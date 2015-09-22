@@ -96,9 +96,6 @@ public class Map : MonoBehaviour
 
 	void StartPlay (bool isNewLevel) 
 	{
-		starsLevel = SaveLoad.SavedData.StarsLevel;
-		numberHint = SaveLoad.SavedData.NumberOfHint;
-		NUMBER_ITEM = SaveLoad.SavedData.NumberOfItem;
 
 		startPanel.SetActive (false);
 		headerPanel.SetActive (true);
@@ -109,6 +106,10 @@ public class Map : MonoBehaviour
 			Debug.Log ("123");
 		//LMap(10, 15);
 		if (isNewLevel) {
+			starsLevel = SaveLoad.SavedData.StarsLevel;
+			numberHint = SaveLoad.SavedData.NumberOfHint;
+			NUMBER_ITEM = SaveLoad.SavedData.NumberOfItem;
+
 			starsLevel++;
 			if (NUMBER_ITEM == 0)
 				NUMBER_ITEM = 15;
@@ -889,6 +890,7 @@ public class Map : MonoBehaviour
 	
 	public void SoundChangeGame()
 	{
+		Debug.Log("Time: "+System.DateTime.Now.Ticks);
 		isEnableSound = !isEnableSound;
 		UpdateForUI ();
 		SaveLoad.SetDataConfig (isEnableSound, isCountDownMode);
@@ -936,14 +938,16 @@ public class Map : MonoBehaviour
 	{
 
 	}
-
+	private int countAdsShow = 1;
 	private void ShowInterstitialAds()
 	{
-		if(System.DateTime.Now.Ticks - lastShowAds > 20 * 10000000)
+		if(countAdsShow < 4) countAdsShow++;
+		if(System.DateTime.Now.Ticks - lastShowAds > countAdsShow * 60 * 10000000)
 		{
 			AdmobService.RequestInterstitial (true);
 			lastShowAds = System.DateTime.Now.Ticks;
 		}
+		 
 	}
 
 	private void ChangeEnableHeaderButton(bool enable)
