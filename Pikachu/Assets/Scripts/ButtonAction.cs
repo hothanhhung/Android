@@ -68,4 +68,9 @@ public class ButtonAction : MonoBehaviour {
 		mapScrip.GotoMainMenuGame ();
 	}
 
+	public void ResetData()
+	{
+		SaveLoad.SetData (0, 0, 0);
+	}
+
 }

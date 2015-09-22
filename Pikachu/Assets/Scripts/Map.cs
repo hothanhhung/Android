@@ -82,11 +82,20 @@ public class Map : MonoBehaviour
 
 	void Start () 
 	{
+		stopGame = true;
+		SaveLoad.Load ();
+		isCountDownMode = SaveLoad.SavedData.IsCountDown;
+		isEnableSound = SaveLoad.SavedData.IsSound;
+		UpdateForUI ();
 		Screen.orientation = ScreenOrientation.Portrait;
 	}
 
 	void StartPlay (bool isNewLevel) 
 	{
+		starsLevel = SaveLoad.SavedData.StarsLevel;
+		numberHint = SaveLoad.SavedData.NumberOfHint;
+		NUMBER_ITEM = SaveLoad.SavedData.NumberOfItem;
+
 		startPanel.SetActive (false);
 		headerPanel.SetActive (true);
 		ChangeEnableHeaderButton (true);
@@ -799,6 +808,7 @@ public class Map : MonoBehaviour
 
 	private void MeetWinner()
 	{
+		SaveLoad.SetData(starsLevel, numberHint, NUMBER_ITEM);
 		stopGame = true;
 		winPanel.SetActive (true);
 		ChangeEnableHeaderButton (false);
@@ -875,6 +885,7 @@ public class Map : MonoBehaviour
 	{
 		isEnableSound = !isEnableSound;
 		UpdateForUI ();
+		SaveLoad.SetDataConfig (isEnableSound, isCountDownMode);
 	}
 
 	public void StartGame()
@@ -895,6 +906,7 @@ public class Map : MonoBehaviour
 		} else {
 			countDownText.text = COUNT_DOWN_OFF;
 		}
+		SaveLoad.SetDataConfig (isEnableSound, isCountDownMode);
 	}
 
 	public void GotoMainMenuGame()
