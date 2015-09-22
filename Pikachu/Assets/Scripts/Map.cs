@@ -118,7 +118,7 @@ public class Map : MonoBehaviour
 			if (NUMBER_ITEM > MAX_NUMBER_ITEM)
 				NUMBER_ITEM = MAX_NUMBER_ITEM;
 		}
-		Debug.Log("NUMBER_ITEM:"+NUMBER_ITEM + " numberHint: " +numberHint);
+
 		if (starsLevel < 1)
 			starsLevel = 1;
 
