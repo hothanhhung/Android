@@ -4,11 +4,18 @@ using System.Collections;
 
 public class Map : MonoBehaviour 
 {
+	private const string SOUND_ON ="SOUND : ON";
+	private const string SOUND_OFF ="SOUND : OFF";
+	private const string COUNT_DOWN_ON ="COUNT DOWN : ON";
+	private const string COUNT_DOWN_OFF ="COUNT DOWN : OFF";
+
 	private bool isEnableSound = true;
 	private const int  MAX_NUMBER_ITEM = 36;
 	private int  NUMBER_ITEM = 0;
 	private bool stopGame = false;
+	public GameObject startPanel;
 	public GameObject winPanel;
+	public GameObject gameoverPanel;
 	public GameObject pausePanel;
 	public GameObject headerPanel;
 	public Button hintButton;
@@ -18,10 +25,10 @@ public class Map : MonoBehaviour
 	private GameObject objectPos2;
 
 	public Object prefap_pikachu;
-	int [][]ROW_COL = { new int[]{6, 5}, new int[]{8, 5}, new int[]{7, 6}, new int[]{8, 6} ,new int[]{9, 6} ,
-						new int[]{10, 6}, new int[]{10, 7}, new int[]{10, 8}, new int[]{11, 8},	new int[]{10, 9} ,
-						new int[]{10, 10}, new int[]{11, 10}, new int[]{12, 10}, new int[]{13, 10}, new int[]{14, 10} };
-	int ROW = 10, COL = 7;
+	int [][]ROW_COL = { new int[]{6, 5, 15}, new int[]{8, 5, 20}, new int[]{7, 6, 30}, new int[]{8, 6, 40} ,new int[]{9, 6, 60} ,
+						new int[]{10, 6, 80}, new int[]{10, 7, 100}, new int[]{10, 8, 120}, new int[]{11, 8, 160},	new int[]{10, 9, 180} ,
+						new int[]{10, 10, 200}, new int[]{11, 10, 220}, new int[]{12, 10, 240} /*, new int[]{13, 10}, new int[]{14, 10} */};
+	int ROW = 0, COL = 0;
 	public int[][] MAP;
 	public bool[][] SHIT;
 	public Vec2[][] SHIT_ROOT_POS;
@@ -41,13 +48,17 @@ public class Map : MonoBehaviour
 	public Text timeText;
 	public Text starsText;
 	public Text soundText;
+	public Text soundMainMenuText;
 	public Text numberHintText;
+	public Text countDownText;
 	private int numberHint = 0;
 	private int starsLevel = 0;
 	private float totalTime=0;
 	private AudioSource source;
 	public AudioClip shootSound;
 	public AudioClip changeMapSound;
+	public AudioClip gameoverSound;
+	public AudioClip wrongSelectionSound;
 	private float volLowRange = .5f;
 	private float volHighRange = 1.0f;
 	private LineRenderer lineRenderer1;
@@ -71,11 +82,12 @@ public class Map : MonoBehaviour
 
 	void Start () 
 	{
-		StartPlay (true);
+		Screen.orientation = ScreenOrientation.Portrait;
 	}
 
 	void StartPlay (bool isNewLevel) 
 	{
+		startPanel.SetActive (false);
 		headerPanel.SetActive (true);
 		ChangeEnableHeaderButton (true);
 		stopGame = false;
@@ -97,20 +109,36 @@ public class Map : MonoBehaviour
 			starsLevel = 1;
 
 		if(starsLevel<ROW_COL.Length)
+		{
 			LMap(ROW_COL[starsLevel-1][0], ROW_COL[starsLevel-1][1]);
-		else
+			if(isCountDownMode)
+			{
+				totalTime = ROW_COL[starsLevel-1][2];
+			}else {
+				totalTime = 0;
+			}
+		}
+		else{
+
 			LMap(ROW_COL[ROW_COL.Length - 1][0], ROW_COL[ROW_COL.Length - 1][1]);
+			if(isCountDownMode)
+			{
+				totalTime = ROW_COL[ROW_COL.Length - 1][2] + 60;
+			}else {
+				totalTime = 0;
+			}
+		}
 		RandomMap();
 		CheckAndSwapThings (false); // make sure has a couple
-		totalTime = 0;
 		starsText.text = "" + starsLevel;
 	}
 	void FixedUpdate()
 	{
 		if (stopGame)
 			return;
-
-		totalTime += Time.deltaTime;
+		if(isCountDownMode) totalTime -= Time.deltaTime;
+		else
+			totalTime += Time.deltaTime;
 		timeText.text = "" + Mathf.RoundToInt(totalTime);
 	}
 
@@ -118,6 +146,17 @@ public class Map : MonoBehaviour
 	{
 		if (stopGame)
 			return;
+		if(totalTime < 0)
+		{
+			if (isEnableSound) {
+				float vol = Random.Range (volLowRange, volHighRange);
+				source.PlayOneShot (gameoverSound, vol);
+			}
+			stopGame = true;
+			this.enabled = false;
+			gameoverPanel.SetActive(true);
+			return;
+		}
 		if(Input.GetMouseButtonDown(0))
 		{
 			float x = (Input.mousePosition.x - Screen.width / 2) / Screen.width * (Screen.width * 1.0f / Screen.height);
@@ -210,6 +249,10 @@ public class Map : MonoBehaviour
 				Invoke("DeleteSameItems", 0.5f);
 			}
 			else{
+				if (isEnableSound) {
+					float vol = Random.Range (volLowRange, volHighRange);
+					source.PlayOneShot (wrongSelectionSound, vol);
+				}
 				Debug.Log("khong thay dương di ");
 				DeSelect ();
 			}
@@ -224,7 +267,13 @@ public class Map : MonoBehaviour
 		Sprite sprite = Resources.Load("Images/item/item"+type, typeof(Sprite)) as Sprite;
 		g.GetComponent<SpriteRenderer>().sprite = sprite;
 		g.transform.localScale = new Vector3(Mathf.Abs(width * 1.0f / sprite.bounds.size.x), Mathf.Abs (- height * 1.0f / sprite.bounds.size.y), 1);
-		
+		if(ROW_COL.Length < starsLevel){
+			var val = Random.Range(0, 3);
+			if(val==1) g.transform.Rotate(0, 180, 0);
+			else if(val==2) g.transform.Rotate(180, 0, 0);
+		}else{
+			if(Random.Range(0, 3) == 1) g.transform.Rotate(0, 180, 0);
+		}
 	}
 	public void LMap(int row, int col)
 	{
@@ -792,6 +841,7 @@ public class Map : MonoBehaviour
 		stopGame = false;
 		this.enabled = true;
 		pausePanel.SetActive (false);
+		gameoverPanel.SetActive (false);
 		ChangeEnableHeaderButton (true);
 		foreach (Transform child in this.transform) {
 			Destroy(child.gameObject);
@@ -799,22 +849,71 @@ public class Map : MonoBehaviour
 		StartPlay (false);
 	}
 
+	private void UpdateForUI()
+	{
+		
+		var backgroundSound = GameObject.Find ("BackgroundSound");
+		var backgroundSoundAudioSource = backgroundSound.GetComponent<AudioSource> ();
+		if (isEnableSound) {
+			soundText.text = SOUND_ON;
+			soundMainMenuText.text = SOUND_ON;
+			backgroundSoundAudioSource.Play ();
+		} else {
+			soundText.text = SOUND_OFF;
+			soundMainMenuText.text = SOUND_OFF;
+			backgroundSoundAudioSource.Stop();
+		}
+
+		if (isCountDownMode) {
+			countDownText.text = COUNT_DOWN_ON;
+		} else {
+			countDownText.text = COUNT_DOWN_OFF;
+		}
+	}
 	
 	public void SoundChangeGame()
 	{
 		isEnableSound = !isEnableSound;
-		var backgroundSound = GameObject.Find ("BackgroundSound");
-		var backgroundSoundAudioSource = backgroundSound.GetComponent<AudioSource> ();
-		if (isEnableSound) {
-			soundText.text = "SOUND : ON";
-			backgroundSoundAudioSource.Play ();
+		UpdateForUI ();
+	}
+
+	public void StartGame()
+	{
+		starsLevel = 0;
+		numberHint = 0;
+		stopGame = false;
+		this.enabled = true;
+		StartPlay (true);
+	}
+
+	private bool isCountDownMode = false;
+	public void CoundownModeGame()
+	{
+		isCountDownMode = !isCountDownMode;
+		if (isCountDownMode) {
+			countDownText.text = COUNT_DOWN_ON;
 		} else {
-			soundText.text = "SOUND : OFF";
-			backgroundSoundAudioSource.Stop();
+			countDownText.text = COUNT_DOWN_OFF;
+		}
+	}
+
+	public void GotoMainMenuGame()
+	{
+
+		stopGame = true;
+		this.enabled = false;
+		winPanel.SetActive (false);
+		gameoverPanel.SetActive (false);
+		pausePanel.SetActive (false);
+		headerPanel.SetActive (false);
+		ChangeEnableHeaderButton (false);
+		foreach (Transform child in this.transform) {
+			Destroy(child.gameObject);
 		}
 
+		startPanel.SetActive (true);
 	}
-	
+
 	public void HelpGame()
 	{
 

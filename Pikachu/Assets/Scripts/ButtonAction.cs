@@ -6,9 +6,8 @@ public class ButtonAction : MonoBehaviour {
 	public GameObject map;
 	public void StartGame()
 	{
-		var btStartGame = GameObject.Find("btStartGame");
-		btStartGame.SetActive (false);
-		map.SetActive (true);
+		Map mapScrip = (Map) map.GetComponent(typeof(Map));
+		mapScrip.StartGame ();
 	}
 
 	public void PauseGame()
@@ -55,4 +54,18 @@ public class ButtonAction : MonoBehaviour {
 		Map mapScrip = (Map) map.GetComponent(typeof(Map));
 		mapScrip.ContinueGame ();
 	}
+	
+	public void CountdownModeGame()
+	{
+		Map mapScrip = (Map) map.GetComponent(typeof(Map));
+		mapScrip.CoundownModeGame ();
+	}
+
+	
+	public void GotoMainMenuGame()
+	{
+		Map mapScrip = (Map) map.GetComponent(typeof(Map));
+		mapScrip.GotoMainMenuGame ();
+	}
+
 }
