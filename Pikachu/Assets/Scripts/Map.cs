@@ -67,6 +67,8 @@ public class Map : MonoBehaviour
 	public GameObject objectLineRenderer3;
 	private LineRenderer lineRenderer3;
 
+	private long lastShowAds = 0;
+
 	void Awake () {		
 		lineRenderer1 = this.GetComponent<LineRenderer> ();
 		lineRenderer2 = objectLineRenderer2.GetComponent<LineRenderer> ();
@@ -82,12 +84,14 @@ public class Map : MonoBehaviour
 
 	void Start () 
 	{
+		lastShowAds = System.DateTime.Now.Ticks;
 		stopGame = true;
 		SaveLoad.Load ();
 		isCountDownMode = SaveLoad.SavedData.IsCountDown;
 		isEnableSound = SaveLoad.SavedData.IsSound;
 		UpdateForUI ();
 		Screen.orientation = ScreenOrientation.Portrait;
+		AdmobService.RequestBanner ();
 	}
 
 	void StartPlay (bool isNewLevel) 
@@ -157,6 +161,7 @@ public class Map : MonoBehaviour
 			return;
 		if(totalTime < 0)
 		{
+			ShowInterstitialAds();
 			if (isEnableSound) {
 				float vol = Random.Range (volLowRange, volHighRange);
 				source.PlayOneShot (gameoverSound, vol);
@@ -808,6 +813,7 @@ public class Map : MonoBehaviour
 
 	private void MeetWinner()
 	{
+		ShowInterstitialAds ();
 		SaveLoad.SetData(starsLevel, numberHint, NUMBER_ITEM);
 		stopGame = true;
 		winPanel.SetActive (true);
@@ -930,6 +936,16 @@ public class Map : MonoBehaviour
 	{
 
 	}
+
+	private void ShowInterstitialAds()
+	{
+		if(System.DateTime.Now.Ticks - lastShowAds > 20 * 10000000)
+		{
+			AdmobService.RequestInterstitial (true);
+			lastShowAds = System.DateTime.Now.Ticks;
+		}
+	}
+
 	private void ChangeEnableHeaderButton(bool enable)
 	{		
 		hintButton.enabled = enable;
