@@ -25,9 +25,9 @@ public class Map : MonoBehaviour
 	private GameObject objectPos2;
 
 	public Object prefap_pikachu;
-	int [][]ROW_COL = { new int[]{6, 5, 15}, new int[]{8, 5, 20}, new int[]{7, 6, 30}, new int[]{8, 6, 40} ,new int[]{9, 6, 60} ,
-						new int[]{10, 6, 80}, new int[]{10, 7, 100}, new int[]{10, 8, 120}, new int[]{11, 8, 160},	new int[]{10, 9, 180} ,
-						new int[]{10, 10, 200}, new int[]{11, 10, 220}, new int[]{12, 10, 240} /*, new int[]{13, 10}, new int[]{14, 10} */};
+	int [][]ROW_COL = { new int[]{6, 5, 15}, new int[]{8, 5, 15}, new int[]{7, 6, 20}, new int[]{8, 6, 20} ,new int[]{9, 6, 40} ,
+						new int[]{10, 6, 40}, new int[]{10, 7, 60}, new int[]{10, 8, 80}, new int[]{11, 8, 120},	new int[]{10, 9, 140} ,
+						new int[]{10, 10, 160}, new int[]{11, 10, 200}, new int[]{12, 10, 240} /*, new int[]{13, 10}, new int[]{14, 10} */};
 	int ROW = 0, COL = 0;
 	public int[][] MAP;
 	public bool[][] SHIT;
@@ -118,7 +118,7 @@ public class Map : MonoBehaviour
 			if (NUMBER_ITEM > MAX_NUMBER_ITEM)
 				NUMBER_ITEM = MAX_NUMBER_ITEM;
 		}
-
+		Debug.Log("NUMBER_ITEM:"+NUMBER_ITEM + " numberHint: " +numberHint);
 		if (starsLevel < 1)
 			starsLevel = 1;
 
@@ -814,6 +814,7 @@ public class Map : MonoBehaviour
 
 	private void MeetWinner()
 	{
+		numberHint++;
 		ShowInterstitialAds ();
 		SaveLoad.SetData(starsLevel, numberHint, NUMBER_ITEM);
 		stopGame = true;
@@ -823,7 +824,6 @@ public class Map : MonoBehaviour
 
 	public void ContinueGame()
 	{
-		numberHint++;
 		if(numberHint > 0)
 		{
 			hintButton.enabled = true;
@@ -890,7 +890,6 @@ public class Map : MonoBehaviour
 	
 	public void SoundChangeGame()
 	{
-		Debug.Log("Time: "+System.DateTime.Now.Ticks);
 		isEnableSound = !isEnableSound;
 		UpdateForUI ();
 		SaveLoad.SetDataConfig (isEnableSound, isCountDownMode);
@@ -905,7 +904,7 @@ public class Map : MonoBehaviour
 		StartPlay (true);
 	}
 
-	private bool isCountDownMode = false;
+	private bool isCountDownMode = true;
 	public void CoundownModeGame()
 	{
 		isCountDownMode = !isCountDownMode;

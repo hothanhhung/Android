@@ -12,7 +12,11 @@ public class GameData{
 
 	public bool IsSound;
 	public bool IsCountDown;
-	/*public SaveData(){}
+	public GameData(){
+		IsSound = true;
+		IsCountDown = true;
+	}
+	/*
 	public SaveData(int level, int hint, int item){
 		StarsLevel = level;
 		NumberOfHint = hint;
