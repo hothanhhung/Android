@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Map : MonoBehaviour 
 {
@@ -145,6 +146,7 @@ public class Map : MonoBehaviour
 		RandomMap();
 		CheckAndSwapThings (false); // make sure has a couple
 		starsText.text = "" + starsLevel;
+		numberHintText.text = "" + numberHint;
 	}
 	void FixedUpdate()
 	{
@@ -296,8 +298,8 @@ public class Map : MonoBehaviour
 		ROW = row;
 		COL = col;
 		CELL_HEIGHT = (int)(CAM_GAME_Y / (ROW));//(int)(CAM_GAME_Y / (ROW - 2));
-		if (CELL_HEIGHT > 25)
-			CELL_HEIGHT = 25;
+		if (CELL_HEIGHT > 30)
+			CELL_HEIGHT = 30;
 		//Debug.Log(CELL_HEIGHT);
 		CELL_WIDH = (int)(CELL_HEIGHT * 0.9f);
 		
@@ -355,11 +357,34 @@ public class Map : MonoBehaviour
 			Debug.LogError("than gnu");
 			return;
 		}
-		
+
+		/// random limiting repeat number
+		List<int[]> itemList = new List<int[]>();
+		for(int i = 0; i<NUMBER_ITEM; i++)
+		{
+			int [] itemArray = new int[2];
+			itemArray[0] = i;
+			itemArray[1] = 2;
+			itemList.Add(itemArray); 
+		}
+
 		int[] pool = new int[dem];
 		
 		for (int i = 0; i < dem / 2; i++)
-			pool[i] = Random.Range(0, NUMBER_ITEM - 1);
+		{
+			if(itemList.Count > 0)
+			{
+				int index = Random.Range(0, itemList.Count);
+				var item = itemList[index];
+				pool[i] = item[0];
+				item[1] = item[1] - 1;
+				if(item[1] == 0) itemList.RemoveAt(index);
+			}else{
+				pool[i] = Random.Range(0, NUMBER_ITEM);
+			}
+		}
+
+		///////////
 		for (int i = dem / 2; i < dem; i++)
 			pool[i] = pool[dem - 1 - i];
 		
@@ -868,7 +893,6 @@ public class Map : MonoBehaviour
 
 	private void UpdateForUI()
 	{
-		
 		var backgroundSound = GameObject.Find ("BackgroundSound");
 		var backgroundSoundAudioSource = backgroundSound.GetComponent<AudioSource> ();
 		if (isEnableSound) {
@@ -937,10 +961,10 @@ public class Map : MonoBehaviour
 	{
 
 	}
-	private int countAdsShow = 1;
+	private int countAdsShow = 2;
 	private void ShowInterstitialAds()
 	{
-		if(countAdsShow < 4) countAdsShow++;
+		if(countAdsShow < 5) countAdsShow++;
 		if(System.DateTime.Now.Ticks - lastShowAds > countAdsShow * 60 * 10000000)
 		{
 			AdmobService.RequestInterstitial (true);
