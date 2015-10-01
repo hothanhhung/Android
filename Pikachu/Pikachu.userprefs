@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\FruitLink\Assets\Scripts\Map.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Map.cs">
     <Files>
-      <File FileName="..\FruitLink\Assets\Scripts\Map.cs" Line="250" Column="7" />
+      <File FileName="Assets\Scripts\Map.cs" Line="1059" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

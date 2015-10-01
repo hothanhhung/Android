@@ -43,6 +43,12 @@ public class ButtonAction : MonoBehaviour {
 		mapScrip.HelpGame ();
 	}
 
+	public void CloseHelpGame()
+	{
+		Map mapScrip = (Map) map.GetComponent(typeof(Map));
+		mapScrip.CloseHelpGame ();
+	}
+
 	public void HintGame()
 	{
 		Map mapScrip = (Map) map.GetComponent(typeof(Map));

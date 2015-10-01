@@ -15,6 +15,7 @@ public class Map : MonoBehaviour
 	private int  NUMBER_ITEM = 0;
 	private bool stopGame = false;
 	public GameObject startPanel;
+	public GameObject helpPanel;
 	public GameObject winPanel;
 	public GameObject gameoverPanel;
 	public GameObject pausePanel;
@@ -27,8 +28,8 @@ public class Map : MonoBehaviour
 
 	public Object prefap_pikachu;
 	int [][]ROW_COL = { new int[]{6, 5, 15}, new int[]{8, 5, 15}, new int[]{7, 6, 20}, new int[]{8, 6, 20} ,new int[]{9, 6, 40} ,
-						new int[]{10, 6, 40}, new int[]{10, 7, 60}, new int[]{10, 8, 80}, new int[]{11, 8, 120},	new int[]{10, 9, 140} ,
-						new int[]{10, 10, 160}, new int[]{11, 10, 200}, new int[]{12, 10, 240} /*, new int[]{13, 10}, new int[]{14, 10} */};
+						new int[]{10, 6, 60}, new int[]{10, 7, 100}, new int[]{10, 8, 140}, new int[]{11, 8, 200},	new int[]{10, 9, 240} ,
+						new int[]{10, 10, 280}, new int[]{11, 10, 320}, new int[]{12, 10, 360} /*, new int[]{13, 10}, new int[]{14, 10} */};
 	int ROW = 0, COL = 0;
 	public int[][] MAP;
 	public bool[][] SHIT;
@@ -47,6 +48,7 @@ public class Map : MonoBehaviour
 	private int OFFSET_Y_BOTTOM=10;
 
 	public Text timeText;
+	public Text notifyHideSomeItemsText;
 	public Text starsText;
 	public Text soundText;
 	public Text soundMainMenuText;
@@ -68,7 +70,7 @@ public class Map : MonoBehaviour
 	public GameObject objectLineRenderer3;
 	private LineRenderer lineRenderer3;
 
-	private long lastShowAds = 0;
+	private float lastShowAds = 0;
 
 	void Awake () {		
 		lineRenderer1 = this.GetComponent<LineRenderer> ();
@@ -85,7 +87,7 @@ public class Map : MonoBehaviour
 
 	void Start () 
 	{
-		lastShowAds = System.DateTime.Now.Ticks;
+		lastShowAds = Time.realtimeSinceStartup;
 		stopGame = true;
 		SaveLoad.Load ();
 		isCountDownMode = SaveLoad.SavedData.IsCountDown;
@@ -138,7 +140,17 @@ public class Map : MonoBehaviour
 			LMap(ROW_COL[ROW_COL.Length - 1][0], ROW_COL[ROW_COL.Length - 1][1]);
 			if(isCountDownMode)
 			{
-				totalTime = ROW_COL[ROW_COL.Length - 1][2] + 60;
+				if(starsLevel < LEVEL_FOR_HIDE_SOME_ITEMS){
+					totalTime = ROW_COL[ROW_COL.Length - 1][2] + 60;
+				}else{
+					var numberItems = ROW_COL[ROW_COL.Length - 1][0] * ROW_COL[ROW_COL.Length - 1][1];
+					var numberHideItems = starsLevel - LEVEL_FOR_HIDE_SOME_ITEMS + NUMBER_HIDE_ITEM_IN_THE_FIRST;
+					if(numberHideItems > numberItems/2) numberHideItems = numberItems/2;
+					totalTime = ROW_COL[ROW_COL.Length - 1][2] + 120;
+					if(numberHideItems>NUMBER_HIDE_ITEM_IN_THE_FIRST){
+						totalTime += (numberHideItems - NUMBER_HIDE_ITEM_IN_THE_FIRST) * 20;
+					}
+				}
 			}else {
 				totalTime = 0;
 			}
@@ -147,6 +159,13 @@ public class Map : MonoBehaviour
 		CheckAndSwapThings (false); // make sure has a couple
 		starsText.text = "" + starsLevel;
 		numberHintText.text = "" + numberHint;
+		if(starsLevel < LEVEL_FOR_HIDE_SOME_ITEMS){
+			notifyHideSomeItemsText.gameObject.SetActive(false);
+		}
+		else{
+			timeForHideSomeItems = TIME_FOR_HIDE_SOME_ITEMS;
+			notifyHideSomeItemsText.gameObject.SetActive(true);
+		}
 	}
 	void FixedUpdate()
 	{
@@ -155,7 +174,10 @@ public class Map : MonoBehaviour
 		if(isCountDownMode) totalTime -= Time.deltaTime;
 		else
 			totalTime += Time.deltaTime;
+		timeForHideSomeItems -= Time.deltaTime;
 		timeText.text = "" + Mathf.RoundToInt(totalTime);
+		notifyHideSomeItemsText.text = "Hide In " + Mathf.RoundToInt(timeForHideSomeItems);
+		 
 	}
 
 	void Update () 
@@ -199,6 +221,7 @@ public class Map : MonoBehaviour
 				}
 			}
 		}
+		HideSomeItem (false);
 	}
 	
 	private GameObject GetGameObjectFromPos(Vec2 pos)
@@ -696,6 +719,10 @@ public class Map : MonoBehaviour
 			float vol = Random.Range (volLowRange, volHighRange);
 			source.PlayOneShot(changeMapSound,vol);
 		}
+		if(changed)
+		{
+			HideSomeItem(true);
+		}
 	}
 	Vec2 HINT_POS0;
 	Vec2 HINT_POS1;
@@ -959,16 +986,20 @@ public class Map : MonoBehaviour
 
 	public void HelpGame()
 	{
-
+		helpPanel.SetActive (true);
+	}
+	public void CloseHelpGame()
+	{
+		helpPanel.SetActive (false);
 	}
 	private int countAdsShow = 2;
 	private void ShowInterstitialAds()
 	{
 		if(countAdsShow < 5) countAdsShow++;
-		if(System.DateTime.Now.Ticks - lastShowAds > countAdsShow * 60 * 10000000)
+		if(Time.realtimeSinceStartup - lastShowAds > countAdsShow * 60)
 		{
 			AdmobService.RequestInterstitial (true);
-			lastShowAds = System.DateTime.Now.Ticks;
+			lastShowAds = Time.realtimeSinceStartup;
 		}
 		 
 	}
@@ -1004,6 +1035,79 @@ public class Map : MonoBehaviour
 				Vector3 vec3 = new Vector3 (CELL_WIDH * path.PATH [i].C + MIN_X + CELL_WIDH/2, CELL_HEIGHT * path.PATH [i].R + MIN_Y + CELL_HEIGHT/2, 0);
 				lineRenderer.SetPosition (i, vec3);
 			}*/
+		}
+	}
+
+	private void hideSpriteItem(Vec2 pos)
+	{
+		var obj = GetGameObjectFromPos (pos);
+		var sprite = Resources.Load("Images/item/item", typeof(Sprite)) as Sprite; 
+		obj.GetComponent<SpriteRenderer> ().sprite = sprite;
+
+	}
+
+	private void resetSpriteItem(Vec2 pos)
+	{
+		var type = MAP [pos.R] [pos.C];
+		var obj = GetGameObjectFromPos (pos);
+		var sprite = Resources.Load("Images/item/item"+type, typeof(Sprite)) as Sprite; 
+		obj.GetComponent<SpriteRenderer> ().sprite = sprite;
+		obj.transform.localScale = new Vector3(Mathf.Abs(CELL_WIDH * 1.0f / sprite.bounds.size.x), Mathf.Abs (- CELL_HEIGHT * 1.0f / sprite.bounds.size.y), 1);
+
+		
+	}
+
+	private const int LEVEL_FOR_HIDE_SOME_ITEMS = 20;
+	private const int TIME_FOR_HIDE_SOME_ITEMS = 45;
+	private const int NUMBER_HIDE_ITEM_IN_THE_FIRST = 5;
+	float timeForHideSomeItems;
+	private void HideSomeItem(bool isReset)
+	{
+		if (stopGame)
+			return;
+		if(isReset){
+			List<Vec2> listLiveItem = new List<Vec2>();
+			for (int i = 1; i < ROW - 1; i++)
+				for (int j = 1; j < COL - 1; j++)
+			{
+				if (MAP[i][j] != -1)
+				{
+					var pos = new Vec2(i, j);
+					listLiveItem.Add(pos);
+					resetSpriteItem(pos);
+				}
+			}
+			timeForHideSomeItems = TIME_FOR_HIDE_SOME_ITEMS;
+		}
+		else{
+			if(starsLevel > LEVEL_FOR_HIDE_SOME_ITEMS - 1)
+			{
+				if(timeForHideSomeItems < 0)
+				{
+					List<Vec2> listLiveItem = new List<Vec2>();
+					for (int i = 1; i < ROW - 1; i++)
+						for (int j = 1; j < COL - 1; j++)
+					{
+						if (MAP[i][j] != -1)
+						{
+							var pos = new Vec2(i, j);
+							listLiveItem.Add(pos);
+							resetSpriteItem(pos);
+						}
+					}
+
+					var numberHideItem = starsLevel - LEVEL_FOR_HIDE_SOME_ITEMS + NUMBER_HIDE_ITEM_IN_THE_FIRST;
+					if(numberHideItem > listLiveItem.Count / 2) numberHideItem= listLiveItem.Count / 2;
+					for(int i = 0; i< numberHideItem; i++)
+					{
+						int index = Random.Range(0, listLiveItem.Count);
+						hideSpriteItem(listLiveItem[index]);
+						listLiveItem.RemoveAt(index);
+					}
+
+					timeForHideSomeItems = TIME_FOR_HIDE_SOME_ITEMS;
+				}
+			}
 		}
 	}
 }
