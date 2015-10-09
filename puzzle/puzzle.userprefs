@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Script\Map.cs">
+    <Files>
+      <File FileName="Assets\Resources\Script\Map.cs" Line="210" Column="1" />
+      <File FileName="Assets\Resources\Script\Vec2.cs" Line="19" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="D:\hung\github\android\Android\puzzle\Assets\Resoures\Script\Map.cs" line="11" />
+      <Breakpoint file="D:\hung\github\android\Android\puzzle\Assets\Resources\Script\Map.cs" line="52" />
+      <Breakpoint file="D:\hung\github\android\Android\puzzle\Assets\Resources\Script\Map.cs" line="60" />
+      <Breakpoint file="D:\hung\github\android\Android\puzzle\Assets\Resources\Script\Map.cs" line="104" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
