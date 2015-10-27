@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0a6a6a"
+    android:orientation="vertical" >
+    <!-- android:background="#fa6a6a" -->
+    <!-- <GridView
+        android:id="@+id/lvMovies"
+        android:layout_width="match_parent"
+	    android:numColumns="3"
+	    android:verticalSpacing="5dp"
+	    android:horizontalSpacing="10dp"
+	    android:stretchMode="columnWidth"
+	    android:gravity="center"	        
+        android:layout_height="match_parent"
+        android:layout_marginBottom="34dp"
+        android:descendantFocusability="blocksDescendants"  >
+        </GridView> -->
+   <ListView
+        android:id="@+id/lvMovies"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="50dp" >
+    </ListView>
+
+</RelativeLayout>
