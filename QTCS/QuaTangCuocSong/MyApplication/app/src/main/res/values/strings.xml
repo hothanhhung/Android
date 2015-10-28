@@ -17,4 +17,5 @@
 	<string name="strXoaNgay">Xóa Ngày</string>
 	<string name="strChonNgay">Chọn Ngày</string>
 	<string name="ad_unit_id">ca-app-pub-4576847792571626/5411861994</string>
+    <string name="ad_unit_id_interstitial">ca-app-pub-4576847792571626/5373621596</string>
 </resources>

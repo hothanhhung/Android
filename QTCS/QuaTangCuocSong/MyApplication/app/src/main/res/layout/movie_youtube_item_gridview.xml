@@ -18,8 +18,8 @@
             android:focusable="false"
             android:focusableInTouchMode="false" >
 
-        <WebView
-            android:id="@+id/webViewImage"
+        <ImageView
+            android:id="@+id/imgImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
@@ -39,7 +39,7 @@
             android:text="@string/example_string"
             android:background="#000000"
             android:textColor="#a3a3a3"
-            android:textSize="12sp"
+            android:textSize="9sp"
             android:textStyle="bold"
             android:typeface="normal" >
         </TextView>
@@ -53,7 +53,7 @@
         android:layout_marginTop="1dip"
         android:text="@string/example_string"
         android:textColor="#343434"
-        android:textSize="12sp" >
+        android:textSize="8sp" >
     </TextView>
 
 </LinearLayout>

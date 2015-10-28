@@ -116,10 +116,34 @@ public class UIUtils {
     	firstAdFlex.setName("Ủng hộ tác giả bằng cách down và cài đặt Game và ứng dụng");
     	firstAdFlex.setDesc("Đối với file APK vui lòng bật chế độ cho phép cài đặt nguồn ngoài Google play \n Settings > Security > ☑ Unknown Sources.");
     	adFlexes.add(firstAdFlex);
-    	
-    	for(int i = 0; i < adFlexDataList.size(); i++)
+
+		AdFlexData firstAdFlex2 = new AdFlexData();
+		firstAdFlex2.setType("Google play");
+		firstAdFlex2.setName("Đọc Truyện Cổ");
+		firstAdFlex2.setDesc("Với ứng dụng như một sách truyện giúp bạn có thể đọc offline các truyện");
+		firstAdFlex2.setLink("https://play.google.com/store/apps/details?id=com.hth.doctruyenco");
+		firstAdFlex2.setUrlImage("https://lh3.ggpht.com/wk8buIq8ybv9vjZ1GPQ1q6NiClaZDJJ1KzQ3EBCAhxretCryfJRsXaLxrXjLSdLjTw=w300");
+		adFlexes.add(firstAdFlex2);
+
+		AdFlexData firstAdFlex3 = new AdFlexData();
+		firstAdFlex3.setType("Google play");
+		firstAdFlex3.setName("Lịch Tivi");
+		firstAdFlex3.setDesc("Ứng dụng xem lịch truyền hình, lịch phát sóng, lịch tivi trực truyến của hơn 110 kênh truyền hình thông dụng như VTV, HTV, VTC, k+");
+		firstAdFlex3.setLink("https://play.google.com/store/apps/details?id=com.hth.lichtivi");
+		firstAdFlex3.setUrlImage("https://lh5.ggpht.com/ysKh6UJAxeJlIZydIc1mBhw4fGWNObMD2SS1leTCxmc3cfwgZ_jU6i4BiDROO90vBl0=w300");
+		adFlexes.add(firstAdFlex3);
+
+		AdFlexData firstAdFlex1 = new AdFlexData();
+		firstAdFlex1.setType("Google play");
+		firstAdFlex1.setName("Animal Connection");
+		firstAdFlex1.setDesc("Game Pikachu mới, càng chơi càng thú vị");
+		firstAdFlex1.setLink("https://play.google.com/store/apps/details?id=com.hth.animalconnection");
+		firstAdFlex1.setUrlImage("https://lh3.googleusercontent.com/UifZjCgWDSnWQ6c-9ukm8e8osK9VthxPvgAqEaLBpZJOWYad8ncIl-AL0Sokn5yRLOU=w300");
+		adFlexes.add(firstAdFlex1);
+
+    	for(int i = adFlexDataList.size(); i>0 ; i--)
     	{
-    		AdFlexData adFlex = adFlexDataList.get(i);
+    		AdFlexData adFlex = adFlexDataList.get(i-1);
     		if(!adFlex.getAppId().contains("gameloft"))
     		{
     			adFlexes.add(adFlex);

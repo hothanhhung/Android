@@ -13,7 +13,7 @@
         android:layout_marginLeft="5dp"
         android:gravity="center_horizontal"
         android:text="@string/example_string"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/youtube_view"
@@ -44,6 +44,7 @@
 	        android:scrollbars="vertical"
 	        android:gravity="left"
 	        android:text="@string/example_string"
+            android:textSize="11sp"
 	        android:textAppearance="@android:style/TextAppearance.Small" />
 	    
     </LinearLayout>
@@ -77,5 +78,5 @@
         android:layout_marginLeft="0dp"
         ads:adSize="BANNER"
         ads:adUnitId="@string/ad_unit_id"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </LinearLayout>

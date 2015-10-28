@@ -15,9 +15,9 @@
             android:layout_gravity="center_vertical"
             android:textSize="12sp" >
         </TextView>
-        <WebView
-	        android:id="@+id/webViewImage"
-	        android:layout_width="130dip"
+        <com.hth.utils.AspectRatioImageView
+	        android:id="@+id/imgViewImage"
+	        android:layout_width="100dip"
 	        android:layout_height="wrap_content"
 		    android:focusable="false"
 	   		android:focusableInTouchMode="false"/>
@@ -33,7 +33,7 @@
 		            android:maxLines="4"
 		            android:text="@string/example_string"
 		            android:textColor="#040404"
-		            android:textSize="15sp"
+		            android:textSize="13sp"
 		            android:textStyle="bold"
 		            android:typeface="sans" >
 		        </TextView>
@@ -44,7 +44,7 @@
 		            android:layout_marginTop="1dip"
 		            android:text="@string/example_string"
 		            android:textColor="#343434"
-		            android:textSize="12sp" >
+		            android:textSize="11sp" >
 		        </TextView>
 			</LinearLayout>
 		<ImageButton

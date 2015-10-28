@@ -23,9 +23,9 @@ import android.os.Bundle;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +39,7 @@ public class PlayerYoutubeMovieActivity extends YouTubeBaseActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_player_youtube_movie);
 
 		ActionBar actionBar = getActionBar();

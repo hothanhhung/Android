@@ -2,8 +2,10 @@ package com.hth.qtcs;
 
 import java.util.Calendar;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.hth.qtcs.R;
 import com.hth.utils.UIUtils;
 
@@ -14,6 +16,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
 import android.widget.LinearLayout;
 
 public class MainActivity extends FragmentActivity implements		ActionBar.TabListener {
@@ -22,6 +25,7 @@ public class MainActivity extends FragmentActivity implements		ActionBar.TabList
     private int countShow = 0;
     
 	private AdView mAdView = null;
+	private InterstitialAd interstitial = null;
 
 	private ViewPager viewPager;
 	private TabsPagerAdapter mAdapter;
@@ -32,6 +36,8 @@ public class MainActivity extends FragmentActivity implements		ActionBar.TabList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_main);
 
 		if(!UIUtils.isOnline(this)){
@@ -102,7 +108,33 @@ public class MainActivity extends FragmentActivity implements		ActionBar.TabList
         long timenow = Calendar.getInstance().getTime().getTime();
         if(timeForRun > 0 && ((timenow - timeForRun) > ((countShow*200000 ) + 200000)))
         {
+			if (interstitial == null) {
+				interstitial = new InterstitialAd(this);
+				interstitial.setAdUnitId(getResources().getString(R.string.ad_unit_id_interstitial));
+				interstitial.setAdListener(new AdListener() {
+					@Override
+					public void onAdLoaded() {
+						if(interstitial.isLoaded()){
+							interstitial.show();
+							timeForRun = Calendar.getInstance().getTime().getTime();
+							countShow++;
+						}
+					}
 
+					@Override
+					public void onAdClosed() {
+					}
+
+
+					@Override
+					public void onAdFailedToLoad(int errorCode) {
+					}
+				});
+			}
+
+			AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+
+			interstitial.loadAd(adRequest_interstitial);
         }
     }
     @Override

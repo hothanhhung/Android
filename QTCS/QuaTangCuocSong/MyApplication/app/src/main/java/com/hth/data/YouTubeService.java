@@ -9,7 +9,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.os.Debug;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.google.api.services.youtube.YouTube;
 import com.google.gson.Gson;
@@ -105,11 +107,11 @@ public class YouTubeService {
 	//UCn-WnIG_oFOd11uKHESF_9w
 	public static String buildUrlRequest(String query, String publishedAfter, String publishedBefore, String order, String pageToken, String maxResults, boolean needCorrectDate)
 	{
-		String url_select = "https://www.googleapis.com/youtube/v3/search?playlist=PLYcNicIg1HY7KLCVNgEfGgfIjVv35t7OR&channelId=UCGk3yw5k_xQUS_KSDCC6Nhw&part=snippet,id";//&maxResults=20&q=&order=date&maxResults=20&key=AIzaSyBMhBxnjBMMFOeqO_nqw7TyFf0jN07CHKw";
+		String url_select = "https://www.googleapis.com/youtube/v3/search?channelId=UCGk3yw5k_xQUS_KSDCC6Nhw&part=snippet,id&type=video";//&maxResults=20&q=&order=date&maxResults=20&key=AIzaSyBMhBxnjBMMFOeqO_nqw7TyFf0jN07CHKw";
 		
 		url_select += "&key=" + DeveloperConst.DEVELOPER_KEY;
-		
-		if(query!="") url_select += "&q=" + query;
+		url_select += "&q=cu%E1%BB%99c%20s%E1%BB%91ng%20";
+		if(query!="") url_select += java.net.URLEncoder.encode(query);
 
 		if(needCorrectDate) publishedAfter = getCorrectDateTimeForRequest(publishedAfter, false);
 		if(publishedAfter!="") url_select += "&publishedAfter=" + publishedAfter;
@@ -124,7 +126,7 @@ public class YouTubeService {
 
 		if(maxResults!="") url_select += "&maxResults=" + maxResults; 
 		else url_select += "&maxResults=20";
-			
+		Log.d("buildUrlRequest",url_select);
 		return url_select;
 	}
 	

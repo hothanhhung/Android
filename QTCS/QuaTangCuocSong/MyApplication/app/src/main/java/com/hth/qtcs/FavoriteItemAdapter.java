@@ -3,6 +3,7 @@ package com.hth.qtcs;
 import com.hth.data.Data;
 import com.hth.data.ObjectFavorite;
 import com.hth.qtcs.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -16,16 +17,19 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FavoriteItemAdapter extends ArrayAdapter<ObjectFavorite> {
 	private ArrayList<ObjectFavorite> data;
 	private static LayoutInflater inflater = null;
 	public Resources res;
+	private Context context;
 
 	public FavoriteItemAdapter(Context a, ArrayList<ObjectFavorite> d,
 			Resources resLocal) {
 		super(a, R.layout.favorite_item, R.id.title, d);
+		context = a;
 		data = d;
 		res = resLocal;
 		// Cache the LayoutInflate to avoid asking for a new one each time.
@@ -52,7 +56,7 @@ public class FavoriteItemAdapter extends ArrayAdapter<ObjectFavorite> {
 		TextView tvNumberChapter;
 		TextView tvTime;
 		ImageButton removeButton;
-        WebView wvWebViewImage;
+		ImageView imgViewImage;
 		
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.favorite_item, null);
@@ -101,10 +105,10 @@ public class FavoriteItemAdapter extends ArrayAdapter<ObjectFavorite> {
 					myQuittingDialogBox.show();
 				}
 			});
-			
-			wvWebViewImage = (WebView)convertView.findViewById(R.id.webViewImage);
-        	wvWebViewImage.setBackgroundColor(0);
-        	viewHolder.webViewImage = wvWebViewImage;
+
+			imgViewImage = (ImageView)convertView.findViewById(R.id.imgViewImage);
+			imgViewImage.setBackgroundColor(0);
+        	viewHolder.imgViewImage = imgViewImage;
         	
 			convertView.setTag(viewHolder);
 		} else {
@@ -113,7 +117,7 @@ public class FavoriteItemAdapter extends ArrayAdapter<ObjectFavorite> {
 			tvNumberChapter = viewHolder.countID;
 			tvTime = viewHolder.time;
 			removeButton = viewHolder.removeButton;
-			wvWebViewImage = viewHolder.webViewImage;
+			imgViewImage = viewHolder.imgViewImage;
 		}
 		ObjectFavorite objectFavorite = data.get(position);
 
@@ -122,10 +126,15 @@ public class FavoriteItemAdapter extends ArrayAdapter<ObjectFavorite> {
 		tvTitle.setTag(objectFavorite);
 		tvTime.setText(objectFavorite.getTime());
 		tvNumberChapter.setText("" + (position + 1));
+		/*
 		String contentImage = "<!DOCTYPE html><head> <meta http-equiv=\"Content-Type\" " +
       	      "content=\"text/html; charset=utf-8\"> </head><body><div style=\"background-color: rgba(10,10,10,0.5); " +
       	      "\"> "+"<img src='"+objectFavorite.getPath()+"'></img>"+ "</div> </body></html>";
 		wvWebViewImage.loadDataWithBaseURL(null, contentImage, "text/html", "utf-8", null);
+		*/
+		Picasso.with(context)
+				.load(objectFavorite.getPath())
+				.into(imgViewImage);
 		return convertView;
 	}
 
@@ -136,5 +145,5 @@ class ViewHolderFavorite {
 	TextView time;
 	TextView countID;
 	ImageButton removeButton;
-	WebView webViewImage;
+	ImageView imgViewImage;
 }

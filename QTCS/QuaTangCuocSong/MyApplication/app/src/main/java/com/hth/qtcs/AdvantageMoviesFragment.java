@@ -15,6 +15,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -50,7 +51,7 @@ public class AdvantageMoviesFragment extends Fragment {
 		Spinner spinner = (Spinner) rootView.findViewById(R.id.spnKindOfSort);
 		ArrayAdapter<CharSequence> spnadapter = ArrayAdapter
 				.createFromResource(getActivity(), R.array.sort_kind_array,
-						android.R.layout.simple_spinner_item);
+						R.layout.spinner_item);
 		spnadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(spnadapter);
 
