@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"   
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/youtube_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center_horizontal"
+        android:text="@string/example_string"
+        android:textSize="16sp" />
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/youtube_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/btFavoriteMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/empty_string"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="favoriteMovie"
+            android:src="@drawable/heart" >
+        </ImageButton>
+	    <TextView
+	        android:id="@+id/inforPlayMovie"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+        	android:layout_weight="1"
+	        android:maxLines="4"
+	        android:scrollbars="vertical"
+	        android:gravity="left"
+	        android:text="@string/example_string"
+            android:textSize="11sp"
+	        android:textAppearance="@android:style/TextAppearance.Small" />
+	    
+    </LinearLayout>
+
+	<GridView
+        android:id="@+id/grvOlderMovies"
+        android:layout_width="match_parent"
+	    android:numColumns="3"
+	    android:verticalSpacing="5dp"
+	    android:horizontalSpacing="10dp"
+	    android:stretchMode="columnWidth"
+	    android:gravity="center"	        
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="0dp"
+        android:descendantFocusability="blocksDescendants"  >
+    </GridView>
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:adx="http://schemas.adflex.asia/apk/lib/ads"
+		android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/adFlexView"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" />
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_unit_id"
+        android:visibility="visible" />
+</LinearLayout>
