@@ -10,6 +10,7 @@ import com.hth.data.YouTubeService;
 import com.hth.haitonghop.R;
 import com.hth.utils.UIUtils;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -38,7 +39,7 @@ public class HomeActivity extends Activity {
 		{
 			ObjectChannel channel = _lstChannels.get(i); 
 			Button button = new Button(this);
-			//button.setTextColor(0x0000A0);
+			button.setTextColor(Color.DKGRAY);
 			button.setText(channel.getTitle());
 			button.setTag(channel);			
 			button.setLayoutParams(new LinearLayout.LayoutParams(

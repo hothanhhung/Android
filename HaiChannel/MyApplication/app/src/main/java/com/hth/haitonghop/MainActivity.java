@@ -106,7 +106,9 @@ public class MainActivity extends FragmentActivity implements		ActionBar.TabList
     private void showInterstitial()
     {
         long timenow = Calendar.getInstance().getTime().getTime();
-        if(timeForRun > 0 && ((timenow - timeForRun) > ((countShow*200000 ) + 200000)))
+		long maxTime = ((countShow*200000 ) + 200000);
+		if(maxTime > 900000) maxTime = 900000;
+        if(timeForRun > 0 && ((timenow - timeForRun) > maxTime))
         {
 			if (interstitial == null) {
 				interstitial = new InterstitialAd(this);
