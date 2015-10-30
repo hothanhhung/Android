@@ -25,7 +25,7 @@ public class YouTubeService {
 	
 	public static YouTubeParserJSObject getOlderPublishYouTubeVideo(String publishedBefore)
 	{
-		return searchPublishedVideos("", "", publishedBefore, "date", "", "7", false);
+		return searchPublishedVideos("", "", publishedBefore, "date", "", "10", false);
 	}
 	
 	public static YouTubeParserJSObject searchPublishedVideos(String query, String publishedAfter, String publishedBefore, String order, String pageToken)
@@ -126,7 +126,7 @@ public class YouTubeService {
 
 		if(maxResults!="") url_select += "&maxResults=" + maxResults; 
 		else url_select += "&maxResults=20";
-		Log.d("buildUrlRequest",url_select);
+		//Log.d("buildUrlRequest",url_select);
 		return url_select;
 	}
 	
