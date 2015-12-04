@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Files Transfer</string>
+    <string name="error_title">Error</string>
+    <string name="error_internet">Sorry! No internet.\n Please check internet connection</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
+</resources>

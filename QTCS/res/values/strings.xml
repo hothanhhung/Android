@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Quà Tặng Cuộc Sống</string>
+    <string name="example_string">example string</string>
+    <string name="empty_string"></string>
+    <string name="loading_string">loading...</string>
+    <string name="error_internet">Chưa kết nối internet</string>
+    <string name="content_about">Ứng dụng lấy nội dung từ các website. Bản quyền nội dung thuộc về tác giả.\nTác giả không chịu trách nhiệm về nội dung bài viết.</string>
+    <string name="title_activity_main">Quà Tặng Cuộc Sống</string>
+    <string name="error_title">Lỗi</string>
+    <string name="notify_title">Thông báo</string>
+    <string name="title_activity_player_youtube_movie">Xem video</string>
+	<string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+	<string name="strFavorite">Thêm vào danh mục yêu thích</string>
+	<string name="strBoQua">Bỏ Qua</string>
+	<string name="strXoaNgay">Xóa Ngày</string>
+	<string name="strChonNgay">Chọn Ngày</string>
+	<string name="ad_unit_id">ca-app-pub-4576847792571626/5411861994</string>
+</resources>

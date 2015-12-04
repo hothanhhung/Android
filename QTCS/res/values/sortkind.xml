@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_kind_array">
+        <item>Độ chính xác</item>
+        <item>Ngày</item>
+        <item>Lượt xem</item>
+        <item>Lượt thích</item>
+        <item>Tiêu đề</item>
+    </string-array>
+</resources>
