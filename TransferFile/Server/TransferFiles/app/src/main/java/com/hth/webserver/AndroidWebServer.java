@@ -2,9 +2,11 @@ package com.hth.webserver;
 
 import com.hth.utils.DataSevices;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.util.Enumeration;
@@ -46,7 +48,7 @@ public class AndroidWebServer extends  NanoHTTPD {
             return true;
         }
     }
-
+/*
     @Override
     public Response serve(IHTTPSession session) {
         String msg = "<html><body><h1>Hello server</h1>\n";
@@ -58,6 +60,46 @@ public class AndroidWebServer extends  NanoHTTPD {
         }
         return newFixedLengthResponse( msg + "</body></html>\n" );
 
+    }
+*/
+    @Override
+    public Response serve(String uri, Method method,
+                          Map<String, String> header,
+                          Map<String, String> parameters,
+                          Map<String, String> files) {
+
+        if(parameters.size() > 1 && uri != null && uri.equalsIgnoreCase("/"))
+            return responseOfAPI(uri, parameters);
+
+        if(uri == null || uri.isEmpty() || uri.equalsIgnoreCase("/")) uri = "/index.html";
+        try {
+            Enumeration<URL> resources = NanoHTTPD.class.getClassLoader().getResources("Website" + uri);
+
+            if(resources.hasMoreElements()) {
+                URL url = (URL) resources.nextElement();
+                InputStream inputStream = null;
+                try {
+                    inputStream = url.openStream();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return newChunkedResponse(Response.Status.OK, getMimeTypeForFile(uri),inputStream);
+            }else{
+                return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Found");
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
+        }
+
+
+    }
+
+    private Response responseOfAPI(String uri, Map<String, String> parameters)
+    {
+        return newFixedLengthResponse(Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT, "No implement yet");
     }
 /*
     private Response defaultRespond(Map<String, String> headers, IHTTPSession session, String uri) {
