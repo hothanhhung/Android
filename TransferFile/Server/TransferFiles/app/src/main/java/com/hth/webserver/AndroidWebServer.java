@@ -1,5 +1,7 @@
 package com.hth.webserver;
 
+import com.google.gson.Gson;
+import com.hth.data.FolderInfo;
 import com.hth.utils.DataSevices;
 
 import java.io.BufferedReader;
@@ -9,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,7 +102,15 @@ public class AndroidWebServer extends  NanoHTTPD {
 
     private Response responseOfAPI(String uri, Map<String, String> parameters)
     {
-        return newFixedLengthResponse(Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT, "No implement yet");
+        String fullPath = parameters.get("path");
+        if(fullPath!=null) {
+            ArrayList<FolderInfo> obj = DataSevices.getDirInfo(fullPath);
+            Gson gson = new Gson();
+            String json = gson.toJson(obj);
+            return newFixedLengthResponse(Response.Status.OK, "application/json", json);
+        }else{
+            return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not found");
+        }
     }
 /*
     private Response defaultRespond(Map<String, String> headers, IHTTPSession session, String uri) {
