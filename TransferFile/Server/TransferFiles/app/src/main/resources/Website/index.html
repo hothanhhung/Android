@@ -6,11 +6,35 @@
 <title>Game và ứng dụng hay</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1,  minimum-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="common/css/app.min.css">
-<script src="common/js/jQuery2.0.2.min.js"></script>
-<script src="common/js/jquery.touchwipe.min.js"></script>
-<script src="common/js/main.min.js"></script>
+
 <script src="js/libs/angular.min.js"></script>
+<style>
+.itembox {
+	float: left;
+	margin: 10px;
+	padding: 10px;
+	width: 100px;
+	height: 100px;
+	align-items: center;
+    text-align: center;
+}   
+
+.lastmodified{
+	font-size: 10px;
+	color: gray;
+}
+.size{
+	font-size: 10px;
+	color: gray;
+}
+.name{
+	font-size: 16px;
+    color: #000017;
+    line-height: 1.3em;
+}
+.contentbox{
+}
+</style>
 </head>
 
 <body ng-app="myApp" ng-controller="listObjectControl">
@@ -23,31 +47,33 @@
 
 <div class="app-content" style="padding-bottom:50px">
 
-<div class="list-view-header" style="line-height: 1.3em; height:auto;">
-Đối với file APK vui lòng bật chế độ cho phép cài đặt nguồn ngoài Google play <br/>
+<div style="line-height: 1.3em; height:auto;">
 <i><b> Settings > Security > ☑ Unknown Sources.</b></i>
+<div>
+	<input type="file" name="fileToUpload" id="fileToUpload">
+	<input type="button" value="Upload" name="uploadfile">
+</div>
+</div>
+<div class="contentbox">
+	<div class="itembox">
+		<a href="" style="text-decoration: none;">
+			<img class="thumb thumb-3" src="images/3dots.png" height="50px" width="50px">
+			<div class="name">. . .</div>
+		</a>
+	</div>
+    <div ng-repeat="item in directories" class="itembox">
+		<a href="{{item.FullPath}}" style="text-decoration: none;">
+			<img class="thumb thumb-3" src="{{item.isFile?'images/file.png':'images/folder.png'}}" height="50px" width="50px">
+			<div class="size" ng-if="item.isFile">{{item.Size}}</div>
+			<div class="lastmodified">{{item.LastModified}}</div>
+			<div class="name">{{item.Name}}</div>
+		</a>
+    </div>
 </div>
 
-<ul class="list-view with-swipe left-thumbs right-one-icons">
-    <li ng-repeat="item in gameAndAppItems | filter:{isActive:true}">
-        <div class="thumbs">
-            <a href="{{item.link}}" class="thumb thumb-1">
-				<img class="thumb thumb-3" src="{{item.imageUrl}}">
-			</a>
-        </div><!-- .thumbs -->
-        <a href="{{item.link}}" class="content">
-        	<h2>{{item.name}}</h2>
-            {{item.type}}
-            <div class="list-view-icons">
-                <span class="icon-right-arrow">&nbsp;</span>
-            </div>
-        </a>
-    </li>
-</ul>
-
-
 </div><!--#app-content-->
-</div><!--#app-wrapper-->\
+</div><!--#app-wrapper-->
 </body>
+<script src="js/dataservice.js"></script>
 <script src="js/app.js"></script>
 </html>
