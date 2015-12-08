@@ -48,21 +48,21 @@
 <div class="app-content" style="padding-bottom:50px">
 
 <div style="line-height: 1.3em; height:auto;">
-<i><b> Settings > Security > ☑ Unknown Sources.</b></i>
+<i><b> {{currentPath}}</b></i>
 <div>
-	<input type="file" name="fileToUpload" id="fileToUpload">
-	<input type="button" value="Upload" name="uploadfile">
+	<input type="file" name="fileToUpload" id="fileToUpload" file-model="myFile">
+	<input type="button" value="Upload" name="uploadfile" ng-click="uploadFile()">
 </div>
 </div>
 <div class="contentbox">
-	<div class="itembox">
+	<div class="itembox" ng-if="parentPath!=''" ng-click="getDirectories(parentPath)">
 		<a href="" style="text-decoration: none;">
 			<img class="thumb thumb-3" src="images/3dots.png" height="50px" width="50px">
 			<div class="name">. . .</div>
 		</a>
 	</div>
-    <div ng-repeat="item in directories" class="itembox">
-		<a href="{{item.FullPath}}" style="text-decoration: none;">
+    <div ng-repeat="item in dataInfo.directories" class="itembox">
+		<a href="#" ng-click="getDirectories(item.FullPath)" style="text-decoration: none;">
 			<img class="thumb thumb-3" src="{{item.isFile?'images/file.png':'images/folder.png'}}" height="50px" width="50px">
 			<div class="size" ng-if="item.isFile">{{item.Size}}</div>
 			<div class="lastmodified">{{item.LastModified}}</div>
