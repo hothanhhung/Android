@@ -31,6 +31,7 @@
 	font-size: 16px;
     color: #000017;
     line-height: 1.3em;
+	word-break: break-word;
 }
 .contentbox{
 }
@@ -48,24 +49,24 @@
 <div class="app-content" style="padding-bottom:50px">
 
 <div style="line-height: 1.3em; height:auto;">
-<i><b> {{currentPath}}</b></i>
+<i><b> <span ng-repeat="path in parentPaths">{{path.Name}} > </span></b></i>
 <div>
 	<input type="file" name="fileToUpload" id="fileToUpload" file-model="myFile">
 	<input type="button" value="Upload" name="uploadfile" ng-click="uploadFile()">
 </div>
 </div>
 <div class="contentbox">
-	<div class="itembox" ng-if="parentPath!=''" ng-click="getDirectories(parentPath)">
+	<div class="itembox" ng-if="parentPaths.length>1" ng-click="getDirectories(parentPaths[parentPaths.length-2], true)">
 		<a href="" style="text-decoration: none;">
 			<img class="thumb thumb-3" src="images/3dots.png" height="50px" width="50px">
 			<div class="name">. . .</div>
 		</a>
 	</div>
     <div ng-repeat="item in dataInfo.directories" class="itembox">
-		<a href="#" ng-click="getDirectories(item.FullPath)" style="text-decoration: none;">
-			<img class="thumb thumb-3" src="{{item.isFile?'images/file.png':'images/folder.png'}}" height="50px" width="50px">
-			<div class="size" ng-if="item.isFile">{{item.Size}}</div>
-			<div class="lastmodified">{{item.LastModified}}</div>
+		<a href="#" ng-click="getDirectories(item, false)" style="text-decoration: none;">
+			<img class="thumb thumb-3" src="{{item.IsFile?'images/file.png':'images/folder.png'}}" height="50px" width="50px">
+			<div class="size" ng-if="item.IsFile">{{item.DisplaySize}}</div>
+			<div class="lastmodified">{{item.DisplayLastModified}}</div>
 			<div class="name">{{item.Name}}</div>
 		</a>
     </div>

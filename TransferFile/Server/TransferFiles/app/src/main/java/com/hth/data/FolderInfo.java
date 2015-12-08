@@ -1,5 +1,6 @@
 package com.hth.data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -12,11 +13,18 @@ public class FolderInfo {
     public Date LastModified;
     public long Size = 0;
     public String DisplaySize = "";
+    public String DisplayLastModified = "";
 
     public static double roundToDecimals(double d, int c)
     {
         int temp = (int)(d * Math.pow(10 , c));
         return ((double)temp)/Math.pow(10 , c);
+    }
+
+    public static String GetDisplaySize(Date LastModified)
+    {
+        SimpleDateFormat df = new SimpleDateFormat(); //called without pattern
+        return df.format(LastModified.getTime());
     }
 
     public static String GetDisplaySize(long size){

@@ -103,7 +103,7 @@ public class AndroidWebServer extends  NanoHTTPD {
     private Response responseOfAPI(String uri, Map<String, String> parameters)
     {
         String fullPath = parameters.get("path");
-        if(fullPath!=null) {
+        if(fullPath!=null && DataSevices.isExist(fullPath)) {
             ArrayList<FolderInfo> obj = DataSevices.getDirInfo(fullPath);
             Gson gson = new Gson();
             String json = gson.toJson(obj);

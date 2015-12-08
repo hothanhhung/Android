@@ -52,6 +52,7 @@ public class DataSevices {
                     if(folderInfo.IsFile){
                         folderInfo.Size = file.length();
                         folderInfo.DisplaySize = FolderInfo.GetDisplaySize(file.length());
+                        folderInfo.DisplayLastModified = FolderInfo.GetDisplaySize(folderInfo.LastModified);
                         fileInfos.add(folderInfo);
                     }
                     else folderInfos.add(folderInfo);
@@ -74,6 +75,18 @@ public class DataSevices {
         }
         return folderInfos;
 
+    }
+
+    public static boolean isExist(String dirPath)
+    {
+        try {
+            File f = new File(dirPath);
+            if(f.exists()) return true;
+            else return false;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }
