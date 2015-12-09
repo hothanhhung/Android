@@ -22,11 +22,13 @@ angular.module('myApp', ['myApp.services'])
     };
 
 	$scope.getDirectories = function(selectedObject, isBack){
-		//$scope.dataInfo.directories = DataService.getDirectories('/');
-		getDirectories(selectedObject, isBack);
+		$scope.dataInfo.directories = DataService.getDirectories('/');
+		//getDirectories(selectedObject, isBack);
     };
 
     function getDirectories(selectedObject, isBack){
+	$scope.dataInfo.directories = DataService.getDirectories('/');
+	return;
     $http({
     	  method: 'GET',
     	  url: '/?path='+selectedObject.FullPath

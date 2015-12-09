@@ -48,69 +48,72 @@ angular.module('myApp.services', []).service('DataService', function(){
 				Name :'hung ',
 				FullPath:'hung dep trai1',
 				Size:"",
-				isFile: false ,
+				IsFile: false ,
 				DisplayLastModified:'10-1-2003',
 			  },
 			  {
 				Name :'hung 2',
 				FullPath:'hung dep trai2',
 				Size:"14G",
-				isFile: false ,
+				IsFile: false ,
 				DisplayLastModified:'23-2-2013',
+			  },
+			  {
+				Name :'có con chim là chim chich chè',
+				FullPath:'hung dep trai',
+				Size:"",
+				IsFile: false ,
+				DisplayLastModified:'10-1-2003',
 			  },
 			  {
 				Name :'hung 231',
 				FullPath:'hung dep trai3',
 				Size:"134B",
-				isFile: false ,
+				IsFile: false ,
 				DisplayLastModified:'10-11-2014',
 			  },
 			  {
 				Name :'hung ',
 				FullPath:'hung dep trai',
 				Size:"",
-				isFile: false ,
+				IsFile: false ,
 				DisplayLastModified:'10-1-2003',
 			  },
 			  {
 				Name :'hung 2',
 				FullPath:'hung dep trai',
 				Size:"14G",
-				isFile: false ,
+				IsFile: false ,
 				DisplayLastModified:'23-2-2013',
 			  },
 			  {
 				Name :'hung 231',
 				FullPath:'hung dep trai',
 				Size:"134B",
-				isFile: true ,
+				IsFile: true ,
 				DisplayLastModified:'10-11-2014',
 			  },
 			  {
 				Name :'có con chim là chim chich chè',
 				FullPath:'hung dep trai',
 				Size:"",
-				isFile: false ,
+				IsFile: false ,
 				DisplayLastModified:'10-1-2003',
 			  },
 			  {
 				Name :'hung 2',
 				FullPath:'hung dep trai',
 				Size:"14G",
-				isFile: true ,
+				IsFile: true ,
 				DisplayLastModified:'23-2-2013',
 			  },
 			  {
 				Name :'hung 231',
 				FullPath:'hung dep trai',
 				Size:"134B",
-				isFile: true ,
+				IsFile: true ,
 				DisplayLastModified:'10-11-2014',
 			  }];
-	result = {
-		error:false,
-		directories:data
-	}
-  return result;
+  return data;
   }
 });
