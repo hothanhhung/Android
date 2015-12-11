@@ -1,5 +1,6 @@
-angular.module('myApp', ['myApp.services'])
+angular.module('myApp', ['myApp.services','myApp.directives'])
 .controller("listObjectControl", ['$scope', '$http', 'DataService', function ($scope, $http, DataService){
+	$scope.uploadingFiles=[];
 	$scope.rootPath = {
 							Name :'/',
 							FullPath:'/'
