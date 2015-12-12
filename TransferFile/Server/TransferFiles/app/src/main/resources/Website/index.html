@@ -18,9 +18,14 @@
 	align-items: center;
     text-align: center;
 	margin-top: 10px;
+	position:relative;
 }   
 .itembox:hover { 
 	background-color: #fff; 
+}
+
+.itembox:hover div.menuAction{ 
+	display: block; 
 }
 
 .lastmodified{
@@ -56,10 +61,18 @@
 	color: #ccc;
 	text-align:center;
 }
-.dragover{;
+.dragover{
+	display: none;
 	border: 2px dashed #000;
 	color: #000;
 }
+.menuAction{
+	display: none;
+    position: absolute;
+    top: 1px;
+	right: 1px;
+}
+
 </style>
 </head>
 
@@ -93,6 +106,10 @@ Drop files or click here to select uploaded files
 		</a>
 	</div>
     <div ng-repeat="item in dataInfo.directories" class="itembox">
+		<div class = "menuAction">
+			<img ng-click="renameItem(item)" src="images/tan-rename.png" height="20px" width="20px">
+			<img ng-click="deleteItem(item)" src="images/tan-delete.png" height="20px" width="20px">
+		</div>
 		<a href="javascript:void(0)" ng-click="item.IsFile?getFile(item):getDirectories(item, false)" style="text-decoration: none;">
 			<img class="thumb thumb-3" src="{{item.IsFile?'images/file.png':'images/folder.png'}}" height="50px" width="50px">
 			<div class="size" ng-if="item.IsFile">{{item.DisplaySize}}</div>

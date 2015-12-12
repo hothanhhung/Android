@@ -39,6 +39,12 @@ angular.module('myApp', ['myApp.services','myApp.directives'])
 		}
     };
 
+	$scope.deleteItem = function(selectedObject){
+		alert('delete has not implemented');
+    };
+	$scope.renameItem = function(selectedObject, isBack){
+		alert('rename has not implemented');
+    };
 	$scope.getFile = function(selectedObject){
 		 // var element = angular.element('<a/>');
                          // element.attr({
@@ -50,13 +56,13 @@ angular.module('myApp', ['myApp.services','myApp.directives'])
     };
 	
 	$scope.getDirectories = function(selectedObject, isBack){
-		//$scope.dataInfo.directories = DataService.getDirectories('/');
-		getDirectories(selectedObject, isBack);
+		$scope.dataInfo.directories = DataService.getDirectories('/');
+		//getDirectories(selectedObject, isBack);
     };
 
     function getDirectories(selectedObject, isBack){
-	//$scope.dataInfo.directories = DataService.getDirectories('/');
-	//return;
+	$scope.dataInfo.directories = DataService.getDirectories('/');
+	return;
     $http({
     	  method: 'GET',
     	  url: '/?api=browser&path='+selectedObject.FullPath
