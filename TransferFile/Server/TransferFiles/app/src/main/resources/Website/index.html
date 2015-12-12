@@ -6,8 +6,11 @@
 <title>Files Tranfer</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1,  minimum-scale=1, maximum-scale=1">
-
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/libs/jquery.js"></script>
+<script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/angular.min.js"></script>
+<script src="js/libs/bootbox.js"></script>
 <style>
 .itembox {
 	float: left;
@@ -45,7 +48,8 @@
 .contentbox{	
     overflow: auto;
     background-color: #F8F8FF;
-	margin-top: 10px;
+	margin-top: 10px;	
+    padding-bottom: 100px;
 }
 .uploadButton{
 	margin-bottom: 20px;
@@ -72,7 +76,9 @@
     top: 1px;
 	right: 1px;
 }
-
+.pointerHover:hover{
+	cursor:pointer
+}
 </style>
 </head>
 
@@ -107,21 +113,22 @@ Drop files or click here to select uploaded files
 	</div>
     <div ng-repeat="item in dataInfo.directories" class="itembox">
 		<div class = "menuAction">
-			<img ng-click="renameItem(item)" src="images/tan-rename.png" height="20px" width="20px">
-			<img ng-click="deleteItem(item)" src="images/tan-delete.png" height="20px" width="20px">
+			<img class="pointerHover" ng-click="renameItem(item)" src="images/tan-rename.png" height="20px" width="20px">
+			<img class="pointerHover" ng-click="deleteItem(item)" src="images/tan-delete.png" height="20px" width="20px">
 		</div>
-		<a href="javascript:void(0)" ng-click="item.IsFile?getFile(item):getDirectories(item, false)" style="text-decoration: none;">
+		<div class="pointerHover" ng-click="item.IsFile?getFile(item):getDirectories(item, false)" style="text-decoration: none;">
 			<img class="thumb thumb-3" src="{{item.IsFile?'images/file.png':'images/folder.png'}}" height="50px" width="50px">
 			<div class="size" ng-if="item.IsFile">{{item.DisplaySize}}</div>
 			<div class="lastmodified">{{item.DisplayLastModified}}</div>
 			<div class="name">{{item.Name}}</div>
-		</a>
+		</div>
     </div>
 </div>
 
 </div><!--#app-content-->
 </div><!--#app-wrapper-->
 </body>
+<script src="js/libs/ngBootbox.js"></script>
 <script src="js/dataservice.js"></script>
 <script src="js/app.js"></script>
 </html>

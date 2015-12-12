@@ -147,13 +147,46 @@ public class AndroidWebServer extends  NanoHTTPD {
 
     private Response delete(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
     {
-        return newFixedLengthResponse(Response.Status.NOT_IMPLEMENTED, NanoHTTPD.MIME_PLAINTEXT, "API have not implemented");
+        try {
+            String fullPath = parameters.get("path");
+            File file = new File(fullPath);
+            if(file.exists()) {
+                if (file.delete()) {
+                    return newFixedLengthResponse(Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT, "Delete successfully");
+                } else {
+                    return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, "Delete unsuccessfully");
+                }
+            }else {
+                return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "File not found");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
+        }
     }
 
 
     private Response rename(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
     {
-        return newFixedLengthResponse(Response.Status.NOT_IMPLEMENTED, NanoHTTPD.MIME_PLAINTEXT, "API have not implemented");
+        try {
+            String fullPath = parameters.get("path");
+            String newName = parameters.get("newName");
+            if(fullPath == null || fullPath.isEmpty() || newName==null || newName.isEmpty())
+            {
+                return newFixedLengthResponse(Response.Status.BAD_REQUEST, NanoHTTPD.MIME_PLAINTEXT,"missing parameters");
+            }
+            File file = new File(fullPath);
+            if(file.exists()) {
+                File newfile = new File(file.getParent() + "/" + newName);
+                file.renameTo(newfile);
+                return newFixedLengthResponse(Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT,"Rename successfully");
+            }else{
+                return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Found");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
+        }
     }
 
     private Response uploadFiles(String uri, Method method, Map<String, String> header, Map<String, String> parameters,Map<String, String> files)

@@ -1,5 +1,5 @@
-angular.module('myApp', ['myApp.services','myApp.directives'])
-.controller("listObjectControl", ['$scope', '$http', 'DataService', function ($scope, $http, DataService){
+angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox'])
+.controller("listObjectControl", ['$scope', '$http', 'DataService','$ngBootbox', function ($scope, $http, DataService, $ngBootbox){
 	$scope.uploadingFiles=[];
 	$scope.currentPath='';
 	$scope.rootPath = {
@@ -32,7 +32,7 @@ angular.module('myApp', ['myApp.services','myApp.directives'])
 				.success(function(respone){
 				})
 				.error(function(respone){
-					alert(respone.data);
+					alert(respone);
 				});
 			}
 			//fileUpload.uploadFileToUrl(files, uploadUrl);
@@ -40,11 +40,57 @@ angular.module('myApp', ['myApp.services','myApp.directives'])
     };
 
 	$scope.deleteItem = function(selectedObject){
-		alert('delete has not implemented');
+		$ngBootbox.confirm('Are you sure you want to delete?')
+            .then(function() {
+				$http({
+				  method: 'GET',
+				  url: '/?api=delete&path='+selectedObject.FullPath
+				}).then(function successCallback(response) {
+					alert(response.data);
+				  }, function errorCallback(response) {
+					  alert(response.data);
+				  });
+            }, function() {
+                //alert('Confirm dismissed!');
+            });
+			
     };
+	
 	$scope.renameItem = function(selectedObject, isBack){
-		alert('rename has not implemented');
+			bootbox.prompt({
+			  title: "Please type new name!",
+			  value: selectedObject.Name,
+			  callback: function(result) {
+				  if(result!=null){
+					  $http({
+						  method: 'GET',
+						  url: '/?api=rename&path='+selectedObject.FullPath+'&newName='+result
+						}).then(function successCallback(response) {
+							alert(response.data);
+						  }, function errorCallback(response) {
+							  alert(response.data);
+						  });
+				  }
+			  }
+			});
+			return;
+		/*
+		$ngBootbox.prompt('Please type new name!')
+            .then(function(result) {
+				$http({
+				  method: 'GET',
+				  url: '/?api=rename&path='+selectedObject.FullPath+'&newName='+result
+				}).then(function successCallback(response) {
+					alert(response.data);
+				  }, function errorCallback(response) {
+					  alert(response.data);
+				  });
+            }, function() {
+                //alert('Prompt dismissed!');
+            });
+			*/
     };
+	
 	$scope.getFile = function(selectedObject){
 		 // var element = angular.element('<a/>');
                          // element.attr({
@@ -56,13 +102,13 @@ angular.module('myApp', ['myApp.services','myApp.directives'])
     };
 	
 	$scope.getDirectories = function(selectedObject, isBack){
-		$scope.dataInfo.directories = DataService.getDirectories('/');
-		//getDirectories(selectedObject, isBack);
+		//$scope.dataInfo.directories = DataService.getDirectories('/');
+		getDirectories(selectedObject, isBack);
     };
 
     function getDirectories(selectedObject, isBack){
-	$scope.dataInfo.directories = DataService.getDirectories('/');
-	return;
+	//$scope.dataInfo.directories = DataService.getDirectories('/');
+	//return;
     $http({
     	  method: 'GET',
     	  url: '/?api=browser&path='+selectedObject.FullPath
@@ -80,7 +126,7 @@ angular.module('myApp', ['myApp.services','myApp.directives'])
 			}
 			$scope.currentPath = selectedObject.FullPath;
     	  }, function errorCallback(response) {
-			  alert(response.data)
+			  alert(response.data);
     		// called asynchronously if an error occurs
     		// or server returns response with an error status.
     	  });
