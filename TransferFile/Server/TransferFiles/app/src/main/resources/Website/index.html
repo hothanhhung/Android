@@ -87,13 +87,13 @@ Drop files or click here to select uploaded files
 </div>
 <div class="contentbox">
 	<div class="itembox" ng-if="parentPaths.length>1" ng-click="getDirectories(parentPaths[parentPaths.length-2], true)">
-		<a href="" style="text-decoration: none;">
+		<a href="javascript:void(0)" style="text-decoration: none;">
 			<img class="thumb thumb-3" src="images/3dots.png" height="50px" width="50px">
 			<div class="name">. . .</div>
 		</a>
 	</div>
     <div ng-repeat="item in dataInfo.directories" class="itembox">
-		<a href="#" ng-click="getDirectories(item, false)" style="text-decoration: none;">
+		<a href="javascript:void(0)" ng-click="item.IsFile?getFile(item):getDirectories(item, false)" style="text-decoration: none;">
 			<img class="thumb thumb-3" src="{{item.IsFile?'images/file.png':'images/folder.png'}}" height="50px" width="50px">
 			<div class="size" ng-if="item.IsFile">{{item.DisplaySize}}</div>
 			<div class="lastmodified">{{item.DisplayLastModified}}</div>

@@ -1,6 +1,7 @@
 angular.module('myApp', ['myApp.services','myApp.directives'])
 .controller("listObjectControl", ['$scope', '$http', 'DataService', function ($scope, $http, DataService){
 	$scope.uploadingFiles=[];
+	$scope.currentPath='';
 	$scope.rootPath = {
 							Name :'/',
 							FullPath:'/'
@@ -15,24 +16,50 @@ angular.module('myApp', ['myApp.services','myApp.directives'])
 	getDirectories($scope.rootPath);
 	
     $scope.uploadFile = function(){
-        var file = $scope.myFile;
-        console.log('file is ' );
-        console.dir(file);
-        var uploadUrl = "/fileUpload";
-        fileUpload.uploadFileToUrl(file, uploadUrl);
+		if(typeof($scope.uploadingFiles) != undefined && $scope.uploadingFiles.length > 0)
+		{
+			var files = $scope.uploadingFiles;
+			//console.log('file is ' );
+		   // console.dir(file);
+			var uploadUrl = "/?api=upload&path="+$scope.currentPath;
+			for (var i = 0, f; f = files[i]; i++) {
+				var fd = new FormData();
+				fd.append('file', f);
+				$http.post(uploadUrl, fd, {
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				})
+				.success(function(respone){
+				})
+				.error(function(respone){
+					alert(respone.data);
+				});
+			}
+			//fileUpload.uploadFileToUrl(files, uploadUrl);
+		}
     };
 
+	$scope.getFile = function(selectedObject){
+		 // var element = angular.element('<a/>');
+                         // element.attr({
+                             // href: '/?api=get&path='+selectedObject.FullPath,
+                             // target: '_blank',
+                             // download: selectedObject.Name
+                         // })[0].click();
+		window.open('/?api=get&path='+selectedObject.FullPath, "_blank");
+    };
+	
 	$scope.getDirectories = function(selectedObject, isBack){
-		$scope.dataInfo.directories = DataService.getDirectories('/');
-		//getDirectories(selectedObject, isBack);
+		//$scope.dataInfo.directories = DataService.getDirectories('/');
+		getDirectories(selectedObject, isBack);
     };
 
     function getDirectories(selectedObject, isBack){
-	$scope.dataInfo.directories = DataService.getDirectories('/');
-	return;
+	//$scope.dataInfo.directories = DataService.getDirectories('/');
+	//return;
     $http({
     	  method: 'GET',
-    	  url: '/?path='+selectedObject.FullPath
+    	  url: '/?api=browser&path='+selectedObject.FullPath
     	}).then(function successCallback(response) {
     		// this callback will be called asynchronously
     		// when the response is available
@@ -45,6 +72,7 @@ angular.module('myApp', ['myApp.services','myApp.directives'])
 			}else{
 				$scope.parentPaths.push(selectedObject);
 			}
+			$scope.currentPath = selectedObject.FullPath;
     	  }, function errorCallback(response) {
 			  alert(response.data)
     		// called asynchronously if an error occurs

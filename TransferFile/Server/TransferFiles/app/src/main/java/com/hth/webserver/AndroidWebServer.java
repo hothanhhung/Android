@@ -6,9 +6,12 @@ import com.hth.utils.DataSevices;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 
 /**
@@ -72,7 +76,7 @@ public class AndroidWebServer extends  NanoHTTPD {
                           Map<String, String> files) {
 
         if(parameters.size() > 1 && uri != null && uri.equalsIgnoreCase("/"))
-            return responseOfAPI(uri, parameters);
+            return responseOfAPI(uri, method, header, parameters, files);
 
         if(uri == null || uri.isEmpty() || uri.equalsIgnoreCase("/")) uri = "/index.html";
         try {
@@ -100,7 +104,82 @@ public class AndroidWebServer extends  NanoHTTPD {
 
     }
 
-    private Response responseOfAPI(String uri, Map<String, String> parameters)
+    private Response responseOfAPI(String uri, Method method, Map<String, String> header, Map<String, String> parameters, Map<String, String> files)
+    {
+        String apiName = parameters.get("api");
+        switch (apiName.toLowerCase())
+        {
+            case "browser":
+                return getDirInfo(uri, parameters);
+            case "upload":
+                return uploadFiles(uri, method, header, parameters, files);
+            case "rename":
+                return rename(uri, method, header, parameters);
+            case "delete":
+                return delete(uri, method, header, parameters);
+            case "get":
+                return sendFile(uri, method, header, parameters);
+
+        }
+        return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "API Not found");
+    }
+
+    private Response sendFile(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
+    {
+        try {
+            String fullPath = parameters.get("path");
+            File file = new File(fullPath);
+
+            if(file.exists()) {
+                InputStream inputStream = new FileInputStream(file);
+                NanoHTTPD.Response res = newChunkedResponse(Response.Status.OK, "application/octet-stream",inputStream);
+                res.addHeader("Content-Disposition", "attachment; filename="+ file.getName());
+                return res;
+            }else{
+                return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Found");
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
+        }
+    }
+
+    private Response delete(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
+    {
+        return newFixedLengthResponse(Response.Status.NOT_IMPLEMENTED, NanoHTTPD.MIME_PLAINTEXT, "API have not implemented");
+    }
+
+
+    private Response rename(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
+    {
+        return newFixedLengthResponse(Response.Status.NOT_IMPLEMENTED, NanoHTTPD.MIME_PLAINTEXT, "API have not implemented");
+    }
+
+    private Response uploadFiles(String uri, Method method, Map<String, String> header, Map<String, String> parameters,Map<String, String> files)
+    {
+        try {
+            String fullPath = parameters.get("path");
+            Set<String> keys = files.keySet();
+            for(String key: keys){
+                String name = parameters.get("file");
+                String loaction = files.get(key);
+                File tempfile = new File(loaction);
+                File toFile = new File(fullPath+"/"+name);
+                copy(tempfile, toFile);
+                tempfile.deleteOnExit();
+              //  tempfile.renameTo(new File(fullPath+"/"+name));
+            }
+            return newFixedLengthResponse(Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT, "Ok");
+
+        } catch (Exception e) {
+            System.out.println("i am error file upload post ");
+            e.printStackTrace();
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
+        }
+    }
+
+    private Response getDirInfo(String uri, Map<String, String> parameters)
     {
         String fullPath = parameters.get("path");
         if(fullPath!=null && DataSevices.isExist(fullPath)) {
@@ -111,6 +190,20 @@ public class AndroidWebServer extends  NanoHTTPD {
         }else{
             return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not found");
         }
+    }
+
+    public static void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
     }
 /*
     private Response defaultRespond(Map<String, String> headers, IHTTPSession session, String uri) {
