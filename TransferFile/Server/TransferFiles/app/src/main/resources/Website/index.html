@@ -60,10 +60,13 @@
 
 .dropzone{
 	width:100%;
-	height:80px;
+	min-height:80px;
+	line-height:80px;
 	border: 2px dashed #ccc;
 	color: #ccc;
 	text-align:center;
+	position:relative;
+	padding: 5px;
 }
 .dragover{
 	display: none;
@@ -78,6 +81,14 @@
 }
 .pointerHover:hover{
 	cursor:pointer
+}
+
+.uploadedFiles{
+    position: absolute;
+    left: 10px;
+    top: 1px;
+    text-align: left;	
+    line-height: initial;
 }
 </style>
 </head>
@@ -97,7 +108,12 @@
 <div style="line-height: 1.3em; height:auto;">
 <div class="currentPath"> <i><b> vvvvvv <span ng-repeat="path in parentPaths">{{path.Name}} > </span></b></i> </div>
 <div class="dropzone" dropzone drag-over-class="dropzone dragover">
-<div><span ng-repeat="file in uploadingFiles">{{file.name}} . </span></div>
+<div class="uploadedFiles">
+	<div ng-repeat="file in uploadingFiles">
+		<img class="pointerHover" src="images/remove.png" ng-click="removeUploadedFile($event, file)" height="15px" width="15px">
+		{{file.name}} . 
+	</div>
+</div>
 Drop files or click here to select uploaded files 
 </div>
 <input type="button" value="Upload" name="uploadfile" ng-click="uploadFile()">

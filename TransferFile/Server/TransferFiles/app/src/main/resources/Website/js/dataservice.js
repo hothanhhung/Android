@@ -35,11 +35,19 @@ myApp.directive("dropzone", function() {
     return {
         restrict : "A",
         link: function (scope, elem, attrs) {
+			angular.element(elem).attr("draggable", "true")
             elem.bind('drop', function(evt) {
+                evt.preventDefault();				
                 evt.stopPropagation();
-                evt.preventDefault();
+				dataTransfer = event.dataTransfer;
+				if(typeof(dataTransfer) === "undefined" || dataTransfer == null)
+				{
+					dataTransfer = evt.originalEvent.dataTransfer;
+				}
+                event.preventDefault();
+                event.stopPropagation();
 
-                var files = evt.dataTransfer.files;
+                var files = dataTransfer.files;
                 for (var i = 0, f; f = files[i]; i++) {
 						if(typeof(scope.uploadingFiles) === undefined) scope.uploadingFiles = [];
 						scope.uploadingFiles.push(f);
@@ -64,27 +72,42 @@ myApp.directive("dropzone", function() {
 				this.className = attrs.class;
             });
 			elem.bind('dragover', function(evt) {
-					if (event != null) {
-				  event.preventDefault();
-				}
-				this.className = attrs.dragOverClass;
-				event.dataTransfer.effectAllowed = 'copy';
-				return false;
+                return preventDefaultAction(evt);
 			});
 			elem.bind('dragleave', function(evt) {
-					if (event != null) {
-				  event.preventDefault();
+                return preventDefaultAction(evt);
+			});
+			elem.bind("dragstart", function(evt) {
+                 return   preventDefaultAction(evt);
+                });
+                 
+			elem.bind("dragend", function(evt) {
+                 return   preventDefaultAction(evt);
+			});
+			
+			function preventDefaultAction(evt)
+			{
+				evt.preventDefault();
+				evt.stopPropagation();
+				if(typeof(event) === "undefined")
+				{
+					event = evt.originalEvent;
+				}
+				if (event != null) {
+					event.preventDefault();
+					event.stopPropagation();
 				}
 				this.className = attrs.class;
-				event.dataTransfer.effectAllowed = 'copy';
+				//event.dataTransfer.effectAllowed = 'copy';
 				return false;
-			});
+			}
+			
 			elem.bind('click', function(evt) {
 				var fileSelector = document.createElement('input');
 				fileSelector.setAttribute('type', 'file');
 				fileSelector.setAttribute('multiple', true);
 				
-				fileSelector.onchange = function(evt) {
+				fileSelector.onchange = function(evt1) {
 					 for (var i = 0, f; f = this.files[i]; i++) {
 						if(typeof(scope.uploadingFiles) === undefined) scope.uploadingFiles = [];
 						scope.uploadingFiles.push(f);

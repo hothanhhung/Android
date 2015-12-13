@@ -105,10 +105,20 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox'])
 		//$scope.dataInfo.directories = DataService.getDirectories('/');
 		getDirectories(selectedObject, isBack);
     };
+	
+	$scope.removeUploadedFile = function($event, file){
+		$event.stopPropagation();
+		if($scope.uploadingFiles.length>0){
+			var index = $scope.uploadingFiles.indexOf(file);
+			if(index!=-1){
+				$scope.uploadingFiles.splice(index, 1);
+			}
+		}
+    };
 
     function getDirectories(selectedObject, isBack){
-	//$scope.dataInfo.directories = DataService.getDirectories('/');
-	//return;
+	$scope.dataInfo.directories = DataService.getDirectories('/');
+	return;
     $http({
     	  method: 'GET',
     	  url: '/?api=browser&path='+selectedObject.FullPath
