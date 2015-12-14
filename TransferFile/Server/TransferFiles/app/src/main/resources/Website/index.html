@@ -11,6 +11,7 @@
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/angular.min.js"></script>
 <script src="js/libs/bootbox.js"></script>
+<script src="js/libs/ui-bootstrap-tpls-0.14.3.min.js"></script>
 <style>
 .itembox {
 	float: left;
@@ -147,4 +148,18 @@ Drop files or click here to select uploaded files
 <script src="js/libs/ngBootbox.js"></script>
 <script src="js/dataservice.js"></script>
 <script src="js/app.js"></script>
+<script type="text/ng-template" id="uploadingFiles.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Upload files info</h3>
+        </div>
+        <div class="modal-body">
+            <div ng-repeat="info in uploadingInfos">
+				<img class="pointerHover" src="images/{{info.status==1?'tick-success.png':(info.status==2?'error.png':'waiting.png')}}" ng-click="removeUploadedFile($event, file)" height="15px" width="15px">
+				{{info.file.name}} - {{info.message}}
+			</div>
+        </div>
+        <div class="modal-footer">
+            <button ng-if="displayButton" class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        </div>
+    </script>
 </html>

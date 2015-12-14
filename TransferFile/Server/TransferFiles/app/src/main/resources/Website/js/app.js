@@ -1,5 +1,5 @@
-angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox'])
-.controller("listObjectControl", ['$scope', '$http', 'DataService','$ngBootbox', function ($scope, $http, DataService, $ngBootbox){
+angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.bootstrap'])
+.controller("listObjectControl", ['$scope', '$http', 'DataService','$ngBootbox','$modal', function ($scope, $http, DataService, $ngBootbox, $modal){
 	$scope.uploadingFiles=[];
 	$scope.currentPath='';
 	$scope.rootPath = {
@@ -21,20 +21,44 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox'])
 			var files = $scope.uploadingFiles;
 			//console.log('file is ' );
 		   // console.dir(file);
-			var uploadUrl = "/?api=upload&path="+$scope.currentPath;
-			for (var i = 0, f; f = files[i]; i++) {
-				var fd = new FormData();
-				fd.append('file', f);
-				$http.post(uploadUrl, fd, {
-					transformRequest: angular.identity,
-					headers: {'Content-Type': undefined}
-				})
-				.success(function(respone){
-				})
-				.error(function(respone){
-					alert(respone);
-				});
-			}
+			// var uploadUrl = "/?api=upload&path="+$scope.currentPath;
+			// for (var i = 0, f; f = files[i]; i++) {
+				// var fd = new FormData();
+				// fd.append('file', f);
+				// $http.post(uploadUrl, fd, {
+					// transformRequest: angular.identity,
+					// headers: {'Content-Type': undefined}
+				// })
+				// .success(function(respone){
+				// })
+				// .error(function(respone){
+					// alert(respone);
+				// });
+			// }
+			
+			var modalInstance = $modal.open({
+			  animation: $scope.animationsEnabled,
+			  templateUrl: 'uploadingFiles.html',
+			  controller: 'ModalUploadingFilesCtrl',
+			  backdrop : 'static',
+			  keyboard :false,
+			  resolve: {
+				uploadingFiles: function () {
+				  return $scope.uploadingFiles;
+				},
+				currentPath: function () {
+				  return $scope.currentPath;
+				}
+			  }
+			});
+
+			modalInstance.result.then(function () {
+				alert('close');
+			}, function () {
+			  alert('Modal dismissed at: ' + new Date());
+			});
+		  
+		  
 			//fileUpload.uploadFileToUrl(files, uploadUrl);
 		}
     };
@@ -141,4 +165,50 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox'])
     		// or server returns response with an error status.
     	  });
     }
-}]);
+}]).controller('ModalUploadingFilesCtrl', function ($scope, $http, $uibModalInstance, uploadingFiles, currentPath) {
+	$scope.currentPath = currentPath;
+  $scope.displayButton = false;
+  $scope.uploadingFiles = uploadingFiles;
+  $scope.uploadingInfos = new Array(uploadingFiles.length);
+	for (var i = 0, f; f = uploadingFiles[i]; i++) {
+		uploadProcess(f, i)
+	}
+
+  $scope.ok = function () {
+    $uibModalInstance.close();
+  };
+
+  
+  function uploadProcess(f, index)
+  {
+	var uploadUrl = "/?api=upload&path="+$scope.currentPath;
+	$scope.uploadingInfos[index] = {file:f, status:0, message:""};
+		var fd = new FormData();
+		fd.append('file', f);
+		$http.post(uploadUrl, fd, {
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
+		.success(function(respone){
+			$scope.uploadingInfos[index].status = 1;
+			$scope.uploadingInfos[index].message = 'successfully';
+			updateDisplayButtonValue();
+		})
+		.error(function(respone){
+			$scope.uploadingInfos[index].status = 2;
+			$scope.uploadingInfos[index].message = respone;
+			updateDisplayButtonValue();
+		});
+  }
+  
+  function updateDisplayButtonValue()
+  {
+	for (var i = 0, info; info = $scope.uploadingInfos[i]; i++) {
+		if(info.status == 0){
+			$scope.displayButton = false;
+			return;
+		}
+	}
+	$scope.displayButton = true;
+  }
+});
