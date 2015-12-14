@@ -89,4 +89,10 @@ public class DataSevices {
         }
     }
 
+    public static boolean hasAllowWithKey(Activity activity, int key)
+    {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        boolean result = sharedPref.getBoolean(activity.getResources().getString(key), true);
+        return result;
+    }
 }

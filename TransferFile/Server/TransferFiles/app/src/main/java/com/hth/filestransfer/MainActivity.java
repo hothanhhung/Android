@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     androidWebServer.stop();
                 }else{
                     try{
-                        androidWebServer.startAndTryPort(getLastPort());
+                        androidWebServer.startAndTryPort(getLastPort(), getParent());
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
@@ -116,5 +118,11 @@ public class MainActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .show();
         return alertDialog;
+    }
+
+    public void openSettings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+
     }
 }

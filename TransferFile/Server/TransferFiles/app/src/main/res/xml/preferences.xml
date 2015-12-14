@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="pref_sync_allow_upload"
+        android:title="Allow Upload"
+        android:summary="Allow client upload files"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="pref_sync_allow_download"
+        android:title="Allow Download"
+        android:summary="Allow client download files"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="pref_sync_allow_rename"
+        android:title="Allow Rename"
+        android:summary="Allow client rename files or folders"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="pref_sync_allow_delete"
+        android:title="Allow Delete"
+        android:summary="Allow client delete files or folders"
+        android:defaultValue="true" />
+
+</PreferenceScreen>

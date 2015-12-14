@@ -44,6 +44,14 @@
             android:selectAllOnFocus="true"
             android:editable="false" />
 
+
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:id="@+id/btSettings"
+        android:onClick="openSettings"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

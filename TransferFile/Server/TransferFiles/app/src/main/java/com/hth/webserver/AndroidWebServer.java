@@ -1,7 +1,10 @@
 package com.hth.webserver;
 
+import android.app.Activity;
+
 import com.google.gson.Gson;
 import com.hth.data.FolderInfo;
+import com.hth.filestransfer.R;
 import com.hth.utils.DataSevices;
 
 import java.io.BufferedReader;
@@ -27,14 +30,15 @@ import java.util.logging.Level;
  */
 public class AndroidWebServer extends  NanoHTTPD {
 
-
+    private Activity activity;
     public AndroidWebServer()
     {
         super(0);
     }
 
-    public void startAndTryPort(int port) throws IOException
+    public void startAndTryPort(int port, Activity activity) throws IOException
     {
+        this.activity = activity;
         if(isLocalPortInUse(port)) {
             setMyPort(0);
             start();
@@ -169,6 +173,9 @@ public class AndroidWebServer extends  NanoHTTPD {
     private Response rename(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
     {
         try {
+            if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_rename)) {
+                return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
+            }
             String fullPath = parameters.get("path");
             String newName = parameters.get("newName");
             if(fullPath == null || fullPath.isEmpty() || newName==null || newName.isEmpty())

@@ -141,8 +141,8 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
     };
 
     function getDirectories(selectedObject, isBack){
-	$scope.dataInfo.directories = DataService.getDirectories('/');
-	return;
+	//$scope.dataInfo.directories = DataService.getDirectories('/');
+	//return;
     $http({
     	  method: 'GET',
     	  url: '/?api=browser&path='+selectedObject.FullPath

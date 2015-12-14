@@ -4,4 +4,9 @@
     <string name="error_internet">Sorry! No internet.\n Please check internet connection</string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
+    <string name="pref_sync_allow_upload">pref_sync_allow_upload</string>
+    <string name="pref_sync_allow_download">pref_sync_allow_download</string>
+    <string name="pref_sync_allow_rename">pref_sync_allow_rename</string>
+    <string name="pref_sync_allow_delete">pref_sync_allow_delete</string>
+
 </resources>
