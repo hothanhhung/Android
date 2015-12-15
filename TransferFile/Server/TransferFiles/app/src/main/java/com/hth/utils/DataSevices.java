@@ -3,6 +3,7 @@ package com.hth.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.hth.data.FolderInfo;
 
@@ -91,7 +92,7 @@ public class DataSevices {
 
     public static boolean hasAllowWithKey(Activity activity, int key)
     {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
         boolean result = sharedPref.getBoolean(activity.getResources().getString(key), true);
         return result;
     }

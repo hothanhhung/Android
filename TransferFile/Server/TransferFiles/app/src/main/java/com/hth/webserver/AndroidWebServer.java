@@ -131,6 +131,10 @@ public class AndroidWebServer extends  NanoHTTPD {
     private Response sendFile(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
     {
         try {
+            if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download)) {
+                return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
+            }
+
             String fullPath = parameters.get("path");
             File file = new File(fullPath);
 
@@ -152,6 +156,11 @@ public class AndroidWebServer extends  NanoHTTPD {
     private Response delete(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
     {
         try {
+
+            if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_delete)) {
+                return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
+            }
+
             String fullPath = parameters.get("path");
             File file = new File(fullPath);
             if(file.exists()) {
@@ -199,6 +208,10 @@ public class AndroidWebServer extends  NanoHTTPD {
     private Response uploadFiles(String uri, Method method, Map<String, String> header, Map<String, String> parameters,Map<String, String> files)
     {
         try {
+            if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_upload)) {
+                return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
+            }
+
             String fullPath = parameters.get("path");
             Set<String> keys = files.keySet();
             for(String key: keys){

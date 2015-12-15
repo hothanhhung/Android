@@ -8,6 +8,7 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Settings");
         addPreferencesFromResource(R.xml.preferences);
     }
 

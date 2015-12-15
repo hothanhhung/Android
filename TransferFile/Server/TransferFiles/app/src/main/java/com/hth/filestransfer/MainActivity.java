@@ -20,6 +20,7 @@ import com.hth.utils.DataSevices;
 import com.hth.webserver.AndroidWebServer;
 
 public class MainActivity extends AppCompatActivity {
+    private Activity currentActivity;
     private AndroidWebServer androidWebServer = null;
     private Button startButton;
     private EditText txtURL;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             this.showAlertErrorNoInternet(this, true);
             return;
         }
-
+        currentActivity = this;
         startButton = (Button) findViewById(R.id.btStartServer);
         txtURL = (EditText) findViewById(R.id.txtURL);
         lblGuide = (TextView) findViewById(R.id.lblGuide);
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     androidWebServer.stop();
                 }else{
                     try{
-                        androidWebServer.startAndTryPort(getLastPort(), getParent());
+                        androidWebServer.startAndTryPort(getLastPort(), currentActivity);
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }

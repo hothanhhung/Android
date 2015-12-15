@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Files Transfer</string>
     <string name="error_title">Error</string>
-    <string name="error_internet">Sorry! No internet.\n Please check internet connection</string>
+    <string name="error_internet">Sorry! No internet.\nPlease check internet connection</string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
     <string name="pref_sync_allow_upload">pref_sync_allow_upload</string>
     <string name="pref_sync_allow_download">pref_sync_allow_download</string>
     <string name="pref_sync_allow_rename">pref_sync_allow_rename</string>
     <string name="pref_sync_allow_delete">pref_sync_allow_delete</string>
+    <string name="pref_sync_enable_key">pref_sync_enable_key</string>
+    <string name="pref_sync_key_connection">pref_sync_key_connection</string>
 
 </resources>

@@ -53,7 +53,8 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 			});
 
 			modalInstance.result.then(function () {
-				alert('close');
+				$scope.uploadingFiles=[];
+				refreshCurrentDirectories();
 			}, function () {
 			  alert('Modal dismissed at: ' + new Date());
 			});
@@ -70,9 +71,9 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				  method: 'GET',
 				  url: '/?api=delete&path='+selectedObject.FullPath
 				}).then(function successCallback(response) {
-					alert(response.data);
+					alertWithCallback(response.data, refreshCurrentDirectories);
 				  }, function errorCallback(response) {
-					  alert(response.data);
+					  alertWithCallback(response.data);
 				  });
             }, function() {
                 //alert('Confirm dismissed!');
@@ -90,9 +91,9 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 						  method: 'GET',
 						  url: '/?api=rename&path='+selectedObject.FullPath+'&newName='+result
 						}).then(function successCallback(response) {
-							alert(response.data);
+							alertWithCallback(response.data, refreshCurrentDirectories);
 						  }, function errorCallback(response) {
-							  alert(response.data);
+							  alertWithCallback(response.data);
 						  });
 				  }
 			  }
@@ -139,7 +140,23 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 			}
 		}
     };
+	
+	function alertWithCallback(message, callback){
+		$ngBootbox.alert(message)
+		.then(function() {
+			if(callback){
+				callback();
+			}
+		});
+	}
 
+	function refreshCurrentDirectories(){
+		if($scope.parentPaths.length>0)
+		{
+			getDirectories($scope.parentPaths.pop(), false);
+		}
+	}
+	
     function getDirectories(selectedObject, isBack){
 	//$scope.dataInfo.directories = DataService.getDirectories('/');
 	//return;
