@@ -103,18 +103,21 @@ myApp.directive("dropzone", function() {
 			}
 			
 			elem.bind('click', function(evt) {
-				var fileSelector = document.createElement('input');
-				fileSelector.setAttribute('type', 'file');
-				fileSelector.setAttribute('multiple', true);
-				
-				fileSelector.onchange = function(evt1) {
-					 for (var i = 0, f; f = this.files[i]; i++) {
-						if(typeof(scope.uploadingFiles) === undefined) scope.uploadingFiles = [];
-						scope.uploadingFiles.push(f);
-					 }
-					 scope.$apply();
-				};
-				fileSelector.click();
+				if(typeof(scope.fileSelector) === "undefined"){
+					scope.fileSelector = document.createElement('input');
+					scope.fileSelector.setAttribute('type', 'file');
+					scope.fileSelector.setAttribute('multiple', true);
+					
+					scope.fileSelector.onchange = function(evt1) {
+						 for (var i = 0, f; f = this.files[i]; i++) {
+							if(typeof(scope.uploadingFiles) === undefined) scope.uploadingFiles = [];
+							scope.uploadingFiles.push(f);
+						 }
+						 scope.$apply();
+					};
+					scope.$apply();
+				}
+				scope.fileSelector.click();
 				return false;
 			});
         }
