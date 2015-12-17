@@ -3,6 +3,7 @@ package com.hth.webserver;
 import android.app.Activity;
 
 import com.google.gson.Gson;
+import com.hth.data.Authentication;
 import com.hth.data.FolderInfo;
 import com.hth.filestransfer.R;
 import com.hth.utils.DataSevices;
@@ -113,6 +114,8 @@ public class AndroidWebServer extends  NanoHTTPD {
         String apiName = parameters.get("api");
         switch (apiName.toLowerCase())
         {
+            case "auth":
+                return getAuthenticationResponse();
             case "browser":
                 return getDirInfo(uri, parameters);
             case "upload":
@@ -132,7 +135,7 @@ public class AndroidWebServer extends  NanoHTTPD {
     {
         try {
             if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download)) {
-                return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
+                return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Not Allowed");
             }
 
             String fullPath = parameters.get("path");
@@ -158,7 +161,7 @@ public class AndroidWebServer extends  NanoHTTPD {
         try {
 
             if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_delete)) {
-                return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
+                return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
             }
 
             String fullPath = parameters.get("path");
@@ -183,7 +186,7 @@ public class AndroidWebServer extends  NanoHTTPD {
     {
         try {
             if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_rename)) {
-                return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
+                return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Not Allowed");
             }
             String fullPath = parameters.get("path");
             String newName = parameters.get("newName");
@@ -209,7 +212,7 @@ public class AndroidWebServer extends  NanoHTTPD {
     {
         try {
             if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_upload)) {
-                return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "Unauthorized");
+                return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Not Allowed");
             }
 
             String fullPath = parameters.get("path");
@@ -245,6 +248,22 @@ public class AndroidWebServer extends  NanoHTTPD {
         }
     }
 
+    private Response getAuthenticationResponse(){
+        Authentication obj = getAuthentication();
+        Gson gson = new Gson();
+        String json = gson.toJson(obj);
+        return newFixedLengthResponse(Response.Status.OK, "application/json", json);
+    }
+
+    private Authentication getAuthentication() {
+        Authentication obj = new Authentication();
+        obj.AllowUpload = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_upload);
+        obj.AllowDownload = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download);
+        obj.AllowRename = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_rename);
+        obj.AllowDelete = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_delete);
+        obj.EnableKey = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key);
+        return  obj;
+    }
     public static void copy(File src, File dst) throws IOException {
         InputStream in = new FileInputStream(src);
         OutputStream out = new FileOutputStream(dst);

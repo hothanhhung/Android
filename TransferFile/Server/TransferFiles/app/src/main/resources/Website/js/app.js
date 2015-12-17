@@ -11,6 +11,14 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 						error:false,
 						directories:[]
 						};
+	$scope.authenticationData={
+		AllowDownload:true,
+		AllowUpload:true,
+		AllowRename:true,
+		AllowDelete:true,
+		EnableKey:false,
+		Token:''
+	};
 	
 	//$scope.dataInfo.directories = DataService.getDirectories('/');
 	getDirectories($scope.rootPath);
@@ -117,13 +125,16 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
     };
 	
 	$scope.getFile = function(selectedObject){
-		 // var element = angular.element('<a/>');
-                         // element.attr({
-                             // href: '/?api=get&path='+selectedObject.FullPath,
-                             // target: '_blank',
-                             // download: selectedObject.Name
-                         // })[0].click();
-		window.open('/?api=get&path='+selectedObject.FullPath, "_blank");
+		if($scope.authenticationData.AllowRename) 
+		{
+			 // var element = angular.element('<a/>');
+							 // element.attr({
+								 // href: '/?api=get&path='+selectedObject.FullPath,
+								 // target: '_blank',
+								 // download: selectedObject.Name
+							 // })[0].click();
+			window.open('/?api=get&path='+selectedObject.FullPath, "_blank");
+		}
     };
 	
 	$scope.getDirectories = function(selectedObject, isBack){
