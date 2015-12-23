@@ -17,11 +17,30 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 		AllowRename:true,
 		AllowDelete:true,
 		EnableKey:false,
-		Token:''
+		Token:'',
+		Message:''
 	};
 	
 	//$scope.dataInfo.directories = DataService.getDirectories('/');
-	getDirectories($scope.rootPath);
+	//getDirectories($scope.rootPath);
+	
+	$scope.login = function(key){
+		$http({
+			  method: 'GET',
+			  url: '/?api=login&key='+key
+			}).then(function successCallback(response) {
+				if(response.data!=""){
+					$scope.authenticationData.Token = response.data;
+					getDirectories($scope.rootPath);
+				}
+				else{
+					$scope.authenticationData.Message = 'Login fail';
+				}
+			  }, function errorCallback(response) {
+				  $scope.authenticationData.Message = 'Error: '+respone.data;
+			  });
+	}
+	$scope.login("");
 	
     $scope.uploadFile = function(){
 		if(typeof($scope.uploadingFiles) != undefined && $scope.uploadingFiles.length > 0)
@@ -56,6 +75,9 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				},
 				currentPath: function () {
 				  return $scope.currentPath;
+				},
+				tokenAuth: function () {
+				  return genAuth();
 				}
 			  }
 			});
@@ -77,7 +99,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
             .then(function() {
 				$http({
 				  method: 'GET',
-				  url: '/?api=delete&path='+selectedObject.FullPath
+				  url: '/?'+ genAuth() + '&api=delete&path='+selectedObject.FullPath
 				}).then(function successCallback(response) {
 					alertWithCallback(response.data, refreshCurrentDirectories);
 				  }, function errorCallback(response) {
@@ -97,7 +119,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				  if(result!=null){
 					  $http({
 						  method: 'GET',
-						  url: '/?api=rename&path='+selectedObject.FullPath+'&newName='+result
+						  url: '/?'+ genAuth() + '&api=rename&path='+selectedObject.FullPath+'&newName='+result
 						}).then(function successCallback(response) {
 							alertWithCallback(response.data, refreshCurrentDirectories);
 						  }, function errorCallback(response) {
@@ -133,7 +155,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 								 // target: '_blank',
 								 // download: selectedObject.Name
 							 // })[0].click();
-			window.open('/?api=get&path='+selectedObject.FullPath, "_blank");
+			window.open('/?'+ genAuth() + '&api=get&path='+selectedObject.FullPath, "_blank");
 		}
     };
 	
@@ -152,6 +174,10 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 		}
     };
 	
+	function genAuth()
+	{
+		return 'token='+ $scope.authenticationData.Token;
+	}
 	function alertWithCallback(message, callback){
 		$ngBootbox.alert(message)
 		.then(function() {
@@ -173,7 +199,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 	//return;
     $http({
     	  method: 'GET',
-    	  url: '/?api=browser&path='+selectedObject.FullPath
+    	  url: '/?'+ genAuth() + '&api=browser&path='+selectedObject.FullPath
     	}).then(function successCallback(response) {
     		// this callback will be called asynchronously
     		// when the response is available
@@ -193,7 +219,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
     		// or server returns response with an error status.
     	  });
     }
-}]).controller('ModalUploadingFilesCtrl', function ($scope, $http, $uibModalInstance, uploadingFiles, currentPath) {
+}]).controller('ModalUploadingFilesCtrl', function ($scope, $http, $uibModalInstance, uploadingFiles, currentPath, tokenAuth) {
 	$scope.currentPath = currentPath;
   $scope.displayButton = false;
   $scope.uploadingFiles = uploadingFiles;
@@ -209,7 +235,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
   
   function uploadProcess(f, index)
   {
-	var uploadUrl = "/?api=upload&path="+$scope.currentPath;
+	var uploadUrl = '/?'+tokenAuth+'&api=upload&path='+$scope.currentPath;
 	$scope.uploadingInfos[index] = {file:f, status:0, message:""};
 		var fd = new FormData();
 		fd.append('file', f);
