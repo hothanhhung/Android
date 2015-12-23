@@ -104,7 +104,9 @@
  Files Tranfer</h1>
 </header>
 <div ng-if="authenticationData.Token.length < 1">
-
+<div>{{authenticationData.Message}}</div>
+<input type="text" ng-model="key" />
+<input type="button" value="Login" name="login" ng-click="login(key)">
 </div>
 <div ng-if="authenticationData.Token.length > 0" class="app-content" style="padding-bottom:50px">
 

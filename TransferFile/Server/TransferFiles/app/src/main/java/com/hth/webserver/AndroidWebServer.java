@@ -1,6 +1,7 @@
 package com.hth.webserver;
 
 import android.app.Activity;
+import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.hth.data.Authentication;
@@ -31,6 +32,7 @@ import java.util.logging.Level;
  */
 public class AndroidWebServer extends  NanoHTTPD {
 
+    private final String EMPTY_KEY="EMPTY_KEY";
     private Activity activity;
     public AndroidWebServer()
     {
@@ -112,23 +114,32 @@ public class AndroidWebServer extends  NanoHTTPD {
     private Response responseOfAPI(String uri, Method method, Map<String, String> header, Map<String, String> parameters, Map<String, String> files)
     {
         String apiName = parameters.get("api");
-        switch (apiName.toLowerCase())
-        {
-            case "auth":
-                return getAuthenticationResponse();
-            case "browser":
-                return getDirInfo(uri, parameters);
-            case "upload":
-                return uploadFiles(uri, method, header, parameters, files);
-            case "rename":
-                return rename(uri, method, header, parameters);
-            case "delete":
-                return delete(uri, method, header, parameters);
-            case "get":
-                return sendFile(uri, method, header, parameters);
+        String token = parameters.get("token");
+        String key = DataSevices.getStringValueOfKey(activity, R.string.pref_sync_key_connection);
+        String tokenKey = getConnectionWithKey(header, key);
+        if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key) || apiName.equals("login") || tokenKey.equals(token)) {
+            switch (apiName.toLowerCase()) {
+                case "login":
+                    return getLoginResponse(header, parameters);
+                case "auth":
+                    return getAuthenticationResponse();
+                case "browser":
+                    return getDirInfo(uri, parameters);
+                case "upload":
+                    return uploadFiles(uri, method, header, parameters, files);
+                case "rename":
+                    return rename(uri, method, header, parameters);
+                case "delete":
+                    return delete(uri, method, header, parameters);
+                case "get":
+                    return sendFile(uri, method, header, parameters);
 
+            }
+            return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "API Not found");
+        }else
+        {
+            return newFixedLengthResponse(Response.Status.UNAUTHORIZED, NanoHTTPD.MIME_PLAINTEXT, "UnAuthorized");
         }
-        return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "API Not found");
     }
 
     private Response sendFile(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
@@ -248,11 +259,34 @@ public class AndroidWebServer extends  NanoHTTPD {
         }
     }
 
-    private Response getAuthenticationResponse(){
+    private Response getAuthenticationResponse() {
         Authentication obj = getAuthentication();
         Gson gson = new Gson();
         String json = gson.toJson(obj);
         return newFixedLengthResponse(Response.Status.OK, "application/json", json);
+    }
+
+    private Response getLoginResponse(Map<String, String> header, Map<String, String> parameters){
+        if(DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key))
+        {
+            String key = parameters.get("key");
+            if(DataSevices.getStringValueOfKey(activity, R.string.pref_sync_key_connection).equals(key))
+            {
+                String token = getConnectionWithKey(header, key);
+                return newFixedLengthResponse(Response.Status.OK, MIME_PLAINTEXT, token);
+            }else{
+
+                return newFixedLengthResponse(Response.Status.OK, MIME_PLAINTEXT, "");
+            }
+        }else {
+            String token = getConnectionWithKey(header, EMPTY_KEY);
+            return newFixedLengthResponse(Response.Status.OK, MIME_PLAINTEXT, token);
+        }
+    }
+
+    private String getConnectionWithKey(Map<String, String> header, String key)
+    {
+        return Base64.encodeToString(key.getBytes(), Base64.DEFAULT).trim();
     }
 
     private Authentication getAuthentication() {

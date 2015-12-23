@@ -96,4 +96,11 @@ public class DataSevices {
         boolean result = sharedPref.getBoolean(activity.getResources().getString(key), true);
         return result;
     }
+
+    public static String getStringValueOfKey(Activity activity, int key)
+    {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
+        String result = sharedPref.getString(activity.getResources().getString(key), "");
+        return result;
+    }
 }
