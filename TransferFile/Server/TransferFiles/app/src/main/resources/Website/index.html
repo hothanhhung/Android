@@ -33,18 +33,21 @@
 }
 
 .lastmodified{
-	font-size: 10px;
+	font-size: 8px;
 	color: gray;
 }
 .size{
-	font-size: 10px;
+	font-size: 8px;
 	color: gray;
 }
 .name{
-	font-size: 16px;
+	font-size: 13px;
     color: #000017;
-    line-height: 1.3em;
+    line-height: 1.3em;	
+	height: 50px;
 	word-break: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .contentbox{	
     overflow: auto;
@@ -94,34 +97,36 @@
 </style>
 </head>
 
-<body ng-app="myApp" ng-controller="listObjectControl">
+<body ng-app="myApp" ng-controller="listObjectControl" style="background-color: cornsilk; margin: 10px;">
 
 <div class="app-wrapper">
 
 <header>
 <h1>
 <img src="images/icon.png" height="50px" width="50px">
- Files Tranfer</h1>
+ Files Transfer</h1>
 </header>
 <div ng-if="authenticationData.Token.length < 1">
 <div>{{authenticationData.Message}}</div>
 <input type="text" ng-model="key" />
 <input type="button" value="Login" name="login" ng-click="login(key)">
 </div>
-<div ng-if="authenticationData.Token.length > 0" class="app-content" style="padding-bottom:50px">
+<div ng-if="authenticationData.Token.length >= 0" class="app-content" style="padding-bottom:50px">
 
 <div style="line-height: 1.3em; height:auto;">
-<div class="currentPath"> <i><b> vvvvvv <span ng-repeat="path in parentPaths">{{path.Name}} > </span></b></i> </div>
-<div ng-if="authenticationData.AllowUpload"  class="dropzone" dropzone drag-over-class="dropzone dragover">
+<div class="currentPath"> <i><b> You are here: <span ng-repeat="path in parentPaths">{{path.Name}} > </span></b></i> </div>
+<div ng-if="authenticationData.AllowUpload" style="position:relative">
+<div  class="dropzone" dropzone drag-over-class="dropzone dragover">
 <div class="uploadedFiles">
 	<div ng-repeat="file in uploadingFiles">
 		<img class="pointerHover" src="images/remove.png" ng-click="removeUploadedFile($event, file)" height="15px" width="15px">
 		{{file.name}} . 
 	</div>
 </div>
-Drop files or click here to select uploaded files 
+Drop or click here to select uploaded files 
 </div>
-<input type="button" value="Upload" name="uploadfile" ng-click="uploadFile()">
+<input type="button" class="btn" style="position:absolute; top:0px; right:0px; height:94px; width:100px; z-index=10;" value="Upload" name="uploadfile" ng-click="uploadFile()">
+</div>
 <div class="uploadButton">
 </div>
 </div>

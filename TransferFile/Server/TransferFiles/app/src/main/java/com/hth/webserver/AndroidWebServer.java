@@ -33,6 +33,8 @@ import java.util.logging.Level;
 public class AndroidWebServer extends  NanoHTTPD {
 
     private final String EMPTY_KEY="EMPTY_KEY";
+    private final String COOKIE_TOKEN="COOKIE_TOKEN";
+
     private Activity activity;
     public AndroidWebServer()
     {

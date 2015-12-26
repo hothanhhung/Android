@@ -174,6 +174,21 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 		}
     };
 	
+	function getAuth()
+	{
+		$http({
+			  method: 'GET',
+			  url: '/?'+ genAuth() + '&api=auth'
+			}).then(function successCallback(response) {
+				$scope.authenticationData.AllowDownload = response.data.AllowDownload;
+				$scope.authenticationData.AllowUpload = response.data.AllowUpload;
+				$scope.authenticationData.AllowRename = response.data.AllowRename;
+				$scope.authenticationData.AllowDelete = response.data.AllowDelete;				
+			  }, function errorCallback(response) {
+				  
+			  });
+	}
+	
 	function genAuth()
 	{
 		return 'token='+ $scope.authenticationData.Token;
@@ -197,6 +212,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
     function getDirectories(selectedObject, isBack){
 	//$scope.dataInfo.directories = DataService.getDirectories('/');
 	//return;
+	getAuth();					
     $http({
     	  method: 'GET',
     	  url: '/?'+ genAuth() + '&api=browser&path='+selectedObject.FullPath
