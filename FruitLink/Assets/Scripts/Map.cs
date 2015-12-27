@@ -38,8 +38,8 @@ public class Map : MonoBehaviour
 	public Vector3[][] POS;
 	public static int MIN_X;
 	public static int MIN_Y;
-	public static int CELL_WIDH = 28;
-	public static int CELL_HEIGHT = 32;
+	public static int CELL_WIDH = 47;
+	public static int CELL_HEIGHT = 47;
 	private float CAM_SIZE=320f;
 	private float CAM_GAME_X = 0f;
 	private float CAM_GAME_Y = 0f;
@@ -307,7 +307,7 @@ public class Map : MonoBehaviour
 		g.transform.position = pos;
 		Sprite sprite = Resources.Load(GetItemPathFromType(type), typeof(Sprite)) as Sprite;
 		g.GetComponent<SpriteRenderer>().sprite = sprite;
-		g.transform.localScale = new Vector3(Mathf.Abs(width * 1.0f / sprite.bounds.size.x), Mathf.Abs (- height * 1.0f / sprite.bounds.size.y), 1);
+		g.transform.localScale = new Vector3(Mathf.Abs(width * 1.0f / (sprite.bounds.size.x + 2)), Mathf.Abs (- height * 1.0f / (sprite.bounds.size.y+2)), 1);
 		if(ROW_COL.Length < starsLevel){
 			var val = Random.Range(0, 3);
 			if(val==1) g.transform.Rotate(0, 180, 0);
@@ -356,7 +356,7 @@ public class Map : MonoBehaviour
 				POS[i][j] = new Vector3(0, 0, 0);
 				POS[i][j].x = MIN_X + j * CELL_WIDH + CELL_WIDH / 2;
 				POS[i][j].y = MIN_Y + i * CELL_HEIGHT + CELL_HEIGHT / 2;
-				POS[i][j].z = i / 10.0f;
+				POS[i][j].z = 0;//i / 10.0f;
 				
 				//Debug.Log("a  " + POS[i][j]);
 			}
