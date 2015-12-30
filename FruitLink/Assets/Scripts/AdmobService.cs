@@ -3,8 +3,8 @@ using GoogleMobileAds.Api;
 
 public class AdmobService{
 
-	private const string adUnitId = "ca-app-pub-4576847792571626/7489703991";
-	private const string adUnitIdInterstitial = "ca-app-pub-4576847792571626/8966437193";
+	private const string adUnitId = "ca-app-pub-4576847792571626/5371996794";
+	private const string adUnitIdInterstitial = "ca-app-pub-4576847792571626/6848729992";
 
 	public static void RequestBanner()
 	{

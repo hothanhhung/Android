@@ -2,11 +2,16 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Map.cs">
     <Files>
-      <File FileName="Assets\Scripts\Map.cs" Line="310" Column="147" />
+      <File FileName="Assets\Scripts\Map.cs" Line="97" Column="29" />
+      <File FileName="Assets\Scripts\ButtonAction.cs" Line="53" Column="51" />
+      <File FileName="Assets\Scripts\AdmobService.cs" Line="11" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="E:\Work\github\Games\Unity\Pikachu\Android\FruitLink\Assets\Scripts\Map.cs" line="262" />
+      <Breakpoint file="E:\Work\github\Games\Unity\Pikachu\Android\FruitLink\Assets\Scripts\Map.cs" line="861" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

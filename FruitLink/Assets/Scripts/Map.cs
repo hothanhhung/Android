@@ -15,6 +15,7 @@ public class Map : MonoBehaviour
 	private int  NUMBER_ITEM = 0;
 	private bool stopGame = false;
 	public GameObject startPanel;
+	public GameObject helpPanel;
 	public GameObject winPanel;
 	public GameObject gameoverPanel;
 	public GameObject pausePanel;
@@ -27,8 +28,8 @@ public class Map : MonoBehaviour
 	
 	public Object prefap_pikachu;
 	int [][]ROW_COL = { new int[]{6, 5, 15}, new int[]{8, 5, 15}, new int[]{7, 6, 20}, new int[]{8, 6, 20} ,new int[]{9, 6, 40} ,
-		new int[]{10, 6, 40}, new int[]{10, 7, 60}, new int[]{10, 8, 80}, new int[]{11, 8, 120},	new int[]{10, 9, 140} ,
-		new int[]{10, 10, 160}, new int[]{11, 10, 200}, new int[]{12, 10, 240} /*, new int[]{13, 10}, new int[]{14, 10} */};
+		new int[]{10, 6, 40}, new int[]{10, 7, 60}, new int[]{10, 8, 80}, new int[]{11, 8, 120},	new int[]{12, 8, 140} ,
+		new int[]{11, 9, 160}, new int[]{12, 9, 200}, new int[]{13, 8, 240}, new int[]{13, 9, 280}, new int[]{13, 10, 320}};
 	int ROW = 0, COL = 0;
 	public int[][] MAP;
 	public bool[][] SHIT;
@@ -38,8 +39,8 @@ public class Map : MonoBehaviour
 	public Vector3[][] POS;
 	public static int MIN_X;
 	public static int MIN_Y;
-	public static int CELL_WIDH = 47;
-	public static int CELL_HEIGHT = 47;
+	public static int CELL_WIDH = 28;
+	public static int CELL_HEIGHT = 32;
 	private float CAM_SIZE=320f;
 	private float CAM_GAME_X = 0f;
 	private float CAM_GAME_Y = 0f;
@@ -47,6 +48,7 @@ public class Map : MonoBehaviour
 	private int OFFSET_Y_BOTTOM=10;
 	
 	public Text timeText;
+	public Text notifyHideSomeItemsText;
 	public Text starsText;
 	public Text soundText;
 	public Text soundMainMenuText;
@@ -68,7 +70,7 @@ public class Map : MonoBehaviour
 	public GameObject objectLineRenderer3;
 	private LineRenderer lineRenderer3;
 	
-	private long lastShowAds = 0;
+	private float lastShowAds = 0;
 	
 	void Awake () {		
 		lineRenderer1 = this.GetComponent<LineRenderer> ();
@@ -85,7 +87,7 @@ public class Map : MonoBehaviour
 	
 	void Start () 
 	{
-		lastShowAds = System.DateTime.Now.Ticks;
+		lastShowAds = Time.realtimeSinceStartup;
 		stopGame = true;
 		SaveLoad.Load ();
 		isCountDownMode = SaveLoad.SavedData.IsCountDown;
@@ -156,6 +158,7 @@ public class Map : MonoBehaviour
 		else
 			totalTime += Time.deltaTime;
 		timeText.text = "" + Mathf.RoundToInt(totalTime);
+		//notifyHideSomeItemsText.text = "Hide In " + Mathf.RoundToInt(timeForHideSomeItems);
 	}
 	
 	void Update () 
@@ -356,7 +359,7 @@ public class Map : MonoBehaviour
 				POS[i][j] = new Vector3(0, 0, 0);
 				POS[i][j].x = MIN_X + j * CELL_WIDH + CELL_WIDH / 2;
 				POS[i][j].y = MIN_Y + i * CELL_HEIGHT + CELL_HEIGHT / 2;
-				POS[i][j].z = 0;//i / 10.0f;
+				POS[i][j].z = i / 10.0f;
 				
 				//Debug.Log("a  " + POS[i][j]);
 			}
@@ -990,16 +993,20 @@ public class Map : MonoBehaviour
 	
 	public void HelpGame()
 	{
-		
+		helpPanel.SetActive (true);
+	}
+	public void CloseHelpGame()
+	{
+		helpPanel.SetActive (false);
 	}
 	private int countAdsShow = 2;
 	private void ShowInterstitialAds()
 	{
 		if(countAdsShow < 5) countAdsShow++;
-		if(System.DateTime.Now.Ticks - lastShowAds > countAdsShow * 60 * 10000000)
+		if(Time.realtimeSinceStartup - lastShowAds > countAdsShow * 60)
 		{
 			AdmobService.RequestInterstitial (true);
-			lastShowAds = System.DateTime.Now.Ticks;
+			lastShowAds = Time.realtimeSinceStartup;
 		}
 		
 	}
