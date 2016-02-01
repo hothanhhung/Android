@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">15 Puzzle</string>
+    <string name="menu_shuffle">Shuffle</string>
+    <string name="moves">"Moves: "</string>
+    <string name="record">"Record: "</string>
+    <string name="time">"Time: "</string>
+
+    <!-- values for startScreen -->
+    <string name="play"> Play </string>
+    <string name="customise"> Themes </string>
+    <string name="about"> About </string>
+
+    <!-- vales for dialogs -->
+    <string name="dialogTitle">Resume Game</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="quitgame">Quit Game</string>
+    <string name="share_screenshot">Share</string>
+    <string name="dialogtitle1">Not bad!!</string>
+    <string name="dialogtitle2">Great!!</string>
+    <string name="dialogtitle3">Astounding!!</string>
+    <string name="dialogtitle4">You are a pro!!</string>
+    <string name="dialog_playagain">Play Again?</string>
+
+    <!-- values for aboutScreen -->
+    <string name="aboutTitle">About Fifteen Puzzle</string>
+    <string name="aboutcontent">The 15-puzzle (also called Gem Puzzle, Boss Puzzle, Game of Fifteen, Mystic Square and many others) is a sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing. The puzzle was "invented" by Noyes Palmer Chapman, a postmaster in Canastota, New York, who is said to have shown friends, as early as 1874, a precursor puzzle consisting of 16 numbered blocks that were to be put together in rows of four, each summing to 34. Copies of the improved Fifteen Puzzle made their way to Syracuse, New York by way of  Frank, son of Noyes, and from there, via sundry connections, to Watch Hill, RI, and finally to Hartford (Connecticut), where students in the American School for the Deaf started manufacturing the puzzle and, by December 1879, selling them both locally and in Boston, Massachusetts. Shown one of these, Matthias Rice, who ran a fancy woodworking business in Boston, started manufacturing the puzzle sometime in December 1879 and convinced a Yankee Notions fancy goods dealer to sell them under the name of "Gem Puzzle". In late-January 1880, Dr. Charles Pevey, a dentist in Worcester, Massachusetts, garnered some attention by offering a cash reward for a solution to the Fifteen Puzzle.</string>
+
+    <!-- values for admob -->
+    <string name="admob_id">a152ee32d3d8f0d</string>
+    <string name="interstitial_id">a15305056466330</string>
+
+    <!-- values for tutorial -->
+    <string name="howto">You will be given a board of 4x4 cells out of which one tile will be missing. Your aim is to arrange the tiles in correct numerical order. Touch on any tile to move it to the blank space on grid. To be a maestro you have to complete the game in minimal time and moves</string>
+
+    <!-- String values for Rate dialog -->
+    <string name="rate">Rate</string>
+    <string name="rate_dialog_title">Rate Fifteen Puzzle</string>
+    <string name="rate_message">If you like Fifteen Puzzle, please take a moment to rate it. Thanks for your support!</string>
+    <string name="later">Later</string>
+    <string name="no_thanks">No Thanks</string>
+    
+    <!-- string values for start screen menu -->
+    <string name="more_games">More Games</string>
+    <string name="developer_group_url">https://play.google.com/store/apps/developer?id=Creative+Droids</string>   
+    
+</resources>

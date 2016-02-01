@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="grey">#cdcccc</color>
+    <color name="light_green">#d1feca</color>
+    <color name="red">#e93030</color>
+    <color name="blue">#0207eb</color>
+    <color name="purple">#8c00dd</color>
+    <color name="green">#01cc6e</color>
+    <color name="light_pink">#fdcdee</color>
+    <color name="brown">#754c24</color>
+    <color name="pink">#fb4ec4</color>
+    <color name="white">#ffffff</color>
+    <color name="light_blue">#d8f4ff</color>
+
+    <!-- colors for theme 4 -->
+    <color name="board4">#0029a3</color>
+    <color name="tile_text_4">#ff6600</color>
+    <color name="background_4">#ffe0cc</color>
+    <color name="tile_bacground_4">#ff6600</color>
+
+    <!-- colors for theme 5 -->
+
+    <color name="board5">#000000</color>
+    <color name="tile_text_5">#5200a3</color>
+    <color name="background_5">#999999</color>
+    <color name="tile_bacground_5">#5200a3</color>
+
+</resources>

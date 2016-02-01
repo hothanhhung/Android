@@ -1,0 +1,242 @@
+[
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_plus_signin_btn_icon_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_plus_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_settings_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_settings_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\on_position_theme_2.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\on_position_theme_2.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_edit_text_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_dialog_material_background_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_cast_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_cast_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_plus_signin_btn_text_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_plus_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_full_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_ratingbar_full_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_play_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_play_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_play_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_play_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_check_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\theme_3_tile_background.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\theme_3_tile_background.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\custom_button_blue.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\custom_button_blue.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_media_route_connecting_mono_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_media_route_connecting_mono_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\cast_ic_notification_connecting.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast\\8.4.0\\res\\drawable\\cast_ic_notification_connecting.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_media_route_connecting_mono_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_media_route_connecting_mono_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\on_position_theme_1.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\on_position_theme_1.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_borderless_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_btn_borderless_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_pause_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_pause_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\off_position_theme_2.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\off_position_theme_2.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_text_cursor_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_pause_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_pause_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\on_position_theme_3.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\on_position_theme_3.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\custom_button.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\custom_button.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_colored_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_plus_signin_btn_text_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_plus_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\on_position_theme_4.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\on_position_theme_4.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\theme_4_tile_background.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\theme_4_tile_background.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_plus_signin_btn_icon_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_plus_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_media_route_mono_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_media_route_mono_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\theme_2_tile_background.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\theme_2_tile_background.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_dialog_material_background_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\theme_1_tile_background.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\theme_1_tile_background.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\theme_5_tile_background.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\theme_5_tile_background.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_media_route_mono_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_media_route_mono_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\off_position_theme_3.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\off_position_theme_3.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\on_position_theme_5.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\on_position_theme_5.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_tab_indicator_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\off_position_theme_5.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\off_position_theme_5.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\off_position_theme_4.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\off_position_theme_4.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_settings_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_settings_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_cast_light.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\drawable\\mr_ic_cast_light.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\off_position_theme_1.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\drawable\\off_position_theme_1.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_textfield_search_material.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.0.1\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    }
+]

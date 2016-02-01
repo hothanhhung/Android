@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\startscreen_menu.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\menu\\startscreen_menu.xml"
+    },
+    {
+        "merged": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\activity_main.xml",
+        "source": "E:\\Works\\github\\Android\\Android\\PhotoPuzzle\\app\\src\\main\\res\\menu\\activity_main.xml"
+    }
+]
