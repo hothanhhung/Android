@@ -1,0 +1,15 @@
+.searched {
+	background-color: #E05C2B;
+	color: #FFFFFF;
+}
+
+.selectedChannel{
+	background-color: #EEE;
+	color: #800000;
+}
+
+#schedule_content p {
+    border-bottom: 1px dotted #4A4A4A;
+    margin: 7px 0px;
+    padding-bottom: 7px;
+}
