@@ -1,0 +1,121 @@
+<ion-side-menus>
+
+    <!-- Center content -->
+    <ion-side-menu-content>
+      <ion-header-bar class="bar-calm">
+      <button class="button button-icon" ng-click="toggleLeft()">
+        <i class="icon ion-navicon"></i>
+      </button>
+      <h1 class="title">{{dataSchedule.title}}</h1> 
+     <div class="buttons" side="right">    
+        <button class="button button-icon" ng-if="!wasFavoriteStory(dataSchedule)" ng-click="saveFavoriteStory(dataSchedule)">
+          <i class="icon ion-heart"></i>
+        </button>
+        <button class="button button-icon" ng-if="wasFavoriteStory(dataSchedule)" ng-click="removeFavoriteStory(dataSchedule)">
+          <i class="icon ion-heart-broken"></i>
+        </button>
+        <button class="button button-icon" ng-click="toggleRight()">
+          <i class="icon ion-happy"></i>
+        </button>
+      </div>
+      </ion-header-bar>
+
+      <ion-content scroll="false">
+        <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%;" delegate-handle="ionScrollContentStory">
+          
+
+          <div style="padding: 10px 20px 80px 20px">
+            
+            <div class="row">
+              <div class="col col-50">
+                <button class="button button-icon" ng-if="backStory!=null" ng-click="openStory(backStory.id, backStory.title, backStory.link)">
+                  <i class="icon ion-arrow-left-b"></i> Back
+                </button>
+              </div>
+              <div class="col col-50" style="text-align: right;">
+                <button class="button button-icon"  ng-if="nextStory!=null" ng-click="openStory(nextStory.id, nextStory.title, nextStory.link)">
+                  Next <i class="icon ion-arrow-right-b"></i>
+                </button>
+              </div>
+            </div>
+				
+			<h1 class="title" style="margin-top: -15px; margin-bottom: 10px; font-size: 36px; text-align: center;">{{dataSchedule.title}}</h1>
+			<div id="schedule_content" ng-bind-html="dataSchedule.data"></div>
+	        
+			<div class="row"">
+              <div class="col col-50">
+                <button class="button button-icon" ng-if="backStory!=null" ng-click="openStory(backStory.id, backStory.title, backStory.link)">
+                  <i class="icon ion-arrow-left-b"></i> Back
+                </button>
+              </div>
+              <div class="col col-50" style="text-align: right;">
+                <button class="button button-icon"  ng-if="nextStory!=null" ng-click="openStory(nextStory.id, nextStory.title, nextStory.link)">
+                  Next <i class="icon ion-arrow-right-b"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+         </ion-scroll>
+      </ion-content>
+    </ion-side-menu-content>
+
+    <!-- Left menu -->
+    <ion-side-menu side="left" >
+      <ion-header-bar class="bar-calm">
+        <button class="button button-icon" ng-click="goBack()">
+          <i class="icon ion-ios7-home"></i>
+        </button>
+		    <h1 class="title">{{category.title}}</h1>
+      </ion-header-bar>
+      <ion-content scroll="false">
+	  <div class="list">
+		  <div class="item item-input-inset">
+			<label class="item-input-wrapper">
+			  <input type="text" placeholder="Keyword" ng-model="txtSearchChannelValue">
+			</label>
+			<button class="button button-small icon ion-search" ng-click="searchStories(txtSearchChannelValue)">
+			  Search
+			</button>
+      <button class="button button-small icon ion-refresh" ng-click="txtSearchChannelValue=''; resetStories()">
+      </button>
+		  </div>
+		</div>
+        <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%" delegate-handle="ionScrollListStories">
+      	  <ion-list	  
+                show-reorder="shouldShowReorder"
+                can-swipe="listCanSwipe">
+			<div style="padding: 10px 0px 140px 0px">
+			<div style="text-align:center" ng-if="lstStories.length == 0">No data here</div>
+      		<ion-item ng-repeat="story in lstStories" ng-click="openStory(story.id, story.title, story.link, true)"  ng-class="story.link == dataSchedule.link ? 'selectedChannel':''" >
+      				<span>{{$index + 1}}.</span>
+              <span ng-if="isSearchStories(story)==false">{{story.title}}</span> 
+              <span ng-if="isSearchStories(story)" ng-bind-html="story.titleSearch"></span>
+      		</ion-item >
+			</div>
+      		</ion-list>
+        </ion-scroll>
+      </ion-content>
+    </ion-side-menu>
+
+    <ion-side-menu side="right" >
+      <ion-header-bar class="bar-calm">
+    <h1 class="title">Favourite stories</h1>
+      </ion-header-bar>
+      <ion-content scroll="false">
+        <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%">
+          <ion-list   
+                show-reorder="shouldShowReorder"
+                can-swipe="listCanSwipe">
+          <div style="padding: 10px 0px 80px 0px">
+			<div style="text-align:center" ng-if="lstFavoriteStories.length == 0">No data here</div>
+      		<ion-item ng-repeat="story in lstFavoriteStories | orderBy:'title':false" ng-click="openStory(story.id, story.title, story.link, false, false)"  ng-class="story.link == dataSchedule.link ? 'selectedChannel':''" >
+              <span>{{$index + 1}}.</span>
+              <span>{{story.title}}</span> 
+          </ion-item >
+		  </div>
+          </ion-list>
+        </ion-scroll>
+      </ion-content>
+    </ion-side-menu>
+
+</ion-side-menus>

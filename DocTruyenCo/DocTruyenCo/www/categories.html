@@ -4,7 +4,7 @@
   </ion-header-bar>
   <ion-content has-header="true" scroll="true">
     <div style="align:center">         
-           <button ng-repeat="category in lstCategories" class="button button-block button-stable" ng-click="go('stories/{{category.id}}')">
+           <button ng-repeat="category in lstCategories" class="button button-block button-stable" ng-click="go('stories/{{category.id}}')" onclick="showInterstitial();">
               {{category.title}}
             </button>
     </div>

@@ -22,7 +22,8 @@ angular.module('starter', ['ngRoute', 'ionic', 'ngSanitize', 'starter.appData', 
 .controller("categoriesController", function ($scope, $routeParams, $location, $ionicPlatform,  $ionicScrollDelegate, appData){
 	$scope.lstCategories = appData.lstCategories;
 	$scope.go = function ( path ) {
-	  $location.path( path );
+		
+		$location.path( path );
 	};
 })
 .controller("storiesController", function ($scope, $routeParams, $location, $http, $ionicPlatform, $ionicSideMenuDelegate, $ionicPopup, $ionicScrollDelegate, appData, appDataProcess, $ionicModal, $sce){
@@ -39,6 +40,7 @@ angular.module('starter', ['ngRoute', 'ionic', 'ngSanitize', 'starter.appData', 
 
 	var lastId = appDataProcess.getLastId($scope.category.id)
 
+	
 	$.getJSON($scope.category.link, function(jsondata) {
     	
 		listStoriesInCategory = jsondata;// appData.getStories("./truyenviet/kho-tang-truyen-co-tich-viet-nam/kho-tang-truyen-co-tich-viet-nam.json");
@@ -298,7 +300,7 @@ angular.module('starter', ['ngRoute', 'ionic', 'ngSanitize', 'starter.appData', 
       var ad_units = {
         android : {
           banner: 'ca-app-pub-4576847792571626/2668419599',
-          interstitial:'ca-app-pub-4576847792571626/2827172395'
+          interstitial:'ca-app-pub-4576847792571626/2852383194'
          }
       };
       var admobid = ad_units.android;
@@ -307,9 +309,9 @@ angular.module('starter', ['ngRoute', 'ionic', 'ngSanitize', 'starter.appData', 
         initAd();
         // display the banner at startup
         AdMob.createBanner( admobid.banner, function(){}, function(data){alert(JSON.stringify(data));} );
-		if((new Date()).getSeconds()%2 == 1)
+		//if((new Date()).getSeconds()%2 == 1)
 		{
-			AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:true} );
+			AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
 		}
       }
       function initAd(){
@@ -328,3 +330,16 @@ angular.module('starter', ['ngRoute', 'ionic', 'ngSanitize', 'starter.appData', 
         };
         AdMob.setOptions( defaultOptions );
       }
+	  
+	  function showInterstitial()
+	  {
+		if(AdMob){
+		//	AdMob.isInterstitialReady(function(ready){ 
+			//	if(ready)
+			{
+					AdMob.showInterstitial();
+				}
+		//	});
+		}
+		
+	  }
