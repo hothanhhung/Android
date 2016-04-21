@@ -1,6 +1,8 @@
 package com.hth.webserver;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import com.google.gson.Gson;
@@ -10,6 +12,8 @@ import com.hth.filestransfer.R;
 import com.hth.utils.DataSevices;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -135,6 +139,8 @@ public class AndroidWebServer extends  NanoHTTPD {
                     return delete(uri, method, header, parameters);
                 case "get":
                     return sendFile(uri, method, header, parameters);
+                case "preview":
+                    return getPreview(uri, parameters);
 
             }
             return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "API Not found");
@@ -258,6 +264,49 @@ public class AndroidWebServer extends  NanoHTTPD {
             return newFixedLengthResponse(Response.Status.OK, "application/json", json);
         }else{
             return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not found");
+        }
+    }
+
+    final int PREVIEW_WIDTH = 80;
+    final int PREVIEW_HEIGHT = 80;
+
+    private Response getPreview(String uri, Map<String, String> parameters)
+    {
+        try {
+           // if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download)) {
+             //   return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Not Allowed");
+            //}
+
+
+            String fullPath = parameters.get("path");
+            File file = new File(fullPath);
+
+            if(file.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                int width = PREVIEW_WIDTH;
+                int height = PREVIEW_HEIGHT;
+
+                height = myBitmap.getHeight() * width / myBitmap.getWidth();
+                if(height > PREVIEW_HEIGHT){
+                    height = PREVIEW_HEIGHT;
+                    width = width * myBitmap.getWidth() / myBitmap.getHeight();
+                }
+                Bitmap resized = Bitmap.createScaledBitmap(myBitmap, width, height, true);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                resized.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
+                ByteArrayInputStream inputStream = new ByteArrayInputStream(bitmapdata);
+
+                NanoHTTPD.Response res = newChunkedResponse(Response.Status.OK, "application/octet-stream",inputStream);
+                res.addHeader("Content-Disposition", "attachment; filename="+ file.getName());
+                return res;
+            }else{
+                return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Found");
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
         }
     }
 

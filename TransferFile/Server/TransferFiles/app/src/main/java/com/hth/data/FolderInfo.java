@@ -14,6 +14,8 @@ public class FolderInfo {
     public long Size = 0;
     public String DisplaySize = "";
     public String DisplayLastModified = "";
+    public String Preview = "";
+    public boolean IsCommonPreview = true;
 
     public static double roundToDecimals(double d, int c)
     {

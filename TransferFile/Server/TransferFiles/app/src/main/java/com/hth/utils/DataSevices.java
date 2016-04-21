@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.hth.data.FolderInfo;
+import com.hth.webserver.AndroidWebServer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class DataSevices {
                 for (int i = 0; i < files.length; i++) {
                     File file = files[i];
                     FolderInfo folderInfo = new FolderInfo();
+                    folderInfo.IsCommonPreview = true;
                     folderInfo.Name = file.getName();
                     folderInfo.FullPath = file.getPath();
                     folderInfo.IsFile = file.isFile();
@@ -54,9 +56,19 @@ public class DataSevices {
                         folderInfo.Size = file.length();
                         folderInfo.DisplaySize = FolderInfo.GetDisplaySize(file.length());
                         folderInfo.DisplayLastModified = FolderInfo.GetDisplaySize(folderInfo.LastModified);
+                        String mimeType = AndroidWebServer.getMimeTypeForFile(folderInfo.FullPath);
+                        if(mimeType!=null && mimeType.indexOf("image") == 0) {
+                            folderInfo.Preview = "/?api=preview&path="+folderInfo.FullPath;
+                            folderInfo.IsCommonPreview = false;
+                        }else{
+                            folderInfo.Preview = "images/file.png";
+                        }
                         fileInfos.add(folderInfo);
                     }
-                    else folderInfos.add(folderInfo);
+                    else{
+                        folderInfo.Preview = "images/folder.png";
+                        folderInfos.add(folderInfo);
+                    }
 
                 }
             }

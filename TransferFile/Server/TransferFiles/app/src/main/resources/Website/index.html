@@ -143,7 +143,7 @@ Drop or click here to select uploaded files
 			<img class="pointerHover" ng-if="authenticationData.AllowDelete" ng-click="deleteItem(item)" src="images/tan-delete.png" height="20px" width="20px">
 		</div>
 		<div class="pointerHover" ng-click="item.IsFile?getFile(item):getDirectories(item, false)" style="text-decoration: none;">
-			<img class="thumb thumb-3" src="{{item.IsFile?'images/file.png':'images/folder.png'}}" height="50px" width="50px">
+			<img class="thumb thumb-3" src="{{item.IsCommonPreview? item.Preview : item.Preview + '&token='+ authenticationData.Token}}" height="50px" width="50px">
 			<div class="size" ng-if="item.IsFile">{{item.DisplaySize}}</div>
 			<div class="lastmodified">{{item.DisplayLastModified}}</div>
 			<div class="name">{{item.Name}}</div>
