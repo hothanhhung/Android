@@ -16,6 +16,7 @@ public class FolderInfo {
     public String DisplayLastModified = "";
     public String Preview = "";
     public boolean IsCommonPreview = true;
+    public boolean IsVideo = false;
 
     public static double roundToDecimals(double d, int c)
     {

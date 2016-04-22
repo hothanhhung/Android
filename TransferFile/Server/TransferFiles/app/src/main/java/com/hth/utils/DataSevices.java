@@ -48,6 +48,7 @@ public class DataSevices {
                     File file = files[i];
                     FolderInfo folderInfo = new FolderInfo();
                     folderInfo.IsCommonPreview = true;
+                    folderInfo.IsVideo = false;
                     folderInfo.Name = file.getName();
                     folderInfo.FullPath = file.getPath();
                     folderInfo.IsFile = file.isFile();
@@ -58,9 +59,23 @@ public class DataSevices {
                         folderInfo.DisplayLastModified = FolderInfo.GetDisplaySize(folderInfo.LastModified);
                         String mimeType = AndroidWebServer.getMimeTypeForFile(folderInfo.FullPath);
                         if(mimeType!=null && mimeType.indexOf("image") == 0) {
-                            folderInfo.Preview = "/?api=preview&path="+folderInfo.FullPath;
+                            folderInfo.Preview = "/?api=preview&type=image&path="+folderInfo.FullPath;
                             folderInfo.IsCommonPreview = false;
-                        }else{
+                        }else if(mimeType!=null && mimeType.indexOf("video") == 0) {
+                            folderInfo.Preview = "/?api=preview&type=video&path="+folderInfo.FullPath;
+                            folderInfo.IsCommonPreview = false;
+                            folderInfo.IsVideo = true;
+                        }else if(mimeType!=null && mimeType.indexOf("text") == 0) {
+                            folderInfo.Preview = "images/text.png";
+                        }else if(mimeType!=null && mimeType.indexOf("audio") == 0) {
+                            folderInfo.Preview = "images/audio.png";
+                        }
+                        else if(mimeType!=null && mimeType.indexOf("video") == 0) {
+                            folderInfo.Preview = "/?api=preview&type=video&path="+folderInfo.FullPath;
+                            folderInfo.IsCommonPreview = false;
+                            folderInfo.IsVideo = true;
+                        }
+                        else{
                             folderInfo.Preview = "images/file.png";
                         }
                         fileInfos.add(folderInfo);
@@ -104,8 +119,13 @@ public class DataSevices {
 
     public static boolean hasAllowWithKey(Activity activity, int key)
     {
+        return hasAllowWithKey(activity, key, true);
+    }
+
+    public static boolean hasAllowWithKey(Activity activity, int key, boolean defaultValue)
+    {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
-        boolean result = sharedPref.getBoolean(activity.getResources().getString(key), true);
+        boolean result = sharedPref.getBoolean(activity.getResources().getString(key), defaultValue);
         return result;
     }
 

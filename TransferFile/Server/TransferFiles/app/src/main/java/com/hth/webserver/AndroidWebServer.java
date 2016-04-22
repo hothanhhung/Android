@@ -10,6 +10,7 @@ import com.hth.data.Authentication;
 import com.hth.data.FolderInfo;
 import com.hth.filestransfer.R;
 import com.hth.utils.DataSevices;
+import com.hth.utils.ImageProcess;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -270,44 +271,38 @@ public class AndroidWebServer extends  NanoHTTPD {
     final int PREVIEW_WIDTH = 80;
     final int PREVIEW_HEIGHT = 80;
 
-    private Response getPreview(String uri, Map<String, String> parameters)
-    {
+    private Response getPreview(String uri, Map<String, String> parameters) {
         try {
-           // if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download)) {
-             //   return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Not Allowed");
+            // if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download)) {
+            //   return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Not Allowed");
             //}
 
 
             String fullPath = parameters.get("path");
-            File file = new File(fullPath);
+            String type = parameters.get("type");
+            Bitmap resized = null;
 
-            if(file.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                int width = PREVIEW_WIDTH;
-                int height = PREVIEW_HEIGHT;
-
-                height = myBitmap.getHeight() * width / myBitmap.getWidth();
-                if(height > PREVIEW_HEIGHT){
-                    height = PREVIEW_HEIGHT;
-                    width = width * myBitmap.getWidth() / myBitmap.getHeight();
-                }
-                Bitmap resized = Bitmap.createScaledBitmap(myBitmap, width, height, true);
+            if(type.equalsIgnoreCase("image")){
+                resized = ImageProcess.decodeBitmapFromFile(fullPath, PREVIEW_WIDTH, PREVIEW_HEIGHT);}
+            else if(type.equalsIgnoreCase("video")){
+                resized = ImageProcess.createVideoThumbnail(fullPath);
+            }
+            if (resized != null) {
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 resized.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                 byte[] bitmapdata = bos.toByteArray();
                 ByteArrayInputStream inputStream = new ByteArrayInputStream(bitmapdata);
 
-                NanoHTTPD.Response res = newChunkedResponse(Response.Status.OK, "application/octet-stream",inputStream);
-                res.addHeader("Content-Disposition", "attachment; filename="+ file.getName());
+                NanoHTTPD.Response res = newChunkedResponse(Response.Status.OK, "image/png", inputStream);
                 return res;
-            }else{
-                return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Found");
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
+           // return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
         }
+        NanoHTTPD.Response res = newChunkedResponse(Response.Status.OK, "image/png", null);
+        return res;
     }
 
     private Response getAuthenticationResponse() {
@@ -337,6 +332,7 @@ public class AndroidWebServer extends  NanoHTTPD {
 
     private String getConnectionWithKey(Map<String, String> header, String key)
     {
+        if(key.isEmpty()) key = EMPTY_KEY;
         return Base64.encodeToString(key.getBytes(), Base64.DEFAULT).trim();
     }
 
