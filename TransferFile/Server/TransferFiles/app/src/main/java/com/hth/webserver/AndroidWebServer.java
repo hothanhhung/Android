@@ -124,7 +124,7 @@ public class AndroidWebServer extends  NanoHTTPD {
         String token = parameters.get("token");
         String key = DataSevices.getStringValueOfKey(activity, R.string.pref_sync_key_connection);
         String tokenKey = getConnectionWithKey(header, key);
-        if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key) || apiName.equals("login") || tokenKey.equals(token)) {
+        if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key, false) || apiName.equals("login") || tokenKey.equals(token)) {
             switch (apiName.toLowerCase()) {
                 case "login":
                     return getLoginResponse(header, parameters);
@@ -313,7 +313,7 @@ public class AndroidWebServer extends  NanoHTTPD {
     }
 
     private Response getLoginResponse(Map<String, String> header, Map<String, String> parameters){
-        if(DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key))
+        if(DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key, false))
         {
             String key = parameters.get("key");
             if(DataSevices.getStringValueOfKey(activity, R.string.pref_sync_key_connection).equals(key))
@@ -342,7 +342,7 @@ public class AndroidWebServer extends  NanoHTTPD {
         obj.AllowDownload = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download);
         obj.AllowRename = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_rename);
         obj.AllowDelete = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_delete);
-        obj.EnableKey = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key);
+        obj.EnableKey = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key, false);
         return  obj;
     }
     public static void copy(File src, File dst) throws IOException {

@@ -127,7 +127,7 @@
 <div ng-if="authenticationData.Token.length < 1">
 <div>{{authenticationData.Message}}</div>
 <input type="text" ng-model="key" />
-<input type="button" value="Login" name="login" ng-click="login(key)">
+<input type="button" value="Login" name="login" ng-click="login(key)" ng-enter="login(key)">
 </div>
 <div ng-if="authenticationData.Token.length > 0" class="app-content" style="padding-bottom:50px">
 
@@ -162,8 +162,8 @@ Drop or click here to select uploaded files
 		</div>
 		<div class="pointerHover" ng-click="item.IsFile?getFile(item):getDirectories(item, false)" style="text-decoration: none;">
 			<div class="imageBox">
-				<div class="play" ng-if="item.IsVideo" ><img src="images/play.png" height="30px" width="30px"/> </div>
-				<img class="thumb thumb-3 imageElement" src="{{item.IsCommonPreview? item.Preview : item.Preview + '&token='+ authenticationData.Token}}">
+				<div class="play" ng-if="item.IsVideo" ><img lazy-src="images/play.png" height="30px" width="30px"/> </div>
+				<img class="thumb thumb-3 imageElement" lazy-src="{{item.IsCommonPreview? item.Preview : item.Preview + '&token='+ authenticationData.Token}}">
 			</div>
 			<div class="size" ng-if="item.IsFile">{{item.DisplaySize}}</div>
 			<div class="lastmodified">{{item.DisplayLastModified}}</div>
