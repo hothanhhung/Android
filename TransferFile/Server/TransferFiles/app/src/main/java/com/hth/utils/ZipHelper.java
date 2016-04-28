@@ -16,6 +16,7 @@ public class ZipHelper {
         FileOutputStream fW = null;
         fW = new FileOutputStream(nameZipFile);
         zip = new ZipOutputStream(fW);
+        zip.setLevel(ZipOutputStream.STORED);
         addFolderToZip("", dirName, zip);
         zip.close();
         fW.close();
@@ -23,7 +24,7 @@ public class ZipHelper {
 
     private static void addFolderToZip(String path, String srcFolder, ZipOutputStream zip) throws IOException {
         File folder = new File(srcFolder);
-        if (folder.list().length == 0) {
+        if (folder == null || folder.list() != null || folder.list().length == 0) {
             addFileToZip(path , srcFolder, zip, true);
         }
         else {
@@ -40,6 +41,7 @@ public class ZipHelper {
 
     private static void addFileToZip(String path, String srcFile, ZipOutputStream zip, boolean flag) throws IOException {
         File folder = new File(srcFile);
+        if(folder == null) return;
         if (flag) {
             zip.putNextEntry(new ZipEntry(path + "/" +folder.getName() + "/"));
         }

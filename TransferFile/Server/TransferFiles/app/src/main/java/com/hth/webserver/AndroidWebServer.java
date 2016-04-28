@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hth.data.Authentication;
@@ -11,6 +12,8 @@ import com.hth.data.FolderInfo;
 import com.hth.filestransfer.R;
 import com.hth.utils.DataSevices;
 import com.hth.utils.ImageProcess;
+import com.hth.utils.MemoryHelper;
+import com.hth.utils.ZipHelper;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -138,6 +141,8 @@ public class AndroidWebServer extends  NanoHTTPD {
                     return rename(uri, method, header, parameters);
                 case "delete":
                     return delete(uri, method, header, parameters);
+                case "zip":
+                    return sendFolder(uri, method, header, parameters);
                 case "get":
                     return sendFile(uri, method, header, parameters);
                 case "preview":
@@ -151,10 +156,44 @@ public class AndroidWebServer extends  NanoHTTPD {
         }
     }
 
+    private Response sendFolder(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
+    {
+        try {
+            if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download_folder)) {
+                return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Not Allowed");
+            }
+
+            String fullPath = parameters.get("path");
+            File file = new File(fullPath);
+
+            if(file.exists()) {
+                File cacheFolder = MemoryHelper.getCacheFolder(activity);
+                if(cacheFolder.getFreeSpace() > file.length())
+                {
+                    File zipFile = new File(cacheFolder.getPath()+"/"+file.getName()+".zip");
+                    Log.d("sendFolder",zipFile.getPath());
+                    ZipHelper.zipDir(file.getPath(), zipFile.getPath());
+                    InputStream inputStream = new FileInputStream(zipFile);
+                    NanoHTTPD.Response res = newChunkedResponse(Response.Status.OK, "application/octet-stream",inputStream);
+                    res.addHeader("Content-Disposition", "attachment; filename="+ file.getName()+".zip");
+                    return res;
+                }else {
+                    return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Enough Memory");
+                }
+            }else{
+                return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Found");
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
+        }
+    }
+
     private Response sendFile(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
     {
         try {
-            if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download)) {
+            if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download_file)) {
                 return newFixedLengthResponse(Response.Status.METHOD_NOT_ALLOWED, NanoHTTPD.MIME_PLAINTEXT, "Not Allowed");
             }
 
@@ -268,8 +307,8 @@ public class AndroidWebServer extends  NanoHTTPD {
         }
     }
 
-    final int PREVIEW_WIDTH = 80;
-    final int PREVIEW_HEIGHT = 80;
+    final int PREVIEW_WIDTH = 120;
+    final int PREVIEW_HEIGHT = 120;
 
     private Response getPreview(String uri, Map<String, String> parameters) {
         try {
@@ -339,7 +378,8 @@ public class AndroidWebServer extends  NanoHTTPD {
     private Authentication getAuthentication() {
         Authentication obj = new Authentication();
         obj.AllowUpload = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_upload);
-        obj.AllowDownload = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download);
+        obj.AllowDownloadFolder = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download_folder);
+        obj.AllowDownloadFile = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download_file);
         obj.AllowRename = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_rename);
         obj.AllowDelete = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_delete);
         obj.EnableKey = DataSevices.hasAllowWithKey(activity, R.string.pref_sync_enable_key, false);

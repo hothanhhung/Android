@@ -169,7 +169,7 @@ Drop or click here to select uploaded files
 	</div>
     <div ng-repeat="item in dataInfo.directories" class="itembox" style="height:{{UISize.ItemBoxHeight}};width:{{UISize.ItemBoxWidth}}">
 		<div class = "menuAction">
-			<img class="pointerHover" ng-if="authenticationData.AllowRename && !item.IsFile" ng-click="downItem(item)" src="images/tan-zip.png" height="{{UISize.IconActionSize}}" width="{{UISize.IconActionSize}}">
+			<img class="pointerHover" ng-if="authenticationData.AllowDownloadFolder && !item.IsFile" ng-click="zipAndDownItem(item)" src="images/tan-zip.png" height="{{UISize.IconActionSize}}" width="{{UISize.IconActionSize}}">
 			<img class="pointerHover" ng-if="authenticationData.AllowRename" ng-click="renameItem(item)" src="images/tan-rename.png" height="{{UISize.IconActionSize}}" width="{{UISize.IconActionSize}}">
 			<img class="pointerHover" ng-if="authenticationData.AllowDelete" ng-click="deleteItem(item)" src="images/tan-delete.png" height="{{UISize.IconActionSize}}" width="{{UISize.IconActionSize}}">
 		</div>

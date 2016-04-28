@@ -12,7 +12,8 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 						directories:[]
 						};
 	$scope.authenticationData={
-		AllowDownload:true,
+		AllowDownloadFolder:true,
+		AllowDownloadFile:true,
 		AllowUpload:true,
 		AllowRename:true,
 		AllowDelete:true,
@@ -222,11 +223,20 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 			*/
     };
 	
-	$scope.downItem = function(selectedObject){
-		alert('down');
+	$scope.zipAndDownItem = function(selectedObject){
+		if($scope.authenticationData.AllowDownloadFolder)
+        		{
+        			 // var element = angular.element('<a/>');
+        							 // element.attr({
+        								 // href: '/?api=get&path='+selectedObject.FullPath,
+        								 // target: '_blank',
+        								 // download: selectedObject.Name
+        							 // })[0].click();
+        			window.open('/?'+ genAuth() + '&api=zip&path='+selectedObject.FullPath, "_blank");
+        		}
 	}
 	$scope.getFile = function(selectedObject){
-		if($scope.authenticationData.AllowRename) 
+		if($scope.authenticationData.AllowDownloadFile)
 		{
 			 // var element = angular.element('<a/>');
 							 // element.attr({

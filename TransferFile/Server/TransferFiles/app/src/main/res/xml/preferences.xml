@@ -21,8 +21,13 @@
             android:summary="Allow client upload files"
             android:defaultValue="true" />
         <CheckBoxPreference
-            android:key="@string/pref_sync_allow_download"
-            android:title="Allow Download"
+            android:key="@string/pref_sync_allow_download_folder"
+            android:title="Allow Download Folder"
+            android:summary="Allow client zip and download folders"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_sync_allow_download_file"
+            android:title="Allow Download Files"
             android:summary="Allow client download files"
             android:defaultValue="true" />
         <CheckBoxPreference

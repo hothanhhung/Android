@@ -5,7 +5,8 @@
     <string name="stop">Stop</string>
     <string name="start">Start</string>
     <string name="pref_sync_allow_upload">pref_sync_allow_upload</string>
-    <string name="pref_sync_allow_download">pref_sync_allow_download</string>
+    <string name="pref_sync_allow_download_folder">pref_sync_allow_download_folder</string>
+    <string name="pref_sync_allow_download_file">pref_sync_allow_download_file</string>
     <string name="pref_sync_allow_rename">pref_sync_allow_rename</string>
     <string name="pref_sync_allow_delete">pref_sync_allow_delete</string>
     <string name="pref_sync_enable_key">pref_sync_enable_key</string>
