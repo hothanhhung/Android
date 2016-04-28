@@ -140,73 +140,83 @@ angular.module('myApp.services', []).service('DataService', function(){
   */
   var data = [{
 				Name :'hung ',
-				FullPath:'hung dep trai1',
+				Preview:'images/folder.png',
 				Size:"",
 				IsFile: false ,
 				DisplayLastModified:'10-1-2003',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'hung 2',
-				FullPath:'hung dep trai2',
+				Preview:'images/folder.png',
 				Size:"14G",
 				IsFile: false ,
 				DisplayLastModified:'23-2-2013',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'có con chim là chim chich chè',
-				FullPath:'hung dep trai',
+				Preview:'images/folder.png',
 				Size:"",
 				IsFile: false ,
 				DisplayLastModified:'10-1-2003',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'hung 231',
-				FullPath:'hung dep trai3',
+				Preview:'images/folder.png',
 				Size:"134B",
 				IsFile: false ,
 				DisplayLastModified:'10-11-2014',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'hung ',
-				FullPath:'hung dep trai',
+				Preview:'images/folder.png',
 				Size:"",
 				IsFile: false ,
 				DisplayLastModified:'10-1-2003',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'hung 2',
-				FullPath:'hung dep trai',
+				Preview:'images/folder.png',
 				Size:"14G",
 				IsFile: false ,
 				DisplayLastModified:'23-2-2013',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'hung 231',
-				FullPath:'hung dep trai',
+				Preview:'images/file.png',
 				Size:"134B",
 				IsFile: true ,
 				DisplayLastModified:'10-11-2014',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'có con chim là chim chich chè',
-				FullPath:'hung dep trai',
+				Preview:'images/file.png',
 				Size:"",
-				IsFile: false ,
+				IsFile: true ,
 				DisplayLastModified:'10-1-2003',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'hung 2',
-				FullPath:'hung dep trai',
+				Preview:'images/file.png',
 				Size:"14G",
 				IsFile: true ,
 				DisplayLastModified:'23-2-2013',
+				IsCommonPreview: true
 			  },
 			  {
 				Name :'hung 231',
-				FullPath:'hung dep trai',
+				Preview:'images/file.png',
 				Size:"134B",
 				IsFile: true ,
 				DisplayLastModified:'10-11-2014',
+				IsCommonPreview: true
 			  }];
   return data;
   }

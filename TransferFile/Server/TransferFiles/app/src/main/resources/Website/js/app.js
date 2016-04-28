@@ -1,4 +1,4 @@
-angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.bootstrap'])
+angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.bootstrap','ngMaterial'])
 .controller("listObjectControl", ['$scope', '$http', 'DataService','$ngBootbox','$modal', function ($scope, $http, DataService, $ngBootbox, $modal){
 	$scope.uploadingFiles=[];
 	$scope.currentPath='';
@@ -21,6 +21,67 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 		Message:''
 	};
 	
+	$scope.UISizes=
+		[
+			{
+				IconSize:"30px",
+				IconActionSize:"20px",
+				ImageSize:"50px",
+				BoxSize:"50px",
+				ItemBoxHeight:"100px",
+				ItemBoxWidth:"80px"
+			},
+			{
+				IconSize:"40px",
+				IconActionSize:"25px",
+				ImageSize:"60px",
+				BoxSize:"60px",
+				ItemBoxHeight:"110px",
+				ItemBoxWidth:"90px"
+			},
+			{
+				IconSize:"50px",
+				IconActionSize:"25px",
+				ImageSize:"70px",
+				BoxSize:"70px",
+				ItemBoxHeight:"120px",
+				ItemBoxWidth:"100px"
+			},
+			{
+				IconSize:"60px",
+				IconActionSize:"30px",
+				ImageSize:"80px",
+				BoxSize:"80px",
+				ItemBoxHeight:"130px",
+				ItemBoxWidth:"110px"
+			},
+			{
+				IconSize:"70px",
+				IconActionSize:"30px",
+				ImageSize:"90px",
+				BoxSize:"90px",
+				ItemBoxHeight:"140px",
+				ItemBoxWidth:"120px"
+			},
+			{
+				IconSize:"70px",
+				IconActionSize:"35px",
+				ImageSize:"110px",
+				BoxSize:"110px",
+				ItemBoxHeight:"160px",
+				ItemBoxWidth:"140px"
+			},
+			{
+				IconSize:"70px",
+				IconActionSize:"35px",
+				ImageSize:"130px",
+				BoxSize:"130px",
+				ItemBoxHeight:"180px",
+				ItemBoxWidth:"160px"
+			}
+		];
+	$scope.UISize = $scope.UISizes[0];
+	
 	//$scope.dataInfo.directories = DataService.getDirectories('/');
 	//getDirectories($scope.rootPath);
 	
@@ -41,6 +102,21 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 			  });
 	}
 	$scope.login("");
+	
+	$scope.updateUISize = function(uiIndex)
+	{
+		var index = 0;
+		if(uiIndex)
+		{
+			if(uiIndex > 0 && uiIndex < $scope.UISizes.length) {
+				index = uiIndex - 1
+			}else if( uiIndex >= $scope.UISizes.length) {
+				index = $scope.UISizes.length - 1;
+			}
+		}
+		
+		$scope.UISize = $scope.UISizes[index];
+	}
 	
     $scope.uploadFile = function(){
 		if(typeof($scope.uploadingFiles) != undefined && $scope.uploadingFiles.length > 0)
@@ -146,6 +222,9 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 			*/
     };
 	
+	$scope.downItem = function(selectedObject){
+		alert('down');
+	}
 	$scope.getFile = function(selectedObject){
 		if($scope.authenticationData.AllowRename) 
 		{

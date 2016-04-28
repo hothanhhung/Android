@@ -7,18 +7,23 @@
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1,  minimum-scale=1, maximum-scale=1">
 <link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/angular-material.min.css" rel="stylesheet">
 <script src="js/libs/jquery.js"></script>
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/angular.min.js"></script>
 <script src="js/libs/bootbox.js"></script>
 <script src="js/libs/ui-bootstrap-tpls-0.14.3.min.js"></script>
+<script src="js/libs/angular-animate.min.js"></script>
+<script src="js/libs/angular-aria.min.js"></script>
+<script src="js/libs/angular-messages.min.js"></script>
+<script src="js/libs/angular-material.min.js"></script>
 <style>
 .itembox {
 	float: left;
 	margin: 10px;
 	padding: 10px;
-	width: 80px;
-	height: 100px;
+	/*width: 80px;
+	height: 100px;*/
 	align-items: center;
     text-align: center;
 	margin-top: 10px;
@@ -95,22 +100,24 @@
     line-height: initial;
 }
 .imageBox{
-	height: 50px;
-	width: 50px;
 }
 .imageElement{
 	height: auto;
 	width: auto;
-	max-width: 50px;
-	max-height: 50px;
+	/*max-width: 50px;
+	max-height: 50px;*/
 }
 .play{
 	position : absolute;
 	display:block;
-	height:30px;
-	width:30px;
+	/*height:30px;
+	width:30px;*/
 	margin:10px;
 	z-index:100;
+}
+
+#ex1Slider .slider-selection {
+	background: #BABABA;
 }
 </style>
 </head>
@@ -126,8 +133,8 @@
 </header>
 <div ng-if="authenticationData.Token.length < 1">
 <div>{{authenticationData.Message}}</div>
-<input type="text" ng-model="key" />
-<input type="button" value="Login" name="login" ng-click="login(key)" ng-enter="login(key)">
+<input type="text" ng-model="key" ng-enter="login(key)" />
+<input type="button" value="Login" name="login" ng-click="login(key)">
 </div>
 <div ng-if="authenticationData.Token.length > 0" class="app-content" style="padding-bottom:50px">
 
@@ -148,22 +155,28 @@ Drop or click here to select uploaded files
 <div class="uploadButton">
 </div>
 </div>
+<div style="width:100%; align:center">
+	<div style="width:90%; min-width:400px">
+		<md-slider flex="" class="md-primary" md-discrete="" ng-init="uiIndex=3; updateUISize(uiIndex)" ng-model="uiIndex" ng-change="updateUISize(uiIndex)" step="1" min="1" max="7" aria-label="rating">
+	</div>
+</div>
 <div class="contentbox">
-	<div class="itembox" ng-if="parentPaths.length>1" ng-click="getDirectories(parentPaths[parentPaths.length-2], true)">
+	<div class="itembox" style="height:{{UISize.ItemBoxHeight}};width:{{UISize.ItemBoxWidth}}" ng-if="parentPaths.length>1" ng-click="getDirectories(parentPaths[parentPaths.length-2], true)">
 		<a href="javascript:void(0)" style="text-decoration: none;">
 			<img class="thumb thumb-3" src="images/3dots.png" height="50px" width="50px">
 			<div class="name">. . .</div>
 		</a>
 	</div>
-    <div ng-repeat="item in dataInfo.directories" class="itembox">
+    <div ng-repeat="item in dataInfo.directories" class="itembox" style="height:{{UISize.ItemBoxHeight}};width:{{UISize.ItemBoxWidth}}">
 		<div class = "menuAction">
-			<img class="pointerHover" ng-if="authenticationData.AllowRename" ng-click="renameItem(item)" src="images/tan-rename.png" height="20px" width="20px">
-			<img class="pointerHover" ng-if="authenticationData.AllowDelete" ng-click="deleteItem(item)" src="images/tan-delete.png" height="20px" width="20px">
+			<img class="pointerHover" ng-if="authenticationData.AllowRename && !item.IsFile" ng-click="downItem(item)" src="images/tan-zip.png" height="{{UISize.IconActionSize}}" width="{{UISize.IconActionSize}}">
+			<img class="pointerHover" ng-if="authenticationData.AllowRename" ng-click="renameItem(item)" src="images/tan-rename.png" height="{{UISize.IconActionSize}}" width="{{UISize.IconActionSize}}">
+			<img class="pointerHover" ng-if="authenticationData.AllowDelete" ng-click="deleteItem(item)" src="images/tan-delete.png" height="{{UISize.IconActionSize}}" width="{{UISize.IconActionSize}}">
 		</div>
 		<div class="pointerHover" ng-click="item.IsFile?getFile(item):getDirectories(item, false)" style="text-decoration: none;">
-			<div class="imageBox">
-				<div class="play" ng-if="item.IsVideo" ><img lazy-src="images/play.png" height="30px" width="30px"/> </div>
-				<img class="thumb thumb-3 imageElement" lazy-src="{{item.IsCommonPreview? item.Preview : item.Preview + '&token='+ authenticationData.Token}}">
+			<div class="imageBox" style="height: {{UISize.BoxSize}; width:{{UISize.BoxSize}">
+				<div class="play" ng-if="item.IsVideo" ><img lazy-src="images/play.png" height="{{UISize.IconSize}}"; width="{{UISize.IconSize}}"/> </div>
+				<img class="thumb thumb-3 imageElement" lazy-src="{{item.IsCommonPreview? item.Preview : item.Preview + '&token='+ authenticationData.Token}}"  style="max-height:{{UISize.ImageSize}};max-width:{{UISize.ImageSize}}">
 			</div>
 			<div class="size" ng-if="item.IsFile">{{item.DisplaySize}}</div>
 			<div class="lastmodified">{{item.DisplayLastModified}}</div>
