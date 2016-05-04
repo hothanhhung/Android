@@ -72,28 +72,36 @@ public class AndroidWebServer extends  NanoHTTPD {
             return true;
         }
     }
-/*
+
     @Override
     public Response serve(IHTTPSession session) {
-        String msg = "<html><body><h1>Hello server</h1>\n";
-        Map<String, String> parms = session.getParms();
-        if (parms.get("username") == null) {
-            msg += "<form action='?' method='get'>\n  <p>Your name: <input type='text' name='username'></p>\n" + "</form>\n";
-        } else {
-            msg += "<p>Hello, " + parms.get("username") + "!</p>";
+        Map<String, String> files = new HashMap<String, String>();
+        Method method = session.getMethod();
+        if (Method.PUT.equals(method) || Method.POST.equals(method)) {
+            try {
+                session.parseBody(files);
+            } catch (IOException ioe) {
+                return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, "SERVER INTERNAL ERROR: IOException: " + ioe.getMessage());
+            } catch (ResponseException re) {
+                return newFixedLengthResponse(re.getStatus(), NanoHTTPD.MIME_PLAINTEXT, re.getMessage());
+            }
         }
-        return newFixedLengthResponse( msg + "</body></html>\n" );
+
+        Map<String, String> parms = session.getParms();
+        //parms.put(NanoHTTPD.QUERY_STRING_PARAMETER, session.getQueryParameterString());
+        return serve(session, session.getUri(), method, session.getHeaders(), parms, files);
 
     }
-*/
-    @Override
-    public Response serve(String uri, Method method,
+
+
+    public Response serve(IHTTPSession session,
+                          String uri, Method method,
                           Map<String, String> header,
                           Map<String, String> parameters,
                           Map<String, String> files) {
 
         if(parameters.size() > 1 && uri != null && uri.equalsIgnoreCase("/"))
-            return responseOfAPI(uri, method, header, parameters, files);
+            return responseOfAPI(session, uri, method, header, parameters, files);
 
         if(uri == null || uri.isEmpty() || uri.equalsIgnoreCase("/")) uri = "/index.html";
         try {
@@ -121,7 +129,7 @@ public class AndroidWebServer extends  NanoHTTPD {
 
     }
 
-    private Response responseOfAPI(String uri, Method method, Map<String, String> header, Map<String, String> parameters, Map<String, String> files)
+    private Response responseOfAPI(IHTTPSession session, String uri, Method method, Map<String, String> header, Map<String, String> parameters, Map<String, String> files)
     {
         String apiName = parameters.get("api");
         String token = parameters.get("token");
@@ -142,7 +150,7 @@ public class AndroidWebServer extends  NanoHTTPD {
                 case "delete":
                     return delete(uri, method, header, parameters);
                 case "zip":
-                    return sendFolder(uri, method, header, parameters);
+                    return sendFolder(session, uri, method, header, parameters);
                 case "get":
                     return sendFile(uri, method, header, parameters);
                 case "preview":
@@ -156,7 +164,7 @@ public class AndroidWebServer extends  NanoHTTPD {
         }
     }
 
-    private Response sendFolder(String uri, Method method, Map<String, String> header, Map<String, String> parameters)
+    private Response sendFolder(IHTTPSession session,String uri, Method method, Map<String, String> header, Map<String, String> parameters)
     {
         try {
             if(!DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_download_folder)) {
@@ -168,9 +176,10 @@ public class AndroidWebServer extends  NanoHTTPD {
 
             if(file.exists()) {
                 File cacheFolder = MemoryHelper.getCacheFolder(activity);
-                if(cacheFolder.getFreeSpace() > file.length())
+                if(cacheFolder.getFreeSpace() > file.length() + 50000000l)
                 {
                     File zipFile = new File(cacheFolder.getPath()+"/"+file.getName()+".zip");
+                    session.addFileToDeleteWhenDoneResponse(zipFile.getPath());
                     Log.d("sendFolder",zipFile.getPath());
                     ZipHelper.zipDir(file.getPath(), zipFile.getPath());
                     InputStream inputStream = new FileInputStream(zipFile);
@@ -298,7 +307,7 @@ public class AndroidWebServer extends  NanoHTTPD {
     {
         String fullPath = parameters.get("path");
         if(fullPath!=null && DataSevices.isExist(fullPath)) {
-            ArrayList<FolderInfo> obj = DataSevices.getDirInfo(fullPath);
+            ArrayList<FolderInfo> obj = DataSevices.getDirInfo(fullPath, DataSevices.hasAllowWithKey(activity, R.string.pref_sync_allow_preview));
             Gson gson = new Gson();
             String json = gson.toJson(obj);
             return newFixedLengthResponse(Response.Status.OK, "application/json", json);

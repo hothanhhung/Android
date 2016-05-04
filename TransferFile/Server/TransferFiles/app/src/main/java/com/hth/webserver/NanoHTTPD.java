@@ -873,6 +873,7 @@ public abstract class NanoHTTPD {
             } finally {
                 safeClose(r);
                 this.tempFileManager.clear();
+                this.deleleFileInFileToDeleteWhenDoneResponse();
             }
         }
 
@@ -1109,6 +1110,33 @@ public abstract class NanoHTTPD {
             }
             return path;
         }
+
+        private ArrayList<String> FileToDeleteWhenDoneResponse;
+        public void addFileToDeleteWhenDoneResponse(String filePath)
+        {
+            if(FileToDeleteWhenDoneResponse == null)
+            {
+                FileToDeleteWhenDoneResponse = new ArrayList<>();
+            }
+            FileToDeleteWhenDoneResponse.add(filePath);
+        }
+
+        private void deleleFileInFileToDeleteWhenDoneResponse()
+        {
+            if(FileToDeleteWhenDoneResponse!=null) {
+                for (int i = 0; i < FileToDeleteWhenDoneResponse.size(); i++) {
+                    try {
+                            File file = new File(FileToDeleteWhenDoneResponse.get(i));
+                            if (file != null && file.exists()) {
+                                file.delete();
+                            }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                FileToDeleteWhenDoneResponse.clear();
+            }
+        }
     }
 
     /**
@@ -1143,6 +1171,8 @@ public abstract class NanoHTTPD {
          *            map to modify
          */
         void parseBody(Map<String, String> files) throws IOException, ResponseException;
+
+        void addFileToDeleteWhenDoneResponse(String filePath);
     }
 
     /**

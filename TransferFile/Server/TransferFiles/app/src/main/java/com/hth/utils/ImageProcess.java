@@ -13,7 +13,7 @@ public class ImageProcess {
     public static Bitmap createVideoThumbnail(String filePath)
     {
         try {
-            return ThumbnailUtils.createVideoThumbnail(filePath, MediaStore.Video.Thumbnails.MICRO_KIND);
+            return ThumbnailUtils.createVideoThumbnail(filePath, MediaStore.Video.Thumbnails.MINI_KIND);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -24,7 +24,7 @@ public class ZipHelper {
 
     private static void addFolderToZip(String path, String srcFolder, ZipOutputStream zip) throws IOException {
         File folder = new File(srcFolder);
-        if (folder == null || folder.list() != null || folder.list().length == 0) {
+        if (folder == null || folder.list() == null || folder.list().length == 0) {
             addFileToZip(path , srcFolder, zip, true);
         }
         else {

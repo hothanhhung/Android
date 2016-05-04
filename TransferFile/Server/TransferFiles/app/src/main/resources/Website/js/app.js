@@ -33,7 +33,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				ItemBoxWidth:"80px"
 			},
 			{
-				IconSize:"40px",
+				IconSize:"30px",
 				IconActionSize:"25px",
 				ImageSize:"60px",
 				BoxSize:"60px",
@@ -41,7 +41,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				ItemBoxWidth:"90px"
 			},
 			{
-				IconSize:"50px",
+				IconSize:"30px",
 				IconActionSize:"25px",
 				ImageSize:"70px",
 				BoxSize:"70px",
@@ -49,7 +49,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				ItemBoxWidth:"100px"
 			},
 			{
-				IconSize:"60px",
+				IconSize:"30px",
 				IconActionSize:"30px",
 				ImageSize:"80px",
 				BoxSize:"80px",
@@ -57,7 +57,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				ItemBoxWidth:"110px"
 			},
 			{
-				IconSize:"70px",
+				IconSize:"30px",
 				IconActionSize:"30px",
 				ImageSize:"90px",
 				BoxSize:"90px",
@@ -65,7 +65,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				ItemBoxWidth:"120px"
 			},
 			{
-				IconSize:"70px",
+				IconSize:"30px",
 				IconActionSize:"35px",
 				ImageSize:"110px",
 				BoxSize:"110px",
@@ -73,7 +73,7 @@ angular.module('myApp', ['myApp.services','myApp.directives','ngBootbox','ui.boo
 				ItemBoxWidth:"140px"
 			},
 			{
-				IconSize:"70px",
+				IconSize:"30px",
 				IconActionSize:"35px",
 				ImageSize:"130px",
 				BoxSize:"130px",

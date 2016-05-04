@@ -36,7 +36,7 @@ public class DataSevices {
         return lastPort;
     }
 
-    public static ArrayList<FolderInfo> getDirInfo(String dirPath)
+    public static ArrayList<FolderInfo> getDirInfo(String dirPath, boolean isPreview)
     {
         ArrayList<FolderInfo> folderInfos = new ArrayList<FolderInfo>();
         ArrayList<FolderInfo> fileInfos = new ArrayList<FolderInfo>();
@@ -59,22 +59,30 @@ public class DataSevices {
                         folderInfo.DisplayLastModified = FolderInfo.GetDisplaySize(folderInfo.LastModified);
                         String mimeType = AndroidWebServer.getMimeTypeForFile(folderInfo.FullPath);
                         if(mimeType!=null && mimeType.indexOf("image") == 0) {
-                            folderInfo.Preview = "/?api=preview&type=image&path="+folderInfo.FullPath;
-                            folderInfo.IsCommonPreview = false;
+                            if(isPreview) {
+                                folderInfo.Preview = "/?api=preview&type=image&path=" + folderInfo.FullPath;
+                                folderInfo.IsCommonPreview = false;
+                            }else{
+                                folderInfo.Preview = "images/image.png";
+                            }
                         }else if(mimeType!=null && mimeType.indexOf("video") == 0) {
-                            folderInfo.Preview = "/?api=preview&type=video&path="+folderInfo.FullPath;
-                            folderInfo.IsCommonPreview = false;
+                            if(isPreview) {
+                                folderInfo.Preview = "/?api=preview&type=video&path=" + folderInfo.FullPath;
+                                folderInfo.IsCommonPreview = false;
+                            }else{
+                                folderInfo.Preview = "images/video.png";
+                            }
                             folderInfo.IsVideo = true;
                         }else if(mimeType!=null && mimeType.indexOf("text") == 0) {
                             folderInfo.Preview = "images/text.png";
                         }else if(mimeType!=null && mimeType.indexOf("audio") == 0) {
                             folderInfo.Preview = "images/audio.png";
-                        }
+                        }/*
                         else if(mimeType!=null && mimeType.indexOf("video") == 0) {
                             folderInfo.Preview = "/?api=preview&type=video&path="+folderInfo.FullPath;
                             folderInfo.IsCommonPreview = false;
                             folderInfo.IsVideo = true;
-                        }
+                        }*/
                         else{
                             folderInfo.Preview = "images/file.png";
                         }

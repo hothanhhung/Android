@@ -156,8 +156,8 @@ Drop or click here to select uploaded files
 </div>
 </div>
 <div style="width:100%; align:center">
-	<div style="width:90%; min-width:400px">
-		<md-slider flex="" class="md-primary" md-discrete="" ng-init="uiIndex=3; updateUISize(uiIndex)" ng-model="uiIndex" ng-change="updateUISize(uiIndex)" step="1" min="1" max="7" aria-label="rating">
+	<div style="width:90%">
+		<md-slider flex="" class="md-primary" md-discrete="" ng-init="uiIndex=3; updateUISize(uiIndex)" ng-model="uiIndex" ng-change="updateUISize(uiIndex)" step="1" min="1" max="7" aria-label="rating"/>
 	</div>
 </div>
 <div class="contentbox">
@@ -175,8 +175,8 @@ Drop or click here to select uploaded files
 		</div>
 		<div class="pointerHover" ng-click="item.IsFile?getFile(item):getDirectories(item, false)" style="text-decoration: none;">
 			<div class="imageBox" style="height: {{UISize.BoxSize}; width:{{UISize.BoxSize}">
-				<div class="play" ng-if="item.IsVideo" ><img lazy-src="images/play.png" height="{{UISize.IconSize}}"; width="{{UISize.IconSize}}"/> </div>
-				<img class="thumb thumb-3 imageElement" lazy-src="{{item.IsCommonPreview? item.Preview : item.Preview + '&token='+ authenticationData.Token}}"  style="max-height:{{UISize.ImageSize}};max-width:{{UISize.ImageSize}}">
+				<div class="play" ng-if="item.IsVideo && !item.IsCommonPreview" ><img height="{{UISize.IconSize}}"; width="{{UISize.IconSize}}" style="background-color: transparent !important;" lazy-src="images/play.png"/> </div>
+				<img class="thumb thumb-3 imageElement" style="max-height:{{UISize.ImageSize}};max-width:{{UISize.ImageSize}}" lazy-src="{{item.IsCommonPreview? item.Preview : item.Preview + '&token='+ authenticationData.Token}}" >
 			</div>
 			<div class="size" ng-if="item.IsFile">{{item.DisplaySize}}</div>
 			<div class="lastmodified">{{item.DisplayLastModified}}</div>

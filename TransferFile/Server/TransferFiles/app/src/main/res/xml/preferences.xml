@@ -40,6 +40,12 @@
             android:title="Allow Delete"
             android:summary="Allow client delete files or folders"
             android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_sync_allow_preview"
+            android:title="Allow Preview"
+            android:summary="Allow client preview images and videos"
+            android:defaultValue="true" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
