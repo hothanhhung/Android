@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/menu_setting"
+        android:visible="false"
+        android:title="Cài đặt" />
+    <item android:id="@+id/menu_bookmark"
+        android:visible="false"
+        android:title="Đánh dấu" />
+    <item android:id="@+id/menu_hotApps"
+        android:visible="false"
+        android:title="Hot Apps" />
+    <item android:id="@+id/menu_moreApps"
+        android:visible="false"
+        android:title="More Apps" />
+    <item android:id="@+id/menu_about"
+        android:visible="false"
+        android:title="About" />
+</menu>

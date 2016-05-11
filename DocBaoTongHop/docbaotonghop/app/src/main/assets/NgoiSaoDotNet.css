@@ -1,0 +1,6 @@
+.adsbygoogle, #TOP_BANNER, [id*="LARGE_BANNER"], #FOOTER_BANNER, iframe {
+display:none !important;
+}
+#divHeader .btn_control_col_left {
+ top: 25px !important;
+}

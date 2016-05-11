@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical" >
+
+        <include layout="@layout/navigation_menu_header"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+
+        <com.hth.utils.MyWebview
+            android:id="@+id/viewArticleDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scrollbars = "vertical"
+            android:layout_weight="1"
+            android:text="@string/loading_string" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:adx="http://schemas.adflex.asia/apk/lib/ads"
+			android:orientation="vertical"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:id="@+id/adFlexView"
+            android:visibility="visible"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ImageButton
+        android:background="@android:drawable/list_selector_background"
+        android:layout_width="20dip"
+        android:layout_height="64dip"
+        android:id="@+id/btGobackHistory"
+        android:src="@drawable/moveleft"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:onClick="backToHistory"/>
+    <ImageButton
+        android:background="@android:drawable/list_selector_background"
+        android:layout_width="20dip"
+        android:layout_height="64dip"
+        android:id="@+id/btPreviousHistroy"
+        android:src="@drawable/moveright"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:onClick="previousHistory" />
+</RelativeLayout>

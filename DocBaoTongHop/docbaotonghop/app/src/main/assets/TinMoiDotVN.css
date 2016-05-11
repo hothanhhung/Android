@@ -1,0 +1,4 @@
+.adsbygoogle, iframe, #bs_ads_content {
+display:none !important;
+z-index:-1
+}

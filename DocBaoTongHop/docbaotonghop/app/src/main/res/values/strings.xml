@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Đọc báo tổng hợp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_catogory">Danh mục</string>
+    <string name="title_activity_category_detail">Nội dung danh mục</string>
+    <string name="title_activity_article_detail">Bài viết</string>
+    <string name="empty_string"></string>
+    <string name="head_home_string">Trang chủ</string>
+    <string name="head_category_string">Danh mục</string>
+    <string name="head_detail_string">Xem nội dung</string>
+    <string name="title_activity_doc_bao">Đọc báo tổng hợp</string>
+    <string name="example_string">example text</string>
+    <string name="title_activity_loading">Loading</string>
+    <string name="loading_string">loading...</string>
+    <string name="title_activity_flash">Doc bao</string>
+    <string name="ad_unit_id">ca-app-pub-4576847792571626/6052820398</string>
+    <string name="interstitial_unit_id">ca-app-pub-4576847792571626/9006286790</string>
+    <string name="error_internet_or_parser">Lỗi kết nối internet và phân tích dữ liệu</string>
+    <string name="content_about">Ứng dụng lấy nội dung từ các website. Bản quyền nội dung thuộc về tác giả.\nTác giả không chịu trách nhiệm về nội dung bài viết.</string>
+    <string name="title_activity_home_page">Đọc báo tổng hợp</string>
+    <string name="title_activity_setting">Cài đặt</string>
+    <string name="action_settings">Settings</string>
+    <string name="error_title">Lỗi</string>
+    <string name="error_internet">Chưa kết nối internet</string>
+    <string name="menu_moreApps_url">http://thanhhung1012.apk.vn/</string>
+    <string name="menu_hotApps_url">http://thanhhungapp.esy.es/</string>
+
+</resources>

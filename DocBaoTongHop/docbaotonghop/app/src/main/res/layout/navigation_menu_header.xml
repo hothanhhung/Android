@@ -1,0 +1,93 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/nagTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backgroundbar" >
+
+        <ImageButton
+            android:id="@+id/button_home_app"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="4dip"
+            android:adjustViewBounds="true"
+            android:background="@android:drawable/list_selector_background"
+            android:contentDescription="@string/empty_string"
+            android:onClick="navigationClick"
+            android:scaleType="fitCenter"
+            android:src="@drawable/home" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="25dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="40dip"
+            android:background="@android:color/transparent" >
+
+            <ImageButton
+                android:id="@+id/button_home"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_alignParentBottom="true"
+                android:background="@android:drawable/list_selector_background"
+                android:contentDescription="@string/empty_string"
+                android:onClick="navigationClick"
+                android:paddingBottom="1dip"
+                android:paddingTop="1dip"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_vietnamnet" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/title_activity_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dip"
+            android:gravity="center"
+            android:text="@string/head_home_string"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageButton
+                android:id="@+id/button_hot_apps"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="3dip"
+                android:adjustViewBounds="true"
+                android:background="@android:drawable/list_selector_background"
+                android:contentDescription="@string/empty_string"
+                android:onClick="navigationClick"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hotapps" />
+            
+            <ImageButton
+                android:id="@+id/button_more_apps"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:adjustViewBounds="true"
+                android:paddingRight="10dp"
+                android:background="@android:drawable/list_selector_background"
+                android:contentDescription="@string/empty_string"
+                android:onClick="navigationClick"
+                android:scaleType="fitCenter"
+                android:src="@drawable/moreapps" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</merge>

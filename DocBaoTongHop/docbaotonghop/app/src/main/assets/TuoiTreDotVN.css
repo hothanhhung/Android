@@ -1,0 +1,6 @@
+.layer-app, .block-ad, .adsbygoogle, .hide-468, iframe {
+display:none !important;
+}
+#comment_thread iframe {
+display:block !important;
+}

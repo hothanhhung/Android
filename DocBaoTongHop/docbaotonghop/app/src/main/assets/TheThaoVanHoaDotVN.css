@@ -1,0 +1,4 @@
+.adsbygoogle, ins, [id*="popupBlock"]{
+z-index:-1 !important;
+display:none !important;
+}

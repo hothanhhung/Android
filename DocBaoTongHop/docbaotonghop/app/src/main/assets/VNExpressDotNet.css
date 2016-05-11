@@ -1,0 +1,6 @@
+.adsbygoogle, [class^="banner_mobile"], #admbackground, [id^="LARGE_BANNER"], iframe[class^="ad"]{
+display:none !important;
+}
+#myvne_taskbar, .btn_control_col_left {
+top:0px !important;
+}

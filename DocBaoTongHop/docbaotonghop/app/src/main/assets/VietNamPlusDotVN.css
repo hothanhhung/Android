@@ -1,0 +1,3 @@
+.ads, iframe, [id^="adm_zone"], #admtpmPopup  {
+display:none !important;
+}

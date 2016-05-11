@@ -1,0 +1,386 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_vnexpress"
+                    android:tag="2" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_vietnamnet"
+                    android:tag="3" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_dantri"
+                    android:tag="13" />
+                
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_tuoitre"
+                    android:tag="19" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_nld"
+                    android:tag="4" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_baomoi"
+                    android:tag="34" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_vtcvn"
+                    android:tag="6" />
+                
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_ngoisaovn"
+                    android:tag="20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_nguoiduatin"
+                    android:tag="7" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_ngoisao"
+                    android:tag="1" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_xaluan"
+                    android:tag="9" />
+                
+                
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_baodatviet"
+                    android:tag="21" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_zing"
+                    android:tag="10" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_2sao"
+                    android:tag="11" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_vietgiaitri"
+                    android:tag="12" />
+                
+                
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_soha"
+                    android:tag="22" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_vov"
+                    android:tag="25" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_thanhnien"
+                    android:tag="5" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_tinmoi"
+                    android:tag="14" />
+                
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_tintuconline"
+                    android:tag="23" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_kenh14"
+                    android:tag="15" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_tiin"
+                    android:tag="16" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_doisongphapluat"
+                    android:tag="17" />
+                
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_vietnamplus"
+                    android:tag="24" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_thethaovanhoa"
+                    android:tag="29" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_bongdaplus"
+                    android:tag="26" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_thethao247"
+                    android:tag="27" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_bongda"
+                    android:tag="28" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_ictnews"
+                    android:tag="30" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_vnreview"
+                    android:tag="31" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_genk"
+                    android:tag="32" />
+                
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_tinhte"
+                    android:tag="33" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
