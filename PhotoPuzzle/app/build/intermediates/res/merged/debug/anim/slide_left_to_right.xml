@@ -7,4 +7,4 @@
         android:fromXDelta="-100%p"
         android:toXDelta="0" />
 
-</set>
+</set><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/anim/slide_left_to_right.xml -->

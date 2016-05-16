@@ -7,4 +7,4 @@
         android:showAsAction="always"
         android:title="@string/menu_shuffle"/>
 
-</menu>
+</menu><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/menu/activity_main.xml -->

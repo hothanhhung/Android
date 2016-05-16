@@ -5,4 +5,4 @@
     <item android:drawable="@color/blue" android:state_enabled="false"></item>
     <item android:drawable="@color/blue"></item>
 
-</selector>
+</selector><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/drawable/custom_button_blue.xml -->

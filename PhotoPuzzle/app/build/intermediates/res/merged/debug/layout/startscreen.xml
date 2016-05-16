@@ -55,4 +55,4 @@
             android:textSize="@dimen/score_size" />
     </LinearLayout>
 
-</RelativeLayout>
+</RelativeLayout><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/layout/startscreen.xml -->

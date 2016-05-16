@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/aboutTitle"
-        android:textColor="#000000"
+        android:textColor="#ff000000"
         android:textSize="@dimen/title_size" />
 
     <View
@@ -32,4 +32,4 @@
             android:textSize="@dimen/content_size" />
     </ScrollView>
 
-</LinearLayout>
+</LinearLayout><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/layout/about.xml -->

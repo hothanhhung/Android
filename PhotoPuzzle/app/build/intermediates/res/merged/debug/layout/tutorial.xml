@@ -29,4 +29,4 @@
         android:textColor="@color/white"
         android:textSize="@dimen/content_size" />
 
-</RelativeLayout>
+</RelativeLayout><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/layout/tutorial.xml -->

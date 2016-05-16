@@ -63,13 +63,14 @@ public class StartScreen extends Activity implements
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.bplay:
-			if (tut.getBoolean("SHOWTUT", true)) {
+			/*if (tut.getBoolean("SHOWTUT", true)) {
 				i = new Intent(StartScreen.this, Tutorial.class);
 				startActivity(i);
 			} else {
+*/
 				i = new Intent(StartScreen.this, GameScreen.class);
 				startActivity(i);
-			}
+		//	}
 
 			break;
 		case R.id.babout:
@@ -77,7 +78,7 @@ public class StartScreen extends Activity implements
 			startActivity(i);
 			break;
 		case R.id.btheme:
-			i = new Intent(StartScreen.this, SetTheme.class);
+			i = new Intent(StartScreen.this, PhotosScreen.class);
 			startActivity(i);
 			break;
 		}

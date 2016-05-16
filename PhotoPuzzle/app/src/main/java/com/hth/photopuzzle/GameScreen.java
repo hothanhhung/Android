@@ -22,11 +22,13 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hth.photopuzzle.R.string;
+import com.hth.photopuzzle.R;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -38,6 +40,7 @@ public class GameScreen extends Activity {
 	private static ArrayList randomArray = new ArrayList();
 	private static String interstitialId;
 	private int cntMove = 0;
+	private ImageView currentPhoto;
 	private boolean fTimeStart = false;
 	private boolean fTimeStop = true;
 	private Item item1;
@@ -92,22 +95,22 @@ public class GameScreen extends Activity {
 	private Position p8;
 	private Position p9;
 	Thread timestart;
-	private TextView tv1;
-	private TextView tv10;
-	private TextView tv11;
-	private TextView tv12;
-	private TextView tv13;
-	private TextView tv14;
-	private TextView tv15;
-	private TextView tv16;
-	private TextView tv2;
-	private TextView tv3;
-	private TextView tv4;
-	private TextView tv5;
-	private TextView tv6;
-	private TextView tv7;
-	private TextView tv8;
-	private TextView tv9;
+	private ImageView tv1;
+	private ImageView tv10;
+	private ImageView tv11;
+	private ImageView tv12;
+	private ImageView tv13;
+	private ImageView tv14;
+	private ImageView tv15;
+	private ImageView tv16;
+	private ImageView tv2;
+	private ImageView tv3;
+	private ImageView tv4;
+	private ImageView tv5;
+	private ImageView tv6;
+	private ImageView tv7;
+	private ImageView tv8;
+	private ImageView tv9;
 	private TextView tvMoves;
 	private TextView tvRecord;
 	private TextView tvRecordTime;
@@ -118,6 +121,7 @@ public class GameScreen extends Activity {
 	private static int themeChoosen;
 	private File picFile;
 	private AdView adView;
+	private AlertDialog alertGameComplete;
 	private InterstitialAd interstitialAd;
 	private boolean gameFinished = false;
 	private boolean shareScreen = false;
@@ -125,6 +129,70 @@ public class GameScreen extends Activity {
 	private void TextViewTimer() {
 		tvTime.setText(getString(R.string.time).concat(
 				timeFormat(Long.valueOf(lSeconds))));
+	}
+
+
+	private void buildMenuCompeteGame() {
+		Object localObject = new ArrayList();
+		((ArrayList) localObject).add(new MenuOption("Play Again", null, null));
+		((ArrayList) localObject).add(new MenuOption("Play Random", null, null));
+		((ArrayList) localObject).add(new MenuOption("Share", null, null));
+		((ArrayList) localObject).add(new MenuOption("Cancel", null, null));
+		localObject = new MenuOptionAdapter(getApplicationContext(), (ArrayList) localObject);
+		AlertDialog.Builder localBuilder = new AlertDialog.Builder(this);
+		localBuilder.setTitle("Game Complete");
+		localBuilder.setAdapter((ListAdapter) localObject, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+				switch (paramInt) {
+					case 0:
+						shuffle();
+						break;
+					case 1:
+						initialGame(true);
+						break;
+					case 2:
+						takeScreenshot();
+				}
+				paramDialogInterface.dismiss();
+			}
+		});
+		localBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			public void onCancel(DialogInterface paramDialogInterface) {
+			}
+		});
+
+
+		this.alertGameComplete = localBuilder.create();
+		this.alertGameComplete.setCanceledOnTouchOutside(false);
+/*
+		Builder dialog = new Builder(mContext);
+		dialog.setTitle(getDialogTitle());
+		dialog.setMessage(getString(R.string.dialog_playagain));
+		dialog.setPositiveButton(getString(R.string.yes),
+				new OnClickListener() {
+					public void onClick(DialogInterface var1, int var2) {
+						var1.dismiss();
+						shuffle();
+					}
+				});
+		dialog.setNegativeButton(getString(R.string.no), new OnClickListener() {
+			public void onClick(DialogInterface var1, int var2) {
+				var1.dismiss();
+				finish();
+			}
+		});
+		dialog.setNeutralButton(getString(R.string.share_screenshot),
+				new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						takeScreenshot();
+
+					}
+				});
+		dialog.setCancelable(false).show();
+*/
+
 	}
 
 	private boolean isValid(ArrayList var1) {
@@ -150,9 +218,9 @@ public class GameScreen extends Activity {
 	private String getDialogTitle() {
 		return cntMove < 100 ? getString(R.string.dialogtitle4)
 				: (cntMove < 150 ? getString(R.string.dialogtitle3)
-						: (cntMove < 200 ? this
-								.getString(R.string.dialogtitle2) : this
-								.getString(R.string.dialogtitle1)));
+				: (cntMove < 200 ? this
+				.getString(R.string.dialogtitle2) : this
+				.getString(R.string.dialogtitle1)));
 	}
 
 	private void startAdmobAds() {
@@ -185,6 +253,12 @@ public class GameScreen extends Activity {
 		}
 
 		return var2.concat(":").concat(var3).concat(":").concat(var4);
+	}
+
+	private void initialGame(boolean paramBoolean) {
+		PhotoManager.initialPhoto(this, paramBoolean);
+		currentPhoto.setImageBitmap(PhotoManager.getPhotoBitmap());
+		shuffle();
 	}
 
 	private boolean isArrayFull() {
@@ -294,59 +368,65 @@ public class GameScreen extends Activity {
 
 	}
 
-	private void completeGame() {
+	private void completeGame()
+	{
+		if (!gameFinished) {
+			gameFinished = true;
 
-		gameFinished = true;
+			if (interstitialAd.isLoaded())
+				interstitialAd.show();
 
-		if (interstitialAd.isLoaded())
-			interstitialAd.show();
+			if (Integer.parseInt(mSet.getRecord()) > cntMove
+					|| mSet.getRecord().equals("0")) {
+				if (cntMove != 0) {
+					mSet.setRecord(String.valueOf(cntMove));
+				}
 
-		if (Integer.parseInt(mSet.getRecord()) > cntMove
-				|| mSet.getRecord().equals("0")) {
-			if (cntMove != 0) {
-				mSet.setRecord(String.valueOf(cntMove));
+				recordSetText();
 			}
 
-			recordSetText();
+			if (Long.parseLong(mSet.getRecordTime()) > lSeconds
+					|| mSet.getRecordTime().equals("0")) {
+				if (lSeconds != 0) {
+					mSet.setRecordTime(String.valueOf(lSeconds));
+				}
+
+				recordTimeSetText();
+			}
+
+			timeStop();
+
+			this.alertGameComplete.setTitle(getDialogTitle());
+			this.alertGameComplete.show();
+			/*
+			Builder dialog = new Builder(mContext);
+			dialog.setTitle(getDialogTitle());
+			dialog.setMessage(getString(R.string.dialog_playagain));
+			dialog.setPositiveButton(getString(R.string.yes),
+					new OnClickListener() {
+						public void onClick(DialogInterface var1, int var2) {
+							var1.dismiss();
+							shuffle();
+						}
+					});
+			dialog.setNegativeButton(getString(R.string.no), new OnClickListener() {
+				public void onClick(DialogInterface var1, int var2) {
+					var1.dismiss();
+					finish();
+				}
+			});
+			dialog.setNeutralButton(getString(R.string.share_screenshot),
+					new OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							takeScreenshot();
+
+						}
+					});
+			dialog.setCancelable(false).show();
+			*/
 		}
-
-		if (Long.parseLong(mSet.getRecordTime()) > lSeconds
-				|| mSet.getRecordTime().equals("0")) {
-			if (lSeconds != 0) {
-				mSet.setRecordTime(String.valueOf(lSeconds));
-			}
-
-			recordTimeSetText();
-		}
-
-		timeStop();
-		Builder dialog = new Builder(mContext);
-		dialog.setTitle(getDialogTitle());
-		dialog.setMessage(getString(R.string.dialog_playagain));
-		dialog.setPositiveButton(getString(R.string.yes),
-				new OnClickListener() {
-					public void onClick(DialogInterface var1, int var2) {
-						var1.dismiss();
-						shuffle();
-					}
-				});
-		dialog.setNegativeButton(getString(R.string.no), new OnClickListener() {
-			public void onClick(DialogInterface var1, int var2) {
-				var1.dismiss();
-				finish();
-			}
-		});
-		dialog.setNeutralButton(getString(R.string.share_screenshot),
-				new OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						takeScreenshot();
-
-					}
-				});
-		dialog.setCancelable(false).show();
-
 	}
 
 	public void moveIncr() {
@@ -419,6 +499,7 @@ public class GameScreen extends Activity {
 		tv14 = null;
 		tv15 = null;
 		tv16 = null;
+		currentPhoto = null;
 		timeStop();
 		lSeconds = 0L;
 		timestart = null;
@@ -437,17 +518,8 @@ public class GameScreen extends Activity {
 	public void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
 		theme = getSharedPreferences("THEME", MODE_PRIVATE);
-		themeChoosen = theme.getInt("THEMECHOOSEN", 3);
-		if (themeChoosen == 1)
-			setContentView(R.layout.activity_main_1);
-		else if (themeChoosen == 2)
-			setContentView(R.layout.activity_main_2);
-		else if (themeChoosen == 3)
-			setContentView(R.layout.activity_main_3);
-		else if (themeChoosen == 4)
-			setContentView(R.layout.activity_main_4);
-		else
-			setContentView(R.layout.activity_main_5);
+		themeChoosen = theme.getInt("THEMECHOOSEN", 1);
+		setContentView(R.layout.activity_main_1);
 
 		mContext = this;
 		mSet = new SavedValues(mContext);
@@ -480,22 +552,22 @@ public class GameScreen extends Activity {
 		ll14 = (LinearLayout) findViewById(R.id.Cell42);
 		ll15 = (LinearLayout) findViewById(R.id.Cell43);
 		ll16 = (LinearLayout) findViewById(R.id.Cell44);
-		tv1 = (TextView) findViewById(R.id.tv1);
-		tv2 = (TextView) findViewById(R.id.tv2);
-		tv3 = (TextView) findViewById(R.id.tv3);
-		tv4 = (TextView) findViewById(R.id.tv4);
-		tv5 = (TextView) findViewById(R.id.tv5);
-		tv6 = (TextView) findViewById(R.id.tv6);
-		tv7 = (TextView) findViewById(R.id.tv7);
-		tv8 = (TextView) findViewById(R.id.tv8);
-		tv9 = (TextView) findViewById(R.id.tv9);
-		tv10 = (TextView) findViewById(R.id.tv10);
-		tv11 = (TextView) findViewById(R.id.tv11);
-		tv12 = (TextView) findViewById(R.id.tv12);
-		tv13 = (TextView) findViewById(R.id.tv13);
-		tv14 = (TextView) findViewById(R.id.tv14);
-		tv15 = (TextView) findViewById(R.id.tv15);
-		tv16 = (TextView) findViewById(R.id.tv16);
+		tv1 = (ImageView) findViewById(R.id.tv1);
+		tv2 = (ImageView) findViewById(R.id.tv2);
+		tv3 = (ImageView) findViewById(R.id.tv3);
+		tv4 = (ImageView) findViewById(R.id.tv4);
+		tv5 = (ImageView) findViewById(R.id.tv5);
+		tv6 = (ImageView) findViewById(R.id.tv6);
+		tv7 = (ImageView) findViewById(R.id.tv7);
+		tv8 = (ImageView) findViewById(R.id.tv8);
+		tv9 = (ImageView) findViewById(R.id.tv9);
+		tv10 = (ImageView) findViewById(R.id.tv10);
+		tv11 = (ImageView) findViewById(R.id.tv11);
+		tv12 = (ImageView) findViewById(R.id.tv12);
+		tv13 = (ImageView) findViewById(R.id.tv13);
+		tv14 = (ImageView) findViewById(R.id.tv14);
+		tv15 = (ImageView) findViewById(R.id.tv15);
+		tv16 = (ImageView) findViewById(R.id.tv16);
 		item1 = new Item(1, false, this);
 		item2 = new Item(2, false, this);
 		item3 = new Item(3, false, this);
@@ -528,14 +600,16 @@ public class GameScreen extends Activity {
 		orderArray.add(item14);
 		orderArray.add(item15);
 		orderArray.add(item16);
-		shuffle();
+		buildMenuCompeteGame();
+		this.currentPhoto = ((ImageView) findViewById(R.id.currentPhoto));
+		initialGame(false);
 		startAdmobAds();
 	}
 
 	private void takeScreenshot() {
 		shareScreen = true;
 		View view = findViewById(R.id.RLMain);// your layout id
-		view.getRootView();		
+		view.getRootView();
 
 		String state = Environment.getExternalStorageState();
 		if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -658,7 +732,7 @@ public class GameScreen extends Activity {
 
 								@Override
 								public void onClick(DialogInterface arg0,
-										int arg1) {
+													int arg1) {
 									timeStart();
 									arg0.dismiss();
 
@@ -669,7 +743,7 @@ public class GameScreen extends Activity {
 
 								@Override
 								public void onClick(DialogInterface arg0,
-										int arg1) {
+													int arg1) {
 									timeStop();
 									finish();
 
@@ -694,10 +768,10 @@ public class GameScreen extends Activity {
 							@Override
 							public void onClick(DialogInterface arg0, int arg1) {
 
-								Intent i = new Intent(GameScreen.this,
+								/*Intent i = new Intent(GameScreen.this,
 										StartScreen.class);
 								i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-								startActivity(i);
+								startActivity(i);*/
 								killGame();
 
 							}

@@ -3,8 +3,8 @@ package com.hth.photopuzzle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class Position {
 
@@ -16,10 +16,10 @@ public class Position {
 	private Position posRight;
 	private Position posTop;
 	private Item item;
-	private TextView tv;
+	private ImageView tv;
 	private int themeChoosen;
 
-	public Position(LinearLayout var1, TextView var2, int var3, Item var4,
+	public Position(LinearLayout var1, ImageView var2, int var3, Item var4,
 			GameScreen var5) {
 		linearLayout = var1;
 		main1 = new GameScreen();
@@ -73,64 +73,66 @@ public class Position {
 		return linearLayout;
 	}
 
-	public TextView gettv() {
-		return tv;
-	}
+  public ImageView gettv() {
+	  return tv;
+  }
 
 	public void setItem(Item var1) {
 		item = var1;
 
-		if (item.isEmptyItem()) {
-			tv.setBackgroundResource(0);
-			linearLayout.setBackgroundResource(0);
-			tv.setText("");
-		} else if (item.isOnGoalPos()) {
-			if (themeChoosen == 1) {
-				tv.setBackgroundResource(R.drawable.on_position_theme_1);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_1_tile_background);
-			} else if (themeChoosen == 2) {
-				tv.setBackgroundResource(R.drawable.on_position_theme_2);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_2_tile_background);
-			} else if (themeChoosen == 3) {
-				tv.setBackgroundResource(R.drawable.on_position_theme_3);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_3_tile_background);
-			} else if (themeChoosen == 4) {
-				tv.setBackgroundResource(R.drawable.on_position_theme_4);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_4_tile_background);
-			} else if (themeChoosen == 5) {
-				tv.setBackgroundResource(R.drawable.on_position_theme_5);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_5_tile_background);
-			}
-			tv.setText(String.valueOf(item.getNum()));
-		} else {
-			if (themeChoosen == 1) {
-				tv.setBackgroundResource(R.drawable.off_position_theme_1);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_1_tile_background);
-			} else if (themeChoosen == 2) {
-				tv.setBackgroundResource(R.drawable.off_position_theme_2);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_2_tile_background);
-			} else if (themeChoosen == 3) {
-				tv.setBackgroundResource(R.drawable.off_position_theme_3);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_3_tile_background);
-			} else if (themeChoosen == 4) {
-				tv.setBackgroundResource(R.drawable.off_position_theme_4);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_4_tile_background);
-			} else if (themeChoosen == 5) {
-				tv.setBackgroundResource(R.drawable.off_position_theme_5);
-				linearLayout
-						.setBackgroundResource(R.drawable.theme_5_tile_background);
-			}
+		if (!item.isEmptyItem()) {
+			if (item.isOnGoalPos()) {
+				if (themeChoosen == 1) {
+					tv.setBackgroundResource(R.drawable.on_position_theme_1);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_1_tile_background);
+				} else if (themeChoosen == 2) {
+					tv.setBackgroundResource(R.drawable.on_position_theme_2);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_2_tile_background);
+				} else if (themeChoosen == 3) {
+					tv.setBackgroundResource(R.drawable.on_position_theme_3);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_3_tile_background);
+				} else if (themeChoosen == 4) {
+					tv.setBackgroundResource(R.drawable.on_position_theme_4);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_4_tile_background);
+				} else if (themeChoosen == 5) {
+					tv.setBackgroundResource(R.drawable.on_position_theme_5);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_5_tile_background);
+				}
+				this.tv.setImageBitmap(PhotoManager.getPhotoPuzzle(this.item.getNum()));
+			} else {
+				if (themeChoosen == 1) {
+					tv.setBackgroundResource(R.drawable.off_position_theme_1);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_1_tile_background);
+				} else if (themeChoosen == 2) {
+					tv.setBackgroundResource(R.drawable.off_position_theme_2);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_2_tile_background);
+				} else if (themeChoosen == 3) {
+					tv.setBackgroundResource(R.drawable.off_position_theme_3);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_3_tile_background);
+				} else if (themeChoosen == 4) {
+					tv.setBackgroundResource(R.drawable.off_position_theme_4);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_4_tile_background);
+				} else if (themeChoosen == 5) {
+					tv.setBackgroundResource(R.drawable.off_position_theme_5);
+					linearLayout
+							.setBackgroundResource(R.drawable.theme_5_tile_background);
+				}
+				this.tv.setImageBitmap(PhotoManager.getPhotoPuzzle(this.item.getNum()));
 
-			tv.setText(String.valueOf(item.getNum()));
+			}
+		} else {
+			this.tv.setBackgroundResource(0);
+			this.linearLayout.setBackgroundResource(0);
+			this.tv.setImageBitmap(null);
 		}
 	}
 

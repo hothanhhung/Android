@@ -31,4 +31,4 @@
         android:text="Set Theme"
         android:textSize="@dimen/button_text" />
 
-</RelativeLayout>
+</RelativeLayout><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/layout/settheme.xml -->
