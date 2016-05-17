@@ -255,8 +255,8 @@ public class GameScreen extends Activity {
 		return var2.concat(":").concat(var3).concat(":").concat(var4);
 	}
 
-	private void initialGame(boolean paramBoolean) {
-		PhotoManager.initialPhoto(this, paramBoolean);
+	private void initialGame(boolean randomImage) {
+		PhotoManager.initialPhoto(this, randomImage);
 		currentPhoto.setImageBitmap(PhotoManager.getPhotoBitmap());
 		shuffle();
 	}
@@ -299,6 +299,7 @@ public class GameScreen extends Activity {
 		TextViewTimer();
 		randomArray.clear();
 		Random var2 = new Random();
+		gameFinished = false;
 
 		for (int var3 = 0; var3 < 16; ++var3) {
 			randomArray.add((Object) null);
@@ -754,7 +755,7 @@ public class GameScreen extends Activity {
 		if (shareScreen == true) {
 			GameScreen.this.finish();
 		}
-
+		System.gc();
 	}
 
 	@Override

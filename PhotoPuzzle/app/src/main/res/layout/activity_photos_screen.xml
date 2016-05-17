@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@color/light_blue" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:ads="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip">
+            <com.hth.photopuzzle.AspectRatioImageView android:id="@+id/imgSelectedPhoto" android:focusable="false" android:focusableInTouchMode="false" android:layout_width="0.0px" android:layout_height="wrap_content" android:layout_weight="1.0" android:src="@drawable/icon"/>
+            <LinearLayout android:orientation="vertical" android:layout_width="0.0px" android:layout_height="wrap_content" android:layout_weight="1.0" android:layout_marginLeft="10dip">
+                <Button android:textSize="20.0sp" android:textColor="#ffffffff" android:id="@+id/btPlayPhoto" android:background="@drawable/custom_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rotate" android:onClick="btPlayPhoto_Click" />
+                <Button android:textSize="24.0sp" android:textColor="#ffffffff" android:id="@+id/btRotatePhoto" android:background="@drawable/custom_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Play" android:onClick="btPlayPhoto_Click" />
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:layout_width="0.0px" android:layout_height="wrap_content" android:layout_weight="1.0" >
+                <Button android:textSize="20.0sp" android:textColor="#ffffffff" android:id="@+id/btCamera" android:background="@drawable/custom_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Camera" android:onClick="btCamera_Click" />
+                <Button android:textSize="20.0sp" android:textColor="#ffffffff" android:id="@+id/btGallery" android:background="@drawable/custom_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gallery" android:onClick="btGallery_Click" />
+            </LinearLayout>
+        </LinearLayout>
+        <GridView android:gravity="center" android:id="@+id/grvPhotos" android:descendantFocusability="blocksDescendants" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="15.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip" android:horizontalSpacing="5.0dip" android:verticalSpacing="5.0dip" android:stretchMode="columnWidth" android:numColumns="3" android:layout_weight="1.0" />
+        <com.google.android.gms.ads.AdView android:id="@+id/adView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" ads:adSize="SMART_BANNER" ads:adUnitId="@string/admob_id" />
+    </LinearLayout>
+</RelativeLayout>

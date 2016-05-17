@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
+
 public class StartScreen extends Activity implements
 		android.view.View.OnClickListener {
 
@@ -29,7 +30,7 @@ public class StartScreen extends Activity implements
 	protected void onCreate(Bundle bund) {
 		super.onCreate(bund);
 		setContentView(R.layout.startscreen);
-
+		com.hth.photopuzzle.MemoryHelper.freeCacheFolder(this);
 		bstart = (Button) findViewById(R.id.bplay);
 		btheme = (Button) findViewById(R.id.btheme);
 		babout = (Button) findViewById(R.id.babout);
@@ -132,5 +133,10 @@ public class StartScreen extends Activity implements
 	protected void onStop() {
 		EasyTracker.getInstance(this).activityStop(this);
 		super.onStop();
+	}
+	protected void onResume()
+	{
+		super.onResume();
+		System.gc();
 	}
 }
