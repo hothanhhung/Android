@@ -94,12 +94,23 @@ public class PhotoManager
 
   public static void reset()
   {
+    if(selectedPhoto != null){
+      selectedPhoto.free();
+    }
     selectedPhoto = null;
   }
 
   public static void setPhoto(Photo paramPhoto)
   {
-    selectedPhoto = paramPhoto;
+    reset();
+    selectedPhoto = Photo.clone(paramPhoto);
+  }
+
+  public static void rotate(Context context)
+  {
+    if(selectedPhoto!=null){
+      selectedPhoto.rotate(context);
+    }
   }
 
   private static void setPhotoBitmap(Bitmap paramBitmap)

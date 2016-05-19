@@ -130,6 +130,14 @@ public class PhotosScreen extends Activity
     startActivity(new Intent(this, GameScreen.class));
   }
 
+  public void btRotatePhoto_Click(View paramView)
+  {
+    PhotoManager.rotate(this);
+    if(PhotoManager.getPhoto()!=null){
+      PhotosScreen.this.imgSelectedPhoto.setImageBitmap(PhotoManager.getPhoto().getSmallPhoto(this));
+    }
+  }
+
   public void onActivityResult(int requestCode, int resultCode, Intent data)
   {
     if (resultCode == RESULT_OK)
@@ -188,10 +196,10 @@ public class PhotosScreen extends Activity
   }
 
   protected void onResume()
-  {
-    super.onResume();
-    if ((this.imgSelectedPhoto != null) && (PhotoManager.getPhoto() != null))
-      this.imgSelectedPhoto.setImageBitmap(PhotoManager.getPhoto().getSmallPhoto(this.context));
-    System.gc();
-  }
+{
+  super.onResume();
+  if ((this.imgSelectedPhoto != null) && (PhotoManager.getPhoto() != null))
+    this.imgSelectedPhoto.setImageBitmap(PhotoManager.getPhoto().getSmallPhoto(this.context));
+  System.gc();
+}
 }

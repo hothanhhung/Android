@@ -5,7 +5,7 @@
         <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip">
             <com.hth.photopuzzle.AspectRatioImageView android:id="@+id/imgSelectedPhoto" android:focusable="false" android:focusableInTouchMode="false" android:layout_width="0.0px" android:layout_height="wrap_content" android:layout_weight="1.0" android:src="@drawable/icon"/>
             <LinearLayout android:orientation="vertical" android:layout_width="0.0px" android:layout_height="wrap_content" android:layout_weight="1.0" android:layout_marginLeft="10dip">
-                <Button android:textSize="20.0sp" android:textColor="#ffffffff" android:id="@+id/btPlayPhoto" android:background="@drawable/custom_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rotate" android:onClick="btPlayPhoto_Click" />
+                <Button android:textSize="20.0sp" android:textColor="#ffffffff" android:id="@+id/btPlayPhoto" android:background="@drawable/custom_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rotate" android:onClick="btRotatePhoto_Click" />
                 <Button android:textSize="24.0sp" android:textColor="#ffffffff" android:id="@+id/btRotatePhoto" android:background="@drawable/custom_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Play" android:onClick="btPlayPhoto_Click" />
             </LinearLayout>
             <LinearLayout android:orientation="vertical" android:layout_width="0.0px" android:layout_height="wrap_content" android:layout_weight="1.0" >
