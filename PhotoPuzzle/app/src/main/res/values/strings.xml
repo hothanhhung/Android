@@ -30,7 +30,7 @@
     <string name="aboutTitle">About</string>
     <string name="aboutcontent">Photo Puzzle game is the same to 15-Puzzle. You need move pieces up, down, left and right so that they have a correct position.
 
-Photo Puzzle is developed based on Fifteen Puzzle of Creative Droids. Thank for sharing the source</string>
+Photo Puzzle is developed based on Fifteen Puzzle of Creative Droids. Thanks for sharing the source</string>
 
     <!-- values for admob -->
     <string name="admob_id">ca-app-pub-4576847792571626/3627578396</string>

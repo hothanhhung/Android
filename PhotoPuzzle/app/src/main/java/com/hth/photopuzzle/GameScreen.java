@@ -257,6 +257,7 @@ public class GameScreen extends Activity {
 
 	private void initialGame(boolean randomImage) {
 		PhotoManager.initialPhoto(this, randomImage);
+		currentPhoto.setImageDrawable(null);
 		currentPhoto.setImageBitmap(PhotoManager.getPhotoBitmap());
 		shuffle();
 	}
@@ -317,7 +318,10 @@ public class GameScreen extends Activity {
 
 		if (!isValid(randomArray)) {
 			shuffle();
+			return;
 		}
+
+		clearResourceImageView();
 
 		p1 = new Position(ll1, tv1, 1, (Item) randomArray.get(0), this);
 		p2 = new Position(ll2, tv2, 2, (Item) randomArray.get(1), this);
@@ -435,7 +439,27 @@ public class GameScreen extends Activity {
 		moveSetText();
 	}
 
+	private void clearResourceImageView(){
+		if(tv1 != null) tv1.setImageDrawable(null);
+		if(tv2 != null) tv2.setImageDrawable(null);
+		if(tv3 != null) tv3.setImageDrawable(null);
+		if(tv4 != null) tv4.setImageDrawable(null);
+		if(tv5 != null) tv5.setImageDrawable(null);
+		if(tv6 != null) tv6.setImageDrawable(null);
+		if(tv7 != null) tv7.setImageDrawable(null);
+		if(tv8 != null) tv8.setImageDrawable(null);
+		if(tv9 != null) tv9.setImageDrawable(null);
+		if(tv10 != null) tv10.setImageDrawable(null);
+		if(tv11 != null) tv11.setImageDrawable(null);
+		if(tv12 != null) tv12.setImageDrawable(null);
+		if(tv13 != null) tv13.setImageDrawable(null);
+		if(tv14 != null) tv14.setImageDrawable(null);
+		if(tv15 != null) tv15.setImageDrawable(null);
+		if(tv16 != null) tv16.setImageDrawable(null);
+		System.gc();
+	}
 	private void killGame() {
+		clearResourceImageView();
 		p1 = null;
 		p2 = null;
 		p3 = null;
@@ -500,6 +524,7 @@ public class GameScreen extends Activity {
 		tv14 = null;
 		tv15 = null;
 		tv16 = null;
+		if(currentPhoto != null)currentPhoto.setImageDrawable(null);
 		currentPhoto = null;
 		timeStop();
 		lSeconds = 0L;
@@ -513,7 +538,7 @@ public class GameScreen extends Activity {
 		orderArray.clear();
 		mContext = null;
 		cntMove = 0;
-		finish();
+		//finish();
 	}
 
 	public void onCreate(Bundle savedInstance) {
@@ -773,8 +798,8 @@ public class GameScreen extends Activity {
 										StartScreen.class);
 								i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								startActivity(i);*/
-								killGame();
-
+								//killGame();
+								finish();
 							}
 						})
 				.setNegativeButton(getResources().getString(R.string.no),

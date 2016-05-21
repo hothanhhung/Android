@@ -150,11 +150,11 @@ public class Photo {
 
   public void free() {
     if (fullCroppedImage != null) {
-      fullCroppedImage.recycle();
+      //fullCroppedImage.recycle();
       fullCroppedImage = null;
     }
     if (smallImage != null) {
-      smallImage.recycle();
+      //smallImage.recycle();
       smallImage = null;
     }
   }

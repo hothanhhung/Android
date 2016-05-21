@@ -42,8 +42,13 @@ public class PhotoManager
     return selectedPhotoBitmap;
   }
 
+  private static Bitmap piceOfImage[] = new Bitmap[16];
   public static Bitmap getPhotoPuzzle(int paramInt)
   {
+    if(paramInt >0 && paramInt <17 && piceOfImage[paramInt - 1] !=null)
+    {
+      return piceOfImage[paramInt - 1];
+    }
     Bitmap localBitmap;
     if ((paramInt <= 16) && (selectedPhotoBitmap != null))
     {
@@ -68,6 +73,10 @@ public class PhotoManager
         k = 0;
       }
       localBitmap = Bitmap.createBitmap(selectedPhotoBitmap, j, k, m, i);
+      if(paramInt > 0)
+      {
+        piceOfImage[paramInt - 1] = localBitmap;
+      }
     }
     else
     {
@@ -87,7 +96,7 @@ public class PhotoManager
     {
       Random localRandom = new Random();
       ArrayList localArrayList = getAllPhotosInAssert(paramContext);
-      selectedPhoto = (Photo)localArrayList.get(localRandom.nextInt(localArrayList.size()));
+      setPhoto((Photo)localArrayList.get(localRandom.nextInt(localArrayList.size())));
     }
     setPhotoBitmap(selectedPhoto.getFullPhoto(paramContext));
   }
@@ -96,6 +105,12 @@ public class PhotoManager
   {
     if(selectedPhoto != null){
       selectedPhoto.free();
+    }
+    for(int i =0; i<16; i++)
+    {
+      if(piceOfImage[i]!=null){
+        piceOfImage[i] = null;
+      }
     }
     selectedPhoto = null;
   }
