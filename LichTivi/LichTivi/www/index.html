@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above-->
+    <link href="css/ionic.app.css" rel="stylesheet">
+    <link href="css/angular-pickadate.css" rel="stylesheet">
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="lib/angular-filter.min.js"></script>
+
+  </head>
+  <body ng-app="starter" onload="onLoad()">
+
+    <ion-side-menus ng-controller="leftmenuController">
+
+    <!-- Center content -->
+    <ion-side-menu-content>
+      <ion-header-bar class="bar-calm">
+      <button class="button button-icon" ng-click="toggleLeft()">
+        <i class="icon ion-navicon"></i>
+      </button> 
+      <button class="button button-icon" ng-click="openSearchProgram()">
+        <i class="icon ion-search"></i>
+      </button>
+      
+      <h1 class="title">{{dataSchedule.name}}</h1> 
+     <div class="buttons" side="right">    
+        <button class="button button-icon" ng-if="!wasFavoriteChannel(dataSchedule.id)" ng-click="saveFavoriteChannel(dataSchedule)">
+          <i class="icon ion-heart"></i>
+        </button>
+        <button class="button button-icon" ng-if="wasFavoriteChannel(dataSchedule.id)" ng-click="removeFavoriteChannel(dataSchedule)">
+          <i class="icon ion-heart-broken"></i>
+        </button>
+        <button class="button button-icon" ng-click="toggleRight()">
+          <i class="icon ion-happy"></i>
+        </button>
+      </div>
+        <!-- <a class="tab-item" style="flex:0 1 auto"><i class="icon ion-navicon-round" ng-click="toggleLeft()"></i></a>
+        <h1 class="title">{{dataSchedule.name}}</h1>   
+        <a class="tab-item" style="flex:0 1 auto" ng-if="!wasFavoriteChannel(dataSchedule.id)"><i class="icon ion-ios7-heart-outline" ng-click="saveFavoriteChannel(dataSchedule)"></i></a> 
+        <a class="tab-item" style="flex:0 1 auto"  ng-if="wasFavoriteChannel(dataSchedule.id)"><i class="icon ion-heart-broken" ng-click="removeFavoriteChannel(dataSchedule)"></i></a>  
+        <a class="tab-item" style="flex:0 1 auto"><i class="icon ion-happy" ng-click="toggleRight()"></i></a>      -->
+      </ion-header-bar>
+
+      <ion-content scroll="false">
+        <!-- <div >{{dataSchedule.name}}</div> -->
+        <label class="item item-input" >
+          <span class="input-label" >Lịch phát sóng ngày:{{getCorrectFormatDate(dataSchedule.timeForSearch,"-")}}</span>
+          <span>
+            <button class="button button-stable" ng-click="opendateModal()">
+              Chọn ngày
+            </button>
+          </span>
+        </label>
+        <ion-scroll delegate-handle="scheduleScroll" zooming="true" direction="y" style="width: 100%; height: 100%;">
+          <div style="padding: 10px 20px 80px 20px">
+	         <div id="schedule_content" ng-if="dataSchedule.message!=''" ng-bind-html="dataSchedule.message"></div>
+			 <div ng-repeat="item in dataSchedule.data" class="row"> 
+				<div class="time-tv">{{item.StartOn}}</div>
+				<div class="t-detail"ng-bind-html="item.ProgramName">
+				</div>
+			</div>
+          </div>
+         </ion-scroll>
+      </ion-content>
+    </ion-side-menu-content>
+
+    <!-- Left menu -->
+    <ion-side-menu side="left" >
+      <ion-header-bar class="bar-calm">
+		<h1 class="title">Danh sách kênh</h1>
+      </ion-header-bar>
+      <ion-content scroll="false">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Từ khóa tìm kênh" ng-blur="searchChannels(txtSearchChannelValue)" ng-keyup="keyUpOnsearchChannels($event, txtSearchChannelValue)" ng-model="txtSearchChannelValue">
+      </label>
+        <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%">
+      	  <!-- <ion-list	  
+                show-reorder="shouldShowReorder"
+                can-swipe="listCanSwipe"> -->
+                <div ng-repeat="(key, channelGroup) in lstChannels | groupBy: '[groupOrder,groupName]' | orderBy:'[groupOrder,groupName]':true">
+                  <div class="item item-divider" ng-click="isDisplayGroupChannel = !isDisplayGroupChannel">
+                    {{correctGroupName(key)}} <i class="icon {{isDisplayGroupChannel == true? 'ion-arrow-up-b': 'ion-arrow-down-b'}}"></i>
+                  </div>
+                  <div ng-if="isDisplayGroupChannel" style="padding-left:5px;">
+                    <ion-list can-swipe="listCanSwipe">
+                      <ion-item ng-repeat="channel in channelGroup | orderBy:'name':false" ng-click="openShcedule(channel.id, channel.name, true)"  ng-class="channel.id == dataSchedule.id ? 'selectedChannel':''" >
+                          <span>{{$index + 1}}.</span>
+                          <span ng-if="isSearchChannels(channel)==false">{{channel.name}}</span> 
+                          <span ng-if="isSearchChannels(channel)" ng-bind-html="channel.nameSearch"></span>
+                      </ion-item >
+                    </ion-list>
+                  </div>
+                </div>
+      		<!-- <ion-item ng-repeat="channel in lstChannels" ng-click="openShcedule(channel.id, channel.name, true)"  ng-class="channel.id == dataSchedule.id ? 'selectedChannel':''" >
+      				<span>{{$index + 1}}.</span>
+              <span ng-if="isSearchChannels(channel)==false">{{channel.name}}</span> 
+              <span ng-if="isSearchChannels(channel)" ng-bind-html="channel.nameSearch"></span>
+      		</ion-item > -->
+      	<!-- 	</ion-list> -->
+        </ion-scroll>
+      </ion-content>
+    </ion-side-menu>
+
+    <ion-side-menu side="right" >
+      <ion-header-bar class="bar-calm">
+    <h1 class="title">Danh sách kênh yêu thích</h1>
+      </ion-header-bar>
+      <ion-content scroll="false">
+        <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%">
+          <ion-list   
+                show-reorder="shouldShowReorder"
+                can-swipe="listCanSwipe">
+          <ion-item ng-repeat="channel in lstFavoriteChannels | orderBy:'name':false" ng-click="openShcedule(channel.id, channel.name, false)"  ng-class="channel.id == dataSchedule.id ? 'selectedChannel':''" >
+              <span>{{$index + 1}}.</span>
+              <span>{{channel.name}}</span> 
+          </ion-item >
+          </ion-list>
+        </ion-scroll>
+      </ion-content>
+    </ion-side-menu>
+
+  </ion-side-menus>
+  </body>
+    <!-- your app's js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js"></script>
+    <script src="lib/angular-pickadate.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+
+</html>

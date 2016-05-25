@@ -1,0 +1,17 @@
+<div class="modal">
+  <header class="bar bar-header bar-positive">
+    <h1 class="title">Date</h1>    
+  </header>
+  <ion-content has-header="false" scroll="false">
+    <div style="align:center">
+      <div style="padding-top:40px">
+          <div pickadate ng-model="myDate"></div>
+      </div>
+      <br/>
+      <div style="text-align:center">
+        <button class="button button-stable" ng-click="closedateModal(myDate, false)">Bỏ qua</button>
+        <button class="button button-stable" ng-click="closedateModal(myDate, true)">Xem lịch</button>
+      </div>
+    </div>
+  </ion-content>
+</div>

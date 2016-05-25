@@ -1,0 +1,72 @@
+{ id:1, name :"VTV1"},
+										{ id:53, name :"VTV5"},
+										
+										{ id:138, name :"ANTV"},
+										
+										
+										
+										{ id:181, name :"Da Vinci"},
+										{ id:73, name :"DaNangTV1"},
+										
+										{ id:46, name :"Discovery Travel & Living"},
+
+										{ id:8, name :"FTV (SD)"},
+										
+										
+										{ id:97, name :"HcaTV"},
+										{ id:96, name :"HiTV"},
+										
+										{ id:165, name :"HTV2 HD"},
+										{ id:163, name :"HTV7 HD"},
+										{ id:164, name :"HTV9 HD"},
+										
+										{ id:167, name :"HTVC Mua sắm, tiêu dùng"},
+										
+										
+										{ id:175, name :"K+ Phái mạnh"},
+										
+										
+										{ id:104, name :"Kids TV"},
+										{ id:105, name :"Let's Viet"},
+										
+										
+										{ id:123, name :"MTV HD"},
+										
+										{ id:140, name :"Net Viet"},
+										{ id:126, name :"NHK HD"},
+										
+										{ id:179, name :"Outdoor Channel (HD)"},
+										
+										{ id:100, name :"Phú yên"},
+										{ id:166, name :"QPVN"},
+										{ id:75, name :"QuangNinhTV"},
+										
+										{ id:139, name :"Today"},
+										
+										{ id:81, name :"Vĩnh Phúc"},
+										
+										{ id:27, name :"VITV"},
+
+										
+										{ id:168, name :"VTC HD1"},
+										{ id:169, name :"VTC HD2"},
+										{ id:170, name :"VTC HD3"},
+										{ id:103, name :"VTC12"},
+										{ id:141, name :"VTC14"},
+										{ id:148, name :"VTC16"},
+										
+										{ id:172, name :"VTC3 HD"},
+										{ id:106, name :"VTC6"},
+										{ id:182, name :"VTV1 HD"},
+										{ id:183, name :"VTV3 HD"},
+										{ id:184, name :"VTV6 HD"},
+										{ id:157, name :"VTVCab 12 - Style TV"},
+										{ id:150, name :"VTVCab 16 – Bóng đá TV"},
+										{ id:162, name :"VTVCab 16 - Bóng đá TV (HD)"},
+										{ id:158, name :"VTVCab 17 – Du lịch"},
+
+										{ id:161, name :"VTVCab 3 - Thể thao (HD)"},
+										
+										{ id:153, name :"VTVCab 4 – M4Me"},
+										
+										{ id:101, name :"VTV-DaNang"}
