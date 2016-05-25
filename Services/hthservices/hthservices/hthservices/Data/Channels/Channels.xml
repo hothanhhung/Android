@@ -1,0 +1,420 @@
+<select>
+	<optgroup label="Đài Truyền hình Việt Nam - VTV">
+		<option value="/lich-phat-song/vtv1.html" name="VTV1"></option>
+		<option value="/lich-phat-song/vtv2.html" name="VTV2"></option>
+		<option value="/lich-phat-song/vtv3.html" name="VTV3"></option>
+		<option value="/lich-phat-song/vtv4.html" name="VTV4"></option>
+		<option value="/lich-phat-song/vtv5.html" name="VTV5"></option>
+		<option value="/lich-phat-song/vtv6.html" name="VTV6"></option>
+		<option value="/lich-phat-song/vtv7.html" name="VTV7"></option>
+		<option value="/lich-phat-song/vtv8.html" name="VTV8"></option>
+		<option value="/lich-phat-song/vtv9.html" name="VTV9"></option>					
+	</optgroup>
+	<optgroup label="Đài Tiếng nói Việt Nam">
+		<option value="/lich-phat-song/vovtv.html" name="VOVTV"></option>					
+	</optgroup>
+	<optgroup label="Đài Phát thanh và Truyền hình Hà Nội">
+		<option value="/lich-phat-song/hanoitv-1.html" name="HaNoiTV 1"></option>
+		<option value="/lich-phat-song/hanoitv-2.html" name="HaNoiTV 2"></option>					
+	</optgroup>
+	<optgroup label="Đài Truyền hình TP Hồ Chí Minh - HTV">
+		<option value="/lich-phat-song/htv1.html" name="HTV1"></option>
+		<option value="/lich-phat-song/htv2.html" name="HTV2"></option>
+		<option value="/lich-phat-song/htv3.html" name="HTV3"></option>
+		<option value="/lich-phat-song/htv4.html" name="HTV4"></option>
+		<option value="/lich-phat-song/htv7.html" name="HTV7"></option>
+		<option value="/lich-phat-song/htv9.html" name="HTV9"></option>					
+	</optgroup>
+	<optgroup label="Đài truyền hình An Viên AVG">
+		<option value="/lich-phat-song/an-vien-btv9.html" name="An Viên - BTV9"></option>
+		<option value="/lich-phat-song/ca-nhac-thieu-nhi.html" name="Ca nhạc thiếu nhi"></option>
+		<option value="/lich-phat-song/doc-sach.html" name="Đọc Sách"></option>
+		<option value="/lich-phat-song/am-nhac-nam-bo.html" name="Âm nhạc Nam Bộ"></option>
+		<option value="/lich-phat-song/ncm-btv10.html" name="NCM - BTV10"></option>
+		<option value="/lich-phat-song/phim-hay.html" name="Phim hay"></option>
+		<option value="/lich-phat-song/sam-btv11.html" name="SAM - BTV11"></option>
+		<option value="/lich-phat-song/vietteen-btv6-2idol.html" name="ViệtTeen - BTV6 2idol"></option>
+		<option value="/lich-phat-song/mien-tay-thdt2.html" name="Miền Tây - THĐT2"></option>
+		<option value="/lich-phat-song/an-ninh-the-gioi.html" name="An Ninh Thế Giới"></option>
+		<option value="/lich-phat-song/nhac-cach-mang.html" name="Nhạc Cách Mạng"></option>
+		<option value="/lich-phat-song/nhac-co-dien.html" name="Nhạc Cổ điển"></option>
+		<option value="/lich-phat-song/nhac-tru-tinh.html" name="Nhạc Trữ tình"></option>
+		<option value="/lich-phat-song/nhac-tre.html" name="Nhạc trẻ"></option>
+		<option value="/lich-phat-song/nhac-dan-toc.html" name="Nhạc Dân tộc"></option>
+		<option value="/lich-phat-song/nhac-nhe.html" name="Nhạc Nhẹ"></option>					
+	</optgroup>
+	<optgroup label="Đài Truyền hình Cáp TP Hồ Chí Minh - HTVC">
+		<option value="/lich-phat-song/htv-co.op.html" name="HTV Co.op"></option>
+		<option value="/lich-phat-song/htv-the-thao.html" name="HTV Thể thao"></option>
+		<option value="/lich-phat-song/htvc-shopping.html" name="HTVC Shopping"></option>
+		<option value="/lich-phat-song/htvc-phim.html" name="HTVC PHIM"></option>
+		<option value="/lich-phat-song/htvc-gia-dinh.html" name="HTVC GIA ĐÌNH"></option>
+		<option value="/lich-phat-song/htvc-du-lich-cuoc-song.html" name="HTVC Du Lịch Cuộc Sống"></option>
+		<option value="/lich-phat-song/htvc-phu-nu.html" name="HTVC PHỤ NỮ"></option>
+		<option value="/lich-phat-song/htvc.html" name="HTVC+"></option>
+		<option value="/lich-phat-song/htvc-ca-nhac.html" name="HTVC CA NHẠC"></option>
+		<option value="/lich-phat-song/htvc-fbnc.html" name="HTVC FBNC"></option>
+		<option value="/lich-phat-song/thuan-viet.html" name="Thuần Việt"></option>					
+	</optgroup>
+	<optgroup label="Đài Truyền hình Cáp Việt Nam">
+		<option value="/lich-phat-song/vtvcab-1-giai-tri-tv.html" name="VTVcab 1 - Giải trí TV"></option>
+		<option value="/lich-phat-song/vctv2.html" name="VTVcab 2 - Phim Việt"></option>
+		<option value="/lich-phat-song/vtc-cab-3-the-thao-tv.html" name="VTVcab 3 - Thể Thao TV"></option>
+		<option value="/lich-phat-song/vtvcab-4-van-hoa.html" name="VTVcab 4 - Văn hóa"></option>		
+		<option value="/lich-phat-song/vctv5.html" name="VTVcab 5 - E channel"></option>
+		<option value="/lich-phat-song/vtvcab-6-hay-tv.html" name="VTVcab 6 - Hay TV"></option>
+		<option value="/lich-phat-song/vtvcab-7-d-dramas.html" name="VTVcab 7 - D Dramas"></option>
+		<option value="/lich-phat-song/vtvcab-8-bibi.html" name="VTVcab 8 - BiBi"></option>
+		<option value="/lich-phat-song/vtvcab-9-info-tv.html" name="VTVcab 9 - INFO TV"></option>
+		<option value="/lich-phat-song/VTVcab-10-O2TV.html" name="VTVcab 10 - O2TV"></option>
+		<option value="/lich-phat-song/vtvcab-11-tv-shopping.html" name="VTVcab 11 - TV Shopping"></option>
+		<option value="/lich-phat-song/vtvcab-12-style-tv.html" name="VTVcab 12 - Style TV"></option>
+		<option value="/lich-phat-song/vtvcab-14-lotte-shopping.html" name="VTVcab 14 - Lotte Shopping"></option>
+		<option value="/lich-phat-song/VTVcab-15%20-Invest-TV.html" name="VTVcab 15 - Invest TV"></option>
+		<option value="/lich-phat-song/vtvcab-16-bong-da-tv.html" name="VTVcab 16 - Bóng đá TV"></option>
+		<option value="/lich-phat-song/vtvcab-17-yeah1-tv.html" name="VTVcab 17 - Yeah1 TV "></option>
+		<option value="/lich-phat-song/vtvcab-19.html" name="VTVcab 19 - Kênh Phim "></option>			
+		<option value="/lich-phat-song/vtvcab-20-v-family.html" name="VTVcab 20 - V Family"></option>
+		<option value="/lich-phat-song/mtv-viet-nam.html" name="MTV Việt Nam"></option>
+	</optgroup>
+	<optgroup label="Đài truyền hình cáp Hà Nội">
+		<option value="/lich-phat-song/youtv.html" name="YOUTV"></option>
+		<option value="/lich-phat-song/hitv.html" name="HiTV"></option>
+		<option value="/lich-phat-song/hcatv.html" name="HCaTV"></option>
+		<option value="/lich-phat-song/mov.html" name="MOV"></option>					
+	</optgroup>
+	<optgroup label="Đài truyền hình cáp Sài Gòn">
+		<option value="/lich-phat-song/sctv1.html" name="SCTV1"></option>
+		<option value="/lich-phat-song/sctv2-yan-tv.html" name="SCTV2 - Yan TV"></option>
+		<option value="/lich-phat-song/sctv3-sao-tv.html" name="SCTV3 - Sao TV"></option>
+		<option value="/lich-phat-song/sctv4.html" name="SCTV4"></option>
+		<option value="/lich-phat-song/sctv5-scj-tv-shopping.html" name="SCTV5 - SCJ TV Shopping"></option>
+		<option value="/lich-phat-song/sctv6-sntv.html" name="SCTV6 - SNTV"></option>
+		<option value="/lich-phat-song/sctv7.html" name="SCTV7"></option>
+		<option value="/lich-phat-song/sctv8-vitv.html" name="SCTV8 - VITV"></option>
+		<option value="/lich-phat-song/sctv9.html" name="SCTV9"></option>
+		<option value="/lich-phat-song/sctv10-home-shopping-network.html" name="SCTV10 - Home shopping Network"></option>
+		<option value="/lich-phat-song/sctv11.html" name="SCTV11"></option>
+		<option value="/lich-phat-song/sctv12.html" name="SCTV12"></option>
+		<option value="/lich-phat-song/sctv13-tvf.html" name="SCTV13 - TVF"></option>
+		<option value="/lich-phat-song/sctv14.html" name="SCTV14"></option>
+		<option value="/lich-phat-song/sctv15.html" name="SCTV15"></option>
+		<option value="/lich-phat-song/sctv16.html" name="SCTV16"></option>
+		<option value="/lich-phat-song/sctv-hd-the-thao.html" name="SCTV HD Thể thao"></option>
+		<option value="/lich-phat-song/sctv-phim-tong-hop.html" name="SCTV Phim tổng hợp"></option>
+	</optgroup>
+	<optgroup label="Đài truyền hình số VTC">
+		<option value="/lich-phat-song/vtc1.html" name="VTC1"></option>
+		<option value="/lich-phat-song/vtc2.html" name="VTC2"></option>
+		<option value="/lich-phat-song/vtc3.html" name="VTC3"></option>
+		<option value="/lich-phat-song/vtc4-yeah1-family.html" name="VTC4 - Yeah1 Family"></option>
+		<option value="/lich-phat-song/vtc5.html" name="VTC5"></option>
+		<option value="/lich-phat-song/vtc6.html" name="VTC6"></option>
+		<option value="/lich-phat-song/vtc7-today-tv.html" name="VTC7 - Today TV"></option>
+		<option value="/lich-phat-song/vtc8-view-tv.html" name="VTC8 - VIEW TV"></option>
+		<option value="/lich-phat-song/vtc9-lets-viet.html" name="VTC9 - LETS VIỆT"></option>
+		<option value="/lich-phat-song/vtc10-netviet.html" name="VTC10 - NetViet"></option>
+		<option value="/lich-phat-song/vtc11-kids-family-tv.html" name="VTC11 - Kids &amp; Family TV"></option>
+		<option value="/lich-phat-song/vtc12.html" name="VTC12"></option>
+		<option value="/lich-phat-song/vtc13-itv.html" name="VTC13 - iTV"></option>
+		<option value="/lich-phat-song/vtc14.html" name="VTC14"></option>
+		<option value="/lich-phat-song/vtc16-3ntv.html" name="VTC16-3NTV"></option>
+		<option value="/lich-phat-song/vtc-hd1.html" name="VTC HD1"></option>
+		<option value="/lich-phat-song/vtc-hd2.html" name="VTC HD2"></option>
+		<option value="/lich-phat-song/vtc-hd3.html" name="VTC HD3"></option>
+	</optgroup>
+	<optgroup label="Đài TH địa phương">
+		<option value="/lich-phat-song/truyen-hinh-son-la-stv.html" name="Truyền hình Sơn La STV"></option>
+		<option value="/lich-phat-song/truyen-hinh-lai-chau-ltv.html" name="Truyền hình Lai Châu LTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-ha-giang-htv.html" name="Truyền hình Hà Giang HTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-cao-bang-crtv.html" name="Truyền hình Cao Bằng CRTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-bac-ninh-bntv.html" name="Truyền hình Bắc Ninh BNTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-ca-mau-ctv.html" name="Truyền hình Cà Mau CTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-soc-trang-stv.html" name="Truyền hình Sóc Trăng STV"></option>
+		<option value="/lich-phat-song/truyen-hinh-tay-ninh-ttv.html" name="Truyền hình Tây Ninh TTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-hoa-binh-hbtv.html" name="Truyền hình Hòa Bình HBTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-ba-ria-vung-tau-brt.html" name="Truyền hình Bà Rịa - Vũng Tàu BRT"></option>
+		<option value="/lich-phat-song/truyen-hinh-tuyen-quang-ttv.html" name="Truyền hình Tuyên Quang TTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-tra-vinh-thtv.html" name="Truyền hình Trà Vinh THTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-kien-giang.html" name="Truyền hình Kiên Giang"></option>
+		<option value="/lich-phat-song/truyen-hinh-da-nang-drt1.html" name="Truyền hình Đà Nẵng DRT1"></option>
+		<option value="/lich-phat-song/truyen-hinh-nam-dinh-ntv.html" name="Truyền hình Nam Định NTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-hai-duong.html" name="Truyền hình Hải Dương"></option>
+		<option value="/lich-phat-song/truyen-hinh-yen-bai-ytv.html" name="Truyền hình Yên Bái YTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-hung-yen-hy.html" name="Truyền hình Hưng Yên HY"></option>
+		<option value="/lich-phat-song/truyen-hinh-dien-bien-dbtv.html" name="Truyền hình Điện Biên ĐBTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-binh-dinh-btv.html" name="Truyền hình Bình Định BTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-thai-binh-tbtv.html" name="Truyền hình Thái Bình TBTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-lao-cai-thlc.html" name="Truyền hình Lào Cai THLC"></option>
+		<option value="/lich-phat-song/truyen-hinh-quang-binh-qbtv.html" name="Truyền hình Quảng Bình QBTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-ninh-thuan-ntv.html" name="Truyền hình Ninh Thuận NTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-kon-tum-krt.html" name="Truyền hình Kon Tum KRT"></option>
+		<option value="/lich-phat-song/truyen-hinh-ha-tinh-httv.html" name="Truyền hình Hà Tĩnh HTTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-dak-nong-ptd.html" name="Truyền hình Đắk Nông PTD"></option>
+		<option value="/lich-phat-song/truyen-hinh-quang-ngai-ptq.html" name="Truyền hình Quảng Ngãi PTQ"></option>
+		<option value="/lich-phat-song/truyen-hinh-cong-an-nhan-dan-antv.html" name="Truyền hình Công An Nhân Dân ANTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-lang-son-lstv.html" name="Truyền hình Lạng Sơn LSTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-quang-ninh-qtv1.html" name="Truyền hình Quảng Ninh QTV1"></option>
+		<option value="/lich-phat-song/truyen-hinh-quang-ninh-qtv3.html" name="Truyền hình Quảng Ninh QTV3"></option>
+		<option value="/lich-phat-song/truyen-hinh-thai-nguyen-tv1.html" name="Truyền hình Thái Nguyên TV1"></option>
+		<option value="/lich-phat-song/truyen-hinh-vinh-phuc-vp.html" name="Truyền hình Vĩnh Phúc VP"></option>
+		<option value="/lich-phat-song/truyen-hinh-ninh-binh-ntv.html" name="Truyền hình Ninh Bình NTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-thanh-hoa-ttv.html" name="Truyền hình Thanh Hóa TTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-nghe-an-ntv.html" name="Truyền hình Nghệ An NTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-quang-tri-qtv.html" name="Truyền hình Quảng Trị QTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-binh-phuoc-bptv2.html" name="Truyền hình Bình Phước BPTV2"></option>
+		<option value="/lich-phat-song/truyen-hinh-dong-thap-thdt.html" name="Truyền hình Đồng Tháp THĐT"></option>
+		<option value="/lich-phat-song/truyen-hinh-bac-lieu-btv.html" name="Truyền hình Bạc Liêu BTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-gia-lai-thgl.html" name="Truyền hình Gia Lai THGL"></option>
+		<option value="/lich-phat-song/truyen-hinh-quoc-phong-qpvn.html" name="Truyền hình Quốc Phòng QPVN"></option>
+		<option value="/lich-phat-song/truyen-hinh-quoc-hoi.html" name="Truyền hình Quốc Hội"></option>
+		<option value="/lich-phat-song/truyen-hinh-nhan-dan.html" name="Truyền hình Nhân Dân"></option>
+		<option value="/lich-phat-song/truyen-hinh-bac-giang-bgtv.html" name="Truyền hình Bắc Giang BGTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-da-nang-drt2.html" name="Truyền hình Đà Nẵng DRT2"></option>
+		<option value="/lich-phat-song/truyen-hinh-ha-nam.html" name="Truyền hình Hà Nam "></option>
+		<option value="/lich-phat-song/truyen-hinh-khanh-hoa-ktv.html" name="Truyền hình Khánh Hòa KTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-lam-dong-ltv.html" name="Truyền hình Lâm Đồng LTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-dak-lak-drt.html" name="Truyền hình Đăk Lăk DRT"></option>
+		<option value="/lich-phat-song/truyen-hinh-quang-nam-qrt.html" name="Truyền hình Quảng Nam QRT"></option>
+		<option value="/lich-phat-song/truyen-hinh-phu-tho-ptv.html" name="Truyền hình Phú Thọ PTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-binh-duong-btv1.html" name="Truyền hình Bình Dương BTV1"></option>
+		<option value="/lich-phat-song/truyen-hinh-hai-phong-thp.html" name="Truyền hình Hải Phòng THP"></option>
+		<option value="/lich-phat-song/truyen-hinh-binh-duong-btv2.html" name="Truyền hình Bình Dương BTV2"></option>
+		<option value="/lich-phat-song/truyen-hinh-can-tho-thtpct.html" name="Truyền hình Cần Thơ THTPCT"></option>
+		<option value="/lich-phat-song/truyen-hinh-binh-duong-btv3.html" name="Truyền hình Bình Dương BTV3"></option>
+		<option value="/lich-phat-song/truyen-hinh-binh-duong-btv4.html" name="Truyền hình Bình Dương BTV4"></option>
+		<option value="/lich-phat-song/truyen-hinh-dong-nai-dn1.html" name="Truyền hình Đồng Nai DN1"></option>
+		<option value="/lich-phat-song/truyen-hinh-vinh-long-thvl1.html" name="Truyền Hình Vĩnh Long THVL1"></option>
+		<option value="/lich-phat-song/truyen-hinh-vinh-long-thvl2.html" name="Truyền hình Vĩnh Long THVL2"></option>
+		<option value="/lich-phat-song/truyen-hinh-thua-thien-hue-trt.html" name="Truyền Hình Thừa Thiên Huế TRT"></option>
+		<option value="/lich-phat-song/truyen-hinh-thong-tan-xa-viet-nam-ttxvn.html" name="Truyền hình Thông tấn xã Việt Nam TTXVN"></option>
+		<option value="/lich-phat-song/truyen-hinh-ben-tre-thbt.html" name="Truyền Hình Bến Tre THBT"></option>
+		<option value="/lich-phat-song/truyen-hinh-hau-giang-hgtv.html" name="Truyền Hình Hậu Giang HGTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-binh-thuan-btv.html" name="Truyền Hình Bình Thuận BTV"></option>
+		<option value="/lich-phat-song/truyen-hinh-binh-phuoc-bptv1.html" name="Truyền Hình Bình Phước BPTV1"></option>
+		<option value="/lich-phat-song/truyen-hinh-dong-nai-dn2.html" name="Truyền hình Đồng Nai DN2"></option>
+		<option value="/lich-phat-song/truyen-hinh-tien-giang-thtg.html" name="Truyền Hình Tiền Giang THTG"></option>
+		<option value="/lich-phat-song/truyen-hinh-long-an-la34.html" name="Truyền Hình Long An LA34"></option>
+		<option value="/lich-phat-song/truyen-hinh-an-giang-atv.html" name="Truyền Hình An Giang ATV"></option>
+		<option value="/lich-phat-song/vietnamnet.html" name="VietNamNet"></option>					
+	</optgroup>
+	<optgroup label="Kênh TH quốc tế">
+		<option value="/lich-phat-song/syfy.html" name="Syfy"></option>
+		<option value="/lich-phat-song/animal-planet.html" name="Animal Planet"></option>
+		<option value="/lich-phat-song/naver-tvcast.html" name="Naver TVcast"></option>
+		<option value="/lich-phat-song/ho-nam-tv.html" name="Hồ Nam TV"></option>
+		<option value="/lich-phat-song/chiet-giang-tv.html" name="Chiết Giang TV"></option>
+		<option value="/lich-phat-song/opt1.html" name="OPT1"></option>
+		<option value="/lich-phat-song/kisco.html" name="KisCo"></option>
+		<option value="/lich-phat-song/fox-sport-2.html" name="Fox Sport 2"></option>
+		<option value="/lich-phat-song/true-vision-sport-1.html" name="True Vision Sport 1"></option>
+		<option value="/lich-phat-song/espn.html" name="ESPN"></option>
+		<option value="/lich-phat-song/outdoor-channel-hd.html" name="Outdoor Channel (HD)"></option>
+		<option value="/lich-phat-song/zee-tv.html" name="Zee TV"></option>
+		<option value="/lich-phat-song/giang-to-tv.html" name="Giang Tô TV"></option>
+		<option value="/lich-phat-song/an-huy-trung-quoc.html" name="An Huy - Trung Quốc"></option>
+		<option value="/lich-phat-song/tvn.html" name="TVN"></option>
+		<option value="/lich-phat-song/mbc.html" name="MBC"></option>
+		<option value="/lich-phat-song/kbs2.html" name="KBS2"></option>
+		<option value="/lich-phat-song/sbs.html" name="SBS"></option>
+		<option value="/lich-phat-song/da-vinci.html" name="Da Vinci"></option>
+		<option value="/lich-phat-song/cartoon-networks.html" name="Cartoon Networks"></option>
+		<option value="/lich-phat-song/golf-channel.html" name="Golf Channel"></option>
+		<option value="/lich-phat-song/gmm-channel.html" name="GMM Channel"></option>
+		<option value="/lich-phat-song/russia-today.html" name="Russia Today"></option>
+		<option value="/lich-phat-song/colors.html" name="COLORS"></option>
+		<option value="/lich-phat-song/travel-living.html" name="TRAVEL &amp; LIVING"></option>
+		<option value="/lich-phat-song/star-gold.html" name="STAR Gold"></option>
+		<option value="/lich-phat-song/hello-japan.html" name="Hello! Japan"></option>
+		<option value="/lich-phat-song/fox-sports-plus-hd.html" name="FOX SPORTS PLUS (HD)"></option>
+		<option value="/lich-phat-song/hd-miostadium-106.html" name="(HD) mioStadium 106"></option>
+		<option value="/lich-phat-song/horse-racing-ch88.html" name="Horse Racing Ch88"></option>
+		<option value="/lich-phat-song/bbc-knowledge.html" name="BBC Knowledge"></option>
+		<option value="/lich-phat-song/nat-geo-people.html" name="Nat Geo People"></option>
+		<option value="/lich-phat-song/ginx-hd.html" name="GINX (HD)"></option>
+		<option value="/lich-phat-song/aniplus-hd.html" name="ANIPLUS HD"></option>
+		<option value="/lich-phat-song/animax.html" name="Animax"></option>
+		<option value="/lich-phat-song/cnbc.html" name="CNBC"></option>
+		<option value="/lich-phat-song/tvb-8.html" name="TVB 8"></option>
+		<option value="/lich-phat-song/celestial-classic-movies.html" name="Celestial Classic Movies"></option>
+		<option value="/lich-phat-song/play-house.html" name="PLAY HOUSE"></option>
+		<option value="/lich-phat-song/zee-cinema.html" name="Zee Cinema"></option>
+		<option value="/lich-phat-song/star-sports.html" name="STAR Sports"></option>
+		<option value="/lich-phat-song/racquet-channel.html" name="Racquet Channel"></option>
+		<option value="/lich-phat-song/horse-racing-ch89.html" name="Horse Racing Ch89"></option>
+		<option value="/lich-phat-song/nat-geo-wild.html" name="Nat Geo Wild"></option>
+		<option value="/lich-phat-song/mtv-sea.html" name="MTV S.E.A"></option>
+		<option value="/lich-phat-song/fox-news-channel.html" name="FOX News Channel"></option>
+		<option value="/lich-phat-song/jiangsu-satellite-channel.html" name="Jiangsu Satellite Channel"></option>
+		<option value="/lich-phat-song/one-hd.html" name="ONE HD"></option>
+		<option value="/lich-phat-song/starmovies.html" name="StarMovies"></option>
+		<option value="/lich-phat-song/cinemax.html" name="CINEMAX"></option>
+		<option value="/lich-phat-song/sony-max.html" name="SONY Max"></option>
+		<option value="/lich-phat-song/sports-hd.html" name="Sports HD"></option>
+		<option value="/lich-phat-song/babytv.html" name="BabyTV"></option>
+		<option value="/lich-phat-song/discovery-channel.html" name="Discovery Channel"></option>
+		<option value="/lich-phat-song/foxcrime.html" name="FOXCRIME"></option>
+		<option value="/lich-phat-song/nat-geo-music.html" name="Nat Geo Music"></option>
+		<option value="/lich-phat-song/bbc-world-news.html" name="BBC World News"></option>
+		<option value="/lich-phat-song/e-city.html" name="E City"></option>
+		<option value="/lich-phat-song/dragon-tv.html" name="Dragon TV"></option>
+		<option value="/lich-phat-song/tv5-monde.html" name="TV5 Monde"></option>
+		<option value="/lich-phat-song/tcm.html" name="TCM"></option>
+		<option value="/lich-phat-song/channel-v-india.html" name="Channel [V] India"></option>
+		<option value="/lich-phat-song/all-sports-network.html" name="All Sports Network"></option>
+		<option value="/lich-phat-song/cbeebies.html" name="CBeebies"></option>
+		<option value="/lich-phat-song/the-biography-channel-hd.html" name="The Biography Channel HD"></option>
+		<option value="/lich-phat-song/discovery-science.html" name="Discovery Science"></option>
+		<option value="/lich-phat-song/fox.html" name="FOX"></option>
+		<option value="/lich-phat-song/iconcerts.html" name="iConcerts"></option>
+		<option value="/lich-phat-song/e-city-2.html" name="E City (+2)"></option>
+		<option value="/lich-phat-song/cti-tv.html" name="CTI TV"></option>
+		<option value="/lich-phat-song/asia-travel.html" name="Asia Travel"></option>
+		<option value="/lich-phat-song/dw.html" name="DW"></option>
+		<option value="/lich-phat-song/cnn-headlines.html" name="CNN HEADLINES"></option>
+		<option value="/lich-phat-song/bloomberg.html" name="BLOOMBERG"></option>
+		<option value="/lich-phat-song/sun-tv.html" name="SUN TV"></option>
+		<option value="/lich-phat-song/nba-tv.html" name="NBA TV"></option>
+		<option value="/lich-phat-song/nick-jr.html" name="Nick Jr"></option>
+		<option value="/lich-phat-song/fx.html" name="FX"></option>
+		<option value="/lich-phat-song/mtv-live-hd.html" name="MTV LIVE HD"></option>
+		<option value="/lich-phat-song/cctv-news.html" name="CCTV News"></option>
+		<option value="/lich-phat-song/now-mango.html" name="now Mango"></option>
+		<option value="/lich-phat-song/now-baogu-movies.html" name="now Baogu Movies"></option>
+		<option value="/lich-phat-song/star-chinese-movies-legend.html" name="STAR Chinese Movies Legend"></option>
+		<option value="/lich-phat-song/asia-news.html" name="ASIA NEWS"></option>
+		<option value="/lich-phat-song/sun-music.html" name="Sun Music"></option>
+		<option value="/lich-phat-song/zee-news.html" name="Zee News"></option>
+		<option value="/lich-phat-song/setanta-sports.html" name="Setanta Sports"></option>
+		<option value="/lich-phat-song/zoomoo-hd.html" name="ZooMoo HD"></option>
+		<option value="/lich-phat-song/eve.html" name="EVE"></option>
+		<option value="/lich-phat-song/cctv-4.html" name="CCTV-4"></option>
+		<option value="/lich-phat-song/tvbj.html" name="TVBJ"></option>
+		<option value="/lich-phat-song/luxe-hd.html" name="LUXE HD"></option>
+		<option value="/lich-phat-song/australia-network.html" name="Australia Network"></option>
+		<option value="/lich-phat-song/star-plus.html" name="STAR Plus"></option>
+		<option value="/lich-phat-song/vijay.html" name="VIJAY"></option>
+		<option value="/lich-phat-song/zee-khana-khazana.html" name="Zee Khana Khazana"></option>
+		<option value="/lich-phat-song/football-channel.html" name="Football Channel"></option>
+		<option value="/lich-phat-song/discovery-kids.html" name="Discovery Kids"></option>
+		<option value="/lich-phat-song/dmax.html" name="DMAX"></option>
+		<option value="/lich-phat-song/travel-channel-hd.html" name="Travel Channel HD"></option>
+		<option value="/lich-phat-song/hbo-signature.html" name="HBO Signature"></option>
+		<option value="/lich-phat-song/phoenix-chinese-channel.html" name="Phoenix Chinese Channel"></option>
+		<option value="/lich-phat-song/mtv-china.html" name="MTV China"></option>
+		<option value="/lich-phat-song/cctv-hd.html" name="CCTV HD"></option>
+		<option value="/lich-phat-song/rai.html" name="RAI"></option>
+		<option value="/lich-phat-song/dw-tv-asia.html" name="DW-TV Asia+"></option>
+		<option value="/lich-phat-song/vannathirai.html" name="Vannathirai"></option>
+		<option value="/lich-phat-song/cinema-one-global.html" name="Cinema One Global"></option>
+		<option value="/lich-phat-song/life-ok.html" name="Life OK"></option>
+		<option value="/lich-phat-song/fifa-world-cup-tm-1.html" name="FIFA World Cup (TM) 1"></option>
+		<option value="/lich-phat-song/disney-junior.html" name="Disney Junior"></option>
+		<option value="/lich-phat-song/universal-channel.html" name="Universal Channel"></option>
+		<option value="/lich-phat-song/channel-v.html" name="Channel [V]"></option>
+		<option value="/lich-phat-song/hbo-family.html" name="HBO Family"></option>
+		<option value="/lich-phat-song/phoenix-infonews-channel.html" name="Phoenix InfoNews Channel"></option>
+		<option value="/lich-phat-song/kmtv.html" name="KMTV"></option>
+		<option value="/lich-phat-song/discovery-world-hd.html" name="Discovery World HD"></option>
+		<option value="/lich-phat-song/bbc.html" name="BBC"></option>
+		<option value="/lich-phat-song/tve.html" name="TVE"></option>
+		<option value="/lich-phat-song/fox-sport.html" name="Fox Sport"></option>
+		<option value="/lich-phat-song/v-thamizh.html" name="V Thamizh"></option>
+		<option value="/lich-phat-song/arirang-tv.html" name="Arirang TV"></option>
+		<option value="/lich-phat-song/ndtv-good-times.html" name="NDTV Good Times"></option>
+		<option value="/lich-phat-song/fifa-world-cup-tm-2.html" name="FIFA World Cup (TM) 2"></option>
+		<option value="/lich-phat-song/disney-channel.html" name="Disney Channel"></option>
+		<option value="/lich-phat-song/rtl-cbs-extreme-hd.html" name="RTL CBS Extreme HD"></option>
+		<option value="/lich-phat-song/lifetime-hd.html" name="Lifetime HD"></option>
+		<option value="/lich-phat-song/hbo-hits.html" name="HBO Hits"></option>
+		<option value="/lich-phat-song/sky-news.html" name="SKY NEWS"></option>
+		<option value="/lich-phat-song/shen-zhou-news-channel.html" name="Shen Zhou News Channel"></option>
+		<option value="/lich-phat-song/v-taiwan.html" name="[V] Taiwan"></option>
+		<option value="/lich-phat-song/star-world.html" name="StarWorld"></option>
+		<option value="/lich-phat-song/hbo.html" name="HBO"></option>
+		<option value="/lich-phat-song/dd-national.html" name="DD NATIONAL"></option>
+		<option value="/lich-phat-song/discovery.html" name="DISCOVERY"></option>
+		<option value="/lich-phat-song/tv4me.html" name="TV4Me"></option>
+		<option value="/lich-phat-song/zee-tamizh.html" name="Zee Tamizh"></option>
+		<option value="/lich-phat-song/ndtv-24x7.html" name="NDTV 24x7"></option>
+		<option value="/lich-phat-song/fox-sports-news.html" name="FOX SPORTS NEWS"></option>
+		<option value="/lich-phat-song/red-card.html" name="Red Card"></option>
+		<option value="/lich-phat-song/nickelodeon.html" name="Nickelodeon"></option>
+		<option value="/lich-phat-song/bbc-lifestyle.html" name="BBC Lifestyle"></option>
+		<option value="/lich-phat-song/warnertv.html" name="WarnerTV"></option>
+		<option value="/lich-phat-song/tvbs-news.html" name="TVBS-NEWS"></option>
+		<option value="/lich-phat-song/tvbs-asia.html" name="TVBS Asia"></option>
+		<option value="/lich-phat-song/v-china.html" name="[V] China"></option>
+		<option value="/lich-phat-song/jajatv.html" name="JAJA&nbsp;TV"></option>
+		<option value="/lich-phat-song/kbs-world.html" name="KBS World"></option>
+		<option value="/lich-phat-song/sony-entertainment-television.html" name="Sony Entertainment Television"></option>
+		<option value="/lich-phat-song/asianet.html" name="Asianet"></option>
+		<option value="/lich-phat-song/sab-tv.html" name="SAB TV"></option>
+		<option value="/lich-phat-song/miostadium-multiview-101.html" name="mioStadium Multiview 101"></option>
+		<option value="/lich-phat-song/ten-cricket.html" name="Ten Cricket"></option>
+		<option value="/lich-phat-song/toonami.html" name="Toonami"></option>
+		<option value="/lich-phat-song/food-network-asia.html" name="Food Network Asia"></option>
+		<option value="/lich-phat-song/comedy-central-asia-hd.html" name="Comedy Central Asia HD"></option>
+		<option value="/lich-phat-song/cinemaworld-hd.html" name="CinemaWorld HD"></option>
+		<option value="/lich-phat-song/cbn.html" name="CBN"></option>
+		<option value="/lich-phat-song/now-hairunomneon.html" name="now Hairunomneon"></option>
+		<option value="/lich-phat-song/star-chinese-movies.html" name="STAR Chinese Movies"></option>
+		<option value="/lich-phat-song/ytn.html" name="YTN"></option>
+		<option value="/lich-phat-song/mnc-business.html" name="MNC Business"></option>
+		<option value="/lich-phat-song/channel-i.html" name="Channel i"></option>
+		<option value="/lich-phat-song/nhk-world-premium.html" name="NHK World Premium"></option>
+		<option value="/lich-phat-song/supersports-arena.html" name="SuperSports Arena"></option>
+		<option value="/lich-phat-song/hd-miostadium-102.html" name="(HD) mioStadium 102"></option>
+		<option value="/lich-phat-song/crime-amp-investigation-network-hd.html" name="Crime &amp; Investigation Network HD"></option>
+		<option value="/lich-phat-song/asian-food-channel.html" name="Asian Food Channel"></option>
+		<option value="/lich-phat-song/kix.html" name="KIX"></option>
+		<option value="/lich-phat-song/turner-classic-movies.html" name="Turner Classic Movies"></option>
+		<option value="/lich-phat-song/vv-drama.html" name="VV Drama"></option>
+		<option value="/lich-phat-song/celestial-movies.html" name="Celestial Movies"></option>
+		<option value="/lich-phat-song/rtm1.html" name="RTM1"></option>
+		<option value="/lich-phat-song/mnc-international.html" name="MNC International"></option>
+		<option value="/lich-phat-song/verna.html" name="Verna"></option>
+		<option value="/lich-phat-song/supersports.html" name="SuperSports"></option>
+		<option value="/lich-phat-song/eurosportnews.html" name="Eurosportnews"></option>
+		<option value="/lich-phat-song/hd-miostadium-103.html" name="(HD) mioStadium 103"></option>
+		<option value="/lich-phat-song/momokids-asia.html" name="momokids Asia"></option>
+		<option value="/lich-phat-song/e-entertainment.html" name="E! Entertainment"></option>
+		<option value="/lich-phat-song/hits-hd.html" name="HITS HD"></option>
+		<option value="/lich-phat-song/thrill.html" name="Thrill"></option>
+		<option value="/lich-phat-song/xing-kong.html" name="XING KONG"></option>
+		<option value="/lich-phat-song/vv-drama-3.html" name="VV Drama (+3)"></option>
+		<option value="/lich-phat-song/mtv.html" name="MTV"></option>
+		<option value="/lich-phat-song/sensasi.html" name="Sensasi"></option>
+		<option value="/lich-phat-song/anc.html" name="ANC"></option>
+		<option value="/lich-phat-song/supersports-plus.html" name="SuperSports Plus"></option>
+		<option value="/lich-phat-song/hd-miostadium-104.html" name="(HD) mioStadium 104"></option>
+		<option value="/lich-phat-song/history-hd.html" name="HISTORY HD"></option>
+		<option value="/lich-phat-song/fashion-tv.html" name="Fashion TV"></option>
+		<option value="/lich-phat-song/bbc-entertainment.html" name="BBC Entertainment"></option>
+		<option value="/lich-phat-song/betv.html" name="beTV"></option>
+		<option value="/lich-phat-song/fox-movies-premium-hd.html" name="FOX Movies Premium HD"></option>
+		<option value="/lich-phat-song/star-chinese-channel.html" name="STAR Chinese Channel"></option>
+		<option value="/lich-phat-song/tvb-classic.html" name="TVB Classic"></option>
+		<option value="/lich-phat-song/nhk.html" name="NHK WORLD"></option>
+		<option value="/lich-phat-song/national-geographic-channel.html" name="NATIONAL GEOGRAPHIC CHANNEL"></option>
+		<option value="/lich-phat-song/one.html" name="ONE"></option>
+		<option value="/lich-phat-song/the-filipino-channel.html" name="The Filipino Channel"></option>
+		<option value="/lich-phat-song/eurosport.html" name="Eurosport"></option>
+		<option value="/lich-phat-song/hd-miostadium-105.html" name="(HD) mioStadium 105"></option>
+		<option value="/lich-phat-song/star-cricket.html" name="STAR Cricket"></option>
+		<option value="/lich-phat-song/h2-hd.html" name="H2 HD"></option>
+		<option value="/lich-phat-song/trutv.html" name="truTV"></option>
+		<option value="/lich-phat-song/diva-universal.html" name="DIVA Universal"></option>
+		<option value="/lich-phat-song/fox-family-movies-hd.html" name="FOX Family Movies HD"></option>
+		<option value="/lich-phat-song/fox-action-movies-hd.html" name="FOX Action Movies HD"></option>
+		<option value="/lich-phat-song/channel-m.html" name="channel M"></option>
+		<option value="/lich-phat-song/tvb-xing-he.html" name="TVB Xing He"></option>
+		<option value="/lich-phat-song/axn.html" name="AXN"></option>					
+	</optgroup>
+	<optgroup label="Truyền hình số vệ tinh k+">
+		<option value="/lich-phat-song/k-pm.html" name="K+PM"></option>
+		<option value="/lich-phat-song/k1.html" name="K+1"></option>
+		<option value="/lich-phat-song/kns.html" name="K+NS"></option>
+		<option value="/lich-phat-song/k-pc.html" name="K+ PC"></option>					
+	</optgroup>
+</select>
