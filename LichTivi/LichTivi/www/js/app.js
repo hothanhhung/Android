@@ -4,34 +4,40 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.filter', 'starter.appDataProcess', 'pickadate'])
-.controller("leftmenuController", function ($scope, $http, $ionicPlatform, $ionicSideMenuDelegate, $ionicPopup, appData, appDataProcess, $ionicModal, $sce, $ionicScrollDelegate){
+.controller("leftmenuController", function ($scope, $http, $ionicPlatform, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup, appData, appDataProcess, $ionicModal, $sce){
 	//var listChannels = appData.lstChannels;
 	// var channel : {id:1, name:"channel 1"};
 	// listChannels.push(channel);
-	var today = new Date();
+	var Message = new Date();
 	$scope.predicate="";
 	$scope.lstChannels = appData.lstChannels;
 	$scope.lstFavoriteChannels = appDataProcess.all();
 	if($scope.lstFavoriteChannels==null) $scope.lstFavoriteChannels = [];
 	$scope.lstFavoriteChannels = $scope.lstFavoriteChannels.filter(function(e){return e}); 
-	$scope.dataSchedule = {id:0, name:"", data: [], message:""};
-	$scope.dataSchedule.timeForSearch = today.getFullYear() +"-"+(today.getMonth()+1)+"-"+today.getDate();//'2013-11-26';
+	$scope.dataSchedule = {id:0, name:"", data: [], message:"", descriptionVN:"", descriptionEN:""};
+	$scope.dataSchedule.timeForSearch = Message.getFullYear() +"-"+(Message.getMonth()+1)+"-"+Message.getDate();//'2013-11-26';
 	//$scope.dataSchedule.data = $sce.trustAsHtml("<strong>a<\/strong> B\u1e3n");
 	$scope.openShcedule =  function ($id, $name, isOpenMenuLeft){
 		$scope.dataSchedule.id = $id;
 		$scope.dataSchedule.name = $name;
+		if(typeof($value) == 'undefined') $scope.dataSchedule.value = "";
+		else
+			$scope.dataSchedule.value = $value;
+		
 		if(isOpenMenuLeft)
 			$scope.openShceduleGetData(true, false);
 		else $scope.openShceduleGetData(false, true);
 	};
 
 	$scope.openShceduleGetData =  function (isOpenMenuLeft, isOpenMenuRight){
+		$scope.dataSchedule.descriptionVN = "";
+		$scope.dataSchedule.descriptionEN = "";
 		//$scope.$apply();
 		//var linkreqest = "http://www.thanhhung.somee.com/RetrieveData/GetSchedules/?channel=VTV2&date=26-05-2016";
 		
 		$scope.dataSchedule.data = [];
 		$scope.dataSchedule.message = "Đang tải dữ liệu...";
-		$ionicScrollDelegate.$getByHandle('scheduleScroll').scrollTop();
+		$ionicScrollDelegate.$getByHandle('ionScrollContentCenter').scrollTop();
 		var url = 'http://www.thanhhung.somee.com/RetrieveData/GetSchedules/?';
 		$.ajax({
 			url: url,
@@ -39,7 +45,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 			data: {channel : $scope.dataSchedule.id, date : $scope.getCorrectFormatDate($scope.dataSchedule.timeForSearch,'-')} ,
 			header: {'Access-Control-Allow-Origin': "*"},
 			dataType: 'json',
-			timeout: 10000,
+			timeout: 25000,
 			error: function(){
 				$ionicPopup.alert({
 					 title: 'Rất tiếc!',
@@ -48,6 +54,8 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 				$scope.dataSchedule.message = "Lỗi khi yêu cầu dữ liệu.";
 				if(isOpenMenuLeft) $ionicSideMenuDelegate.toggleLeft(true);
 				else if(isOpenMenuRight) $ionicSideMenuDelegate.toggleRight(true);
+				//$ionicScrollDelegate.$getByHandle('ionScrollContentCenter').scrollTop();
+				$scope.$apply();
 			},
 			success: function(jsondata){
 				if(jsondata != ''){
@@ -57,8 +65,9 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 				else{
 					$scope.dataSchedule.message = $('<div/>').html('<font style="width: 100%; padding: 15px; text-align: center; float: left; color: #E67D00">Chưa có lịch phát sóng</font>').html();
 				}
-				$scope.$apply();
+				//$ionicScrollDelegate.$getByHandle('ionScrollContentCenter').scrollTop();
 				if(isOpenMenuLeft) $ionicSideMenuDelegate.toggleLeft(true);
+				$scope.$apply();
 			}
 		});
 		/*$http({
@@ -79,113 +88,70 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
             });*/
 	};
 
-	$scope.ResultsOfSearchProgram = {Today:"Không có dữ liệu", NextDay: "Không có dữ liệu", OldDay:"Không có dữ liệu", Explain:""};
-	$scope.searchProgramFromVietBao =  function (){
+	$scope.selectedDateForSearch = (new Date()).toLocaleDateString();;
+	$scope.txtSearchGroupValue = 11;
+	$scope.ResultsOfSearchProgram = {data:[], message:"", explain:""};
+	$scope.searchProgramFromVietBao =  function (keyword, group, date){
+		if(window.cordova && window.cordova.plugins.Keyboard) {
+		  cordova.plugins.Keyboard.close();
+		}
+		if(typeof(keyword) == 'undefined' || keyword=="") return;
 		
-		$scope.ResultsOfSearchProgram.Today = "Đang tìm...";
-		$scope.ResultsOfSearchProgram.NextDay = "Đang tìm...";
-		$scope.ResultsOfSearchProgram.OldDay = "Đang tìm...";
-		$scope.ResultsOfSearchProgram.Explain = "Đang tìm...";
+		$scope.ResultsOfSearchProgram.data = [];
+		$scope.ResultsOfSearchProgram.message = "Đang tìm...";
+		$scope.ResultsOfSearchProgram.explain = "Đang tìm...";
 
-		//var url = 'http://localhost:8100/VTV1_today.htm';
-		var url = 'http://localhost:8100/searchex1.htm';
+		var url = 'http://www.thanhhung.somee.com/RetrieveData/SearchProgram/?';
 		$.ajax({
 			url: url,
 			type: 'GET',
-			//data: {channelId : $scope.dataSchedule.id, dateSchedule : $scope.getCorrectFormatDate($scope.dataSchedule.timeForSearch,'/')} ,
-			//dataType: 'json',
-			timeout: 10000,
+			data: {query : keyword, group : group, date : $scope.getStringDateFromDate(new Date(date))} ,
+			header: {'Access-Control-Allow-Origin': "*"},
+			timeout: 25000,
 			error: function(){
 				$ionicPopup.alert({
 					 title: 'Rất tiếc!',
 					 template: "Lỗi khi yêu cầu dữ liệu."
 				   });
-				$scope.ResultsOfSearchProgram.Today = "Không có dữ liệu";
-				$scope.ResultsOfSearchProgram.NextDay = "Không có dữ liệu";
-				$scope.ResultsOfSearchProgram.OldDay = "Không có dữ liệu";
-				$scope.ResultsOfSearchProgram.Explain = "Lỗi khi yêu cầu dữ liệu.";
+				$scope.ResultsOfSearchProgram.message = "Không có dữ liệu";
+				$scope.ResultsOfSearchProgram.explain = "Lỗi khi yêu cầu dữ liệu.";
 				$scope.$apply();
 			},
 			success: function(responsedata){
 				if(responsedata != ''){
-					var data = $( '<div/>' );
-					var start = responsedata.indexOf("<body>") + 6;
-					var end = responsedata.indexOf("</body>");
-					var body = responsedata.substring(start, end);
-					data.html(body);
-
-					var channelToday = null;
-					var channelNextDay = null;
-					var channelOldDay = null;
-
-					$('div.chanel-detail', body).each(function() {
-						var title = $('div.title-tv', this).text();
-						if(title.indexOf("Ngày hôm nay") > -1)
-						{
-							channelToday = $('div.tv-detail', this);
-						}else if(title.indexOf("Sắp tới") > -1)
-						{
-							channelNextDay = $('div.tv-detail', this);
-						}
-						else if(title.indexOf("Đã phát") > -1)
-						{
-							channelOldDay = $('div.tv-detail', this);
-						}
-					 });
-
-					$scope.ResultsOfSearchProgram.Today = getDataFromSearchProgram(channelToday);
-					
-					$scope.ResultsOfSearchProgram.NextDay = getDataFromSearchProgram(channelNextDay);
-					
-					$scope.ResultsOfSearchProgram.OldDay = getDataFromSearchProgram(channelOldDay);
+					$scope.ResultsOfSearchProgram.data = responsedata;
+					$scope.ResultsOfSearchProgram.message = "";
 				}
 				
-				if($scope.ResultsOfSearchProgram.Today == "") 
+				if($scope.ResultsOfSearchProgram.message == "") 
 				{
-					$scope.ResultsOfSearchProgram.Today="<b style='color:red;'> Không tìm thấy trong các chương trình hôm nay. </b>"
+					$scope.ResultsOfSearchProgram.message="<b style='color:red;'> Không tìm thấy trong các chương trình hôm nay. </b>";
 				}
 
-				if($scope.ResultsOfSearchProgram.NextDay == "") 
-				{
-					$scope.ResultsOfSearchProgram.NextDay="<b style='color:red;'> Không tìm thấy trong các chương trình sắp phát </b>"
-				}
-
-				if($scope.ResultsOfSearchProgram.OldDay == "") 
-				{
-					$scope.ResultsOfSearchProgram.OldDay="<b style='color:red;'> Không tìm thấy trong các chương trình đã phát</b>"
-				}
-				$scope.isDisplayToday = true;
+				$scope.ResultsOfSearchProgram.explain = "";
 				$scope.$apply();
 			}
 		});
 	};
 
-	getDataFromSearchProgram = function(dataObject){
-		if(dataObject != null) 
-		{
-			var resultContent = "";
-			dataObject.each(function() {
-				var time = $('div.time-tv', this).text();
-				if(time.trim() != ""){
-					var content = $('div.t-detail', this);
-
-					var children = content.children();
-					var contentChannel = children.eq(0).text().replace("Kênh:","");
-					var contentDate = children.eq(1).text() + " " + children.eq(2).text();
-					var contentTitle = children.eq(4).text();
-					var contentDetail = children.eq(5).text();
-					if(contentTitle != "") contentTitle = "<br/>" + contentTitle;
-					if(contentDetail != "") contentDetail = "<br/>" + contentDetail;
-					resultContent = resultContent + "<p><strong>" + time + "</strong> " + "Trên <span class='colortext'>" + contentChannel + "</span>" + contentDate + contentTitle + contentDetail + "</p>";
-
-				}
-			});
-			return resultContent;
-		}else{
-			return "Không tìm thấy dữ liệu.";
-		}
+	$scope.openAbout = function()
+	{
+		$ionicPopup.alert({
+					 title: 'Thông tin sản phẩm',
+					 template: "Dữ liệu được lấy từ vietbao.vn và mytvnet.vn. Thông tin hiển thị chỉ mang tính chất tham khảo. Tác giả không chịu bất kỳ trách nhiệm nào từ dữ liệu.<br/>Cảm ơn các bạn đã ủng hộ ứng dụng này!"
+				   });
 	}
 	
+	$ionicModal.fromTemplateUrl('channeldetail.html', 
+        function(modal) {
+            $scope.openDetailChannelModal = modal;
+        },
+        {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope
+
+        }
+    );
 	$ionicModal.fromTemplateUrl('searchprogram.html', 
         function(modal) {
             $scope.openSearchProgramModal = modal;
@@ -205,7 +171,12 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 		var res = $stringDate.split("-"); 
 		return "" + (res[2].length < 2 ? "0" + res[2] : res[2]) + $sign + (res[1].length < 2 ? "0" + res[1] : res[1]) + $sign + res[0];
 	};
-
+	$scope.getStringDateFromDate = function(date){
+		if(typeof(date) === undefined) return "";
+		var d = date.getDate();
+		var m=date.getMonth()+1;
+		return (d<10?"0"+d:d)+"-"+(m<10?"0"+m:m)+"-"+date.getFullYear() ;//'26-11-2016';
+	}
 	$scope.correctGroupName = function(value){
 		return value.length < 4? value : value.substring(3);
 	}
@@ -284,7 +255,10 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 	$scope.oldSearchValue = "";
 	$scope.searchChannels = function($keyword) {
 
-		if($keyword == $scope.oldSearchValue) return;
+		if(window.cordova && window.cordova.plugins.Keyboard) {
+		  cordova.plugins.Keyboard.close();
+		}
+		if(typeof($keyword) == 'undefined' || $keyword == $scope.oldSearchValue) return;
 	  	if ($keyword != "")
 		{
 		    var lstSimilarChannels = new Array();
@@ -300,7 +274,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 
 		    	if( firstIndexSecond > -1)
 		    	{
-		    		var newObject = {groupName: "Kết quả: " + $keyword, id:appData.lstChannels[i].id, name : appData.lstChannels[i].name, nameSearch : "<span class='searched'>" + appData.lstChannels[i].name + "</span>"};
+		    		var newObject = {groupName: "   Kết quả: " + $keyword, id:appData.lstChannels[i].id, name : appData.lstChannels[i].name, nameSearch : "<span class='searched'>" + appData.lstChannels[i].name + "</span>"};
 			    	
 			    	if(secondIndexFirst > -1)
 		    		{
@@ -323,12 +297,21 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 		    $scope.isDisplayGroupChannel = true;
 		    $scope.lstChannels = lstSameChannels.concat(lstSimilarChannels);
 		}
-		else $scope.lstChannels = appData.lstChannels;
+		else{
+			$scope.isDisplayGroupChannel = false;
+			$scope.lstChannels = appData.lstChannels;
+		} 
+		$ionicScrollDelegate.$getByHandle('ionScrollContentLeft').scrollTop();
 		$scope.oldSearchValue = $keyword;
 	}
 
-
-	$scope.openShcedule(appData.lstChannels[0].id, appData.lstChannels[0].name, true);
+	$scope.resetSearchChannel = function(){
+		$scope.lstChannels = appData.lstChannels;
+		$scope.oldSearchValue = "";
+		$scope.isDisplayGroupChannel = false;
+		$ionicScrollDelegate.$getByHandle('ionScrollContentLeft').scrollTop();
+	}
+	$scope.openShcedule("VTV1", "VTV1", true);
 /*
 	compareString = function(firstString, secondString)
 	{
@@ -345,7 +328,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.close();
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();

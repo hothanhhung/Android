@@ -35,7 +35,7 @@
         <i class="icon ion-search"></i>
       </button>
       
-      <h1 class="title">{{dataSchedule.name}}</h1> 
+        <h1 class="h1 title">{{dataSchedule.name}}</h1>        
      <div class="buttons" side="right">    
         <button class="button button-icon" ng-if="!wasFavoriteChannel(dataSchedule.id)" ng-click="saveFavoriteChannel(dataSchedule)">
           <i class="icon ion-heart"></i>
@@ -56,20 +56,22 @@
 
       <ion-content scroll="false">
         <!-- <div >{{dataSchedule.name}}</div> -->
-        <label class="item item-input" >
-          <span class="input-label" >Lịch phát sóng ngày:{{getCorrectFormatDate(dataSchedule.timeForSearch,"-")}}</span>
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">Lịch ngày: {{getCorrectFormatDate(dataSchedule.timeForSearch,"-")}}</label>
           <span>
-            <button class="button button-stable" ng-click="opendateModal()">
-              Chọn ngày
-            </button>
-          </span>
-        </label>
-        <ion-scroll delegate-handle="scheduleScroll" zooming="true" direction="y" style="width: 100%; height: 100%;">
+          <button class="button button-small icon ion-calendar" ng-click="opendateModal()">
+            Ngày
+          </button>
+          <button class="button button-small icon ion-card" ng-click="openDetailChannelModal.show()" ng-if="dataSchedule.descriptionVN!='' || dataSchedule.descriptionEN != ''">
+          </button>
+      </div>
+        <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%;" delegate-handle="ionScrollContentCenter">
           <div style="padding: 10px 20px 80px 20px">
 	         <div id="schedule_content" ng-if="dataSchedule.message!=''" ng-bind-html="dataSchedule.message"></div>
-			 <div ng-repeat="item in dataSchedule.data" class="row"> 
-				<div class="time-tv">{{item.StartOn}}</div>
-				<div class="t-detail"ng-bind-html="item.ProgramName">
+			 <div class="content">
+				 <div ng-repeat="item in dataSchedule.data" class="row"> 
+					<div class="time-tv">{{item.StartOn}}</div>
+					<div class="t-detail"ng-bind-html="item.ProgramName"></div>
 				</div>
 			</div>
           </div>
@@ -80,17 +82,26 @@
     <!-- Left menu -->
     <ion-side-menu side="left" >
       <ion-header-bar class="bar-calm">
+        <button class="button button-icon" ng-click="openAbout()">
+          <i class="icon ion-information-circled"></i>
+        </button>
 		<h1 class="title">Danh sách kênh</h1>
       </ion-header-bar>
       <ion-content scroll="false">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Từ khóa tìm kênh" ng-blur="searchChannels(txtSearchChannelValue)" ng-keyup="keyUpOnsearchChannels($event, txtSearchChannelValue)" ng-model="txtSearchChannelValue">
-      </label>
-        <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%">
-      	  <!-- <ion-list	  
-                show-reorder="shouldShowReorder"
-                can-swipe="listCanSwipe"> -->
+	  <div>
+		  <div class="item item-input-inset">
+			<label class="item-input-wrapper">
+			  <input type="text" placeholder="Từ khóa tìm kênh" ng-model="txtSearchChannelValue">
+			</label>
+			<button class="button button-small icon ion-search" ng-click="searchChannels(txtSearchChannelValue)">
+			  Tìm
+			</button>
+      <button class="button button-small icon ion-refresh" ng-click="txtSearchChannelValue = ''; resetSearchChannel();">
+      </button>
+		  </div>
+		</div>
+        <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%" delegate-handle="ionScrollContentLeft" >
+              <div style="padding: 0px 0px 80px 0px">
                 <div ng-repeat="(key, channelGroup) in lstChannels | groupBy: '[groupOrder,groupName]' | orderBy:'[groupOrder,groupName]':true">
                   <div class="item item-divider" ng-click="isDisplayGroupChannel = !isDisplayGroupChannel">
                     {{correctGroupName(key)}} <i class="icon {{isDisplayGroupChannel == true? 'ion-arrow-up-b': 'ion-arrow-down-b'}}"></i>
@@ -105,12 +116,7 @@
                     </ion-list>
                   </div>
                 </div>
-      		<!-- <ion-item ng-repeat="channel in lstChannels" ng-click="openShcedule(channel.id, channel.name, true)"  ng-class="channel.id == dataSchedule.id ? 'selectedChannel':''" >
-      				<span>{{$index + 1}}.</span>
-              <span ng-if="isSearchChannels(channel)==false">{{channel.name}}</span> 
-              <span ng-if="isSearchChannels(channel)" ng-bind-html="channel.nameSearch"></span>
-      		</ion-item > -->
-      	<!-- 	</ion-list> -->
+              </div>
         </ion-scroll>
       </ion-content>
     </ion-side-menu>
@@ -121,6 +127,7 @@
       </ion-header-bar>
       <ion-content scroll="false">
         <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%">
+          <div style="padding: 10px 0px 80px 0px">
           <ion-list   
                 show-reorder="shouldShowReorder"
                 can-swipe="listCanSwipe">
@@ -129,6 +136,7 @@
               <span>{{channel.name}}</span> 
           </ion-item >
           </ion-list>
+          </div>
         </ion-scroll>
       </ion-content>
     </ion-side-menu>

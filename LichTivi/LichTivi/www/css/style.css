@@ -3,13 +3,13 @@
 	margin: 0;
 	min-height: 35px;
 	}
-.row:nth-child(2n+0){ 
+.content .row:nth-child(2n+0){ 
     background: #f4f4f4;
 }
-.row:nth-child(2n+1){
+.content .row:nth-child(2n+1){
     background: #e7e7e7;
 }
-.row .time-tv {
+.content .time-tv {
     border-right: 1px solid #ffffff;
     float: left;
     font-weight: bold;
@@ -20,4 +20,21 @@
 .row .t-detail {
     width: 100%;
     padding: 3px 3px 0 10px;
+}
+
+.row .t-duration {
+    border-left: 1px solid #ffffff;
+    float: right;
+    padding: 3px 3px 0 10px;
+    text-align: center;
+    width: 70px;
+}
+
+.text-center{ text-align:center; }
+
+.row-head{ 
+    background: #244d6f none repeat scroll 0 0;
+    color: #ffffff;
+    font-weight: bold;
+    line-height: 30px;
 }

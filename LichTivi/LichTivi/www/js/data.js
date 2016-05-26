@@ -11,10 +11,10 @@ angular.module('starter.appDataProcess', []).
 		    save: function(channels) {
 		      window.localStorage['favoriteChannel'] = angular.toJson(channels);
 		    },
-		    newProject: function(channelid, channelName) {
+		    newProject: function(channelID, channelName) {
 		      // Add a new project
 		      return {
-		        id: channelid,
+		        id: channelID,
 		        name: channelName
 		      };
 		    }
