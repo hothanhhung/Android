@@ -11,6 +11,21 @@ namespace hthservices.Utils
 {
     public class DataProcess
     {
+        public static readonly int[] Stations = new int[13] {
+                                            1, //Đài Truyền hình Việt Nam - VTV
+	                                        14, //Đài Tiếng nói Việt Nam
+	                                        15, //Đài Phát thanh và Truyền hình Hà Nội
+	                                        2, //Đài Truyền hình TP Hồ Chí Minh - HTV
+	                                        18, //Đài truyền hình An Viên AVG
+	                                        16, //Đài Truyền hình Cáp Việt Nam
+	                                        17, //Đài Truyền hình Cáp TP Hồ Chí Minh - HTVC
+	                                        3, //Đài truyền hình cáp Hà Nội
+	                                        4, //Đài truyền hình cáp Sài Gòn
+	                                        6, //Đài truyền hình số VTC
+	                                        8, //Đài TH địa phương
+	                                        10, //Kênh TH quốc tế
+	                                        12 //Truyền hình số vệ tinh k+
+                                          };
         static public List<Channel> GetAllChannels()
         {
             List<Channel> channels = SQLiteProcess.GetAllChannels();
@@ -59,6 +74,13 @@ namespace hthservices.Utils
                 }
             }
             return guideItems;
+        }
+   
+        static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int groupId, DateTime date)
+        {
+            int index = groupId - 11;
+            if (index < 0 || index > Stations.Length - 1) index = 0;
+            return hthservices.Utils.HtmlHelper.SearchDataFromVietBaoUrl(query, Stations[index], date);
         }
     }
 }

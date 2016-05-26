@@ -17,7 +17,8 @@ namespace hthservices.Controllers
             }
             if (!String.IsNullOrWhiteSpace(date))
             {
-                dateOn = DateTime.ParseExact(date, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                if(DateTime.TryParseExact(date, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dateOn));
+                else dateOn = DateTime.Now;
             } 
 
             var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn);
@@ -34,6 +35,29 @@ namespace hthservices.Controllers
                 jsonChannels.Add(obj);
             }
             return Json(jsonChannels, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SearchProgram(string query, string group, string date)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return Json(new List<SearchItem>(), JsonRequestBehavior.AllowGet);
+            }
+
+            DateTime selectedDate = DateTime.Now;
+            int groupOrder = 0;
+            if (!String.IsNullOrWhiteSpace(group))
+            {
+                Int32.TryParse(group, out groupOrder);
+            }
+            if (!String.IsNullOrWhiteSpace(date))
+            {
+                if (DateTime.TryParseExact(date, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out selectedDate)) ;
+                else selectedDate = DateTime.Now;
+            }
+
+            var searchItems = hthservices.Utils.DataProcess.SearchDataFromVietBaoUrl(query, groupOrder, selectedDate);
+            return Json(searchItems, JsonRequestBehavior.AllowGet);
         }
     }
 }

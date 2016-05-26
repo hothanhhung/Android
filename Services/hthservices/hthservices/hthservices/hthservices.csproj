@@ -246,6 +246,7 @@
     <Compile Include="Utils\GuideItem.cs" />
     <Compile Include="Utils\HtmlHelper.cs" />
     <Compile Include="Utils\MethodHelpers.cs" />
+    <Compile Include="Utils\SearchItem.cs" />
     <Compile Include="Utils\SQLiteProcess.cs" />
   </ItemGroup>
   <ItemGroup>
