@@ -65,6 +65,58 @@ namespace hthservices.Utils
 
             return guideItems;
         }
+
+        static public List<GuideItem> GetDataFromMyTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server + "channelId={0}&dateSchedule={1}", channelToServer.Value, date.ToString("dd/MM/yyyy"));
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                HttpClient http = new HttpClient();
+                var response = http.GetByteArrayAsync(url).Result;
+                String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                source = System.Text.RegularExpressions.Regex.Unescape(source.Replace("\"",""));
+                source = WebUtility.HtmlDecode(source);
+                HtmlDocument resultat = new HtmlDocument();
+                resultat.LoadHtml(source);
+
+                var items = resultat.DocumentNode.SelectNodes("//p");
+
+                if (items != null)
+                {
+                    foreach (var item in items)
+                    {
+                        string startOn = "", programName = "";
+                        // get start time
+                        var timeTV = item.SelectNodes("strong");
+                        if (timeTV != null && timeTV.Count > 0)
+                        {
+                            startOn = timeTV.FirstOrDefault().InnerText.Trim();
+                        }
+                        var tDetail = item.ChildNodes;
+
+                        // get program name
+                        if (tDetail != null && tDetail.Count > 1)
+                        {
+                            programName = item.ChildNodes[1].InnerText.Trim();
+                        }
+                        var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                        guideItems.Add(guideItem);
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
+        #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
         {
             string url = string.Format(VIETBAO_SEARCH_PAGE, query, date.ToString("dd-MM-yyyy"), stationID);
@@ -147,6 +199,8 @@ namespace hthservices.Utils
 
             return searchItems;
         }
+        #endregion
+
         static public List<Channel> GetAllChannels()
         {
             List<Channel> channels = new List<Channel>();

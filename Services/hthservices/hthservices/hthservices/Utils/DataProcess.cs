@@ -11,21 +11,7 @@ namespace hthservices.Utils
 {
     public class DataProcess
     {
-        public static readonly int[] Stations = new int[13] {
-                                            1, //Đài Truyền hình Việt Nam - VTV
-	                                        14, //Đài Tiếng nói Việt Nam
-	                                        15, //Đài Phát thanh và Truyền hình Hà Nội
-	                                        2, //Đài Truyền hình TP Hồ Chí Minh - HTV
-	                                        18, //Đài truyền hình An Viên AVG
-	                                        16, //Đài Truyền hình Cáp Việt Nam
-	                                        17, //Đài Truyền hình Cáp TP Hồ Chí Minh - HTVC
-	                                        3, //Đài truyền hình cáp Hà Nội
-	                                        4, //Đài truyền hình cáp Sài Gòn
-	                                        6, //Đài truyền hình số VTC
-	                                        8, //Đài TH địa phương
-	                                        10, //Kênh TH quốc tế
-	                                        12 //Truyền hình số vệ tinh k+
-                                          };
+        
         static public List<Channel> GetAllChannels()
         {
             List<Channel> channels = SQLiteProcess.GetAllChannels();
@@ -64,13 +50,27 @@ namespace hthservices.Utils
             guideItems = SQLiteProcess.GetSchedulesOfChannel(channelKey, date);
             if (guideItems == null || guideItems.Count == 0)
             {
-                var channel = SQLiteProcess.GetChannel(channelKey);
-                if(channel != null && channel.ChannelId > 0)
+                var channelToServer = DataStatic.GetChannelToServer(channelKey);
+                switch (channelToServer.Server)
                 {
-                    if(!String.IsNullOrWhiteSpace(channel.LinkVietBao)){
-                        guideItems = HtmlHelper.GetDataFromVietBaoUrl(channel, date);
-                        SQLiteProcess.SetSchedules(guideItems);
-                    }
+                    case DataStatic.FROM_MYTIVI_PAGE:
+                        guideItems = HtmlHelper.GetDataFromMyTVUrl(channelToServer, date);
+                        break;
+                    default:
+                        var channel = SQLiteProcess.GetChannel(channelKey);
+                        if (channel != null && channel.ChannelId > 0)
+                        {
+                            if (!String.IsNullOrWhiteSpace(channel.LinkVietBao))
+                            {
+                                guideItems = HtmlHelper.GetDataFromVietBaoUrl(channel, date);
+
+                            }
+                        }
+                        break;
+                }
+                if (guideItems != null && guideItems.Count > 0)
+                {
+                    SQLiteProcess.SetSchedules(guideItems);
                 }
             }
             return guideItems;
@@ -79,8 +79,8 @@ namespace hthservices.Utils
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int groupId, DateTime date)
         {
             int index = groupId - 11;
-            if (index < 0 || index > Stations.Length - 1) index = 0;
-            return hthservices.Utils.HtmlHelper.SearchDataFromVietBaoUrl(query, Stations[index], date);
+            if (index < 0 || index > DataStatic.Stations.Length - 1) index = 0;
+            return hthservices.Utils.HtmlHelper.SearchDataFromVietBaoUrl(query, DataStatic.Stations[index], date);
         }
     }
 }
