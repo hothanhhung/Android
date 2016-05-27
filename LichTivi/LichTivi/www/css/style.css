@@ -23,7 +23,6 @@
 }
 
 .row .t-duration {
-    border-left: 1px solid #ffffff;
     float: right;
     padding: 3px 3px 0 10px;
     text-align: center;
@@ -37,4 +36,12 @@
     color: #ffffff;
     font-weight: bold;
     line-height: 30px;
+}
+
+input[type="date"]::-ms-clear {
+    display: none;
+}
+/* Hide the cancel button */
+::-webkit-search-cancel-button { 
+    -webkit-appearance: none; 
 }

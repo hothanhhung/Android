@@ -16,6 +16,27 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 	$scope.lstFavoriteChannels = $scope.lstFavoriteChannels.filter(function(e){return e}); 
 	$scope.dataSchedule = {id:0, name:"", data: [], message:"", descriptionVN:"", descriptionEN:""};
 	$scope.dataSchedule.timeForSearch = Message.getFullYear() +"-"+(Message.getMonth()+1)+"-"+Message.getDate();//'2013-11-26';
+	$scope.getCorrectFormatDate =  function ($stringDate, $sign){
+		var res = $stringDate.split("-"); 
+		return "" + (res[2].length < 2 ? "0" + res[2] : res[2]) + $sign + (res[1].length < 2 ? "0" + res[1] : res[1]) + $sign + res[0];
+	};
+	
+	$scope.getYYYYMMDDFromDate = function(date){
+		if(typeof(date) === undefined) return "";
+		var d = date.getDate();
+		var m=date.getMonth()+1;
+		return date.getFullYear() +"-"+(m<10?"0"+m:m)+"-"+ (d<10?"0"+d:d);//'2016-11-26';
+	};
+	
+	$scope.getStringDateFromDate = function(date){
+		if(typeof(date) === undefined) return "";
+		var d = date.getDate();
+		var m=date.getMonth()+1;
+		return (d<10?"0"+d:d)+"-"+(m<10?"0"+m:m)+"-"+date.getFullYear() ;//'26-11-2016';
+	};
+	$scope.correctGroupName = function(value){
+		return value.length < 4? value : value.substring(3);
+	};
 	//$scope.dataSchedule.data = $sce.trustAsHtml("<strong>a<\/strong> B\u1e3n");
 	$scope.openShcedule =  function ($id, $name, isOpenMenuLeft){
 		$scope.dataSchedule.id = $id;
@@ -28,7 +49,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 			$scope.openShceduleGetData(true, false);
 		else $scope.openShceduleGetData(false, true);
 	};
-
+	
 	$scope.openShceduleGetData =  function (isOpenMenuLeft, isOpenMenuRight){
 		$scope.dataSchedule.descriptionVN = "";
 		$scope.dataSchedule.descriptionEN = "";
@@ -88,7 +109,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
             });*/
 	};
 
-	$scope.selectedDateForSearch = (new Date()).toLocaleDateString();;
+	$scope.selectedDateForSearch = $scope.getYYYYMMDDFromDate(new Date());
 	$scope.txtSearchGroupValue = 11;
 	$scope.ResultsOfSearchProgram = {data:[], message:"", explain:""};
 	$scope.searchProgramFromVietBao =  function (keyword, group, date){
@@ -119,13 +140,13 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 			},
 			success: function(responsedata){
 				if(responsedata != ''){
-					$scope.ResultsOfSearchProgram.data = responsedata;
-					$scope.ResultsOfSearchProgram.message = "";
-				}
-				
-				if($scope.ResultsOfSearchProgram.message == "") 
-				{
-					$scope.ResultsOfSearchProgram.message="<b style='color:red;'> Không tìm thấy trong các chương trình hôm nay. </b>";
+					if(responsedata.length > 0){
+						$scope.ResultsOfSearchProgram.data = responsedata;
+						$scope.ResultsOfSearchProgram.message = "";
+					}
+					else{
+						$scope.ResultsOfSearchProgram.message = "<b style='color:red;'> Không tìm thấy kết quả. </b>";
+					}
 				}
 
 				$scope.ResultsOfSearchProgram.explain = "";
@@ -167,19 +188,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
       $scope.openSearchProgramModal.show();
     };
 
-	$scope.getCorrectFormatDate =  function ($stringDate, $sign){
-		var res = $stringDate.split("-"); 
-		return "" + (res[2].length < 2 ? "0" + res[2] : res[2]) + $sign + (res[1].length < 2 ? "0" + res[1] : res[1]) + $sign + res[0];
-	};
-	$scope.getStringDateFromDate = function(date){
-		if(typeof(date) === undefined) return "";
-		var d = date.getDate();
-		var m=date.getMonth()+1;
-		return (d<10?"0"+d:d)+"-"+(m<10?"0"+m:m)+"-"+date.getFullYear() ;//'26-11-2016';
-	}
-	$scope.correctGroupName = function(value){
-		return value.length < 4? value : value.substring(3);
-	}
+	
 
     $ionicModal.fromTemplateUrl('datemodal.html', 
         function(modal) {
