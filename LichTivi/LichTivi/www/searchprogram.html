@@ -1,0 +1,88 @@
+<div class="modal">
+   <ion-header-bar class="bar-calm">
+      <button class="button button-icon" ng-click="openSearchProgramModal.hide();">
+          <i class="icon ion-home"></i>
+       </button>
+      <h1 class="title">Tìm chương trình</h1>   
+  </ion-header-bar>
+  <ion-content  scroll="true">
+    <div style="align:center">
+		<div class="list">
+		  <div class="item-input-inset" style="padding-bottom: 0px;">
+			<label class="item-input-wrapper">
+			  <input type="text" placeholder="Từ khóa tìm chương trình" ng-model="txtSearchProgramValue">
+			</label>
+			<button class="button button-small icon ion-search" ng-click="searchProgramFromVietBao(txtSearchProgramValue, txtSearchGroupValue, selectedDateForSearch)">
+			  Tìm
+			</button>
+		  </div>
+		  <div class="item-input-inset" style="padding-bottom: 0px; padding-top: 5px;">
+			<label class="item-input-wrapper">
+				<div class="input-label" style="width:90px">
+				  Nhà đài
+				</div>
+				<select style="width:100%" ng-model="txtSearchGroupValue">
+				  <option value="11" selected>Đài Truyền hình Việt Nam</option>
+				  <option value="12">Đài Tiếng nói Việt Nam</option>
+				  <option value="13">Đài Phát thanh và Truyền hình Hà Nội</option>
+				  <option value="14">Đài Truyền hình TP Hồ Chí Minh - HTV</option>
+				  <option value="15">Đài truyền hình An Viên AVG</option>
+				  <option value="16">Đài Truyền hình Cáp TP Hồ Chí Minh - HTVC</option>
+				  <option value="17">Đài Truyền hình Cáp Việt Nam</option>
+				  <option value="18">Đài truyền hình cáp Hà Nội</option>
+				  <option value="19">Đài truyền hình cáp Sài Gòn</option>
+				  <option value="20">Đài truyền hình số VTC</option>
+				  <option value="21">Đài TH địa phương</option>
+				  <option value="22">Kênh TH quốc tế</option>
+				  <option value="23">Truyền hình số vệ tinh k+</option>
+				</select>
+			 </label>
+		  </div>
+		  <div class="item-input-inset" style="padding-bottom: 0px; padding-top: 5px;">
+			<label class="item-input-wrapper">
+			  <span class="input-label" style="width:90px">Ngày</span>
+			  <input style="width:100%" type="date" value="{{selectedDateForSearch}}" ng-model="selectedDateForSearch" placeholder="{{selectedDateForSearch}}" required="required" >
+			</label>
+		  </div>
+		</div>
+      <div>
+          <div id="schedule_content">
+            <div ng-if="ResultsOfSearchProgram.explain!=''">{{ResultsOfSearchProgram.explain}}</div>
+			<div style="padding: 10px 10px 80px 10px">
+				<div class="row row-head"> 
+					<div class="time-tv text-center" style="width:100px" >Kênh</div>
+					<div class="t-detail text-center">Chương trình</div>
+					<div class="t-duration text-center" style="width:160px">Thời gian</div>
+				</div>
+				<div class="content">
+					<div ng-repeat="item in ResultsOfSearchProgram.data" class="row"> 
+						<div class="time-tv" style="width:100px" >{{item.ChannelName}}</div>
+						<div class="t-detail" ng-bind-html="item.ProgramName"></div>
+						<div class="t-duration" style="width:160px" ng-bind-html="item.Time"></div>
+					</div>
+				</div>
+				<div id="schedule_content" ng-if="ResultsOfSearchProgram.message!=''" ng-bind-html="ResultsOfSearchProgram.message"></div>
+			</div>
+          </div>
+		  <!--
+            <div class="item item-divider" ng-click="isDisplayToday = !isDisplayToday">
+              Ngày hôm nay <i class="icon {{isDisplayToday == true? 'ion-arrow-up-b': 'ion-arrow-down-b'}}"></i>
+            </div>
+            <div ng-if="isDisplayToday" ng-bind-html="ResultsOfSearchProgram.Today" style="padding-left:5px;">
+            </div>
+             <div class="item item-divider" ng-click="isDisplayNextday = !isDisplayNextday">
+              Sắp chiếu <i class="icon {{isDisplayNextday == true? 'ion-arrow-up-b': 'ion-arrow-down-b'}}"></i>
+            </div>
+            <div ng-if="isDisplayNextday" ng-bind-html="ResultsOfSearchProgram.NextDay" style="padding-left:5px;">
+            </div>
+             <div class="item item-divider" ng-click="isDisplayOldday = !isDisplayOldday">
+              Đã chiếu <i class="icon {{isDisplayOldday == true? 'ion-arrow-up-b': 'ion-arrow-down-b'}}"></i>
+            </div>
+            <div ng-if="isDisplayOldday" ng-bind-html="ResultsOfSearchProgram.OldDay" style="padding-left:5px;">
+            </div>
+-->
+          </div>
+      </div>
+    </div>
+  </ion-content>
+</div>

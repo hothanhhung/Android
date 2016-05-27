@@ -1,0 +1,23 @@
+<div class="modal">
+   <ion-header-bar class="bar-calm">
+      <button class="button button-icon" ng-click="openDetailChannelModal.hide();">
+          <i class="icon ion-home"></i>
+       </button>
+      <h1 class="title">{{dataSchedule.name}}</h1>   
+  </ion-header-bar>
+  <ion-content  scroll="true">
+    <div style="padding: 10px 20px 80px 20px">
+      <div>
+        <strong>Giới thiệu kênh</strong>
+        <div ng-bind-html="dataSchedule.descriptionVN">
+        </div>
+      </div>
+      <br/><br/>
+      <div>
+        <strong>Channel description</strong>
+        <div ng-bind-html="dataSchedule.descriptionEN">
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</div>
