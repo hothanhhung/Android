@@ -56,6 +56,22 @@ namespace hthservices.Utils
                     case DataStatic.FROM_MYTIVI_PAGE:
                         guideItems = HtmlHelper.GetDataFromMyTVUrl(channelToServer, date);
                         break;
+                    case DataStatic.FROM_VOV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromVOVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_VTC14_PAGE:
+                        var VN_Now = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
+                        {
+                            guideItems = HtmlHelper.GetVTC14Url(channelToServer, date);
+                        }
+                        break;
+                    case DataStatic.FROM_TRUYENHINHSO_PAGE:
+                        guideItems = HtmlHelper.GetDataFromTruyenHinhSoUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_TVNET_PAGE:
+                        guideItems = HtmlHelper.GetDataTVNetUrl(channelToServer, date);
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)
@@ -72,7 +88,18 @@ namespace hthservices.Utils
                 {
                     SQLiteProcess.SetSchedules(guideItems);
                 }
+
             }
+            try
+            {
+                System.Threading.Thread th = new System.Threading.Thread(() =>
+                {
+                    SQLiteProcess.SaveScheduleRequestLogs(channelKey, date, guideItems == null || guideItems.Count == 0);
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
+            catch (Exception ex) { }
             return guideItems;
         }
    

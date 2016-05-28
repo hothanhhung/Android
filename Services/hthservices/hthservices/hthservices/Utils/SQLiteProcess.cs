@@ -9,12 +9,17 @@ namespace hthservices.Utils
 {
     public class SQLiteProcess
     {
+        private static string connectString;
         private static string ConnectString
         {
             get
             {
                 //return @"D:\hung\github\android\Android\Services\hthservices\hthservices\hthservices\Data\TVSchedules.db3";
-                return "Data Source=" + HttpContext.Current.Server.MapPath("~/Data/TVSchedules.db3") + ";Version=3;New=False;Compress=True;UTF8Encoding=True";
+                if (string.IsNullOrWhiteSpace(connectString))
+                {
+                    connectString = "Data Source=" + HttpContext.Current.Server.MapPath("~/Data/TVSchedules.db3") + ";Version=3;New=False;Compress=True;UTF8Encoding=True";
+                }
+                return connectString;
             }
         }
         #region Channel
@@ -201,6 +206,44 @@ namespace hthservices.Utils
 
         }
 
+        #endregion
+
+        #region Log Process
+        public static void SaveScheduleRequestLogs(string channelKey, DateTime date, bool isNoData)
+        {
+            string sqlSaveChannel = "";
+
+            sqlSaveChannel = " INSERT INTO ScheduleRequestLogs(ChannelKey, CurrentDate, DateOn, NumberOfRequests, Note) " +
+                             " SELECT @ChannelKey, @CurrentDate, @DateOn, 0, '' " +
+                             " WHERE NOT EXISTS (SELECT * FROM ScheduleRequestLogs WHERE ChannelKey= @ChannelKey AND CurrentDate =@CurrentDate AND DateOn=@DateOn); " +
+                             " UPDATE ScheduleRequestLogs SET NumberOfRequests=NumberOfRequests+1 WHERE ChannelKey=@ChannelKey AND CurrentDate =@CurrentDate AND DateOn=@DateOn; ";
+
+            if (isNoData)
+            {
+                sqlSaveChannel += " INSERT INTO ScheduleFailedRequestLogs(ChannelKey, CurrentDate, DateOn, NumberOfRequests, Note) " +
+                                 " SELECT @ChannelKey, @CurrentDate, @DateOn, 0, '' " +
+                                 " WHERE NOT EXISTS (SELECT * FROM ScheduleFailedRequestLogs WHERE ChannelKey= @ChannelKey AND CurrentDate =@CurrentDate AND DateOn=@DateOn); " +
+                                 " UPDATE ScheduleFailedRequestLogs SET NumberOfRequests=NumberOfRequests+1 WHERE ChannelKey=@ChannelKey AND CurrentDate =@CurrentDate AND DateOn=@DateOn; ";
+            }
+            try
+            {
+                using (var sql_con = new SQLiteConnection(ConnectString))
+                {
+                    sql_con.Open();
+                    using (var sql_cmd = sql_con.CreateCommand())
+                    {
+                        sql_cmd.CommandText = sqlSaveChannel;
+                        SQLiteParameterCollection myParameters = sql_cmd.Parameters;
+                        myParameters.AddWithValue("@ChannelKey", channelKey);
+                        myParameters.AddWithValue("@CurrentDate", MethodHelpers.ConvertDateToCorrectString(MethodHelpers.GetVNCurrentDate()));
+                        myParameters.AddWithValue("@DateOn", MethodHelpers.ConvertDateToCorrectString(date));
+                        sql_cmd.ExecuteNonQuery();
+                    }
+                    sql_con.Close();
+                }
+            }
+            catch (Exception ex) { }
+        }
         #endregion
     }
 }

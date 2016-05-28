@@ -66,5 +66,9 @@ namespace hthservices.Utils
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
         }
+        public static DateTime GetVNCurrentDate()
+        {
+            return DateTime.UtcNow.AddHours(7);
+        }
     }
 }
