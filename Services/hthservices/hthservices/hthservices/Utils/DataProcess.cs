@@ -109,5 +109,24 @@ namespace hthservices.Utils
             if (index < 0 || index > DataStatic.Stations.Length - 1) index = 0;
             return hthservices.Utils.HtmlHelper.SearchDataFromVietBaoUrl(query, DataStatic.Stations[index], date);
         }
+
+        #region Logger
+        public static List<ScheduleRequestLog> GetScheduleRequestLogs()
+        {
+            return SQLiteProcess.GetScheduleRequestLogs();
+        }
+        public static List<ScheduleRequestLog> GetScheduleFailedRequestLogs()
+        {
+            return SQLiteProcess.GetScheduleFailedRequestLogs();
+        }
+        public static void DeleteScheduleRequestLog(int id)
+        {
+            SQLiteProcess.DeleteScheduleRequestLog(id);
+        }
+        public static void DeleteScheduleFailedRequestLog(int id)
+        {
+            SQLiteProcess.DeleteScheduleFailedRequestLog(id);
+        }
+        #endregion
     }
 }

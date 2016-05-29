@@ -244,6 +244,108 @@ namespace hthservices.Utils
             }
             catch (Exception ex) { }
         }
+
+        public static List<ScheduleRequestLog> GetScheduleRequestLogs()
+        {
+            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
+            string sqlSaveChannel = "SELECT Id, ChannelKey, CurrentDate, DateOn, NumberOfRequests, Note FROM ScheduleRequestLogs";
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var scheduleRequestLog = new ScheduleRequestLog();
+                            scheduleRequestLog.ID = reader.GetInt32(0);
+                            scheduleRequestLog.ChannelKey = reader.GetString(1);
+                            scheduleRequestLog.CurrentDate = reader.GetString(2);
+                            scheduleRequestLog.DateOn = reader.GetString(3);
+                            scheduleRequestLog.NumberOfRequests = reader.GetInt32(4);
+                            scheduleRequestLog.Note = reader.GetString(5);
+                            schedules.Add(scheduleRequestLog);
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return schedules;
+        }
+
+        public static void DeleteScheduleRequestLog(int Id)
+        {
+            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
+            string sqlSaveChannel = "DELETE ScheduleRequestLogs WHERE Id =@Id";
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    myParameters.AddWithValue("@Id", Id);
+                    sql_cmd.ExecuteNonQuery();
+                }
+                sql_con.Close();
+            }
+
+        }
+
+        public static void DeleteScheduleFailedRequestLog(int Id)
+        {
+            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
+            string sqlSaveChannel = "DELETE ScheduleFailedRequestLogs WHERE Id =@Id";
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    myParameters.AddWithValue("@Id", Id);
+                    sql_cmd.ExecuteNonQuery();
+                }
+                sql_con.Close();
+            }
+
+        }
+
+        public static List<ScheduleRequestLog> GetScheduleFailedRequestLogs()
+        {
+            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
+            string sqlSaveChannel = "SELECT Id, ChannelKey, CurrentDate, DateOn, NumberOfRequests, Note FROM ScheduleFailedRequestLogs";
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var scheduleRequestLog = new ScheduleRequestLog();
+                            scheduleRequestLog.ID = reader.GetInt32(0);
+                            scheduleRequestLog.ChannelKey = reader.GetString(1);
+                            scheduleRequestLog.CurrentDate = reader.GetString(2);
+                            scheduleRequestLog.DateOn = reader.GetString(3);
+                            scheduleRequestLog.NumberOfRequests = reader.GetInt32(4);
+                            scheduleRequestLog.Note = reader.GetString(5);
+                            schedules.Add(scheduleRequestLog);
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return schedules;
+        }
         #endregion
     }
 }

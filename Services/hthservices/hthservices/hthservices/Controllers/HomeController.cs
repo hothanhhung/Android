@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hthservices.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,6 +29,13 @@ namespace hthservices.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult Report()
+        {
+            ViewBag.ScheduleRequestLogs = DataProcess.GetScheduleRequestLogs();
+            ViewBag.ScheduleFailedRequestLogs = DataProcess.GetScheduleFailedRequestLogs();
             return View();
         }
     }
