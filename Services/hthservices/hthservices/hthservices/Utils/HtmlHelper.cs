@@ -191,8 +191,8 @@ namespace hthservices.Utils
                 HttpClient http = new HttpClient();
                 var response = http.GetByteArrayAsync(url).Result;
                 String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
-                source = System.Text.RegularExpressions.Regex.Unescape(source.Replace("\"",""));
-                source = WebUtility.HtmlDecode(source);
+                source = System.Text.RegularExpressions.Regex.Unescape(source);
+                source = WebUtility.HtmlDecode(source.Replace("\"",""));
                 HtmlDocument resultat = new HtmlDocument();
                 resultat.LoadHtml(source);
 
