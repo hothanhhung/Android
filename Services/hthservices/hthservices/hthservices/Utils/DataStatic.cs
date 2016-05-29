@@ -39,6 +39,7 @@ namespace hthservices.Utils
         public const string FROM_VTC14_PAGE = "http://vtc14.vn/";
         public const string FROM_TRUYENHINHSO_PAGE = "http://truyenhinhso.vn/Pages/Ajax/GetSchedule.aspx?channelid={0}&date={1}";//date=28/05/2016&channelid
         public const string FROM_TVNET_PAGE = "http://vn.tvnet.gov.vn/modules/process.php?option=epg&channel_id={0}&date={1}"; //channel_id=1&date=28/05/2016"
+        public const string FROM_PHUT91_PAGE = "http://phut91.com/lich-phat-song/lich-phat-song-{0}.{1}.html"; //lich-phat-song-htvc-thuan-viet-42.30052016.html
         #endregion
 
         #region Channel to server
@@ -74,14 +75,33 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenhinhDaNangDRT2", Value="74"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="StarMovies", Value="121"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="StarWorld", Value="120"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenhinhCongAnNhanDanANTV", Value="138"},   //chưa có trên client
+             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenhinhCongAnNhanDanANTV", Value="138"}, 
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="HTV4", Value="142"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="VTVcab5-Echannel", Value="154"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="DIVAUniversal", Value="178"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="AsianFoodChannel", Value="180"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenhinhHaTinhHTTV", Value="195"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenhinhHaGiangHTV", Value="199"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenHinhTienGiangTHTG", Value="203"}
+             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenHinhTienGiangTHTG", Value="203"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="HTVThethao", Value="htv-the-thao-11"}, ///////phut 90
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTVHDThethao", Value="sctv-the-thao-18"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="VTC7-TodayTV", Value="today-tv-36"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="CINEMAX", Value="cenimax-125"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="CinemaWorldHD", Value="cenimax-world-hd-126"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="HTVCPHIM", Value="htv-phim-hd-37"}, //htvc phim
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="ThuanViet", Value="htvc-thuan-viet-42"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="HTVCPHUNU", Value="htv-phu-nu-121"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="HTVCDuLichCuocSong", Value="htv-du-lich-cuoc-song-122"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="HTVCGIADINH", Value="htv-gia-dinh-127"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV1", Value="sctv1-103"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV4", Value="sctv4-106"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV9", Value="sctv9-111"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV13-TVF", Value="sctv13-115"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV14", Value="sctv14-116"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV15", Value="sctv15-20"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV16", Value="sctv16-117"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTVPhimtonghop", Value="sctv-phim-tong-hop-118"}             
+             
         };
         #endregion
 

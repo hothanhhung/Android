@@ -283,7 +283,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 
 		    	if( firstIndexSecond > -1)
 		    	{
-		    		var newObject = {groupName: "   Kết quả: " + $keyword, id:appData.lstChannels[i].id, name : appData.lstChannels[i].name, nameSearch : "<span class='searched'>" + appData.lstChannels[i].name + "</span>"};
+		    		var newObject = {groupName: "  Kết quả: " + $keyword, id:appData.lstChannels[i].id, name : appData.lstChannels[i].name, nameSearch : "<span class='searched'>" + appData.lstChannels[i].name + "</span>"};
 			    	
 			    	if(secondIndexFirst > -1)
 		    		{
@@ -295,7 +295,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 			    	}	
 			    }else if(secondIndexFirst > -1)
 			    	{			    	
-			    		var newObject = {groupName: "Kết quả: " + $keyword, id:appData.lstChannels[i].id, name : appData.lstChannels[i].name, nameSearch:""};
+			    		var newObject = {groupName: "  Kết quả: " + $keyword, id:appData.lstChannels[i].id, name : appData.lstChannels[i].name, nameSearch:""};
 
 			    		var oldName = newObject.name;
 			    		newObject.nameSearch = oldName.substring(0, secondIndexFirst)+ "<span class='searched'>" + oldName.substring(secondIndexFirst, secondIndexFirst + firstString.length) + "</span>";
@@ -388,7 +388,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
         position: AdMob.AD_POSITION.BOTTOM_CENTER,
         // x: integer, // valid when set position to 0 / POS_XY
         // y: integer, // valid when set position to 0 / POS_XY
-        isTesting: true, // set to true, to receiving test ad for testing purpose
+        isTesting: false, // set to true, to receiving test ad for testing purpose
         // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
         };
         AdMob.setOptions( defaultOptions );
