@@ -75,6 +75,12 @@ namespace hthservices.Utils
                     case DataStatic.FROM_PHUT91_PAGE:
                         guideItems = HtmlHelper.GetDataFromPhut90Url(channelToServer, date);
                         break;
+                    case DataStatic.FROM_HTV3TV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromHTV3TVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_HTV2CHANNEL_PAGE:
+                        guideItems = HtmlHelper.GetDataFromHTV2ChannelTVUrl(channelToServer, date);
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)

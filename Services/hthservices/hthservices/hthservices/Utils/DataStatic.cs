@@ -40,6 +40,8 @@ namespace hthservices.Utils
         public const string FROM_TRUYENHINHSO_PAGE = "http://truyenhinhso.vn/Pages/Ajax/GetSchedule.aspx?channelid={0}&date={1}";//date=28/05/2016&channelid
         public const string FROM_TVNET_PAGE = "http://vn.tvnet.gov.vn/modules/process.php?option=epg&channel_id={0}&date={1}"; //channel_id=1&date=28/05/2016"
         public const string FROM_PHUT91_PAGE = "http://phut91.com/lich-phat-song/lich-phat-song-{0}.{1}.html"; //lich-phat-song-htvc-thuan-viet-42.30052016.html
+        public const string FROM_HTV3TV_PAGE = "http://www.htv3tv.vn/schedules/jview?day={0}"; //day=2016-05-31 start from 06:00
+        public const string FROM_HTV2CHANNEL_PAGE = "https://htv2channel.vn/lich-chieu/{0}"; //2016/5/31 start from 06:00
         #endregion
 
         #region Channel to server
@@ -100,7 +102,9 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV14", Value="sctv14-116"},
              new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV15", Value="sctv15-20"},
              new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTV16", Value="sctv16-117"},
-             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTVPhimtonghop", Value="sctv-phim-tong-hop-118"}             
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTVPhimtonghop", Value="sctv-phim-tong-hop-118"},
+             new ChannelToServer(){Server=FROM_HTV3TV_PAGE, ChannelKey="HTV3", Value=""},       // start from 06:00   
+             new ChannelToServer(){Server=FROM_HTV2CHANNEL_PAGE, ChannelKey="HTV2", Value=""},       // start from 06:00 
              
         };
         #endregion
