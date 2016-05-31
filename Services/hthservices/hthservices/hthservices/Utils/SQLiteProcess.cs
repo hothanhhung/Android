@@ -277,10 +277,93 @@ namespace hthservices.Utils
             return schedules;
         }
 
+        public static List<ScheduleRequestLog> GetGroupScheduleFailedRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn)
+        {
+            string group = (noChannelKey ? "" : ", ChannelKey") + (noCurrentDate ? "" : ", CurrentDate") + (noDateOn ? "" : ", DateOn");
+            string select = (noChannelKey ? "" : ", ChannelKey") + (noCurrentDate ? "" : ", CurrentDate") + (noDateOn ? "" : ", DateOn");
+            group = group.Trim(',');
+            select = select.Trim(',');
+            if(!string.IsNullOrWhiteSpace(group))
+            {
+                group = " GROUP BY " + group;
+            }
+            else
+            {
+                group = " GROUP BY ChannelKey, CurrentDate, DateOn";
+                select = "ChannelKey, CurrentDate, DateOn";
+            }
+            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
+            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM ScheduleFailedRequestLogs " + group;
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var scheduleRequestLog = new ScheduleRequestLog();
+                            if (!noChannelKey || (noCurrentDate && noDateOn)) scheduleRequestLog.ChannelKey = (reader["ChannelKey"] ?? "").ToString();
+                            if (!noCurrentDate || (noChannelKey && noDateOn)) scheduleRequestLog.CurrentDate = (reader["CurrentDate"] ?? "").ToString();
+                            if (!noDateOn || (noCurrentDate && noChannelKey)) scheduleRequestLog.DateOn = (reader["DateOn"] ?? "").ToString();
+                            scheduleRequestLog.NumberOfRequests = Int32.Parse((reader["NumberOfRequests"] ?? "").ToString());
+                            schedules.Add(scheduleRequestLog);
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return schedules;
+        }
+        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn)
+        {
+            string group = (noChannelKey ? "" : ", ChannelKey") + (noCurrentDate ? "" : ", CurrentDate") + (noDateOn ? "" : ", DateOn");
+            string select = (noChannelKey ? "" : ", ChannelKey") + (noCurrentDate ? "" : ", CurrentDate") + (noDateOn ? "" : ", DateOn");
+            group = group.Trim(',');
+            select = select.Trim(',');
+            if (!string.IsNullOrWhiteSpace(group))
+            {
+                group = " GROUP BY " + group;
+            }
+            else
+            {
+                group = " GROUP BY ChannelKey, CurrentDate, DateOn";
+                select = "ChannelKey, CurrentDate, DateOn";
+            }
+            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
+            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM ScheduleRequestLogs " + group;
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var scheduleRequestLog = new ScheduleRequestLog();
+                            if (!noChannelKey || (noCurrentDate && noDateOn)) scheduleRequestLog.ChannelKey = (reader["ChannelKey"] ?? "").ToString();
+                            if (!noCurrentDate || (noChannelKey && noDateOn)) scheduleRequestLog.CurrentDate = (reader["CurrentDate"] ?? "").ToString();
+                            if (!noDateOn || (noCurrentDate && noChannelKey)) scheduleRequestLog.DateOn = (reader["DateOn"] ?? "").ToString();
+                            scheduleRequestLog.NumberOfRequests = Int32.Parse((reader["NumberOfRequests"] ?? "").ToString());
+                            schedules.Add(scheduleRequestLog);
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return schedules;
+        }
         public static void DeleteScheduleRequestLog(int Id)
         {
-            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
-            string sqlSaveChannel = "DELETE ScheduleRequestLogs WHERE Id =@Id";
+            string sqlSaveChannel = "DELETE FROM ScheduleRequestLogs WHERE Id =@Id";
             using (var sql_con = new SQLiteConnection(ConnectString))
             {
                 sql_con.Open();
@@ -298,8 +381,7 @@ namespace hthservices.Utils
 
         public static void DeleteScheduleFailedRequestLog(int Id)
         {
-            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
-            string sqlSaveChannel = "DELETE ScheduleFailedRequestLogs WHERE Id =@Id";
+            string sqlSaveChannel = "DELETE FROM ScheduleFailedRequestLogs WHERE Id =@Id";
             using (var sql_con = new SQLiteConnection(ConnectString))
             {
                 sql_con.Open();
@@ -308,6 +390,65 @@ namespace hthservices.Utils
                     sql_cmd.CommandText = sqlSaveChannel;
                     var myParameters = sql_cmd.Parameters;
                     myParameters.AddWithValue("@Id", Id);
+                    sql_cmd.ExecuteNonQuery();
+                }
+                sql_con.Close();
+            }
+
+        }
+        public static void DeleteScheduleRequestLog(string channelKey, string currentDate, string dateOn)
+        {
+            string where = (channelKey == null ? "" : " AND ChannelKey=@ChannelKey") + (currentDate == null ? "" : " AND CurrentDate=@CurrentDate") + (dateOn == null ? "" : " AND DateOn=@DateOn");
+            if (!string.IsNullOrWhiteSpace(where))
+            {
+                where = " WHERE" + where;
+                where = where.Replace("WHERE AND ", "WHERE ");
+            }
+            else
+            {
+                where = " WHERE ChannelKey=@ChannelKey  AND CurrentDate=@CurrentDate  AND DateOn=@DateOn";
+            }
+            string sqlSaveChannel = "DELETE FROM ScheduleRequestLogs " + where;
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    if (channelKey != null) myParameters.AddWithValue("@ChannelKey", channelKey);
+                    if (currentDate != null) myParameters.AddWithValue("@CurrentDate", currentDate);
+                    if (dateOn != null) myParameters.AddWithValue("@DateOn", dateOn);
+                    sql_cmd.ExecuteNonQuery();
+                }
+                sql_con.Close();
+            }
+
+        }
+        
+        public static void DeleteScheduleFailedRequestLog(string channelKey, string currentDate, string dateOn)
+        {
+            string where = (channelKey == null ? "" : " AND ChannelKey=@ChannelKey") + (currentDate == null ? "" : " AND CurrentDate=@CurrentDate") + (dateOn == null ? "" : " AND DateOn=@DateOn");
+            if (!string.IsNullOrWhiteSpace(where))
+            {
+                where = " WHERE" + where;
+                where = where.Replace("WHERE AND ", "WHERE ");
+            }
+            else
+            {
+                where = " WHERE ChannelKey=@ChannelKey  AND CurrentDate=@CurrentDate  AND DateOn=@DateOn";
+            }
+            string sqlSaveChannel = "DELETE FROM ScheduleFailedRequestLogs " + where;
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    if (channelKey != null) myParameters.AddWithValue("@ChannelKey", channelKey);
+                    if (currentDate != null) myParameters.AddWithValue("@CurrentDate", currentDate);
+                    if (dateOn != null) myParameters.AddWithValue("@DateOn", dateOn);
                     sql_cmd.ExecuteNonQuery();
                 }
                 sql_con.Close();

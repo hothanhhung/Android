@@ -150,7 +150,10 @@ namespace hthservices.Utils
                                 var tdTags = item.SelectNodes("td");
                                 if (tdTags != null && tdTags.Count > 0)
                                 {
-                                    startOn = tdTags.ElementAt(0).InnerText.Replace("H",":").Replace(" ","");
+                                    var time = tdTags.ElementAt(0).InnerText;
+                                    int length = time.IndexOf("-");
+                                    startOn = time.Substring(0, length).Trim();
+                                    startOn = startOn.Replace("H", ":");
                                 } 
                                 if (tdTags != null && tdTags.Count > 1)
                                 {
@@ -534,6 +537,56 @@ namespace hthservices.Utils
 
             return guideItems;
         }
+        static public List<GuideItem> GetFromQPVNUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server,date.ToString("dd/MM/yyyy"));
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                HttpClient http = new HttpClient();
+                var response = http.GetByteArrayAsync(url).Result;
+                String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                source = WebUtility.HtmlDecode(source);
+                HtmlDocument resultat = new HtmlDocument();
+                resultat.LoadHtml(source.Replace("<br/>",": "));
+
+                var items = resultat.DocumentNode.SelectNodes("table//tr");
+                if (items != null && items.Count > 0)
+                {
+                    foreach (var item in items)
+                    {
+                        string startOn = "", programName = "";
+                        // get start time
+                        var tdTags = item.SelectNodes("td");
+                        if (tdTags != null && tdTags.Count > 0)
+                        {
+                            startOn = tdTags.ElementAt(0).InnerText.Trim();
+                        }
+                        if (tdTags != null && tdTags.Count > 1)
+                        {
+                            var str = tdTags.ElementAt(1).InnerText;
+                            int length = str.IndexOf(": ");
+                            var title = str.Substring(0, length).Trim();
+                            var detail = str.Substring(length);
+                            programName = MethodHelpers.ToTitleCase(title) + (detail.Length > 3 ? detail : "");
+                        }
+                        if (!string.IsNullOrWhiteSpace(startOn))
+                        {
+                            var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                            guideItems.Add(guideItem);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+        
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
         {

@@ -81,6 +81,9 @@ namespace hthservices.Utils
                     case DataStatic.FROM_HTV2CHANNEL_PAGE:
                         guideItems = HtmlHelper.GetDataFromHTV2ChannelTVUrl(channelToServer, date);
                         break;
+                    case DataStatic.FROM_QPVN_PAGE:
+                        guideItems = HtmlHelper.GetFromQPVNUrl(channelToServer, date);
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)
@@ -128,6 +131,16 @@ namespace hthservices.Utils
         {
             return SQLiteProcess.GetScheduleFailedRequestLogs();
         }
+        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn)
+        {
+            return SQLiteProcess.GetGroupScheduleRequestLogs(noChannelKey, noCurrentDate, noDateOn);
+        }
+
+        public static List<ScheduleRequestLog> GetGroupScheduleFailedRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn)
+        {
+            return SQLiteProcess.GetGroupScheduleFailedRequestLogs(noChannelKey, noCurrentDate, noDateOn);
+        }
+
         public static void DeleteScheduleRequestLog(int id)
         {
             SQLiteProcess.DeleteScheduleRequestLog(id);
@@ -135,6 +148,14 @@ namespace hthservices.Utils
         public static void DeleteScheduleFailedRequestLog(int id)
         {
             SQLiteProcess.DeleteScheduleFailedRequestLog(id);
+        }
+        public static void DeleteScheduleRequestLog(string channelKey, string currentDate, string dateOn)
+        {
+            SQLiteProcess.DeleteScheduleRequestLog(channelKey, currentDate, dateOn);
+        }
+        public static void DeleteScheduleFailedRequestLog(string channelKey, string currentDate, string dateOn)
+        {
+            SQLiteProcess.DeleteScheduleFailedRequestLog(channelKey, currentDate, dateOn);
         }
         #endregion
     }

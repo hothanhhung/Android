@@ -42,6 +42,7 @@ namespace hthservices.Utils
         public const string FROM_PHUT91_PAGE = "http://phut91.com/lich-phat-song/lich-phat-song-{0}.{1}.html"; //lich-phat-song-htvc-thuan-viet-42.30052016.html
         public const string FROM_HTV3TV_PAGE = "http://www.htv3tv.vn/schedules/jview?day={0}"; //day=2016-05-31 start from 06:00
         public const string FROM_HTV2CHANNEL_PAGE = "https://htv2channel.vn/lich-chieu/{0}"; //2016/5/31 start from 06:00
+        public const string FROM_QPVN_PAGE = "http://qpvn.vn/ajax/getChannelSchedule?channel=QPVN&date={0}"; //date=03/06/2016
         #endregion
 
         #region Channel to server
@@ -105,6 +106,7 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTVPhimtonghop", Value="sctv-phim-tong-hop-118"},
              new ChannelToServer(){Server=FROM_HTV3TV_PAGE, ChannelKey="HTV3", Value=""},       // start from 06:00   
              new ChannelToServer(){Server=FROM_HTV2CHANNEL_PAGE, ChannelKey="HTV2", Value=""},       // start from 06:00 
+             new ChannelToServer(){Server=FROM_QPVN_PAGE, ChannelKey="QPVN", Value=""}
              
         };
         #endregion

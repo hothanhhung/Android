@@ -32,11 +32,5 @@ namespace hthservices.Controllers
             return View();
         }
 
-        public ActionResult Report()
-        {
-            ViewBag.ScheduleRequestLogs = DataProcess.GetScheduleRequestLogs();
-            ViewBag.ScheduleFailedRequestLogs = DataProcess.GetScheduleFailedRequestLogs();
-            return View();
-        }
     }
 }
