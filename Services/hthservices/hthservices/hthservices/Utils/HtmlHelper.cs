@@ -586,7 +586,317 @@ namespace hthservices.Utils
 
             return guideItems;
         }
-        
+        static public List<GuideItem> GetDataFromHTVONLINEUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server);
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                    var obj = new
+                    {
+                        //must
+                        id_live = channelToServer.Value,
+                        date = date.ToString("yyyy-MM-dd")
+                    };
+
+                    var stringContent = JsonConvert.SerializeObject(obj).ToString();
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/json");
+                    var response = http.PostAsync(url, httpContent).Result;
+                   // http.BaseAddress = new Uri(url);
+                    
+                    //var response = http.PostAsync(url, content).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        source = WebUtility.HtmlDecode(source);
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var items = resultat.DocumentNode.SelectNodes("//p");
+                        if (items != null)
+                        {
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var times = item.SelectNodes("b");
+                                if (times != null && times.Count > 0)
+                                {
+                                    startOn = times.ElementAt(0).InnerText.Trim();                                    
+                                }
+                                var details = item.SelectNodes("span");
+                                if (details != null && details.Count > 0)
+                                {
+                                    programName = details.ElementAt(0).InnerText.Trim();
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn))
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
+        static public List<GuideItem> GetDataFromFBNCUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server, date.ToString("ddd+MMM+dd+yyyy"));
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
+                    var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@class='schedule-list']");
+                    if (schedulerMain != null && schedulerMain.Count > 0)
+                    {
+                        var items = schedulerMain.FirstOrDefault().SelectNodes("div");
+                        if (items != null && items.Count > 0)
+                        {
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var tdTags = item.SelectNodes("div[@class='time']");
+                                if (tdTags != null && tdTags.Count > 0)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                }
+
+                                tdTags = item.SelectNodes("div[@class='broadcast-title']");
+                                if (tdTags != null && tdTags.Count > 0)
+                                {
+                                    var deatail = tdTags.FirstOrDefault();
+                                    var h2 = deatail.SelectNodes("h2");
+                                    if (h2 != null && h2.Count > 0)
+                                    {
+                                        programName = h2.FirstOrDefault().InnerText.Trim();
+                                    }
+                                    var h3 = deatail.SelectNodes("h3");
+                                    if (h3 != null && h3.Count > 0)
+                                    {
+                                        var more = h3.FirstOrDefault().InnerText.Trim();
+                                        if (!string.IsNullOrWhiteSpace(more))
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(programName))
+                                            {
+                                                programName += ": " + more;
+                                            }
+                                            else
+                                            {
+                                                programName = more;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn))
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
+        static public List<GuideItem> GetDataFromVTVCabUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server, channelToServer.Value, date.ToString("dd"), date.ToString("MM"), date.ToString("yyyy"));
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
+                    var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@class='table-schedules']");
+                    if (schedulerMain != null && schedulerMain.Count > 0)
+                    {
+                        var items = schedulerMain.FirstOrDefault().SelectNodes("table//tr");
+                        if (items != null && items.Count > 0)
+                        {
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var tdTags = item.SelectNodes("td");
+                                if (tdTags != null && tdTags.Count > 0)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText;
+                                }
+                                if (tdTags != null && tdTags.Count > 1)
+                                {
+                                    programName = MethodHelpers.ToTitleCase(tdTags.ElementAt(1).InnerText.Trim());
+                                }
+                                if (tdTags != null && tdTags.Count > 2)
+                                {
+                                    var more = tdTags.ElementAt(2).InnerText.Trim();
+                                    if (!string.IsNullOrWhiteSpace(more))
+                                    {
+                                        programName = programName + ": " + more;
+                                    }
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn))
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
+        static public List<GuideItem> GetDataFromTRAVINHTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server);
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var stringContent = "{\"ngay\":\"" + date.ToString("yyyy-MM-dd") + "\"}";
+                    var keys = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("ngay", date.ToString("yyyy-MM-dd")) };
+                    
+                    var content = new System.Net.Http.FormUrlEncodedContent(keys);
+                    content.Headers.Clear();
+                    content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    content.Headers.Add("X-Requested-With", "XMLHttpRequest");
+                 
+                    var response = http.PostAsync(url, content).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        source = WebUtility.HtmlDecode(source);
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+                        var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@id='lichchitiet']");
+                        if (schedulerMain != null && schedulerMain.Count > 0)
+                        {
+                            var items = schedulerMain.FirstOrDefault().SelectNodes("div");
+                            if (items != null)
+                            {
+                                foreach (var item in items)
+                                {
+                                    string startOn = "", programName = "";
+                                    // get start time
+                                    var detail = item.InnerText.Trim();
+                                    if (detail.Length > 5)
+                                    {
+                                        startOn = detail.Substring(0, 5).Replace("g",":").Trim();
+                                        programName = detail.Substring(6).Trim();
+                                    }
+
+                                    if (!string.IsNullOrWhiteSpace(startOn))
+                                    {
+                                        var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                        guideItems.Add(guideItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+        static public List<GuideItem> GetDataFromBPTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server, channelToServer.Value, date.ToString("yyyy-MM-dd"));
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    source = System.Text.RegularExpressions.Regex.Unescape(source);
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
+
+                    var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@id='main-content']//table");
+                    if (schedulerMain != null && schedulerMain.Count > 0)
+                    {
+                        var items = schedulerMain.FirstOrDefault().SelectNodes("tbody//tr");
+                        if (items != null)
+                        {
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var tdTags = item.SelectNodes("td");
+                                if (tdTags != null && tdTags.Count > 1)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                    programName = tdTags.ElementAt(1).InnerText.Trim();
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn))
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
         {

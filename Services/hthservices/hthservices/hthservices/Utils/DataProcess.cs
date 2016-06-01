@@ -84,6 +84,21 @@ namespace hthservices.Utils
                     case DataStatic.FROM_QPVN_PAGE:
                         guideItems = HtmlHelper.GetFromQPVNUrl(channelToServer, date);
                         break;
+                    case DataStatic.FROM_HTVONLINE_PAGE:
+                        guideItems = HtmlHelper.GetDataFromHTVONLINEUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_FBNC_PAGE:
+                        guideItems = HtmlHelper.GetDataFromFBNCUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_VTVCab_PAGE:
+                        guideItems = HtmlHelper.GetDataFromVTVCabUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_TRAVINH_PAGE:
+                        guideItems = HtmlHelper.GetDataFromTRAVINHTVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_BPTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromBPTVUrl(channelToServer, date);
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)
@@ -98,9 +113,17 @@ namespace hthservices.Utils
                 }
                 if (guideItems != null && guideItems.Count > 0)
                 {
-                    SQLiteProcess.SetSchedules(guideItems);
+                    try
+                    {
+                        System.Threading.Thread th = new System.Threading.Thread(() =>
+                        {
+                            SQLiteProcess.SetSchedules(guideItems);
+                        });
+                        th.IsBackground = true;
+                        th.Start();
+                    }
+                    catch (Exception ex) { }
                 }
-
             }
             try
             {
