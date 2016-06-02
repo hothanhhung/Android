@@ -48,6 +48,11 @@ namespace hthservices.Utils
         public const string FROM_VTVCab_PAGE = "http://www.vtvcab.vn/lich-phat-song?day={1}&month={2}&year={3}&channel={0}";//=03&month=06&year=2016&channel=4077
         public const string FROM_TRAVINH_PAGE = "http://travinhtv.vn/thtv/ajax/ajax.php";//ngay:"2016-06-02"
         public const string FROM_BPTV_PAGE = "http://www.bptv.com.vn/?cat=110&kenh={0}&ngay={1}"; //kenh=THBP2&ngay=2016-06-02
+        public const string FROM_YOUTV_PAGE = "http://youtv.vn/lich-chieu/{0}.imc"; ///02-06-2016.imc
+        public const string FROM_HITV_PAGE = "http://hitv.vn/truyenhinh/";
+        public const string FROM_CAMAU_PAGE = "http://ctvcamau.vn/category/lich-phat-song?kenh=TV&ngay={0}"; //ngay=2016-06-02
+        public const string FROM_BENTRE_PAGE = "http://thbt.vn/category/lich-phat-song?kenh=THBT-TV&ngay={0}";//2016-06-01
+        public const string FROM_QUANGBINH_PAGE = "http://qbtv.vn/jsHienthiLich.aspx?year={0}"; //year=01/06/2016
         #endregion
 
         #region Channel to server
@@ -131,7 +136,12 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_VTVCab_PAGE, ChannelKey="StarMovies", Value="4703"},
              new ChannelToServer(){Server=FROM_TRAVINH_PAGE, ChannelKey="TruyenhinhTraVinhTHTV", Value=""},
              new ChannelToServer(){Server=FROM_BPTV_PAGE, ChannelKey="TruyenHinhBinhPhuocBPTV1", Value="THBP1"},
-             new ChannelToServer(){Server=FROM_BPTV_PAGE, ChannelKey="TruyenhinhBinhPhuocBPTV2", Value="THBP2"}
+             new ChannelToServer(){Server=FROM_BPTV_PAGE, ChannelKey="TruyenhinhBinhPhuocBPTV2", Value="THBP2"},
+             new ChannelToServer(){Server=FROM_YOUTV_PAGE, ChannelKey="YOUTV", Value=""},
+             new ChannelToServer(){Server=FROM_HITV_PAGE, ChannelKey="HiTV", Value=""},
+             new ChannelToServer(){Server=FROM_CAMAU_PAGE, ChannelKey="TruyenhinhCaMauCTV", Value=""},
+             new ChannelToServer(){Server=FROM_BENTRE_PAGE, ChannelKey="TruyenHinhBenTreTHBT", Value=""},
+             new ChannelToServer(){Server=FROM_QUANGBINH_PAGE, ChannelKey="TruyenhinhQuangBinhQBTV", Value=""}
         };
         #endregion
 

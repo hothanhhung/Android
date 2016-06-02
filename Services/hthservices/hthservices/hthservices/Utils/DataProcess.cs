@@ -99,6 +99,25 @@ namespace hthservices.Utils
                     case DataStatic.FROM_BPTV_PAGE:
                         guideItems = HtmlHelper.GetDataFromBPTVUrl(channelToServer, date);
                         break;
+                    case DataStatic.FROM_HITV_PAGE:
+                        var VN_Now1 = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now1.Day == date.Day && VN_Now1.Month == date.Month && VN_Now1.Year == date.Year)
+                        {
+                            guideItems = HtmlHelper.GetDataFromHITVUrl(channelToServer, date);
+                        }
+                        break;
+                    case DataStatic.FROM_YOUTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromYOUTVUrl(channelToServer, date);
+                        break; ;
+                    case DataStatic.FROM_CAMAU_PAGE:
+                        guideItems = HtmlHelper.GetDataFromCAMAUVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_BENTRE_PAGE:
+                        guideItems = HtmlHelper.GetDataFromBENTREVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_QUANGBINH_PAGE:
+                        guideItems = HtmlHelper.GetDataFromQUANGBINHUrl(channelToServer, date);
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)
