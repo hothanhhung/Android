@@ -1112,6 +1112,102 @@ namespace hthservices.Utils
             return guideItems;
         }
 
+        static public List<GuideItem> GetDataFromTV24Url(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server, channelToServer.Value, date.ToString("dd/MM/yyyy"));
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    source = System.Text.RegularExpressions.Regex.Unescape(source);
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
+
+                    var schedulerMain = resultat.DocumentNode.SelectNodes("//div");
+                    if (schedulerMain != null && schedulerMain.Count > 0)
+                    {
+                        var items = schedulerMain.FirstOrDefault().SelectNodes("table//tr");
+                        if (items != null)
+                        {
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var tdTags = item.SelectNodes("td");
+                                if (tdTags != null && tdTags.Count > 1)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                    programName = MethodHelpers.ToTitleCase(tdTags.ElementAt(1).InnerText.Trim());
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
+        class LetsViet
+        {
+            public string ScheduleDetailTitle { get; set; }
+            public string ScheduleDetailEp { get; set; }
+            public string ScheduleDetailProgramName { get; set; }
+            public string ScheduleDetailHour { get; set; }
+        }
+        static public List<GuideItem> GetDataFromLetsVietUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server, date.ToString("yyyy/MM/dd"));
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    if (!source.EndsWith("]")) source += "]";
+                    var items = JsonConvert.DeserializeObject<List<LetsViet>>(source);
+
+                    if (items != null)
+                    {
+                        foreach (var item in items)
+                        {
+                            string startOn = "", programName = "";
+                            startOn = item.ScheduleDetailHour.Trim();
+                            programName = (string.IsNullOrWhiteSpace(item.ScheduleDetailProgramName)? item.ScheduleDetailProgramName.Trim() +": ":"")+ item.ScheduleDetailTitle.Trim() + item.ScheduleDetailEp;
+
+                            if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
+                            {
+                                var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                guideItems.Add(guideItem);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
         {
