@@ -11,4 +11,10 @@
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
     <string name="no_move">No Values</string>
+    <string name="changes">"Changes: "</string>
+    <string name="time">"Time: "</string>
+    <string name="dialogTitle">Resume Game</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>

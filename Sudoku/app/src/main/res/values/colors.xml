@@ -13,4 +13,5 @@
     <color name="puzzle_hint_1">#6400ff80</color>
     <color name="puzzle_hint_2">#2000ff80</color>
     <color name="puzzle_selected">#64ff8000</color>
+    <color name="puzzle_can_not_change_value">#f4c6d4ef</color>
 </resources>

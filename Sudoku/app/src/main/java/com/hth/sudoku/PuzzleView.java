@@ -65,7 +65,7 @@ public class PuzzleView extends View {
 
     private void getRect(int x, int y, Rect rect)
     {
-        rect.set((int) (x * width), (int) (y * height), (int) ((x + 1) * width), (int) ((y + 1) * height));
+        rect.set((int) (x * width) + 2, (int) (y * height) + 2, (int) ((x + 1) * width) -2, (int) ((y + 1) * height - 2));
     }
 
     protected void onDraw(Canvas canvas)
@@ -103,6 +103,9 @@ public class PuzzleView extends View {
         canvas.drawLine(9*width - 1, 0, 9*width - 1,getHeight(), dark);
         //canvas.drawLine(9*width - 2,0,9*width - 2, getHeight(), hilite);
 
+        Paint canNotChangeValue = new Paint();
+        canNotChangeValue.setColor(getResources().getColor(R.color.puzzle_can_not_change_value));
+
         Paint foreground = new Paint(Paint.ANTI_ALIAS_FLAG);
         foreground.setColor(getResources().getColor(R.color.puzzle_foreground));
         foreground.setStyle(Paint.Style.FILL);
@@ -114,9 +117,14 @@ public class PuzzleView extends View {
         float x = width / 2;
         float y = height / 2 - (fm.ascent + fm.descent) / 2;
 
+        Rect canNotChange = new Rect();
         for(int i = 0; i < 9; i++)
         {
             for(int j = 0; j < 9; j++){
+                if(!this.game.canChangeValue(i,j)){
+                    getRect(i,j, canNotChange);
+                    canvas.drawRect(canNotChange, canNotChangeValue);
+                }
                 canvas.drawText(this.game.getTileString(i, j), i * width + x,
                         j*height+y, foreground);
             }
@@ -148,20 +156,22 @@ public class PuzzleView extends View {
         return true;
     }
 
-    private void select(int x, int y){
-        invalidate(selRect);
-        selX = Math.min(Math.max(x,0), 8);
-        selY = Math.min(Math.max(y,0), 8);
-        getRect(selX, selY, selRect);
-        invalidate(selRect);
+    public void select(int x, int y){
+        if(game.canChangeValue(x, y)) {
+            invalidate(selRect);
+            selX = Math.min(Math.max(x, 0), 8);
+            selY = Math.min(Math.max(y, 0), 8);
+            getRect(selX, selY, selRect);
+            invalidate(selRect);
+        }
     }
 
     public boolean onTouchEvent(MotionEvent event){
         if(event.getAction() != MotionEvent.ACTION_DOWN){
             return super.onTouchEvent(event);
         }
-        select((int) (event.getX()/width), (int) (event.getY()/height));
-        game.showKeypadOrError(selX,selY);
+        select((int) (event.getX() / width), (int) (event.getY() / height));
+        //game.showKeypadOrError(selX,selY);
         return true;
     }
 
