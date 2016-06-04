@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Sudoku</string>
+    <string name="new_game">New Game</string>
+    <string name="continue_game">Continue</string>
+    <string name="settings_game">Setting</string>
+    <string name="about_game">About</string>
+    <string name="exit_game">Exit</string>
+    <string name="about_content">This Sudoku game is the same others</string>
+    <string name="new_game_title">Difficulty</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="no_move">No Values</string>
+</resources>
