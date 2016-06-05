@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -39,7 +41,8 @@ public class GameActivity extends AppCompatActivity {
     private ArrayList<TrackChange> trackChanges = new ArrayList<TrackChange>();
     private Item puzzle[];
     private PuzzleView puzzleView;
-
+    SavedValues savedValues;
+    private int level = Data.DIFFICULTY_EASY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,37 +62,46 @@ public class GameActivity extends AppCompatActivity {
             if(actionBar!=null) actionBar.hide();
         }
         setContentView(R.layout.activity_game);
+        savedValues = new SavedValues(this);
         tvMoves = (TextView) findViewById(R.id.tvMoves);
         tvTime = (TextView) findViewById(R.id.tvTime);
         btUndo = (ImageButton) findViewById(R.id.btUndo);
 
         int diff = getIntent().getIntExtra(Data.DIFFICULTY_KEY, Data.DIFFICULTY_EASY);
-        puzzle = getPuzzle(diff);
-        calculateUsedTiles();
+
         puzzleView = (PuzzleView) findViewById(R.id.puzzleView);// new PuzzleView(this);
         //setContentView(puzzleView);
-        puzzleView.requestFocus();
+       // puzzleView.requestFocus();
 
-        for(int i = 0; i<9 * 9; i++) {
-            int x = i % 9, y = i / 9;
-            if (getTile(x, y).getValue() == 0) {
-                puzzleView.select(x, y);
-                break;
-            }
-        }
-        startGame();
+
+        startGame(diff);
     }
 
-    private void startGame() {
+    private void startGame(int diff) {
         changes = 0;
         lSeconds = 0;
         fTimeStart = false;
         fTimeStop = true;
+        puzzle = getPuzzle(diff);
+        calculateUsedTiles();
+
+        for(int i = 0; i<9 * 9; i++) {
+            int x = i % 9, y = i / 9;
+            if (getTile(x, y).canChange()) {
+                puzzleView.select(x, y);
+                break;
+            }
+        }
+
         timeStop();
         changeSetText();
         textViewTimer();
         gameFinished = false;
         timeStart();
+        String[] levelNames = getResources().getStringArray(R.array.difficulty);
+        if(level > 0 && levelNames!= null && levelNames.length > level - 1) {
+            ((TextView) findViewById(R.id.tvLevel)).setText(levelNames[level - 1]);
+        }
     }
     private void changeSetText() {
         tvMoves.setText(getString(R.string.changes).concat(
@@ -236,6 +248,16 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
+        for (int i = 0; i < 9; i++) {
+            if (i == x) {
+                continue;
+            }
+            int t = getTile(i, y).getValue();
+            if (t != 0) {
+                c[t - 1] = t;
+            }
+        }
+
         int startx = x / 3 * 3;
         int starty = y / 3 * 3;
 
@@ -273,6 +295,8 @@ public class GameActivity extends AppCompatActivity {
     {
         if(isWin()){
 
+        }else{
+            saveRecord();
         }
     }
     private boolean isWin() {
@@ -284,10 +308,44 @@ public class GameActivity extends AppCompatActivity {
         return true;
     }
 
+    private void saveRecord()
+    {
+        savedValues.setRecordPuzzle(puzzle);
+        savedValues.setRecordTime(lSeconds);
+        savedValues.setRecordChanges(changes);
+        savedValues.setRecordTrackchange(trackChanges);
+        savedValues.setRecordLevel(level);
+    }
     private Item[] getPuzzle(int diff) {
         String puz;
+        level = diff;
         switch (diff) {
+            case Data.DIFFICULTY_CONTINUES:
+                Item[] items = savedValues.getRecordPuzzle();
+                level = savedValues.getRecordLevel();
+                if(items == null){
+                    return getPuzzle(level);
+                }else{
+                    lSeconds = savedValues.getRecordTime();
+                    changes = savedValues.getRecordChanges();
+                    trackChanges.clear();
+                    TrackChange[] trchs = savedValues.getRecordTrackChange();
+                    if(trchs != null){
+                        for(TrackChange trch:trchs){
+                            trackChanges.add(trch);
+                        }
+                    }
+                    if(trackChanges.size() > 0){
+                        btUndo.setClickable(true);
+                        if (Build.VERSION.SDK_INT > 10)
+                        {
+                            btUndo.setAlpha(1f);
+                        }
+                    }
+                    return items;
+                }
             case Data.DIFFICULTY_HARD:
+
                 puz = Data.HarPuzzle;
                 break;
             case Data.DIFFICULTY_MEDIUM:
@@ -369,6 +427,7 @@ public class GameActivity extends AppCompatActivity {
                         puzzleView.select(lastTrackChange.getX(), lastTrackChange.getY());
                         getTile(lastTrackChange.getX(), lastTrackChange.getY()).setValue(lastTrackChange.getValue());
                         calculateUsedTiles();
+                        saveRecord();
                         isRunningUndo = false;
                         lastTrackChange = null;
                         /*new Thread() {
@@ -387,7 +446,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btHint:
-                int [] tiles = getUsedTiles(puzzleView.getSelX(), puzzleView.getSelX());
+                int [] tiles = getUsedTiles(puzzleView.getSelX(), puzzleView.getSelY());
                 if(tiles == null || tiles.length < 9) {
                     for (int i = 1; i < 10; i++) {
                         if (contains(tiles, i)) continue;

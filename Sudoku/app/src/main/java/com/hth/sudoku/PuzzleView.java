@@ -27,8 +27,8 @@ public class PuzzleView extends View {
     public PuzzleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.game = (GameActivity) context;
-        setFocusable(true);
-        setFocusableInTouchMode(true);
+        //setFocusable(true);
+        //setFocusableInTouchMode(true);
     }
 
     public PuzzleView(Context context, AttributeSet attrs, int defStyle) {

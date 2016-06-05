@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
                 openNewGameDialog();
                 break;
             case R.id.btContinue:
+                startGame(Data.DIFFICULTY_CONTINUES);
                 break;
             case R.id.btSettings:
                 break;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 .setItems(R.array.difficulty, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startGame(which);
+                        startGame(which + 1);
                     }
                 }).show();
     }
@@ -49,5 +51,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(Data.DIFFICULTY_KEY, i);
         startActivity(intent);
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        SavedValues savedValues = new SavedValues(this);
+        Button btContinue = (Button) findViewById(R.id.btContinue);
+        if(savedValues.getRecordTime() > 0)
+        {
+            btContinue.setVisibility(View.VISIBLE);
+        }else{
+            btContinue.setVisibility(View.GONE);
+        }
     }
 }

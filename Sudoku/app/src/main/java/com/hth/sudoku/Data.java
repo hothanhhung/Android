@@ -5,9 +5,10 @@ package com.hth.sudoku;
  */
 public class Data {
     public static final String DIFFICULTY_KEY="DIFFICULTY_KEY";
-    public static final int DIFFICULTY_EASY = 0;
-    public static final int DIFFICULTY_MEDIUM = 1;
-    public static final int DIFFICULTY_HARD = 2;
+    public static final int DIFFICULTY_CONTINUES = 0;
+    public static final int DIFFICULTY_EASY = 1;
+    public static final int DIFFICULTY_MEDIUM = 2;
+    public static final int DIFFICULTY_HARD = 3;
 
     public static final String EasyPuzzle =  "360000000004230800000004200"
                                             +"070460003820000014500013020"
