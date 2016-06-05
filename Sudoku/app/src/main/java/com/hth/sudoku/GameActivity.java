@@ -12,9 +12,15 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
@@ -29,6 +35,8 @@ public class GameActivity extends AppCompatActivity {
     private boolean gameFinished = false;
     private boolean resumeTimer = false;
 
+    private ImageButton btUndo;
+    private ArrayList<TrackChange> trackChanges = new ArrayList<TrackChange>();
     private Item puzzle[];
     private PuzzleView puzzleView;
 
@@ -53,6 +61,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         tvMoves = (TextView) findViewById(R.id.tvMoves);
         tvTime = (TextView) findViewById(R.id.tvTime);
+        btUndo = (ImageButton) findViewById(R.id.btUndo);
+
         int diff = getIntent().getIntExtra(Data.DIFFICULTY_KEY, Data.DIFFICULTY_EASY);
         puzzle = getPuzzle(diff);
         calculateUsedTiles();
@@ -182,19 +192,20 @@ public class GameActivity extends AppCompatActivity {
     }
 
     boolean setTileIfValid(int x, int y, int value) {
-        int tiles[] = getUsedTiles(x, y);
-        if (value != 0) {
-            for (int tile : tiles) {
-                if (tile == value) {
-                    return false;
+        if(getTile(x,y).canChange) {
+            int tiles[] = getUsedTiles(x, y);
+            if (value != 0) {
+                for (int tile : tiles) {
+                    if (tile == value) {
+                        return false;
+                    }
                 }
             }
+            addToTrackChange(new TrackChange(x, y, getTile(x, y).getValue()));
+            getTile(x, y).setValue(value);
+            calculateUsedTiles();
+            checkWin();
         }
-        getTile(x, y).setValue(value);
-        calculateUsedTiles();
-        changes++;
-        changeSetText();
-        checkWin();
         return true;
     }
 
@@ -315,17 +326,164 @@ public class GameActivity extends AppCompatActivity {
         return puzzle[y * 9 + x].canSee();
     }
 
+    private void addToTrackChange(TrackChange trackChange)
+    {
+        trackChanges.add(trackChange);
+        if(trackChanges.size() > 0){
+            btUndo.setClickable(true);
+            if (Build.VERSION.SDK_INT > 10)
+            {
+                btUndo.setAlpha(1f);
+            }
+        }
+        changes++;
+        changeSetText();
+    }
+
+    private TrackChange removeFromTrackChange()
+    {
+        if(trackChanges.size() < 2){
+            btUndo.setClickable(false);
+            if (Build.VERSION.SDK_INT > 10){
+                btUndo.setAlpha(0.3f);
+            }
+        }
+        if(trackChanges.isEmpty()) return null;
+        changes--;
+        changeSetText();
+        return  trackChanges.remove(trackChanges.size() - 1);
+    }
+
+    TrackChange lastTrackChange;
+    boolean isRunningUndo = false;
     public void btClick(View view) {
         switch (view.getId()){
             case R.id.btMenu:
 
                 break;
+            case R.id.btUndo:
+                if(!trackChanges.isEmpty() && !isRunningUndo){
+                    isRunningUndo = true;
+                    lastTrackChange = removeFromTrackChange();
+                    if(lastTrackChange!=null) {
+                        puzzleView.select(lastTrackChange.getX(), lastTrackChange.getY());
+                        getTile(lastTrackChange.getX(), lastTrackChange.getY()).setValue(lastTrackChange.getValue());
+                        calculateUsedTiles();
+                        isRunningUndo = false;
+                        lastTrackChange = null;
+                        /*new Thread() {
+                            public void run() {
+                                try {
+                                    if (lastTrackChange != null) {
+                                        sleep(300);
+                                        puzzleView.select(lastTrackChange.getX(), lastTrackChange.getY());
+
+                                    }
+                                } catch (Exception ex) {
+                                }
+                            }
+                        }.start();*/
+                    }
+                }
+                break;
             case R.id.btHint:
+                int [] tiles = getUsedTiles(puzzleView.getSelX(), puzzleView.getSelX());
+                if(tiles == null || tiles.length < 9) {
+                    for (int i = 1; i < 10; i++) {
+                        if (contains(tiles, i)) continue;
+                        hintOnNumberButton(i);
+                    }
+                    hinted = true;
+                }else{
+                    Toast toast = Toast.makeText(this, R.string.no_move, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
                 break;
         }
     }
 
+    public static boolean contains(int[] arr, int item) {
+        for (int n : arr) {
+            if (item == n) {
+                return true;
+            }
+        }
+        return false;
+    }
+    boolean hinted = false;
+    public void resetNumberButton()
+    {
+        if(hinted) {
+            Button imgbt;
+            imgbt = (Button) findViewById(R.id.keypad_1);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            imgbt = (Button) findViewById(R.id.keypad_2);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            imgbt = (Button) findViewById(R.id.keypad_3);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            imgbt = (Button) findViewById(R.id.keypad_4);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            imgbt = (Button) findViewById(R.id.keypad_5);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            imgbt = (Button) findViewById(R.id.keypad_6);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            imgbt = (Button) findViewById(R.id.keypad_7);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            imgbt = (Button) findViewById(R.id.keypad_8);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            imgbt = (Button) findViewById(R.id.keypad_9);
+            imgbt.setBackgroundResource(R.drawable.number_default);
+            hinted = false;
+        }
+    }
+    public void hintOnNumberButton(int number)
+    {
+        Button imgbt;
+        switch (number){
+            case 1:
+                imgbt = (Button) findViewById(R.id.keypad_1);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+            case 2:
+                imgbt = (Button) findViewById(R.id.keypad_2);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+            case 3:
+                imgbt = (Button) findViewById(R.id.keypad_3);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+            case 4:
+                imgbt = (Button) findViewById(R.id.keypad_4);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+            case 5:
+                imgbt = (Button) findViewById(R.id.keypad_5);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+            case 6:
+                imgbt = (Button) findViewById(R.id.keypad_6);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+            case 7:
+                imgbt = (Button) findViewById(R.id.keypad_7);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+            case 8:
+                imgbt = (Button) findViewById(R.id.keypad_8);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+            case 9:
+                imgbt = (Button) findViewById(R.id.keypad_9);
+                imgbt.setBackgroundResource(R.drawable.number_hint);
+                break;
+
+        }
+    }
     public void btNumberClick(View view) {
+        if(isRunningUndo) return;
+
+        resetNumberButton();
         switch (view.getId()){
             case R.id.keypad_0:
                 puzzleView.setSelectedTile(0);

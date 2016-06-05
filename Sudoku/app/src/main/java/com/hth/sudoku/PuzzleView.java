@@ -172,6 +172,7 @@ public class PuzzleView extends View {
         }
         select((int) (event.getX() / width), (int) (event.getY() / height));
         //game.showKeypadOrError(selX,selY);
+        game.resetNumberButton();
         return true;
     }
 
@@ -181,5 +182,13 @@ public class PuzzleView extends View {
         }else{
             startAnimation(AnimationUtils.loadAnimation(game,R.anim.anim));
         }
+    }
+
+    public int getSelX() {
+        return selX;
+    }
+
+    public int getSelY() {
+        return selY;
     }
 }
