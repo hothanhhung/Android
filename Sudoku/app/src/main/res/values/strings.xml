@@ -16,5 +16,10 @@
     <string name="dialogTitle">Resume Game</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ingame_resume">Resume</string>
+    <string name="ingame_restart">Restart</string>
+    <string name="ingame_exit">Main Menu</string>
+    <string name="warning">Warning</string>
+    <string name="warning_delete_old_game">That can delete your last play. Do you want to continue?</string>
 
 </resources>

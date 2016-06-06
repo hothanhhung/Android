@@ -16,6 +16,7 @@ public class SavedValues {
 	private static final String RECORD_PUZZLE = "RECORD_PUZZLE";
 	private static final String RECORD_TRACKCHANGE = "RECORD_TRACKCHANGE";
 	private static final String RECORD_LEVEL = "RECORD_LEVEL";
+	private static final String RECORD_PLAYBACKGROUND = "RECORD_PLAYBACKGROUND";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -55,10 +56,15 @@ public class SavedValues {
 			return null;
 		}
 	}
+	public boolean getRecordPlaybackground() {
+		return appSharedPrefs.getBoolean(RECORD_PLAYBACKGROUND, true);
+	}
+
 	public void setRecordChanges(int var1) {
 		prefsEditor.putInt(RECORD_CHANGES, var1);
 		prefsEditor.commit();
 	}
+
 
 	public void setRecordTime(long var1) {
 		prefsEditor.putLong(RECORD_TIME, var1);
@@ -84,6 +90,11 @@ public class SavedValues {
 
 	public void setRecordLevel(int var1) {
 		prefsEditor.putInt(RECORD_LEVEL, var1);
+		prefsEditor.commit();
+	}
+
+	public void setRecordPlaybackground(boolean var1) {
+		prefsEditor.putBoolean(RECORD_PLAYBACKGROUND, var1);
 		prefsEditor.commit();
 	}
 }

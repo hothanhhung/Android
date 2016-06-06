@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="10dp"
+    android:paddingBottom="0dp"
     android:orientation="vertical"
+    android:background="#ff5ac2ce"
     tools:context="com.hth.sudoku.GameActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,21 +19,23 @@
             android:layout_alignParentTop="true"
             android:gravity="center"
             android:layout_centerInParent="true"
+            android:textAllCaps="true"
             android:text="Medium"
             android:textStyle="bold"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="2dp" />
         <ImageButton
             android:id="@+id/btMenu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:scaleType="fitXY"
             android:background="@android:color/transparent"
             android:onClick="btClick"
             android:src="@drawable/pause"/>
         <ImageButton
             android:id="@+id/btSpeaker"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:scaleType="fitXY"
             android:layout_toRightOf="@id/btMenu"
             android:background="@android:color/transparent"
@@ -41,8 +44,8 @@
 
         <ImageButton
             android:id="@+id/btHint"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:scaleType="fitXY"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
@@ -50,8 +53,9 @@
             android:src="@drawable/hint"/>
         <ImageButton
             android:id="@+id/btUndo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:scaleType="fitXY" android:alpha="0.3"
             android:clickable="false"
             android:layout_toLeftOf="@id/btHint"
@@ -79,6 +83,7 @@
         android:layout_weight="1"
         />
     <TableLayout
+        android:paddingTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TableRow>

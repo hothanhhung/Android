@@ -6,12 +6,16 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -43,10 +47,14 @@ public class GameActivity extends AppCompatActivity {
     private PuzzleView puzzleView;
     SavedValues savedValues;
     private int level = Data.DIFFICULTY_EASY;
+
+    private MediaPlayer backgroundMusic = null;
+    private boolean isPlayMusic = true;
+    Dialog ingameMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT < 16) {
+        /*if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }else {
@@ -60,29 +68,42 @@ public class GameActivity extends AppCompatActivity {
             // status bar is hidden, so hide that too if necessary.
             ActionBar actionBar = getActionBar();
             if(actionBar!=null) actionBar.hide();
-        }
+        }*/
         setContentView(R.layout.activity_game);
         savedValues = new SavedValues(this);
         tvMoves = (TextView) findViewById(R.id.tvMoves);
         tvTime = (TextView) findViewById(R.id.tvTime);
         btUndo = (ImageButton) findViewById(R.id.btUndo);
-
+        isPlayMusic = savedValues.getRecordPlaybackground();
+        backgroundMusic = MediaPlayer.create(this, R.raw.backgroundmusic);
+        backgroundMusic.setLooping(true);
         int diff = getIntent().getIntExtra(Data.DIFFICULTY_KEY, Data.DIFFICULTY_EASY);
 
         puzzleView = (PuzzleView) findViewById(R.id.puzzleView);// new PuzzleView(this);
         //setContentView(puzzleView);
        // puzzleView.requestFocus();
+        ImageButton btSpeaker = (ImageButton) findViewById(R.id.btSpeaker);
+        ingameMenu = createIngameMenu();
+        if(isPlayMusic)
+        {
+            backgroundMusic.start();
+            btSpeaker.setImageResource(R.drawable.speaker);
+        }else{
+            btSpeaker.setImageResource(R.drawable.speaker_mute);
+        }
 
-
-        startGame(diff);
+        initGame(diff);
     }
-
-    private void startGame(int diff) {
+    private void initGame(int diff)
+    {
         changes = 0;
         lSeconds = 0;
         fTimeStart = false;
         fTimeStop = true;
-        puzzle = getPuzzle(diff);
+        startGame(getPuzzle(diff));
+    }
+    private void startGame(Item[] puzzle) {
+        this.puzzle = puzzle;
         calculateUsedTiles();
 
         for(int i = 0; i<9 * 9; i++) {
@@ -168,10 +189,30 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timeStop();
+        if (backgroundMusic.isPlaying()) {
+            backgroundMusic.pause();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        backgroundMusic.release();
+        backgroundMusic = null;
+        super.onDestroy();
+    }
     protected void onResume() {
         super.onResume();
+        if (isPlayMusic) {
+            backgroundMusic.start();
+        }
         if (resumeTimer == true && gameFinished == false) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            if(!ingameMenu.isShowing()){
+                ingameMenu.show();
+            }
+            /*AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setTitle(getResources().getString(R.string.dialogTitle))
                     .setPositiveButton(getResources().getString(R.string.yes),
                             new DialogInterface.OnClickListener() {
@@ -195,7 +236,7 @@ public class GameActivity extends AppCompatActivity {
 
                                 }
                             }).setCancelable(false).show();
-
+*/
         }
         /*if (shareScreen == true) {
             GameScreen.this.finish();
@@ -417,7 +458,10 @@ public class GameActivity extends AppCompatActivity {
     public void btClick(View view) {
         switch (view.getId()){
             case R.id.btMenu:
-
+                timeStop();
+                if(!ingameMenu.isShowing()){
+                    ingameMenu.show();
+                }
                 break;
             case R.id.btUndo:
                 if(!trackChanges.isEmpty() && !isRunningUndo){
@@ -459,7 +503,72 @@ public class GameActivity extends AppCompatActivity {
                     toast.show();
                 }
                 break;
+            case R.id.btSpeaker:
+                isPlayMusic = !isPlayMusic;
+                savedValues.setRecordPlaybackground(isPlayMusic);
+                ImageButton btSpeaker = (ImageButton) findViewById(R.id.btSpeaker);
+                if(isPlayMusic)
+                {
+                    backgroundMusic.start();
+                    btSpeaker.setImageResource(R.drawable.speaker);
+                }else{
+                    backgroundMusic.pause();
+                    btSpeaker.setImageResource(R.drawable.speaker_mute);
+                }
+                break;
         }
+    }
+
+    private Dialog createIngameMenu()
+    {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.menu_ingame);
+        ColorDrawable dialogColor = new ColorDrawable(Color.GRAY);
+        dialogColor.setAlpha(0);
+        dialog.getWindow().setBackgroundDrawable(dialogColor);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);;
+
+        Button btIngameResume = (Button) dialog.findViewById(R.id.btIngameResume);
+        Button btIngameRestart = (Button) dialog.findViewById(R.id.btIngameRestart);
+        Button btIngameExit = (Button) dialog.findViewById(R.id.btIngameExit);
+
+        // if button is clicked, close the custom dialog
+        btIngameResume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                timeStart();
+            }
+        });
+
+        btIngameRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                for(Item item:puzzle){
+                    if(item.canChange()){
+                        item.setValue(0);
+                    }
+                }
+                changes = 0;
+                lSeconds = 0;
+                fTimeStart = false;
+                trackChanges.clear();
+                fTimeStop = true;
+                startGame(puzzle);
+            }
+        });
+
+        btIngameExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        // dialog.setGravity(Gravity.CENTER, 0, 0);
+        return dialog;
     }
 
     public static boolean contains(int[] arr, int item) {
