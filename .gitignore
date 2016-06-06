@@ -1,3 +1,4 @@
+/BanCa
 FruitLink/Library/
 FruitLink/Pikachu_Data
 FruitLink/ProjectSettings
@@ -7,3 +8,7 @@ Pikachu/ProjectSettings
 puzzle/Library/
 puzzle/Pikachu_Data
 puzzle/ProjectSettings
+Services/hthservices/hthservices/packages
+Services/hthservices/hthservices/hthservices.Tests
+Services/hthservices/hthservices/hthservices/bin
+Services/hthservices/hthservices/hthservices/obj

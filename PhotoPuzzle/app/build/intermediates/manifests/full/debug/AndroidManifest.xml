@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hth.photopuzzle"
     android:installLocation="auto"
-    android:versionCode="2"
-    android:versionName="2" >
+    android:versionCode="102"
+    android:versionName="102" >
 
     <uses-sdk
         android:minSdkVersion="9"
