@@ -49,7 +49,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/menu_item"
                 android:onClick="btClick"
-                android:text="@string/settings_game"/>
+                android:text="@string/profile"/>
             <Button
                 android:id="@+id/btAbout"
                 android:layout_width="match_parent"

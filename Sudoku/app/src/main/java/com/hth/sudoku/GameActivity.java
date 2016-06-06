@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.camera2.params.TonemapCurve;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -153,13 +155,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void timeStart() {
-        if (fTimeStart == false) {
+        if (fTimeStart == false && !gameFinished) {
             fTimeStart = true;
             fTimeStop = false;
             timestart = new Thread() {
                 public void run() {
                     try {
-                        while (!fTimeStop) {
+                        while (!fTimeStop && !gameFinished) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     textViewTimer();
@@ -335,7 +337,12 @@ public class GameActivity extends AppCompatActivity {
     private void checkWin()
     {
         if(isWin()){
-
+            gameFinished = true;
+            timeStop();
+            wingameDialog = createWingameDialog("Easy", timeFormat(Long.valueOf(lSeconds)), ""+changes,
+                    "10:12:30\nJun 06, 2016", "14:12:30\nJun 06, 2016","");
+            wingameDialog.show();
+            savedValues.setRecordTime(0);
         }else{
             saveRecord();
         }
@@ -464,6 +471,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btUndo:
+                if(gameFinished) break;
                 if(!trackChanges.isEmpty() && !isRunningUndo){
                     isRunningUndo = true;
                     lastTrackChange = removeFromTrackChange();
@@ -490,6 +498,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btHint:
+                if(gameFinished) break;
                 int [] tiles = getUsedTiles(puzzleView.getSelX(), puzzleView.getSelY());
                 if(tiles == null || tiles.length < 9) {
                     for (int i = 1; i < 10; i++) {
@@ -519,6 +528,65 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    Dialog wingameDialog;
+    private Dialog createWingameDialog(String levelName, String time, String moves, String startOn, String endOn, String comment)
+    {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.win);
+        ColorDrawable dialogColor = new ColorDrawable(Color.GRAY);
+        dialogColor.setAlpha(0);
+        dialog.getWindow().setBackgroundDrawable(dialogColor);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);;
+
+        ((TextView) dialog.findViewById(R.id.tvLevel)).setText(levelName);
+        ((TextView) dialog.findViewById(R.id.tvTime)).setText(time);
+        ((TextView) dialog.findViewById(R.id.tvMoves)).setText(moves);
+        ((TextView) dialog.findViewById(R.id.tvStartOn)).setText(startOn);
+        ((TextView) dialog.findViewById(R.id.tvEndOn)).setText(endOn);
+        ((EditText) dialog.findViewById(R.id.etComment)).setText(comment);
+
+        Button btWingameSaveComment = (Button) dialog.findViewById(R.id.btWingameSaveComment);
+        Button btWingamePlay = (Button) dialog.findViewById(R.id.btWingamePlay);
+        Button btWingameProfile = (Button) dialog.findViewById(R.id.btWingameProfile);
+        Button btWingameDimiss = (Button) dialog.findViewById(R.id.btWingameDimiss);
+
+        // if button is clicked, close the custom dialog
+        btWingameSaveComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GameActivity.this, "No implement", Toast.LENGTH_LONG);
+            }
+        });
+
+        btWingamePlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(wingameDialog!=null && wingameDialog.isShowing()){
+                    wingameDialog.dismiss();
+                }
+                initGame(level);
+            }
+        });
+
+        btWingameProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GameActivity.this, "No implement", Toast.LENGTH_LONG);
+            }
+        });
+
+        btWingameDimiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(wingameDialog!=null && wingameDialog.isShowing()){
+                    wingameDialog.dismiss();
+                }
+            }
+        });
+        return dialog;
+    }
     private Dialog createIngameMenu()
     {
         final Dialog dialog = new Dialog(this);
@@ -649,7 +717,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
     public void btNumberClick(View view) {
-        if(isRunningUndo) return;
+        if(isRunningUndo || gameFinished) return;
 
         resetNumberButton();
         switch (view.getId()){

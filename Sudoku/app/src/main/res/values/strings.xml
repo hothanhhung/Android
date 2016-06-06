@@ -21,5 +21,7 @@
     <string name="ingame_exit">Main Menu</string>
     <string name="warning">Warning</string>
     <string name="warning_delete_old_game">That can delete your last play. Do you want to continue?</string>
-
+    <string name="profile">Profile</string>
+    <string name="play">Play</string>
+    <string name="dismiss">Dismiss</string>
 </resources>
