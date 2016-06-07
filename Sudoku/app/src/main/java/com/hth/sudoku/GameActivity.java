@@ -105,6 +105,19 @@ public class GameActivity extends AppCompatActivity {
         startGame(getPuzzle(diff));
     }
     private void startGame(Item[] puzzle) {
+        if(puzzle == null || puzzle.length != 81)
+        {
+            new AlertDialog.Builder(this).setTitle(R.string.warning)
+                    .setMessage("Nothing to play")
+                    .setCancelable(false)
+                    .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).show();
+            return;
+        }
         this.puzzle = puzzle;
         calculateUsedTiles();
 
@@ -365,7 +378,7 @@ public class GameActivity extends AppCompatActivity {
         savedValues.setRecordLevel(level);
     }
     private Item[] getPuzzle(int diff) {
-        String puz;
+        String puz = "";
         level = diff;
         switch (diff) {
             case Data.DIFFICULTY_CONTINUES:
@@ -393,15 +406,14 @@ public class GameActivity extends AppCompatActivity {
                     return items;
                 }
             case Data.DIFFICULTY_HARD:
-
-                puz = Data.HarPuzzle;
-                break;
             case Data.DIFFICULTY_MEDIUM:
-                puz = Data.MediumPuzzle;
-                break;
             case Data.DIFFICULTY_EASY:
             default:
-                puz = Data.EasyPuzzle;
+                SudokuItem sudoku = Data.getSudokuToPlay(this,diff);
+                if(sudoku!=null)
+                {
+                    puz = sudoku.getOriginalMap();
+                }
                 break;
         }
 

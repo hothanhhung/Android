@@ -13,6 +13,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.hth.utils.DataBaseHelper;
+
 public class MainActivity extends AppCompatActivity {
 
     Dialog difficultyMenu;
@@ -20,6 +22,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DataBaseHelper myDbHelper = new DataBaseHelper(this);
+        try {
+            myDbHelper.createDataBase();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         difficultyMenu = createDifficultyMenu();
     }
 

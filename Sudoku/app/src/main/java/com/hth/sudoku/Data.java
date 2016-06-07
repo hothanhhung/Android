@@ -1,5 +1,12 @@
 package com.hth.sudoku;
 
+import android.content.Context;
+
+import com.hth.utils.DataBaseHelper;
+
+import java.util.List;
+import java.util.Random;
+
 /**
  * Created by Lenovo on 6/3/2016.
  */
@@ -22,4 +29,13 @@ public class Data {
              "360000000004230800000004200"
             +"070460003820000014500013020"
             +"001900000007048300000000045";
+
+    public static SudokuItem getSudokuToPlay(Context context, int diff){
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        List<SudokuItem> sudokuItems = dataBaseHelper.getUnsuedSudokus(diff);
+        if(sudokuItems.size() > 0){
+            return sudokuItems.get((new Random()).nextInt(sudokuItems.size()));
+        }
+        return null;
+    }
 }
