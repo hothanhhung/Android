@@ -42,6 +42,16 @@
             android:onClick="btClick"
             android:src="@drawable/speaker"/>
 
+        <Button
+            android:id="@+id/btPlay"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/custom_rectangle"
+            android:onClick="btClick"
+            android:text="PLAY"/>
+
         <ImageButton
             android:id="@+id/btHint"
             android:layout_width="35dp"

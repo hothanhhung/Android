@@ -20,6 +20,13 @@ public class Item {
         this.canSee =true;
     }
 
+    public Item(int value, boolean canChange)
+    {
+        this.value = value;
+        this.canChange = canChange;
+        this.canSee =true;
+    }
+
     public void setValue(int value)
     {
         if(canChange){

@@ -53,6 +53,7 @@ public class GameActivity extends AppCompatActivity {
     private MediaPlayer backgroundMusic = null;
     private boolean isPlayMusic = true;
     Dialog ingameMenu;
+    private boolean isCreating = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,9 +105,14 @@ public class GameActivity extends AppCompatActivity {
         fTimeStop = true;
         startGame(getPuzzle(diff));
     }
-    private void startGame(Item[] puzzle) {
-        if(puzzle == null || puzzle.length != 81)
+    private void startGame(Item[] puz) {
+        if(puz == null || puz.length != 81)
         {
+            puzzle = new Item[81];
+            for(int i = 0; i<9 * 9; i++) {
+                puzzle[i] = new Item(0);
+            }
+
             new AlertDialog.Builder(this).setTitle(R.string.warning)
                     .setMessage("Nothing to play")
                     .setCancelable(false)
@@ -118,7 +124,7 @@ public class GameActivity extends AppCompatActivity {
                     }).show();
             return;
         }
-        this.puzzle = puzzle;
+        this.puzzle = puz;
         calculateUsedTiles();
 
         for(int i = 0; i<9 * 9; i++) {
@@ -129,15 +135,35 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        timeStop();
-        changeSetText();
-        textViewTimer();
-        gameFinished = false;
-        timeStart();
-        String[] levelNames = getResources().getStringArray(R.array.difficulty);
-        if(level > 0 && levelNames!= null && levelNames.length > level - 1) {
-            ((TextView) findViewById(R.id.tvLevel)).setText(levelNames[level - 1]);
+        if(!isCreating)
+        {
+            timeStop();
+            changeSetText();
+            textViewTimer();
+            gameFinished = false;
+            timeStart();
         }
+        String[] levelNames = getResources().getStringArray(R.array.difficulty);
+        switch (level){
+            case Data.DIFFICULTY_EASY:
+                ((TextView) findViewById(R.id.tvLevel)).setText("EASY");break;
+            case Data.DIFFICULTY_MEDIUM:
+                ((TextView) findViewById(R.id.tvLevel)).setText("MEDIUM");break;
+            case Data.DIFFICULTY_HARD:
+                ((TextView) findViewById(R.id.tvLevel)).setText("HARD");break;
+            case Data.DIFFICULTY_EXPERT:
+                ((TextView) findViewById(R.id.tvLevel)).setText("EXPERT");break;
+            case Data.DIFFICULTY_CREATE:
+                if(isCreating){
+                    ((TextView) findViewById(R.id.tvLevel)).setText("CREATING");
+                }else {
+                    ((TextView) findViewById(R.id.tvLevel)).setText("CREATE");
+                }
+                break;
+            case Data.DIFFICULTY_SPECIAL:
+                ((TextView) findViewById(R.id.tvLevel)).setText("SPECIAL");break;
+        }
+        System.gc();
     }
     private void changeSetText() {
         tvMoves.setText(getString(R.string.changes).concat(
@@ -269,10 +295,14 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             }
-            addToTrackChange(new TrackChange(x, y, getTile(x, y).getValue()));
+            if(!isCreating){
+                addToTrackChange(new TrackChange(x, y, getTile(x, y).getValue()));
+            }
             getTile(x, y).setValue(value);
             calculateUsedTiles();
-            checkWin();
+            if(!isCreating){
+                checkWin();
+            }
         }
         return true;
     }
@@ -405,6 +435,21 @@ public class GameActivity extends AppCompatActivity {
                     }
                     return items;
                 }
+            case Data.DIFFICULTY_CREATE:
+                isCreating = true;
+                puzzle = new Item[81];
+                for(int i = 0; i<9 * 9; i++) {
+                    puzzle[i] = new Item(0, true);
+                }
+                creatingViewUpdate();
+                return puzzle;
+            case Data.DIFFICULTY_SPECIAL:
+                SudokuItem sudokuSp = Data.getSudokuToPlay(this,diff);
+                if(sudokuSp!=null)
+                {
+                    puz = sudokuSp.getOriginalMap();
+                }
+                break;
             case Data.DIFFICULTY_HARD:
             case Data.DIFFICULTY_MEDIUM:
             case Data.DIFFICULTY_EASY:
@@ -483,7 +528,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btUndo:
-                if(gameFinished) break;
+                if(gameFinished || isCreating) break;
                 if(!trackChanges.isEmpty() && !isRunningUndo){
                     isRunningUndo = true;
                     lastTrackChange = removeFromTrackChange();
@@ -510,7 +555,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btHint:
-                if(gameFinished) break;
+                if(gameFinished || isCreating) break;
                 int [] tiles = getUsedTiles(puzzleView.getSelX(), puzzleView.getSelY());
                 if(tiles == null || tiles.length < 9) {
                     for (int i = 1; i < 10; i++) {
@@ -536,6 +581,16 @@ public class GameActivity extends AppCompatActivity {
                     backgroundMusic.pause();
                     btSpeaker.setImageResource(R.drawable.speaker_mute);
                 }
+                break;
+            case R.id.btPlay:
+                isCreating = false;
+                creatingViewUpdate();
+                Item puzz[] = new Item[81];
+                for(int i =0; i <81; i++)
+                {
+                    puzz[i] = new Item(puzzle[i].getValue());
+                }
+                startGame(puzz);
                 break;
         }
     }
@@ -764,6 +819,18 @@ public class GameActivity extends AppCompatActivity {
                 puzzleView.setSelectedTile(9);
                 break;
         }
+    }
+
+    void creatingViewUpdate()
+    {
+        tvMoves.setVisibility(isCreating ? View.INVISIBLE : View.VISIBLE);
+        tvTime.setVisibility(isCreating ? View.INVISIBLE : View.VISIBLE);
+        ImageButton btHint = (ImageButton) findViewById(R.id.btHint);
+        ImageButton btUndo = (ImageButton) findViewById(R.id.btUndo);
+        btHint.setVisibility(isCreating ? View.GONE : View.VISIBLE);
+        btUndo.setVisibility(isCreating ? View.GONE : View.VISIBLE);
+        Button btPlay = (Button) findViewById(R.id.btPlay);
+        btPlay.setVisibility(isCreating ? View.VISIBLE : View.GONE);
     }
     void showKeypadOrError(int x, int y) {
         if (canChangeValue(x, y)) {

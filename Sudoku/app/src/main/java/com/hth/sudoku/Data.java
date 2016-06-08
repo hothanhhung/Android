@@ -17,6 +17,8 @@ public class Data {
     public static final int DIFFICULTY_MEDIUM = 2;
     public static final int DIFFICULTY_HARD = 3;
     public static final int DIFFICULTY_EXPERT = 4;
+    public static final int DIFFICULTY_CREATE = 5;
+    public static final int DIFFICULTY_SPECIAL = 6;
 
     public static final String EasyPuzzle =  "854219763397865421261473985"
                                             +"785126394649538172132947856"

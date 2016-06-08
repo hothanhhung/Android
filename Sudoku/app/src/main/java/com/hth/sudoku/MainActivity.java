@@ -118,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
         Button btMedium = (Button) dialog.findViewById(R.id.btMedium);
         Button btHard = (Button) dialog.findViewById(R.id.btHard);
         Button btExpert = (Button) dialog.findViewById(R.id.btExpert);
+        Button btCreate = (Button) dialog.findViewById(R.id.btCreate);
+        Button btSpecial = (Button) dialog.findViewById(R.id.btSpecial);
 
         btEasy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +147,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 dialog.dismiss();
                 startGame(Data.DIFFICULTY_EXPERT);
+            }
+        });
+        btCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                startGame(Data.DIFFICULTY_CREATE);
+            }
+        });
+        btSpecial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                startGame(Data.DIFFICULTY_SPECIAL);
             }
         });
         return dialog;
