@@ -137,6 +137,50 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return listSudokuItem;
     }
 
+    public void saveWingame(String originalMap, int difficulty, String resolvedMap, String levelName, String time, int changes, String startAt, String endAt, String comment, String orderViaEndAt)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try {
+            String sqlSave = " INSERT INTO GAMES(OriginalMap, Difficulty, StartAt, EndAt, ResolvedMap, TotalTime, Changes, Name, Comment, OrderViaEndAt) " +
+                    " SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ? " +
+                    " WHERE NOT EXISTS (SELECT * FROM GAMES WHERE OriginalMap=?); " +
+                    " UPDATE GAMES SET Difficulty=?, StartAt=?, EndAt=?, ResolvedMap=?, TotalTime=?, Changes=?, Name=?, Comment=?, OrderViaEndAt=? "+
+                    " WHERE OriginalMap =?";
+            Object[] parameters = new Object[]{
+                    originalMap, difficulty, startAt, endAt, resolvedMap, time, changes, levelName, comment, orderViaEndAt,
+                    originalMap,
+                    difficulty, startAt, endAt, resolvedMap, time, changes, levelName, comment, orderViaEndAt,
+                    originalMap
+            };
+            db.execSQL(sqlSave, parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        db.close();
+
+    }
+
+    public void saveCommentWin(String originalMap, String comment)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try {
+            String sqlSave = "UPDATE GAMES SET Comment=? "+
+                    " WHERE OriginalMap =?";
+            Object[] parameters = new Object[]{
+                    comment, originalMap
+            };
+            db.execSQL(sqlSave, parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        db.close();
+
+    }
+
     @Override
     public synchronized void close() {
         if(myDataBase != null)

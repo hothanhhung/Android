@@ -24,6 +24,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hth.utils.DataBaseHelper;
+import com.hth.utils.MethodsHelper;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +57,7 @@ public class GameActivity extends AppCompatActivity {
     private boolean isPlayMusic = true;
     Dialog ingameMenu;
     private boolean isCreating = false;
+    private boolean needSaveStartAt = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +98,8 @@ public class GameActivity extends AppCompatActivity {
         }else{
             btSpeaker.setImageResource(R.drawable.speaker_mute);
         }
-
+        isCreating = false;
+        creatingViewUpdate();
         initGame(diff);
     }
     private void initGame(int diff)
@@ -143,27 +148,30 @@ public class GameActivity extends AppCompatActivity {
             gameFinished = false;
             timeStart();
         }
-        String[] levelNames = getResources().getStringArray(R.array.difficulty);
-        switch (level){
+
+        ((TextView) findViewById(R.id.tvLevel)).setText(getLevelName(level));
+        System.gc();
+    }
+    private String getLevelName(int lv){
+        switch (lv){
             case Data.DIFFICULTY_EASY:
-                ((TextView) findViewById(R.id.tvLevel)).setText("EASY");break;
+                return "EASY";
             case Data.DIFFICULTY_MEDIUM:
-                ((TextView) findViewById(R.id.tvLevel)).setText("MEDIUM");break;
+                return "MEDIUM";
             case Data.DIFFICULTY_HARD:
-                ((TextView) findViewById(R.id.tvLevel)).setText("HARD");break;
+                return "HARD";
             case Data.DIFFICULTY_EXPERT:
-                ((TextView) findViewById(R.id.tvLevel)).setText("EXPERT");break;
+                return "EXPERT";
             case Data.DIFFICULTY_CREATE:
                 if(isCreating){
-                    ((TextView) findViewById(R.id.tvLevel)).setText("CREATING");
+                    return "CREATING";
                 }else {
-                    ((TextView) findViewById(R.id.tvLevel)).setText("CREATE");
+                    return "CREATE";
                 }
-                break;
             case Data.DIFFICULTY_SPECIAL:
-                ((TextView) findViewById(R.id.tvLevel)).setText("SPECIAL");break;
+                return "SPECIAL";
         }
-        System.gc();
+        return "";
     }
     private void changeSetText() {
         tvMoves.setText(getString(R.string.changes).concat(
@@ -377,13 +385,34 @@ public class GameActivity extends AppCompatActivity {
         return c1;
     }
 
+    private String getOrginalMap(){
+        String str = "";
+        for(Item item : puzzle){
+            if(item.canChange()) {
+                str+="0";
+            }else{
+               str+=item.getValue();
+            }
+        }
+        return str;
+    }
+
+    private String getResolvedMap(){
+        String str = "";
+        for(Item item : puzzle){
+            str+=item.getValue();
+        }
+        return str;
+    }
     private void checkWin()
     {
         if(isWin()){
             gameFinished = true;
             timeStop();
-            wingameDialog = createWingameDialog("Easy", timeFormat(Long.valueOf(lSeconds)), ""+changes,
-                    "10:12:30\nJun 06, 2016", "14:12:30\nJun 06, 2016","");
+            String orignalMap = getOrginalMap(), resolvedMap = getResolvedMap(), startAt = savedValues.getRecordStartAt(), endAt = MethodsHelper.getCurrentDate();
+            String time = timeFormat(Long.valueOf(lSeconds)), nameLevel = getLevelName(level);
+            (new DataBaseHelper(this)).saveWingame(orignalMap, level, resolvedMap, nameLevel,"" + time, changes, startAt, endAt, "", MethodsHelper.getCurrentDateToOrder());
+            wingameDialog = createWingameDialog(nameLevel, time, ""+changes, startAt, endAt,"");
             wingameDialog.show();
             savedValues.setRecordTime(0);
         }else{
@@ -406,8 +435,13 @@ public class GameActivity extends AppCompatActivity {
         savedValues.setRecordChanges(changes);
         savedValues.setRecordTrackchange(trackChanges);
         savedValues.setRecordLevel(level);
+        if(needSaveStartAt){
+            savedValues.setRecordStartAt(MethodsHelper.getCurrentDate());
+            needSaveStartAt = false;
+        }
     }
     private Item[] getPuzzle(int diff) {
+        needSaveStartAt = false;
         String puz = "";
         level = diff;
         switch (diff) {
@@ -436,6 +470,7 @@ public class GameActivity extends AppCompatActivity {
                     return items;
                 }
             case Data.DIFFICULTY_CREATE:
+                needSaveStartAt = true;
                 isCreating = true;
                 puzzle = new Item[81];
                 for(int i = 0; i<9 * 9; i++) {
@@ -444,6 +479,7 @@ public class GameActivity extends AppCompatActivity {
                 creatingViewUpdate();
                 return puzzle;
             case Data.DIFFICULTY_SPECIAL:
+                needSaveStartAt = true;
                 SudokuItem sudokuSp = Data.getSudokuToPlay(this,diff);
                 if(sudokuSp!=null)
                 {
@@ -454,6 +490,7 @@ public class GameActivity extends AppCompatActivity {
             case Data.DIFFICULTY_MEDIUM:
             case Data.DIFFICULTY_EASY:
             default:
+                needSaveStartAt = true;
                 SudokuItem sudoku = Data.getSudokuToPlay(this,diff);
                 if(sudoku!=null)
                 {
@@ -623,7 +660,8 @@ public class GameActivity extends AppCompatActivity {
         btWingameSaveComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GameActivity.this, "No implement", Toast.LENGTH_LONG);
+                (new DataBaseHelper(GameActivity.this)).saveCommentWin(getOrginalMap(), ((EditText)dialog.findViewById(R.id.etComment)).getText().toString());
+                Toast.makeText(dialog.getContext(), "No implement", Toast.LENGTH_LONG);
             }
         });
 

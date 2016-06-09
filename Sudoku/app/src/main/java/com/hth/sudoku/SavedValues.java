@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.google.gson.Gson;
+import com.hth.utils.MethodsHelper;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class SavedValues {
 	private static final String RECORD_TRACKCHANGE = "RECORD_TRACKCHANGE";
 	private static final String RECORD_LEVEL = "RECORD_LEVEL";
 	private static final String RECORD_PLAYBACKGROUND = "RECORD_PLAYBACKGROUND";
+	private static final String RECORD_STARTAT = "RECORD_STARTAT";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -60,6 +62,10 @@ public class SavedValues {
 		return appSharedPrefs.getBoolean(RECORD_PLAYBACKGROUND, true);
 	}
 
+	public String getRecordStartAt() {
+		return appSharedPrefs.getString(RECORD_STARTAT, MethodsHelper.getCurrentDate());
+	}
+
 	public void setRecordChanges(int var1) {
 		prefsEditor.putInt(RECORD_CHANGES, var1);
 		prefsEditor.commit();
@@ -95,6 +101,10 @@ public class SavedValues {
 
 	public void setRecordPlaybackground(boolean var1) {
 		prefsEditor.putBoolean(RECORD_PLAYBACKGROUND, var1);
+		prefsEditor.commit();
+	}
+	public void setRecordStartAt(String var1) {
+		prefsEditor.putString(RECORD_STARTAT, var1);
 		prefsEditor.commit();
 	}
 }
