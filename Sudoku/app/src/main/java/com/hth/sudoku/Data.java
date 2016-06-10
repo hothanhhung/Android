@@ -19,6 +19,7 @@ public class Data {
     public static final int DIFFICULTY_EXPERT = 4;
     public static final int DIFFICULTY_CREATE = 5;
     public static final int DIFFICULTY_SPECIAL = 6;
+    public static final int DIFFICULTY_PLAY_AGAIN = 8;
 
     public static final String EasyPuzzle =  "854219763397865421261473985"
                                             +"785126394649538172132947856"
@@ -40,4 +41,7 @@ public class Data {
         }
         return null;
     }
+
+    public static String ReplayOriginalMap = "";
+    public static int ReplayLevel=0;
 }

@@ -40,8 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
                                         int groupPosition, int childPosition, long id) {
                 SudokuItem sudokuItem = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
                 if(sudokuItem!=null){
-                    Dialog dialog = MethodsHelper.createProfileDetailDialog(ProfileActivity.this, sudokuItem.getOriginalMap(),sudokuItem.getName(),
-                            sudokuItem.getTotalTime(), ""+sudokuItem.getChanges(), sudokuItem.getStartAt(), sudokuItem.getEndAt(),sudokuItem.getComment());
+                    Dialog dialog = MethodsHelper.createProfileDetailDialog(sudokuItem, ProfileActivity.this);
                     dialog.show();
                 }
                 return false;
@@ -55,8 +54,8 @@ public class ProfileActivity extends AppCompatActivity {
         // Adding child data
         listDataHeader.add("Easy");
         listDataHeader.add("Medium");
-        listDataHeader.add("Heard");
-        listDataHeader.add("Special");
+        listDataHeader.add("Hard");
+       // listDataHeader.add("Special");
         listDataHeader.add("Your Creation");
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
@@ -64,13 +63,13 @@ public class ProfileActivity extends AppCompatActivity {
         List<SudokuItem> easy = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_EASY);
         List<SudokuItem> medium = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_MEDIUM);
         List<SudokuItem> heard = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_HARD);
-        List<SudokuItem> special = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_SPECIAL);
+      //  List<SudokuItem> special = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_SPECIAL);
         List<SudokuItem> creation = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_CREATE);
 
         listDataChild.put(listDataHeader.get(0), easy); // Header, Child data
         listDataChild.put(listDataHeader.get(1), medium);
         listDataChild.put(listDataHeader.get(2), heard);
-        listDataChild.put(listDataHeader.get(3), special);
-        listDataChild.put(listDataHeader.get(4), creation);
+       // listDataChild.put(listDataHeader.get(3), special);
+        listDataChild.put(listDataHeader.get(3), creation);
     }
 }

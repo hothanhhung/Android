@@ -103,4 +103,18 @@ public class SudokuItem {
     public void setOrderViaEndAt(String orderViaEndAt) {
         this.orderViaEndAt = orderViaEndAt;
     }
+
+    public Item[] getResolvedItem() {
+        Item[] puz = new Item[81];
+        if(resolvedMap.length() == 81 && originalMap.length() == 81) {
+            for (int i = 0; i < puz.length; i++) {
+                puz[i] = new Item(resolvedMap.charAt(i) - '0', originalMap.charAt(i) == '0');
+            }
+        }else{
+            for (int i = 0; i < puz.length; i++) {
+                puz[i] = new Item(0);
+            }
+        }
+        return puz;
+    }
 }

@@ -1,20 +1,15 @@
 package com.hth.sudoku;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.camera2.params.TonemapCurve;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,15 +20,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 import com.hth.utils.DataBaseHelper;
 import com.hth.utils.MethodsHelper;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -59,6 +53,9 @@ public class GameActivity extends AppCompatActivity {
     Dialog ingameMenu;
     private boolean isCreating = false;
     private boolean needSaveStartAt = false;
+    private AdView mAdView = null;
+    private InterstitialAd interstitial = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +99,9 @@ public class GameActivity extends AppCompatActivity {
         isCreating = false;
         creatingViewUpdate();
         initGame(diff);
+        mAdView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
     private void initGame(int diff)
     {
@@ -408,6 +408,28 @@ public class GameActivity extends AppCompatActivity {
     private void checkWin()
     {
         if(isWin()){
+            if (interstitial == null) {
+                interstitial = new InterstitialAd(this);
+                interstitial.setAdUnitId(getResources().getString(R.string.ad_unit_id_interstitial));
+                interstitial.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        if (interstitial.isLoaded()) {
+                            interstitial.show();
+                        }
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                    }
+                });
+            }
+            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+            interstitial.loadAd(adRequest_interstitial);
             gameFinished = true;
             timeStop();
             String orignalMap = getOrginalMap(), resolvedMap = getResolvedMap(), startAt = savedValues.getRecordStartAt(), endAt = MethodsHelper.getCurrentDate();
@@ -486,6 +508,11 @@ public class GameActivity extends AppCompatActivity {
                 {
                     puz = sudokuSp.getOriginalMap();
                 }
+                break;
+            case Data.DIFFICULTY_PLAY_AGAIN:
+                needSaveStartAt = true;
+                level = Data.ReplayLevel;
+                puz = Data.ReplayOriginalMap;
                 break;
             case Data.DIFFICULTY_HARD:
             case Data.DIFFICULTY_MEDIUM:

@@ -24,4 +24,6 @@
     <string name="profile">Profile</string>
     <string name="play">Play</string>
     <string name="dismiss">Dismiss</string>
+    <string name="ad_unit_id">ca-app-pub-4576847792571626/5498866799</string>
+    <string name="ad_unit_id_interstitial">ca-app-pub-4576847792571626/8452333192</string>
 </resources>
