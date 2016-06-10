@@ -40,7 +40,7 @@
                 android:onClick="btClick"
                 android:text="@string/continue_game"/>
             <Button
-                android:id="@+id/btSettings"
+                android:id="@+id/btProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"

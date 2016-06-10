@@ -34,7 +34,7 @@ public class Data {
 
     public static SudokuItem getSudokuToPlay(Context context, int diff){
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        List<SudokuItem> sudokuItems = dataBaseHelper.getUnsuedSudokus(diff);
+        List<SudokuItem> sudokuItems = dataBaseHelper.getUnusedSudokus(diff);
         if(sudokuItems.size() > 0){
             return sudokuItems.get((new Random()).nextInt(sudokuItems.size()));
         }

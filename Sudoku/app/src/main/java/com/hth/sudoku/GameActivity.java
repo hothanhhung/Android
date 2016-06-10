@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -647,8 +648,8 @@ public class GameActivity extends AppCompatActivity {
         ((TextView) dialog.findViewById(R.id.tvLevel)).setText(levelName);
         ((TextView) dialog.findViewById(R.id.tvTime)).setText(time);
         ((TextView) dialog.findViewById(R.id.tvMoves)).setText(moves);
-        ((TextView) dialog.findViewById(R.id.tvStartOn)).setText(startOn);
-        ((TextView) dialog.findViewById(R.id.tvEndOn)).setText(endOn);
+        ((TextView) dialog.findViewById(R.id.tvStartOn)).setText(startOn.replace(" - ","\n"));
+        ((TextView) dialog.findViewById(R.id.tvEndOn)).setText(endOn.replace(" - ","\n"));
         ((EditText) dialog.findViewById(R.id.etComment)).setText(comment);
 
         Button btWingameSaveComment = (Button) dialog.findViewById(R.id.btWingameSaveComment);
@@ -660,8 +661,14 @@ public class GameActivity extends AppCompatActivity {
         btWingameSaveComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                (new DataBaseHelper(GameActivity.this)).saveCommentWin(getOrginalMap(), ((EditText)dialog.findViewById(R.id.etComment)).getText().toString());
-                Toast.makeText(dialog.getContext(), "No implement", Toast.LENGTH_LONG);
+                try {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+                (new DataBaseHelper(GameActivity.this)).saveCommentWin(getOrginalMap(), ((EditText) dialog.findViewById(R.id.etComment)).getText().toString());
+                Toast.makeText(dialog.getContext(), "Saved", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -678,7 +685,7 @@ public class GameActivity extends AppCompatActivity {
         btWingameProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GameActivity.this, "No implement", Toast.LENGTH_LONG);
+                Toast.makeText(GameActivity.this, "No implement", Toast.LENGTH_LONG).show();
             }
         });
 

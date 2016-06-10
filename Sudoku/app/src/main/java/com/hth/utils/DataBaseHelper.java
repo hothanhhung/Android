@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +44,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * */
     public void createDataBase() throws IOException {
         boolean dbExist = checkDataBase();
-        /*if(dbExist){
+        if(dbExist){
             //do nothing - database already exist
-        }else*/
+        }else
         {
 
             //By calling this method and empty database will be created into the default system path
@@ -112,7 +113,72 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public List<SudokuItem> getUnsuedSudokus(int diff){
+    public SudokuItem getSudoku(String originalMap){
+        SudokuItem sudokuItem = null;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c;
+
+        try {
+            c = db.rawQuery("SELECT OriginalMap, Difficulty, StartAt, EndAt, ResolvedMap, TotalTime, Changes, Name, Comment, OrderViaEndAt FROM GAMES WHERE OriginalMap=?" , new String[]{originalMap});
+            if(c == null) return null;
+
+            if(c.moveToFirst()) {
+                do {
+                    sudokuItem = new SudokuItem(c.getString(0), c.getInt(1));
+                    sudokuItem.setStartAt(c.getString(2));
+                    sudokuItem.setEndAt(c.getString(3));
+                    sudokuItem.setResolvedMap(c.getString(4));
+                    sudokuItem.setTotalTime(c.getString(5));
+                    sudokuItem.setChanges(c.getInt(6));
+                    sudokuItem.setName(c.getString(7));
+                    sudokuItem.setComment(c.getString(8));
+                    sudokuItem.setOrderViaEndAt(c.getString(9));
+                } while (c.moveToNext());
+            }
+            c.close();
+        } catch (Exception e) {
+
+        }
+
+        db.close();
+
+        return sudokuItem;
+    }
+
+    public List<SudokuItem> getUsedSudokus(int diff){
+        List<SudokuItem> listSudokuItem = new ArrayList<SudokuItem>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c;
+
+        try {
+            c = db.rawQuery("SELECT OriginalMap, Difficulty, StartAt, EndAt, ResolvedMap, TotalTime, Changes, Name, Comment, OrderViaEndAt FROM GAMES WHERE ResolvedMap IS NOT NULL AND Difficulty="+diff+" ORDER BY OrderViaEndAt DESC" , null);
+            if(c == null) return null;
+
+            if(c.moveToFirst()) {
+                do {
+                    SudokuItem sudokuItem = new SudokuItem(c.getString(0), c.getInt(1));
+                    sudokuItem.setStartAt(c.getString(2));
+                    sudokuItem.setEndAt(c.getString(3));
+                    sudokuItem.setResolvedMap(c.getString(4));
+                    sudokuItem.setTotalTime(c.getString(5));
+                    sudokuItem.setChanges(c.getInt(6));
+                    sudokuItem.setName(c.getString(7));
+                    sudokuItem.setComment(c.getString(8));
+                    sudokuItem.setOrderViaEndAt(c.getString(9));
+                    listSudokuItem.add(sudokuItem);
+                } while (c.moveToNext());
+            }
+            c.close();
+        } catch (Exception e) {
+
+        }
+
+        db.close();
+
+        return listSudokuItem;
+    }
+
+    public List<SudokuItem> getUnusedSudokus(int diff){
         List<SudokuItem> listSudokuItem = new ArrayList<SudokuItem>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c;
@@ -142,18 +208,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
-            String sqlSave = " INSERT INTO GAMES(OriginalMap, Difficulty, StartAt, EndAt, ResolvedMap, TotalTime, Changes, Name, Comment, OrderViaEndAt) " +
-                    " SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ? " +
-                    " WHERE NOT EXISTS (SELECT * FROM GAMES WHERE OriginalMap=?); " +
-                    " UPDATE GAMES SET Difficulty=?, StartAt=?, EndAt=?, ResolvedMap=?, TotalTime=?, Changes=?, Name=?, Comment=?, OrderViaEndAt=? "+
-                    " WHERE OriginalMap =?";
-            Object[] parameters = new Object[]{
-                    originalMap, difficulty, startAt, endAt, resolvedMap, time, changes, levelName, comment, orderViaEndAt,
-                    originalMap,
-                    difficulty, startAt, endAt, resolvedMap, time, changes, levelName, comment, orderViaEndAt,
-                    originalMap
+            String sqlSave = "";
+            Cursor c = db.rawQuery("SELECT * FROM GAMES WHERE OriginalMap=?", new String[]{originalMap});
+            if(!c.moveToFirst()) {
+                c.close();
+                sqlSave = " INSERT INTO GAMES(OriginalMap, Difficulty, StartAt, EndAt, ResolvedMap, TotalTime, Changes, Name, Comment, OrderViaEndAt) " +
+                        " SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ";
+                Object[] parameters = new Object[]{
+                        originalMap, difficulty, startAt, endAt, resolvedMap, time, changes, levelName, comment, orderViaEndAt
+                };
+                db.execSQL(sqlSave, parameters);
+            }else{
+                c.close();
+                sqlSave = "UPDATE GAMES SET Difficulty=?, StartAt=?, EndAt=?, ResolvedMap=?, TotalTime=?, Changes=?, Name=?, Comment=?, OrderViaEndAt=? " +
+                        " WHERE OriginalMap =?";
+                Object[] parameters = new Object[]{ difficulty, startAt, endAt, resolvedMap, time, changes, levelName, comment, orderViaEndAt,
+                    originalMap };
+                db.execSQL(sqlSave, parameters);
             };
-            db.execSQL(sqlSave, parameters);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

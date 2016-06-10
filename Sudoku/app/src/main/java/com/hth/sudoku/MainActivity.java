@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btContinue:
                 startGame(Data.DIFFICULTY_CONTINUES);
                 break;
-            case R.id.btSettings:
+            case R.id.btProfile:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btAbout:
                 Intent i = new Intent(this, AboutActivity.class);
