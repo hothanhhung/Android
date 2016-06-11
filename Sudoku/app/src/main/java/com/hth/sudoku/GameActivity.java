@@ -695,7 +695,7 @@ public class GameActivity extends AppCompatActivity {
                     // TODO: handle exception
                 }
                 (new DataBaseHelper(GameActivity.this)).saveCommentWin(getOrginalMap(), ((EditText) dialog.findViewById(R.id.etComment)).getText().toString());
-                Toast.makeText(dialog.getContext(), "Saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(dialog.getContext(), "Saved", Toast.LENGTH_SHORT).show();
             }
         });
 

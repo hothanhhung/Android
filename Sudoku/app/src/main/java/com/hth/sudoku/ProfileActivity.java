@@ -51,25 +51,26 @@ public class ProfileActivity extends AppCompatActivity {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<SudokuItem>>();
 
-        // Adding child data
-        listDataHeader.add("Easy");
-        listDataHeader.add("Medium");
-        listDataHeader.add("Hard");
-       // listDataHeader.add("Special");
-        listDataHeader.add("Your Creation");
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
         // Adding child data
         List<SudokuItem> easy = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_EASY);
         List<SudokuItem> medium = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_MEDIUM);
-        List<SudokuItem> heard = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_HARD);
+        List<SudokuItem> hard = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_HARD);
       //  List<SudokuItem> special = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_SPECIAL);
         List<SudokuItem> creation = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_CREATE);
 
-        listDataChild.put(listDataHeader.get(0), easy); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), medium);
-        listDataChild.put(listDataHeader.get(2), heard);
+        // Adding child data
+        listDataHeader.add("Your Creation (" + creation.size() +")");
+        listDataHeader.add("Easy (" + easy.size() +")");
+        listDataHeader.add("Medium (" + medium.size() +")");
+        listDataHeader.add("Hard (" + hard.size() +")");
+        // listDataHeader.add("Special");
+
+        listDataChild.put(listDataHeader.get(0), creation);
+        listDataChild.put(listDataHeader.get(1), easy); // Header, Child data
+        listDataChild.put(listDataHeader.get(2), medium);
+        listDataChild.put(listDataHeader.get(3), hard);
        // listDataChild.put(listDataHeader.get(3), special);
-        listDataChild.put(listDataHeader.get(3), creation);
     }
 }

@@ -37,9 +37,6 @@ public class PuzzleReview extends View {
 
     private float width;
     private float height;
-    private int selX;
-    private int selY;
-    private final Rect selRect = new Rect();
 
     public Item[] getPuzzle() {
         if(puzzle == null || puzzle.length != 81)
@@ -68,7 +65,6 @@ public class PuzzleReview extends View {
     {
         width = w/9f;
         height = h/9f;
-        getRect(selX, selY, selRect);
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -149,10 +145,6 @@ public class PuzzleReview extends View {
                         j*height+y, foreground);
             }
         }
-
-        Paint selected = new Paint();
-        selected.setColor(getResources().getColor(R.color.puzzle_selected));
-        canvas.drawRect(selRect, selected);
     }
 
 }

@@ -5,7 +5,8 @@
     <string name="settings_game">Setting</string>
     <string name="about_game">About</string>
     <string name="exit_game">Exit</string>
-    <string name="about_content">This Sudoku game is the same others</string>
+    <string name="about_content_rules">Sudoku is played on a grid of 9 x 9 spaces. Within the rows and columns are 9 “squares” (made up of 3 x 3 spaces). Each row, column and square (9 spaces each) needs to be filled out with the numbers 1-9, without repeating any numbers within the row, column or square</string>
+    <string name="about_content_explain">In the blue square, space with green cycle should be put 1 based on rules of Sudoku game. </string>
     <string name="new_game_title">Difficulty</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>

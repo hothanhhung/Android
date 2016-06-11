@@ -42,7 +42,7 @@ public class ExpandableProfileListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = ((SudokuItem) getChild(groupPosition, childPosition)).getEndAt();
+        SudokuItem sudokuItem = ((SudokuItem) getChild(groupPosition, childPosition));
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -52,8 +52,13 @@ public class ExpandableProfileListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.tvProfileItem);
-
-        txtListChild.setText(childText);
+        TextView txtListChild1 = (TextView) convertView
+                .findViewById(R.id.tvProfileItem2);
+        PuzzleReview puzzleViewProfileItem = (PuzzleReview) convertView
+                .findViewById(R.id.puzzleViewProfileItem);
+        puzzleViewProfileItem.setPuzzle(sudokuItem.getResolvedItem());
+        txtListChild.setText(sudokuItem.getEndAt());
+        txtListChild1.setText(sudokuItem.getComment());
         return convertView;
     }
 
