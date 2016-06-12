@@ -21,39 +21,43 @@ namespace hthservices.Utils
             List<GuideItem> guideItems = new List<GuideItem>();
             try{
                 HttpClient http = new HttpClient();
-                var response = http.GetByteArrayAsync(url).Result;
-                String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
-                source = WebUtility.HtmlDecode(source);
-                HtmlDocument resultat = new HtmlDocument();
-                resultat.LoadHtml(source);
-
-                var chanelDetails = resultat.DocumentNode.SelectNodes("//div[@class='chanel-detail']");
-                if(chanelDetails !=null && chanelDetails.Count > 0)
+                var response = http.GetAsync(url).Result;
+                if (url.Equals(response.RequestMessage.RequestUri.ToString(), StringComparison.OrdinalIgnoreCase))
                 {
-                    var chanelDetail = chanelDetails.LastOrDefault();
-                    if (chanelDetail != null)
-                    {
-                        var items = chanelDetail.SelectNodes("div[@class='row']");
-                        if(items!=null)
-                        {
-                            foreach(var item in items)
-                            {
-                                string startOn = "", programName = "";
-                                // get start time
-                                var timeTV = item.SelectNodes("div[@class='time-tv']");
-                                if (timeTV != null && timeTV.Count > 0)
-                                {
-                                    startOn = timeTV.FirstOrDefault().InnerText.Trim();
-                                }
-                                var tDetail = item.SelectNodes("div[@class='t-detail']");
+                    var content = response.Content.ReadAsByteArrayAsync().Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(content, 0, content.Length - 1);
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
 
-                                // get program name
-                                if (tDetail != null && tDetail.Count > 0)
+                    var chanelDetails = resultat.DocumentNode.SelectNodes("//div[@class='chanel-detail']");
+                    if (chanelDetails != null && chanelDetails.Count > 0)
+                    {
+                        var chanelDetail = chanelDetails.LastOrDefault();
+                        if (chanelDetail != null)
+                        {
+                            var items = chanelDetail.SelectNodes("div[@class='row']");
+                            if (items != null)
+                            {
+                                foreach (var item in items)
                                 {
-                                    programName = tDetail.FirstOrDefault().InnerText.Trim();
+                                    string startOn = "", programName = "";
+                                    // get start time
+                                    var timeTV = item.SelectNodes("div[@class='time-tv']");
+                                    if (timeTV != null && timeTV.Count > 0)
+                                    {
+                                        startOn = timeTV.FirstOrDefault().InnerText.Trim();
+                                    }
+                                    var tDetail = item.SelectNodes("div[@class='t-detail']");
+
+                                    // get program name
+                                    if (tDetail != null && tDetail.Count > 0)
+                                    {
+                                        programName = tDetail.FirstOrDefault().InnerText.Trim();
+                                    }
+                                    var guideItem = new GuideItem() { ChannelKey = channel.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
                                 }
-                                var guideItem = new GuideItem() { ChannelKey = channel.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
-                                guideItems.Add(guideItem);
                             }
                         }
                     }
@@ -63,7 +67,7 @@ namespace hthservices.Utils
             {
 
             }
-
+        
             return guideItems;
         }
         static public List<GuideItem> GetVTC14Url(ChannelToServer channelToServer, DateTime date)
