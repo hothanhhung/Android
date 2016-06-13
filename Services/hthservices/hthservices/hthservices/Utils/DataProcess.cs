@@ -48,6 +48,7 @@ namespace hthservices.Utils
         {
             List<GuideItem> guideItems = new List<GuideItem>();
             guideItems = SQLiteProcess.GetSchedulesOfChannel(channelKey, date);
+            DateTime VN_Now;
             if (guideItems == null || guideItems.Count == 0)
             {
                 var channelToServer = DataStatic.GetChannelToServer(channelKey);
@@ -60,7 +61,7 @@ namespace hthservices.Utils
                         guideItems = HtmlHelper.GetDataFromVOVUrl(channelToServer, date);
                         break;
                     case DataStatic.FROM_VTC14_PAGE:
-                        var VN_Now = DateTime.UtcNow.AddHours(7);
+                        VN_Now = DateTime.UtcNow.AddHours(7);
                         if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
                         {
                             guideItems = HtmlHelper.GetVTC14Url(channelToServer, date);
@@ -100,8 +101,8 @@ namespace hthservices.Utils
                         guideItems = HtmlHelper.GetDataFromBPTVUrl(channelToServer, date);
                         break;
                     case DataStatic.FROM_HITV_PAGE:
-                        var VN_Now1 = DateTime.UtcNow.AddHours(7);
-                        if (VN_Now1.Day == date.Day && VN_Now1.Month == date.Month && VN_Now1.Year == date.Year)
+                        VN_Now = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
                         {
                             guideItems = HtmlHelper.GetDataFromHITVUrl(channelToServer, date);
                         }
@@ -123,6 +124,26 @@ namespace hthservices.Utils
                         break;
                     case DataStatic.FROM_LETSVIET_PAGE:
                         guideItems = HtmlHelper.GetDataFromLetsVietUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_KGTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromKGTVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_BRT_PAGE:
+                        VN_Now = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
+                        {
+                            guideItems = HtmlHelper.GetDataFromBRTUrl(channelToServer, date);
+                        }
+                        break;
+                    case DataStatic.FROM_BTV_PAGE:
+                        VN_Now = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
+                        {
+                            guideItems = HtmlHelper.GetDataFromBTVUrl(channelToServer, date);
+                        }
+                        break;
+                    case DataStatic.FROM_LA34_PAGE:
+                        guideItems = HtmlHelper.GetDataFromLA34Url(channelToServer, date);
                         break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);

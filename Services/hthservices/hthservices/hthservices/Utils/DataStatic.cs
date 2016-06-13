@@ -55,6 +55,10 @@ namespace hthservices.Utils
         public const string FROM_QUANGBINH_PAGE = "http://qbtv.vn/jsHienthiLich.aspx?year={0}"; //year=01/06/2016
         public const string FROM_TV24_PAGE = "http://tv24.vn/schedule/filter?id={0}&date={1}"; //id=2&date=01/06/2016
         public const string FROM_LETSVIET_PAGE = "http://letsviet.vn/Control/ListHotProgram.aspx?date={0}&channel=vi";//date=2016-06-03&channel=vi
+        public const string FROM_KGTV_PAGE = "http://kgtv.vn/category/lich-phat-song/?kenh={0}&ngay={1}";//kenh=TV&ngay=2016-06-14
+        public const string FROM_BRT_PAGE = "http://brt.vn/";//
+        public const string FROM_BTV_PAGE = "http://www.btv.org.vn/live/{0}.html";//http://www.btv.org.vn/live/btv1.html
+        public const string FROM_LA34_PAGE = "http://la34.com.vn/lich-phat-song/?schtype=th&schedule={0}";//schedule=15-06-2016
         #endregion
 
         #region Channel to server
@@ -160,6 +164,12 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_TV24_PAGE, ChannelKey="SCTV11", Value="61"}, 
              new ChannelToServer(){Server=FROM_TV24_PAGE, ChannelKey="SCTV12", Value="62"}, 
              new ChannelToServer(){Server=FROM_LETSVIET_PAGE, ChannelKey="VTC9-LETSVIET", Value=""}, 
+             new ChannelToServer(){Server=FROM_KGTV_PAGE, ChannelKey="TruyenhinhKienGiang", Value="TV"}, //TV2
+             new ChannelToServer(){Server=FROM_BRT_PAGE, ChannelKey="TruyenhinhBaRia-VungTauBRT", Value=""},
+             new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV1", Value="btv1"},
+             new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV2", Value="btv2"},
+             new ChannelToServer(){Server=FROM_LA34_PAGE, ChannelKey="TruyenHinhLongAnLA34", Value=""}
+             
         };
         #endregion
 
