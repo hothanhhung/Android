@@ -145,6 +145,22 @@ namespace hthservices.Utils
                     case DataStatic.FROM_LA34_PAGE:
                         guideItems = HtmlHelper.GetDataFromLA34Url(channelToServer, date);
                         break;
+                    case DataStatic.FROM_CANTHOTV_PAGE:
+                        VN_Now = DateTime.UtcNow.AddHours(7);
+                        int offset = (int)VN_Now.DayOfWeek - (int)date.DayOfWeek;
+                        if (offset > 6 || offset < -6) break;
+                        guideItems = HtmlHelper.GetDataFromCanThoTVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_TRT_PAGE:
+                        VN_Now = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
+                        {
+                            guideItems = HtmlHelper.GetDataFromTRTUrl(channelToServer, date);
+                        }
+                        break;
+                    case DataStatic.FROM_PHUTHOTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromPhuThoTVUrl(channelToServer, date);
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)

@@ -59,6 +59,9 @@ namespace hthservices.Utils
         public const string FROM_BRT_PAGE = "http://brt.vn/";//
         public const string FROM_BTV_PAGE = "http://www.btv.org.vn/live/{0}.html";//http://www.btv.org.vn/live/btv1.html
         public const string FROM_LA34_PAGE = "http://la34.com.vn/lich-phat-song/?schtype=th&schedule={0}";//schedule=15-06-2016
+        public const string FROM_CANTHOTV_PAGE = "http://canthotv.vn/";
+        public const string FROM_TRT_PAGE = "http://www.trt.com.vn/lichPhatSong/tabid/59/Default.aspx";// default is current date
+        public const string FROM_PHUTHOTV_PAGE = "http://phuthotv.vn/Modules/Video/Components/VideoHandler.ashx";//
         #endregion
 
         #region Channel to server
@@ -168,7 +171,10 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_BRT_PAGE, ChannelKey="TruyenhinhBaRia-VungTauBRT", Value=""},
              new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV1", Value="btv1"},
              new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV2", Value="btv2"},
-             new ChannelToServer(){Server=FROM_LA34_PAGE, ChannelKey="TruyenHinhLongAnLA34", Value=""}
+             new ChannelToServer(){Server=FROM_LA34_PAGE, ChannelKey="TruyenHinhLongAnLA34", Value=""},
+             new ChannelToServer(){Server=FROM_CANTHOTV_PAGE, ChannelKey="TruyenhinhCanThoTHTPCT", Value=""},
+             new ChannelToServer(){Server=FROM_TRT_PAGE, ChannelKey="TruyenHinhThuaThienHueTRT", Value=""},
+             new ChannelToServer(){Server=FROM_PHUTHOTV_PAGE, ChannelKey="TruyenhinhPhuThoPTV", Value=""}
              
         };
         #endregion
