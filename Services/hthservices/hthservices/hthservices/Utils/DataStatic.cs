@@ -62,19 +62,23 @@ namespace hthservices.Utils
         public const string FROM_CANTHOTV_PAGE = "http://canthotv.vn/";
         public const string FROM_TRT_PAGE = "http://www.trt.com.vn/lichPhatSong/tabid/59/Default.aspx";// default is current date
         public const string FROM_PHUTHOTV_PAGE = "http://phuthotv.vn/Modules/Video/Components/VideoHandler.ashx";//
+        public const string FROM_THDT_PAGE = "http://thdt.vn/lich-phat-song/index.html";// default is current date
+        public const string FROM_LANGSONTV_PAGE = "http://www.langsontv.vn/";// default is current date
+        public const string FROM_VTC16_PAGE = "http://vtc16.vn/ajaxs/tvshow/loadchannel.aspx?channelid={0}&date={1}";//channelid=3&date=16/06/2016
+
+
         #endregion
 
         #region Channel to server
         public static readonly List<ChannelToServer> ChannelsToServers = new List<ChannelToServer>(){
              new ChannelToServer(){Server=FROM_VOV_PAGE, ChannelKey="VOVTV", Value=""},
-             new ChannelToServer(){Server=FROM_VTC14_PAGE, ChannelKey="VTC14", Value=""},
-             new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="VTCHD3", Value="42"},
-             new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="VTC3", Value="42"},
+             //new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="VTCHD3", Value="42"},
+             //new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="VTC3", Value="42"},
              new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="DisneyChannel", Value="378"},
-             new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTCHD1", Value="1"},
-             new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC1", Value="1"},
-             new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC10-NetViet", Value="4"},
-             new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC16-3NTV", Value="5"},
+             //new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTCHD1", Value="1"},
+             //new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC1", Value="1"},
+             //new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC10-NetViet", Value="4"},
+             //new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC16-3NTV", Value="5"},
              new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="TruyenhinhThongtanxaVietNamTTXVN", Value="75"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+1", Value="187"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+NS", Value="188"},
@@ -109,7 +113,6 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="NHKWORLD", Value="126"},
              //new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="HTVThethao", Value="htv-the-thao-11"}, ///////phut 91
              //new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTVHDThethao", Value="sctv-the-thao-18"},
-             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="VTC7-TodayTV", Value="today-tv-36"},
              new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="CINEMAX", Value="cenimax-125"},
              new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="CinemaWorldHD", Value="cenimax-world-hd-126"},
             // new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="HTVCPHIM", Value="htv-phim-hd-37"}, //htvc phim
@@ -166,7 +169,6 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_TV24_PAGE, ChannelKey="SCTVHDThethao", Value="109"}, //phut 91
              new ChannelToServer(){Server=FROM_TV24_PAGE, ChannelKey="SCTV11", Value="61"}, 
              new ChannelToServer(){Server=FROM_TV24_PAGE, ChannelKey="SCTV12", Value="62"}, 
-             new ChannelToServer(){Server=FROM_LETSVIET_PAGE, ChannelKey="VTC9-LETSVIET", Value=""}, 
              new ChannelToServer(){Server=FROM_KGTV_PAGE, ChannelKey="TruyenhinhKienGiang", Value="TV"}, //TV2
              new ChannelToServer(){Server=FROM_BRT_PAGE, ChannelKey="TruyenhinhBaRia-VungTauBRT", Value=""},
              new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV1", Value="btv1"},
@@ -174,7 +176,23 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_LA34_PAGE, ChannelKey="TruyenHinhLongAnLA34", Value=""},
              new ChannelToServer(){Server=FROM_CANTHOTV_PAGE, ChannelKey="TruyenhinhCanThoTHTPCT", Value=""},
              new ChannelToServer(){Server=FROM_TRT_PAGE, ChannelKey="TruyenHinhThuaThienHueTRT", Value=""},
-             new ChannelToServer(){Server=FROM_PHUTHOTV_PAGE, ChannelKey="TruyenhinhPhuThoPTV", Value=""}
+             new ChannelToServer(){Server=FROM_PHUTHOTV_PAGE, ChannelKey="TruyenhinhPhuThoPTV", Value=""},
+             new ChannelToServer(){Server=FROM_THDT_PAGE, ChannelKey="TruyenhinhDongThapTHDT", Value=""},
+             new ChannelToServer(){Server=FROM_LANGSONTV_PAGE, ChannelKey="TruyenhinhLangSonLSTV", Value=""},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC1", Value="1"},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTCHD1", Value="1"},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC2", Value="2"},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTCHD2", Value="2"},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC3", Value="3"},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTCHD3", Value="3"},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC6", Value="4"},
+             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="VTC7-TodayTV", Value="today-tv-36"},
+             new ChannelToServer(){Server=FROM_LETSVIET_PAGE, ChannelKey="VTC9-LETSVIET", Value=""}, 
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC10-NetViet", Value="7"},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC12", Value="6"},
+             //new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC14", Value="8"},
+             new ChannelToServer(){Server=FROM_VTC14_PAGE, ChannelKey="VTC14", Value=""},
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC16-3NTV", Value="9"}
              
         };
         #endregion
