@@ -171,6 +171,19 @@ namespace hthservices.Utils
                     case DataStatic.FROM_VTC16_PAGE:
                         guideItems = HtmlHelper.GetDataFromVTC16Url(channelToServer, date);
                         break;
+                    case DataStatic.FROM_TRUELIFE_PAGE:
+                        guideItems = HtmlHelper.GetDataFromTrueLifeTVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_ATV_PAGE:
+                        VN_Now = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
+                        {
+                            guideItems = HtmlHelper.GetDataFromATVUrl(channelToServer, date);
+                        }
+                        break;
+                    case DataStatic.FROM_NAMDINHTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromNamDinhTVUrl(channelToServer, date);
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)

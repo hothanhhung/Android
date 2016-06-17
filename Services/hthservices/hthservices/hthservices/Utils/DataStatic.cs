@@ -65,6 +65,9 @@ namespace hthservices.Utils
         public const string FROM_THDT_PAGE = "http://thdt.vn/lich-phat-song/index.html";// default is current date
         public const string FROM_LANGSONTV_PAGE = "http://www.langsontv.vn/";// default is current date
         public const string FROM_VTC16_PAGE = "http://vtc16.vn/ajaxs/tvshow/loadchannel.aspx?channelid={0}&date={1}";//channelid=3&date=16/06/2016
+        public const string FROM_TRUELIFE_PAGE = "http://truelife.vn/offica/tvchannel/tvshow/action?_f=6&communityId={0}&d={1}&jsoncallback=stateChanged";// d=20160616
+        public const string FROM_ATV_PAGE = "http://atv.org.vn/lich-phat-song.aspx";// default is current date
+        public const string FROM_NAMDINHTV_PAGE = "http://namdinhtv.vn/ctv/ajax";// post op:"lichphatsong" data:"06-18|1"
 
 
         #endregion
@@ -192,7 +195,12 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC12", Value="6"},
              //new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC14", Value="8"},
              new ChannelToServer(){Server=FROM_VTC14_PAGE, ChannelKey="VTC14", Value=""},
-             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC16-3NTV", Value="9"}
+             new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC16-3NTV", Value="9"},
+             new ChannelToServer(){Server=FROM_TRUELIFE_PAGE, ChannelKey="TruyenhinhLamDongLTV", Value="10804"},
+             new ChannelToServer(){Server=FROM_TRUELIFE_PAGE, ChannelKey="TruyenhinhNgheAnNTV", Value="9463481"},
+             new ChannelToServer(){Server=FROM_TRUELIFE_PAGE, ChannelKey="TruyenhinhNinhBinhNTV", Value="3566981"},
+             new ChannelToServer(){Server=FROM_ATV_PAGE, ChannelKey="TruyenHinhAnGiangATV", Value=""},
+             new ChannelToServer(){Server=FROM_NAMDINHTV_PAGE, ChannelKey="TruyenhinhNamDinhNTV", Value=""}
              
         };
         #endregion
