@@ -184,6 +184,19 @@ namespace hthservices.Utils
                     case DataStatic.FROM_NAMDINHTV_PAGE:
                         guideItems = HtmlHelper.GetDataFromNamDinhTVUrl(channelToServer, date);
                         break;
+                    case DataStatic.FROM_HAUGIANGTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromHauGiangTVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_HAIPHONG_PAGE:
+                        VN_Now = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
+                        {
+                            guideItems = HtmlHelper.GetDataFromHaiPhongTVUrl(channelToServer, date);
+                        }
+                        break;
+                    case DataStatic.FROM_SONLA_PAGE:
+                        guideItems = HtmlHelper.GetDataFromSonLaTVUrl(channelToServer, date);
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)

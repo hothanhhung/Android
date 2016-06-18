@@ -68,7 +68,9 @@ namespace hthservices.Utils
         public const string FROM_TRUELIFE_PAGE = "http://truelife.vn/offica/tvchannel/tvshow/action?_f=6&communityId={0}&d={1}&jsoncallback=stateChanged";// d=20160616
         public const string FROM_ATV_PAGE = "http://atv.org.vn/lich-phat-song.aspx";// default is current date
         public const string FROM_NAMDINHTV_PAGE = "http://namdinhtv.vn/ctv/ajax";// post op:"lichphatsong" data:"06-18|1"
-
+        public const string FROM_HAUGIANGTV_PAGE = "http://haugiangtivi.vn/?page_id=17";// post fDay:"16" fMonth:"6" fYear:"2016"  fKenh:"truyen-hinh"  submit:"Xem"
+        public const string FROM_HAIPHONG_PAGE = "http://thp.org.vn/";// get current date
+        public const string FROM_SONLA_PAGE = "http://sonlatv.vn/lich-phat-song?loai=truyenhinh&chonngay%5Bvalue%5D%5Bdate%5D={0}";// 18/06/2016
 
         #endregion
 
@@ -200,7 +202,10 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_TRUELIFE_PAGE, ChannelKey="TruyenhinhNgheAnNTV", Value="9463481"},
              new ChannelToServer(){Server=FROM_TRUELIFE_PAGE, ChannelKey="TruyenhinhNinhBinhNTV", Value="3566981"},
              new ChannelToServer(){Server=FROM_ATV_PAGE, ChannelKey="TruyenHinhAnGiangATV", Value=""},
-             new ChannelToServer(){Server=FROM_NAMDINHTV_PAGE, ChannelKey="TruyenhinhNamDinhNTV", Value=""}
+             new ChannelToServer(){Server=FROM_NAMDINHTV_PAGE, ChannelKey="TruyenhinhNamDinhNTV", Value=""},
+             new ChannelToServer(){Server=FROM_HAUGIANGTV_PAGE, ChannelKey="TruyenHinhHauGiangHGTV", Value=""},
+             new ChannelToServer(){Server=FROM_HAIPHONG_PAGE, ChannelKey="TruyenhinhHaiPhongTHP", Value=""},
+             new ChannelToServer(){Server=FROM_SONLA_PAGE, ChannelKey="TruyenhinhSonLaSTV", Value=""}
              
         };
         #endregion
