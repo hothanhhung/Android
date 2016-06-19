@@ -2,6 +2,8 @@
 using System;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using hthservices.Models;
+using hthservices.Ads;
 
 namespace hthservices.Controllers
 {
@@ -58,6 +60,13 @@ namespace hthservices.Controllers
 
             var searchItems = hthservices.Utils.DataProcess.SearchDataFromVietBaoUrl(query, groupOrder, selectedDate);
             return Json(searchItems, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult GetAds(string country, string os)
+        {
+            var adItems = Ads.AdData.GetAds(country, os);
+            return Json(ResponseJson<AdItem>.GetResponseJson(adItems), JsonRequestBehavior.AllowGet);
         }
     }
 }

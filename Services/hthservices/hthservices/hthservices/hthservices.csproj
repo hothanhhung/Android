@@ -240,6 +240,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ads\AdData.cs" />
+    <Compile Include="Ads\AdItem.cs" />
+    <Compile Include="Ads\OwnerAds.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -251,6 +254,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ResponseJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sudoku\Generator.cs" />
     <Compile Include="Sudoku\HtmlHelper.cs" />
@@ -269,6 +273,7 @@
     <Compile Include="Utils\SQLiteProcess.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ads\AdFlexData.cs" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -388,7 +393,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
