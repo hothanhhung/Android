@@ -14,14 +14,19 @@ namespace hthservices.Sudoku
 
         static public SudokuItem GenSudoku(int le)
         {
-            for (int level = 1; level < 5; level++)
+            for (int level = 0; level < 3; level++)
             {
-                for (int i = 0; i < 1000; i++)
+                int max = 1000;
+                if (level == 0) max = 2000;
+                for (int i = 0; i < max; i++)
                 {
                     var gen = new TrueMagic.SudokuGenerator.Generator();
                     TrueMagic.SudokuGenerator.Sudoku s = null;
                     switch (level)
                     {
+                        case 0:
+                            s = gen.Generate(3, TrueMagic.SudokuGenerator.Level.VeryEasy);
+                            break;
                         case 1:
                             s = gen.Generate(3, TrueMagic.SudokuGenerator.Level.Easy);
                             break;

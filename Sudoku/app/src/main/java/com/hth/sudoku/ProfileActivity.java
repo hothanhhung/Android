@@ -57,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         List<SudokuItem> easy = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_EASY);
         List<SudokuItem> medium = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_MEDIUM);
         List<SudokuItem> hard = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_HARD);
+        List<SudokuItem> expert = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_EXPERT);
       //  List<SudokuItem> special = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_SPECIAL);
         List<SudokuItem> creation = dataBaseHelper.getUsedSudokus(Data.DIFFICULTY_CREATE);
 
@@ -65,12 +66,14 @@ public class ProfileActivity extends AppCompatActivity {
         listDataHeader.add("Easy (" + easy.size() +")");
         listDataHeader.add("Medium (" + medium.size() +")");
         listDataHeader.add("Hard (" + hard.size() +")");
+        listDataHeader.add("Expert (" + expert.size() +")");
         // listDataHeader.add("Special");
 
         listDataChild.put(listDataHeader.get(0), creation);
         listDataChild.put(listDataHeader.get(1), easy); // Header, Child data
         listDataChild.put(listDataHeader.get(2), medium);
         listDataChild.put(listDataHeader.get(3), hard);
+        listDataChild.put(listDataHeader.get(4), expert);
        // listDataChild.put(listDataHeader.get(3), special);
     }
 }

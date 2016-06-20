@@ -27,4 +27,9 @@
     <string name="dismiss">Dismiss</string>
     <string name="ad_unit_id">ca-app-pub-4576847792571626/5498866799</string>
     <string name="ad_unit_id_interstitial">ca-app-pub-4576847792571626/8452333192</string>
+    <string name="empty_string"></string>
+    <string name="example_string">example string</string>
+    <string name="get_more">Get More</string>
+    <string name="loading_string">Updating</string>
+
 </resources>

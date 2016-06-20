@@ -28,16 +28,20 @@ namespace hthservices.Ads
 
                     if (items != null)
                     {
-                        foreach (var item in items)
+                        for(var i = items.Count; i>0; i++)
                         {
-                            var adItem = new AdItem();
-                            adItem.Name = item.getName();
-                            adItem.Desc = item.getDesc();
-                            adItem.Type = item.GetFullType();
-                            adItem.Link = item.getLink();
-                            adItem.AppId = item.getAppId();
-                            adItem.UrlImage = item.getUrlImage();
-                            adItems.Add(adItem);
+                            var item = items[i-1];
+                            if (!item.getAppId().Contains("gameloft"))
+                            {
+                                var adItem = new AdItem();
+                                adItem.Name = item.getName();
+                                adItem.Desc = item.getDesc();
+                                adItem.Type = item.GetFullType();
+                                adItem.Link = item.getLink();
+                                adItem.AppId = item.getAppId();
+                                adItem.UrlImage = item.getUrlImage();
+                                adItems.Add(adItem);
+                            }
                         }
                     }
                 }

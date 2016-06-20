@@ -2,10 +2,12 @@ package com.hth.sudoku;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.hth.utils.DataBaseHelper;
+import com.hth.utils.UIUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         difficultyMenu = createDifficultyMenu();
     }
 
+    Dialog progressDialog;
     public void btClick(View view) {
         switch (view.getId()){
             case R.id.btNewGame:
@@ -42,6 +46,22 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btProfile:
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.btGetMore:
+                //progressDialog = ProgressDialog.show(MainActivity.this, "Loading", "Please wait for a moment...", true);;
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        progressDialog = ProgressDialog.show(MainActivity.this, "Loading", "Please wait for a moment...", true);
+                    }
+                });
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        UIUtils.showAlertGetMoreApps(MainActivity.this);
+                        if (progressDialog != null && progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+                });
                 break;
             case R.id.btAbout:
                 Intent i = new Intent(this, AboutActivity.class);

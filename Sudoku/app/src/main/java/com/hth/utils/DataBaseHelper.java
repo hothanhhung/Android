@@ -1,6 +1,8 @@
 package com.hth.utils;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,11 +25,14 @@ import java.util.List;
  * Created by Lenovo on 6/7/2016.
  */
 public class DataBaseHelper extends SQLiteOpenHelper {
+    private static final String APP_SHARED_PREFS = "com.hth.sudoku";
+    private static final String RECODE_VERSION_DB = "RECODE_VERSION_DB";
+
     private static String DB_PATH = "/data/data/com.hth.sudoku/databases/";
     private static String DB_NAME = "Sudoku.db3";
     private SQLiteDatabase myDataBase;
     private final Context myContext;
-
+    private static int currentVersion;
     /**
      * Constructor
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
@@ -37,15 +42,110 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, 1);
         this.myContext = context;
         DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
+        try {
+            currentVersion = myContext.getPackageManager().getPackageInfo(myContext.getPackageName(), 0).versionCode;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
+    private void setVersion(int newVersion) {
+        SharedPreferences appSharedPrefs = myContext.getSharedPreferences(APP_SHARED_PREFS, 0);
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+        prefsEditor.putInt(RECODE_VERSION_DB, newVersion);
+        prefsEditor.commit();
+    }
+
+    private int getVersion()
+    {
+        SharedPreferences appSharedPrefs = myContext.getSharedPreferences(APP_SHARED_PREFS, 0);
+        return appSharedPrefs.getInt(RECODE_VERSION_DB, 0);
+    }
+
+    private boolean updateDatabase(){
+
+        try {
+            String tempName = "NewSudoku.db3";
+
+            /*------------copy file db tempory------------------*/
+            //Open your local db as the input stream
+            InputStream myInput = myContext.getAssets().open(DB_NAME);
+            // Path to the just created empty db
+            String outFileName = DB_PATH + tempName;
+            //Open the empty db as the output stream
+            File dbfile = new File(outFileName);
+            if(!dbfile.exists())
+            {
+                dbfile.createNewFile();
+            }else{
+                dbfile.delete();
+                dbfile.createNewFile();
+            }
+
+            OutputStream myOutput = new FileOutputStream(outFileName);
+            //transfer bytes from the inputfile to the outputfile
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = myInput.read(buffer))>0){
+                myOutput.write(buffer, 0, length);
+            }
+
+            //Close the streams
+            myOutput.flush();
+            myOutput.close();
+            myInput.close();
+
+            /*--------------------get data from new-------------------*/
+            String myPath = DB_PATH + tempName;
+            SQLiteDatabase dbInAssert = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+            List<SudokuItem> listSudokuItem = new ArrayList<SudokuItem>();
+            Cursor c;
+
+            c = dbInAssert.rawQuery("SELECT OriginalMap, Difficulty FROM GAMES", null);
+            if (c == null) return false;
+
+            if (c.moveToFirst()) {
+                do {
+                    SudokuItem sudokuItem = new SudokuItem(c.getString(0), c.getInt(1));
+                    listSudokuItem.add(sudokuItem);
+                } while (c.moveToNext());
+            }
+            c.close();
+
+            dbInAssert.close();
+
+            /*--------------------update data to old-------------------*/
+            SQLiteDatabase db = this.getWritableDatabase();
+            String sqlSaveSudoku = "";
+            for (SudokuItem sudokuItem:listSudokuItem) {
+
+                sqlSaveSudoku = " INSERT INTO Games(OriginalMap, Difficulty) " +
+                                "    SELECT ?, ? " +
+                                " WHERE NOT EXISTS (SELECT * FROM Games WHERE OriginalMap= ?)";
+                Object[] parameters = new Object[]{
+                        sudokuItem.getOriginalMap(), sudokuItem.getDifficulty(), sudokuItem.getOriginalMap()
+                };
+                db.execSQL(sqlSaveSudoku, parameters);
+            }
+            db.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
     /**
      * Creates a empty database on the system and rewrites it with your own database.
      * */
     public void createDataBase() throws IOException {
         boolean dbExist = checkDataBase();
-        if(dbExist){
+        if(dbExist && currentVersion != getVersion())
+        {
             //do nothing - database already exist
+            Dialog dialog = UIUtils.showProgressDialog(null, myContext);
+            if(updateDatabase()){
+                setVersion(currentVersion);
+            }
+            dialog.dismiss();
         }else
         {
 
@@ -54,6 +154,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             this.getReadableDatabase();
             try {
                 copyDataBase();
+                setVersion(currentVersion);
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new Error("Error copying database");

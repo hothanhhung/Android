@@ -12,7 +12,7 @@ namespace TrueMagic.SudokuGenerator
         private const int RandomCells = 15;
         private static readonly IDictionary<Level, Tuple<int, int>> LevelToClearCells = new Dictionary<Level, Tuple<int, int>>() 
         { 
-            { Level.VeryEasy, new Tuple<int, int>(20, 30) },
+            { Level.VeryEasy, new Tuple<int, int>(15, 25) },
             { Level.Easy, new Tuple<int, int>(30, 45) },
             { Level.Medium, new Tuple<int, int>(46, 54) },
             { Level.Hard, new Tuple<int, int>(55, 65) },
