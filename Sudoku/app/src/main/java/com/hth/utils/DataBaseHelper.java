@@ -128,7 +128,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 db.execSQL(sqlSaveSudoku, parameters);
             }
             db.close();
+            dbfile.delete();
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -140,12 +142,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         boolean dbExist = checkDataBase();
         if(dbExist && currentVersion != getVersion())
         {
+            //Log.d("createDataBase", "vao  dbExist "+currentVersion);
             //do nothing - database already exist
             Dialog dialog = UIUtils.showProgressDialog(null, myContext);
             if(updateDatabase()){
                 setVersion(currentVersion);
             }
             dialog.dismiss();
+            //Log.d("createDataBase", "save "+currentVersion);
         }else
         {
 

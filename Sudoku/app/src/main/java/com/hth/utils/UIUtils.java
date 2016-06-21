@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -196,18 +197,43 @@ public class UIUtils {
 		return linearLayout;
 	}
 
-     public static AlertDialog showAlertGetMoreApps(final Activity activity)
-	{
-    	AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-		alert.setView(BuildGetMoreApps(activity));
-		alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.dismiss();
-			}
-		});
-		//alert.setIcon(android.R.drawable.box_new)
-		return alert.show();
+	static LinearLayout linearLayout;
+	static AlertDialog alertDialog;
+	static AlertDialog.Builder alert;
+     public static void showAlertGetMoreApps(final Activity activity) {
+		 alert = new AlertDialog.Builder(activity);
+		 TextView textView = new TextView(activity);
+		 textView.setText("Loading...");
+		 textView.setPadding(10, 10, 10, 10);
+		 textView.setTextSize(15);
+		 textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+		 alert.setView(textView);
+		 alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+			 @Override
+			 public void onClick(DialogInterface dialog, int id) {
+				 dialog.dismiss();
+				 alertDialog = null;
+			 }
+		 });
+		 //alert.setIcon(android.R.drawable.box_new)
+		 alertDialog = alert.show();
 
-	}
+		 (new Thread(new Runnable() {
+			 @Override
+			 public void run() {
+				 linearLayout = BuildGetMoreApps(activity);
+				 activity.runOnUiThread(new Runnable() {
+					 @Override
+					 public void run() {
+						 if(alertDialog!=null && alertDialog.isShowing()) {
+							 alert.setView(linearLayout);
+							 alertDialog.dismiss();
+							 alertDialog = alert.show();
+						 }
+					 }
+				 });
+			 }
+		 }
+		 )).start();
+	 }
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="0dp"
     android:layout_margin="10dp"
+    android:isScrollContainer="true"
     android:background="@drawable/custom_rectangle">
 
     <LinearLayout
@@ -11,15 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="0.9"
-        android:isScrollContainer="true"
-        android:padding="30dp"
+        android:padding="20dp"
+        android:layout_gravity="center"
         android:gravity="center">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="1"
-            android:padding="30dp"
+            android:padding="20dp"
             android:gravity="center">
 
             <TextView
@@ -111,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
+                android:layout_margin="5dp"
                 android:textColor="#000fff"
                 android:textSize="20dp"
                 android:textStyle="bold"
