@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="0dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/custom_rectangle">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:padding="20dp"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:textColor="#1b2397"
+            android:textSize="20dp"
+            android:textStyle="bold"
+
+            android:text="congratulations"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp">
+            <TableRow>
+                <TextView android:layout_height="wrap_content" android:textSize="15dp" android:text="Level:"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp" />
+                <TextView android:layout_height="wrap_content" android:textSize="15dp" android:text="Easy"
+                    android:textStyle="bold" android:id="@+id/tvLevel"
+                    android:layout_marginBottom="5dp" />
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_height="wrap_content" android:textSize="15dp" android:text="Total Time:"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp" />
+                <TextView android:layout_height="wrap_content" android:textSize="15dp"  android:text="00:00:00"
+                    android:textStyle="bold" android:id="@+id/tvTime"
+                    android:layout_marginBottom="5dp" />
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_height="wrap_content" android:textSize="15dp" android:text="Changes:"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp" />
+                <TextView android:layout_height="wrap_content" android:textSize="15dp" android:text="100"
+                    android:textStyle="bold" android:id="@+id/tvMoves"
+                    android:layout_marginBottom="5dp" />
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_height="wrap_content" android:textSize="15dp" android:text="Start At:"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp" />
+                <TextView android:layout_height="wrap_content" android:textSize="15dp" android:text="12:00:00 - Jun 06 2016"
+                    android:textStyle="bold" android:id="@+id/tvStartOn"
+                    android:layout_marginBottom="5dp" />
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_height="wrap_content" android:textSize="15dp"  android:text="End At:"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp" />
+                <TextView android:layout_height="wrap_content" android:textSize="15dp" android:text="13:00:00 - Jun 06 2016"
+                    android:textStyle="bold" android:id="@+id/tvEndOn"
+                    android:layout_marginBottom="5dp" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_height="wrap_content" android:textSize="15dp" android:text="Comment:"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp" />
+            </TableRow>
+        </TableLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText android:layout_height="50dp" android:layout_width="0dp" android:layout_weight="1" android:textSize="15dp" android:text="abc"
+                android:editable="true"
+                android:fadeScrollbars="true" android:id="@+id/etComment" />
+            <Button
+                android:layout_height="30dp" android:layout_width="40dp" android:textSize="10dp"
+                android:text="Save" android:id="@+id/btWingameSaveComment"
+                android:background="@drawable/custom_rectangle" />
+        </LinearLayout>
+
+        <com.hth.Lines.PuzzleReview
+            android:id="@+id/puzzleViewProfile"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btWingamePlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/menu_item"
+                android:text="@string/play"/>
+            <Button
+                android:id="@+id/btWingameProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:background="@drawable/menu_item"
+                android:text="@string/profile"/>
+            <Button
+                android:id="@+id/btWingameDimiss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/menu_item"
+                android:text="@string/dismiss"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</AbsoluteLayout>
