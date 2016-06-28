@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public void btClick(View view) {
         switch (view.getId()){
             case R.id.btNewGame:
-                startGame(Data.DIFFICULTY_CONTINUES);
+                startGame(Data.DIFFICULTY_NEWGAME);
                 break;
             case R.id.btContinue:
                 startGame(Data.DIFFICULTY_CONTINUES);

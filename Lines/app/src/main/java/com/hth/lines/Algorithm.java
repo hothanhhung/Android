@@ -41,9 +41,9 @@ public class Algorithm {
 				xj = j / 9;
 				yj = j % 9;
 				if (((xi == xj) && (Math.abs(yi - yj) == 1)
-						&& (b[xi][yi] == 0 || b[xi][yi] == 2) && (b[xj][yj] == 0 || b[xj][yj] == 2))
+						&& (b[xi][yi] >= 0) && (b[xj][yj] >= 0))
 						|| ((yi == yj) && (Math.abs(xi - xj) == 1)
-								&& (b[xi][yi] == 0 || b[xi][yi] == 2) && (b[xj][yj] == 0 || b[xj][yj] == 2))) {
+								&& (b[xi][yi] >= 0) && (b[xj][yj] >= 0))) {
 					a[i][j] = 1;
 				} else
 					a[i][j] = 0;
