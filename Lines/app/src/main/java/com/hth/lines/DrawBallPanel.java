@@ -40,7 +40,8 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 	private final int XNUM = 9, YNUM = 9;
 	private final int [] MENU_BUTTON = new int[] {10, 10, 70, 70};
 	private final int [] SPEAKER_BUTTON = new int[] {80, 10, 140, 70};
-	private final int [] UNDO_BUTTON = new int[] {-70, 10, -10, 70};
+	private final int [] UNDO_BUTTON = new int[] {-140, 10, -80, 70};
+	private final int [] REDO_BUTTON = new int[] {-70, 10, -10, 70};
 	private int dxFirst = -1, dyFirst = -1, dau_x = -1, dau_y = -1;
 	private BallThread thread = null;
 	private Paint p = new Paint();
@@ -58,7 +59,10 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 	Dialog ingameMenu;
 
 	private boolean drawUndoButton = false;
+	private boolean drawRedoButton = false;
 	private ArrayList<TrackChange> trackChanges = new ArrayList<TrackChange>();
+	private int scoreBackup = 0;
+
 	public DrawBallPanel(Context context) {
 
 		super(context);
@@ -108,11 +112,14 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 	private void startGame(int kind)
 	{
 		drawUndoButton = false;
+		drawRedoButton = false;
+		undoIndex = 0;
+		scoreBackup = 0;
+		matrixBackup = new int[XNUM][YNUM];
 		switch (kind){
 			case Data.DIFFICULTY_CONTINUES:
 				matrix = savedValues.getRecordPuzzle();
 				if(matrix!=null) {
-					matrixBackup = new int[XNUM][YNUM];
 					for (int i = 0; i < XNUM; i++) {
 						for (int j = 0; j < YNUM; j++) {
 							matrixBackup[i][j] = matrix[i][j];
@@ -133,6 +140,7 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 					isGameover = false;
 					TIME = savedValues.getRecordTime();
 					MARK = savedValues.getRecordScore();
+					scoreBackup = MARK;
 
 					trackChanges.clear();
 					TrackChange[] trchs = savedValues.getRecordTrackChange();
@@ -143,6 +151,7 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 					}
 					if(trackChanges.size() > 0) {
 						drawUndoButton = true;
+						undoIndex = trackChanges.size()-1;
 					}
 					break;
 				}
@@ -159,9 +168,11 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 				isGameover = false;
 				TIME = 0;
 				MARK = 0;
+
 				this.generateSmallBall();
 				this.ShowLargeBall();
 				this.generateSmallBall();
+				saveMatrixToBackup();
 		}
 
 		this.timeStart();
@@ -203,11 +214,23 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 		d.setBounds(getPosLeftOfButton(SPEAKER_BUTTON), getPosTopOfButton(SPEAKER_BUTTON), getPosRightOfButton(SPEAKER_BUTTON), getPosBottomOfButton(SPEAKER_BUTTON));
 		d.draw(canvas);
 
+		d = getResources().getDrawable(R.drawable.undo);
 		if(drawUndoButton) {
-			d = getResources().getDrawable(R.drawable.undo);
-			d.setBounds(getPosLeftOfButton(UNDO_BUTTON), getPosTopOfButton(UNDO_BUTTON), getPosRightOfButton(UNDO_BUTTON), getPosBottomOfButton(UNDO_BUTTON));
-			d.draw(canvas);
+			d.setAlpha(255);
+		} else {
+			d.setAlpha(100);
 		}
+		d.setBounds(getPosLeftOfButton(UNDO_BUTTON), getPosTopOfButton(UNDO_BUTTON), getPosRightOfButton(UNDO_BUTTON), getPosBottomOfButton(UNDO_BUTTON));
+		d.draw(canvas);
+
+		d = getResources().getDrawable(R.drawable.redo);
+		if(drawRedoButton) {
+			d.setAlpha(255);
+		} else {
+			d.setAlpha(100);
+		}
+		d.setBounds(getPosLeftOfButton(REDO_BUTTON), getPosTopOfButton(REDO_BUTTON), getPosRightOfButton(REDO_BUTTON), getPosBottomOfButton(REDO_BUTTON));
+		d.draw(canvas);
 	}
 
 	private int getPosLeftOfButton(int [] arrayPosButton)
@@ -289,8 +312,10 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 				backgroundMusic.pause();
 			}
 
-		}else if(touchInButton(UNDO_BUTTON, (int)event.getX(), (int)event.getY())){
+		}else if(drawUndoButton && touchInButton(UNDO_BUTTON, (int)event.getX(), (int)event.getY())){
 			undoAction();
+		}else if(drawRedoButton &&touchInButton(REDO_BUTTON, (int)event.getX(), (int)event.getY())){
+			redoAction();
 		}else {
 			if(isGameover){
 				return false;
@@ -491,6 +516,7 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 					MARK+=score1.KetQua();
 					for (Point p : score1.arrayList) {
 						ball[p.x][p.y].setHideBall(true);
+						matrix[p.x][p.y] = 0;
 					}
 				} else{
 					generateSmallBall();A=0;B=0;}
@@ -583,13 +609,20 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 
 			}*/
 		}
+		printMatrix(matrix);
+
+	}
+
+	private void printMatrix(int [][] array)
+	{
+		System.out.println("---------------------");
 		for (int i = 0; i < XNUM; i++) {
 			for (int j = 0; j < YNUM; j++) {
-				System.out.print(matrix[j][i] + "  ");
+				System.out.printf("%5d", array[j][i]);
 			}
 			System.out.println();
 		}
-		for (int i = 0; i < XNUM; i++) {
+		/*for (int i = 0; i < XNUM; i++) {
 			for (int j = 0; j < YNUM; j++) {
 				if (ball[j][i] != null && ball[j][i].isJumpBall())
 					System.out.print(" X ");
@@ -597,10 +630,8 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 					System.out.print(" 0 ");
 			}
 			System.out.println();
-		}
-
+		}*/
 	}
-
 	private void ShowLargeBall() {
 		synchronized (ball) {
 			for (int i = 0; i < XNUM; i++) {
@@ -613,6 +644,7 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 							MARK+=score1.KetQua();
 							System.out.println("XU LY TRONG LARGBALL");
 							for (Point p : score1.arrayList) {
+								matrix[i][j] = 0;
 								ball[p.x][p.y].setHideBall(true);
 							}
 						}
@@ -800,32 +832,42 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 
 	private void saveRecord()
 	{
+		printMatrix(matrixBackup);
+		printMatrix(matrix);
 		savedValues.setRecordTime(TIME);
 		savedValues.setRecordScore(MARK);
 		savedValues.setRecordPuzzle(matrix);
-		TrackChange trackChange = new TrackChange(MARK, matrixBackup, matrix);
-		for(int i = 0; i< XNUM; i++)
-			for(int j =0; j< YNUM; j++)
-				matrixBackup[i][j] = matrix[i][j];
+		TrackChange trackChange = new TrackChange(scoreBackup, MARK, matrixBackup, matrix);
+		saveMatrixToBackup();
 		if(trackChanges == null){
 			trackChanges= new ArrayList<TrackChange>();
 		}
+		for(int i = trackChanges.size(); i > undoIndex; i--)
+		{
+			trackChanges.remove(i - 1);
+		}
 		trackChanges.add(trackChange);
 		savedValues.setRecordTrackchange(trackChanges);
-		if(trackChanges.size() > 0) drawUndoButton = true;
+		if(trackChanges.size() > 0){
+			drawUndoButton = true;
+			drawRedoButton = false;
+			undoIndex = trackChanges.size();
+		}
 	}
 
+	int undoIndex = 0;
 	private void undoAction()
 	{
-		if(trackChanges.size() > 0) {
-			TrackChange trackChange = trackChanges.remove(trackChanges.size() - 1);
-			MARK = trackChange.getScore();
+		if(trackChanges.size() > 0 && undoIndex > 0) {
+			undoIndex --;
+			TrackChange trackChange = trackChanges.get(undoIndex);
+			MARK = MARK - trackChange.getDiffScore();
 			ArrayList<Pair<Integer, Integer>> pairs = trackChange.getChanges();
 			for(Pair<Integer, Integer> pair : pairs)
 			{
 				int i = pair.first/YNUM;
 				int j = pair.first%YNUM;
-				matrix[i][j] = pair.second;
+				matrix[i][j] = matrix[i][j] - pair.second;
 				if(matrix[i][j]!=0) {
 					ball[i][j] = new Ball(i, j, Data.getColorFromIndex(matrix[i][j]), sizeRectangle, YOFFSET_BOARD);
 					if(matrix[i][j] < 0)
@@ -835,10 +877,56 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 						ball[i][j].setSizeBall(false);
 					}
 				}else {
+					if(ball[i][j]!=null) {
+						ball[i][j].hideBall();
+					}
 					ball[i][j] = null;
 				}
 			}
-			if (trackChanges.size() <= 0) drawUndoButton = false;
+			saveMatrixToBackup();
+			if (undoIndex <= 0) drawUndoButton = false;
+			if (undoIndex < trackChanges.size()) drawRedoButton = true;
 		}
+	}
+
+	private void redoAction()
+	{
+		if(trackChanges.size() > 0 && undoIndex < trackChanges.size()) {
+			undoIndex ++;
+			TrackChange trackChange = trackChanges.get(undoIndex - 1);
+			MARK = MARK + trackChange.getDiffScore();
+			ArrayList<Pair<Integer, Integer>> pairs = trackChange.getChanges();
+			for(Pair<Integer, Integer> pair : pairs)
+			{
+				int i = pair.first/YNUM;
+				int j = pair.first%YNUM;
+				matrix[i][j] = matrix[i][j] + pair.second;
+				if(matrix[i][j]!=0) {
+					ball[i][j] = new Ball(i, j, Data.getColorFromIndex(matrix[i][j]), sizeRectangle, YOFFSET_BOARD);
+					if(matrix[i][j] < 0)
+					{
+						ball[i][j].setSizeBall(true);
+					}else{
+						ball[i][j].setSizeBall(false);
+					}
+				}else {
+					if(ball[i][j]!=null) {
+						ball[i][j].hideBall();
+					}
+					ball[i][j] = null;
+				}
+			}
+			saveMatrixToBackup();
+			if (undoIndex >= trackChanges.size()) drawRedoButton = false;
+			if (undoIndex > 0) drawUndoButton = true;
+		}
+	}
+
+	private void saveMatrixToBackup()
+	{
+		for(int i = 0; i< XNUM; i++)
+			for(int j =0; j< YNUM; j++)
+				matrixBackup[i][j] = matrix[i][j];
+		scoreBackup = MARK;
 	}
 }
