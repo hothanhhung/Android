@@ -1,41 +1,31 @@
 package com.hth.lines;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
-import com.hth.utils.MethodsHelper;
-import java.util.ArrayList;
-
 public class GameActivity extends AppCompatActivity {
     private DrawBallPanel drawBallPanel;
+    private AdView mAdView = null;
+    private InterstitialAd interstitial = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         drawBallPanel = new DrawBallPanel(this);
-        setContentView(drawBallPanel);
+        setContentView(R.layout.activity_game);
+        LinearLayout pnlGame = (LinearLayout) findViewById(R.id.pnlGame);
+        pnlGame.addView(drawBallPanel);
+        mAdView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        timePlay= System.currentTimeMillis();
     }
 
     @Override
@@ -60,6 +50,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        showInterstitial();
         if(drawBallPanel!=null){
             drawBallPanel.onResume();
         }
@@ -72,5 +63,34 @@ public class GameActivity extends AppCompatActivity {
             drawBallPanel.onDestroy();
         }
         super.onDestroy();
+    }
+
+    private long timePlay = 0;
+    private void showInterstitial(){
+        if(timePlay!=0 && System.currentTimeMillis() - timePlay > 2 * 60000) {
+            if (interstitial == null) {
+                interstitial = new InterstitialAd(this);
+                interstitial.setAdUnitId(getResources().getString(R.string.ad_unit_id_interstitial));
+                interstitial.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        timePlay = System.currentTimeMillis();
+                        if (interstitial.isLoaded()) {
+                            interstitial.show();
+                        }
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                    }
+                });
+            }
+            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+            interstitial.loadAd(adRequest_interstitial);
+        }
     }
 }

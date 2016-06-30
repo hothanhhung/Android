@@ -13,6 +13,7 @@ import android.graphics.RadialGradient;
  */
 public class Ball {
 
+	final int LARG_RADIUS_CONST = 20, SMALL_RADIUS_CONST = 10;
 	int locX;
 	int locY, MAX, MIN, N = 0;
 	int Larg_radius = 20, small_radius = 10;
@@ -86,6 +87,15 @@ public class Ball {
 	}
 
 	public void setSizeBall(boolean sizeBall) {
+		if(!this.sizeBall && sizeBall){
+			Larg_radius = SMALL_RADIUS_CONST;
+		}else if(this.sizeBall && !sizeBall){
+			small_radius = LARG_RADIUS_CONST;
+		}else if(!this.sizeBall && !sizeBall){
+			small_radius = 0;
+		}else{
+			Larg_radius =LARG_RADIUS_CONST;
+		}
 		this.sizeBall = sizeBall;
 	}
 
@@ -146,4 +156,23 @@ public class Ball {
 		if (this.Larg_radius > 0 && this.hideBall)
 			this.Larg_radius -= 2;
 	}
+
+	public void showSizeBall() {
+		if (!this.hideBall){
+			if(this.sizeBall){
+				if (this.Larg_radius < LARG_RADIUS_CONST)
+					this.Larg_radius += 2;
+			}else {
+				if (this.small_radius > SMALL_RADIUS_CONST)
+				{
+					this.small_radius -= 2;
+				}
+				else if (this.small_radius < SMALL_RADIUS_CONST)
+				{
+					this.small_radius += 2;
+				}
+			}
+		}
+	}
+
 }

@@ -149,9 +149,10 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 							trackChanges.add(trch);
 						}
 					}
+					undoIndex=0;
 					if(trackChanges.size() > 0) {
 						drawUndoButton = true;
-						undoIndex = trackChanges.size()-1;
+						undoIndex = trackChanges.size();
 					}
 					break;
 				}
@@ -687,6 +688,21 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 
 	}
 
+	public void showSizeBall(){
+		synchronized (ball) {
+
+			for (int i = 0; i < XNUM; i++) {
+				for (int j = 0; j < YNUM; j++) {
+					if (ball[i][j] != null && !ball[i][j].isHideBall()) {
+						ball[i][j].showSizeBall();
+					}
+
+				}
+			}
+		}
+	}
+
+
 	Thread timestart;
 
 	private boolean fTimeStart = false;
@@ -739,7 +755,7 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 		if (isPlayMusic) {
 			backgroundMusic.start();
 		}
-		if(fTimeStop)
+		if(fTimeStop && !isGameover)
 		{
 			ingameMenu.show();
 		}
@@ -867,13 +883,17 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 			{
 				int i = pair.first/YNUM;
 				int j = pair.first%YNUM;
+				int oldSize = matrix[i][j];
 				matrix[i][j] = matrix[i][j] - pair.second;
 				if(matrix[i][j]!=0) {
 					ball[i][j] = new Ball(i, j, Data.getColorFromIndex(matrix[i][j]), sizeRectangle, YOFFSET_BOARD);
 					if(matrix[i][j] < 0)
 					{
+						if(oldSize >= 0)ball[i][j].setSizeBall(false);
 						ball[i][j].setSizeBall(true);
 					}else{
+						if(oldSize == 0) ball[i][j].setSizeBall(false);
+						else if (oldSize < 0) ball[i][j].setSizeBall(true);
 						ball[i][j].setSizeBall(false);
 					}
 				}else {
@@ -900,13 +920,17 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 			{
 				int i = pair.first/YNUM;
 				int j = pair.first%YNUM;
+				int oldSize = matrix[i][j];
 				matrix[i][j] = matrix[i][j] + pair.second;
 				if(matrix[i][j]!=0) {
 					ball[i][j] = new Ball(i, j, Data.getColorFromIndex(matrix[i][j]), sizeRectangle, YOFFSET_BOARD);
 					if(matrix[i][j] < 0)
 					{
+						if(oldSize >= 0)ball[i][j].setSizeBall(false);
 						ball[i][j].setSizeBall(true);
 					}else{
+						if(oldSize == 0) ball[i][j].setSizeBall(false);
+						else if (oldSize < 0) ball[i][j].setSizeBall(true);
 						ball[i][j].setSizeBall(false);
 					}
 				}else {

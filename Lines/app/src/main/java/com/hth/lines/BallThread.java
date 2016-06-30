@@ -26,6 +26,7 @@ public class BallThread extends Thread {
 				surfaceBall.jumpBall();
 				surfaceBall.runBall();
 				surfaceBall.hideBall();
+				surfaceBall.showSizeBall();
 				surfaceBall.drawBall(canvas);
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}

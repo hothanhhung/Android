@@ -16,4 +16,6 @@ public interface ISurfaceBall {
 	public void jumpBall();
 
 	public void hideBall();
+
+	public void showSizeBall();
 }

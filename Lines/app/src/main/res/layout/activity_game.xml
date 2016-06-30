@@ -4,102 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
-    android:paddingBottom="0dp"
+    android:padding="0dp"
+    android:layout_margin="0dp"
     android:orientation="vertical"
     android:background="#ff5ac2ce"
     tools:context="com.hth.lines.GameActivity">
     <LinearLayout
+        android:id="@+id/pnlGame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="5dp"
+        android:padding="0dp"
+        android:layout_margin="0dp"
         android:orientation="vertical">
-        <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView android:textSize="25.0sp" android:textColor="#af020c68"
-            android:id="@+id/tvLevel"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:textAllCaps="true"
-            android:text="Medium"
-            android:textStyle="bold"
-            android:layout_marginTop="2dp" />
-        <ImageButton
-            android:id="@+id/btMenu"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:scaleType="fitXY"
-            android:background="@android:color/transparent"
-            android:onClick="btClick"
-            android:src="@drawable/pause"/>
-        <ImageButton
-            android:id="@+id/btSpeaker"
-            android:layout_marginLeft="5dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:scaleType="fitXY"
-            android:layout_toRightOf="@id/btMenu"
-            android:background="@android:color/transparent"
-            android:onClick="btClick"
-            android:src="@drawable/speaker"/>
 
-        <Button
-            android:id="@+id/btPlay"
-            android:layout_width="50dp"
-            android:layout_height="35dp"
-            android:scaleType="fitXY"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/custom_rectangle"
-            android:onClick="btClick"
-            android:text="PLAY"/>
-
-        <ImageButton
-            android:id="@+id/btHint"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:scaleType="fitXY"
-            android:layout_alignParentRight="true"
-            android:background="@android:color/transparent"
-            android:onClick="btClick"
-            android:src="@drawable/hint"/>
-        <ImageButton
-            android:id="@+id/btUndo"
-            android:layout_marginRight="5dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:scaleType="fitXY" android:alpha="0.3"
-            android:clickable="false"
-            android:layout_toLeftOf="@id/btHint"
-            android:background="@android:color/transparent"
-            android:onClick="btClick"
-            android:src="@drawable/undo"/>
-        <TextView android:textSize="15.0sp" android:textColor="#000"
-            android:id="@+id/tvTime" android:padding="2.0dip"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Time : 0"
-            android:layout_below="@id/btMenu" />
-        <TextView android:textSize="15.0sp" android:textColor="#000"
-            android:id="@+id/tvMoves" android:padding="2.0dip"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginLeft="10.0dip" android:layout_marginBottom="5.0dip"
-            android:layout_alignParentRight="true"
-            android:text="Changes : 0"
-            android:layout_below="@id/btHint"
-            />
-    </RelativeLayout>
-        <com.hth.lines.PuzzleView
-            android:id="@+id/puzzleView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            />
     </LinearLayout>
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
