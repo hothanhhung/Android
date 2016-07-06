@@ -7,7 +7,9 @@ namespace hthservices.Ads
 {
     public class AdItem
     {
+        public String NameVN;
         public String Name;
+        public String DescVN;
         public String Desc;
         public String Type;
         public String Link;
@@ -20,6 +22,23 @@ namespace hthservices.Ads
 
         public string IgnoreCountries; //VN, EN, 
 
+        public string GetName(string country)
+        {
+            if (country.Equals("VN", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!string.IsNullOrWhiteSpace(NameVN)) return NameVN;
+            }
+            return Name;
+        }
+
+        public string GetDesc(string country)
+        {
+            if (country.Equals("VN", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!string.IsNullOrWhiteSpace(DescVN)) return DescVN;
+            }
+            return Desc;
+        }
         public bool IsAllowForCountry(string country)
         {
             if (!string.IsNullOrWhiteSpace(country))

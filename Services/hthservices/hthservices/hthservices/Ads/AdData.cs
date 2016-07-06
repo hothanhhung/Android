@@ -28,7 +28,7 @@ namespace hthservices.Ads
 
                     if (items != null)
                     {
-                        for(var i = items.Count; i>0; i++)
+                        for(var i = items.Count; i>0; i--)
                         {
                             var item = items[i-1];
                             if (!item.getAppId().Contains("gameloft"))
@@ -57,7 +57,7 @@ namespace hthservices.Ads
         public static List<AdItem> GetAds(string country, string os = "android")
         {
             var adItems = new List<AdItem>();
-            var ownerAds = OwnerAds.OWNER_ADITEMS.Where(p => p.IsAllowForCountry(country));
+            var ownerAds = OwnerAds.GetOwnerAds(country);
             if (ownerAds != null)
             {
                 adItems.AddRange(ownerAds);
