@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,10 +19,10 @@ public class ExpandableProfileListAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataGroup; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<Object>> _profileItems;
+    private HashMap<String, ArrayList<HighScoreItem>> _profileItems;
 
     public ExpandableProfileListAdapter(Context context, List<String> listDataGroup,
-                                 HashMap<String, List<Object>> profileItems) {
+                                 HashMap<String, ArrayList<HighScoreItem>> profileItems) {
         this._context = context;
         this._listDataGroup = listDataGroup;
         this._profileItems = profileItems;
@@ -42,7 +43,7 @@ public class ExpandableProfileListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-
+        HighScoreItem highScoreItem = ((HighScoreItem) getChild(groupPosition, childPosition));
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -54,9 +55,9 @@ public class ExpandableProfileListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.tvProfileItem);
         TextView txtListChild1 = (TextView) convertView
                 .findViewById(R.id.tvProfileItem2);
-        PuzzleReview puzzleViewProfileItem = (PuzzleReview) convertView
-                .findViewById(R.id.puzzleViewProfileItem);
 
+        txtListChild.setText(highScoreItem.getName());
+        txtListChild1.setText("" + highScoreItem.getScore());
         return convertView;
     }
 

@@ -93,6 +93,14 @@ public class ParseJSONAds {
 		firstAdFlex.setDesc("Đối với file APK vui lòng bật chế độ cho phép cài đặt nguồn ngoài Google play \n Settings > Security > ☑ Unknown Sources.");
 		adFlexes.add(firstAdFlex);
 
+		AdItem firstAdFlex0 = new AdItem();
+		firstAdFlex0.setType("Google play");
+		firstAdFlex0.setName("Sudoku");
+		firstAdFlex0.setDesc("The Sudoku game is famous in the world. The rule is simple. However, it is not easy to find solution.");
+		firstAdFlex0.setLink("https://play.google.com/store/apps/details?id=com.hth.sudoku");
+		firstAdFlex0.setUrlImage("https://lh3.googleusercontent.com/7BFgI4j1PX7f-J6B47BqzuW2C5DGqQ-WpbcRcZQjSI6pQO7CXNQSprjOXHEDilXaY9Q=w300");
+		adFlexes.add(firstAdFlex0);
+
 		AdItem firstAdFlex2 = new AdItem();
 		firstAdFlex2.setType("Google play");
 		firstAdFlex2.setName("Đọc Truyện Cổ");

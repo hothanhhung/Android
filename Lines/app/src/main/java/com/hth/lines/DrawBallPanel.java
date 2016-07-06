@@ -24,7 +24,10 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hth.utils.MethodsHelper;
 
@@ -616,6 +619,7 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 
 	private void printMatrix(int [][] array)
 	{
+		if(true) return;
 		System.out.println("---------------------");
 		for (int i = 0; i < XNUM; i++) {
 			for (int j = 0; j < YNUM; j++) {
@@ -833,8 +837,30 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 				dialog.dismiss();
 			}
 		});
+		Button btWingameSaveComment = (Button) dialog.findViewById(R.id.btWingameSaveComment);
+		btWingameSaveComment.setVisibility(VISIBLE);
+		// if button is clicked, close the custom dialog
+		btWingameSaveComment.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+					InputMethodManager imm = (InputMethodManager)getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 
-		// dialog.setGravity(Gravity.CENTER, 0, 0);
+				EditText etComment = ((EditText) dialog.findViewById(R.id.etComment));
+				String name = etComment.getText().toString();
+				ArrayList<HighScoreItem> highScoreItems = savedValues.getRecordHighScore();
+				highScoreItems.add(new HighScoreItem(MARK, name));
+
+				savedValues.setRecordHighScore(highScoreItems);
+				v.setVisibility(GONE);
+				etComment.setEnabled(false);
+				Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+			}
+		});
 		return dialog;
 	}
 

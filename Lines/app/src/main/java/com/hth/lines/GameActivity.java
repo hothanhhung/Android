@@ -67,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
 
     private long timePlay = 0;
     private void showInterstitial(){
-        if(timePlay!=0 && System.currentTimeMillis() - timePlay > 2 * 60000) {
+        if(timePlay!=0 && System.currentTimeMillis() - timePlay > 15 * 60000) {
             if (interstitial == null) {
                 interstitial = new InterstitialAd(this);
                 interstitial.setAdUnitId(getResources().getString(R.string.ad_unit_id_interstitial));

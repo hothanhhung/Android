@@ -9,6 +9,8 @@ import android.widget.ExpandableListView;
 import com.hth.utils.MethodsHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class ProfileActivity extends AppCompatActivity {
     ExpandableProfileListAdapter listAdapter;
     ExpandableListView lvProfiles;
     List<String> listDataHeader;
-    HashMap<String, List<Object>> listDataChild;
+    HashMap<String, ArrayList<HighScoreItem>> listDataChild;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,20 +30,29 @@ public class ProfileActivity extends AppCompatActivity {
         listAdapter = new ExpandableProfileListAdapter(this, listDataHeader, listDataChild);
         // setting list adapter
         lvProfiles.setAdapter(listAdapter);
+        lvProfiles.expandGroup(0);
 
-        lvProfiles.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-
-                return false;
-            }
-        });
     }
     private void prepareListData() {
+        SavedValues savedValues = new SavedValues(this);
         listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<Object>>();
+        listDataHeader.add("Top");
+        listDataChild = new HashMap<String, ArrayList<HighScoreItem>>();
+        ArrayList<HighScoreItem> highScoreItems = savedValues.getRecordHighScore();
+        if(highScoreItems!=null && highScoreItems.size() > 1) {
+            Collections.sort(highScoreItems, new Comparator<HighScoreItem>() {
+                @Override
+                public int compare(HighScoreItem highScoreItem1, HighScoreItem highScoreItem2) {
 
+                    return highScoreItem2.getScore() - highScoreItem1.getScore();
+                }
+            });
+        }
+        /*if(highScoreItems.size() > 20){
+            listDataChild.put(listDataHeader.get(0), highScoreItems.subList(0, 20));
+        }else*/
+        {
+            listDataChild.put(listDataHeader.get(0), highScoreItems);
+        }
     }
 }

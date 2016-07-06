@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.google.gson.Gson;
-import com.hth.utils.MethodsHelper;
 
 import java.util.ArrayList;
 
@@ -17,6 +16,7 @@ public class SavedValues {
 	private static final String RECORD_PUZZLE = "RECORD_PUZZLE";
 	private static final String RECORD_TRACKCHANGE = "RECORD_TRACKCHANGE";
 	private static final String RECORD_PLAYBACKGROUND = "RECORD_PLAYBACKGROUND";
+	private static final String RECORD_HIGHSCORE = "RECORD_HIGHSCORE";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -44,6 +44,21 @@ public class SavedValues {
 			return null;
 		}
 	}
+	public ArrayList<HighScoreItem> getRecordHighScore() {
+		ArrayList<HighScoreItem> highScoreItems = new ArrayList<HighScoreItem>();
+		try {
+			Gson gson = new Gson();
+			String json = appSharedPrefs.getString(RECORD_HIGHSCORE, "");
+			HighScoreItem[] items = gson.fromJson(json, HighScoreItem[].class);
+			if(items!=null)
+				for (HighScoreItem item: items) {
+					highScoreItems.add(item);
+				}
+		}catch (Exception ex){
+		}
+		return highScoreItems;
+	}
+
 	public boolean getRecordPlaybackground() {
 		return appSharedPrefs.getBoolean(RECORD_PLAYBACKGROUND, true);
 	}
@@ -94,4 +109,16 @@ public class SavedValues {
 		prefsEditor.putString(RECORD_PUZZLE, json);
 		prefsEditor.commit();
 	}
+
+	public void setRecordHighScore(ArrayList<HighScoreItem> highScoreItems) {
+		Gson gson = new Gson();
+		HighScoreItem[] items = new HighScoreItem[highScoreItems.size()];
+		for (int i=0; i<items.length; i++){
+			items[i] = highScoreItems.get(i);
+		}
+		String json = gson.toJson(items);
+		prefsEditor.putString(RECORD_HIGHSCORE, json);
+		prefsEditor.commit();
+	}
+
 }

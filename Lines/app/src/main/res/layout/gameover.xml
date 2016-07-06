@@ -22,10 +22,41 @@
             android:textAlignment="center"
             android:text="GAME\nOVER"/>
         <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.6"
+            android:padding="30dp"
+            android:gravity="left">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="18dp" android:text="Your Name in High Score:"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
+                <EditText android:layout_height="50dp" android:layout_width="0dp"
+                    android:selectAllOnFocus="true"
+                    android:layout_weight="1"
+                    android:textSize="15dp"
+                    android:text="Player Name"
+                    android:editable="true"
+                    android:fadeScrollbars="true" android:id="@+id/etComment" />
+                <Button
+                    android:layout_height="30dp" android:layout_width="40dp" android:textSize="10dp"
+                    android:text="Save" android:id="@+id/btWingameSaveComment"
+                    android:background="@drawable/custom_rectangle" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp">
+            android:paddingTop="0dp">
             <Button
                 android:id="@+id/btOvergamePlay"
                 android:layout_width="match_parent"
