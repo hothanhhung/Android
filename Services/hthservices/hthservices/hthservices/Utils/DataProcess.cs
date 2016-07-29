@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using hthservices.Models;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -252,16 +253,31 @@ namespace hthservices.Utils
         {
             return SQLiteProcess.GetScheduleFailedRequestLogs();
         }
-        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn)
+        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn, int page = 1, int size = 25)
         {
-            return SQLiteProcess.GetGroupScheduleRequestLogs(noChannelKey, noCurrentDate, noDateOn);
+            return SQLiteProcess.GetGroupScheduleRequestLogs(noChannelKey, noCurrentDate, noDateOn, page, size);
         }
 
         public static List<ScheduleRequestLog> GetGroupScheduleFailedRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn)
         {
             return SQLiteProcess.GetGroupScheduleFailedRequestLogs(noChannelKey, noCurrentDate, noDateOn);
         }
-
+        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(ReportFilter filter)
+        {
+            return SQLiteProcess.GetGroupScheduleRequestLogs(filter, false);
+        }
+        public static int GetCountGroupScheduleRequestLogs(ReportFilter filter)
+        {
+            return SQLiteProcess.GetCountGroupScheduleRequestLogs(filter, false);
+        }
+        public static List<ScheduleRequestLog> GetGroupScheduleFailedRequestLogs(ReportFilter filter)
+        {
+            return SQLiteProcess.GetGroupScheduleRequestLogs(filter, true);
+        }
+        public static int GetCountGroupScheduleFailedRequestLogs(ReportFilter filter)
+        {
+            return SQLiteProcess.GetCountGroupScheduleRequestLogs(filter, true);
+        }
         public static void DeleteScheduleRequestLog(int id)
         {
             SQLiteProcess.DeleteScheduleRequestLog(id);

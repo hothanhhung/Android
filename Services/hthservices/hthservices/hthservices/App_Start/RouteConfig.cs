@@ -11,6 +11,7 @@ namespace hthservices
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("Admin/*");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hthservices.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -319,7 +320,7 @@ namespace hthservices.Utils
 
             return schedules;
         }
-        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn)
+        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn, int page, int size)
         {
             string group = (noChannelKey ? "" : ", ChannelKey") + (noCurrentDate ? "" : ", CurrentDate") + (noDateOn ? "" : ", DateOn");
             string select = (noChannelKey ? "" : ", ChannelKey") + (noCurrentDate ? "" : ", CurrentDate") + (noDateOn ? "" : ", DateOn");
@@ -335,7 +336,7 @@ namespace hthservices.Utils
                 select = "ChannelKey, CurrentDate, DateOn";
             }
             List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
-            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM ScheduleRequestLogs " + group;
+            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM ScheduleRequestLogs " + group + " LIMIT "+size+" OFFSET " + (page - 1) * size;
             using (var sql_con = new SQLiteConnection(ConnectString))
             {
                 sql_con.Open();
@@ -360,6 +361,64 @@ namespace hthservices.Utils
             }
 
             return schedules;
+        }
+
+        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(ReportFilter filter, bool isFailRequest = false)
+        {
+            if (filter == null) filter = new ReportFilter();
+            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
+
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = filter.GenSelectCommand(isFailRequest);
+                    var myParameters = sql_cmd.Parameters;
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var scheduleRequestLog = new ScheduleRequestLog();
+                            if (!filter.NoChannelKey || (filter.NoCurrentDate && filter.NoDateOn)) scheduleRequestLog.ChannelKey = (reader["ChannelKey"] ?? "").ToString();
+                            if (!filter.NoCurrentDate || (filter.NoChannelKey && filter.NoDateOn)) scheduleRequestLog.CurrentDate = (reader["CurrentDate"] ?? "").ToString();
+                            if (!filter.NoDateOn || (filter.NoCurrentDate && filter.NoChannelKey)) scheduleRequestLog.DateOn = (reader["DateOn"] ?? "").ToString();
+                            scheduleRequestLog.NumberOfRequests = Int32.Parse((reader["NumberOfRequests"] ?? "").ToString());
+                            schedules.Add(scheduleRequestLog);
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return schedules;
+        }
+
+        public static int GetCountGroupScheduleRequestLogs(ReportFilter filter, bool isFailRequest = false)
+        {
+            if (filter == null) filter = new ReportFilter();
+            int count = 0;
+
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = filter.GenCountCommand(isFailRequest);
+                    var myParameters = sql_cmd.Parameters;
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            count = reader.GetInt32(0);
+                            break;
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return count;
         }
         public static void DeleteScheduleRequestLog(int Id)
         {

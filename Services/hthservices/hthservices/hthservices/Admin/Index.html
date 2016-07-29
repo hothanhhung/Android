@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="hthServiceApp">
+<head>
+    <title></title>
+    <script src="/admin/bower_components/jQuery-3.1.0/jquery-3.1.0.js"></script>
+    <script src="/admin/bower_components/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/admin/bower_components/bootstrap-3.3.7/css/bootstrap.css" />
+    <script src="/admin/bower_components/angular-1.5.8/angular.js"></script>
+    <script src="/admin/bower_components/angular-1.5.8/angular-route.js"></script>
+    <script src="/admin/app.module.js"></script>
+    <script src="/admin/app.config.js"></script>
+
+    <script src="/admin/directives/directives.js"></script>
+    <script src="/admin/modules/login/login.js"></script>
+    <script src="/admin/modules/home/home.js"></script>
+</head>
+<body>
+    <!--<div ngIf="AuthInfo.Message!=''">{{AuthInfo.Message}}</div>
+    <input type="text" ng-model="Username" placeholder="Username" required="required" />
+    <input type="password" ng-model="Password" placeholder="Password" required="required" />
+    <button type="submit" ng-click="Login(Username, Password)" class="btn btn-primary btn-block btn-large">Let me in.</button>-->
+    <div ng-view></div>
+</body>
+</>

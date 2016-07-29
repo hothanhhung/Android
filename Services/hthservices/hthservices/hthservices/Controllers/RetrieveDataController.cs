@@ -66,7 +66,7 @@ namespace hthservices.Controllers
         public ActionResult GetAds(string country, string os)
         {
             var adItems = Ads.AdData.GetAds(country, os);
-            return Json(ResponseJson<AdItem>.GetResponseJson(adItems), JsonRequestBehavior.AllowGet);
+            return Json(ResponseJson.GetResponseJson(adItems), JsonRequestBehavior.AllowGet);
         }
     }
 }

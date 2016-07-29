@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Runtime.Serialization;
+using hthservices.Utils;
 
 namespace hthservices.Models
 {
-    public class ResponseJson<T>
+    [Serializable]
+    [KnownType(typeof(List<ScheduleRequestLog>))]
+    [KnownType(typeof(ScheduleReport))]    
+    public class ResponseJson
     {
         public bool IsSuccess;
         public bool NeedChangeDomain;
         public string NewDomain;
-        public List<T> Data;
+        public dynamic Data;
 
-        public static ResponseJson<T> GetResponseJson(List<T> data)
+        public static dynamic GetResponseJson(dynamic data, bool isSuccess = true)
         {
-            var responseJson = new ResponseJson<T>()
+            var responseJson = new ResponseJson()
             {
-                IsSuccess = true,
+                IsSuccess = isSuccess,
                 NeedChangeDomain = false,
                 Data = data
             };

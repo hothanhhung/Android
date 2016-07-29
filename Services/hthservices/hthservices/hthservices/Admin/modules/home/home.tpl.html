@@ -1,0 +1,75 @@
+﻿Reports
+<div style="width:100%;">
+    <div style=" width:49%; float:left">
+        <h2>Schedule Request Logs</h2>
+        <div class="code-cut">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Channel Key</th>
+                            <th>Current Date</th>
+                            <th>Date On</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ScheduleRequestLogs.ScheduleLogs">
+                            <td>{{item.ChannelKey}}</td>
+                            <td>{{item.CurrentDate}}</td>
+                            <td>{{item.DateOn}}</td>
+                            <td>{{item.NumberOfRequests}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <li ng-if="ScheduleRequestLogs.Filter.Page - 3 > 0 " ng-click="TablePaging(1, false)"><a href="javascript:void(0)">1</a></li>
+                    <li ng-if="ScheduleRequestLogs.Filter.Page - 4 > 0 " ng-click="TablePaging(ScheduleRequestLogs.Filter.Page - 3, false)"><a href="javascript:void(0)">...</a></li>
+                    <li ng-if="ScheduleRequestLogs.Filter.Page - 2 > 0" ng-click="TablePaging(ScheduleRequestLogs.Filter.Page - 2, false)"><a href="javascript:void(0)">{{ScheduleRequestLogs.Filter.Page - 2}}</a></li>
+                    <li ng-if="ScheduleRequestLogs.Filter.Page - 1 > 0" ng-click="TablePaging(ScheduleRequestLogs.Filter.Page - 1, false)"><a href="javascript:void(0)">{{ScheduleRequestLogs.Filter.Page - 1}}</a></li>
+                    <li class="active"><a href="javascript:void(0)">{{ScheduleRequestLogs.Filter.Page}}</a></li>
+                    <li ng-if="ScheduleRequestLogs.Filter.Page + 1 <= ScheduleRequestLogs.NumberOfPages" ng-click="TablePaging(ScheduleRequestLogs.Filter.Page + 1, false)"><a href="javascript:void(0)">{{ScheduleRequestLogs.Filter.Page + 1}}</a></li>
+                    <li ng-if="ScheduleRequestLogs.Filter.Page + 2 <= ScheduleRequestLogs.NumberOfPages" ng-click="TablePaging(ScheduleRequestLogs.Filter.Page + 2, false)"><a href="javascript:void(0)">{{ScheduleRequestLogs.Filter.Page + 2}}</a></li>
+                    <li ng-if="ScheduleRequestLogs.Filter.Page + 4 <= ScheduleRequestLogs.NumberOfPages" ng-click="TablePaging(ScheduleRequestLogs.Filter.Page + 3, false)"><a href="javascript:void(0)">...</a></li>
+                    <li ng-if="ScheduleRequestLogs.Filter.Page + 4 <= ScheduleRequestLogs.NumberOfPages" ng-click="TablePaging(ScheduleRequestLogs.NumberOfPages, false)"><a href="javascript:void(0)">{{ScheduleRequestLogs.NumberOfPages}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="width:49%; float:right">
+        <h2>Schedule Failed Request Logs</h2>
+        <div class="code-cut">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Channel Key</th>
+                            <th>Current Date</th>
+                            <th>Date On</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ScheduleFailedRequestLogs.ScheduleLogs">
+                            <td>{{item.ChannelKey}}</td>
+                            <td>{{item.CurrentDate}}</td>
+                            <td>{{item.DateOn}}</td>
+                            <td>{{item.NumberOfRequests}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <li ng-if="ScheduleFailedRequestLogs.Filter.Page - 3 > 0 " ng-click="TablePaging(1, true)"><a href="javascript:void(0)">1</a></li>
+                    <li ng-if="ScheduleFailedRequestLogs.Filter.Page - 4 > 0 " ng-click="TablePaging(ScheduleFailedRequestLogs.Filter.Page - 3, true)"><a href="javascript:void(0)">...</a></li>
+                    <li ng-if="ScheduleFailedRequestLogs.Filter.Page - 2 > 0" ng-click="TablePaging(ScheduleFailedRequestLogs.Filter.Page - 2, true)"><a href="javascript:void(0)">{{ScheduleFailedRequestLogs.Filter.Page - 2}}</a></li>
+                    <li ng-if="ScheduleFailedRequestLogs.Filter.Page - 1 > 0" ng-click="TablePaging(ScheduleFailedRequestLogs.Filter.Page - 1, true)"><a href="javascript:void(0)">{{ScheduleFailedRequestLogs.Filter.Page - 1}}</a></li>
+                    <li class="active"><a href="javascript:void(0)">{{ScheduleFailedRequestLogs.Filter.Page}}</a></li>
+                    <li ng-if="ScheduleFailedRequestLogs.Filter.Page + 1 <= ScheduleFailedRequestLogs.NumberOfPages" ng-click="TablePaging(ScheduleFailedRequestLogs.Filter.Page + 1, true)"><a href="javascript:void(0)">{{ScheduleFailedRequestLogs.Filter.Page + 1}}</a></li>
+                    <li ng-if="ScheduleFailedRequestLogs.Filter.Page + 2 <= ScheduleFailedRequestLogs.NumberOfPages" ng-click="TablePaging(ScheduleFailedRequestLogs.Filter.Page + 2, true)"><a href="javascript:void(0)">{{ScheduleFailedRequestLogs.Filter.Page + 2}}</a></li>
+                    <li ng-if="ScheduleFailedRequestLogs.Filter.Page + 4 <= ScheduleFailedRequestLogs.NumberOfPages" ng-click="TablePaging(ScheduleFailedRequestLogs.Filter.Page + 3, true)"><a href="javascript:void(0)">...</a></li>
+                    <li ng-if="ScheduleFailedRequestLogs.Filter.Page + 4 <= ScheduleFailedRequestLogs.NumberOfPages" ng-click="TablePaging(ScheduleFailedRequestLogs.NumberOfPages, true)"><a href="javascript:void(0)">{{ScheduleFailedRequestLogs.NumberOfPages}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
