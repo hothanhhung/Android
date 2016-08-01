@@ -22,6 +22,7 @@ namespace hthservices.Models
         }
         public string GenSelectCommand(bool isFailRequest = false)
         {
+            string order_by = "";
             string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn");
             string select = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn");
             group = group.Trim(',');
@@ -35,7 +36,14 @@ namespace hthservices.Models
                 group = " GROUP BY ChannelKey, CurrentDate, DateOn";
                 select = "ChannelKey, CurrentDate, DateOn";
             }
-            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM "+ (isFailRequest?"ScheduleFailedRequestLogs" : "ScheduleRequestLogs") +" " + group + " LIMIT " + (Size ?? 25) + " OFFSET " + (((Page ?? 1) - 1) * (Size ?? 25));
+
+            if(!string.IsNullOrWhiteSpace(OrderField) && (OrderField.Equals("NumberOfRequests", StringComparison.OrdinalIgnoreCase) ||
+                                                            select.Split(',').Any(p=> OrderField.Equals(p.Trim(), StringComparison.OrdinalIgnoreCase))))
+            {
+                order_by = " ORDER BY " + OrderField + ((Desc??true)?" DESC":" ASC");
+            }
+
+            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + group + order_by + " LIMIT " + GetCorrectSize() + " OFFSET " + (((Page ?? 1) - 1) * GetCorrectSize());
             
             return sqlSaveChannel;
         }

@@ -16,8 +16,8 @@ hthServiceApp.controller('HomeController',
               }
           };
           
-          $scope.ScheduleRequestLogs = { ScheduleLogs: [], Total: 0, NumberOfPages: 0 };
-          $scope.ScheduleFailedRequestLogs = { ScheduleLogs: [], Total: 0, NumberOfPages: 0 };
+          $scope.ScheduleRequestLogs = { ScheduleLogs: [], Total: 0, NumberOfPages: 0, IsLoading: false };
+          $scope.ScheduleFailedRequestLogs = { ScheduleLogs: [], Total: 0, NumberOfPages: 0, IsLoading: false };
 
           $scope.ScheduleRequestLogs.Filter = {
               NoChannelKey: false,
@@ -44,8 +44,10 @@ hthServiceApp.controller('HomeController',
               var headers = {
                   'Content-Type': 'application/json'
               };
+              $scope.ScheduleRequestLogs.IsLoading = true;
               $http.post(getReportUrl, $scope.ScheduleRequestLogs.Filter, { headers: headers }).then(
                   function (response) {
+                      $scope.ScheduleRequestLogs.IsLoading = false;
                       var responseData = response.data;
                       if (responseData.IsSuccess) {
                           $scope.ScheduleRequestLogs.ScheduleLogs = responseData.Data.ScheduleLogs;
@@ -56,6 +58,7 @@ hthServiceApp.controller('HomeController',
                       }
                   },
                   function (error) {
+                      $scope.ScheduleRequestLogs.IsLoading = false;
                       alert(error);
                   });
           };
@@ -65,8 +68,10 @@ hthServiceApp.controller('HomeController',
               var headers = {
                   'Content-Type': 'application/json'
               };
+              $scope.ScheduleFailedRequestLogs.IsLoading = true;
               $http.post(getReportUrl, $scope.ScheduleFailedRequestLogs.Filter, { headers: headers }).then(
                   function (response) {
+                      $scope.ScheduleFailedRequestLogs.IsLoading = false;
                       var responseData = response.data;
                       if (responseData.IsSuccess) {
                           $scope.ScheduleFailedRequestLogs.ScheduleLogs = responseData.Data.ScheduleLogs;
@@ -77,6 +82,7 @@ hthServiceApp.controller('HomeController',
                       }
                   },
                   function (error) {
+                      $scope.ScheduleFailedRequestLogs.IsLoading = false;
                       alert(error);
                   });
           };
@@ -92,6 +98,43 @@ hthServiceApp.controller('HomeController',
                   }
               }
           };
+
+          $scope.ApplyColums = function (channelKey, currentDate, dateOn, isFailedRequest) {
+              if (isFailedRequest) {
+                  $scope.ScheduleFailedRequestLogs.Filter.NoChannelKey = !channelKey;
+                  $scope.ScheduleFailedRequestLogs.Filter.NoCurrentDate = !currentDate;
+                  $scope.ScheduleFailedRequestLogs.Filter.NoDateOn = !dateOn;
+                  $scope.ScheduleFailedRequestLogs.Filter.Page = 1;
+                  $scope.GetFailedReport();
+              } else {
+                  $scope.ScheduleRequestLogs.Filter.NoChannelKey = !channelKey;
+                  $scope.ScheduleRequestLogs.Filter.NoCurrentDate = !currentDate;
+                  $scope.ScheduleRequestLogs.Filter.NoDateOn = !dateOn;
+                  $scope.ScheduleRequestLogs.Filter.Page = 1;
+                  $scope.GetReport();
+              }
+          }
+
+          $scope.OrderColum = function (columName, isFailedRequest) {
+              if (isFailedRequest) {
+                  if ($scope.ScheduleFailedRequestLogs.Filter.Desc == null)
+                  {
+                      $scope.ScheduleFailedRequestLogs.Filter.Desc = true;
+                  } else {
+                      $scope.ScheduleFailedRequestLogs.Filter.Desc = !$scope.ScheduleFailedRequestLogs.Filter.Desc;
+                  }
+                  $scope.ScheduleFailedRequestLogs.Filter.OrderField = columName;
+                  $scope.GetFailedReport();
+              } else {
+                  if ($scope.ScheduleRequestLogs.Filter.Desc == null) {
+                      $scope.ScheduleRequestLogs.Filter.Desc = true;
+                  } else {
+                      $scope.ScheduleRequestLogs.Filter.Desc = !$scope.ScheduleRequestLogs.Filter.Desc;
+                  }
+                  $scope.ScheduleRequestLogs.Filter.OrderField = columName;
+                  $scope.GetReport();
+              }
+          }
 
           $scope.GetReport();
           $scope.GetFailedReport();
