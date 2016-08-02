@@ -54,7 +54,7 @@ namespace hthservices.Controllers
             }
             else
             {
-                isSuccess = true;
+                isSuccess = false;
                 message = "Logout failed";
             }
             var resultObject = new { IsSuccess = isSuccess, Message = message, Token = token };

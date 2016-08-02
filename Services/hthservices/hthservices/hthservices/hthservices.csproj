@@ -1060,6 +1060,10 @@
     <Content Include="Admin\bower_components\angular-1.5.8\i18n\angular-locale_zu.js" />
     <Content Include="Admin\bower_components\angular-1.5.8\version.txt" />
     <Content Include="Admin\directives\directives.js" />
+    <Content Include="Admin\modules\dashboard\dashboard.js" />
+    <Content Include="Admin\modules\dashboard\dashboard.tpl.html" />
+    <Content Include="Admin\modules\grid-report\grid-report.js" />
+    <Content Include="Admin\modules\grid-report\grid-report.tpl.html" />
     <Content Include="Admin\modules\home\home.js" />
     <Content Include="Admin\modules\home\home.tpl.html" />
     <Content Include="Admin\modules\login\login.js" />

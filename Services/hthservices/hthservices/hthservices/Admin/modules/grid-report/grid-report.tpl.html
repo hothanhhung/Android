@@ -1,0 +1,72 @@
+﻿
+<div class="code-cut" style="position: relative">
+    <div ng-if="$ctrl.ScheduleRequestLogs.IsLoading" style="width: 100%; height: 100%; position: absolute; text-align: center; background-color: rgba(179, 175, 179, 0.46); z-index: 9999;">
+        <span style="top: 50%; left: 45%; position: absolute; font-weight: bold; padding:5px; background-color: grey;"> loading... </span>
+    </div>
+    <div class="form-inline">
+        <div class="form-group">
+            <label class="form-check">
+                Channel Key
+                <input type="checkbox" ng-model="ScheduleRequestLogs.Filter.ChannelKey" ng-init="ScheduleRequestLogs.Filter.ChannelKey=!$ctrl.ScheduleRequestLogs.Filter.NoChannelKey">
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="form-check">
+                Current Date
+                <input type="checkbox" ng-model="ScheduleRequestLogs.Filter.CurrentDate" ng-init="ScheduleRequestLogs.Filter.CurrentDate=!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate">
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="form-check">
+                Date On
+                <input type="checkbox" ng-model="ScheduleRequestLogs.Filter.DateOn" ng-init="ScheduleRequestLogs.Filter.DateOn=!$ctrl.ScheduleRequestLogs.Filter.NoDateOn">
+            </label>
+        </div>
+        <div class="form-group">
+            <button type="submit" ng-click="$ctrl.ApplyColums(ScheduleRequestLogs.Filter.ChannelKey, ScheduleRequestLogs.Filter.CurrentDate, ScheduleRequestLogs.Filter.DateOn)" class="btn btn-primary">Apply</button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoChannelKey">
+                        Channel Key
+                        <span ng-click="$ctrl.OrderColum('ChannelKey')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='ChannelKey'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
+                    </th>
+                    <th ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate">
+                        Current Date
+                        <span ng-click="$ctrl.OrderColum('CurrentDate')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='CurrentDate'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
+                    </th>
+                    <th ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDateOn">
+                        Date On
+                        <span ng-click="$ctrl.OrderColum('DateOn')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='DateOn'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
+                    </th>
+                    <th>
+                        Count
+                        <span ng-click="$ctrl.OrderColum('NumberOfRequests')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='NumberOfRequests'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in $ctrl.ScheduleRequestLogs.ScheduleLogs">
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoChannelKey">{{item.ChannelKey}}</td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate">{{item.CurrentDate}}</td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDateOn">{{item.DateOn}}</td>
+                    <td>{{item.NumberOfRequests}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul class="pagination">
+            <li ng-if="$ctrl.ScheduleRequestLogs.Filter.Page - 3 > 0 " ng-click="$ctrl.TablePaging(1)"><a href="javascript:void(0)">1</a></li>
+            <li ng-if="$ctrl.ScheduleRequestLogs.Filter.Page - 4 > 0 " ng-click="$ctrl.TablePaging(ScheduleRequestLogs.Filter.Page - 3)"><a href="javascript:void(0)">...</a></li>
+            <li ng-if="$ctrl.ScheduleRequestLogs.Filter.Page - 2 > 0" ng-click="$ctrl.TablePaging(ScheduleRequestLogs.Filter.Page - 2)"><a href="javascript:void(0)">{{$ctrl.ScheduleRequestLogs.Filter.Page - 2}}</a></li>
+            <li ng-if="$ctrl.ScheduleRequestLogs.Filter.Page - 1 > 0" ng-click="$ctrl.TablePaging(ScheduleRequestLogs.Filter.Page - 1)"><a href="javascript:void(0)">{{$ctrl.ScheduleRequestLogs.Filter.Page - 1}}</a></li>
+            <li class="active"><a href="javascript:void(0)">{{$ctrl.ScheduleRequestLogs.Filter.Page}}</a></li>
+            <li ng-if="$ctrl.ScheduleRequestLogs.Filter.Page + 1 <= $ctrl.ScheduleRequestLogs.NumberOfPages" ng-click="$ctrl.TablePaging($ctrl.ScheduleRequestLogs.Filter.Page + 1)"><a href="javascript:void(0)">{{$ctrl.ScheduleRequestLogs.Filter.Page + 1}}</a></li>
+            <li ng-if="$ctrl.ScheduleRequestLogs.Filter.Page + 2 <= $ctrl.ScheduleRequestLogs.NumberOfPages" ng-click="$ctrl.TablePaging($ctrl.ScheduleRequestLogs.Filter.Page + 2)"><a href="javascript:void(0)">{{$ctrl.ScheduleRequestLogs.Filter.Page + 2}}</a></li>
+            <li ng-if="$ctrl.ScheduleRequestLogs.Filter.Page + 4 <= $ctrl.ScheduleRequestLogs.NumberOfPages" ng-click="$ctrl.TablePaging($ctrl.ScheduleRequestLogs.Filter.Page + 3)"><a href="javascript:void(0)">...</a></li>
+            <li ng-if="$ctrl.ScheduleRequestLogs.Filter.Page + 4 <= $ctrl.ScheduleRequestLogs.NumberOfPages" ng-click="$ctrl.TablePaging($ctrl.ScheduleRequestLogs.NumberOfPages)"><a href="javascript:void(0)">{{$ctrl.ScheduleRequestLogs.NumberOfPages}}</a></li>
+        </ul>
+    </div>
+</div>
