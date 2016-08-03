@@ -82,6 +82,32 @@ function GridReportController($scope, $rootScope, $http, $location) {
         ctrl.GetReport();
     }
 
+    ctrl.Delete = function (scheduleLog) {
+        if (confirm("Do you want to delete?")) {
+            var deleteReportUrl = URL_SERVICE + '/api/ReportApi/Delete/?token=' + $rootScope.AuthInfo.Token + '&isFailed=' + ctrl.isFailedRequest;
+            var headers = {
+                'Content-Type': 'application/json'
+            };
+            ctrl.ScheduleRequestLogs.IsLoading = true;
+            $http.post(deleteReportUrl, scheduleLog, { headers: headers }).then(
+                function (response) {
+                    ctrl.ScheduleRequestLogs.IsLoading = false;
+                    var responseData = response.data;
+                    if (responseData.IsSuccess) {
+                        alert(responseData.Data.Message);
+                        ctrl.GetReport();
+
+                    } else {
+                        $location.path('/login');
+                    }
+                },
+                function (error) {
+                    ctrl.ScheduleRequestLogs.IsLoading = false;
+                    alert(error);
+                });
+        }
+    }
+
     ctrl.GetReport();
 };
 
