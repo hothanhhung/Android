@@ -15,38 +15,20 @@ hthServiceApp.controller('DashboardController',
             return;
         }
     };
-    var ctrl = this;
-    if (typeof(ctrl.isFailedRequest) === 'undefined') {
-        ctrl.isFailedRequest = false;
-    }
-    ctrl.ScheduleRequestLogs = { ScheduleLogs: [], Total: 0, NumberOfPages: 0, IsLoading: false };
-    ctrl.ScheduleRequestLogs.Filter = {
-        NoChannelKey: false,
-        NoCurrentDate: false,
-        NoDateOn: false,
-        Page: 1,
-        Size: 10,
-        Desc: null,
-        OrderField: '',
-    };
 
-    ctrl.GetReport = function () {
-        var getReportUrl = URL_SERVICE + '/api/ReportApi/GroupRequest/?token=' + $rootScope.AuthInfo.Token;
-        var headers = {
-            'Content-Type': 'application/json'
-        };
-        if (ctrl.isFailedRequest=="true") {
-            getReportUrl = URL_SERVICE + '/api/ReportApi/GroupFailedRequest/?token=' + $rootScope.AuthInfo.Token;
-        }
-        ctrl.ScheduleRequestLogs.IsLoading = true;
-        $http.post(getReportUrl, ctrl.ScheduleRequestLogs.Filter, { headers: headers }).then(
+    $scope.ScheduleRequestLogs = { FromDate: new Date(), ToDate: new Date(), IsLoading: false };
+    $scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), $scope.ScheduleRequestLogs.ToDate.getMonth(), 1);
+    $scope.GetReport = function () {
+        var getReportUrl = URL_SERVICE + '/api/ReportApi/Dashboard/?token=' + $rootScope.AuthInfo.Token + "&fromDate=" + GetStringOfDate($scope.ScheduleRequestLogs.FromDate) + "&toDate=" + GetStringOfDate($scope.ScheduleRequestLogs.ToDate);
+        
+        $scope.ScheduleRequestLogs.IsLoading = true;
+        $http.get(getReportUrl, null).then(
             function (response) {
-                ctrl.ScheduleRequestLogs.IsLoading = false;
+                $scope.ScheduleRequestLogs.IsLoading = false;
                 var responseData = response.data;
+
                 if (responseData.IsSuccess) {
-                    ctrl.ScheduleRequestLogs.ScheduleLogs = responseData.Data.ScheduleLogs;
-                    ctrl.ScheduleRequestLogs.Total = responseData.Data.Total;
-                    ctrl.ScheduleRequestLogs.NumberOfPages = responseData.Data.NumberOfPages;
+                    areaDashboard.setData(responseData.Data);
                 } else {
                     $location.path('/login');
                 }
@@ -56,22 +38,28 @@ hthServiceApp.controller('DashboardController',
                 alert(error);
             });
     };
-
-    Morris.Area({
+        
+    $scope.ToDateMaxDate = new Date();
+    var areaDashboard = Morris.Line({
         element: 'area-dashboard',
-        data: [
-          { y: '2006', a: 100, b: 90 },
-          { y: '2007', a: 75, b: 65 },
-          { y: '2008', a: 50, b: 40 },
-          { y: '2009', a: 75, b: 65 },
-          { y: '2010', a: 50, b: 40 },
-          { y: '2011', a: 75, b: 65 },
-          { y: '2012', a: 100, b: 90 }
-        ],
-        xkey: 'y',
-        ykeys: ['a', 'b'],
-        labels: ['Schedule Failed Request Logs', 'Schedule Request Logs']
+        data: null,
+        xkey: 'CurrentDate',
+        ykeys: ['NumberOfRequest', 'NumberOfFailedRequest'],
+        labels: ['Schedule Request Logs', 'Schedule Failed Request Logs'],
+        pointSize: 2,
+        hideHover: 'auto'
     });
 
-    //ctrl.GetReport();
+    $scope.GetReport();
+
+    function GetStringOfDate(date)
+    {
+        if (typeof (date) != 'object')
+        {
+            return "";
+        }
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        return date.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (d < 10 ? "0" : "") + d;
+    }
 }]);

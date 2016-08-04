@@ -9,7 +9,9 @@ namespace hthservices.Models
 {
     [Serializable]
     [KnownType(typeof(List<ScheduleRequestLog>))]
-    [KnownType(typeof(ScheduleReport))]    
+    [KnownType(typeof(ScheduleReport))]
+    [KnownType(typeof(ReportForCurrentDate))] 
+    [KnownType(typeof(List<ReportForCurrentDate>))] 
     public class ResponseJson
     {
         public bool IsSuccess;

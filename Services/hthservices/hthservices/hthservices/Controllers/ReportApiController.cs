@@ -22,6 +22,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.HttpPost]
+        [System.Web.Http.ActionName("Delete")]
         public ResponseJson Delete(string token, string isFailed, ScheduleRequestLog scheduleLog)
         {
             if(!AuthData.Validate(token))
@@ -58,12 +59,14 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.HttpPost]
+        [System.Web.Http.ActionName("GroupFailedRequest")]
         public ResponseJson GroupFailedRequest(string token, [FromBody] ReportFilter filter)
         {
             if (!AuthData.Validate(token))
             {
                 return ResponseJson.GetResponseJson(string.Empty, false);
             }
+            if (filter == null) filter = new ReportFilter();
             var data = DataProcess.GetGroupScheduleFailedRequestLogs(filter);
             var total = DataProcess.GetCountGroupScheduleFailedRequestLogs(filter);
             var resultObject = new ScheduleReport() { ScheduleLogs = data, Total = total, NumberOfPages = (total + filter.GetCorrectSize() - 1) / filter.GetCorrectSize() };
@@ -72,18 +75,40 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.HttpPost]
+        [System.Web.Http.ActionName("GroupRequest")]
         public ResponseJson GroupRequest(string token, ReportFilter filter)
         {
             if (!AuthData.Validate(token))
             {
                 return ResponseJson.GetResponseJson(string.Empty, false);
             }
-
+            if (filter == null) filter = new ReportFilter();
             var data = DataProcess.GetGroupScheduleRequestLogs(filter);
             var total = DataProcess.GetCountGroupScheduleRequestLogs(filter);
             var resultObject = new ScheduleReport() { ScheduleLogs = data, Total = total, NumberOfPages = (total + filter.GetCorrectSize() - 1) / filter.GetCorrectSize() };
             return ResponseJson.GetResponseJson(resultObject);
         }
 
+        [System.Web.Http.HttpGet]
+        public ResponseJson Dashboard(string token, string fromDate, string toDate)
+        {
+            if (!AuthData.Validate(token))
+            {
+                return ResponseJson.GetResponseJson(string.Empty, false);
+            }
+            var logs = DataProcess.GetReportForCurrentDate(fromDate, toDate, false);
+            var failLogs = DataProcess.GetReportForCurrentDate(fromDate, toDate, true);
+
+            var resultObject =
+                        from log in logs
+                        join failLog in failLogs on log.CurrentDate equals failLog.CurrentDate
+                        select new ReportForCurrentDate
+                        {
+                            CurrentDate = log.CurrentDate,
+                            NumberOfRequest = log.NumberOfRequests, 
+                            NumberOfFailedRequest = failLog.NumberOfRequests 
+                        };
+            return ResponseJson.GetResponseJson(resultObject != null ? resultObject.ToList() : null);
+        }
     }
 }

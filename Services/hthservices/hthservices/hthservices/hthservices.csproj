@@ -263,6 +263,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ReportFilter.cs" />
+    <Compile Include="Models\ReportForCurrentDate.cs" />
     <Compile Include="Models\ResponseJson.cs" />
     <Compile Include="Models\ScheduleReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

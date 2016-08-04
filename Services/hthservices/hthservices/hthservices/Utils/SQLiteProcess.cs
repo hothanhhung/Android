@@ -394,6 +394,36 @@ namespace hthservices.Utils
             return schedules;
         }
 
+        public static List<ScheduleRequestLog> GetReportForCurrentDate(string fromDate, string toDate, bool isFailRequest = false)
+        {
+            List<ScheduleRequestLog> schedules = new List<ScheduleRequestLog>();
+
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = "SELECT CurrentDate, SUM(NumberOfRequests) AS NumberOfRequests FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " WHERE CurrentDate >= @fromDate AND CurrentDate <= @toDate GROUP BY CurrentDate ";
+                    var myParameters = sql_cmd.Parameters;
+                    myParameters.AddWithValue("@fromDate", fromDate);
+                    myParameters.AddWithValue("@toDate", toDate);
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var scheduleRequestLog = new ScheduleRequestLog();
+                            scheduleRequestLog.CurrentDate = (reader["CurrentDate"] ?? "").ToString();
+                            scheduleRequestLog.NumberOfRequests = Int32.Parse((reader["NumberOfRequests"] ?? "").ToString());
+                            schedules.Add(scheduleRequestLog);
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return schedules;
+        }
+
         public static int GetCountGroupScheduleRequestLogs(ReportFilter filter, bool isFailRequest = false)
         {
             if (filter == null) filter = new ReportFilter();

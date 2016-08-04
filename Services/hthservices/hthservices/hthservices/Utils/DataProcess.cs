@@ -294,6 +294,11 @@ namespace hthservices.Utils
         {
             SQLiteProcess.DeleteScheduleFailedRequestLog(channelKey, currentDate, dateOn);
         }
+
+        public static List<ScheduleRequestLog> GetReportForCurrentDate(string fromDate, string toDate, bool isFailRequest = false)
+        {
+            return SQLiteProcess.GetReportForCurrentDate(fromDate, toDate, isFailRequest);
+        }
         #endregion
     }
 }
