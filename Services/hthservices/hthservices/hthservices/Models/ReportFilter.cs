@@ -14,7 +14,8 @@ namespace hthservices.Models
         public int? Size { get; set; }
         public bool? Desc { get; set; }
         public string OrderField {get; set;}
-
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
 
         public int GetCorrectSize()
         {
@@ -25,6 +26,9 @@ namespace hthservices.Models
             string order_by = "";
             string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn");
             string select = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn");
+
+            string where = "";
+
             group = group.Trim(',');
             select = select.Trim(',');
             if (!string.IsNullOrWhiteSpace(group))
@@ -43,7 +47,12 @@ namespace hthservices.Models
                 order_by = " ORDER BY " + OrderField + ((Desc??true)?" DESC":" ASC");
             }
 
-            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + group + order_by + " LIMIT " + GetCorrectSize() + " OFFSET " + (((Page ?? 1) - 1) * GetCorrectSize());
+            if(!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+            {
+                where = " WHERE CurrentDate >= '" + FromDate + "' AND CurrentDate <= '" + ToDate + "' ";
+            }
+
+            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + where + group + order_by + " LIMIT " + GetCorrectSize() + " OFFSET " + (((Page ?? 1) - 1) * GetCorrectSize());
             
             return sqlSaveChannel;
         }
@@ -52,6 +61,7 @@ namespace hthservices.Models
         {
             string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn");
             group = group.Trim(',');
+            string where = "";
             if (!string.IsNullOrWhiteSpace(group))
             {
                 group = " GROUP BY " + group;
@@ -60,7 +70,11 @@ namespace hthservices.Models
             {
                 group = " GROUP BY ChannelKey, CurrentDate, DateOn";
             }
-            string sqlSaveChannel = "SELECT count(*) FROM (SELECT * FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + group +" )";
+            if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+            {
+                where = " WHERE CurrentDate >= '" + FromDate + "' AND CurrentDate <= '" + ToDate + "' ";
+            }
+            string sqlSaveChannel = "SELECT count(*) FROM (SELECT * FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + where + group + " )";
 
             return sqlSaveChannel;
         }
