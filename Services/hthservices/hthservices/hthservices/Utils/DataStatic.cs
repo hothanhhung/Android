@@ -71,6 +71,7 @@ namespace hthservices.Utils
         public const string FROM_HAUGIANGTV_PAGE = "http://haugiangtivi.vn/?page_id=17";// post fDay:"16" fMonth:"6" fYear:"2016"  fKenh:"truyen-hinh"  submit:"Xem"
         public const string FROM_HAIPHONG_PAGE = "http://thp.org.vn/";// get current date
         public const string FROM_SONLA_PAGE = "http://sonlatv.vn/lich-phat-song?loai=truyenhinh&chonngay%5Bvalue%5D%5Bdate%5D={0}";// 18/06/2016
+        public const string FROM_THVL_PAGE = "http://www.thvl.vn/?cat=40&kenh={0}&ngay={1}";// 2016-08-13
 
         #endregion
 
@@ -103,7 +104,7 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="DISCOVERY", Value="45"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TRAVEL&LIVING", Value="46"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="AnimalPlanet", Value="47"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenHinhVinhLongTHVL1", Value="65"},
+             //new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenHinhVinhLongTHVL1", Value="65"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenhinhDaNangDRT2", Value="74"},
              //new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="StarMovies", Value="121"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="StarWorld", Value="120"},
@@ -205,7 +206,9 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_NAMDINHTV_PAGE, ChannelKey="TruyenhinhNamDinhNTV", Value=""},
              new ChannelToServer(){Server=FROM_HAUGIANGTV_PAGE, ChannelKey="TruyenHinhHauGiangHGTV", Value=""},
              new ChannelToServer(){Server=FROM_HAIPHONG_PAGE, ChannelKey="TruyenhinhHaiPhongTHP", Value=""},
-             new ChannelToServer(){Server=FROM_SONLA_PAGE, ChannelKey="TruyenhinhSonLaSTV", Value=""}
+             new ChannelToServer(){Server=FROM_SONLA_PAGE, ChannelKey="TruyenhinhSonLaSTV", Value=""},
+             new ChannelToServer(){Server=FROM_THVL_PAGE, ChannelKey="TruyenHinhVinhLongTHVL1", Value="THVL1"},
+             new ChannelToServer(){Server=FROM_THVL_PAGE, ChannelKey="TruyenHinhVinhLongTHVL2", Value="THVL2"}
              
         };
         #endregion

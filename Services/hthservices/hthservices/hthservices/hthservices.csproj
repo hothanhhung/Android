@@ -1060,6 +1060,8 @@
     <Content Include="Admin\bower_components\angular-1.5.8\i18n\angular-locale_zu-za.js" />
     <Content Include="Admin\bower_components\angular-1.5.8\i18n\angular-locale_zu.js" />
     <Content Include="Admin\bower_components\angular-1.5.8\version.txt" />
+    <Content Include="Admin\bower_components\angular_material-1.1.0-rc2\angular-material.min.css" />
+    <Content Include="Admin\bower_components\angular_material-1.1.0-rc2\angular-material.min.js" />
     <Content Include="Admin\bower_components\bootstrap-3.3.7\css\bootstrap-theme.css" />
     <Content Include="Admin\bower_components\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
     <Content Include="Admin\bower_components\bootstrap-3.3.7\css\bootstrap.css" />
@@ -1070,6 +1072,10 @@
     <Content Include="Admin\bower_components\bootstrap-3.3.7\js\npm.js" />
     <Content Include="Admin\bower_components\jQuery-3.1.0\jquery-3.1.0.js" />
     <Content Include="Admin\bower_components\jQuery-3.1.0\jquery-3.1.0.min.js" />
+    <Content Include="Admin\bower_components\morris-0.4.1\morris-0.4.1.min.js" />
+    <Content Include="Admin\bower_components\morris-0.4.1\morris.css" />
+    <Content Include="Admin\bower_components\morris-0.4.1\raphael-min.js" />
+    <Content Include="Admin\bower_components\sbadmin\sb-admin.css" />
     <Content Include="Admin\directives\directives.js" />
     <Content Include="Admin\modules\dashboard\dashboard.js" />
     <Content Include="Admin\modules\dashboard\dashboard.tpl.html" />

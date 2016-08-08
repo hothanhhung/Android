@@ -1,6 +1,6 @@
 ﻿// Define the `phonecatApp` module
 var hthServiceApp = angular.module('hthServiceApp', []);
-var URL_SERVICE = "http://localhost:9511";
+var URL_SERVICE = "";
 
 
 

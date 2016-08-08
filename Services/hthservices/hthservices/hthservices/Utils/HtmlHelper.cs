@@ -2085,7 +2085,55 @@ namespace hthservices.Utils
 
             return guideItems;
         }
+        static public List<GuideItem> GetDataFromTHVLUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = String.Format(channelToServer.Server, channelToServer.Value, date.ToString("yyyy-MM-dd"));
 
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                HttpClient http = new HttpClient();
+                var response = http.GetByteArrayAsync(url).Result;
+                String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                source = WebUtility.HtmlDecode(source);
+                HtmlDocument resultat = new HtmlDocument();
+                resultat.LoadHtml(source);
+                var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@class='content-block']");
+                if (schedulerMain != null && schedulerMain.Count > 0)
+                {
+                    var chanelDetail = schedulerMain.FirstOrDefault();
+                    if (chanelDetail != null)
+                    {
+                        var items = chanelDetail.SelectNodes("div//table//tr");
+                        if (items != null)
+                        {
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                var tdTags = item.SelectNodes("td");
+                                if (tdTags != null && tdTags.Count > 1)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                    programName = tdTags.ElementAt(1).InnerText.Trim();
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn))
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+       
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
         {

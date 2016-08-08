@@ -198,6 +198,9 @@ namespace hthservices.Utils
                     case DataStatic.FROM_SONLA_PAGE:
                         guideItems = HtmlHelper.GetDataFromSonLaTVUrl(channelToServer, date);
                         break;
+                    case DataStatic.FROM_THVL_PAGE:
+                        guideItems = HtmlHelper.GetDataFromTHVLUrl(channelToServer, date);
+                        break;                        
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)

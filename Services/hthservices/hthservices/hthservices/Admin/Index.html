@@ -2,16 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="hthServiceApp">
 <head>
     <title></title>
-    <script src="/admin/bower_components/jQuery-3.1.0/jquery-3.1.0.js"></script>
-    <script src="/admin/bower_components/bootstrap-3.3.7/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="/admin/bower_components/bootstrap-3.3.7/css/bootstrap.css" />
-    <script src="/admin/bower_components/angular-1.5.8/angular.js"></script>
-    <script src="/admin/bower_components/angular-1.5.8/angular-route.js"></script>
+    <!--<script src="/admin/bower_components/jQuery-3.1.0/jquery-3.1.0.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>    
+
+    <!--<script src="/admin/bower_components/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/admin/bower_components/bootstrap-3.3.7/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--<script src="/admin/bower_components/angular-1.5.8/angular.min.js"></script>
+    <script src="/admin/bower_components/angular-1.5.8/angular-route.min.js"></script>
     <script src="/admin/bower_components/angular-1.5.8/angular-animate.min.js"></script>
     <script src="/admin/bower_components/angular-1.5.8/angular-aria.min.js"></script>
-    <script src="/admin/bower_components/angular-1.5.8/angular-messages.min.js"></script>
-    <link rel="stylesheet" href="/admin/bower_components/angular_material-1.1.0-rc2/angular-material.min.css">
-    <script src="/admin/bower_components/angular_material-1.1.0-rc2/angular-material.min.js"></script>
+    <script src="/admin/bower_components/angular-1.5.8/angular-messages.min.js"></script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+    
+    <!--<link rel="stylesheet" href="/admin/bower_components/angular_material-1.1.0-rc2/angular-material.min.css">
+    <script src="/admin/bower_components/angular_material-1.1.0-rc2/angular-material.min.js"></script>-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
     <script src="/admin/app.module.js"></script>
     <script src="/admin/app.config.js"></script>
 
@@ -20,13 +35,19 @@
     <script src="/admin/modules/home/home.js"></script>
     <script src="/admin/modules/grid-report/grid-report.js"></script>
     <script src="/admin/modules/dashboard/dashboard.js"></script>
-    <script src="/admin/bower_components/morris-0.4.1/raphael-min.js"></script>
+    <!--<script src="/admin/bower_components/morris-0.4.1/raphael-min.js"></script>
     <script src="/admin/bower_components/morris-0.4.1/morris-0.4.1.min.js"></script>
-    <link rel="stylesheet" href="/admin/bower_components/morris-0.4.1/morris.css" />
-    <link rel="stylesheet" href="/admin/bower_components/sbadmin/sb-admin.css" />
+    <link rel="stylesheet" href="/admin/bower_components/morris-0.4.1/morris.css" />-->
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.4.1/morris.min.js"></script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.4.1/morris.css" />
+
+    <!--<link rel="stylesheet" href="/admin/bower_components/sbadmin/sb-admin.css" />-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/3.3.7/css/sb-admin-2.min.css" />
+    
 </head>
-<body style="background-color:white">
+<body style="background-color:white; padding-left:20px; padding-right:20px">
     <!--<div ngIf="AuthInfo.Message!=''">{{AuthInfo.Message}}</div>
     <input type="text" ng-model="Username" placeholder="Username" required="required" />
     <input type="password" ng-model="Password" placeholder="Password" required="required" />
@@ -35,4 +56,4 @@
         <div ng-view></div>
     </div>
 </body>
-</>
+</html>

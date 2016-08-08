@@ -19,7 +19,8 @@ hthServiceApp.controller('DashboardController',
     $scope.ScheduleRequestLogs = { FromDate: new Date(), ToDate: new Date(), IsLoading: false, TotalRequest: 0, TotalFailedRequest: 0 };
     $scope.ScheduleRequestLogs.TopRequests = [];
     $scope.ScheduleRequestLogs.TopFailedRequests = [];
-    $scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), $scope.ScheduleRequestLogs.ToDate.getMonth(), 1);
+    $scope.ScheduleRequestLogs.QuickSearchTitle = "Customized";
+    //$scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), $scope.ScheduleRequestLogs.ToDate.getMonth(), 1);
     $scope.GetReport = function () {
         var getReportUrl = URL_SERVICE + '/api/ReportApi/Dashboard/?token=' + $rootScope.AuthInfo.Token + "&fromDate=" + GetStringOfDate($scope.ScheduleRequestLogs.FromDate) + "&toDate=" + GetStringOfDate($scope.ScheduleRequestLogs.ToDate);
         
@@ -59,6 +60,42 @@ hthServiceApp.controller('DashboardController',
         pointSize: 2,
         hideHover: 'auto'
     });
+
+    $scope.UpdateSearchDate = function (id) {
+        switch(id) {
+            case 1:
+                $scope.ScheduleRequestLogs.QuickSearchTitle = "7 Days";
+                $scope.ScheduleRequestLogs.ToDate=new Date(); 
+                $scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), $scope.ScheduleRequestLogs.ToDate.getMonth(), $scope.ScheduleRequestLogs.ToDate.getDate() - 7);
+                break;
+            case 2:
+                $scope.ScheduleRequestLogs.QuickSearchTitle = "30 Days";
+                $scope.ScheduleRequestLogs.ToDate=new Date(); 
+                $scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), $scope.ScheduleRequestLogs.ToDate.getMonth(), $scope.ScheduleRequestLogs.ToDate.getDate() - 30);
+                break;
+            case 3:
+                $scope.ScheduleRequestLogs.QuickSearchTitle = "This Week";
+                $scope.ScheduleRequestLogs.ToDate = new Date();
+                $scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), $scope.ScheduleRequestLogs.ToDate.getMonth(), $scope.ScheduleRequestLogs.ToDate.getDate() - $scope.ScheduleRequestLogs.ToDate.getDay());
+                break;
+            case 4:
+                $scope.ScheduleRequestLogs.QuickSearchTitle = "This Month";
+                $scope.ScheduleRequestLogs.ToDate = new Date();
+                $scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), $scope.ScheduleRequestLogs.ToDate.getMonth(), 1);
+                break;
+            case 5:
+                $scope.ScheduleRequestLogs.QuickSearchTitle = "This Year";
+                $scope.ScheduleRequestLogs.ToDate = new Date();
+                $scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), 0, 1);
+                break;
+            case 6:
+                $scope.ScheduleRequestLogs.QuickSearchTitle = "All Time";
+                $scope.ScheduleRequestLogs.ToDate = new Date();
+                $scope.ScheduleRequestLogs.FromDate = new Date(2015, 0, 1);
+            default:
+                $scope.ScheduleRequestLogs.QuickSearchTitle = "Customized";
+        } 
+    }
 
     $scope.GetReport();
 

@@ -8,7 +8,7 @@ namespace hthservices.Data
     public class AuthData
     {
         private const string USERNAME = "admin";
-        private const string PASSWORD = "admin";
+        private const string PASSWORD = "hungadmin";
         private const int TIMEOUT = 3600; //seconds
         private static List<KeyValuePair<string, DateTime>> listLogins = new List<KeyValuePair<string, DateTime>>();
         public static string Login(string username, string password)

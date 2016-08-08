@@ -24,9 +24,9 @@ function GridReportController($scope, $rootScope, $http, $location) {
         NoCurrentDate: false,
         NoDateOn: false,
         Page: 1,
-        Size: 10,
-        Desc: null,
-        OrderField: '',
+        Size: 30,
+        Desc: true,
+        OrderField: 'CurrentDate',
     };
 
     ctrl.GetReport = function () {
