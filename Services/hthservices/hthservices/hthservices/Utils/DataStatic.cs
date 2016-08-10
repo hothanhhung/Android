@@ -35,7 +35,7 @@ namespace hthservices.Utils
 
         #region Server
         public const string FROM_VOV_PAGE = "http://vovtv.vov.vn/Schedule.aspx?";//day=29/05/2016
-        public const string FROM_MYTIVI_PAGE = "http://www.mytv.com.vn/module/ajax/ajax_get_schedule.php?"; //?channelId=22&dateSchedule=28/05/2016
+        public const string FROM_MYTIVI_PAGE = "http://www.mytv.com.vn/module/ajax/ajax_get_schedule.php"; //?channelId=22&dateSchedule=28/05/2016
         public const string FROM_VTC14_PAGE = "http://vtc14.vn/";
         public const string FROM_TRUYENHINHSO_PAGE = "http://truyenhinhso.vn/Pages/Ajax/GetSchedule.aspx?channelid={0}&date={1}";//date=28/05/2016&channelid
         public const string FROM_TVNET_PAGE = "http://vn.tvnet.gov.vn/modules/process.php?option=epg&channel_id={0}&date={1}"; //channel_id=1&date=28/05/2016"
@@ -72,7 +72,7 @@ namespace hthservices.Utils
         public const string FROM_HAIPHONG_PAGE = "http://thp.org.vn/";// get current date
         public const string FROM_SONLA_PAGE = "http://sonlatv.vn/lich-phat-song?loai=truyenhinh&chonngay%5Bvalue%5D%5Bdate%5D={0}";// 18/06/2016
         public const string FROM_THVL_PAGE = "http://www.thvl.vn/?cat=40&kenh={0}&ngay={1}";// 2016-08-13
-
+        public const string FROM_KPLUS_PAGE = "http://www.kplus.vn/Schedule/getSchedule";
         #endregion
 
         #region Channel to server

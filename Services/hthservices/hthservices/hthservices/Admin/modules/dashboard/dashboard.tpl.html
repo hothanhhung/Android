@@ -1,35 +1,35 @@
 ﻿
 <div class="container-fluid" style="position: relative;">
-    <div ng-if="ScheduleRequestLogs.IsLoading" style="width: 100%; height: 100%; position: absolute; text-align: center; background-color: rgba(179, 175, 179, 0.46); z-index: 9999;">
-        <span style="top: 50%; left: 45%; position: absolute; font-weight: bold; padding:5px; background-color: grey;"> loading... </span>
+    <div ng-if="ScheduleRequestLogs.IsLoading" class="loading">
+        <span class="text-loading"> loading... </span>
     </div>
-    <div class="row">
+    <div class="row" style="padding-top: 10px;">
         <div class="form-inline row">
-            <div class="col-lg-6 col-md-6">
-                <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-12">
+                <div class="form-group col-sm-6 col-md-6" style="padding-right: 0px;">
                     <label class="form-group">
-                        From Date
+                        From
                     </label>
                     <div class="form-group">
                         <md-datepicker ng-model="ScheduleRequestLogs.FromDate" md-placeholder="Enter date" md-max-date="ScheduleRequestLogs.ToDate" ng-change="UpdateSearchDate(0)"></md-datepicker>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-sm-6 col-md-6">
                     <label class="form-group">
-                        To Date
+                        To
                     </label>
                     <div class="form-group">
                         <md-datepicker ng-model="ScheduleRequestLogs.ToDate" md-placeholder="Enter date" md-max-date="ToDateMaxDate" ng-change="UpdateSearchDate(0)"></md-datepicker>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="col-lg-6 col-md-6">
+            <div class="form-group col-md-6 col-sm-12">
+                <div class="form-group col-md-6 col-sm-6">
                     <label class="form-group">
                         Quick Select
                     </label>
                     <div class="dropdown form-group" style="width:120px">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <button style="border-bottom-width: 1px; border-color: white; border-bottom-color: #ccc; border-style: solid;" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             {{ScheduleRequestLogs.QuickSearchTitle}}
                             <span class="caret"></span>
                         </button>
@@ -44,7 +44,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
+                <div class="form-group col-md-6 col-sm-6">
                     <div class="form-group">
                         <button type="submit" ng-click="GetReport()" class="btn btn-primary">Apply</button>
                     </div>
@@ -54,7 +54,7 @@
         <div class="form-group">
         </div>
         <div class="row">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-md-6 col-sm-12">
                 <div class="panel panel-green">
                     <div class="panel-heading">
                         <div class="row">
@@ -76,7 +76,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6">
+            <div class="col-md-6 col-sm-12">
                 <div class="panel panel-red">
                     <div class="panel-heading">
                         <div class="row">
@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-md-6 col-sm-12">
                 <div class="panel panel-green">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Top Requests</h3>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6">
+            <div class="col-md-6 col-sm-12">
                 <div class="panel panel-red">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Top Failed Requests</h3>

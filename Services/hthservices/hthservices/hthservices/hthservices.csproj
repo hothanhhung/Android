@@ -1086,6 +1086,7 @@
     <Content Include="Admin\modules\login\login.js" />
     <Content Include="Admin\Index.html" />
     <Content Include="Admin\modules\login\login.tpl.html" />
+    <Content Include="Admin\style.css" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
