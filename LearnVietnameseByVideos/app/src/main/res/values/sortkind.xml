@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_kind_array">
+        <item>Relevance</item>
+        <item>Date</item>
+        <item>View count </item>
+        <item>Rating</item>
+        <item>Title</item>
+    </string-array>
+</resources>

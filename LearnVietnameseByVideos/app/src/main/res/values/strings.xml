@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Learn Vietnamese By Videos</string>
+    <string name="example_string">example string</string>
+    <string name="empty_string"></string>
+    <string name="loading_string">loading...</string>
+    <string name="error_internet">Internet is disconnected</string>
+    <string name="content_about">All videos come from Youtube.</string>
+    <string name="title_activity_main">Learn Vietnamese By Videos</string>
+    <string name="error_title">Error</string>
+    <string name="notify_title">Notify</string>
+    <string name="title_activity_player_youtube_movie">Play video</string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+    <string name="strFavorite">Add to Favorite</string>
+    <string name="strBoQua">Cancel</string>
+    <string name="strXoaNgay">Clear</string>
+    <string name="strChonNgay">Select</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="no_video_string">Sorry! No data</string>
+	<string name="ad_unit_id">ca-app-pub-4576847792571626/2642153991</string>
+	<string name="interstitial_unit_id"> ca-app-pub-4576847792571626/4118887190</string>
+
+</resources>
