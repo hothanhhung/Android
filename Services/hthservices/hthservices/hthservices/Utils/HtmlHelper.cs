@@ -2174,12 +2174,14 @@ namespace hthservices.Utils
             {
                 using (HttpClient http = new HttpClient())
                 {
+                    http.BaseAddress = new Uri("http://www.kplus.vn");
                     http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-
-                    var stringContent = "categories=0&date=" + date.ToString("dd/MM/yyyy");
-                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    http.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
+                    http.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0");
+                    var stringContent = "";//date=17-8-2016&categories=11";// +date.ToString("dd/MM/yyyy");
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/json");
                     var response = http.PostAsync(url, httpContent).Result;
-                    
+                    //var response = http.PostAsJsonAsync(url, stringContent).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         var bytes = response.Content.ReadAsByteArrayAsync().Result;
@@ -2217,6 +2219,190 @@ namespace hthservices.Utils
 
             return guideItems;
         }
+
+        static public List<GuideItem> GetDataFromSCTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string postdata = "ctl00%24RadScriptManager1=ctl00%24RadScriptManager1%7Cctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel&ctl00_RadScriptManager1_TSM=%3B%3BSystem.Web.Extensions%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D31bf3856ad364e35%3Aen-US%3A50b12c66-1dd3-4ebf-87e6-55014086ad94%3Aea597d4b%3Ab25378d2%3BTelerik.Web.UI%2C%20Version%3D2012.1.411.35%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D121fae78165ba3d4%3Aen-US%3A4cad056e-160b-4b85-8751-cc8693e9bcd0%3A16e4e7cd%3Aed16cbdc%3Af7645509%3A7c926187%3A8674cba1%3Ab7778d6c%3Ac08e9f8a%3Aa51ee93e%3A59462f1&ctl00%24txtMasterSearch=&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel={0}&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24sDate={1}&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24sDate%24dateInput={1}-00-00-00&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_dateInput_ClientState=%7B%22enabled%22%3Atrue%2C%22emptyMessage%22%3A%22%22%2C%22minDateStr%22%3A%221%2F1%2F1900%200%3A0%3A0%22%2C%22maxDateStr%22%3A%2212%2F31%2F2099%200%3A0%3A0%22%2C%22enteredText%22%3A%22%22%7D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_calendar_SD=%5B%5D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_calendar_AD=%5B%5B1900%2C1%2C1%5D%2C%5B2099%2C12%2C30%5D%2C%5B2016%2C8%2C15%5D%5D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_ClientState=%7B%22minDateStr%22%3A%221%2F1%2F1900%200%3A0%3A0%22%2C%22maxDateStr%22%3A%2212%2F31%2F2099%200%3A0%3A0%22%7D&__EVENTTARGET=ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=%2FwEPDwUKMTA3MTA2NDk2OA9kFgJmD2QWBAIBD2QWAgIDDxYCHgdjb250ZW50ZGQCAw8WAh4GYWN0aW9uBRQvbGljaC1waGF0LXNvbmcuaHRtbBYCAgMPZBYCAgEPZBYCAgEPZBYGZg9kFgICAQ9kFgJmDxYCHgtfIUl0ZW1Db3VudGZkAgEPZBYCAgEPZBYIAgMPDxYCHhdFbmFibGVBamF4U2tpblJlbmRlcmluZ2hkZAIFDxAPFgYeDURhdGFUZXh0RmllbGQFB0NoYW5uZWweDkRhdGFWYWx1ZUZpZWxkBQxDaGFubmVsTWFwSUQeC18hRGF0YUJvdW5kZ2QQFSoSLS0gQ2jhu41uIGvDqm5oIC0tBVNDVFYxBlNDVFYgMg5TQ1RWIDMgLSBTRUVUVgZTQ1RWIDQGU0NUViA1BlNDVFYgNgZTQ1RWIDcGU0NUViA4BlNDVFYgOQdTQ1RWIDEwEVNDVFYgMTEgLSBUViBTVEFSB1NDVFYgMTIHU0NUViAxMwdTQ1RWIDE0B1NDVFYgMTUHU0NUViAxNhZTQ1RWIFBoaW0gVOG7lW5nIEjhu6NwElNDVFYgSEQgVGjhu4MgVGhhbwVWVEMxNAVWVEMxNgRWVEMyBFZUQzMLVlRDNS1Tb2ZhVFYEVlRDOARUSEJUBFRISEcHVEhEVGhhcARWVEMxCFRvZGF5IFRWDFRIIE5JTkggQklOSAdRUFZOIEhED1ZUQzktTEVUJ1MgVklFVAdWVFYgSFVFA0hCTwdDaW5lbWF4CUZveCBTcG9ydApTVEFSTU9WSUVTClNUQVJTUE9SVFMJU1RBUldPUkxEA0FYTgJEVxUqATABMgEzAjI0ATUBNgE3ATgBOQIxNgI3NwI2MQI2MgMxMDUCMzYCMTADMTAzATEDMTA5AzE1NwMxNTkBMAEwAzE3MQEwAjQ5ATACMzgCNjMCNTkCOTgDMTI4Ajg5AjQwAjcwAjc2AjU3AjcxAjU4AjgyAjgxAjkxFCsDKmdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZxYBAglkAgcPDxYGHgdNaW5EYXRlBgBAVyBTBVEIHgxTZWxlY3RlZERhdGUGAKhdbWTE04geB01heERhdGUGAEBxb7E%2BMQlkFgRmDxQrAAgPFhIeBFNraW4FB0RlZmF1bHQeBFRleHQFEzIwMTYtMDgtMTUtMDAtMDAtMDAeEUVuYWJsZUFyaWFTdXBwb3J0aB4NTGFiZWxDc3NDbGFzcwUHcmlMYWJlbB8DaB8JBgBAcW%2BxPjEJHgxFbXB0eU1lc3NhZ2VlHwcGAEBXIFMFUQgeEV9za2lwTU1WYWxpZGF0aW9uaGQWBh4FV2lkdGgbAAAAAAAAWUAHAAAAHghDc3NDbGFzcwURcmlUZXh0Qm94IHJpSG92ZXIeBF8hU0ICggIWBh8QGwAAAAAAAFlABwAAAB8RBRFyaVRleHRCb3ggcmlFcnJvch8SAoICFgYfEBsAAAAAAABZQAcAAAAfEQUTcmlUZXh0Qm94IHJpRm9jdXNlZB8SAoICFgYfEBsAAAAAAABZQAcAAAAfEQUTcmlUZXh0Qm94IHJpRW5hYmxlZB8SAoICFgYfEBsAAAAAAABZQAcAAAAfEQUUcmlUZXh0Qm94IHJpRGlzYWJsZWQfEgKCAhYGHxAbAAAAAAAAWUAHAAAAHxEFEXJpVGV4dEJveCByaUVtcHR5HxICggIWBh8QGwAAAAAAAFlABwAAAB8RBRByaVRleHRCb3ggcmlSZWFkHxICggJkAgIPFCsADQ8WFgUERm9jRAYAgLwZn8TTCAUPUmVuZGVySW52aXNpYmxlZwUNU2VsZWN0ZWREYXRlcw8FjwFUZWxlcmlrLldlYi5VSS5DYWxlbmRhci5Db2xsZWN0aW9ucy5EYXRlVGltZUNvbGxlY3Rpb24sIFRlbGVyaWsuV2ViLlVJLCBWZXJzaW9uPTIwMTIuMS40MTEuMzUsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49MTIxZmFlNzgxNjViYTNkNBQrAAAFEUVuYWJsZU11bHRpU2VsZWN0aAUNQ3VsdHVyZU5hbWVJRAUFdmktVk4FC1NwZWNpYWxEYXlzDwWSAVRlbGVyaWsuV2ViLlVJLkNhbGVuZGFyLkNvbGxlY3Rpb25zLkNhbGVuZGFyRGF5Q29sbGVjdGlvbiwgVGVsZXJpay5XZWIuVUksIFZlcnNpb249MjAxMi4xLjQxMS4zNSwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj0xMjFmYWU3ODE2NWJhM2Q0FCsAAAUETWF4RAYAgAdF6D0xCQUETWluRAYAQFcgUwVRCAUNQ3VsdHVyZUluZm9JRCgpbVN5c3RlbS5HbG9iYWxpemF0aW9uLkN1bHR1cmVJbmZvLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFdmktVk4FCUN1bHR1cmVJRAKqCAUQVmlld1NlbGVjdG9yVGV4dAUBeA8WBh8MaB8KBQdEZWZhdWx0HwNoZGQWBB8RBQtyY01haW5UYWJsZR8SAgIWBB8RBQxyY090aGVyTW9udGgfEgICZBYEHxEFCnJjU2VsZWN0ZWQfEgICZBYEHxEFCnJjRGlzYWJsZWQfEgICFgQfEQUMcmNPdXRPZlJhbmdlHxICAhYEHxEFCXJjV2Vla2VuZB8SAgIWBB8RBQdyY0hvdmVyHxICAhYEHxEFMVJhZENhbGVuZGFyTW9udGhWaWV3IFJhZENhbGVuZGFyTW9udGhWaWV3X0RlZmF1bHQfEgICFgQfEQUJcmNWaWV3U2VsHxICAmQCCQ9kFggCAw8WAh8CAhcWLgIBD2QWAmYPFQIFMDE6MDAcTOG6pFkgQ0jhu5JORyBHScOAVSBTQU5HIFQzOGQCAg9kFgJmDxUCBTAyOjAwF1TDglkgRFUgS8OdIFQzMCAoSOG6vlQpZAIDD2QWAmYPFQIFMDM6MDAdUEjDmkMgVsWoIFbDgCBQSEnDik4gVsOCTiBUMzJkAgQPZBYCZg8VAgUwNDowMBtBTkggSMOZTkcgVEjDgE5IIFRS4bqgSSBUMTJkAgUPZBYCZg8VAgUwNTowMCBUUlVZ4buATiBUSFVZ4bq%2BVCBMScOKVSBUUkFJIFQxNWQCBg9kFgJmDxUCBTA2OjAwHVBIw5pDIFbFqCBWw4AgUEhJw4pOIFbDgk4gVDMzZAIHD2QWAmYPFQIFMDc6MDAmR0lBIMSQw4xOSCBWVUkgVuG6uiBISeG7hk4gxJDhuqBJIFQxNDlkAggPZBYCZg8VAgUwODowMBNUw4JZIERVIEvDnSBQMiAtIFQxZAIJD2QWAmYPFQIFMDk6MDAgVFJVWeG7gE4gVEhVWeG6vlQgTEnDilUgVFJBSSBUMTZkAgoPZBYCZg8VAgUxMDowMBxM4bqkWSBDSOG7kk5HIEdJw4BVIFNBTkcgVDM5ZAILD2QWAmYPFQIFMTE6MDAbQU5IIEjDmU5HIFRIw4BOSCBUUuG6oEkgVDEzZAIMD2QWAmYPFQIFMTI6MDATVMOCWSBEVSBLw50gUDIgLSBUMmQCDQ9kFgJmDxUCBTEzOjAwHEzhuqRZIENI4buSTkcgR0nDgFUgU0FORyBUNDBkAg4PZBYCZg8VAgUxNDowMCZHSUEgxJDDjE5IIFZVSSBW4bq6IEhJ4buGTiDEkOG6oEkgVDE1MGQCDw9kFgJmDxUCBTE1OjAwG0FOSCBIw5lORyBUSMOATkggVFLhuqBJIFQxNGQCEA9kFgJmDxUCBTE2OjAwHVBIw5pDIFbFqCBWw4AgUEhJw4pOIFbDgk4gVDM0ZAIRD2QWAmYPFQIFMTc6MDAmR0lBIMSQw4xOSCBWVUkgVuG6uiBISeG7hk4gxJDhuqBJIFQxNTFkAhIPZBYCZg8VAgUxODowMBNUw4JZIERVIEvDnSBQMiAtIFQzZAITD2QWAmYPFQIFMTk6MDAcTkfGr%2BG7nEkgQuG7kCBUSMOCTiBZw4pVIFQxMWQCFA9kFgJmDxUCBTIwOjAwG0FOSCBIw5lORyBUSMOATkggVFLhuqBJIFQxNWQCFQ9kFgJmDxUCBTIxOjAwHEzhuqRZIENI4buSTkcgR0nDgFUgU0FORyBUNDFkAhYPZBYCZg8VAgUyMjowMB1QSMOaQyBWxaggVsOAIFBIScOKTiBWw4JOIFQzNWQCFw9kFgJmDxUCBTIzOjAwJkdJQSDEkMOMTkggVlVJIFbhurogSEnhu4ZOIMSQ4bqgSSBUMTQ5ZAIHDw8WAh4LTmF2aWdhdGVVcmwFPC9ob20tbmF5LXhlbS1naS9ob20tbmF5LXhlbS1naS84MzM3L2FuaC1odW5nLXRoYW5oLXRyYWkuaHRtbGQWAmYPDxYEHghJbWFnZVVybAU7L01lZGlhL0FydGljbGVzLzIwMTYvNy8zODg3YTFlZWEwNWY0MmY0OTQzMDU1Mjc1YTFhMTI1Ni5qcGceDUFsdGVybmF0ZVRleHQFE2FuaCBodW5nIHRoYW5oIHRyYWlkZAIJDw8WBB8LBRdBbmggaMO5bmcgdGjDoG5oIHRy4bqhaR8TBTwvaG9tLW5heS14ZW0tZ2kvaG9tLW5heS14ZW0tZ2kvODMzNy9hbmgtaHVuZy10aGFuaC10cmFpLmh0bWxkZAINDxYCHwICAxYGZg9kFgZmDxUBOi9ob20tbmF5LXhlbS1naS9ob20tbmF5LXhlbS1naS84MjcwL25ndW9pLWJvLXRoYW4teWV1Lmh0bWxkAgEPDxYEHxQFPH4vTWVkaWEvQXJ0aWNsZXMvMjAxNi83LzAwMGE2NWFhMTNmMTRhNDRiMGZkY2UwODJhOGY2NGUyLmpwZx8VBRFuZ3VvaSBibyB0aGFuIHlldWRkAgIPFQI6L2hvbS1uYXkteGVtLWdpL2hvbS1uYXkteGVtLWdpLzgyNzAvbmd1b2ktYm8tdGhhbi15ZXUuaHRtbBhOZ8aw4budaSBi4buRIHRow6JuIHnDqnVkAgEPZBYGZg8VAU8vaG9tLW5heS14ZW0tZ2kvaG9tLW5heS14ZW0tZ2kvNzYwMS8tdGF5LWR1LWt5LS10dmItdGFpLW5nby1raGFuLWdpYS1zY3R2OS5odG1sZAIBDw8WBB8UBTx%2BL01lZGlhL0FydGljbGVzLzIwMTYvNy9jOTljYzc3YmJmOTY0ZDhkYTI1YTFjNmYxNmU0MTQwMy5qcGcfFQUmIHRheSBkdSBreSAgdHZiIHRhaSBuZ28ga2hhbiBnaWEgc2N0djlkZAICDxUCTy9ob20tbmF5LXhlbS1naS9ob20tbmF5LXhlbS1naS83NjAxLy10YXktZHUta3ktLXR2Yi10YWktbmdvLWtoYW4tZ2lhLXNjdHY5Lmh0bWwuIlTDonkgZHUga8O9IiBUVkIgdMOhaSBuZ%2BG7mSBraMOhbiBnaeG6oyBTQ1RWOWQCAg9kFgZmDxUBOy9ob20tbmF5LXhlbS1naS9waGltLWRhLWNoaWV1LzczNDYvbGF5LWNob25nLWdpYXUtc2FuZy5odG1sZAIBDw8WBB8UBTx%2BL01lZGlhL0FydGljbGVzLzIwMTYvNy81NTVkNGJmNDg1OTY0YTBmOTY5NTExOWUwMzZjM2YxYS5qcGcfFQUTbGF5IGNob25nIGdpYXUgc2FuZ2RkAgIPFQI7L2hvbS1uYXkteGVtLWdpL3BoaW0tZGEtY2hpZXUvNzM0Ni9sYXktY2hvbmctZ2lhdS1zYW5nLmh0bWwYTOG6pXkgY2jhu5NuZyBnacOgdSBzYW5nZAICD2QWAgIBD2QWAgIBDxYCHwICGRYyZg9kFgRmDxUBAGQCAQ8WAh4Dc3JjBSJ%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djEucG5nZAIBD2QWBGYPFQEAZAIBDxYCHxYFIn4vTWVkaWEvU2hvcnRDdXQvY2hhbm5lbC9zY3R2Mi5wbmdkAgIPZBYEZg8VAQBkAgEPFgIfFgUifi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHYzLnBuZ2QCAw9kFgRmDxUBAGQCAQ8WAh8WBSJ%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djQucG5nZAIED2QWBGYPFQEAZAIBDxYCHxYFIn4vTWVkaWEvU2hvcnRDdXQvY2hhbm5lbC9zY3R2NS5wbmdkAgUPZBYEZg8VAQBkAgEPFgIfFgUifi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHY2LnBuZ2QCBg9kFgRmDxUBAGQCAQ8WAh8WBSJ%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djcucG5nZAIHD2QWBGYPFQEAZAIBDxYCHxYFIn4vTWVkaWEvU2hvcnRDdXQvY2hhbm5lbC9zY3R2OC5wbmdkAggPZBYEZg8VAQBkAgEPFgIfFgUifi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHY5LnBuZ2QCCQ9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djEwLnBuZ2QCCg9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djExLnBuZ2QCCw9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djEyLnBuZ2QCDA9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djEzLnBuZ2QCDQ9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djE0LnBuZ2QCDg9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djE1LnBuZ2QCDw9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djE2LnBuZ2QCEA9kFgRmDxUBAGQCAQ8WAh8WBSR%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0dnB0aC5wbmdkAhEPZBYEZg8VAQBkAgEPFgIfFgUjfi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHZ0dC5wbmdkAhIPZBYEZg8VAQBkAgEPFgIfFgUlfi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHZwbmdkLnBuZ2QCEw9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0dnRuLnBuZ2QCFA9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0dnB2LmpwZ2QCFQ9kFgRmDxUBAGQCAQ8WAh8WBSV%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0dmd0dGgucG5nZAIWD2QWBGYPFQEAZAIBDxYCHxYFJH4vTWVkaWEvU2hvcnRDdXQvY2hhbm5lbC9zY3R2aGFpLnBuZ2QCFw9kFgRmDxUBAGQCAQ8WAh8WBSF%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvYnR2My5qcGdkAhgPZBYEZg8VAQBkAgEPFgIfFgUhfi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL2J0djUucG5nZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAwUrY3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRjdGwwMCRjdGwwMSRzRGF0ZQU0Y3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRjdGwwMCRjdGwwMSRzRGF0ZSRjYWxlbmRhcgU0Y3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRjdGwwMCRjdGwwMSRzRGF0ZSRjYWxlbmRhcn8FEEA1gjRQVuuPnaI8HA%2BA9ngqVOLxxMYWvN3e9kTU&__VIEWSTATEGENERATOR=CA0B0334&__EVENTVALIDATION=%2FwEWLgLLwZTvAQLcktymCQLEs6DQDQK8j%2BfPBwKs4M2hCwKy4M2hCwKx4M2hCwKy4L2iCwK34M2hCwK24M2hCwK14M2hCwKk4M2hCwKr4M2hCwKz4LWiCwK14KmiCwK24IGiCwK24IWiCwKMs8XrCQKx4LWiCwKz4I2iCwLG5oG2DgKz4M2hCwLQwtvqAwLaga2BBQLQws%2FqAwKs4M2hCwKs4M2hCwL4mOiAAgKs4M2hCwKw4OGhCwKs4M2hCwKx4O2hCwK24LmiCwK34OGhCwKr4O2hCwLt6%2FHfDQKk4OGhCwKw4I2iCwK14I2iCwK14LWiCwK34KmiCwK14IGiCwK34O2hCwKk4IWiCwKk4IGiCwKr4IGiCyZp08t0uTG3CNFnMh5pfTLTkxfioivjV0%2BqIIw4VzVm&__ASYNCPOST=false&";//2016-08-15
+            string url = String.Format(channelToServer.Server);
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (var http = new HttpClient())
+                {
+                    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+
+                    var stringContent = string.Format(postdata, channelToServer.Value, date.ToString("yyyy-MM-dd"));
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    var response = http.PostAsync(url, httpContent).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        source = WebUtility.HtmlDecode(source.Replace("\"", ""));
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var schedules = resultat.DocumentNode.SelectNodes("//div[@class='schedule']");
+
+                        if (schedules != null && schedules.Count > 0)
+                        {
+                            var items = schedules.FirstOrDefault().SelectNodes("table//tr");
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var tdTags = item.SelectNodes("td");
+                                if (tdTags != null && tdTags.Count > 1)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                    programName = tdTags.ElementAt(1).InnerText.Trim();
+                                }
+                                var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                guideItems.Add(guideItem);
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
+        static public List<GuideItem> GetDataFromTHSTUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string postdata = "Ngay={0}&X-Requested-With=XMLHttpRequest";//16/08/2016
+            string url = String.Format(channelToServer.Server);
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (var http = new HttpClient())
+                {
+                    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+
+                    var stringContent = string.Format(postdata, date.ToString("dd/MM/yyyy"));
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    var response = http.PostAsync(url, httpContent).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var schedules = resultat.DocumentNode.SelectNodes("//marquee");
+
+                        if (schedules != null && schedules.Count > 0)
+                        {
+                            var items = schedules.FirstOrDefault().SelectNodes("p");
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                var strdata = HttpUtility.HtmlDecode(item.InnerText).Trim().Trim('-').Trim();
+                                var tdTags = strdata.Split(':');
+                                if (tdTags != null && tdTags.Length > 1)
+                                {
+                                    startOn = tdTags.ElementAt(0).Trim();
+                                    startOn = startOn.Replace('h', ':').Trim(':');
+                                    programName = tdTags.ElementAt(1).Trim();
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn))
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
+        static public List<GuideItem> GetDataFromBinhDinhTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string postdata = "date={0}&xem=Xem+lịch+phát+sóng";
+            string url = String.Format(channelToServer.Server);
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (var http = new HttpClient())
+                {
+                    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+
+                    var stringContent = string.Format(postdata, date.ToString("yyyy-MM-dd"));
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    var response = http.PostAsync(url, httpContent).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var schedules = resultat.DocumentNode.SelectNodes("//div[@id='printReady']");
+
+                        if (schedules != null && schedules.Count > 0)
+                        {
+                            var items = schedules.FirstOrDefault().SelectNodes("table//tr/td//p");
+                            for (int i = 0; i < items.Count; i++ )
+                            {
+                                var stritem = items[i].InnerText.Trim();
+                                if (!string.IsNullOrEmpty(stritem) && stritem.Length > 10 && stritem[2] == 'h')
+                                {
+                                    string startOn = "", programName = "";
+                                    stritem = WebUtility.HtmlDecode(stritem); 
+                                    
+                                    startOn = stritem.Substring(0, 5).Replace('h',':').Trim();
+                                    programName = stritem.Substring(6).Trim();
+                                    if (i + 1 < items.Count)
+                                    {
+                                        var strong = items[i + 1].SelectNodes("strong");
+                                        if( strong != null && strong.Count > 0)
+                                        {
+                                            programName += ": " + WebUtility.HtmlDecode(strong.FirstOrDefault().InnerText).Trim();
+                                            i = i + 1;
+                                        }
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(startOn))
+                                    {
+                                        var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                        guideItems.Add(guideItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
         {

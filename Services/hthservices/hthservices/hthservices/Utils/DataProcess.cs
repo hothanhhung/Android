@@ -200,7 +200,16 @@ namespace hthservices.Utils
                         break;
                     case DataStatic.FROM_THVL_PAGE:
                         guideItems = HtmlHelper.GetDataFromTHVLUrl(channelToServer, date);
-                        break;                        
+                        break;
+                    case DataStatic.FROM_SCTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromSCTVUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_THST_PAGE:
+                        guideItems = HtmlHelper.GetDataFromTHSTUrl(channelToServer, date);
+                        break;
+                    case DataStatic.FROM_BINHDINHTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromBinhDinhTVUrl(channelToServer, date);
+                        break;                      
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)
