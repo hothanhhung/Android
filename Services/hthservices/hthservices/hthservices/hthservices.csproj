@@ -1077,6 +1077,8 @@
     <Content Include="Admin\bower_components\morris-0.4.1\raphael-min.js" />
     <Content Include="Admin\bower_components\sbadmin\sb-admin.css" />
     <Content Include="Admin\directives\directives.js" />
+    <Content Include="Admin\modules\filter\filter.js" />
+    <Content Include="Admin\modules\filter\filter.tpl.html" />
     <Content Include="Admin\modules\dashboard\dashboard.js" />
     <Content Include="Admin\modules\dashboard\dashboard.tpl.html" />
     <Content Include="Admin\modules\grid-report\grid-report.js" />

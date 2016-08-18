@@ -1,0 +1,51 @@
+﻿
+<div class="row" style="padding-top: 10px;">
+    <div class="form-inline row">
+        <div class="form-group col-md-6 col-sm-12">
+            <div class="form-group col-sm-6 col-md-6" style="padding-right: 0px;">
+                <label class="form-group">
+                    From
+                </label>
+                <div class="form-group">
+                    <md-datepicker ng-model="$ctrl.fromDate" md-placeholder="Enter date" md-max-date="$ctrl.toDate" ng-change="$ctrl.UpdateSearchDate(0)"></md-datepicker>
+                </div>
+            </div>
+            <div class="form-group col-sm-6 col-md-6">
+                <label class="form-group">
+                    To
+                </label>
+                <div class="form-group">
+                    <md-datepicker ng-model="$ctrl.toDate" md-placeholder="Enter date" md-max-date="$ctrl.ToDateMaxDate" ng-change="$ctrl.UpdateSearchDate(0)"></md-datepicker>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-6 col-sm-12">
+            <div class="form-group col-md-6 col-sm-6">
+                <label class="form-group">
+                    Quick Select
+                </label>
+                <div class="dropdown form-group" style="width:120px">
+                    <button style="border-bottom-width: 1px; border-color: white; border-bottom-color: #ccc; border-style: solid;" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{$ctrl.QuickSearchTitle}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="javascript:void(0)" ng-click="$ctrl.UpdateSearchDate(1)">7 Days</a></li>
+                        <li><a href="javascript:void(0)" ng-click="$ctrl.UpdateSearchDate(2)">30 Days</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:void(0)" ng-click="$ctrl.UpdateSearchDate(3)">Today</a></li>
+                        <li><a href="javascript:void(0)" ng-click="$ctrl.UpdateSearchDate(4)">This Week</a></li>
+                        <li><a href="javascript:void(0)" ng-click="$ctrl.UpdateSearchDate(5)">This Month</a></li>
+                        <li><a href="javascript:void(0)" ng-click="$ctrl.UpdateSearchDate(6)">This Year</a></li>
+                        <li><a href="javascript:void(0)" ng-click="$ctrl.UpdateSearchDate(7)">All Time</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+                <div class="form-group">
+                    <button type="submit" ng-click="$ctrl.ApplyFilter()" class="btn btn-primary">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

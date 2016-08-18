@@ -15,6 +15,20 @@ hthServiceApp.controller('HomeController',
                   return;
               }
           };
+
+          if (typeof ($rootScope.FromDate) == 'undefined')
+          {
+            $scope.FromDate = new Date();
+          } else {
+              $scope.FromDate = $rootScope.FromDate;
+          }
+
+          if (typeof ($rootScope.ToDate) == 'undefined') {
+              $scope.ToDate = new Date();
+          } else {
+              $scope.ToDate = $rootScope.ToDate;
+          }
+
           $scope.Logout = function () {
               var logoutUrl = URL_SERVICE + '/api/Account/Logout/?token=' + $rootScope.AuthInfo.Token;
               $http.get(logoutUrl, null, null).then(
@@ -32,4 +46,17 @@ hthServiceApp.controller('HomeController',
                       alert(responseData.Data.Message);
                   });
           };
+
+          $scope.TriggerRefeshForFailedRequest = false;
+          $scope.TriggerRefeshForRequest = false;
+          $scope.UpdateFilter = function (fromDate, toDate) {
+              $scope.FromDate = fromDate;
+              $scope.ToDate = toDate;
+              $scope.TriggerRefeshForFailedRequest = !$scope.TriggerRefeshForFailedRequest;
+              $scope.TriggerRefeshForRequest = !$scope.TriggerRefeshForRequest;
+
+              //save to root
+              $rootScope.FromDate = fromDate;
+              $rootScope.ToDate = toDate;
+          }
     }]);
