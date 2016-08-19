@@ -9,14 +9,14 @@ namespace hthservices.Data
     {
         private const string USERNAME = "admin";
         private const string PASSWORD = "hungadmin";
-        private const int TIMEOUT = 3600; //seconds
-        private static List<KeyValuePair<string, DateTime>> listLogins = new List<KeyValuePair<string, DateTime>>();
+        private const int TIMEOUT = 1800; //seconds
+        private static Dictionary<string, DateTime> listLogins = new Dictionary<string, DateTime>();
         public static string Login(string username, string password)
         {
             if (USERNAME.Equals(username) && PASSWORD.Equals(password))
             {
                 string key = Guid.NewGuid().ToString();
-                listLogins.Add(new KeyValuePair<string, DateTime>(key, DateTime.Now));
+                listLogins.Add(key, DateTime.Now);
                 return key;
             }
             return string.Empty;
@@ -26,7 +26,7 @@ namespace hthservices.Data
         {
             if (listLogins != null)
             {
-                listLogins.RemoveAll(p => p.Key.Equals(token));
+                listLogins.Remove(token);
             }
             return true;
         }
@@ -35,13 +35,20 @@ namespace hthservices.Data
         {
             if (listLogins!=null)
             {
-                var now = DateTime.Now;
-                listLogins.RemoveAll(p=>(now - p.Value).Seconds > TIMEOUT);
 
-                var item = listLogins.Where(p => p.Key.Equals(token));
-                if (item != null && item.Count() > 0)
+                if ( listLogins.ContainsKey(token))
                 {
-                    return true;
+                    var now = DateTime.Now;
+                    if ((now - listLogins[token]).TotalSeconds > TIMEOUT)
+                    {
+                        listLogins.Remove(token);
+                        return false;
+                    }
+                    else
+                    {
+                        listLogins[token] = now;
+                        return true;
+                    }
                 }
             }
             return false;

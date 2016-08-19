@@ -21,7 +21,15 @@ namespace hthservices.Controllers
             {
                 if(DateTime.TryParseExact(date, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dateOn));
                 else dateOn = DateTime.Now;
-            } 
+            }
+            if(channelKey.StartsWith("K", StringComparison.OrdinalIgnoreCase))
+            {
+                if(channelKey.EndsWith("PM", StringComparison.OrdinalIgnoreCase)) channelKey = "K+PM";
+                else if(channelKey.EndsWith("1", StringComparison.OrdinalIgnoreCase)) channelKey = "K+1";
+                else if(channelKey.EndsWith("NS", StringComparison.OrdinalIgnoreCase)) channelKey = "K+NS";
+                else if(channelKey.EndsWith("PC", StringComparison.OrdinalIgnoreCase)) channelKey = "K+PC";
+            }
+            else if(channelKey.Equals("HTVC ", StringComparison.OrdinalIgnoreCase))channelKey = "HTVC+";
 
             var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn);
             return Json(channels, JsonRequestBehavior.AllowGet);

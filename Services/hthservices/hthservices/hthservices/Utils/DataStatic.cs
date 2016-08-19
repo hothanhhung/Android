@@ -77,6 +77,9 @@ namespace hthservices.Utils
         public const string FROM_SCTV_PAGE = "http://www.sctv.com.vn/lich-phat-song.html";
         public const string FROM_THST_PAGE = "http://thst.vn/Home/NewLichPhatSong";// default is current date
         public const string FROM_BINHDINHTV_PAGE = "http://www.binhdinhtv.vn/tvschedule.php";// default is current date
+        public const string FROM_GIALAITV_PAGE = "http://gialaitv.vn/lich-phat-song/?ngay={0}&kenh=1";// 2016-08-20
+        public const string FROM_DRT_PAGE = "http://www.drt.danang.vn/default.aspx";
+        
         #endregion
 
         #region Channel to server
@@ -261,7 +264,10 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_THVL_PAGE, ChannelKey="TruyenHinhVinhLongTHVL1", Value="THVL1"},
              new ChannelToServer(){Server=FROM_THVL_PAGE, ChannelKey="TruyenHinhVinhLongTHVL2", Value="THVL2"},
              new ChannelToServer(){Server=FROM_THST_PAGE, ChannelKey="TruyenhinhSocTrangSTV", Value=""},
-             new ChannelToServer(){Server=FROM_BINHDINHTV_PAGE, ChannelKey="TruyenhinhBinhDinhBTV", Value=""}
+             new ChannelToServer(){Server=FROM_BINHDINHTV_PAGE, ChannelKey="TruyenhinhBinhDinhBTV", Value=""},
+             new ChannelToServer(){Server=FROM_GIALAITV_PAGE, ChannelKey="TruyenhinhGiaLaiTHGL", Value=""},
+             new ChannelToServer(){Server=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT1", Value="1"},
+             new ChannelToServer(){Server=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT2", Value="2"}
              
         };
         #endregion

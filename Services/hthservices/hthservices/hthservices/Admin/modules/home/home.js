@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 hthServiceApp.controller('HomeController',
-    ['$scope', '$rootScope', '$http', '$location',
-      function ($scope, $rootScope, $http, $location) {
+    ['$scope', '$rootScope', '$http', '$location', '$routeParams',
+      function ($scope, $rootScope, $http, $location, $routeParams) {
           if (typeof ($rootScope.AuthInfo) === 'undefined' || typeof ($rootScope.AuthInfo.Token) === 'undefined' || $rootScope.AuthInfo.Token == '') {
               var token = window.localStorage.getItem("AuthInfo.Token");
               if (token && token != "") {
@@ -27,6 +27,13 @@ hthServiceApp.controller('HomeController',
               $scope.ToDate = new Date();
           } else {
               $scope.ToDate = $rootScope.ToDate;
+          }
+
+          $scope.IsTop = false;
+
+          if (typeof ($routeParams.top) != 'undefined')
+          {
+              $scope.IsTop = true;
           }
 
           $scope.Logout = function () {

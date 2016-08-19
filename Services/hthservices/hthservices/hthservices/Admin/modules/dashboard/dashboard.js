@@ -19,6 +19,7 @@ hthServiceApp.controller('DashboardController',
     $scope.ScheduleRequestLogs = { FromDate: new Date(), ToDate: new Date(), IsLoading: false, TotalRequest: 0, TotalFailedRequest: 0 };
     $scope.ScheduleRequestLogs.TopRequests = [];
     $scope.ScheduleRequestLogs.TopFailedRequests = [];
+    $scope.ScheduleRequestLogs.IsShowChart = false;
 
     if (typeof ($rootScope.FromDate) != 'undefined') {
         $scope.ScheduleRequestLogs.FromDate = $rootScope.FromDate;
@@ -27,7 +28,10 @@ hthServiceApp.controller('DashboardController',
     if (typeof ($rootScope.ToDate) != 'undefined') {
         $scope.ScheduleRequestLogs.ToDate = $rootScope.ToDate;
     }
-
+    
+    if ($scope.ScheduleRequestLogs.FromDate.setHours(0, 0, 0, 0, 0) != $scope.ScheduleRequestLogs.ToDate.setHours(0, 0, 0, 0, 0)) {
+        $scope.ScheduleRequestLogs.IsShowChart = true;
+    }
     //$scope.ScheduleRequestLogs.FromDate = new Date($scope.ScheduleRequestLogs.ToDate.getFullYear(), $scope.ScheduleRequestLogs.ToDate.getMonth(), 1);
     $scope.GetReport = function () {
         var getReportUrl = URL_SERVICE + '/api/ReportApi/Dashboard/?token=' + $rootScope.AuthInfo.Token + "&fromDate=" + GetStringOfDate($scope.ScheduleRequestLogs.FromDate) + "&toDate=" + GetStringOfDate($scope.ScheduleRequestLogs.ToDate);
@@ -41,10 +45,10 @@ hthServiceApp.controller('DashboardController',
                 if (responseData.IsSuccess) {
                     $scope.ScheduleRequestLogs.TotalRequest = 0;
                     $scope.ScheduleRequestLogs.TotalFailedRequest = 0;
-                    areaDashboard.setData(responseData.Data);
+                    areaDashboard.setData(responseData.Data, $scope.ScheduleRequestLogs.IsShowChart);
                     for (var i = 0; i < responseData.Data.length; i++) {
-                        $scope.ScheduleRequestLogs.TotalRequest = responseData.Data[i].NumberOfRequest;
-                        $scope.ScheduleRequestLogs.TotalFailedRequest = responseData.Data[i].NumberOfFailedRequest;
+                        $scope.ScheduleRequestLogs.TotalRequest += responseData.Data[i].NumberOfRequest;
+                        $scope.ScheduleRequestLogs.TotalFailedRequest += responseData.Data[i].NumberOfFailedRequest;
                     }
                 } else {
                     $location.path('/login');
@@ -59,6 +63,7 @@ hthServiceApp.controller('DashboardController',
     };
         
     var areaDashboard = Morris.Line({
+        shown: false,
         element: 'area-dashboard',
         data: null,
         xkey: 'CurrentDate',
@@ -78,6 +83,18 @@ hthServiceApp.controller('DashboardController',
         $rootScope.ToDate = toDate;
     }
 
+    $scope.ShowChart = function () {
+        if ($scope.ScheduleRequestLogs.IsShowChart) {
+            setTimeout(function () {
+                if ($('#area-dashboard-parent').hasClass("ng-hide")) {
+                    $scope.ShowChart();
+                }
+                else {
+                    areaDashboard.redraw();
+                }
+            }, 1000);
+        }
+    }
     function GetStringOfDate(date)
     {
         if (typeof (date) != 'object')

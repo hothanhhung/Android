@@ -101,12 +101,13 @@ namespace hthservices.Controllers
 
             var resultObject =
                         from log in logs
-                        join failLog in failLogs on log.CurrentDate equals failLog.CurrentDate
+                        join failLog in failLogs on log.CurrentDate equals failLog.CurrentDate into ps
+                        from failLog in ps.DefaultIfEmpty()
                         select new ReportForCurrentDate
                         {
                             CurrentDate = log.CurrentDate,
-                            NumberOfRequest = log.NumberOfRequests, 
-                            NumberOfFailedRequest = failLog.NumberOfRequests 
+                            NumberOfRequest = log.NumberOfRequests,
+                            NumberOfFailedRequest = failLog == null? 0 : failLog.NumberOfRequests 
                         };
             return ResponseJson.GetResponseJson(resultObject != null ? resultObject.ToList() : null);
         }

@@ -25,15 +25,21 @@ function GridReportController($scope, $rootScope, $http, $location) {
         ctrl.toDate = new Date();
     }
 
+    var initByTop = false;
+    if (ctrl.isTop)
+    {
+        initByTop = true;
+    }
+
     ctrl.ScheduleRequestLogs = { ScheduleLogs: [], Total: 0, NumberOfPages: 0, IsLoading: false };
     ctrl.ScheduleRequestLogs.Filter = {
         NoChannelKey: false,
-        NoCurrentDate: false,
-        NoDateOn: false,
+        NoCurrentDate: initByTop,
+        NoDateOn: initByTop,
         Page: 1,
         Size: 30,
         Desc: true,
-        OrderField: 'CurrentDate',
+        OrderField: initByTop?'NumberOfRequests':'CurrentDate',
         FromDate: '',
         ToDate:''
     };
@@ -145,12 +151,14 @@ hthServiceApp.component('gridReport', {
         isFailedRequest: '@',
         fromDate: '=?',
         toDate: '=?',
-        triggerRefesh: '='
+        triggerRefesh: '=',
+        isTop: '<'
     },
     bindToController: {
         isFailedRequest: '@',
         fromDate: '=?',
         toDate: '=?',
-        triggerRefesh: '='
+        triggerRefesh: '=',
+        isTop:'<'
     }
 });
