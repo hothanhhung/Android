@@ -24,6 +24,9 @@ function GridReportController($scope, $rootScope, $http, $location) {
     if (typeof (ctrl.toDate) === 'undefined') {
         ctrl.toDate = new Date();
     }
+    if (typeof (ctrl.isShowAction) === 'undefined') {
+        ctrl.isShowAction = true;
+    }
 
     var initByTop = false;
     if (ctrl.isTop)
@@ -148,6 +151,7 @@ hthServiceApp.component('gridReport', {
     templateUrl: '/admin/modules/grid-report/grid-report.tpl.html',
     controller: GridReportController,
     bindings: {
+        isShowAction:'<',
         isFailedRequest: '@',
         fromDate: '=?',
         toDate: '=?',
@@ -155,6 +159,7 @@ hthServiceApp.component('gridReport', {
         isTop: '<'
     },
     bindToController: {
+        isShowAction: '<',
         isFailedRequest: '@',
         fromDate: '=?',
         toDate: '=?',

@@ -215,7 +215,10 @@ namespace hthservices.Utils
                         break;
                     case DataStatic.FROM_DRT_PAGE:
                         guideItems = HtmlHelper.GetDataFromDRTUrl(channelToServer, date);
-                        break;                  
+                        break;
+                    case DataStatic.FROM_MOBITV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromMOBITVUrl(channelToServer, date);
+                        break;                 
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)

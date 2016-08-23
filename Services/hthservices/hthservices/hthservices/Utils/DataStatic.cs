@@ -79,6 +79,7 @@ namespace hthservices.Utils
         public const string FROM_BINHDINHTV_PAGE = "http://www.binhdinhtv.vn/tvschedule.php";// default is current date
         public const string FROM_GIALAITV_PAGE = "http://gialaitv.vn/lich-phat-song/?ngay={0}&kenh=1";// 2016-08-20
         public const string FROM_DRT_PAGE = "http://www.drt.danang.vn/default.aspx";
+        public const string FROM_MOBITV_PAGE = "http://mobitv.net.vn/lich-phat-song/";
         
         #endregion
 
@@ -228,6 +229,12 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_SCTV_PAGE, ChannelKey="DW", Value="91"},
              new ChannelToServer(){Server=FROM_SCTV_PAGE, ChannelKey="StarWorld", Value="82"},
              new ChannelToServer(){Server=FROM_SCTV_PAGE, ChannelKey="CINEMAX", Value="76"},
+             
+             new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="MienTay-THDT2", Value="Mien+Tay"},
+             new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="AnNinhTheGioi", Value="ANTG"},
+             new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="AnVien-BTV9", Value="An+Viên"},
+             new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="Phimhay", Value="Phim+Hay"},
+             new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="VietTeen-BTV62idol", Value="Viet+Teen"},
 
              new ChannelToServer(){Server=FROM_KGTV_PAGE, ChannelKey="TruyenhinhKienGiang", Value="TV"}, //TV2
              new ChannelToServer(){Server=FROM_BRT_PAGE, ChannelKey="TruyenhinhBaRia-VungTauBRT", Value=""},

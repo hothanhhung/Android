@@ -95,6 +95,25 @@ hthServiceApp.controller('DashboardController',
             }, 1000);
         }
     }
+
+    $scope.Logout = function () {
+        var logoutUrl = URL_SERVICE + '/api/Account/Logout/?token=' + $rootScope.AuthInfo.Token;
+        $http.get(logoutUrl, null, null).then(
+            function (response) {
+                var responseData = response.data;
+                if (responseData.Data.IsSuccess) {
+                    window.localStorage.setItem("AuthInfo.Token", "");
+                    $rootScope.AuthInfo.Token = "";
+                    $location.path('/login');
+                } else {
+                    alert(responseData.Data.Message);
+                }
+            },
+            function (error) {
+                alert(responseData.Data.Message);
+            });
+    };
+
     function GetStringOfDate(date)
     {
         if (typeof (date) != 'object')

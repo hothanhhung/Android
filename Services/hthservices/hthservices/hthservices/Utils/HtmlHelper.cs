@@ -2521,6 +2521,80 @@ namespace hthservices.Utils
             return guideItems;
         }
 
+        static private List<GuideItem> GetDataFromMOBITVUrl(string url, ChannelToServer channelToServer, DateTime date)
+        {
+            string postdata = "RadScriptManager1_TSM=%3B%3BSystem.Web.Extensions%2C+Version%3D4.0.0.0%2C+Culture%3Dneutral%2C+PublicKeyToken%3D31bf3856ad364e35%3Aen-US%3A8f393b2b-3315-402f-b504-cd6d2db001f6%3Aea597d4b%3Ab25378d2&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMTI0Mjk0NjMyM2QYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFEWN0bDA2JGN0bDAxJElzSG90&km=T%E1%BB%AB+kh%C3%B3a+t%C3%ACm+ki%E1%BA%BFm...&ctl06_ctl01_ChooseDate={1}&ctl06%24ctl01%24Channel={0}&ctl06%24ctl01%24Programmer=Ch%E1%BB%8Dn+ch%C6%B0%C6%A1ng+tr%C3%ACnh&ctl06%24ctl01%24HourPeriod=Th%E1%BB%9Di+gian&ctl06%24ctl01%24btnBSSubmit=T%C3%ACm+ki%E1%BA%BFm";//22-08-2016
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (var http = new HttpClient())
+                {
+                    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+
+                    var stringContent = string.Format(postdata, channelToServer.Value, date.ToString("dd-MM-yyyy"));
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    var response = http.PostAsync(url, httpContent).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        source = WebUtility.HtmlDecode(source.Replace("\"", ""));
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var schedules = resultat.DocumentNode.SelectNodes("//table[@class='list-table']");
+
+                        if (schedules != null && schedules.Count > 0)
+                        {
+                            var items = schedules.FirstOrDefault().SelectNodes("tr");
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var tdTags = item.SelectNodes("td");
+                                if (tdTags != null && tdTags.Count > 3)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                    programName = tdTags.ElementAt(2).InnerText.Trim();
+                                    var more = tdTags.ElementAt(3).InnerText.Trim();
+                                    if (!string.IsNullOrWhiteSpace(more))
+                                    {
+                                        programName += ": " + more;
+                                    }
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn))
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
+        static public List<GuideItem> GetDataFromMOBITVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+
+            guideItems.AddRange(GetDataFromMOBITVUrl(channelToServer.Server, channelToServer, date));
+            guideItems.AddRange(GetDataFromMOBITVUrl(channelToServer.Server + "page-2/", channelToServer, date));
+
+            return guideItems;
+        }
+
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
         {

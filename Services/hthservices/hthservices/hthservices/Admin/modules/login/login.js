@@ -15,6 +15,7 @@ hthServiceApp.controller('LoginController',
                     if (responseData.Data.IsSuccess) {
                         window.localStorage.setItem("AuthInfo.Token", responseData.Data.Token);
                         $rootScope.AuthInfo.Token = responseData.Data.Token;
+                        $rootScope.AuthInfo.Role = responseData.Data.Token.charAt(0);
                         $location.path('/dashboard');
                     } else {
                         $rootScope.AuthInfo.Message = responseData.Data.Message;

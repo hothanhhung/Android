@@ -41,7 +41,7 @@
                             <span ng-click="$ctrl.OrderColum('NumberOfRequests')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='NumberOfRequests'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
                         </a>
                     </th>
-                    <th>
+                    <th ng-if="$ctrl.isShowAction">
                         Delete
                     </th>
                 </tr>
@@ -52,7 +52,7 @@
                     <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate">{{item.CurrentDate}}</td>
                     <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDateOn">{{item.DateOn}}</td>
                     <td>{{item.NumberOfRequests}}</td>
-                    <td align="center">
+                    <td align="center" ng-if="$ctrl.isShowAction">
                         <a href="javascript:void(0)">
                             <span ng-click="$ctrl.Delete(item)" style="width:50px" class="glyphicon glyphicon-trash"></span>
                         </a>

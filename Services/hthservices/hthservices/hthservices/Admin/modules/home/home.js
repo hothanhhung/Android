@@ -29,6 +29,11 @@ hthServiceApp.controller('HomeController',
               $scope.ToDate = $rootScope.ToDate;
           }
 
+          if ($rootScope.AuthInfo.Role == '1') {
+              $scope.IsShowAction = true;
+          } else {
+              $scope.IsShowAction = false;
+          }
           $scope.IsTop = false;
 
           if (typeof ($routeParams.top) != 'undefined')

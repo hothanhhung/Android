@@ -25,7 +25,7 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("Delete")]
         public ResponseJson Delete(string token, string isFailed, ScheduleRequestLog scheduleLog)
         {
-            if(!AuthData.Validate(token))
+            if(AuthData.GetRole(token) != Role.Admin)
             {
                 return ResponseJson.GetResponseJson(string.Empty, false);
             }
@@ -62,7 +62,7 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GroupFailedRequest")]
         public ResponseJson GroupFailedRequest(string token, [FromBody] ReportFilter filter)
         {
-            if (!AuthData.Validate(token))
+            if (AuthData.GetRole(token) == Role.NoLogin)
             {
                 return ResponseJson.GetResponseJson(string.Empty, false);
             }
@@ -78,7 +78,7 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GroupRequest")]
         public ResponseJson GroupRequest(string token, ReportFilter filter)
         {
-            if (!AuthData.Validate(token))
+            if (AuthData.GetRole(token) == Role.NoLogin)
             {
                 return ResponseJson.GetResponseJson(string.Empty, false);
             }
@@ -92,7 +92,7 @@ namespace hthservices.Controllers
         [System.Web.Http.HttpGet]
         public ResponseJson Dashboard(string token, string fromDate, string toDate)
         {
-            if (!AuthData.Validate(token))
+            if (AuthData.GetRole(token) == Role.NoLogin)
             {
                 return ResponseJson.GetResponseJson(string.Empty, false);
             }
