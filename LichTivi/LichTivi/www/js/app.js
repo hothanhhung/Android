@@ -1,5 +1,13 @@
 // Ionic Starter App
 
+      var ad_units = {
+        android : {
+          banner: 'ca-app-pub-4576847792571626/1841794794',
+		  interstitial: 'ca-app-pub-4576847792571626/5305438795',
+         }
+      };
+      var admobid = ad_units.android;
+	  
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
@@ -49,8 +57,13 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 			$scope.openShceduleGetData(true, false);
 		else $scope.openShceduleGetData(false, true);
 	};
-	
+	$scope.userTime = (new Date()).getTime();
+	$scope.numberOfOpenSchedule = 0;
 	$scope.openShceduleGetData =  function (isOpenMenuLeft, isOpenMenuRight){
+		$scope.numberOfOpenSchedule ++;
+		if($scope.numberOfOpenSchedule % 4 == 0 ){
+			if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:true} );
+		}
 		$scope.dataSchedule.descriptionVN = "";
 		$scope.dataSchedule.descriptionEN = "";
 		//$scope.$apply();
@@ -59,11 +72,11 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 		$scope.dataSchedule.data = [];
 		$scope.dataSchedule.message = "Đang tải dữ liệu...";
 		$ionicScrollDelegate.$getByHandle('ionScrollContentCenter').scrollTop();
-		var url = 'http://www.thanhhung.somee.com/RetrieveData/GetSchedules/?';
+		var url = 'http://www.hunght.com/RetrieveData/GetSchedules/?';
 		$.ajax({
 			url: url,
 			type: 'GET',
-			data: {channel : $scope.dataSchedule.id, date : $scope.getCorrectFormatDate($scope.dataSchedule.timeForSearch,'-')} ,
+			data: {channel : $scope.dataSchedule.id, date : $scope.getCorrectFormatDate($scope.dataSchedule.timeForSearch,'-'), userTime: $scope.userTime, version:'304'} ,
 			header: {'Access-Control-Allow-Origin': "*"},
 			dataType: 'json',
 			timeout: 25000,
@@ -122,7 +135,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
 		$scope.ResultsOfSearchProgram.message = "Đang tìm...";
 		$scope.ResultsOfSearchProgram.explain = "Đang tìm...";
 
-		var url = 'http://www.thanhhung.somee.com/RetrieveData/SearchProgram/?';
+		var url = 'http://www.hunght.com/RetrieveData/SearchProgram/?';
 		$.ajax({
 			url: url,
 			type: 'GET',
@@ -365,12 +378,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
         initApp();
         }
       }
-      var ad_units = {
-        android : {
-          banner: 'ca-app-pub-4576847792571626/1841794794',
-         }
-      };
-      var admobid = ad_units.android;
+	  
       function initApp() {
         if (! AdMob ) { alert( 'admob plugin not ready' ); return; }
         initAd();
@@ -380,7 +388,7 @@ angular.module('starter', ['ionic', 'ngSanitize', 'starter.appData','angular.fil
       function initAd(){
         var defaultOptions = {
         // publisherId: admobid.banner,
-        // interstitialAdId: admobid.interstitial,
+         interstitialAdId: admobid.interstitial,
          adSize: 'SMART_BANNER',
         // width: integer, // valid when set adSize 'CUSTOM'
         // height: integer, // valid when set adSize 'CUSTOM'

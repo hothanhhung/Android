@@ -87,6 +87,7 @@ angular.module('starter.appData', []).
 										{"id":"VTVcab17-Yeah1TV","name":"VTVcab 17 - Yeah1 TV ","groupName":"Đài Truyền hình Cáp Việt Nam","groupOrder":17},
 										{"id":"VTVcab19-KenhPhim","name":"VTVcab 19 - Kênh Phim ","groupName":"Đài Truyền hình Cáp Việt Nam","groupOrder":17},
 										{"id":"VTVcab20-VFamily","name":"VTVcab 20 - V Family","groupName":"Đài Truyền hình Cáp Việt Nam","groupOrder":17},
+										{"id":"VTVcab21","name":"VTVcab21","groupName":"Đài Truyền hình Cáp Việt Nam","groupOrder":17},
 										{"id":"MTVVietNam","name":"MTV Việt Nam","groupName":"Đài Truyền hình Cáp Việt Nam","groupOrder":17},
 										{"id":"HCaTV","name":"HCaTV","groupName":"Đài truyền hình cáp Hà Nội","groupOrder":18},
 										{"id":"HiTV","name":"HiTV","groupName":"Đài truyền hình cáp Hà Nội","groupOrder":18},
