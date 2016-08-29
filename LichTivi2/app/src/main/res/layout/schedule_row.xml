@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/llRow"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp"
+    android:gravity="center_vertical">
+    <TextView
+        android:id="@+id/tvStartOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:layout_margin="0sp"
+        android:paddingLeft="5sp"
+        android:paddingBottom="10sp"
+        android:paddingTop="10sp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/tvProgramName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="United States Of America United States Of America United States Of America"
+        android:layout_margin="0sp"
+        android:paddingLeft="15sp"
+        android:paddingBottom="10sp"
+        android:paddingTop="10sp"
+        android:textSize="14sp"
+        android:gravity="center_vertical" />
+
+</LinearLayout>

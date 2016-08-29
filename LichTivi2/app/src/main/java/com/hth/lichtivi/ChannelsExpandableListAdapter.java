@@ -49,7 +49,7 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.channel_row, null);
         }
-
+        view.setTag(channel);
         TextView name = (TextView) view.findViewById(R.id.name);
         name.setText(channel.getName().trim());
 

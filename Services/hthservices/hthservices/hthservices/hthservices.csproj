@@ -146,6 +146,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportApiController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\LichTiviController.cs" />
     <Compile Include="Controllers\RetrieveDataController.cs" />
     <Compile Include="Data\AuthData.cs" />
     <Compile Include="Global.asax.cs">

@@ -4,10 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
 using hthservices.Utils;
+using hthservices.Ads;
 
 namespace hthservices.Models
 {
     [Serializable]
+    [KnownType(typeof(List<GuideItem>))]
+    [KnownType(typeof(List<SearchItem>))]
+    [KnownType(typeof(List<AdItem>))]
     [KnownType(typeof(List<ScheduleRequestLog>))]
     [KnownType(typeof(ScheduleReport))]
     [KnownType(typeof(ReportForCurrentDate))] 

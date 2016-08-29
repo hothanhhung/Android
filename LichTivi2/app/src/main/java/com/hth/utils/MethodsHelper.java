@@ -44,4 +44,10 @@ public class MethodsHelper {
        // s.replaceAll('đ', 'd');
         return s;
     }
+
+    public static String getStringFromDate(Date date) {
+        StringBuilder str = new StringBuilder().append(date.getDate() > 9 ? date.getDate() : "0" + date.getDate()).append("-")
+                .append(date.getMonth() > 8 ? (date.getMonth() + 1) : "0" + (date.getMonth() + 1)).append("-").append(date.getYear());
+        return str.toString();
+    }
 }
