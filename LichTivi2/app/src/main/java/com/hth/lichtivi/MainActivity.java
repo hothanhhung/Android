@@ -2,37 +2,32 @@ package com.hth.lichtivi;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hth.data.DataFavorite;
 import com.hth.utils.MethodsHelper;
 import com.hth.utils.ParseJSONScheduleItems;
 import com.hth.utils.ScheduleItem;
-import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
-import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,25 +39,26 @@ public class MainActivity extends Activity implements
     private Activity activity;
     private DrawerLayout mDrawerLayout;
     private LinearLayout mLeftDrawerList;
-    private ListView mRightDrawerList;
+    private LinearLayout mRightDrawerList;
     private ListView lvSchedules;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerArrowDrawable drawerArrow;
-    private boolean drawerArrowColor;
-
 
     private Date selectedDate;
-    private String selectedChannelKey = "VTV1";
+    private ChannelItem selectedChannel;
     private String openKey = "";
     private TextView tvSelectedDate;
     private TextView tvMessage;
+    private TextView tvSelectedChannel;
     private ParseJSONScheduleItems parseJSONScheduleItems;
     private ScheduleAsyncTask scheduleAsyncTask;
 
     private SearchView search;
     private ChannelsExpandableListAdapter lvChannelsAdapter;
+    private FlexibleFavoriteRowAdapter lvFavoritesAdapter;
+    private TextView tvNoFavorites;
+    private ImageButton btFavorite;
     private ExpandableListView lvChannels;
     private ArrayList<ChannelGroup> channelGroupList = new ArrayList<ChannelGroup>();
+    private ArrayList<ChannelItem> favoriteslList = new ArrayList<ChannelItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +66,7 @@ public class MainActivity extends Activity implements
         setContentView(R.layout.activity_main);
 
         activity = this;
+        selectedChannel = new ChannelItem("VTV1", "VTV1");
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -79,36 +76,15 @@ public class MainActivity extends Activity implements
         parseJSONScheduleItems = new ParseJSONScheduleItems(this);
 
         ActionBar ab = getActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeButtonEnabled(true);
+        ab.hide();
+        /*ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeButtonEnabled(true);*/
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftDrawerList = (LinearLayout) findViewById(R.id.leftNavdrawer);
-        mRightDrawerList = (ListView) findViewById(R.id.rightNavdrawer);
-/*
+        mRightDrawerList = (LinearLayout) findViewById(R.id.rightNavdrawer);
 
-        drawerArrow = new DrawerArrowDrawable(this) {
-            @Override
-            public boolean isLayoutRtl() {
-                return false;
-            }
-        };
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                drawerArrow, R.string.drawer_open,
-                R.string.drawer_close) {
-
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();*/
+        tvSelectedChannel = (TextView) findViewById(R.id.tvSelectedChannel);
         lvSchedules = (ListView) findViewById(R.id.lvSchedules);
         tvMessage = (TextView) findViewById(R.id.tvMessage);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -119,13 +95,94 @@ public class MainActivity extends Activity implements
         search.setOnCloseListener(this);
         tvSelectedDate = (TextView) findViewById(R.id.tvSelectedDate);
 
-        showDate(selectedDate);
-
         //display the list
         displayList();
         //expand all Groups
         expandOrCollapseAll(false);
+
+        initFavoriteData();
+        showDate(selectedDate);
     }
+
+    private void removeFavorite(ChannelItem item)
+    {
+        for(int i = 0; i< favoriteslList.size(); i++)
+        {
+            if(favoriteslList.get(i).getId().equalsIgnoreCase(item.getId()))
+            {
+                favoriteslList.remove(i);
+                i--;
+            }
+        }
+        saveFavorites();
+
+    }
+
+    private void addFavorite(ChannelItem item)
+    {
+        favoriteslList.add(item);
+        saveFavorites();
+
+    }
+
+    private boolean isInFavorites(ChannelItem item)
+    {
+        for(int i = 0; i< favoriteslList.size(); i++)
+        {
+            if(favoriteslList.get(i).getId().equalsIgnoreCase(item.getId()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void saveFavorites()
+    {
+        DataFavorite.setFavorites(this, favoriteslList);
+        lvFavoritesAdapter.updatedData(favoriteslList);
+        if(favoriteslList == null || favoriteslList.size() == 0){
+            tvNoFavorites.setVisibility(View.VISIBLE);
+        }else{
+            tvNoFavorites.setVisibility(View.GONE);
+        }
+
+        if(isInFavorites((selectedChannel)))
+        {
+            btFavorite.setImageResource(R.drawable.unfavorite);
+        }else{
+            btFavorite.setImageResource(R.drawable.favorite);
+        }
+    }
+    private void initFavoriteData()
+    {
+        favoriteslList = DataFavorite.getFavorite(this);
+        ListView lvFavorites = (ListView) findViewById(R.id.lvFavorites);
+        btFavorite = (ImageButton) findViewById(R.id.btFavorite);
+        tvNoFavorites = (TextView) findViewById(R.id.tvNoFavorites);
+        if(favoriteslList == null || favoriteslList.size() == 0){
+            tvNoFavorites.setVisibility(View.VISIBLE);
+        }else{
+            tvNoFavorites.setVisibility(View.GONE);
+        }
+        lvFavoritesAdapter = new FlexibleFavoriteRowAdapter(MainActivity.this, favoriteslList);
+        lvFavorites.setAdapter(lvFavoritesAdapter);
+        lvFavorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ChannelItem channelItem = favoriteslList.get(position);
+                if (channelItem != null) {
+                    selectedChannel = channelItem;
+                    if (mDrawerLayout.isDrawerOpen(mRightDrawerList)) {
+                        mDrawerLayout.closeDrawer(mRightDrawerList);
+                    } else {
+                        mDrawerLayout.openDrawer(mRightDrawerList);
+                    }
+                    updateSchedules();
+                }
+            }
+        });
+    }
+
     private void expandOrCollapseAll(boolean isExpand) {
         int count = lvChannelsAdapter.getGroupCount();
         if(isExpand) {
@@ -141,6 +198,14 @@ public class MainActivity extends Activity implements
 
     private void updateSchedules()
     {
+        tvSelectedChannel.setText(selectedChannel.getName());
+        if(isInFavorites((selectedChannel)))
+        {
+            btFavorite.setImageResource(R.drawable.unfavorite);
+        }else{
+            btFavorite.setImageResource(R.drawable.favorite);
+        }
+
         tvMessage.setVisibility(View.VISIBLE);
         tvMessage.setText("Đang tải dữ liệu...");
         lvSchedules.setVisibility(View.GONE);
@@ -148,6 +213,8 @@ public class MainActivity extends Activity implements
         {
             scheduleAsyncTask.cancel(true);
         }
+
+        if(true) return;
         scheduleAsyncTask = new ScheduleAsyncTask();
         scheduleAsyncTask.execute();
     }
@@ -167,7 +234,7 @@ public class MainActivity extends Activity implements
                                         int groupPosition, int childPosition, long id) {
                 ChannelItem channelItem = (ChannelItem) v.getTag();
                 if (channelItem != null) {
-                    selectedChannelKey = channelItem.getId();
+                    selectedChannel = channelItem;
                     if (mDrawerLayout.isDrawerOpen(mLeftDrawerList)) {
                         mDrawerLayout.closeDrawer(mLeftDrawerList);
                     } else {
@@ -198,8 +265,7 @@ public class MainActivity extends Activity implements
                     public void onClick(DialogInterface dialog, int which) {
                         DatePicker dp = datePickerDialog.getDatePicker();
                         datePickerDialog.dismiss();
-                        if(selectedDate.getDate() != dp.getDayOfMonth() || selectedDate.getMonth() != dp.getMonth() || selectedDate.getYear() != dp.getYear())
-                        {
+                        if (selectedDate.getDate() != dp.getDayOfMonth() || selectedDate.getMonth() != dp.getMonth() || selectedDate.getYear() != dp.getYear()) {
                             selectedDate.setYear(dp.getYear());
                             selectedDate.setMonth(dp.getMonth());
                             selectedDate.setDate(dp.getDayOfMonth());
@@ -223,6 +289,59 @@ public class MainActivity extends Activity implements
         }
         datePickerDialog.updateDate(selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDate());
         datePickerDialog.show();
+    }
+
+    public void btUnFavoriteClick(View view)
+    {
+        final ChannelItem channelItem = (ChannelItem)view.getTag();
+        if(channelItem!=null){
+            new AlertDialog.Builder(this)
+                    .setTitle("Delete")
+                    .setMessage("Do you really want to remove " +channelItem.getName()+ " ?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            removeFavorite(channelItem);
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
+        }
+    }
+
+    public void menuClick(View view) {
+        switch (view.getId()){
+            case R.id.btMenu:
+                if (mDrawerLayout.isDrawerOpen(mRightDrawerList)) {
+                    mDrawerLayout.closeDrawer(mRightDrawerList);
+                }
+                if (mDrawerLayout.isDrawerOpen(mLeftDrawerList)) {
+                    mDrawerLayout.closeDrawer(mLeftDrawerList);
+                } else {
+                    mDrawerLayout.openDrawer(mLeftDrawerList);
+                }
+                break;
+            case R.id.btSearch:
+                break;
+            case R.id.btFavorite:
+                if(isInFavorites(selectedChannel))
+                {
+                    removeFavorite(selectedChannel);
+                }else{
+                    addFavorite(selectedChannel);
+                }
+                break;
+            case R.id.btFavorites:
+                if (mDrawerLayout.isDrawerOpen(mLeftDrawerList)) {
+                    mDrawerLayout.closeDrawer(mLeftDrawerList);
+                }
+                if (mDrawerLayout.isDrawerOpen(mRightDrawerList)) {
+                    mDrawerLayout.closeDrawer(mRightDrawerList);
+                } else {
+                    mDrawerLayout.openDrawer(mRightDrawerList);
+                }
+                break;
+
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -279,7 +398,7 @@ public class MainActivity extends Activity implements
     private class ScheduleAsyncTask extends AsyncTask<String, Void, ArrayList<ScheduleItem>> {
         @Override
         protected ArrayList<ScheduleItem> doInBackground(String... urls) {
-            return parseJSONScheduleItems.getSchedules(selectedChannelKey, selectedDate, openKey);
+            return parseJSONScheduleItems.getSchedules(selectedChannel.getId(), selectedDate, openKey);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override

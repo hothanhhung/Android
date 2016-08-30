@@ -12,6 +12,56 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:background="@android:color/holo_blue_light"
+            android:layout_height="35dp"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/btMenu"
+                android:background="@android:color/transparent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/menu"
+                android:onClick="menuClick"/>
+            <ImageButton
+                android:id="@+id/btSearch"
+                android:background="@android:color/transparent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/search"
+                android:onClick="menuClick"/>
+            <TextView
+                android:id="@+id/tvSelectedChannel"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginLeft="5sp"
+                android:layout_marginRight="5sp"
+                android:text="VTV1"/>
+            <ImageButton
+                android:id="@+id/btFavorite"
+                android:background="@android:color/transparent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/favorite"
+                android:onClick="menuClick" />
+            <ImageButton
+                android:id="@+id/btFavorites"
+                android:background="@android:color/transparent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/favorites"
+                android:onClick="menuClick"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
@@ -20,6 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingRight="5sp"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:text="Lịch ngày:"/>
@@ -92,15 +143,41 @@
             android:layout_width="match_parent"/>
     </LinearLayout>
     <!-- The navigation drawer -->
-    <ListView
+
+    <LinearLayout
         android:id="@+id/rightNavdrawer"
         android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        android:orientation="vertical"
         android:background="@drawable/custom_rectangle"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:drawSelectorOnTop="false"
-        android:paddingRight="5px"/>
+        android:paddingLeft="5px">
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kênh yêu thích"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20sp"
+            android:layout_marginTop="10sp" />
+        <TextView
+            android:id="@+id/tvNoFavorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa có kênh nào"
+            android:paddingLeft="20sp" />
+        <ListView
+            android:id="@+id/lvFavorites"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true">
+        </ListView>
+
+    </LinearLayout>
+
 </android.support.v4.widget.DrawerLayout>
