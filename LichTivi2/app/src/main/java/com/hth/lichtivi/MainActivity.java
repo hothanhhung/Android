@@ -24,6 +24,10 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.hth.data.DataFavorite;
 import com.hth.utils.MethodsHelper;
 import com.hth.utils.ParseJSONScheduleItems;
@@ -36,7 +40,13 @@ import java.util.Date;
 public class MainActivity extends Activity implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
+    private AdView mAdView = null;
+    private InterstitialAd interstitial = null;
+
+
     private Activity activity;
+    private SearchProgramView searchProgramView;
+
     private DrawerLayout mDrawerLayout;
     private LinearLayout mLeftDrawerList;
     private LinearLayout mRightDrawerList;
@@ -79,7 +89,7 @@ public class MainActivity extends Activity implements
         ab.hide();
         /*ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);*/
-
+        searchProgramView = (SearchProgramView) findViewById(R.id.searchProgramView);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftDrawerList = (LinearLayout) findViewById(R.id.leftNavdrawer);
         mRightDrawerList = (LinearLayout) findViewById(R.id.rightNavdrawer);
@@ -102,6 +112,11 @@ public class MainActivity extends Activity implements
 
         initFavoriteData();
         showDate(selectedDate);
+
+        mAdView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
     }
 
     private void removeFavorite(ChannelItem item)
@@ -213,7 +228,10 @@ public class MainActivity extends Activity implements
         {
             scheduleAsyncTask.cancel(true);
         }
-
+        if(searchProgramView.getVisibility() == View.VISIBLE)
+        {
+            searchProgramView.setVisibility(View.INVISIBLE);
+        }
         if(true) return;
         scheduleAsyncTask = new ScheduleAsyncTask();
         scheduleAsyncTask.execute();
@@ -311,6 +329,7 @@ public class MainActivity extends Activity implements
     public void menuClick(View view) {
         switch (view.getId()){
             case R.id.btMenu:
+
                 if (mDrawerLayout.isDrawerOpen(mRightDrawerList)) {
                     mDrawerLayout.closeDrawer(mRightDrawerList);
                 }
@@ -321,6 +340,7 @@ public class MainActivity extends Activity implements
                 }
                 break;
             case R.id.btSearch:
+                searchProgramView.setVisibility(View.VISIBLE);
                 break;
             case R.id.btFavorite:
                 if(isInFavorites(selectedChannel))
@@ -417,5 +437,72 @@ public class MainActivity extends Activity implements
                 tvMessage.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(searchProgramView.getVisibility() == View.VISIBLE)
+        {
+            searchProgramView.setVisibility(View.INVISIBLE);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(mAdView!=null) mAdView.destroy();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        if(mAdView!=null) mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showInterstitial();
+
+    }
+
+    private void showInterstitial()
+    {
+        /*long timenow = Calendar.getInstance().getTime().getTime();
+        long maxTime = ((countShow*200000 ) + 200000);
+        if(maxTime > 900000) maxTime = 900000;
+        if(timeForRun > 0 && ((timenow - timeForRun) > maxTime))
+        {
+            if (interstitial == null) {
+                interstitial = new InterstitialAd(this);
+                interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
+                interstitial.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        if(interstitial.isLoaded()){
+                            interstitial.show();
+                            timeForRun = Calendar.getInstance().getTime().getTime();
+                            countShow++;
+                        }
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                    }
+
+
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                    }
+                });
+            }
+
+            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+
+            interstitial.loadAd(adRequest_interstitial);
+        }*/
     }
 }
