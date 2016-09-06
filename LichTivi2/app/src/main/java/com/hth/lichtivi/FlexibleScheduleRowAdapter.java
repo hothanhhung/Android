@@ -2,8 +2,11 @@ package com.hth.lichtivi;
 
 import java.util.ArrayList;
 
+import com.hth.utils.AlarmItem;
 import com.hth.utils.ScheduleItem;
+import com.hth.utils.UIUtils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -13,14 +16,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
-	private Context activity;
+	private Activity activity;
     private ArrayList<ScheduleItem> data;
     private static LayoutInflater inflater=null;
     public Resources res;
 
-    public FlexibleScheduleRowAdapter(Context a, ArrayList<ScheduleItem> d, Resources resLocal ) {
+    public FlexibleScheduleRowAdapter(Activity a, ArrayList<ScheduleItem> d, Resources resLocal ) {
         super( a, R.layout.schedule_row);
         activity = a;
         if(d == null) data = new ArrayList<ScheduleItem>();
@@ -46,6 +50,7 @@ public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
         TextView tvProgramName;
         LinearLayout llRow;
 
+        ScheduleItem scheduleItem = data.get(position);
     	if(convertView==null)
         {
     		convertView = inflater.inflate(R.layout.schedule_row, null);
@@ -54,6 +59,21 @@ public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
             viewHolder.llRow = llRow = (LinearLayout)convertView.findViewById(R.id.llRow); // title
         	viewHolder.tvStartOn = tvStartOn = (TextView)convertView.findViewById(R.id.tvStartOn); // title
         	viewHolder.tvProgramName = tvProgramName = (TextView)convertView.findViewById(R.id.tvProgramName);
+
+            tvStartOn.setTag(scheduleItem);
+            if(!scheduleItem.getStartOn().isEmpty()) {
+                tvStartOn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ScheduleItem scheduleItem = (ScheduleItem)v.getTag();
+                        if(scheduleItem!=null)
+                        {
+                            UIUtils.showSetAlarmPopup(new AlarmItem(0, scheduleItem), activity);
+                        }
+
+                    }
+                });
+            }
         	convertView.setTag(viewHolder);
         }
     	else{
@@ -62,7 +82,6 @@ public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
             tvStartOn = viewHolder.tvStartOn; // title
             tvProgramName = viewHolder.tvProgramName;
         }
-        ScheduleItem scheduleItem = data.get(position);
 
         // Setting all values in listview
         if(position % 2 == 0) {

@@ -1,6 +1,7 @@
 package com.hth.lichtivi;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,11 +65,11 @@ public class FlexibleFavoriteRowAdapter extends ArrayAdapter<ArrayList<ChannelIt
         btUnFavorite.setTag(channelItem);
 
         // Setting all values in listview
-        /*if(position % 2 == 0) {
-            llRow.setBackgroundColor(Color.parseColor("#e7e7e7"));
+        if(position % 2 == 0) {
+            convertView.setBackgroundColor(Color.parseColor("#e7e7e7"));
         }else {
-            llRow.setBackgroundColor(Color.parseColor("#f4f4f4"));
-        }*/
+            convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
+        }
 
         tvName.setText(channelItem.getName());
 

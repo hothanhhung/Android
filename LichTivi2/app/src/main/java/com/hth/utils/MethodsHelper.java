@@ -1,5 +1,11 @@
 package com.hth.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.provider.Settings;
+import android.view.inputmethod.InputMethodManager;
+
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +41,15 @@ public class MethodsHelper {
         return str;
     }
 
+    public static String stripAccentsAndD(String s)
+    {
+        s = s.toLowerCase();
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        s = s.replaceAll("[đ]", "d");
+        return s;
+    }
+
     public static String stripAccents(String s)
     {
         s = s.toLowerCase();
@@ -49,5 +64,39 @@ public class MethodsHelper {
         StringBuilder str = new StringBuilder().append(date.getDate() > 9 ? date.getDate() : "0" + date.getDate()).append("-")
                 .append(date.getMonth() > 8 ? (date.getMonth() + 1) : "0" + (date.getMonth() + 1)).append("-").append(date.getYear());
         return str.toString();
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public static String getAppVersion(Context context)
+    {
+        String version = "";
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            version = pInfo.versionName;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return version;
+
+    }
+
+    public static String getAndroidId(Context context)
+    {
+        String android_id = "";
+        try {
+            android_id = Settings.Secure.getString(context.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return android_id;
+
     }
 }

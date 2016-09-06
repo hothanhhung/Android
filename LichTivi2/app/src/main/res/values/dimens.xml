@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_bottom_padding">100dp</dimen>
+    <dimen name="search_program_channel_width">60dp</dimen>
+    <dimen name="search_program_time_width">100dp</dimen>
 </resources>

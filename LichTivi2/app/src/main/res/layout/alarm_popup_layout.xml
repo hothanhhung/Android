@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:gravity="center_vertical"
+    android:background="#e7e7e7"
+    android:descendantFocusability="blocksDescendants">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chương trình: "/>
+            <TextView
+                android:id="@+id/tvProgramName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Những thành phố của tương lai - Tập 1"
+                android:layout_margin="0sp"
+                android:paddingLeft="5sp"
+                android:paddingBottom="10sp"
+                android:paddingTop="10sp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phát trên: "/>
+            <TextView
+                android:id="@+id/tvChannelName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Đài truyên hình VTV2"
+                android:layout_margin="0sp"
+                android:paddingLeft="5sp"
+                android:paddingBottom="10sp"
+                android:paddingTop="10sp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vào lúc: "/>
+                <TextView
+                    android:id="@+id/tvStartOn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10:30 ngày 20-12-2016"
+                    android:layout_margin="0sp"
+                    android:paddingLeft="5sp"
+                    android:paddingBottom="10sp"
+                    android:paddingTop="10sp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhắc trước: "/>
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/spTimeRemindBefore"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+            <Button
+                android:id="@+id/btCancel"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Bỏ qua"/>
+            <Button
+                android:id="@+id/btSaveAlarm"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Lưu"/>
+        </LinearLayout>
+     </LinearLayout>
+</LinearLayout>

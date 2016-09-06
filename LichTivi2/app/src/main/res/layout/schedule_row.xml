@@ -8,6 +8,11 @@
     android:paddingRight="20dp"
     android:paddingLeft="20dp"
     android:gravity="center_vertical">
+    <ImageView
+        android:id="@+id/ivAlarmIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/alarm_inactive"/>
     <TextView
         android:id="@+id/tvStartOn"
         android:layout_width="wrap_content"

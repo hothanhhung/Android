@@ -1,6 +1,7 @@
 package com.hth.lichtivi;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,11 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
         view.setTag(channel);
         TextView name = (TextView) view.findViewById(R.id.name);
         name.setText(channel.getName().trim());
-
+        if(childPosition % 2 == 0) {
+            view.setBackgroundColor(Color.parseColor("#e7e7e7"));
+        }else {
+            view.setBackgroundColor(Color.parseColor("#f4f4f4"));
+        }
         return view;
     }
 
@@ -91,7 +96,11 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView heading = (TextView) view.findViewById(R.id.heading);
         heading.setText(channelGroup.getName().trim());
-
+        if(groupPosition % 2 == 0) {
+            view.setBackgroundColor(Color.parseColor("#e7e7e7"));
+        }else {
+            view.setBackgroundColor(Color.parseColor("#f4f4f4"));
+        }
         return view;
     }
 
@@ -115,14 +124,13 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
         }
         else {
 
-            String noToneQuery = MethodsHelper.stripAccents(query);
+            String noToneQuery = MethodsHelper.stripAccentsAndD(query);
             for(ChannelGroup channelGroup: originalChannelGroups){
 
                 ArrayList<ChannelItem> channelList = channelGroup.getChannelList();
                 ArrayList<ChannelItem> newList = new ArrayList<ChannelItem>();
                 for(ChannelItem country: channelList){
-                    Log.d("ddddd",MethodsHelper.stripAccents(country.getName()));
-                    if(MethodsHelper.stripAccents(country.getName()).contains(noToneQuery)){
+                    if(country.getEnglishName().contains(noToneQuery)){
                         newList.add(country);
                     }
                 }

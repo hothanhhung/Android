@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#607D8B"
-    android:padding="5dp">
+    android:padding="0dp">
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvChannel"
+        android:layout_width="@dimen/search_program_channel_width"
+        android:layout_height="wrap_content"
+        android:text="vtv"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/tvProgramName"
+        android:layout_width="0sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Kênh" />
+        android:text="Phim truyen" />
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvTime"
+        android:layout_width="@dimen/search_program_time_width"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Chương trình" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Thời gian" />
+        android:text="10:22-14:00 2012-12-12"
+        android:gravity="center" />
 </TableRow>

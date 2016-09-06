@@ -8,47 +8,50 @@
     android:paddingLeft="20sp"
     android:paddingRight="10sp">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35sp"
         android:orientation="horizontal"
-        android:layout_margin="5sp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp">
         <EditText
             android:id="@+id/etSearchProgramQuery"
             android:layout_width="0dp"
-            android:layout_height="35sp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:hint="Tên chương trình"/>
         <Button
             android:id="@+id/btSearchProgram"
-            android:layout_width="80sp"
-            android:layout_height="35sp"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
             android:background="@drawable/border_rectangle"
             android:textSize="14sp"
-            android:onClick="setDate"
             android:text="Tìm"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35sp"
+        android:layout_height="30sp"
         android:orientation="horizontal">
 
         <Spinner
             android:layout_width="match_parent"
-            android:layout_height="35sp"
+            android:layout_height="30sp"
             android:id="@+id/spStation" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35sp"
+        android:layout_height="30sp"
         android:orientation="horizontal">
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="35sp"
-            android:inputType="date"
+            android:layout_height="30sp"
             android:ems="10"
+            android:editable="false"
+            android:focusable="false"
             android:id="@+id/etDate" />
     </LinearLayout>
     <TableLayout
@@ -60,9 +63,8 @@
             android:background="#607D8B"
             android:padding="5dp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/search_program_channel_width"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Kênh" />
             <TextView
                 android:layout_width="wrap_content"
@@ -70,14 +72,23 @@
                 android:layout_weight="1"
                 android:text="Chương trình" />
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/search_program_time_width"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Thời gian" />
         </TableRow>
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text=""/>
         <ListView
             android:id="@+id/lvPrograms"
-            android:padding="5dp"
+            android:padding="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </ListView>

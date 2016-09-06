@@ -47,6 +47,14 @@
                     android:layout_marginRight="5sp"
                     android:text="VTV1"/>
                 <ImageButton
+                    android:id="@+id/btAlarms"
+                    android:background="@android:drawable/list_selector_background"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/alarms"
+                    android:onClick="menuClick" />
+                <ImageButton
                     android:id="@+id/btFavorite"
                     android:background="@android:drawable/list_selector_background"
                     android:layout_width="35dp"
@@ -66,16 +74,16 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="5sp"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:text="Lịch ngày:"/>
                 <TextView
@@ -83,7 +91,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:text="18-03-2016"/>
                 <Button
@@ -92,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_rectangle"
                     android:drawableLeft="@drawable/date_picker"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:onClick="setDate"
                     android:text="Ngày"
                     android:paddingLeft="10dp"
@@ -120,6 +128,12 @@
             </LinearLayout>
         </LinearLayout>
 
+        <com.hth.lichtivi.AlarmManagerView
+            android:id="@+id/alarmManagerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="35sp"
+            android:visibility="invisible"/>
         <com.hth.lichtivi.SearchProgramView
             android:id="@+id/searchProgramView"
             android:layout_width="match_parent"
@@ -135,7 +149,7 @@
             android:layout_gravity="start"
             android:background="@drawable/custom_rectangle"
             android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
+            android:divider="@android:color/white"
             android:dividerHeight="0dp"
             android:drawSelectorOnTop="false"
             android:baselineAligned="false"
@@ -166,7 +180,7 @@
             android:orientation="vertical"
             android:background="@drawable/custom_rectangle"
             android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
+            android:divider="@android:color/darker_gray"
             android:dividerHeight="0dp"
             android:drawSelectorOnTop="false"
             android:paddingLeft="5px">

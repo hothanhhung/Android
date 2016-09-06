@@ -46,6 +46,7 @@ public class MainActivity extends Activity implements
 
     private Activity activity;
     private SearchProgramView searchProgramView;
+    private AlarmManagerView alarmManagerView;
 
     private DrawerLayout mDrawerLayout;
     private LinearLayout mLeftDrawerList;
@@ -54,7 +55,6 @@ public class MainActivity extends Activity implements
 
     private Date selectedDate;
     private ChannelItem selectedChannel;
-    private String openKey = "";
     private TextView tvSelectedDate;
     private TextView tvMessage;
     private TextView tvSelectedChannel;
@@ -82,7 +82,6 @@ public class MainActivity extends Activity implements
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         selectedDate = new Date(year, month, day);
-        openKey = "" + selectedDate.getTime();
         parseJSONScheduleItems = new ParseJSONScheduleItems(this);
 
         ActionBar ab = getActionBar();
@@ -90,6 +89,8 @@ public class MainActivity extends Activity implements
         /*ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);*/
         searchProgramView = (SearchProgramView) findViewById(R.id.searchProgramView);
+        alarmManagerView = (AlarmManagerView) findViewById(R.id.alarmManagerView);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftDrawerList = (LinearLayout) findViewById(R.id.leftNavdrawer);
         mRightDrawerList = (LinearLayout) findViewById(R.id.rightNavdrawer);
@@ -232,7 +233,11 @@ public class MainActivity extends Activity implements
         {
             searchProgramView.setVisibility(View.INVISIBLE);
         }
-        if(true) return;
+        if(alarmManagerView.getVisibility() == View.VISIBLE)
+        {
+            alarmManagerView.setVisibility(View.INVISIBLE);
+        }
+        //if(true) return;
         scheduleAsyncTask = new ScheduleAsyncTask();
         scheduleAsyncTask.execute();
     }
@@ -340,7 +345,18 @@ public class MainActivity extends Activity implements
                 }
                 break;
             case R.id.btSearch:
+                if(alarmManagerView.getVisibility() == View.VISIBLE)
+                {
+                    alarmManagerView.setVisibility(View.INVISIBLE);
+                }
                 searchProgramView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.btAlarms:
+                if(searchProgramView.getVisibility() == View.VISIBLE)
+                {
+                    searchProgramView.setVisibility(View.INVISIBLE);
+                }
+                alarmManagerView.setVisibility(View.VISIBLE);
                 break;
             case R.id.btFavorite:
                 if(isInFavorites(selectedChannel))
@@ -418,7 +434,7 @@ public class MainActivity extends Activity implements
     private class ScheduleAsyncTask extends AsyncTask<String, Void, ArrayList<ScheduleItem>> {
         @Override
         protected ArrayList<ScheduleItem> doInBackground(String... urls) {
-            return parseJSONScheduleItems.getSchedules(selectedChannel.getId(), selectedDate, openKey);
+            return parseJSONScheduleItems.getSchedules(selectedChannel.getId(), selectedDate);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -444,6 +460,9 @@ public class MainActivity extends Activity implements
         if(searchProgramView.getVisibility() == View.VISIBLE)
         {
             searchProgramView.setVisibility(View.INVISIBLE);
+        }else if(alarmManagerView.getVisibility() == View.VISIBLE)
+        {
+            alarmManagerView.setVisibility(View.INVISIBLE);
         }
         else {
             super.onBackPressed();
