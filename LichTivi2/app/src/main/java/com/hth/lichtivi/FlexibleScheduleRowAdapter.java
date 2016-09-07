@@ -3,6 +3,7 @@ package com.hth.lichtivi;
 import java.util.ArrayList;
 
 import com.hth.utils.AlarmItem;
+import com.hth.utils.AlarmItemsManager;
 import com.hth.utils.ScheduleItem;
 import com.hth.utils.UIUtils;
 
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +50,8 @@ public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
     	ViewHolder viewHolder;
         TextView tvStartOn;
         TextView tvProgramName;
-        LinearLayout llRow;
+        LinearLayout llSetAlarm;
+        ImageView ivAlarmIcon;
 
         ScheduleItem scheduleItem = data.get(position);
     	if(convertView==null)
@@ -56,19 +59,19 @@ public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
     		convertView = inflater.inflate(R.layout.schedule_row, null);
         	viewHolder = new ViewHolder();
 
-            viewHolder.llRow = llRow = (LinearLayout)convertView.findViewById(R.id.llRow); // title
+            viewHolder.llSetAlarm = llSetAlarm = (LinearLayout)convertView.findViewById(R.id.llSetAlarm); // title
+            viewHolder.ivAlarmIcon = ivAlarmIcon = (ImageView)convertView.findViewById(R.id.ivAlarmIcon); // title
         	viewHolder.tvStartOn = tvStartOn = (TextView)convertView.findViewById(R.id.tvStartOn); // title
         	viewHolder.tvProgramName = tvProgramName = (TextView)convertView.findViewById(R.id.tvProgramName);
 
-            tvStartOn.setTag(scheduleItem);
             if(!scheduleItem.getStartOn().isEmpty()) {
-                tvStartOn.setOnClickListener(new View.OnClickListener() {
+                llSetAlarm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ScheduleItem scheduleItem = (ScheduleItem)v.getTag();
                         if(scheduleItem!=null)
                         {
-                            UIUtils.showSetAlarmPopup(new AlarmItem(0, scheduleItem), activity);
+                            UIUtils.showSetAlarmPopup(new AlarmItem(0, scheduleItem), activity, FlexibleScheduleRowAdapter.this);
                         }
 
                     }
@@ -78,29 +81,49 @@ public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
         }
     	else{
             viewHolder = (ViewHolder)convertView.getTag();
-            llRow = viewHolder.llRow;
+            llSetAlarm = viewHolder.llSetAlarm;
             tvStartOn = viewHolder.tvStartOn; // title
             tvProgramName = viewHolder.tvProgramName;
+            ivAlarmIcon = viewHolder.ivAlarmIcon;
         }
 
         // Setting all values in listview
         if(position % 2 == 0) {
-            llRow.setBackgroundColor(Color.parseColor("#e7e7e7"));
+            convertView.setBackgroundColor(Color.parseColor("#e7e7e7"));
         }else {
-            llRow.setBackgroundColor(Color.parseColor("#f4f4f4"));
+            convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
         }
 
+        if(AlarmItemsManager.getIndex(activity, scheduleItem)!=-1)
+        {
+            ivAlarmIcon.setImageResource(R.drawable.alarm_active);
+        }else{
+            ivAlarmIcon.setImageResource(R.drawable.alarm_inactive);
+        }
+        llSetAlarm.setTag(scheduleItem);
         tvStartOn.setText(scheduleItem.getStartOn());
         tvProgramName.setText(scheduleItem.getTextProgramName());
 
         return convertView;
     }
 
+    public void updateUI()
+    {
+        notifyDataSetChanged();
+    }
+
+    public void updateData(ArrayList<ScheduleItem> d)
+    {
+        if(d == null) data = new ArrayList<ScheduleItem>();
+        else data=d;
+        notifyDataSetChanged();
+    }
 }
 
 class ViewHolder
 {
+    ImageView ivAlarmIcon;
     TextView tvStartOn;
     TextView tvProgramName;
-    LinearLayout llRow;
+    LinearLayout llSetAlarm;
 }

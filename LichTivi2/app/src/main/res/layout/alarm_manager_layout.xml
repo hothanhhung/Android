@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingLeft="20sp"
-    android:paddingRight="10sp">
+    android:paddingLeft="5sp"
+    android:paddingRight="5sp">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -49,7 +49,9 @@
             android:id="@+id/lvAlarms"
             android:padding="0dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_bottom_padding"
+            android:clipToPadding="false">
         </ListView>
     </TableLayout>
 </LinearLayout>

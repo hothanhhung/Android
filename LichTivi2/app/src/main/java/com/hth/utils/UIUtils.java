@@ -33,26 +33,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hth.lichtivi.Data;
+import com.hth.lichtivi.FlexibleScheduleRowAdapter;
 import com.hth.lichtivi.R;
 
 public class UIUtils {
-	public static Dialog showSetAlarmPopup(AlarmItem alarmItem, final Activity activity) {
+	public static Dialog showSetAlarmPopup(final AlarmItem alarmItem, final Activity activity, final FlexibleScheduleRowAdapter flexibleScheduleRowAdapter) {
 		final Dialog loadingDialog = new Dialog(activity);
 		loadingDialog.getWindow().getCurrentFocus();
-		//Drawable d = new ColorDrawable(Color.BLACK);
-		//d.setAlpha(210);
-		//loadingDialog.getWindow().setBackgroundDrawable(d);
 		loadingDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
-
-		/*Rect displayRectangle = new Rect();
-		Window window = activity.getWindow();
-		window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
-		LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.alarm_popup_layout, null);
-		layout.setMinimumWidth((int) (displayRectangle.width() * 0.9f));
-		layout.setMinimumHeight((int) (displayRectangle.height() * 0.4f));
-		loadingDialog.setContentView(layout);*/
-
 		loadingDialog.setContentView(R.layout.alarm_popup_layout);
 		loadingDialog.getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -89,7 +77,24 @@ public class UIUtils {
 		btSaveAlarm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(activity, "set alarm !!!!", Toast.LENGTH_LONG);
+				Spinner spTimeRemindBefore = (Spinner) loadingDialog.findViewById(R.id.spTimeRemindBefore);
+				int minute = 5;
+				switch (spTimeRemindBefore.getSelectedItemPosition())
+				{
+					case 0: minute = 5; break;
+					case 1: minute = 10; break;
+					case 2: minute = 15; break;
+					case 3: minute = 20; break;
+					case 4: minute = 30; break;
+					case 5: minute = 45; break;
+					case 6: minute = 60; break;
+					case 7: minute = 90; break;
+					case 8: minute = 120; break;
+				}
+				alarmItem.setRemindBeforeInMinute(minute);
+				AlarmItemsManager.setAlarm(activity, alarmItem);
+				flexibleScheduleRowAdapter.updateUI();
+				loadingDialog.dismiss();
 			}
 		});
 

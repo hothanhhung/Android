@@ -23,6 +23,11 @@
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+        <receiver android:name="com.hth.utils.AlarmReceiver" />
+
+        <service android:name="com.hth.utils.RingtonePlayingService"
+            android:enabled="true">
+        </service>
     </application>
 
 </manifest>

@@ -64,6 +64,8 @@ public class MainActivity extends Activity implements
     private SearchView search;
     private ChannelsExpandableListAdapter lvChannelsAdapter;
     private FlexibleFavoriteRowAdapter lvFavoritesAdapter;
+    FlexibleScheduleRowAdapter flexibleScheduleRowAdapter;
+
     private TextView tvNoFavorites;
     private ImageButton btFavorite;
     private ExpandableListView lvChannels;
@@ -106,6 +108,8 @@ public class MainActivity extends Activity implements
         search.setOnCloseListener(this);
         tvSelectedDate = (TextView) findViewById(R.id.tvSelectedDate);
 
+        flexibleScheduleRowAdapter = new FlexibleScheduleRowAdapter(activity, null, activity.getResources());
+        lvSchedules.setAdapter(flexibleScheduleRowAdapter);
         //display the list
         displayList();
         //expand all Groups
@@ -235,7 +239,7 @@ public class MainActivity extends Activity implements
         }
         if(alarmManagerView.getVisibility() == View.VISIBLE)
         {
-            alarmManagerView.setVisibility(View.INVISIBLE);
+            alarmManagerView.hideView();
         }
         //if(true) return;
         scheduleAsyncTask = new ScheduleAsyncTask();
@@ -347,7 +351,7 @@ public class MainActivity extends Activity implements
             case R.id.btSearch:
                 if(alarmManagerView.getVisibility() == View.VISIBLE)
                 {
-                    alarmManagerView.setVisibility(View.INVISIBLE);
+                    alarmManagerView.hideView();
                 }
                 searchProgramView.setVisibility(View.VISIBLE);
                 break;
@@ -356,7 +360,7 @@ public class MainActivity extends Activity implements
                 {
                     searchProgramView.setVisibility(View.INVISIBLE);
                 }
-                alarmManagerView.setVisibility(View.VISIBLE);
+                alarmManagerView.showAndUpdate();
                 break;
             case R.id.btFavorite:
                 if(isInFavorites(selectedChannel))
@@ -448,8 +452,7 @@ public class MainActivity extends Activity implements
                 tvMessage.setText("Chưa có dữ liệu");
             }else {
                 lvSchedules.setVisibility(View.VISIBLE);
-                FlexibleScheduleRowAdapter adapter = new FlexibleScheduleRowAdapter(activity, scheduleItems, activity.getResources());
-                lvSchedules.setAdapter(adapter);
+                flexibleScheduleRowAdapter.updateData(scheduleItems);
                 tvMessage.setVisibility(View.GONE);
             }
         }
@@ -462,7 +465,8 @@ public class MainActivity extends Activity implements
             searchProgramView.setVisibility(View.INVISIBLE);
         }else if(alarmManagerView.getVisibility() == View.VISIBLE)
         {
-            alarmManagerView.setVisibility(View.INVISIBLE);
+            alarmManagerView.hideView();
+            flexibleScheduleRowAdapter.updateUI();
         }
         else {
             super.onBackPressed();

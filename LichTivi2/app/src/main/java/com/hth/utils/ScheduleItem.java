@@ -63,4 +63,9 @@ public class ScheduleItem {
 	public void setStartOn(String startOn) {
 		StartOn = startOn;
 	}
+
+	public String getKey()
+	{
+		return getDateOn().concat(getStartOn()).concat(getChannelKey());
+	}
 }

@@ -2,6 +2,7 @@ package com.hth.utils;
 
 import com.hth.lichtivi.Data;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -65,8 +66,24 @@ public class AlarmItem {
     public String getKey()
     {
         if(scheduleItem!=null){
-            return getDateOfSchedule().concat(scheduleItem.getStartOn()).concat(scheduleItem.getChannelKey());
+            return scheduleItem.getKey();
         }
         return "";
+    }
+
+    public void setRemindBeforeInMinute(int remindBeforeInMinute)
+    {
+        this.remindBeforeInMinute = remindBeforeInMinute;
+    }
+
+    public long getTimeToRemindInMiliSecond()
+    {
+        /*Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 17);
+        calendar.set(Calendar.MINUTE, 3);
+        if(true) return calendar.getTimeInMillis();*/
+        Date date = MethodsHelper.getDateFromString(getDateOfSchedule(), getStartOn());
+        return (date.getTime() - remindBeforeInMinute * 60 * 1000) ;
     }
 }

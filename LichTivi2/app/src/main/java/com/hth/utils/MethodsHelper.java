@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import java.text.Normalizer;
@@ -14,6 +15,21 @@ import java.util.Date;
  * Created by Lenovo on 6/9/2016.
  */
 public class MethodsHelper {
+
+    static public Date getDateFromString(String date, String time){
+        Date rs = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try
+        {
+            rs = simpleDateFormat.parse(date.concat(" ".concat(time)));
+            Log.d("getDateFromString", rs.toString());
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return rs;
+    }
 
     static public String getCurrentDateToOrder(){
         return getCurrentDate("yyyyMMddHHmmss");
