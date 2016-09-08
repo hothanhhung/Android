@@ -18,8 +18,12 @@ public class DataAlarm {
     public  static final String STATE_YES_KEY = "STATE_YES_KEY";
     public  static final String STATE_NO_KEY = "STATE_NO_KEY";
     public  static final String STATE_KEY = "STATE_KEY";
-    public  static final String TITLE_SCHEDULE_KEY = "TITLE_SCHEDULE_KEY";
-    public  static final String CONTENT_SCHEDULE_KEY = "CONTENT_SCHEDULE_KEY";
+    public  static final String PROGRAM_NAME_SCHEDULE_KEY = "PROGRAM_NAME_SCHEDULE_KEY";
+    public  static final String START_ON_SCHEDULE_KEY = "START_ON_SCHEDULE_KEY";
+    public  static final String CHANNEL_NAME_SCHEDULE_KEY = "CHANNEL_NAME_SCHEDULE_KEY";
+    public  static final String ALARM_ID_SCHEDULE_KEY = "ALARM_ID_SCHEDULE_KEY";
+    public  static final String VIBRATE_SCHEDULE_KEY = "VIBRATE_SCHEDULE_KEY";
+    public  static final String BACK_FROM_RINGTONE_SCHEDULE_KEY = "BACK_FROM_RINGTONE_SCHEDULE_KEY";
 
     final private static String ALARM_KEY_NAME = "LichTiviAlarmsRecord";
 

@@ -47,6 +47,15 @@ public class AlarmItem {
         }
         return "";
     }
+
+    public String getStartOnTime() {
+        if(scheduleItem!=null)
+        {
+            return scheduleItem.getStartOn();
+        }
+        return "";
+    }
+
     public String getStartOn() {
         if(scheduleItem!=null)
         {
@@ -85,5 +94,10 @@ public class AlarmItem {
         if(true) return calendar.getTimeInMillis();*/
         Date date = MethodsHelper.getDateFromString(getDateOfSchedule(), getStartOn());
         return (date.getTime() - remindBeforeInMinute * 60 * 1000) ;
+    }
+
+    public boolean isVibrate()
+    {
+        return true;
     }
 }

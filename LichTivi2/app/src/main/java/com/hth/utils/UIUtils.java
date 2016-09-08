@@ -92,9 +92,13 @@ public class UIUtils {
 					case 8: minute = 120; break;
 				}
 				alarmItem.setRemindBeforeInMinute(minute);
-				AlarmItemsManager.setAlarm(activity, alarmItem);
-				flexibleScheduleRowAdapter.updateUI();
-				loadingDialog.dismiss();
+				if(alarmItem.getTimeToRemindInMiliSecond() > System.currentTimeMillis()) {
+					AlarmItemsManager.setAlarm(activity, alarmItem);
+					flexibleScheduleRowAdapter.updateUI();
+					loadingDialog.dismiss();
+				}else{
+					showAlertError(activity, false, "Thời gian chạy được cài đặt đã ở quá khứ.");
+				}
 			}
 		});
 
@@ -104,6 +108,22 @@ public class UIUtils {
 		loadingDialog.show();
 
 		return loadingDialog;
+	}
+
+	public static AlertDialog showAlertError(final Activity activity, final Boolean isCloseThis, String message) {
+		AlertDialog alertDialog = new AlertDialog.Builder(activity)
+				.setTitle("Error")
+				.setMessage(message)
+				.setNeutralButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+								if (isCloseThis) activity.finish();
+							}
+						})
+				.setIcon(android.R.drawable.ic_dialog_info)
+				.show();
+		return alertDialog;
 	}
 
 	public static AlertDialog showAlertError(final Activity activity, final Boolean isCloseThis) {

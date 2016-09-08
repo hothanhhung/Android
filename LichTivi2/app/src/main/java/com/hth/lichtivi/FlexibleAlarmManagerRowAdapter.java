@@ -2,6 +2,7 @@ package com.hth.lichtivi;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,32 +20,40 @@ import com.hth.utils.AlarmItemsManager;
 import com.hth.utils.ScheduleItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class FlexibleAlarmManagerRowAdapter extends ArrayAdapter<AlarmItem> {
-	private Activity activity;
-    private ArrayList<AlarmItem> data;
+public class FlexibleAlarmManagerRowAdapter  extends BaseExpandableListAdapter {
+    private Activity activity;
     private static LayoutInflater inflater=null;
+    private ArrayList<AlarmItem> oldAlarmItems;
+    private ArrayList<AlarmItem> nextlarmItems;
+    private ArrayList<String> alarmItemGroups =  new ArrayList<String>() {{ add("Sắp đến"); add("Đã qua");}};
 
-    public FlexibleAlarmManagerRowAdapter(Activity a, ArrayList<AlarmItem> d ) {
-        super( a, R.layout.schedule_row);
-        activity = a;
-        if(d == null) data = new ArrayList<AlarmItem>();
-        else data=d;
-        inflater = LayoutInflater.from(a) ;
-    }
- 
-    public int getCount() {
-        return data.size();
+    public FlexibleAlarmManagerRowAdapter(Activity activity, ArrayList<AlarmItem> alarmItems) {
+        this.activity = activity;
+        inflater = LayoutInflater.from(activity) ;
+        resolveData(alarmItems);
     }
 
-    public Object onRetainNonConfigurationInstance() {
-        return data ;
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        if(groupPosition == 0){
+            return nextlarmItems.get(childPosition);
+        }else {
+            return oldAlarmItems.get(childPosition);
+        }
     }
-    public long getItemId(int position) {
-        return position;
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
     }
- 
-    public View getView(int position, View convertView, ViewGroup parent) {
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+                             View convertView, ViewGroup parent) {
+
         ViewHolderAlarmManager viewHolder;
         TextView tvProgramName;
         TextView tvChannelName;
@@ -51,16 +61,16 @@ public class FlexibleAlarmManagerRowAdapter extends ArrayAdapter<AlarmItem> {
         TextView tvRemindBefore;
         ImageButton btDeleteAlarm;
 
-        AlarmItem alarmItem = data.get(position);
-    	if(convertView==null)
+        AlarmItem alarmItem = (AlarmItem) getChild(groupPosition, childPosition);
+        if(convertView==null)
         {
-    		convertView = inflater.inflate(R.layout.alarm_manager_row, null);
-        	viewHolder = new ViewHolderAlarmManager();
+            convertView = inflater.inflate(R.layout.alarm_manager_row, null);
+            viewHolder = new ViewHolderAlarmManager();
 
             viewHolder.tvProgramName = tvProgramName = (TextView)convertView.findViewById(R.id.tvProgramName); // title
             viewHolder.tvChannelName = tvChannelName = (TextView)convertView.findViewById(R.id.tvChannelName); // title
-        	viewHolder.tvStartOn = tvStartOn = (TextView)convertView.findViewById(R.id.tvStartOn); // title
-        	viewHolder.tvRemindBefore = tvRemindBefore = (TextView)convertView.findViewById(R.id.tvRemindBefore);
+            viewHolder.tvStartOn = tvStartOn = (TextView)convertView.findViewById(R.id.tvStartOn); // title
+            viewHolder.tvRemindBefore = tvRemindBefore = (TextView)convertView.findViewById(R.id.tvRemindBefore);
             viewHolder.btDeleteAlarm = btDeleteAlarm = (ImageButton)convertView.findViewById(R.id.btDeleteAlarm);
 
             if(!alarmItem.getStartOn().isEmpty()) {
@@ -87,9 +97,9 @@ public class FlexibleAlarmManagerRowAdapter extends ArrayAdapter<AlarmItem> {
                     }
                 });
             }
-        	convertView.setTag(viewHolder);
+            convertView.setTag(viewHolder);
         }
-    	else{
+        else{
             viewHolder = (ViewHolderAlarmManager)convertView.getTag();
             tvChannelName = viewHolder.tvChannelName;
             tvStartOn = viewHolder.tvStartOn; // title
@@ -99,7 +109,7 @@ public class FlexibleAlarmManagerRowAdapter extends ArrayAdapter<AlarmItem> {
         }
 
         // Setting all values in listview
-        if(position % 2 == 0) {
+        if(childPosition % 2 == 0) {
             convertView.setBackgroundColor(Color.parseColor("#e7e7e7"));
         }else {
             convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
@@ -114,11 +124,96 @@ public class FlexibleAlarmManagerRowAdapter extends ArrayAdapter<AlarmItem> {
         return convertView;
     }
 
+    @Override
+    public int getChildrenCount(int groupPosition) {
+
+        if(groupPosition == 0){
+            return nextlarmItems.size();
+        }else {
+            return oldAlarmItems.size();
+        }
+
+    }
+
+    @Override
+    public Object getGroup(int groupPosition) {
+        return alarmItemGroups.get(groupPosition);
+    }
+
+    @Override
+    public int getGroupCount() {
+        return alarmItemGroups.size();
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isLastChild, View view,
+                             ViewGroup parent) {
+
+        String groupName = (String) getGroup(groupPosition);
+        if (view == null) {
+            view = inflater.inflate(R.layout.group_channel_row, null);
+        }
+
+        TextView heading = (TextView) view.findViewById(R.id.heading);
+        heading.setText(groupName);
+        if(groupPosition % 2 == 0) {
+            view.setBackgroundColor(Color.parseColor("#e7e7e7"));
+        }else {
+            view.setBackgroundColor(Color.parseColor("#f4f4f4"));
+        }
+        return view;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
     public void updateData( ArrayList<AlarmItem> d )
     {
-        if(d == null) data = new ArrayList<AlarmItem>();
-        else data=d;
+        resolveData(d);
         notifyDataSetChanged();
+    }
+
+    private void resolveData(ArrayList<AlarmItem> alarmItems){
+        if(oldAlarmItems== null ) oldAlarmItems = new ArrayList<>();
+        else oldAlarmItems.clear();
+
+        if(nextlarmItems== null ) nextlarmItems = new ArrayList<>();
+        else nextlarmItems.clear();
+
+        if(alarmItems != null) {
+            long currentTime = System.currentTimeMillis();
+
+            for (AlarmItem alarmItem : alarmItems) {
+                if (alarmItem.getTimeToRemindInMiliSecond() > currentTime) {
+                    nextlarmItems.add(alarmItem);
+                } else {
+                    oldAlarmItems.add(alarmItem);
+                }
+            }
+            Collections.sort(nextlarmItems, new Comparator<AlarmItem>() {
+                public int compare(AlarmItem o1, AlarmItem o2) {
+                    return (int) (o1.getTimeToRemindInMiliSecond() - o2.getTimeToRemindInMiliSecond()) / 1000;
+                }
+            });
+
+            Collections.sort(oldAlarmItems, new Comparator<AlarmItem>() {
+                public int compare(AlarmItem o1, AlarmItem o2) {
+                    return (int) (o1.getTimeToRemindInMiliSecond() - o2.getTimeToRemindInMiliSecond());
+                }
+            });
+        }
     }
 }
 

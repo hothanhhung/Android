@@ -5,53 +5,20 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:paddingLeft="5sp"
     android:paddingRight="5sp">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="2dp"
-        android:paddingRight="2dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/textView" />
-
-        <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New ToggleButton"
-            android:id="@+id/toggleButton" />
-
-    </LinearLayout>
-
-    <TableLayout
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:text="Danh Sách Các Lịch Hẹn"/>
+    <ExpandableListView
+        android:id="@+id/lvAlarms"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/tvMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="30dp"
-            android:paddingLeft="30dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text=""/>
-        <ListView
-            android:id="@+id/lvAlarms"
-            android:padding="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/activity_bottom_padding"
-            android:clipToPadding="false">
-        </ListView>
-    </TableLayout>
+        android:paddingBottom="@dimen/activity_bottom_padding"
+        android:clipToPadding="false" />
 </LinearLayout>

@@ -3,8 +3,8 @@ package com.hth.lichtivi;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hth.data.DataAlarm;
@@ -14,7 +14,7 @@ import com.hth.data.DataAlarm;
  */
 public class AlarmManagerView extends LinearLayout {
     Context context;
-    ListView lvAlarms;
+    ExpandableListView lvAlarms;
     TextView tvMessage;
     FlexibleAlarmManagerRowAdapter flexibleAlarmManagerRowAdapter;
 
@@ -38,7 +38,7 @@ public class AlarmManagerView extends LinearLayout {
     private void initView()
     {
         inflate(getContext(), R.layout.alarm_manager_layout, this);
-        lvAlarms = (ListView) this.findViewById(R.id.lvAlarms);
+        lvAlarms = (ExpandableListView) this.findViewById(R.id.lvAlarms);
         tvMessage = (TextView) this.findViewById(R.id.tvMessage);
         flexibleAlarmManagerRowAdapter = new FlexibleAlarmManagerRowAdapter((Activity)context, DataAlarm.getAlarms((Activity)context));
         lvAlarms.setAdapter(flexibleAlarmManagerRowAdapter);
@@ -47,6 +47,7 @@ public class AlarmManagerView extends LinearLayout {
     public void showAndUpdate()
     {
         flexibleAlarmManagerRowAdapter.updateData(DataAlarm.getAlarms((Activity)context));
+        flexibleAlarmManagerRowAdapter.onGroupExpanded(0);
         this.setVisibility(VISIBLE);
     }
 

@@ -26,8 +26,11 @@ public class AlarmItemsManager {
             AlarmManager alarmManager = (AlarmManager) active.getSystemService(active.ALARM_SERVICE);
             Intent myIntent = new Intent(active, AlarmReceiver.class);
             myIntent.putExtra(DataAlarm.STATE_KEY, DataAlarm.STATE_YES_KEY);
-            myIntent.putExtra(DataAlarm.TITLE_SCHEDULE_KEY, alarmItem.getProgramName());
-            myIntent.putExtra(DataAlarm.CONTENT_SCHEDULE_KEY,"Bắt đầu lúc " + alarmItem.getStartOn());
+            myIntent.putExtra(DataAlarm.PROGRAM_NAME_SCHEDULE_KEY, alarmItem.getProgramName());
+            myIntent.putExtra(DataAlarm.START_ON_SCHEDULE_KEY, alarmItem.getStartOnTime());
+            myIntent.putExtra(DataAlarm.CHANNEL_NAME_SCHEDULE_KEY, alarmItem.getChannelName());
+            myIntent.putExtra(DataAlarm.ALARM_ID_SCHEDULE_KEY, alarmItem.getId());
+            myIntent.putExtra(DataAlarm.VIBRATE_SCHEDULE_KEY, alarmItem.isVibrate());
             PendingIntent pending_intent = PendingIntent.getBroadcast(active, alarmItem.getId(), myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, alarmItem.getTimeToRemindInMiliSecond(), pending_intent);
@@ -51,8 +54,11 @@ public class AlarmItemsManager {
                 AlarmManager alarmManager = (AlarmManager) active.getSystemService(active.ALARM_SERVICE);
                 Intent myIntent = new Intent(active, AlarmReceiver.class);
                 myIntent.putExtra(DataAlarm.STATE_KEY, DataAlarm.STATE_NO_KEY);
-                myIntent.putExtra(DataAlarm.TITLE_SCHEDULE_KEY, alarmItem.getProgramName());
-                myIntent.putExtra(DataAlarm.CONTENT_SCHEDULE_KEY, "Bắt đầu lúc " + alarmItem.getStartOn());
+                myIntent.putExtra(DataAlarm.PROGRAM_NAME_SCHEDULE_KEY, alarmItem.getProgramName());
+                myIntent.putExtra(DataAlarm.START_ON_SCHEDULE_KEY, alarmItem.getStartOnTime());
+                myIntent.putExtra(DataAlarm.CHANNEL_NAME_SCHEDULE_KEY, alarmItem.getChannelName());
+                myIntent.putExtra(DataAlarm.ALARM_ID_SCHEDULE_KEY, alarmItem.getId());
+                myIntent.putExtra(DataAlarm.VIBRATE_SCHEDULE_KEY, alarmItem.isVibrate());
                 PendingIntent pending_intent = PendingIntent.getBroadcast(active, alarmItem.getId(), myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 active.sendBroadcast(myIntent);
                 alarmManager.cancel(pending_intent);
