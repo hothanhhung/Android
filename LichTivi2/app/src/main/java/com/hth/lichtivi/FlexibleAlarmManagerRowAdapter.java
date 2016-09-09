@@ -110,9 +110,9 @@ public class FlexibleAlarmManagerRowAdapter  extends BaseExpandableListAdapter {
 
         // Setting all values in listview
         if(childPosition % 2 == 0) {
-            convertView.setBackgroundColor(Color.parseColor("#e7e7e7"));
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.item_odd_color));
         }else {
-            convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.item_even_color));
         }
 
         btDeleteAlarm.setTag(alarmItem);
@@ -162,9 +162,9 @@ public class FlexibleAlarmManagerRowAdapter  extends BaseExpandableListAdapter {
         TextView heading = (TextView) view.findViewById(R.id.heading);
         heading.setText(groupName);
         if(groupPosition % 2 == 0) {
-            view.setBackgroundColor(Color.parseColor("#e7e7e7"));
+            view.setBackgroundColor(activity.getResources().getColor(R.color.group_item_odd_color));
         }else {
-            view.setBackgroundColor(Color.parseColor("#f4f4f4"));
+            view.setBackgroundColor(activity.getResources().getColor(R.color.group_item_even_color));
         }
         return view;
     }
@@ -210,7 +210,7 @@ public class FlexibleAlarmManagerRowAdapter  extends BaseExpandableListAdapter {
 
             Collections.sort(oldAlarmItems, new Comparator<AlarmItem>() {
                 public int compare(AlarmItem o1, AlarmItem o2) {
-                    return (int) (o1.getTimeToRemindInMiliSecond() - o2.getTimeToRemindInMiliSecond());
+                    return (int) (o2.getTimeToRemindInMiliSecond() - o1.getTimeToRemindInMiliSecond());
                 }
             });
         }

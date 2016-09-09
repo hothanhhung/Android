@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
+    android:clickable="true"
     android:paddingLeft="20sp"
     android:paddingRight="10sp">
     <LinearLayout
@@ -20,11 +21,12 @@
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:hint="Tên chương trình"/>
+            android:hint="Tên chương trình"
+            android:textSize="14sp" />
         <Button
             android:id="@+id/btSearchProgram"
             android:layout_width="80dp"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:background="@drawable/border_rectangle"
             android:textSize="14sp"
             android:text="Tìm"
@@ -39,6 +41,7 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="30sp"
+            android:textSize="14sp"
             android:id="@+id/spStation" />
     </LinearLayout>
     <LinearLayout
@@ -52,20 +55,21 @@
             android:ems="10"
             android:editable="false"
             android:focusable="false"
-            android:id="@+id/etDate" />
+            android:id="@+id/etDate"
+            android:textSize="14sp" />
     </LinearLayout>
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_marginTop="10dp">
 
-        <TableRow
-            android:background="#607D8B"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#dce1e3"
             android:padding="5dp">
-            <TextView
-                android:layout_width="@dimen/search_program_channel_width"
-                android:layout_height="wrap_content"
-                android:text="Kênh" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +79,7 @@
                 android:layout_width="@dimen/search_program_time_width"
                 android:layout_height="wrap_content"
                 android:text="Thời gian" />
-        </TableRow>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvMessage"
@@ -88,9 +92,13 @@
             android:text=""/>
         <ListView
             android:id="@+id/lvPrograms"
-            android:padding="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingRight="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_bottom_padding"
+            android:clipToPadding="false">
         </ListView>
-    </TableLayout>
+    </LinearLayout>
 </LinearLayout>

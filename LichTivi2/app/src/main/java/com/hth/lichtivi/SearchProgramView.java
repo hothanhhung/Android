@@ -20,6 +20,7 @@ import com.hth.utils.MethodsHelper;
 import com.hth.utils.ParseJSONScheduleItems;
 import com.hth.utils.SearchProgramItem;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -148,8 +149,17 @@ public class SearchProgramView extends LinearLayout {
                 "Kênh TH quốc tế",
                 "Truyền hình số vệ tinh k+",
         };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arraySpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, arraySpinner);
+       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spStation.setAdapter(adapter);
+        try {
+            Field popup = Spinner.class.getDeclaredField("mPopup");
+            popup.setAccessible(true);
+            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spStation);
+            popupWindow.setHeight(400);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void searchProgram()

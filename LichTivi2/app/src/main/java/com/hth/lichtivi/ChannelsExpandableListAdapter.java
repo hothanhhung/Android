@@ -54,9 +54,9 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
         TextView name = (TextView) view.findViewById(R.id.name);
         name.setText(channel.getName().trim());
         if(childPosition % 2 == 0) {
-            view.setBackgroundColor(Color.parseColor("#e7e7e7"));
+            view.setBackgroundColor(context.getResources().getColor(R.color.item_odd_color));
         }else {
-            view.setBackgroundColor(Color.parseColor("#f4f4f4"));
+            view.setBackgroundColor(context.getResources().getColor(R.color.item_even_color));
         }
         return view;
     }
@@ -97,9 +97,9 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
         TextView heading = (TextView) view.findViewById(R.id.heading);
         heading.setText(channelGroup.getName().trim());
         if(groupPosition % 2 == 0) {
-            view.setBackgroundColor(Color.parseColor("#e7e7e7"));
+            view.setBackgroundColor(context.getResources().getColor(R.color.group_item_odd_color));
         }else {
-            view.setBackgroundColor(Color.parseColor("#f4f4f4"));
+            view.setBackgroundColor(context.getResources().getColor(R.color.group_item_even_color));
         }
         return view;
     }

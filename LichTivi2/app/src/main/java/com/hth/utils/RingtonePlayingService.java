@@ -96,12 +96,12 @@ public class RingtonePlayingService extends Service {
         if(!this.isRunning && startId == 1) {
             Log.e("if there was not sound ", " and you want start");
             if(vibrate){
-                // Vibrate for 45000 milliseconds
+                // Vibrate for 5000 milliseconds
                 vibrator = (Vibrator) this.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(45000);
+                vibrator.vibrate(5000);
             }
-            mMediaPlayer = MediaPlayer.create(this, R.raw.alarm1);
-            mMediaPlayer.setLooping(true);
+            mMediaPlayer = MediaPlayer.create(this, R.raw.alarm2);
+            //mMediaPlayer.setLooping(true);
             mMediaPlayer.start();
             mNM.notify(idOfAlarm, mNotify);
             this.isRunning = true;

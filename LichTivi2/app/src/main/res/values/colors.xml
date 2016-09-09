@@ -5,6 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="actionbar_color">#bf360c</color>
     <color name="drawer_arrow_second_color">#303f9f</color>
+    <color name="group_item_even_color">#f2f4f4</color>
+    <color name="group_item_odd_color">#EDF0F0</color>
+    <color name="item_even_color">#f4f4f4</color>
+    <color name="item_odd_color">#e7e7e7</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

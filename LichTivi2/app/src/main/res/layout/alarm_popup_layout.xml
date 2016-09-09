@@ -104,11 +104,15 @@
                 android:id="@+id/btCancel"
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/border_rectangle"
+                android:layout_marginRight="10sp"
                 android:text="Bỏ qua"/>
             <Button
                 android:id="@+id/btSaveAlarm"
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/border_rectangle"
+                android:layout_marginLeft="10sp"
                 android:text="Lưu"/>
         </LinearLayout>
      </LinearLayout>

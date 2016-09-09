@@ -26,8 +26,8 @@
             android:text="00:00"
             android:layout_margin="0sp"
             android:paddingLeft="5sp"
-            android:paddingBottom="10sp"
-            android:paddingTop="10sp"
+            android:paddingBottom="5sp"
+            android:paddingTop="5sp"
             android:textSize="14sp"
             android:textStyle="bold"
             android:gravity="center" />
@@ -39,8 +39,8 @@
         android:text="United States Of America United States Of America United States Of America"
         android:layout_margin="0sp"
         android:paddingLeft="15sp"
-        android:paddingBottom="10sp"
-        android:paddingTop="10sp"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
         android:textSize="14sp"
         android:gravity="center_vertical" />
 

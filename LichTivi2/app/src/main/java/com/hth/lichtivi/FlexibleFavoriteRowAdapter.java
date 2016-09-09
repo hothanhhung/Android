@@ -66,9 +66,9 @@ public class FlexibleFavoriteRowAdapter extends ArrayAdapter<ArrayList<ChannelIt
 
         // Setting all values in listview
         if(position % 2 == 0) {
-            convertView.setBackgroundColor(Color.parseColor("#e7e7e7"));
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.group_item_odd_color));
         }else {
-            convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.group_item_even_color));
         }
 
         tvName.setText(channelItem.getName());

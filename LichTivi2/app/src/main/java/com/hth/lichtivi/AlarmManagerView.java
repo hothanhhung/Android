@@ -47,7 +47,7 @@ public class AlarmManagerView extends LinearLayout {
     public void showAndUpdate()
     {
         flexibleAlarmManagerRowAdapter.updateData(DataAlarm.getAlarms((Activity)context));
-        flexibleAlarmManagerRowAdapter.onGroupExpanded(0);
+        lvAlarms.expandGroup(0);
         this.setVisibility(VISIBLE);
     }
 

@@ -225,7 +225,7 @@ public class MainActivity extends Activity implements
         }else{
             btFavorite.setImageResource(R.drawable.favorite);
         }
-
+        btFavorite.setVisibility(View.VISIBLE);
         tvMessage.setVisibility(View.VISIBLE);
         tvMessage.setText("Đang tải dữ liệu...");
         lvSchedules.setVisibility(View.GONE);
@@ -354,6 +354,8 @@ public class MainActivity extends Activity implements
                     alarmManagerView.hideView();
                 }
                 searchProgramView.setVisibility(View.VISIBLE);
+                btFavorite.setVisibility(View.GONE);
+                tvSelectedChannel.setText("Tìm Chương Trình");
                 break;
             case R.id.btAlarms:
                 if(searchProgramView.getVisibility() == View.VISIBLE)
@@ -361,6 +363,8 @@ public class MainActivity extends Activity implements
                     searchProgramView.setVisibility(View.INVISIBLE);
                 }
                 alarmManagerView.showAndUpdate();
+                btFavorite.setVisibility(View.GONE);
+                tvSelectedChannel.setText("Lịch Hẹn");
                 break;
             case R.id.btFavorite:
                 if(isInFavorites(selectedChannel))
@@ -463,10 +467,14 @@ public class MainActivity extends Activity implements
         if(searchProgramView.getVisibility() == View.VISIBLE)
         {
             searchProgramView.setVisibility(View.INVISIBLE);
+            tvSelectedChannel.setText(selectedChannel.getName());
+            btFavorite.setVisibility(View.VISIBLE);
         }else if(alarmManagerView.getVisibility() == View.VISIBLE)
         {
             alarmManagerView.hideView();
             flexibleScheduleRowAdapter.updateUI();
+            btFavorite.setVisibility(View.VISIBLE);
+            tvSelectedChannel.setText(selectedChannel.getName());
         }
         else {
             super.onBackPressed();

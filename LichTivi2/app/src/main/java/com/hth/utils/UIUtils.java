@@ -36,6 +36,8 @@ import com.hth.lichtivi.Data;
 import com.hth.lichtivi.FlexibleScheduleRowAdapter;
 import com.hth.lichtivi.R;
 
+import java.lang.reflect.Field;
+
 public class UIUtils {
 	public static Dialog showSetAlarmPopup(final AlarmItem alarmItem, final Activity activity, final FlexibleScheduleRowAdapter flexibleScheduleRowAdapter) {
 		final Dialog loadingDialog = new Dialog(activity);
@@ -65,8 +67,16 @@ public class UIUtils {
 				" 90 phút",
 				"120 phút"
 		};
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, arraySpinner);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_dropdown_item, arraySpinner);
 		spTimeRemindBefore.setAdapter(adapter);
+		/*try {
+			Field popup = Spinner.class.getDeclaredField("mPopup");
+			popup.setAccessible(true);
+			android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spTimeRemindBefore);
+			popupWindow.setHeight(420);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 		btCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

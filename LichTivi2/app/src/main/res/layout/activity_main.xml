@@ -162,6 +162,7 @@
                 android:layout_height="wrap_content"
                 android:queryHint="Từ khóa tìm kênh"
                 android:hint="Từ khóa tìm kênh"
+                android:textSize="14sp"
                 android:iconifiedByDefault="false" />
             <ExpandableListView
                 android:id="@+id/lvChannels"
@@ -187,11 +188,11 @@
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kênh yêu thích"
+            android:text="Kênh Yêu Thích"
                 android:layout_gravity="center"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="20sp"
+                android:layout_marginBottom="10sp"
                 android:layout_marginTop="10sp" />
             <TextView
                 android:id="@+id/tvNoFavorites"

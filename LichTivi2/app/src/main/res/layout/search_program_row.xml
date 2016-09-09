@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableRow
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="0dp">
-    <TextView
-        android:id="@+id/tvChannel"
-        android:layout_width="@dimen/search_program_channel_width"
-        android:layout_height="wrap_content"
-        android:text="vtv"
-        android:gravity="center" />
-    <TextView
-        android:id="@+id/tvProgramName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:gravity="center_vertical">
+    <LinearLayout
         android:layout_width="0sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Phim truyen" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvProgramName"
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:text="Phim truyen" />
+        <TextView
+            android:id="@+id/tvChannel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="vtv" />
+    </LinearLayout>
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="@dimen/search_program_time_width"
         android:layout_height="wrap_content"
         android:text="10:22-14:00 2012-12-12"
         android:gravity="center" />
-</TableRow>
+</LinearLayout>
