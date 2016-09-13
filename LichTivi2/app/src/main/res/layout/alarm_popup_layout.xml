@@ -95,6 +95,14 @@
                 android:textStyle="bold"
                 android:id="@+id/spTimeRemindBefore"/>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/warning_alarm"
+            android:textSize="10sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

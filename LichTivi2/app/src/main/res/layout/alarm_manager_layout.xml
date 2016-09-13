@@ -15,6 +15,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
         android:text="Danh Sách Các Lịch Hẹn"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/warning_alarm"
+        android:textSize="12sp"
+        android:layout_margin="10sp" />
     <ExpandableListView
         android:id="@+id/lvAlarms"
         android:layout_height="match_parent"

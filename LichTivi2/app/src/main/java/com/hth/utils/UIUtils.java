@@ -3,40 +3,27 @@ package com.hth.utils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.telephony.TelephonyManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.hth.lichtivi.Data;
+import com.hth.lichtivi.AlarmItemsManager;
 import com.hth.lichtivi.FlexibleScheduleRowAdapter;
 import com.hth.lichtivi.R;
-
-import java.lang.reflect.Field;
 
 public class UIUtils {
 	public static Dialog showSetAlarmPopup(final AlarmItem alarmItem, final Activity activity, final FlexibleScheduleRowAdapter flexibleScheduleRowAdapter) {
@@ -89,29 +76,84 @@ public class UIUtils {
 			public void onClick(View v) {
 				Spinner spTimeRemindBefore = (Spinner) loadingDialog.findViewById(R.id.spTimeRemindBefore);
 				int minute = 5;
-				switch (spTimeRemindBefore.getSelectedItemPosition())
-				{
-					case 0: minute = 5; break;
-					case 1: minute = 10; break;
-					case 2: minute = 15; break;
-					case 3: minute = 20; break;
-					case 4: minute = 30; break;
-					case 5: minute = 45; break;
-					case 6: minute = 60; break;
-					case 7: minute = 90; break;
-					case 8: minute = 120; break;
+				switch (spTimeRemindBefore.getSelectedItemPosition()) {
+					case 0:
+						minute = 5;
+						break;
+					case 1:
+						minute = 10;
+						break;
+					case 2:
+						minute = 15;
+						break;
+					case 3:
+						minute = 20;
+						break;
+					case 4:
+						minute = 30;
+						break;
+					case 5:
+						minute = 45;
+						break;
+					case 6:
+						minute = 60;
+						break;
+					case 7:
+						minute = 90;
+						break;
+					case 8:
+						minute = 120;
+						break;
 				}
 				alarmItem.setRemindBeforeInMinute(minute);
-				if(alarmItem.getTimeToRemindInMiliSecond() > System.currentTimeMillis()) {
+				if (alarmItem.getTimeToRemindInMiliSecond() > System.currentTimeMillis()) {
 					AlarmItemsManager.setAlarm(activity, alarmItem);
 					flexibleScheduleRowAdapter.updateUI();
 					loadingDialog.dismiss();
-				}else{
+				} else {
 					showAlertError(activity, false, "Thời gian chạy được cài đặt đã ở quá khứ.");
 				}
 			}
 		});
 
+		if(alarmItem.getRemindBeforeInMinute() == 0){
+			btSaveAlarm.setVisibility(View.VISIBLE);
+		}else{
+			int selectedIndex = 0;
+			switch (alarmItem.getRemindBeforeInMinute()) {
+				case 5:
+					selectedIndex = 0;
+					break;
+				case 10:
+					selectedIndex = 1;
+					break;
+				case 15:
+					selectedIndex = 2;
+					break;
+				case 20:
+					selectedIndex = 3;
+					break;
+				case 30:
+					selectedIndex = 4;
+					break;
+				case 45:
+					selectedIndex = 5;
+					break;
+				case 60:
+					selectedIndex = 6;
+					break;
+				case 90:
+					selectedIndex = 7;
+					break;
+				case 120:
+					selectedIndex = 8;
+					break;
+			}
+			spTimeRemindBefore.setSelection(selectedIndex);
+			spTimeRemindBefore.setEnabled(false);
+			btSaveAlarm.setText("Đóng");
+			btSaveAlarm.setVisibility(View.GONE);
+		}
 		loadingDialog.setCancelable(false);
 		loadingDialog.setOwnerActivity(activity);
 

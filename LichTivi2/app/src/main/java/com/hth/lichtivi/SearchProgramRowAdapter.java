@@ -79,7 +79,7 @@ public class SearchProgramRowAdapter extends ArrayAdapter<ArrayList<SearchProgra
         }
 
         tvChannel.setText("Trên kênh ".concat(searchProgramItem.getChannelName()));
-        tvProgramName.setText(searchProgramItem.getProgramName());
+        tvProgramName.setText(searchProgramItem.getDecodedProgramName());
         tvTime.setText(searchProgramItem.getTime());
         return convertView;
     }

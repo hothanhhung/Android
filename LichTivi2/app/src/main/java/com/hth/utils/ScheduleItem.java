@@ -9,6 +9,7 @@ public class ScheduleItem {
 	public String DateOn;
 	public String StartOn;
 	public String ProgramName;
+	public String DecodedProgramName;
 	public String Note;
 
 	public String getChannelKey() {
@@ -39,13 +40,22 @@ public class ScheduleItem {
 		return ProgramName;
 	}
 
+	public String getDecodedProgramName()
+	{
+		if(DecodedProgramName == null || DecodedProgramName.isEmpty())
+		{
+			DecodedProgramName= EncrypeString.tryDecode(ProgramName);
+		}
+		return DecodedProgramName;
+	}
+
 	public void setProgramName(String programName) {
 		ProgramName = programName;
 	}
 
 	public String getTextProgramName() {
 
-		return Html.fromHtml(ProgramName).toString();
+		return Html.fromHtml(getDecodedProgramName()).toString();
 	}
 
 	public int getScheduleId() {

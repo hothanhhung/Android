@@ -9,4 +9,5 @@
     <string name="repeat_button">Lặp Lại</string>
     <string name="hide_button">Tắt</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="warning_alarm">Với một số điện thoại, bạn cần khởi động lại ứng dụng sau khi khởi động lại máy để lịch hẹn chạy đúng</string>
 </resources>

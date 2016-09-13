@@ -3,14 +3,11 @@ package com.hth.lichtivi;
 import java.util.ArrayList;
 
 import com.hth.utils.AlarmItem;
-import com.hth.utils.AlarmItemsManager;
 import com.hth.utils.ScheduleItem;
 import com.hth.utils.UIUtils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
 	private Activity activity;
@@ -71,7 +67,8 @@ public class FlexibleScheduleRowAdapter extends ArrayAdapter<ScheduleItem> {
                         ScheduleItem scheduleItem = (ScheduleItem)v.getTag();
                         if(scheduleItem!=null)
                         {
-                            UIUtils.showSetAlarmPopup(new AlarmItem(0, scheduleItem), activity, FlexibleScheduleRowAdapter.this);
+                            AlarmItem alarmItem = AlarmItemsManager.getAlarmItem(activity, scheduleItem);
+                            UIUtils.showSetAlarmPopup(alarmItem, activity, FlexibleScheduleRowAdapter.this);
                         }
 
                     }

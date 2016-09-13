@@ -2,22 +2,15 @@ package com.hth.lichtivi;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.hth.data.DataAlarm;
 import com.hth.utils.AlarmItem;
-import com.hth.utils.AlarmItemsManager;
-import com.hth.utils.ScheduleItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +66,7 @@ public class FlexibleAlarmManagerRowAdapter  extends BaseExpandableListAdapter {
             viewHolder.tvRemindBefore = tvRemindBefore = (TextView)convertView.findViewById(R.id.tvRemindBefore);
             viewHolder.btDeleteAlarm = btDeleteAlarm = (ImageButton)convertView.findViewById(R.id.btDeleteAlarm);
 
-            if(!alarmItem.getStartOn().isEmpty()) {
+            if(!alarmItem.getStartOnTime().isEmpty()) {
                 btDeleteAlarm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

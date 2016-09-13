@@ -7,6 +7,7 @@ public class SearchProgramItem {
     public String ChannelName;
     public String ImageUrl;
     public String ProgramName;
+    public String DecodedProgramName;
     public String Time;
 
     public String getChannelName() {
@@ -29,6 +30,14 @@ public class SearchProgramItem {
         return ProgramName;
     }
 
+    public String getDecodedProgramName()
+    {
+        if(DecodedProgramName == null || DecodedProgramName.isEmpty())
+        {
+            DecodedProgramName= EncrypeString.tryDecode(ProgramName);
+        }
+        return DecodedProgramName;
+    }
     public void setProgramName(String programName) {
         ProgramName = programName;
     }

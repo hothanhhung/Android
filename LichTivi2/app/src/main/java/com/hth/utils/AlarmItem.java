@@ -59,7 +59,7 @@ public class AlarmItem {
     public String getStartOn() {
         if(scheduleItem!=null)
         {
-            return scheduleItem.getStartOn().concat(" ngày ").concat(getDateOfSchedule());
+            return scheduleItem.getStartOn().concat(" ngày ").concat( MethodsHelper.getddMMyyyyFromString(getDateOfSchedule()));
         }
         return "";
     }
@@ -92,7 +92,7 @@ public class AlarmItem {
         calendar.set(Calendar.HOUR_OF_DAY, 17);
         calendar.set(Calendar.MINUTE, 3);
         if(true) return calendar.getTimeInMillis();*/
-        Date date = MethodsHelper.getDateFromString(getDateOfSchedule(), getStartOn());
+        Date date = MethodsHelper.getDateFromString(getDateOfSchedule(), getStartOnTime());
         return (date.getTime() - remindBeforeInMinute * 60 * 1000) ;
     }
 

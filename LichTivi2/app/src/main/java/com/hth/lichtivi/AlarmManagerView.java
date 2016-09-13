@@ -7,8 +7,6 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hth.data.DataAlarm;
-
 /**
  * Created by Lenovo on 8/31/2016.
  */

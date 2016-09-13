@@ -78,6 +78,7 @@ public class MainActivity extends Activity implements
         setContentView(R.layout.activity_main);
 
         activity = this;
+        resetupAlarm(activity);
         selectedChannel = new ChannelItem("VTV1", "VTV1");
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -124,6 +125,21 @@ public class MainActivity extends Activity implements
 
     }
 
+    private void resetupAlarm(final  Context activity)
+    {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    AlarmItemsManager.resetupAlarmIfNeed(activity);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        thread.start();
+    }
     private void removeFavorite(ChannelItem item)
     {
         for(int i = 0; i< favoriteslList.size(); i++)

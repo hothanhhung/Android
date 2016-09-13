@@ -22,13 +22,28 @@ public class MethodsHelper {
         try
         {
             rs = simpleDateFormat.parse(date.concat(" ".concat(time)));
-            Log.d("getDateFromString", rs.toString());
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
         return rs;
+    }
+
+    static public String getddMMyyyyFromString(String date){
+        Date rs = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try
+        {
+            rs = simpleDateFormat.parse(date);
+            return outDateFormat.format(rs);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return "";
     }
 
     static public String getCurrentDateToOrder(){
