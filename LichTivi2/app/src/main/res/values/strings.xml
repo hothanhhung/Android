@@ -2,8 +2,8 @@
     <string name="app_name">Lich Tivi</string>
     <string name="drawer_open">drawer_open</string>
     <string name="drawer_close">drawer_close</string>
-    <string name="ad_unit_id">ca-app-pub-4576847792571626/7662512396</string>
-    <string name="interstitial_unit_id">ca-app-pub-4576847792571626/1159282794</string>
+    <string name="ad_unit_id">ca-app-pub-4576847792571626/1841794794</string>
+    <string name="interstitial_unit_id">ca-app-pub-4576847792571626/5305438795</string>
 
     <string name="title_activity_fullscreen_alarm">FullscreenAlarmActivity</string>
     <string name="repeat_button">Lặp Lại</string>

@@ -232,8 +232,13 @@ public class MainActivity extends Activity implements
         }
     }
 
+    private int numberOfShowShedules = 0;
     private void updateSchedules()
     {
+        numberOfShowShedules++;
+        if(numberOfShowShedules%4 == 0){
+            showInterstitial();
+        }
         tvSelectedChannel.setText(selectedChannel.getName());
         if(isInFavorites((selectedChannel)))
         {
@@ -512,44 +517,33 @@ public class MainActivity extends Activity implements
     @Override
     protected void onResume() {
         super.onResume();
-        showInterstitial();
-
     }
 
-    private void showInterstitial()
-    {
-        /*long timenow = Calendar.getInstance().getTime().getTime();
-        long maxTime = ((countShow*200000 ) + 200000);
-        if(maxTime > 900000) maxTime = 900000;
-        if(timeForRun > 0 && ((timenow - timeForRun) > maxTime))
-        {
-            if (interstitial == null) {
-                interstitial = new InterstitialAd(this);
-                interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
-                interstitial.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdLoaded() {
-                        if(interstitial.isLoaded()){
-                            interstitial.show();
-                            timeForRun = Calendar.getInstance().getTime().getTime();
-                            countShow++;
-                        }
+    private void showInterstitial() {
+        if (interstitial == null) {
+            interstitial = new InterstitialAd(this);
+            interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
+            interstitial.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    if (interstitial.isLoaded()) {
+                        interstitial.show();
                     }
+                }
 
-                    @Override
-                    public void onAdClosed() {
-                    }
+                @Override
+                public void onAdClosed() {
+                }
 
 
-                    @Override
-                    public void onAdFailedToLoad(int errorCode) {
-                    }
-                });
-            }
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                }
+            });
+        }
 
-            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+        AdRequest adRequest_interstitial = new AdRequest.Builder().build();
 
-            interstitial.loadAd(adRequest_interstitial);
-        }*/
+        interstitial.loadAd(adRequest_interstitial);
     }
 }

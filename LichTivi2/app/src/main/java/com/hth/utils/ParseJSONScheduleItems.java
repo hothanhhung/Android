@@ -57,7 +57,7 @@ public class ParseJSONScheduleItems {
 		{
 			androidId = MethodsHelper.getAndroidId(context);
 		}
-		return openKey;
+		return androidId;
 	}
 
 	private String getAppVersion(){
