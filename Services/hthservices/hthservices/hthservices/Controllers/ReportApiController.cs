@@ -90,6 +90,18 @@ namespace hthservices.Controllers
         }
 
         [System.Web.Http.HttpGet]
+        public ResponseJson RequestInfo(string token, string type, string date, string order = "", bool desc = true, int page = 1, int size = 30)
+        {
+            if (AuthData.GetRole(token) == Role.NoLogin)
+            {
+                return ResponseJson.GetResponseJson(string.Empty, false);
+            }
+            var requestInfos = DataProcess.GetRequestInfo(type, date, order, desc, page, size);
+
+            return ResponseJson.GetResponseJson(requestInfos);
+        }
+
+        [System.Web.Http.HttpGet]
         public ResponseJson Dashboard(string token, string fromDate, string toDate)
         {
             if (AuthData.GetRole(token) == Role.NoLogin)
@@ -107,7 +119,7 @@ namespace hthservices.Controllers
                         {
                             CurrentDate = log.CurrentDate,
                             NumberOfRequest = log.NumberOfRequests,
-                            NumberOfFailedRequest = failLog == null? 0 : failLog.NumberOfRequests 
+                            NumberOfFailedRequest = failLog == null ? 0 : failLog.NumberOfRequests
                         };
             return ResponseJson.GetResponseJson(resultObject != null ? resultObject.ToList() : null);
         }

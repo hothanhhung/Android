@@ -2,7 +2,7 @@
 
 hthServiceApp.controller('HomeController',
     ['$scope', '$rootScope', '$http', '$location', '$routeParams',
-      function ($scope, $rootScope, $http, $location, $routeParams) {
+      function ($scope, $rootScope, $http, $location, $routeParams, $window) {
           if (typeof ($rootScope.AuthInfo) === 'undefined' || typeof ($rootScope.AuthInfo.Token) === 'undefined' || $rootScope.AuthInfo.Token == '') {
               var token = window.localStorage.getItem("AuthInfo.Token");
               if (token && token != "") {
@@ -70,5 +70,16 @@ hthServiceApp.controller('HomeController',
               //save to root
               $rootScope.FromDate = fromDate;
               $rootScope.ToDate = toDate;
+          }
+          $scope.openRequestInfo = function () {
+              window.open(URL_SERVICE + "/api/ReportApi/RequestInfo/?token=" + $rootScope.AuthInfo.Token + "&type=SearchProgram&order=Id&desc=true&date=" + GetStringOfDate(new Date()), "_blank");
+          };
+          function GetStringOfDate(date) {
+              if (typeof (date) != 'object') {
+                  return "";
+              }
+              var m = date.getMonth() + 1;
+              var d = date.getDate();
+              return date.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (d < 10 ? "0" : "") + d;
           }
     }]);

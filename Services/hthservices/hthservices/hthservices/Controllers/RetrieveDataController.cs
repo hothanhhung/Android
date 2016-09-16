@@ -31,7 +31,7 @@ namespace hthservices.Controllers
             }
             else if(channelKey.Equals("HTVC ", StringComparison.OrdinalIgnoreCase))channelKey = "HTVC+";
 
-            var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn);
+            var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn, Request.Url.ToString());
             return Json(channels, JsonRequestBehavior.AllowGet);
         }
 
@@ -66,7 +66,7 @@ namespace hthservices.Controllers
                 else selectedDate = DateTime.Now;
             }
 
-            var searchItems = hthservices.Utils.DataProcess.SearchDataFromVietBaoUrl(query, groupOrder, selectedDate);
+            var searchItems = hthservices.Utils.DataProcess.SearchDataFromVietBaoUrl(query, groupOrder, selectedDate, Request.Url.ToString());
             return Json(searchItems, JsonRequestBehavior.AllowGet);
         }
 

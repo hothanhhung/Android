@@ -2598,7 +2598,7 @@ namespace hthservices.Utils
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
         {
-            string url = string.Format(VIETBAO_SEARCH_PAGE, query, date.ToString("dd-MM-yyyy"), stationID);
+            string url = string.Format(VIETBAO_SEARCH_PAGE, HttpUtility.UrlEncode(MethodHelpers.RemoveSign4VietnameseString(query)), date.ToString("dd-MM-yyyy"), stationID);
 
             List<SearchItem> searchItems = new List<SearchItem>();
             try

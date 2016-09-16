@@ -45,7 +45,7 @@ namespace hthservices.Utils
             return channels;
         }
 
-        static public List<GuideItem> GetSchedulesOfChannel(string channelKey, DateTime date)
+        static public List<GuideItem> GetSchedulesOfChannel(string channelKey, DateTime date, string requestLink)
         {
             List<GuideItem> guideItems = new List<GuideItem>();
             guideItems = SQLiteProcess.GetSchedulesOfChannel(channelKey, date);
@@ -255,17 +255,44 @@ namespace hthservices.Utils
                 th.Start();
             }
             catch (Exception ex) { }
+
+            try
+            {
+                System.Threading.Thread th = new System.Threading.Thread(() =>
+                {
+                    SQLiteProcess.SaveRequestInfo("GetSchedules", date, guideItems == null || guideItems.Count == 0, requestLink);
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
+            catch (Exception ex) { }
+
             return guideItems;
         }
-   
-        static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int groupId, DateTime date)
+
+        static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int groupId, DateTime date, string requestLink)
         {
             int index = groupId - 11;
             if (index < 0 || index > DataStatic.Stations.Length - 1) index = 0;
-            return hthservices.Utils.HtmlHelper.SearchDataFromVietBaoUrl(query, DataStatic.Stations[index], date);
+            var guideItems = hthservices.Utils.HtmlHelper.SearchDataFromVietBaoUrl(query, DataStatic.Stations[index], date);
+            try
+            {
+                System.Threading.Thread th = new System.Threading.Thread(() =>
+                {
+                    SQLiteProcess.SaveRequestInfo("SearchProgram", date, guideItems == null || guideItems.Count == 0, requestLink);
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
+            catch (Exception ex) { }
+            return guideItems;
         }
 
         #region Logger
+        public static List<RequestInfo> GetRequestInfo(string type, string date, string order = "", bool desc = true, int page = 1, int size = 30)
+        {
+            return SQLiteProcess.GetRequestInfo(type, date, order, desc, page, size);
+        }
         public static List<ScheduleRequestLog> GetScheduleRequestLogs()
         {
             return SQLiteProcess.GetScheduleRequestLogs();

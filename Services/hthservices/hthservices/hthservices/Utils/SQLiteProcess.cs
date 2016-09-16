@@ -18,7 +18,21 @@ namespace hthservices.Utils
                 //return @"D:\hung\github\android\Android\Services\hthservices\hthservices\hthservices\Data\TVSchedules.db3";
                 if (string.IsNullOrWhiteSpace(connectString))
                 {
-                    connectString = "Data Source=" + HttpContext.Current.Server.MapPath("~/Data/TVSchedules.db3") + ";Version=3;New=False;Compress=True;UTF8Encoding=True";
+                    if (HttpContext.Current == null)
+                    {
+                        if (HttpRuntime.AppDomainAppPath.EndsWith("\\"))
+                        {
+                            connectString = "Data Source=" + HttpRuntime.AppDomainAppPath + "Data\\TVSchedules.db3;Version=3;New=False;Compress=True;UTF8Encoding=True";
+                        }
+                        else
+                        {
+                            connectString = "Data Source=" + HttpRuntime.AppDomainAppPath + "\\Data\\TVSchedules.db3;Version=3;New=False;Compress=True;UTF8Encoding=True";
+                        }
+                    }
+                    else
+                    {
+                        connectString = "Data Source=" + HttpContext.Current.Server.MapPath("~/Data/TVSchedules.db3") + ";Version=3;New=False;Compress=True;UTF8Encoding=True";
+                    }
                 }
                 return connectString;
             }
@@ -210,6 +224,105 @@ namespace hthservices.Utils
         #endregion
 
         #region Log Process
+
+        public static void SaveRequestInfo(string type, DateTime date, bool isNoData, string requestLink)
+        {
+            string sqlSaveChannel = "";
+
+            sqlSaveChannel = " INSERT INTO RequestInfo(Type, CurrentDate, IsFailed, RequestLink) " +
+                             " VALUES(@Type, @CurrentDate, @IsFailed, @RequestLink);";
+
+            try
+            {
+                using (var sql_con = new SQLiteConnection(ConnectString))
+                {
+                    sql_con.Open();
+                    using (var sql_cmd = sql_con.CreateCommand())
+                    {
+                        sql_cmd.CommandText = sqlSaveChannel;
+                        SQLiteParameterCollection myParameters = sql_cmd.Parameters;
+                        myParameters.AddWithValue("@Type", type);
+                        myParameters.AddWithValue("@CurrentDate", MethodHelpers.ConvertDateToCorrectString(MethodHelpers.GetVNCurrentDate()));
+                        myParameters.AddWithValue("@IsFailed", isNoData?"1":"0");
+                        myParameters.AddWithValue("@RequestLink", requestLink);
+                        sql_cmd.ExecuteNonQuery();
+                    }
+                    sql_con.Close();
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        public static List<RequestInfo> GetRequestInfo(string type, string date, string order = "", bool desc = true, int page = 1, int size = 30)
+        {
+            String orderBy = "";
+            String where = "";
+            if (!string.IsNullOrWhiteSpace(order))
+            {
+                if (order.Equals("Id", StringComparison.OrdinalIgnoreCase))
+                {
+                    orderBy = " Order by Id " + (desc ? "DESC" : "ASC");
+                }
+                else if (order.Equals("CurrentDate", StringComparison.OrdinalIgnoreCase))
+                {
+                    orderBy = " Order by CurrentDate" + (desc ? "DESC" : "ASC");
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(type))
+            {
+                where += "WHERE Type=@Type ";
+            }
+            if (!string.IsNullOrWhiteSpace(date))
+            {
+                if (!string.IsNullOrWhiteSpace(where))
+                {
+                    where += " AND CurrentDate=@CurrentDate ";
+                }
+                else
+                {
+                    where += "WHERE CurrentDate=@CurrentDate ";
+                }
+            }
+
+            List<RequestInfo> requestInfos = new List<RequestInfo>();
+            string sqlSaveChannel = "SELECT * FROM RequestInfo " + where + orderBy + " LIMIT " + size + " OFFSET " + (page - 1) * size;
+            using (var sql_con = new SQLiteConnection(ConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    if (!string.IsNullOrWhiteSpace(type))
+                    {
+                        myParameters.AddWithValue("@Type", type);
+                    }
+                    if (!string.IsNullOrWhiteSpace(date))
+                    {
+                        myParameters.AddWithValue("@CurrentDate", date);
+                    }                   
+                    
+
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var requestInfo = new RequestInfo();
+                            requestInfo.Id = Int32.Parse((reader["Id"] ?? "").ToString());
+                            requestInfo.CurrentDate = (reader["CurrentDate"] ?? "").ToString();
+                            requestInfo.Type = (reader["Type"] ?? "").ToString();
+                            requestInfo.IsFailed = (reader["IsFailed"] ?? "").ToString();
+                            requestInfo.RequestLink = (reader["RequestLink"] ?? "").ToString();
+                            requestInfos.Add(requestInfo);
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return requestInfos;
+        }
+
         public static void SaveScheduleRequestLogs(string channelKey, DateTime date, bool isNoData)
         {
             string sqlSaveChannel = "";

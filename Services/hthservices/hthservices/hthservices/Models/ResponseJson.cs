@@ -9,6 +9,7 @@ using hthservices.Ads;
 namespace hthservices.Models
 {
     [Serializable]
+    [KnownType(typeof(List<RequestInfo>))]
     [KnownType(typeof(List<GuideItem>))]
     [KnownType(typeof(List<SearchItem>))]
     [KnownType(typeof(List<AdItem>))]
