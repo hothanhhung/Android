@@ -10,6 +10,7 @@ namespace hthservices.Utils
         public string Server { get; set; }
         public string ChannelKey { get; set; }
         public string Value { get; set; }
+        public string ExtraValue { get; set; }
     }
 
     public class DataStatic
@@ -88,16 +89,16 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_VOV_PAGE, ChannelKey="VOVTV", Value=""},
              //new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="VTCHD3", Value="42"},
              //new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="VTC3", Value="42"},
-             new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="DisneyChannel", Value="378"},
+             //new ChannelToServer(){Server=FROM_TRUYENHINHSO_PAGE, ChannelKey="DisneyChannel", Value="378"},
              //new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTCHD1", Value="1"},
              //new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC1", Value="1"},
              //new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC10-NetViet", Value="4"},
              //new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="VTC16-3NTV", Value="5"},
              new ChannelToServer(){Server=FROM_TVNET_PAGE, ChannelKey="TruyenhinhThongtanxaVietNamTTXVN", Value="75"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+1", Value="187"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+NS", Value="188"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+PM", Value="189"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+PC", Value="205"},
+             //new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+1", Value="187"},
+             //new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+NS", Value="188"},
+             //new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+PM", Value="189"},
+             //new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="K+PC", Value="205"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="NATIONALGEOGRAPHICCHANNEL", Value="7"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="HBO", Value="9"},
              //new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="StarMovies", Value="11"},
@@ -186,6 +187,15 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_VTVCab_PAGE, ChannelKey="VTVcab21", Value="23926"}, //no client yet
              new ChannelToServer(){Server=FROM_VTVCab_PAGE, ChannelKey="WarnerTV", Value="4707"},
              new ChannelToServer(){Server=FROM_VTVCab_PAGE, ChannelKey="DisneyJunior", Value="4109"},
+
+             new ChannelToServer(){Server=FROM_KPLUS_PAGE, ChannelKey="K+1", Value="7008", ExtraValue="11"},
+             new ChannelToServer(){Server=FROM_KPLUS_PAGE, ChannelKey="K+NS", Value="7010", ExtraValue="11"},
+             new ChannelToServer(){Server=FROM_KPLUS_PAGE, ChannelKey="K+PM", Value="7012", ExtraValue="11"},
+             new ChannelToServer(){Server=FROM_KPLUS_PAGE, ChannelKey="K+PC", Value="7014", ExtraValue="11"},
+             new ChannelToServer(){Server=FROM_KPLUS_PAGE, ChannelKey="DiscoveryChannel", Value="7057", ExtraValue="8"},
+             new ChannelToServer(){Server=FROM_KPLUS_PAGE, ChannelKey="MTVVietNam", Value="4533", ExtraValue="3"},
+             new ChannelToServer(){Server=FROM_KPLUS_PAGE, ChannelKey="DisneyChannel", Value="4536", ExtraValue="3"},
+             new ChannelToServer(){Server=FROM_KPLUS_PAGE, ChannelKey="TV5Monde", Value="7068", ExtraValue="7"},
 
              new ChannelToServer(){Server=FROM_TRAVINH_PAGE, ChannelKey="TruyenhinhTraVinhTHTV", Value=""},
              new ChannelToServer(){Server=FROM_BPTV_PAGE, ChannelKey="TruyenHinhBinhPhuocBPTV1", Value="THBP1"},

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -2172,43 +2173,70 @@ namespace hthservices.Utils
             List<GuideItem> guideItems = new List<GuideItem>();
             try
             {
-                using (HttpClient http = new HttpClient())
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 {
-                    http.BaseAddress = new Uri("http://www.kplus.vn");
-                    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-                    http.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
-                    http.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0");
-                    var stringContent = "";//date=17-8-2016&categories=11";// +date.ToString("dd/MM/yyyy");
-                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/json");
-                    var response = http.PostAsync(url, httpContent).Result;
-                    //var response = http.PostAsJsonAsync(url, stringContent).Result;
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
-                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
-                        source = System.Text.RegularExpressions.Regex.Unescape(source);
-                        //int start = source.IndexOf("["), end = source.LastIndexOf("]") + 1;
-                        //source = source.Substring(start, end - start);
-                        var items = JsonConvert.DeserializeObject<KPlus>(source);
+                    byte[] buffer = Encoding.UTF8.GetBytes("date=" + date.ToString("dd-MM-yyyy") + "&categories=" + channelToServer.ExtraValue);
+                    req.Method = "POST";
+                    req.ContentType = "application/x-www-form-urlencoded";
+                    req.ContentLength = buffer.Length;
+                    req.KeepAlive = true;
+                    req.Timeout = System.Threading.Timeout.Infinite;
+                    req.ProtocolVersion = HttpVersion.Version10;
+                    req.AllowWriteStreamBuffering = false;
+                    req.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+                    req.UserAgent="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0";
+                    
+                    WebHeaderCollection myWebHeaderCollection = req.Headers;
+                    myWebHeaderCollection.Add("Accept-Encoding: gzip, deflate");
+                    myWebHeaderCollection.Add("Accept-Language: en-US,en;q=0.5");
+                    req.CookieContainer = new CookieContainer();
+                    //req.CookieContainer.Add(new Uri(url), new Cookie("__utma", "1.268565172.1470799796.1474424801.1474426720.10"));
+                    //req.CookieContainer.Add(new Uri(url), new Cookie("__utmz", "1.1470803901.2.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)"));
+                    req.CookieContainer.Add(new Uri(url), new Cookie("current_site", "1"));
+                    req.CookieContainer.Add(new Uri(url), new Cookie("Locale", "vi-VN"));
+                    req.CookieContainer.Add(new Uri(url), new Cookie("__utmc", "1"));
 
-                        if (items != null && items.Schedules.Count > 0)
+                    Stream stream = req.GetRequestStream();
+                    stream.Write(buffer, 0, buffer.Length);
+                    stream.Close();
+                    WebResponse response = req.GetResponse();
+
+                    if (((HttpWebResponse)response).StatusDescription.Equals("OK",StringComparison.OrdinalIgnoreCase))
+                    {
+                        stream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(stream);
+                        string source = reader.ReadToEnd();
+                        response.Close();
+                        
+
+                        var totalItems = JsonConvert.DeserializeObject<KPlus>(source);
+
+                        if (totalItems != null)
                         {
-                            foreach (var item in items.Schedules)
+                            var items = totalItems.Schedules.Where(p => channelToServer.Value.Equals(p.Channel.Id.ToString())).ToList();
+                            if (items != null && items.Count > 0)
                             {
-                                string startOn = "", programName = "";
-                                startOn = item.ShowingTime.Substring(11, 5).Trim();
-                                programName = item.Program.Genres.Trim();
-                                if (!string.IsNullOrWhiteSpace(item.Program.Name))
+                                foreach (var item in items)
                                 {
-                                    programName += ": " + Utils.MethodHelpers.ToTitleCase(item.Program.Name.Trim());
-                                }
-                                if (!string.IsNullOrWhiteSpace(startOn))
-                                {
-                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
-                                    guideItems.Add(guideItem);
+                                    string startOn = "", programName = "";
+                                    startOn = item.ShowingTime.Substring(11, 5).Trim();
+                                    programName = item.Program.Genres.Trim();
+                                    if (!string.IsNullOrWhiteSpace(item.Program.Name))
+                                    {
+                                        programName += ": " + Utils.MethodHelpers.ToTitleCase(item.Program.Name.Trim());
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(startOn))
+                                    {
+                                        var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                        guideItems.Add(guideItem);
+                                    }
                                 }
                             }
                         }
+                    }
+                    else
+                    {
+                        response.Close();
                     }
                 }
             }

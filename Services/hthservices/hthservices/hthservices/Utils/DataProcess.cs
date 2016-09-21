@@ -218,7 +218,14 @@ namespace hthservices.Utils
                         break;
                     case DataStatic.FROM_MOBITV_PAGE:
                         guideItems = HtmlHelper.GetDataFromMOBITVUrl(channelToServer, date);
-                        break;                 
+                        break;
+                    case DataStatic.FROM_KPLUS_PAGE:
+                        VN_Now = DateTime.UtcNow.AddHours(7);
+                        if (VN_Now.AddDays(7) > date && VN_Now.AddDays(-7) < date)
+                        {
+                            guideItems = HtmlHelper.GetDataFromKPlusUrl(channelToServer, date);
+                        }
+                        break;
                     default:
                         var channel = SQLiteProcess.GetChannel(channelKey);
                         if (channel != null && channel.ChannelId > 0)

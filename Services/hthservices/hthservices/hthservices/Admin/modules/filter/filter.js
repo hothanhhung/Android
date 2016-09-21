@@ -32,21 +32,27 @@ function FilterController() {
                 ctrl.fromDate = new Date();
                 break;
             case 4:
+                ctrl.QuickSearchTitle = "Yesterday";
+                var td = new Date();
+                ctrl.toDate = new Date(td.getFullYear(), td.getMonth(), td.getDate() - 1);
+                ctrl.fromDate = ctrl.toDate;
+                break;
+            case 5:
                 ctrl.QuickSearchTitle = "This Week";
                 ctrl.toDate = new Date();
                 ctrl.fromDate = new Date(ctrl.toDate.getFullYear(), ctrl.toDate.getMonth(), ctrl.toDate.getDate() - ctrl.toDate.getDay());
                 break;
-            case 5:
+            case 6:
                 ctrl.QuickSearchTitle = "This Month";
                 ctrl.toDate = new Date();
                 ctrl.fromDate = new Date(ctrl.toDate.getFullYear(), ctrl.toDate.getMonth(), 1);
                 break;
-            case 6:
+            case 7:
                 ctrl.QuickSearchTitle = "This Year";
                 ctrl.toDate = new Date();
                 ctrl.fromDate = new Date(ctrl.toDate.getFullYear(), 0, 1);
                 break;
-            case 7:
+            case 8:
                 ctrl.QuickSearchTitle = "All Time";
                 ctrl.toDate = new Date();
                 ctrl.fromDate = new Date(2015, 0, 1);
