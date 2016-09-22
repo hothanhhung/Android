@@ -247,7 +247,8 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="AnVien-BTV9", Value="An+Viên"},
              new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="Phimhay", Value="Phim+Hay"},
              new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="VietTeen-BTV62idol", Value="Viet+Teen"},
-
+             new ChannelToServer(){Server=FROM_MOBITV_PAGE, ChannelKey="SAM-BTV11", Value="SAM"},
+             
              new ChannelToServer(){Server=FROM_KGTV_PAGE, ChannelKey="TruyenhinhKienGiang", Value="TV"}, //TV2
              new ChannelToServer(){Server=FROM_BRT_PAGE, ChannelKey="TruyenhinhBaRia-VungTauBRT", Value=""},
              new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV1", Value="btv1"},
