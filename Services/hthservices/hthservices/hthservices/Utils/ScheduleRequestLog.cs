@@ -13,5 +13,8 @@ namespace hthservices.Utils
         public string DateOn {get; set;}        
         public int NumberOfRequests {get; set;}
         public string Note { get; set; }
+        public string DeviceId { get; set; }
+        public string OpenKey { get; set; }
+        public string AppVersion { get; set; }
     }
 }

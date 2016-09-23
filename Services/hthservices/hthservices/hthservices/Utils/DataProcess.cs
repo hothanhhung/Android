@@ -45,7 +45,7 @@ namespace hthservices.Utils
             return channels;
         }
 
-        static public List<GuideItem> GetSchedulesOfChannel(string channelKey, DateTime date, string requestLink)
+        static public List<GuideItem> GetSchedulesOfChannel(string channelKey, DateTime date, string requestLink, string device = "", string open = "", string version = "")
         {
             List<GuideItem> guideItems = new List<GuideItem>();
             guideItems = SQLiteProcess.GetSchedulesOfChannel(channelKey, date);
@@ -256,7 +256,7 @@ namespace hthservices.Utils
             {
                 System.Threading.Thread th = new System.Threading.Thread(() =>
                 {
-                    SQLiteProcess.SaveScheduleRequestLogs(channelKey, date, guideItems == null || guideItems.Count == 0);
+                    SQLiteProcess.SaveScheduleRequestLogs(channelKey, date, guideItems == null || guideItems.Count == 0, device, open, version);
                 });
                 th.IsBackground = true;
                 th.Start();
@@ -299,24 +299,7 @@ namespace hthservices.Utils
         public static List<RequestInfo> GetRequestInfo(string type, string date, string order = "", bool desc = true, int page = 1, int size = 30)
         {
             return SQLiteProcess.GetRequestInfo(type, date, order, desc, page, size);
-        }
-        public static List<ScheduleRequestLog> GetScheduleRequestLogs()
-        {
-            return SQLiteProcess.GetScheduleRequestLogs();
-        }
-        public static List<ScheduleRequestLog> GetScheduleFailedRequestLogs()
-        {
-            return SQLiteProcess.GetScheduleFailedRequestLogs();
-        }
-        public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn, int page = 1, int size = 25)
-        {
-            return SQLiteProcess.GetGroupScheduleRequestLogs(noChannelKey, noCurrentDate, noDateOn, page, size);
-        }
-
-        public static List<ScheduleRequestLog> GetGroupScheduleFailedRequestLogs(bool noChannelKey, bool noCurrentDate, bool noDateOn)
-        {
-            return SQLiteProcess.GetGroupScheduleFailedRequestLogs(noChannelKey, noCurrentDate, noDateOn);
-        }
+        }       
         public static List<ScheduleRequestLog> GetGroupScheduleRequestLogs(ReportFilter filter)
         {
             return SQLiteProcess.GetGroupScheduleRequestLogs(filter, false);
@@ -339,17 +322,12 @@ namespace hthservices.Utils
         }
         public static void DeleteScheduleFailedRequestLog(int id)
         {
-            SQLiteProcess.DeleteScheduleFailedRequestLog(id);
+            SQLiteProcess.DeleteScheduleRequestLog(id, true);
         }
-        public static void DeleteScheduleRequestLog(string channelKey, string currentDate, string dateOn)
+        public static void DeleteScheduleRequestLog(ScheduleRequestLog scheduleLog, bool isFailRequest = false)
         {
-            SQLiteProcess.DeleteScheduleRequestLog(channelKey, currentDate, dateOn);
+            if (scheduleLog != null) SQLiteProcess.DeleteScheduleRequestLog(scheduleLog, isFailRequest);
         }
-        public static void DeleteScheduleFailedRequestLog(string channelKey, string currentDate, string dateOn)
-        {
-            SQLiteProcess.DeleteScheduleFailedRequestLog(channelKey, currentDate, dateOn);
-        }
-
         public static List<ScheduleRequestLog> GetReportForCurrentDate(string fromDate, string toDate, bool isFailRequest = false)
         {
             return SQLiteProcess.GetReportForCurrentDate(fromDate, toDate, isFailRequest);

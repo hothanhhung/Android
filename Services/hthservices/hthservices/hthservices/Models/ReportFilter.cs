@@ -9,7 +9,11 @@ namespace hthservices.Models
     {
         public bool NoChannelKey {get; set;}
         public bool NoCurrentDate {get; set;} 
-        public bool NoDateOn {get; set;} 
+        public bool NoDateOn {get; set;}
+        public bool NoDeviceId { get; set; }
+        public bool NoOpenKey { get; set; }
+        public bool NoAppVersion { get; set; } 
+
         public int? Page {get; set;}
         public int? Size { get; set; }
         public bool? Desc { get; set; }
@@ -21,11 +25,17 @@ namespace hthservices.Models
         {
             return Size ?? 25;
         }
+
+        public bool IsAllFalse
+        {
+            get { return !NoChannelKey && !NoCurrentDate && !NoDateOn && !NoDeviceId && !NoOpenKey && !NoAppVersion; }
+        }
+
         public string GenSelectCommand(bool isFailRequest = false)
         {
             string order_by = "";
-            string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn");
-            string select = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn");
+            string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn") + (NoDeviceId ? "" : ", DeviceId") + (NoOpenKey ? "" : ", OpenKey") + (NoAppVersion ? "" : ", AppVersion");
+            string select = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn") + (NoDeviceId ? "" : ", DeviceId") + (NoOpenKey ? "" : ", OpenKey") + (NoAppVersion ? "" : ", AppVersion");
 
             string where = "";
 
@@ -37,8 +47,8 @@ namespace hthservices.Models
             }
             else
             {
-                group = " GROUP BY ChannelKey, CurrentDate, DateOn";
-                select = "ChannelKey, CurrentDate, DateOn";
+                group = " GROUP BY ChannelKey, CurrentDate, DateOn, DeviceId, OpenKey, AppVersion";
+                select = "ChannelKey, CurrentDate, DateOn, DeviceId, OpenKey, AppVersion";
             }
 
             if(!string.IsNullOrWhiteSpace(OrderField) && (OrderField.Equals("NumberOfRequests", StringComparison.OrdinalIgnoreCase) ||
@@ -59,7 +69,7 @@ namespace hthservices.Models
 
         public string GenCountCommand(bool isFailRequest = false)
         {
-            string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn");
+            string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn") + (NoDeviceId ? "" : ", DeviceId") + (NoOpenKey ? "" : ", OpenKey") + (NoAppVersion ? "" : ", AppVersion");
             group = group.Trim(',');
             string where = "";
             if (!string.IsNullOrWhiteSpace(group))
@@ -68,7 +78,7 @@ namespace hthservices.Models
             }
             else
             {
-                group = " GROUP BY ChannelKey, CurrentDate, DateOn";
+                group = " GROUP BY ChannelKey, CurrentDate, DateOn, DeviceId, OpenKey, AppVersion";
             }
             if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
             {

@@ -39,6 +39,9 @@ function GridReportController($scope, $rootScope, $http, $location) {
         NoChannelKey: false,
         NoCurrentDate: initByTop,
         NoDateOn: initByTop,
+        NoDeviceId: initByTop,
+        NoOpenKey: initByTop,
+        NoAppVersion: initByTop,
         Page: 1,
         Size: 30,
         Desc: true,
@@ -83,10 +86,13 @@ function GridReportController($scope, $rootScope, $http, $location) {
         }
     };
 
-    ctrl.ApplyColums = function (channelKey, currentDate, dateOn) {
+    ctrl.ApplyColums = function (channelKey, currentDate, dateOn, deviceId, openKey, appVersion) {
         ctrl.ScheduleRequestLogs.Filter.NoChannelKey = !channelKey;
         ctrl.ScheduleRequestLogs.Filter.NoCurrentDate = !currentDate;
         ctrl.ScheduleRequestLogs.Filter.NoDateOn = !dateOn;
+        ctrl.ScheduleRequestLogs.Filter.NoDeviceId = !deviceId;
+        ctrl.ScheduleRequestLogs.Filter.NoOpenKey = !openKey;
+        ctrl.ScheduleRequestLogs.Filter.NoAppVersion = !appVersion;
         ctrl.ScheduleRequestLogs.Filter.Page = 1;
         ctrl.GetReport();
 

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -26,9 +27,9 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.hth.adflex.AdFlexData;
-import com.hth.adflex.FlexibleRowAdapter;
 import com.hth.adflex.ParseJSONAdFlex;
 import com.hth.docbaotonghop.R;
 
@@ -274,7 +275,7 @@ public class UIUtils {
 			}
 		}
 		ListView listView = new ListView(activity);
-		FlexibleRowAdapter adapter = new FlexibleRowAdapter(activity, adFlexes, activity.getResources());
+		com.hth.adflex.FlexibleRowAdapter adapter = new com.hth.adflex.FlexibleRowAdapter(activity, adFlexes, activity.getResources());
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -328,7 +329,7 @@ public class UIUtils {
     		}
     	}
     	ListView listView = new ListView(activity);
-    	FlexibleRowAdapter adapter = new FlexibleRowAdapter(activity, adFlexes, activity.getResources());
+		com.hth.adflex.FlexibleRowAdapter adapter = new com.hth.adflex.FlexibleRowAdapter(activity, adFlexes, activity.getResources());
     	listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -371,5 +372,86 @@ public class UIUtils {
 		//alert.setIcon(android.R.drawable.box_new)
 		return alert.show();
 		
+	}
+
+	public static LinearLayout BuildGetMoreAppsServer(final Activity activity)
+	{
+		ParseJSONAds parseJSONAds = new ParseJSONAds(activity, "VN", "android", "0");
+		ArrayList<AdItem> adItems = parseJSONAds.getAds();
+
+		ListView listView = new ListView(activity);
+		FlexibleRowAdapter adapter = new FlexibleRowAdapter(activity, adItems, activity.getResources());
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if(position > 0){
+					//check internet
+					if(!UIUtils.isOnline(activity)){
+						UIUtils.showAlertErrorNoInternet(activity, false);
+						return;
+					}
+					Object urlObject = view.findViewById(R.id.title).getTag();
+					if(urlObject != null) {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse(urlObject.toString()));
+						activity.startActivity(i);
+					}
+				}
+			}
+		});
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+		layoutParams.setMargins(0, 0, 0, 50);
+		listView.setLayoutParams(layoutParams);
+		LinearLayout linearLayout = new LinearLayout(activity);
+		if (android.os.Build.VERSION.SDK_INT>=17) {
+			// call something for API Level 11+
+			linearLayout.setLayoutDirection(LinearLayout.LAYOUT_DIRECTION_LTR);
+		}
+
+		//linearLayout.addView(progressBar1);
+		linearLayout.addView(listView);
+		return linearLayout;
+	}
+
+	static LinearLayout linearLayout;
+	static AlertDialog alertDialog;
+	static AlertDialog.Builder alert;
+	public static void showAlertGetMoreAppsServer(final Activity activity) {
+		alert = new AlertDialog.Builder(activity);
+		TextView textView = new TextView(activity);
+		textView.setText("Loading...");
+		textView.setPadding(10, 10, 10, 10);
+		textView.setTextSize(15);
+		textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+		alert.setView(textView);
+		alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+				alertDialog = null;
+			}
+		});
+		//alert.setIcon(android.R.drawable.box_new)
+		alertDialog = alert.show();
+
+		(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				linearLayout = BuildGetMoreAppsServer(activity);
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						if(alertDialog!=null && alertDialog.isShowing()) {
+							alert.setView(linearLayout);
+							alertDialog.dismiss();
+							alertDialog = alert.show();
+						}
+					}
+				});
+			}
+		}
+		)).start();
 	}
 }

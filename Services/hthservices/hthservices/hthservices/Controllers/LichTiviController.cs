@@ -33,7 +33,7 @@ namespace hthservices.Controllers
             }
             else if(channelKey.Equals("HTVC ", StringComparison.OrdinalIgnoreCase))channelKey = "HTVC+";
 
-            var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn, Request.RequestUri.ToString());
+            var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn, Request.RequestUri.ToString(),  device, open, version);
 
             Random rand = new Random();
             channels.ForEach(p => p.ProgramName = EncrypeString.EncodeRandomly(p.ProgramName, rand.NextDouble()>0.5));
@@ -79,13 +79,5 @@ namespace hthservices.Controllers
             return ResponseJson.GetResponseJson(searchItems);
         }
 
-
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.ActionName("GetAds")]
-        public ResponseJson GetAds(string country, string os)
-        {
-            var adItems = Ads.AdData.GetAds(country, os);
-            return ResponseJson.GetResponseJson(adItems);
-        }
     }
 }

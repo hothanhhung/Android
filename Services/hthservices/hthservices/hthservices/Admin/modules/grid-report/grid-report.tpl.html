@@ -8,9 +8,12 @@
             <button type="button" ng-model="ScheduleRequestLogs.Filter.ChannelKey" ng-init="ScheduleRequestLogs.Filter.ChannelKey=!$ctrl.ScheduleRequestLogs.Filter.NoChannelKey" class="btn {{ScheduleRequestLogs.Filter.ChannelKey?'btn-info':'btn-default'}}" ng-click="ScheduleRequestLogs.Filter.ChannelKey=!ScheduleRequestLogs.Filter.ChannelKey">Channel Key</button>
             <button type="button" ng-model="ScheduleRequestLogs.Filter.CurrentDate" ng-init="ScheduleRequestLogs.Filter.CurrentDate=!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate" class="btn {{ScheduleRequestLogs.Filter.CurrentDate?'btn-info':'btn-default'}}" ng-click="ScheduleRequestLogs.Filter.CurrentDate=!ScheduleRequestLogs.Filter.CurrentDate">Current Date</button>
             <button type="button" ng-model="ScheduleRequestLogs.Filter.DateOn" ng-init="ScheduleRequestLogs.Filter.DateOn=!$ctrl.ScheduleRequestLogs.Filter.NoDateOn" class="btn {{ScheduleRequestLogs.Filter.DateOn?'btn-info':'btn-default'}}" ng-click="ScheduleRequestLogs.Filter.DateOn=!ScheduleRequestLogs.Filter.DateOn">Date On</button>
+            <button type="button" ng-model="ScheduleRequestLogs.Filter.DeviceId" ng-init="ScheduleRequestLogs.Filter.DeviceId=!$ctrl.ScheduleRequestLogs.Filter.NoDeviceId" class="btn {{ScheduleRequestLogs.Filter.DeviceId?'btn-info':'btn-default'}}" ng-click="ScheduleRequestLogs.Filter.DeviceId=!ScheduleRequestLogs.Filter.DeviceId">Device Id</button>
+            <button type="button" ng-model="ScheduleRequestLogs.Filter.OpenKey" ng-init="ScheduleRequestLogs.Filter.OpenKey=!$ctrl.ScheduleRequestLogs.Filter.NoOpenKey" class="btn {{ScheduleRequestLogs.Filter.OpenKey?'btn-info':'btn-default'}}" ng-click="ScheduleRequestLogs.Filter.OpenKey=!ScheduleRequestLogs.Filter.OpenKey">Open Key</button>
+            <button type="button" ng-model="ScheduleRequestLogs.Filter.AppVersion" ng-init="ScheduleRequestLogs.Filter.AppVersion=!$ctrl.ScheduleRequestLogs.Filter.NoAppVersion" class="btn {{ScheduleRequestLogs.Filter.AppVersion?'btn-info':'btn-default'}}" ng-click="ScheduleRequestLogs.Filter.AppVersion=!ScheduleRequestLogs.Filter.DateOn">App Version</button>
         </div>
         <div class="form-group">
-            <button type="submit" ng-click="$ctrl.ApplyColums(ScheduleRequestLogs.Filter.ChannelKey, ScheduleRequestLogs.Filter.CurrentDate, ScheduleRequestLogs.Filter.DateOn)" class="btn btn-primary">Apply</button>
+            <button type="submit" ng-click="$ctrl.ApplyColums(ScheduleRequestLogs.Filter.ChannelKey, ScheduleRequestLogs.Filter.CurrentDate, ScheduleRequestLogs.Filter.DateOn, ScheduleRequestLogs.Filter.DeviceId, ScheduleRequestLogs.Filter.OpenKey, ScheduleRequestLogs.Filter.AppVersion)" class="btn btn-primary">Apply</button>
         </div>
     </div>
     <div class="table-responsive">
@@ -21,6 +24,24 @@
                         Channel Key
                         <a href="javascript:void(0)">
                             <span ng-click="$ctrl.OrderColum('ChannelKey')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='ChannelKey'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
+                        </a>
+                    </th>
+                    <th ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDeviceId">
+                        Device Id
+                        <a href="javascript:void(0)">
+                            <span ng-click="$ctrl.OrderColum('DeviceId')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='DeviceId'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
+                        </a>
+                    </th>
+                    <th ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoOpenKey">
+                        Open Key
+                        <a href="javascript:void(0)">
+                            <span ng-click="$ctrl.OrderColum('OpenKey')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='OpenKey'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
+                        </a>
+                    </th>
+                    <th ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoAppVersion">
+                        App Version
+                        <a href="javascript:void(0)">
+                            <span ng-click="$ctrl.OrderColum('AppVersion')" style="width:50px" class="glyphicon {{$ctrl.ScheduleRequestLogs.Filter.OrderField=='AppVersion'?($ctrl.ScheduleRequestLogs.Filter.Desc?'glyphicon-triangle-bottom':'glyphicon-triangle-top'):'glyphicon-sort'}}"></span>
                         </a>
                     </th>
                     <th ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate">
@@ -49,6 +70,9 @@
             <tbody>
                 <tr ng-repeat="item in $ctrl.ScheduleRequestLogs.ScheduleLogs">
                     <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoChannelKey">{{item.ChannelKey}}</td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDeviceId">{{item.DeviceId}}</td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoOpenKey">{{item.OpenKey}}</td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoAppVersion">{{item.AppVersion}}</td>
                     <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate">{{item.CurrentDate}}</td>
                     <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDateOn">{{item.DateOn}}</td>
                     <td>{{item.NumberOfRequests}}</td>

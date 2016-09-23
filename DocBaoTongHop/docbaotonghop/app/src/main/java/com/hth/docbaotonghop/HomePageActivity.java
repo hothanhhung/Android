@@ -140,7 +140,7 @@ public class HomePageActivity extends Activity implements AdsListener {
                 UIUtils.showAlertAbout(this);
                 return true;
             case R.id.menu_hotApps:
-                UIUtils.showAlertGetMoreApps(this);
+                UIUtils.showAlertGetMoreAppsServer(this);
                 return true;
             case R.id.menu_moreApps:
             	String url = getResources().getString(R.string.menu_moreApps_url);
@@ -167,7 +167,7 @@ public class HomePageActivity extends Activity implements AdsListener {
             interstitialAds.loadAds(new AdsRequest());
         }else if(ads == interstitialAds)
         {
-            UIUtils.showAlertGetMoreApps(HomePageActivity.this);
+            UIUtils.showAlertGetMoreAppsServer(HomePageActivity.this);
         }
 
 	}

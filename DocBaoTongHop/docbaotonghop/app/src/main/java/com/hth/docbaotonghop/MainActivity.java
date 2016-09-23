@@ -227,7 +227,7 @@ public class MainActivity extends Activity {
                 finish();
                 break;
             case R.id.button_hot_apps:
-                UIUtils.showAlertGetMoreApps(this);
+                UIUtils.showAlertGetMoreAppsServer(this);
 
                 break;
 

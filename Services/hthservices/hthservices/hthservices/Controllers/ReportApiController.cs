@@ -45,11 +45,11 @@ namespace hthservices.Controllers
             {
                 if ("true".Equals(isFailed, StringComparison.OrdinalIgnoreCase))
                 {
-                    DataProcess.DeleteScheduleFailedRequestLog(scheduleLog.ChannelKey, scheduleLog.CurrentDate, scheduleLog.DateOn);
+                    DataProcess.DeleteScheduleRequestLog(scheduleLog, true);
                 }
                 else
                 {
-                    DataProcess.DeleteScheduleRequestLog(scheduleLog.ChannelKey, scheduleLog.CurrentDate, scheduleLog.DateOn);
+                    DataProcess.DeleteScheduleRequestLog(scheduleLog, false);
                 }
 
             }

@@ -36,6 +36,14 @@ namespace hthservices.Ads
 		        UrlImage ="https://lh3.ggpht.com/wk8buIq8ybv9vjZ1GPQ1q6NiClaZDJJ1KzQ3EBCAhxretCryfJRsXaLxrXjLSdLjTw=w300",
                 InCountries="VN"
             },
+            new AdItem(){
+                Type ="Google play",
+		        Name = "Lịch Tivi",
+		        Desc = "Ứng dụng xem lịch truyền hình, lịch phát sóng, lịch tivi trực truyến của hơn 110 kênh truyền hình thông dụng như VTV, HTV, VTC, k+,...",
+		        Link = "https://play.google.com/store/apps/details?id=com.hth.lichtivi",
+		        UrlImage ="https://lh5.ggpht.com/ysKh6UJAxeJlIZydIc1mBhw4fGWNObMD2SS1leTCxmc3cfwgZ_jU6i4BiDROO90vBl0=w300",
+                InCountries="VN"
+            },
 		    new AdItem()
             {
 		        Type="Google play",

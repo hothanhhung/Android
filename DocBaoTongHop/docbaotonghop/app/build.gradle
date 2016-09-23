@@ -24,8 +24,8 @@ android {
         applicationId "com.hth.docbaotonghop"
         minSdkVersion 11
         targetSdkVersion 23
-        versionCode 106
-        versionName "1.0.6"
+        versionCode 107
+        versionName "1.0.7"
         multiDexEnabled true
     }
     buildTypes {
@@ -42,7 +42,7 @@ dependencies {
     compile files('libs/jsoup-1.7.3.jar')
     testCompile 'junit:junit:4.12'
     compile group:'com.squareup.picasso', name:'picasso', version:'2.3.2'
-    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.google.code.gson:gson:2.4'
     compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.google.android.gms:play-services-ads:8.1.0'
+    compile 'com.google.android.gms:play-services-ads:9.0.2'
 }

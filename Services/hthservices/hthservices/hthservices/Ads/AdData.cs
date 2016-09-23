@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using hthservices.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace hthservices.Ads
             return adItems;
         }
 
-        public static List<AdItem> GetAds(string country, string os = "android")
+        public static List<AdItem> GetAds(string country, string os = "android", string requestLink="")
         {
             var adItems = new List<AdItem>();
             var ownerAds = OwnerAds.GetOwnerAds(country);
@@ -63,6 +64,16 @@ namespace hthservices.Ads
                 adItems.AddRange(ownerAds);
             }
             adItems.AddRange(GetAdFromAdFlex(country, os));
+            try
+            {
+                System.Threading.Thread th = new System.Threading.Thread(() =>
+                {
+                    SQLiteProcess.SaveRequestInfo("GetAds", DateTime.UtcNow.AddHours(7), adItems == null || adItems.Count == 0, requestLink);
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
+            catch (Exception ex) { }
             return adItems;
         }
     }
