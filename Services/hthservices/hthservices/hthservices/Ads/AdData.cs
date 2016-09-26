@@ -55,10 +55,10 @@ namespace hthservices.Ads
             return adItems;
         }
 
-        public static List<AdItem> GetAds(string country, string os = "android", string requestLink="")
+        public static List<AdItem> GetAds(string country, string os = "android", string requestLink = "", string device = "", string open = "", string version = "", string package = "")
         {
             var adItems = new List<AdItem>();
-            var ownerAds = OwnerAds.GetOwnerAds(country);
+            var ownerAds = OwnerAds.GetOwnerAds(country, package);
             if (ownerAds != null)
             {
                 adItems.AddRange(ownerAds);
@@ -75,6 +75,20 @@ namespace hthservices.Ads
             }
             catch (Exception ex) { }
             return adItems;
+        }
+
+        public static void UserClickAd(string country, string os, string requestLink, string link, string device, string open, string version, string package)
+        {            
+            try
+            {
+                System.Threading.Thread th = new System.Threading.Thread(() =>
+                {
+                    SQLiteProcess.SaveRequestInfo("UserClickAd", DateTime.UtcNow.AddHours(7), false, requestLink);
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
+            catch (Exception ex) { }
         }
     }
 }

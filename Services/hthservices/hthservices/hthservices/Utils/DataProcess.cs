@@ -263,16 +263,16 @@ namespace hthservices.Utils
             }
             catch (Exception ex) { }
 
-            try
-            {
-                System.Threading.Thread th = new System.Threading.Thread(() =>
-                {
-                    SQLiteProcess.SaveRequestInfo("GetSchedules", date, guideItems == null || guideItems.Count == 0, requestLink);
-                });
-                th.IsBackground = true;
-                th.Start();
-            }
-            catch (Exception ex) { }
+            //try
+            //{
+            //    System.Threading.Thread th = new System.Threading.Thread(() =>
+            //    {
+            //        SQLiteProcess.SaveRequestInfo("GetSchedules", date, guideItems == null || guideItems.Count == 0, requestLink);
+            //    });
+            //    th.IsBackground = true;
+            //    th.Start();
+            //}
+            //catch (Exception ex) { }
 
             return guideItems;
         }

@@ -72,6 +72,15 @@ namespace hthservices.Ads
 		        InCountries="VN"
             },
 
+            new AdItem(){
+		        Type="Google play",
+		        Name="Đọc Báo Tổng Hợp",
+		        Desc="Tổng hợp 32 tờ báo mạng phổ biến ở Việt Nam: vnexpress.net, vietnamnet.vn, ...",
+		        Link="https://play.google.com/store/apps/details?id=com.hth.docbaotonghop",
+		        UrlImage="https://lh3.googleusercontent.com/36dTt1klK2QQV-IoViakvPiKKfjAQOozi7oA2NqmwsZCuFGGKXFIs4rjxH2oz_dbG4E=w300",
+		        InCountries="VN"
+            },
+
 		    new AdItem(){
 		        Type="Google play",
 		        Name="Fruit Link",
@@ -104,13 +113,23 @@ namespace hthservices.Ads
 		        Desc="Collection of the best channels to learn English on Youtube",
 		        Link="https://play.google.com/store/apps/details?id=com.hth.learnenglishbyvideos",
 		        UrlImage="https://lh3.ggpht.com/jPHpzWNuoFd9M0fcKb3gkIUAuXllrJ58vabIPQiWpqRGA-toG3YEl-BczsTTbAjbK58=w300"
+            },
+
+		    new AdItem(){
+		        Type="Google play",
+		        Name="Learn Vietnamese By Videos",
+		        DescVN="Tổng hợp các kênh học tiếng việt hay trên Youtube",
+		        Desc="The videos are collected from famous learning Vietnamese channel on Youtube such as: Learn Vietnamese With Annie,123 VIETNAMESE, so on",
+		        Link="https://play.google.com/store/apps/details?id=com.hth.LearnVietnameseByVideos",
+		        UrlImage="https://lh3.googleusercontent.com/PAOp7u3wUhRTcKXARWE2CfELfUkQxi8KzXpUGdYBzfotOe1Rsi80TEXMhQd27V49ye8=w300",
+                IgnoreCountries="VN"
             }
         };
 
-        public static List<AdItem> GetOwnerAds(string country)
+        public static List<AdItem> GetOwnerAds(string country, string package="")
         {
             List<AdItem> data = new List<AdItem>();
-            var rs = OwnerAds.OWNER_ADITEMS.Where(p => p.IsAllowForCountry(country));
+            var rs = OwnerAds.OWNER_ADITEMS.Where(p => p.IsAllowForCountry(country) && (string.IsNullOrEmpty(package) || !p.Link.EndsWith(package, StringComparison.OrdinalIgnoreCase)));
 
             rs = rs.Select(p =>
                 new AdItem()
