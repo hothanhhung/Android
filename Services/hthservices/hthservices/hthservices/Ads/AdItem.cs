@@ -24,7 +24,7 @@ namespace hthservices.Ads
 
         public string GetName(string country)
         {
-            if (country.Equals("VN", StringComparison.OrdinalIgnoreCase))
+            if ("VN".Equals(country, StringComparison.OrdinalIgnoreCase))
             {
                 if (!string.IsNullOrWhiteSpace(NameVN)) return NameVN;
             }
@@ -33,7 +33,7 @@ namespace hthservices.Ads
 
         public string GetDesc(string country)
         {
-            if (country.Equals("VN", StringComparison.OrdinalIgnoreCase))
+            if ("VN".Equals(country, StringComparison.OrdinalIgnoreCase))
             {
                 if (!string.IsNullOrWhiteSpace(DescVN)) return DescVN;
             }
