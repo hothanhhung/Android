@@ -14,6 +14,9 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetAds")]
         public ResponseJson GetAds(string country, string os, string device = "", string open = "", string version = "", string package = "")
         {
+            if (string.IsNullOrWhiteSpace(country)) country = "VN";
+            if (string.IsNullOrWhiteSpace(os)) os = "android";
+
             var adItems = Ads.AdData.GetAds(country, os, Request.RequestUri.ToString());
             return ResponseJson.GetResponseJson(adItems);
         }

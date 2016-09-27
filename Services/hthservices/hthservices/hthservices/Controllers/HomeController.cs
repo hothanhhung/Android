@@ -11,12 +11,7 @@ namespace hthservices.Controllers
     {
         public ActionResult Index()
         {
-            //var channels = hthservices.Utils.DataProcess.GetAllChannels();
-            //var channels1 = hthservices.Utils.SQLiteProcess.GetAllChannels();
-            //var res = hthservices.Sudoku.HtmlHelper.GenSudoku(0);
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            return View();
+            return Redirect("/adsweb");
         }
 
         public ActionResult About()

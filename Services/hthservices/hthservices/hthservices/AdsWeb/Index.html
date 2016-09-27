@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="hthAdsApp">
 <head>
     <title></title>
+    <base href="/"/>
     <!--<script src="/scripts/bower_components/jQuery-3.1.0/jquery-3.1.0.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
@@ -36,16 +37,13 @@
 <body style="background-color:white; padding-left:20px; padding-right:20px; margin-top:20px" ng-controller="AdsController">
     <div class="container-fluid bg">
         <div class="content">
-            <div class="row head">
-                <b>Ủng hộ tác giả bằng cách download, cài đặt Game và ứng dụng</b>
-            </div>
             <div class="row" ng-if="Message!=''">
                 {{Message}}
             </div>
             <div ng-repeat="ad in Ads">
-                <div class="row {{ad.UrlImage!=null && ad.UrlImage!=''?'rowbg':''}}" ng-click="if(ad.UrlImage!=null && ad.UrlImage!=''){UserClickAd(ad.Link)}">
+                <div class="row {{ad.UrlImage!=null && ad.UrlImage!=''?'rowbg':''}}" ng-click="UserClickAd(ad.Link)">
                     <div class=" pull-left cell_img" ng-if="ad.UrlImage!=null && ad.UrlImage!=''">
-                        <img style="height:80px; width:80px" src="{{ad.UrlImage}}" />
+                        <img class="img" src="{{ad.UrlImage}}" />
                     </div>
                     <div class="cell_content">
                         <div class="title"><b>{{ad.Name}}</b></div>
