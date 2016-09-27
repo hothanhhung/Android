@@ -71,7 +71,8 @@ public class Map : MonoBehaviour
 	private LineRenderer lineRenderer3;
 	
 	private float lastShowAds = 0;
-	
+	private long timeToOpenApp=0;
+
 	void Awake () {		
 		lineRenderer1 = this.GetComponent<LineRenderer> ();
 		lineRenderer2 = objectLineRenderer2.GetComponent<LineRenderer> ();
@@ -88,6 +89,7 @@ public class Map : MonoBehaviour
 	void Start () 
 	{
 		lastShowAds = Time.realtimeSinceStartup;
+		timeToOpenApp = System.DateTime.Now.Ticks;
 		stopGame = true;
 		SaveLoad.Load ();
 		isCountDownMode = SaveLoad.SavedData.IsCountDown;
@@ -1043,5 +1045,12 @@ public class Map : MonoBehaviour
 				lineRenderer.SetPosition (i, vec3);
 			}*/
 		}
+	}
+
+	public void GotoMoreGame()
+	{
+		string urlMoreGame = "http://hunght.com/adsweb/?country=EN&os=android&device=" + SystemInfo.deviceUniqueIdentifier + "&open=" + timeToOpenApp + "&version=1.0.1&package=com.hth.fruitlink";
+		Debug.Log("GotoMoreGame: " + urlMoreGame);
+		Application.OpenURL (urlMoreGame);
 	}
 }
