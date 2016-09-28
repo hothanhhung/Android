@@ -71,6 +71,7 @@ public class Map : MonoBehaviour
 	private LineRenderer lineRenderer3;
 
 	private float lastShowAds = 0;
+	private long timeToOpenApp=0;
 
 	void Awake () {		
 		lineRenderer1 = this.GetComponent<LineRenderer> ();
@@ -88,6 +89,7 @@ public class Map : MonoBehaviour
 	void Start () 
 	{
 		lastShowAds = Time.realtimeSinceStartup;
+		timeToOpenApp = System.DateTime.Now.Ticks;
 		stopGame = true;
 		SaveLoad.Load ();
 		isCountDownMode = SaveLoad.SavedData.IsCountDown;
@@ -1109,5 +1111,16 @@ public class Map : MonoBehaviour
 				}
 			}
 		}
+	}
+	
+	public void GotoMoreGame()
+	{
+		string lg = "EN";
+		if(Application.systemLanguage == SystemLanguage.Vietnamese) lg="VN";
+		else if(Application.systemLanguage == SystemLanguage.ChineseSimplified) lg="CN"; 
+		else if(Application.systemLanguage == SystemLanguage.ChineseTraditional) lg="TW"; 
+		string urlMoreGame = "http://hunght.com/adsweb/?country="+lg+"&os=android&device=" + SystemInfo.deviceUniqueIdentifier + "&open=" + timeToOpenApp + "&version=1.0.5&package=com.hth.animalconnection";
+		Debug.Log("GotoMoreGame: " + urlMoreGame);
+		Application.OpenURL (urlMoreGame);
 	}
 }

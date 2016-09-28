@@ -73,6 +73,12 @@ public class ButtonAction : MonoBehaviour {
 		Map mapScrip = (Map) map.GetComponent(typeof(Map));
 		mapScrip.GotoMainMenuGame ();
 	}
+	
+	public void GotoMoreGame()
+	{
+		Map mapScrip = (Map) map.GetComponent(typeof(Map));
+		mapScrip.GotoMoreGame ();
+	}
 
 	public void ResetData()
 	{
