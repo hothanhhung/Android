@@ -68,7 +68,7 @@ public class FlexibleRowAdapter extends ArrayAdapter<AdItem> {
  
         // Setting all values in listview
         tvTitle.setText(adFlex.getName());
-        tvTitle.setTag(adFlex.getLink());
+        tvTitle.setTag(adFlex);
         
         if(adFlex.getDesc().trim() == "")
             tvShortContent.setVisibility(View.GONE);

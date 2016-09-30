@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by Lenovo on 6/9/2016.
@@ -47,7 +48,7 @@ public class MethodsHelper {
     }
 
     static public String getCurrentDateToOrder(){
-        return getCurrentDate("yyyyMMddHHmmss");
+        return getCurrentDate("yyyyMMdd-HHmmss");
     }
 
     static public String getCurrentDate(){
@@ -55,9 +56,9 @@ public class MethodsHelper {
     }
 
     static public String getCurrentDate(String format){
-        Date now = new Date();
-        String formattedDate = new SimpleDateFormat(format).format(now);
-        return formattedDate;
+        final SimpleDateFormat f = new SimpleDateFormat(format);
+        //f.setTimeZone(TimeZone.getTimeZone("UTC+07:00"));
+        return f.format(new Date());
     }
 
     static public String removeTone(String str){

@@ -11,6 +11,7 @@ import com.hth.LearnVietnameseByVideos.R;
 import com.hth.utils.UIUtils;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -41,6 +42,7 @@ public class HomeActivity extends Activity {
 			Button button = new Button(this);
 			//button.setTextColor(0x0000A0);
 			button.setText(channel.getTitle());
+			button.setTypeface(button.getTypeface(), Typeface.BOLD);
 			button.setTag(channel);
 
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -70,13 +72,42 @@ public class HomeActivity extends Activity {
 			button.setAlpha(0.9f);
 			layoutEnglishChannels.addView(button);
 		}
-
+		addMoreGameButton(layoutEnglishChannels);
 		
 		mAdView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder().build();
 		mAdView.loadAd(adRequest);
 	}
-	
+
+	private void addMoreGameButton(LinearLayout layoutEnglishChannels) {
+		Button button = new Button(this);
+		button.setTextColor(Color.BLUE);
+		button.setText("More Apps");
+		button.setTypeface(button.getTypeface(), Typeface.BOLD);
+
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+
+		params.setMargins(2, 5, 2, 5);
+		button.setLayoutParams(params);
+		button.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (!UIUtils.isOnline(HomeActivity.this)) {
+					UIUtils.showAlertErrorNoInternet(HomeActivity.this, false);
+					return;
+				}
+				UIUtils.showAlertGetMoreAppsServer(HomeActivity.this);
+			}
+		});
+		button.setBackgroundColor(Color.DKGRAY);
+		button.setAlpha(0.9f);
+		layoutEnglishChannels.addView(button);
+	}
+
 	@Override
     protected void onPause() {
         if(mAdView!=null) mAdView.pause();

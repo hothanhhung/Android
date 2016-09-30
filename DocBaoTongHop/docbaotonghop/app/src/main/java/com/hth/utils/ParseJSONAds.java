@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -11,12 +12,14 @@ import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.StrictMode;
 import android.util.Log;
 
 public class ParseJSONAds {
 	private static final String APP_SHARED_PREFS = "com.hth.docbaotonghop";
 	static public final String SERVER_DEFAULT = "http://hunght.com/api/ads/getAds/";
+	static public final String SERVER_DEFAULT_1 = "http://hunght.com/api/ads/userclickad/";
 	static public final String RECODE_SERVER = "RECODE_SERVER";
 
 	private Context context;
@@ -53,11 +56,14 @@ public class ParseJSONAds {
 		return packageName;
 	}
 
-	public ParseJSONAds(Context context, String country, String os, String openKey){
+	public ParseJSONAds(Context context, String country, String os){
 		this.context = context;
 		this.country = country;
 		this.os = os;
-		this.openKey = openKey;
+		if( openKey == null || openKey.isEmpty())
+		{
+			openKey = MethodsHelper.getCurrentDateToOrder();
+		}
 	}
 
 	private void setServer(String newDomain) {
@@ -77,6 +83,9 @@ public class ParseJSONAds {
 		return getServer() + "?country=" + country + "&os=" + os + "&device=" + getAndroidId() + "&open=" + openKey + "&version=" + getAppVersion() + "&package=" + getPackageName();
 	}
 
+	private String getLinkServerUserClick(String link) {
+		return SERVER_DEFAULT_1 + "?country=" + country + "&os=" + os + "&info=" + link + "&device=" + getAndroidId() + "&open=" + openKey + "&version=" + getAppVersion() + "&package=" + getPackageName();
+	}
 	 public ArrayList<AdItem> getAds()
     {
 		String link = getLinkServer();
@@ -114,6 +123,42 @@ public class ParseJSONAds {
     	}
     	return responseJson.Data;
     }
+
+	public void userClickAd(String toLink)
+	{
+		String link = getLinkServerUserClick(Uri.encode(toLink));
+		//Log.d("getAdFlexes", link);
+
+		ResponseJson<String> responseJson = new ResponseJson<String>();
+		Gson gSon = new Gson();
+		try {
+			if (android.os.Build.VERSION.SDK_INT > 9) {
+				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+						.permitAll().build();
+				StrictMode.setThreadPolicy(policy);
+			}
+
+			StringBuilder jsonStringBuilder = new StringBuilder();
+			BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
+
+			String inputLine;
+			while ((inputLine = input.readLine()) != null)
+			{
+				jsonStringBuilder.append(inputLine);
+			}
+			input.close();
+			String json = jsonStringBuilder.toString();
+
+			Type collectionType = new TypeToken<ResponseJson<String>>(){}.getType();
+			responseJson = gSon.fromJson(json, collectionType);
+			if(responseJson.NeedChangeDomain){
+			//	setServer(responseJson.NewDomain);
+			}
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
 
 	private ArrayList<AdItem> getLocalAds()
 	{

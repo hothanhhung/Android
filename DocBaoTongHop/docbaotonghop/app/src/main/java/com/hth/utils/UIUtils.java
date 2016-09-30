@@ -376,7 +376,7 @@ public class UIUtils {
 
 	public static LinearLayout BuildGetMoreAppsServer(final Activity activity)
 	{
-		ParseJSONAds parseJSONAds = new ParseJSONAds(activity, "VN", "android", "0");
+		final ParseJSONAds parseJSONAds = new ParseJSONAds(activity, "VN", "android");
 		ArrayList<AdItem> adItems = parseJSONAds.getAds();
 
 		ListView listView = new ListView(activity);
@@ -392,10 +392,19 @@ public class UIUtils {
 						UIUtils.showAlertErrorNoInternet(activity, false);
 						return;
 					}
-					Object urlObject = view.findViewById(R.id.title).getTag();
-					if(urlObject != null) {
+					final AdItem adItem = (AdItem) view.findViewById(R.id.title).getTag();
+					if(adItem.getLink() != null && adItem.getLink()!="") {
+						Thread background = new Thread(new Runnable() {
+							public void run() {
+								try {
+									parseJSONAds.userClickAd(adItem.getLink());
+								} catch (Throwable t) {}
+							}
+						});
+						background.start();
+
 						Intent i = new Intent(Intent.ACTION_VIEW);
-						i.setData(Uri.parse(urlObject.toString()));
+						i.setData(Uri.parse(adItem.getLink()));
 						activity.startActivity(i);
 					}
 				}

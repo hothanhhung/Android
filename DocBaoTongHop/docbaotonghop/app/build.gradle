@@ -24,8 +24,8 @@ android {
         applicationId "com.hth.docbaotonghop"
         minSdkVersion 11
         targetSdkVersion 23
-        versionCode 107
-        versionName "1.0.7"
+        versionCode 108
+        versionName "1.0.8"
         multiDexEnabled true
     }
     buildTypes {

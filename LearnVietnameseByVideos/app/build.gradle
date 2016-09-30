@@ -6,7 +6,7 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "com.hth.learnvietnamesebyvideos"
+        applicationId "com.hth.LearnVietnameseByVideos"
         minSdkVersion 11
         targetSdkVersion 23
     }
@@ -24,7 +24,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile group:'com.squareup.picasso', name:'picasso', version:'2.3.2'
-    compile 'com.google.android.gms:play-services-ads:8.1.0'
+    compile 'com.google.android.gms:play-services-ads:9.0.2'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.google.apis:google-api-services-youtube:v3-rev148-1.20.0'
 }
