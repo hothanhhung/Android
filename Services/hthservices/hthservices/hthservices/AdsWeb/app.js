@@ -26,11 +26,14 @@ hthAdsApp.controller('AdsController', function PhoneListController($scope, $http
     $location.search();
     $scope.Ads = {};
     $scope.Message = "";
+    $scope.IsLoading = false;
 
     $scope.GetAds = function()
     {
         var getAdsUrl = URL_SERVICE + '/api/ads/getads/?country=' + $scope.RequestInfo.Country + '&os=' + $scope.RequestInfo.OS + '&device=' + $scope.RequestInfo.Device + '&open=' + $scope.RequestInfo.Open + '&version=' + $scope.RequestInfo.Version + '&package=' + $scope.RequestInfo.Package;
-        $scope.Message = "Loading...";
+        $scope.Message = "";
+        $scope.IsLoading = true;
+
         $http.get(getAdsUrl, null).then(
             function (response) {
                 var responseData = response.data;
@@ -40,8 +43,10 @@ hthAdsApp.controller('AdsController', function PhoneListController($scope, $http
                 } else {
                     $scope.Message = "Error when loading ads";
                 }
+                    $scope.IsLoading = false;
             },
             function (error) {
+                $scope.IsLoading = false;
                 $scope.Message = "Error when connect to sever";
             });
     }

@@ -8,9 +8,12 @@ namespace hthservices.Utils
     public class ChannelToServer
     {
         public string Server { get; set; }
+        public string Server2 { get; set; }
         public string ChannelKey { get; set; }
         public string Value { get; set; }
         public string ExtraValue { get; set; }
+        public string Value2 { get; set; }
+        public string ExtraValue2 { get; set; }
     }
 
     public class DataStatic
@@ -33,8 +36,9 @@ namespace hthservices.Utils
 	                                        12 //Truyền hình số vệ tinh k+
                                           };
         #endregion
-
+         
         #region Server
+        public const string FROM_VIETBAO_PAGE = "http://tv.vietbao.vn";
         public const string FROM_VOV_PAGE = "http://vovtv.vov.vn/Schedule.aspx?";//day=29/05/2016
         public const string FROM_MYTIVI_PAGE = "http://www.mytv.com.vn/module/ajax/ajax_get_schedule.php"; //?channelId=22&dateSchedule=28/05/2016
         public const string FROM_VTC14_PAGE = "http://vtc14.vn/";
@@ -126,8 +130,8 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenhinhHaGiangHTV", Value="199"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="TruyenHinhTienGiangTHTG", Value="203"},
              new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="NHKWORLD", Value="126"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="VTV1", Value="1"},
-             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="VTV3", Value="2"},
+             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="VTV1", Value="1", Server2=FROM_VIETBAO_PAGE},
+             new ChannelToServer(){Server=FROM_MYTIVI_PAGE, ChannelKey="VTV3", Value="2", Server2=FROM_VIETBAO_PAGE},
              //new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="HTVThethao", Value="htv-the-thao-11"}, ///////phut 91
              //new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="SCTVHDThethao", Value="sctv-the-thao-18"},
              //new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="CINEMAX", Value="cenimax-125"},
@@ -286,8 +290,8 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_THST_PAGE, ChannelKey="TruyenhinhSocTrangSTV", Value=""},
              new ChannelToServer(){Server=FROM_BINHDINHTV_PAGE, ChannelKey="TruyenhinhBinhDinhBTV", Value=""},
              new ChannelToServer(){Server=FROM_GIALAITV_PAGE, ChannelKey="TruyenhinhGiaLaiTHGL", Value=""},
-             new ChannelToServer(){Server=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT1", Value="1"},
-             new ChannelToServer(){Server=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT2", Value="2"}
+             new ChannelToServer(){Server2=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT1", Value2="1", Server=FROM_MYTIVI_PAGE, Value="73"},
+             new ChannelToServer(){Server2=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT2", Value2="2", Server=FROM_MYTIVI_PAGE, Value="74"}
              
         };
         #endregion
@@ -300,6 +304,20 @@ namespace hthservices.Utils
                 return channelToServer;
             }
             return new ChannelToServer() { Server = "", ChannelKey = channelKey, Value = "" };
+        }
+
+        public static ChannelToServer GetChannelToServer2(string channelKey, ChannelToServer channelToServer)
+        {
+            if (channelToServer != null && !string.IsNullOrEmpty(channelToServer.Server2))
+            {
+                return new ChannelToServer() { 
+                    Server = channelToServer.Server2, 
+                    ChannelKey = channelKey, 
+                    Value = channelToServer.Value2,
+                    ExtraValue = channelToServer.ExtraValue2
+                }; ;
+            }
+            return null;
         }
     }
 }

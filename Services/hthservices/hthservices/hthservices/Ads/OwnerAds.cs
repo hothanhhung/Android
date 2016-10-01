@@ -129,7 +129,7 @@ namespace hthservices.Ads
         public static List<AdItem> GetOwnerAds(string country, string package="")
         {
             List<AdItem> data = new List<AdItem>();
-            var rs = OwnerAds.OWNER_ADITEMS.Where(p => p.IsAllowForCountry(country) && (string.IsNullOrEmpty(package) || !p.Link.EndsWith(package, StringComparison.OrdinalIgnoreCase)));
+            var rs = OwnerAds.OWNER_ADITEMS.Where(p => p.IsAllowForCountry(country) && ((string.IsNullOrEmpty(package) || String.IsNullOrWhiteSpace(p.Link) || !p.Link.EndsWith(package, StringComparison.OrdinalIgnoreCase))));
 
             rs = rs.Select(p =>
                 new AdItem()

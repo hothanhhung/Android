@@ -66,7 +66,7 @@
     height: 100%;
     position: absolute;
     text-align: center;
-    background-color: rgba(179, 175, 179, 0.46);
+    /*background-color: rgba(179, 175, 179, 0.46);*/
     z-index: 9999;
 }
 
@@ -76,5 +76,5 @@
     position: absolute;
     font-weight: bold;
     padding: 5px;
-    background-color: grey;
+    /*background-color: grey;*/
 }
