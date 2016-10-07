@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">AnimalMemory</string>
+    <string name="new_game">New Game</string>
+    <string name="continue_game">Continue</string>
+    <string name="settings_game">Setting</string>
+    <string name="about_game">About</string>
+    <string name="exit_game">Exit</string>
+    <string name="about_content_rules">The game starts with a 9×9 board with three balls chosen out of seven different colours.\nThe player can move one ball per turn, and the player may only move a ball to a particular place if there is a path (linked set of vertical and horizontal empty cells) between the current position of the ball and the desired destination.\nThe goal is to remove balls by forming AnimalMemory (horizontal, vertical or diagonal) of at least five balls of the same colour.\nIf the player does form such AnimalMemory of at least five balls of the same colour, the balls in those AnimalMemory disappear, and he gains one turn, i.e. he can move another ball.\nIf not, three new balls are added, and the game continues until the board is full.</string>
+    <string name="about_content_explain">In the blue square, space with green cycle should be put 1 based on rules of AnimalMemory game. </string>
+    <string name="new_game_title">Difficulty</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="no_move">No Values</string>
+    <string name="changes">"Changes: "</string>
+    <string name="time">"Time: "</string>
+    <string name="dialogTitle">Resume Game</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ingame_resume">Resume</string>
+    <string name="ingame_restart">Restart</string>
+    <string name="ingame_exit">Main Menu</string>
+    <string name="warning">Warning</string>
+    <string name="warning_delete_old_game">That can delete your last play. Do you want to continue?</string>
+    <string name="profile">High Scores</string>
+    <string name="replay">Replay</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="ad_unit_id">ca-app-pub-4576847792571626/1087929596</string>
+    <string name="ad_unit_id_interstitial">ca-app-pub-4576847792571626/2564662793</string>
+    <string name="empty_string"></string>
+    <string name="example_string">example string</string>
+    <string name="get_more">Get More</string>
+    <string name="loading_string">Updating</string>
+
+</resources>

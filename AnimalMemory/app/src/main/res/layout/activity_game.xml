@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+    tools:context="com.hth.AnimalMemory.GameActivity"
+    android:background="@drawable/imagebackground1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <ImageButton
+            android:id="@+id/btPauseInGame"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/pause"
+            android:onClick="btInGame_Click"/>
+        <ImageButton
+            android:id="@+id/btSoundInGame"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/speaker"
+            android:onClick="btInGame_Click"
+            android:layout_marginLeft="5dp" />
+        <TextView
+            android:id="@+id/tvTimeGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00:00"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:gravity="center" />
+        <TextView
+            android:id="@+id/tvNumberOfTriesGame"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="17"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/TableLayout03"
+        android:layout_marginTop="10dp">
+        <TableRow
+            android:id="@+id/TableRow03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+        </TableRow>
+    </TableLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_unit_id"
+        android:visibility="visible" >
+    </com.google.android.gms.ads.AdView>
+</LinearLayout>
