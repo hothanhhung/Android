@@ -5,8 +5,8 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.hth.AnimalMemory"
-        minSdkVersion 9
+        applicationId "com.hth.animalmemory"
+        minSdkVersion 11
         targetSdkVersion 23
         versionCode 100
         versionName "1.0.0"

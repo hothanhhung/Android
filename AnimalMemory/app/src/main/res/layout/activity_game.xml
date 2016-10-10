@@ -8,7 +8,7 @@
     android:layout_margin="0dp"
     android:orientation="vertical"
     tools:context="com.hth.AnimalMemory.GameActivity"
-    android:background="@drawable/imagebackground1">
+    android:background="@drawable/background1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,31 +38,85 @@
             android:text="00:00:00"
             android:layout_gravity="center"
             android:textStyle="bold"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_weight="1"
-            android:gravity="center" />
+            android:gravity="center"
+            android:typeface="monospace"  />
+        <ImageButton
+            android:id="@+id/btNextLevelInGame"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/pause"
+            android:onClick="btInGame_Click"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvTimeHintCountDown"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="0"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:typeface="monospace"  />
         <TextView
             android:id="@+id/tvNumberOfTriesGame"
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="17"
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="20dp"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/TableLayout03"
-        android:layout_marginTop="10dp">
-        <TableRow
-            android:id="@+id/TableRow03"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/btHint"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/hint"
+            android:onClick="btInGame_Click"
+            android:layout_marginRight="5dp"
+            android:text="0"
+            android:textSize="14dp"
+            android:typeface="monospace" />
+        <TextView
+            android:id="@+id/tvLevel"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:background="@drawable/number_hint"
+            android:text="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:typeface="monospace"  />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
             android:gravity="center">
-        </TableRow>
-    </TableLayout>
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TableLayout03"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:background="@drawable/number_hint">
+                <TableRow
+                    android:id="@+id/TableRow03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"

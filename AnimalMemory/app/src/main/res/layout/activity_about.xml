@@ -4,32 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#f09ddbe2"
     android:padding="15dp"
-    tools:context="com.hth.AnimalMemory.AboutActivity">
+    tools:context="com.hth.AnimalMemory.AboutActivity"
+    android:background="@drawable/background1">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:textColor="#1b2397"
-        android:paddingTop="20dp"
-        android:paddingBottom="10dp"
-        android:text="AnimalMemory GAME"/>
+        android:src="@drawable/logo" />
     <TextView android:text="@string/about_content_rules"
-        android:paddingTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:textStyle="bold" />
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:visibility="gone"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:visibility="gone" />
     <TextView android:text="@string/about_content_explain"
-        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 </LinearLayout>

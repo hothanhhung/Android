@@ -9,7 +9,7 @@ public class GameLevel {
     public int numberOfCols;
     public int numberOfItems;
 
-    public GameLevel(int numberOfRows, int numberOfCols, int numberOfItems)
+    public GameLevel(int numberOfCols, int numberOfRows, int numberOfItems)
     {
         this.numberOfRows = numberOfRows;
         this.numberOfCols = numberOfCols;

@@ -10,75 +10,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="0.6"
-        android:padding="30dp"
-        android:gravity="center">
+        android:paddingTop="5dp"
+        android:gravity="center"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="30dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="true"
             android:textColor="#1b2397"
-            android:textSize="60dp"
+            android:textSize="40dp"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:text="GAME\nOVER"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:typeface="monospace"
+            android:text="COMPLETE\nLEVEL"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.6"
-            android:padding="30dp"
-            android:gravity="left">
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textSize="18dp" android:text="Your Name in High Score:"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dp" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp">
-                <EditText android:layout_height="50dp" android:layout_width="0dp"
-                    android:selectAllOnFocus="true"
-                    android:layout_weight="1"
-                    android:textSize="15dp"
-                    android:text="Player Name"
-                    android:editable="true"
-                    android:fadeScrollbars="true" android:id="@+id/etComment" />
-                <Button
-                    android:layout_height="30dp" android:layout_width="40dp" android:textSize="10dp"
-                    android:text="Save" android:id="@+id/btWingameSaveComment"
-                    android:background="@drawable/custom_rectangle" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:src="@drawable/level_complete" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="0dp">
             <Button
-                android:id="@+id/btOvergamePlay"
+                android:id="@+id/btNextLevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
                 android:textColor="#000"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:textStyle="bold"
                 android:layout_margin="10dp"
+                android:padding="10dp"
                 android:background="@drawable/custom_rectangle"
-                android:text="@string/replay"/>
+                android:typeface="monospace"
+                android:text="Next Level"/>
             <Button
-                android:id="@+id/btOvergameDimiss"
+                android:id="@+id/btMainMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
                 android:textColor="#000"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:textStyle="bold"
                 android:layout_margin="10dp"
+                android:padding="10dp"
                 android:background="@drawable/custom_rectangle"
-                android:text="@string/dismiss"/>
+                android:typeface="monospace"
+                android:text="Main Menu"/>
         </LinearLayout>
     </LinearLayout>
 </AbsoluteLayout>
