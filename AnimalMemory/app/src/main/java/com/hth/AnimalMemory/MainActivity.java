@@ -50,18 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 startGame(Data.DIFFICULTY_CONTINUES);
                 break;
             case R.id.btGetMore:
-                //progressDialog = ProgressDialog.show(MainActivity.this, "Loading", "Please wait for a moment...", true);;
                 MainActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
-                        progressDialog = ProgressDialog.show(MainActivity.this, "Loading", "Please wait for a moment...", true);
-                    }
-                });
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    public void run() {
-                        UIUtils.showAlertGetMoreApps(MainActivity.this);
-                        if (progressDialog != null && progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
+                        UIUtils.showAlertGetMoreAppsServer(MainActivity.this);
                     }
                 });
                 break;

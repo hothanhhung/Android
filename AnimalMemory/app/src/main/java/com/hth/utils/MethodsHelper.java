@@ -1,5 +1,9 @@
 package com.hth.utils;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.provider.Settings;
+
 import com.hth.AnimalMemory.R;
 
 import java.text.SimpleDateFormat;
@@ -11,7 +15,7 @@ import java.util.Date;
 public class MethodsHelper {
 
     static public String getCurrentDateToOrder(){
-        return getCurrentDate("yyyyMMddHHmmss");
+        return getCurrentDate("yyyyMMdd-HHmmss");
     }
 
     static public String getCurrentDate(){
@@ -46,5 +50,44 @@ public class MethodsHelper {
         }
 
         return var2.concat(":").concat(var3).concat(":").concat(var4);
+    }
+
+
+    public static String getAppVersion(Context context)
+    {
+        String version = "";
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            version = pInfo.versionName;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return version;
+
+    }
+
+    public static String getAndroidId(Context context)
+    {
+        String android_id = "";
+        try {
+            android_id = Settings.Secure.getString(context.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return android_id;
+
+    }
+
+    public static String getPackageName(Context context)
+    {
+        String packageName = "";
+        try {
+            packageName = context.getPackageName();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return packageName;
+
     }
 }

@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FlexibleRowAdapter extends ArrayAdapter<AdItem> {
-	private Context activity;
+    private Context activity;
     private ArrayList<AdItem> data;
     private static LayoutInflater inflater=null;
     public Resources res;
@@ -28,7 +28,7 @@ public class FlexibleRowAdapter extends ArrayAdapter<AdItem> {
         res = resLocal;
         inflater = LayoutInflater.from(a) ;
     }
- 
+
     public int getCount() {
         return data.size();
     }
@@ -39,25 +39,25 @@ public class FlexibleRowAdapter extends ArrayAdapter<AdItem> {
     public long getItemId(int position) {
         return position;
     }
- 
+
     public View getView(int position, View convertView, ViewGroup parent) {
-    	ViewHolder viewHolder;
+        ViewHolder viewHolder;
         TextView tvTitle;
         TextView tvShortContent;
         TextView tvNoteContent;
         ImageView ivImageArticle;
-    	if(convertView==null)
-        {   
-    		convertView = inflater.inflate(R.layout.item_ads_flexible, null);
-        	viewHolder = new ViewHolder();
- 
-        	viewHolder.title = tvTitle = (TextView)convertView.findViewById(R.id.title); // title
-        	viewHolder.shortContent = tvShortContent = (TextView)convertView.findViewById(R.id.shortContent);
-        	viewHolder.noteContent = tvNoteContent = (TextView)convertView.findViewById(R.id.noteContent);
-        	viewHolder.imageArticle = ivImageArticle = (ImageView)convertView.findViewById(R.id.imageArticle); // thumb image
-        	convertView.setTag(viewHolder);
+        if(convertView==null)
+        {
+            convertView = inflater.inflate(R.layout.item_ads_flexible, null);
+            viewHolder = new ViewHolder();
+
+            viewHolder.title = tvTitle = (TextView)convertView.findViewById(R.id.title); // title
+            viewHolder.shortContent = tvShortContent = (TextView)convertView.findViewById(R.id.shortContent);
+            viewHolder.noteContent = tvNoteContent = (TextView)convertView.findViewById(R.id.noteContent);
+            viewHolder.imageArticle = ivImageArticle = (ImageView)convertView.findViewById(R.id.imageArticle); // thumb image
+            convertView.setTag(viewHolder);
         }
-    	else{
+        else{
             viewHolder = (ViewHolder)convertView.getTag();
             tvTitle = viewHolder.title; // title
             tvShortContent = viewHolder.shortContent;
@@ -65,11 +65,11 @@ public class FlexibleRowAdapter extends ArrayAdapter<AdItem> {
             ivImageArticle = viewHolder.imageArticle;
         }
         AdItem adFlex = data.get(position);
- 
+
         // Setting all values in listview
         tvTitle.setText(adFlex.getName());
-        tvTitle.setTag(adFlex.getLink());
-        
+        tvTitle.setTag(adFlex);
+
         if(adFlex.getDesc().trim() == "")
             tvShortContent.setVisibility(View.GONE);
         else{
@@ -77,7 +77,7 @@ public class FlexibleRowAdapter extends ArrayAdapter<AdItem> {
             tvShortContent.setText(adFlex.getDesc());
         }
 
-        
+
         if(adFlex.getType().trim() == "")
             tvNoteContent.setVisibility(View.GONE);
         else{
@@ -85,15 +85,15 @@ public class FlexibleRowAdapter extends ArrayAdapter<AdItem> {
             tvNoteContent.setText(adFlex.getType());
         }
 
-        
+
         if(adFlex.getUrlImage().trim()!="")
-		{
+        {
             ivImageArticle.setVisibility(View.VISIBLE);
             Picasso.with(activity).load(adFlex.getUrlImage()).into(ivImageArticle);;
-		}else
-		{
+        }else
+        {
             ivImageArticle.setVisibility(View.GONE);
-		}
+        }
         return convertView;
     }
 

@@ -6,7 +6,7 @@
     <string name="about_game">About</string>
     <string name="exit_game">Exit</string>
     <string name="about_content_rules">Try to remember where the animal is placed. Couple of the same items will be removed. All items are removed. You win. </string>
-    <string name="about_content_explain">When you win a level. You get a hint. The hint is used to open all items in 5s.\nMore levels, more kind of the animal. Let try your remember. </string>
+    <string name="about_content_explain">When you win a level. You get a hint. The hint is used to open all items in 5s.\nThe higher levels, the more kind of the animal. Let try your remember. </string>
     <string name="new_game_title">Difficulty</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>

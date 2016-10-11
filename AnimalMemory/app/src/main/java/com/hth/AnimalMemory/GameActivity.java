@@ -416,6 +416,7 @@ public class GameActivity extends AppCompatActivity {
                     saveValues();
                     if(checkWin())
                     {
+                        showInterstitial();
                         timeStop();
                         level = level + 1;
                         savedValues.setRecordCard(null);
@@ -654,7 +655,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showInterstitial();
+        showInterstitialAfterResume();
         if (isPlayMusic) {
             backgroundMusic.start();
         }
@@ -673,8 +674,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private long timePlay = 0;
-    private void showInterstitial(){
+    private void showInterstitialAfterResume(){
         if(timePlay!=0 && System.currentTimeMillis() - timePlay > 15 * 60000) {
+            showInterstitial();
+        }
+    }
+
+    private void showInterstitial(){
             if (interstitial == null) {
                 interstitial = new InterstitialAd(this);
                 interstitial.setAdUnitId(getResources().getString(R.string.ad_unit_id_interstitial));
@@ -698,6 +704,5 @@ public class GameActivity extends AppCompatActivity {
             }
             AdRequest adRequest_interstitial = new AdRequest.Builder().build();
             interstitial.loadAd(adRequest_interstitial);
-        }
     }
 }

@@ -98,67 +98,11 @@ public class UIUtils {
                 .show();
         return alertDialog;
     }
-    
-    private static ProgressBar progressBar1;
-    public static AlertDialog showAlertGetMoreApps(final Activity activity, String urlPage)
-	{		
-    	AlertDialog.Builder alert = new AlertDialog.Builder(activity);
 
-		WebView wv = new WebView(activity);
-        WebSettings settings = wv.getSettings();
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-		settings.setJavaScriptEnabled(true);
-        settings.setAppCacheMaxSize(50000 * 1024);
-        
-		progressBar1 = new ProgressBar(activity);//,null, android.R.attr.progressBarStyleHorizontal);
-		progressBar1.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		wv.setWebViewClient(new WebViewClient() {
-		    @Override
-		    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-		    	Intent i = new Intent(Intent.ACTION_VIEW);
-            	i.setData(Uri.parse(url));
-            	activity.startActivity(i);
-		        return true;
-		    }
-		});
-		wv.setWebChromeClient(new WebChromeClient() {
-		    public void onProgressChanged(WebView view, int progress) {
-            	if(progress < 95)
-            	{
-            		progressBar1.setVisibility(View.VISIBLE);
-            		if(progressBar1.getProgress() < progress){
-            			progressBar1.setProgress(progress);
-            		}
-            	}else
-            	{
-            		view.setVisibility(View.VISIBLE);
-            		progressBar1.setVisibility(View.GONE);
-            	}
-            }
-		});
-		wv.loadUrl(urlPage);
-		LinearLayout linearLayout = new LinearLayout(activity);
-		if (android.os.Build.VERSION.SDK_INT>=17) {
-			// call something for API Level 11+
-			linearLayout.setLayoutDirection(LinearLayout.LAYOUT_DIRECTION_LTR);
-		}
-		linearLayout.addView(progressBar1);
-		linearLayout.addView(wv);
-		alert.setView(linearLayout);
-		alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int id) {
-		        dialog.dismiss();
-		    }
-		});
-		//alert.setIcon(android.R.drawable.box_new)
-		return alert.show();
-		
-	}
 
-	public static LinearLayout BuildGetMoreApps(final Activity activity)
+	public static LinearLayout BuildGetMoreAppsServer(final Activity activity)
 	{
-		ParseJSONAds parseJSONAds = new ParseJSONAds(activity, activity.getResources().getConfiguration().locale.getCountry(), "android");
+		final ParseJSONAds parseJSONAds = new ParseJSONAds(activity, "android");
 		ArrayList<AdItem> adItems = parseJSONAds.getAds();
 
 		ListView listView = new ListView(activity);
@@ -174,10 +118,19 @@ public class UIUtils {
 						UIUtils.showAlertErrorNoInternet(activity, false);
 						return;
 					}
-					Object urlObject = view.findViewById(R.id.title).getTag();
-					if(urlObject != null) {
+					final AdItem adItem = (AdItem) view.findViewById(R.id.title).getTag();
+					if(adItem.getLink() != null && adItem.getLink()!="") {
+						Thread background = new Thread(new Runnable() {
+							public void run() {
+								try {
+									parseJSONAds.userClickAd(adItem.getLink());
+								} catch (Throwable t) {}
+							}
+						});
+						background.start();
+
 						Intent i = new Intent(Intent.ACTION_VIEW);
-						i.setData(Uri.parse(urlObject.toString()));
+						i.setData(Uri.parse(adItem.getLink()));
 						activity.startActivity(i);
 					}
 				}
@@ -200,40 +153,40 @@ public class UIUtils {
 	static LinearLayout linearLayout;
 	static AlertDialog alertDialog;
 	static AlertDialog.Builder alert;
-     public static void showAlertGetMoreApps(final Activity activity) {
-		 alert = new AlertDialog.Builder(activity);
-		 TextView textView = new TextView(activity);
-		 textView.setText("Loading...");
-		 textView.setPadding(10, 10, 10, 10);
-		 textView.setTextSize(15);
-		 textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
-		 alert.setView(textView);
-		 alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-			 @Override
-			 public void onClick(DialogInterface dialog, int id) {
-				 dialog.dismiss();
-				 alertDialog = null;
-			 }
-		 });
-		 //alert.setIcon(android.R.drawable.box_new)
-		 alertDialog = alert.show();
+	public static void showAlertGetMoreAppsServer(final Activity activity) {
+		alert = new AlertDialog.Builder(activity);
+		TextView textView = new TextView(activity);
+		textView.setText("Loading...");
+		textView.setPadding(10, 10, 10, 10);
+		textView.setTextSize(15);
+		textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+		alert.setView(textView);
+		alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+				alertDialog = null;
+			}
+		});
+		//alert.setIcon(android.R.drawable.box_new)
+		alertDialog = alert.show();
 
-		 (new Thread(new Runnable() {
-			 @Override
-			 public void run() {
-				 linearLayout = BuildGetMoreApps(activity);
-				 activity.runOnUiThread(new Runnable() {
-					 @Override
-					 public void run() {
-						 if(alertDialog!=null && alertDialog.isShowing()) {
-							 alert.setView(linearLayout);
-							 alertDialog.dismiss();
-							 alertDialog = alert.show();
-						 }
-					 }
-				 });
-			 }
-		 }
-		 )).start();
-	 }
+		(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				linearLayout = BuildGetMoreAppsServer(activity);
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						if(alertDialog!=null && alertDialog.isShowing()) {
+							alert.setView(linearLayout);
+							alertDialog.dismiss();
+							alertDialog = alert.show();
+						}
+					}
+				});
+			}
+		}
+		)).start();
+	}
 }
