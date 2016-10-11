@@ -71,8 +71,8 @@ hthServiceApp.controller('HomeController',
               $rootScope.FromDate = fromDate;
               $rootScope.ToDate = toDate;
           }
-          $scope.openRequestInfo = function () {
-              window.open(URL_SERVICE + "/api/ReportApi/RequestInfo/?token=" + $rootScope.AuthInfo.Token + "&type=SearchProgram&order=Id&desc=true&date=" + GetStringOfDate(new Date()), "_blank");
+          $scope.openRequestInfo = function (type) {
+              window.open(URL_SERVICE + "/api/ReportApi/RequestInfo/?token=" + $rootScope.AuthInfo.Token + "&type="+type+"&order=Id&desc=true&date=" + GetStringOfDate(new Date()), "_blank");
           };
           function GetStringOfDate(date) {
               if (typeof (date) != 'object') {

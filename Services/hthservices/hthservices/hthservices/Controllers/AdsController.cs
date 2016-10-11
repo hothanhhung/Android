@@ -17,7 +17,7 @@ namespace hthservices.Controllers
             if (string.IsNullOrWhiteSpace(country)) country = "VN";
             if (string.IsNullOrWhiteSpace(os)) os = "android";
 
-            var adItems = Ads.AdData.GetAds(country, os, Request.RequestUri.ToString());
+            var adItems = Ads.AdData.GetAds(country, os, Request.RequestUri.ToString(), device, open, version, package);
             return ResponseJson.GetResponseJson(adItems);
         }
 

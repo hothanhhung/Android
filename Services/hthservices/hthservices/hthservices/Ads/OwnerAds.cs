@@ -17,6 +17,12 @@ namespace hthservices.Ads
 		      },
             new AdItem(){
                 Type ="Google play",
+		        Name = "Animal Memory",
+		        Desc = "Let relax and train your memory with Animal Memory",
+		        Link = "https://play.google.com/store/apps/details?id=com.hth.animalmemory",
+		        UrlImage ="https://lh3.googleusercontent.com/SI565NUJAfeZM5kUzGLLYk8pxRgmKCr4jXX7kd9lY5b01d507NsNgrhEQ7OGHCCbk23N=w300",
+            },new AdItem(){
+                Type ="Google play",
 		        Name = "Lines",
 		        Desc = "Lines game is the same to Color Lines game and lines 98 on window",
 		        Link = "https://play.google.com/store/apps/details?id=com.hth.lines",

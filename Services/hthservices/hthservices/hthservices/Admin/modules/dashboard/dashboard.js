@@ -113,8 +113,8 @@ hthServiceApp.controller('DashboardController',
                 alert(responseData.Data.Message);
             });
     };
-    $scope.openRequestInfo = function () {
-        window.open(URL_SERVICE + "/api/ReportApi/RequestInfo/?token=" + $rootScope.AuthInfo.Token + "&type=SearchProgram&order=Id&desc=true&date=" + GetStringOfDate(new Date()), "_blank");
+    $scope.openRequestInfo = function (type) {
+        window.open(URL_SERVICE + "/api/ReportApi/RequestInfo/?token=" + $rootScope.AuthInfo.Token + "&type="+type+"&order=Id&desc=true&date=" + GetStringOfDate(new Date()), "_blank");
     };
 
     function GetStringOfDate(date)
