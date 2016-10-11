@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
                                     startGame(Data.DIFFICULTY_NEWGAME);
                                 }
                             }).show();
+                }else{
+                    startGame(Data.DIFFICULTY_NEWGAME);
                 }
                 break;
             case R.id.btContinue:
