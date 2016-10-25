@@ -1,0 +1,151 @@
+﻿
+<div class="container-fluid" style="position: relative;">
+    <div class="row">
+        Reports
+    </div>
+    <div class="row">
+        <div class="pull-right col-sm-4">
+            <div class="col-sm-1">
+                <a href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-th-list" style="color: green; font-size: 20px;" ng-click="openRequestInfo('SearchProgram')" />
+                </a>
+            </div>
+            <div class="col-sm-1">
+                <a href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-th-list" style="color: green; font-size: 20px;" ng-click="openRequestInfo('GetAds')" />
+                </a>
+            </div>
+            <div class="col-sm-1">
+                <a href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-th-list" style="color: green; font-size: 20px;" ng-click="openRequestInfo('UserClickAd')" />
+                </a>
+            </div>
+            <div class="col-sm-1">
+                <a href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-log-out" style="color: red; font-size: 20px;" ng-click="Logout()" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="ScheduleRequestLogs.IsLoading" class="loading">
+        <span class="text-loading"> loading... </span>
+    </div>
+    <div class="row" style="padding-top: 10px;">
+        <div class="row">
+            <filter to-date="ScheduleRequestLogs.ToDate" from-date="ScheduleRequestLogs.FromDate" on-apply="UpdateFilter(fromDate, toDate)"></filter>
+        </div>
+        <div class="form-group">
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i style="font-size: 50px;" class="glyphicon glyphicon-cloud-upload"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">{{ScheduleRequestLogs.TotalRequest}}</div>
+                                <div>Requested</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#/home">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i style="font-size: 50px;" class="glyphicon glyphicon-alert"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">{{ScheduleRequestLogs.TotalFailedRequest}}</div>
+                                <div>Failed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#/home">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span style="float: left; margin-top: 5px; margin-right: 10px;">Requests Chart </span>
+                            <span>
+                                <md-switch ng-change="ShowChart()" ng-model="ScheduleRequestLogs.IsShowChart" aria-label="Show Chart" style="margin: 0px;">
+                                </md-switch>
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body" id="area-dashboard-parent" ng-show="ScheduleRequestLogs.IsShowChart">
+                        <div class="table-responsive">
+                            <div style="padding: 30px;border: 1px solid #ccc;box-shadow: 1px 1px 2px #eee;margin: 10px 0;position: relative;">
+                                <div style="text-align: center;"></div>
+                                <div id="area-dashboard" class="graph"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Top Requests</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <div class="list-group-item" ng-repeat="item in ScheduleRequestLogs.TopRequests">
+                                <span class="badge">{{item.NumberOfRequests}}</span>
+                                <i class="fa fa-fw fa-calendar"></i> {{item.ChannelKey}}
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <a href="#/home/?top">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Top Failed Requests</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <div class="list-group">
+                                <div class="list-group-item" ng-repeat="item in ScheduleRequestLogs.TopFailedRequests">
+                                    <span class="badge">{{item.NumberOfRequests}}</span>
+                                    <i class="fa fa-fw fa-calendar"></i> {{item.ChannelKey}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <a href="#/home/?top">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

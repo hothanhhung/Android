@@ -1,0 +1,47 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        Reports
+    </div>
+    <div class="row">
+        <div class="pull-right col-sm-4">
+            <div class="col-sm-1">
+                <a href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-th-list" style="color: green; font-size: 20px;" ng-click="openRequestInfo('SearchProgram')" />
+                </a>
+            </div>
+            <div class="col-sm-1">
+                <a href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-th-list" style="color: green; font-size: 20px;" ng-click="openRequestInfo('GetAds')" />
+                </a>
+            </div>
+            <div class="col-sm-1">
+                <a href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-th-list" style="color: green; font-size: 20px;" ng-click="openRequestInfo('UserClickAd')" />
+                </a>
+            </div>
+            <div class="col-sm-1">
+                <a href="#/dashboard">
+                    <span class="glyphicon glyphicon-dashboard" style="color: green; font-size: 20px;" />
+                </a>
+            </div>
+            <div class="col-sm-1">
+                <a href="javascript:void(0)">
+                    <span class="glyphicon glyphicon-log-out" style="color: red; font-size: 20px;" ng-click="Logout()" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <filter to-date="ToDate" from-date="FromDate" on-apply="UpdateFilter(fromDate, toDate)"></filter>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-lg-6">
+            <h2>Schedule Request Logs</h2>
+            <grid-report trigger-refesh="TriggerRefeshForRequest" to-date="ToDate" from-date="FromDate" is-top="IsTop" is-failed-request=false is-show-action="IsShowAction"></grid-report>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <h2>Schedule Failed Request Logs</h2>
+            <grid-report trigger-refesh="TriggerRefeshForFailedRequest" to-date="ToDate" from-date="FromDate" is-top="IsTop" is-failed-request=true is-show-action="IsShowAction"></grid-report>
+        </div>
+    </div>
+</div>

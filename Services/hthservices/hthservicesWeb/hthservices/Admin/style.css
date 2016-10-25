@@ -1,0 +1,37 @@
+﻿.scol-center {
+     margin:auto;
+     float:none;
+}
+
+.loading{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    background-color: rgba(179, 175, 179, 0.46);
+    z-index: 9999;
+}
+
+.text-loading {
+    top: 50%;
+    left: 45%;
+    position: absolute;
+    font-weight: bold;
+    padding: 5px;
+    background-color: grey;
+}
+
+td.container > div {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+._md-select-menu-container {
+  z-index: 999999 !important;
+}
+
+@media (max-width: @screen-xs-min) {
+  .modal-xs { width: @modal-sm; }
+}

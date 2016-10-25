@@ -1,0 +1,53 @@
+﻿@*@model IEnumerable<hthservices.Utils.ScheduleRequestLog> 
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Report";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.js")" type="text/javascript"> </script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+
+<div style="width:100%;">
+    <div style=" width:49%; float:left">
+    <h2>Schedule Request Logs</h2>
+    <div class="code-cut">
+        @Html.Grid((List<hthservices.Utils.ScheduleRequestLog>)ViewBag.ScheduleRequestLogs).Named("ScheduleRequestLogs").Columns(columns =>
+                    {
+                        columns.Add(c => c.ID).Titled("ID").Filterable(true);
+                        columns.Add(c => c.ChannelKey).Titled("Channel Key").Filterable(true);
+                        columns.Add(c => c.CurrentDate).Titled("Current Date").Filterable(true);
+                        columns.Add(c => c.DateOn).Titled("Date On").Filterable(true);
+                        columns.Add(c => c.NumberOfRequests).Titled("Count").Filterable(true);
+                        columns.Add(c => c.Note).Titled("Note").Filterable(true);
+                        columns.Add()
+                        .Encoded(false)
+                        .Sanitized(false)
+                        .SetWidth(30)
+                        .RenderValueAs(o => Html.ActionLink("Delete", "Delete", new { log = o.ID, type = "log" }, new { onclick = "return confirm('Are you sure?');" }));
+
+                    }).WithPaging(30).Sortable(true)
+    </div>
+</div>
+    <div style ="width:49%; float:right">
+        <h2>Schedule Failed Request Logs</h2>
+        <div class="code-cut">
+            @Html.Grid((List<hthservices.Utils.ScheduleRequestLog>)ViewBag.ScheduleFailedRequestLogs).Named("ScheduleFailedRequestLogs").Columns(columns =>
+                    {
+                        columns.Add(c => c.ID).Titled("ID").Filterable(true);
+                        columns.Add(c => c.ChannelKey).Titled("Channel Key").Filterable(true);
+                        columns.Add(c => c.CurrentDate).Titled("Current Date").Filterable(true);
+                        columns.Add(c => c.DateOn).Titled("Date On").Filterable(true);
+                        columns.Add(c => c.NumberOfRequests).Titled("Count").Filterable(true);
+                        columns.Add(c => c.Note).Titled("Note").Filterable(true);
+                        columns.Add()
+                        .Encoded(false)
+                        .Sanitized(false)
+                        .SetWidth(30)
+                        .RenderValueAs(o => Html.ActionLink("Delete", "Delete", new { log = o.ID, type = "fail" }, new { onclick = "return confirm('Are you sure?');" }));
+
+                    }).WithPaging(30).Sortable(true)
+        </div> 
+    </div>
+</div>*@
+ 
