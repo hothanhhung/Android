@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nguyễn Văn A"
+            android:id="@+id/tvFullname" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0977888782"
+            android:id="@+id/tvPhoneNumber"
+            android:textStyle="italic"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Hòa Cường - Cẩm Lệ - Đà Nẵng"
+            android:id="@+id/tvAddress"
+            android:textStyle="italic"
+            android:paddingLeft="5dp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/btAddCustomer"
+        android:src="@drawable/add_customer"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:scaleType="fitXY"
+        android:onClick="btInOrderViewClick"/>
+</LinearLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:gravity="center_vertical"
+    android:focusableInTouchMode="true">
+<LinearLayout
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="70dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="ĐĂNG NHẬP"
+        android:id="@+id/textView"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="@color/textColorBlue"
+        android:paddingTop="10dp"
+        android:paddingBottom="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên đăng nhập"
+        android:id="@+id/textView2"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="@dimen/activity_text_size" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etUsername" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mật khẩu"
+        android:id="@+id/textView3"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="@dimen/activity_text_size"  />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/etPassword"
+        android:layout_gravity="center_horizontal" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nhớ mật khẩu"
+        android:id="@+id/cbRememberPassword" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ĐĂNG NHẬP"
+        android:id="@+id/btLogin"
+        android:textStyle="bold"
+        android:textColor="@color/textColorWhite"
+        android:background="@color/backgroundColorBlue"
+        android:onClick="btClick" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAllCaps="false"
+            android:textColor="@color/textColorDarkBlue"
+            android:text="@string/sign_up"
+            android:id="@+id/btSignUp"
+            android:onClick="btClick"
+            android:textSize="@dimen/activity_text_size" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAllCaps="false"
+            android:textColor="@color/textColorDarkBlue"
+            android:text="@string/forgot_password"
+            android:id="@+id/btForgotPassword"
+            android:onClick="btClick"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/activity_text_size" />
+    </RelativeLayout>
+</LinearLayout>
+</RelativeLayout>

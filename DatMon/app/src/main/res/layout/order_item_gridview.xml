@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:descendantFocusability="blocksDescendants"
+    android:clickable="false"
+    android:longClickable="false"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="15dp"
+    android:background="#dedddd">
+
+    <RelativeLayout
+        android:descendantFocusability="blocksDescendants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:longClickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" >
+        <ImageView
+            android:id="@+id/imgImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@drawable/order_item1"
+            android:clickable="false"
+            android:longClickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="95K"
+            android:id="@+id/tvPrice"
+            android:autoText="false"
+            android:background="@color/backgroundColorBlue"
+            android:textColor="@color/textColorWhite"
+            android:layout_alignTop="@+id/imgImageView"
+            android:layout_alignRight="@+id/imgImageView"
+            android:layout_alignEnd="@+id/imgImageView"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="HẾT HÀNG"
+            android:id="@+id/tvOutOfStock"
+            android:layout_alignBottom="@+id/imgImageView"
+            android:layout_centerHorizontal="true"
+            android:background="#feacac"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/textColorWhite"
+            android:textStyle="bold"
+            android:alpha="0.9" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ba chỉ lợn xiên nướng"
+        android:id="@+id/tbDetail"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#000"
+        android:padding="5dp" />
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="55dip"
+    android:orientation="horizontal">
+
+    <TextView android:id="@+id/tvDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="50sp"
+        android:textSize="@dimen/activity_text_size"
+        android:text="Chả cá với chi xiên nướng"
+        android:gravity="center_vertical" />
+    <EditText android:id="@+id/etQuantity"
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:minHeight="50sp"
+        android:textSize="@dimen/activity_text_size"
+        android:text="1"
+        android:inputType="number"
+        android:gravity="center"
+        android:background="#e3e1e1"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp" />
+
+    <TextView android:id="@+id/tvTotal"
+        android:layout_width="70sp"
+        android:layout_height="wrap_content"
+        android:minHeight="50sp"
+        android:textSize="@dimen/activity_text_size"
+        android:text="145000"
+        android:gravity="center_vertical|right"/>
+
+    <ImageButton android:id="@+id/btRemove"
+        android:layout_width="15sp"
+        android:layout_height="15sp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/delete"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="5dp" />
+</LinearLayout>

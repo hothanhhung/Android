@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Dat Mon</string>
+    <string name="sign_up"><u>Đăng ký sử dụng</u></string>
+    <string name="forgot_password"><u>Quên mật khẩu?</u></string>
+</resources>

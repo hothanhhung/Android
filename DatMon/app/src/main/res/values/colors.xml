@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="textColorBlue">#6081be</color>
+    <color name="backgroundColorBlue">#6081be</color>
+    <color name="textColorDarkBlue">#284879</color>
+    <color name="textColorWhite">#ffffff</color>
+    <color name="group_item_even_color">#EDF0F0</color>
+    <color name="group_item_odd_color">#fffff0</color>
+    <color name="ordered_item_even_color">#f4f4f4</color>
+    <color name="ordered_item_odd_color">#ffffff</color>
+    <color name="item_even_color">#f4f4f4</color>
+    <color name="item_odd_color">#e7e7e7</color>
+</resources>

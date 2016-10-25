@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    tools:context="com.hth.datmon.OrderActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@android:color/holo_blue_light"
+        android:layout_height="50dp"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:gravity="center">
+        <ImageButton
+            android:id="@+id/btMenu"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/menu"
+            android:onClick="menuClick"/>
+        <TextView
+            android:id="@+id/tvSelectedChannel"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:text="Khu A bàn 5.2"/>
+        <ImageButton
+            android:id="@+id/btFavorites"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/favorites"
+            android:onClick="menuClick"/>
+    </LinearLayout>
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:queryHint="Nhập mã/Tên món cần tìm"
+                android:hint="Nhập mã/Tên món cần tìm"
+                android:iconifiedByDefault="false" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <GridView
+                    android:id="@+id/grvOrderItems"
+                    android:layout_width="match_parent"
+                    android:numColumns="2"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:verticalSpacing="5dp"
+                    android:horizontalSpacing="10dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="0dp"
+                    android:descendantFocusability="blocksDescendants"  />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- The navigation drawer -->
+        <LinearLayout
+            android:id="@+id/leftNavdrawer"
+            android:layout_width="260dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@drawable/custom_rectangle"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/white"
+            android:dividerHeight="0dp"
+            android:drawSelectorOnTop="false"
+            android:baselineAligned="false"
+            android:paddingRight="5px"
+            >
+
+            <ExpandableListView
+                android:id="@+id/lvTables"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:clipToPadding="false" />
+        </LinearLayout>
+        <!-- The navigation drawer -->
+
+        <LinearLayout
+            android:id="@+id/rightNavdrawer"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="end"
+            android:background="@drawable/custom_rectangle"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0dp"
+            android:drawSelectorOnTop="false"
+            android:paddingLeft="5px">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dip"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btCustomer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40sp"
+                    android:textSize="14sp"
+                    android:text="Khách Hàng"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@color/backgroundColorBlue"
+                    android:textColor="#fff"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:onClick="btInOrderViewClick"/>
+                <Button
+                    android:id="@+id/btClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40sp"
+                    android:textSize="14sp"
+                    android:text="Xóa"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="#fff"
+                    android:textColor="#d50d0d"
+                    android:layout_margin="5dp"
+                    android:onClick="btInOrderViewClick" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/activity_text_size"
+                    android:text="Tên món"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="#000" />
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/activity_text_size"
+                    android:text="Số lượng"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/activity_text_size"
+                    android:text="Thành tiền"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:gravity="center" />
+            </LinearLayout>
+            <ListView
+                android:id="@+id/lvOrderedItems"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/textColorWhite"
+                android:clickable="true"
+                android:clipToPadding="false">
+            </ListView>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:text=""
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="#000" />
+                <TextView
+                    android:layout_width="150sp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Tổng tiền"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="130sp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="1.400.000"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="#000" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="55dip"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50sp"
+                    android:textSize="16sp"
+                    android:text="Gửi Bếp\n&amp;Bar"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@color/backgroundColorBlue"
+                    android:textColor="#fff"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50sp"
+                    android:textSize="16sp"
+                    android:text="Hủy Bỏ"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="#fff"
+                    android:textColor="#d50d0d"
+                    android:layout_margin="5dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50sp"
+                    android:textSize="16sp"
+                    android:text="Tính Tiền"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:background="#f5a878"
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
