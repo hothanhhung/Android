@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Loading..."
+        android:id="@+id/textView"
+        android:gravity="center"
+        android:textStyle="bold" />
+    <RelativeLayout
+        android:id="@+id/llWebView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/webView"
+            android:layout_margin="5dp"
+            android:clipToPadding="false"
+            android:paddingBottom="30dp"/>
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:id="@+id/btRefresh"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Tra cứu Lại"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:background="@drawable/border_rectangle"
+            android:textColor="#fff"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/webView"
+            android:layout_alignEnd="@+id/webView" />
+    </RelativeLayout>
+</LinearLayout>
