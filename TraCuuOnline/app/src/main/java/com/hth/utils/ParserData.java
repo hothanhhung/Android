@@ -15,7 +15,7 @@ public class ParserData {
 	public static String getArticleDetail(String urlpage) {
 		StringBuilder contentResult = new StringBuilder();
 
-        try {
+        /*try {
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
@@ -31,7 +31,7 @@ public class ParserData {
         } catch (Exception ex) {
             contentResult =  new StringBuilder(ex.getMessage());
             ex.printStackTrace();
-        }
+        }*/
         return contentResult.toString();
     }
 	
@@ -39,7 +39,7 @@ public class ParserData {
 		StringBuilder contentResult = new StringBuilder();
 
         try {
-            if (android.os.Build.VERSION.SDK_INT > 9) {
+           /* if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
@@ -54,11 +54,11 @@ public class ParserData {
             contentResult.append(joinContent);
             
             InputStream data = new ByteArrayInputStream(contentResult.toString().getBytes());
-            return new WebResourceResponse("text/css", "UTF-8", data);
+            return new WebResourceResponse("text/css", "UTF-8", data);*/
             
         } catch (Exception ex) {
             ex.printStackTrace();
-            return null;
         }
+        return null;
     }
 }
