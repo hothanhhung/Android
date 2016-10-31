@@ -92,6 +92,7 @@ hthWebsiteApp.controller('ContentController',
           $scope.EditContent = function (item) {
               $scope.SelectedContent = item;
               $scope.SelectedCategory = $scope.Categories[0];
+              CKEDITOR.instances.Contenteditor.setData($scope.SelectedContent.Content);
               for (var i = 1; i < $scope.Categories.length; i++)
               {
                   if ($scope.SelectedContent.CategoryId == $scope.Categories[i].Id)
@@ -105,6 +106,7 @@ hthWebsiteApp.controller('ContentController',
           $scope.NewContent = function () {
               $scope.SelectedCategory = $scope.Categories[0];
               $scope.SelectedContent = { Id: 0 };
+              CKEDITOR.instances.Contenteditor.setData("");
               $('#CreateAndEditContentModal').modal('show');
           }
           $scope.SaveContent = function (valid) {
@@ -112,6 +114,7 @@ hthWebsiteApp.controller('ContentController',
               {
                   var url = URL_SERVICE + '/api/AdministratorApi/SaveContent/';
                   $scope.SelectedContent.CategoryId = $scope.SelectedCategory.Id;
+                  $scope.SelectedContent.Content = CKEDITOR.instances.Contenteditor.getData();
                   $scope.IsLoading = true;
                   $http.post(url, $scope.SelectedContent).then(
                       function (response) {
@@ -135,10 +138,24 @@ hthWebsiteApp.controller('ContentController',
                       });
               }
           }
+
+          $scope.openBrowserFileForImageUrl = function() {
+              $('#browserFileForImageUrl').dialog({ modal: true, width: 875, height: 600 });
+          }
+          $scope.closeBrowserFileForImageUrl = function () {
+              $('#browserFileForImageUrl').dialog('close');
+          }
+
           $scope.GetCategories();
           $scope.GetContents();
-          CKEDITOR.replace('contenteditor',
-              { filebrowserImageUploadUrl: '/CKEditorUpload.ashx' }
+          var roxyFileman = URL_SERVICE+'/fileman/index.html'; 
+          CKEDITOR.replace('Contenteditor',
+              {
+                  filebrowserImageUploadUrl: URL_SERVICE+'/CKEditorUpload.ashx',
+                  filebrowserBrowseUrl:roxyFileman,
+                  filebrowserImageBrowseUrl:roxyFileman+'?type=image',
+                  removeDialogTabs: 'link:upload;image:upload'
+              }
               /*{
               toolbar: [
                           ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],

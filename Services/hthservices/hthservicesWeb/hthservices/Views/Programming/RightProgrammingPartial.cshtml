@@ -22,7 +22,7 @@
                         <li>
                             <a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(comment.Content.Category.Name), content_name = Url.ToFriendlyUrl(comment.Content.Title), id = comment.Content.Id })">@comment.Content.Title</a>
                             <span>
-                                @comment.Message
+                                @Html.Raw(comment.Message)
                             </span>
                         </li>
                     }

@@ -11,6 +11,7 @@ namespace hthservices
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("FileMan/*");
             routes.IgnoreRoute("Admin/*");
             routes.IgnoreRoute("AdminWeb/*");
             routes.IgnoreRoute("CKEditorUpload.ashx");

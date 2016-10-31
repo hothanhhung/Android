@@ -15,4 +15,9 @@ Services/hthservices/hthservices/hthservices/bin
 Services/hthservices/hthservices/hthservices/obj
 /DoVui
 /MemoryGame
-/Services
+/Services/hthservices/hthservicesWeb/packages
+/Services/hthservices/hthservicesWeb/hthservices/bin
+/Services/hthservices/hthservicesWeb/hthservices/obj
+/Services/hthservices/hthservicesWeb/hthservices.Tests/bin
+/Services/hthservices/hthservicesWeb/hthservices.Tests/obj
+/Services/hthservices/hthservicesWeb/TestResults

@@ -92,6 +92,28 @@ namespace hthservices.Controllers
             var resultObject = new { IsSuccess = true, Message = "SaveCategory" };
             return ResponseJson.GetResponseJson(resultObject);
         }
+        
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.ActionName("SaveCategory")]
+        public ResponseJson SaveCategory1([FromBody] ProgrammingCategory category)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+
+            bool success = false;
+            if (category != null)
+            {
+                success = DataProcess.SaveProgrammingCategory(category);
+            }
+            var resultObject = new { IsSuccess = true, Message = "SaveCategory" };
+            return ResponseJson.GetResponseJson(resultObject);
+        }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("DeleteCategory")]

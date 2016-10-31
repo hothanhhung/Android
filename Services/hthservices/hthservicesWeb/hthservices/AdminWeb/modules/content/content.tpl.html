@@ -28,6 +28,12 @@
                                         <textarea ng-model="SelectedContent.ShortContent" class="form-control" rows="3"></textarea>
                                     </div>
                                     <div class="form-group">
+                                        <input type="text" id="txtSelectedFile" style="border:1px solid #ccc;cursor:pointer;padding:4px;width:80%;" value="Click here to select a file" onclick="openCustomRoxy2()">
+                                        <div id="roxyCustomPanel2" style="display: none;">
+                                            <iframe src="/fileman/index.html?integration=custom&type=image&txtFieldId=txtSelectedFile" style="width:100%;height:100%" frameborder="0"></iframe>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label>
                                             ImageUrl
                                         </label>
@@ -57,7 +63,7 @@
                                         <label>
                                             Content
                                         </label>
-                                        <textarea ng-model="SelectedContent.Content" class="form-control" rows="5" name="contenteditor" />
+                                        <textarea ng-model="SelectedContent.Content" class="form-control" rows="5" name="Contenteditor" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -131,3 +137,11 @@
         </table>
     </div>
 </div>
+<script>
+    function openCustomRoxy2() {
+        $('#roxyCustomPanel2').dialog({ modal: true, width: 875, height: 600 });
+    }
+    function closeCustomRoxy2() {
+        $('#roxyCustomPanel2').dialog('close');
+    }
+</script>

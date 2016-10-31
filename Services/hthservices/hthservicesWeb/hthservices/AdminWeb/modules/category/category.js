@@ -77,14 +77,14 @@ hthWebsiteApp.controller('CategoryController',
                   var getCategoriesUrl = URL_SERVICE + '/api/AdministratorApi/SaveCategory/';
 
                   $scope.IsLoading = true;
-                  $http.post(getCategoriesUrl, $scope.SelectedCategory).then(
+                  $http.put(getCategoriesUrl, $scope.SelectedCategory).then(
                       function (response) {
                           $scope.IsLoading = false;
                           var responseData = response.data;
                           if (responseData.IsSuccess) {
                               if (responseData.Data.IsSuccess) {
-                                  $scope.SelectedCategory = { Id: 0 };
-                                  $scope.GetCategories();
+                                 // $scope.SelectedCategory = { Id: 0 };
+                                 // $scope.GetCategories();
                               } else {
                                   alert("Save Category Error");
                               }
