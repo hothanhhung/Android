@@ -3,6 +3,7 @@ package com.hth.datmon;
 import java.util.ArrayList;
 
 import com.hth.data.OrderItem;
+import com.hth.service.MenuOrder;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
@@ -15,18 +16,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class OrderItemGridViewAdapter extends ArrayAdapter<OrderItem> {
-    private ArrayList<OrderItem> originalData;
-    private ArrayList<OrderItem> data;
+    private ArrayList<MenuOrder> originalData;
+    private ArrayList<MenuOrder> data;
     private static LayoutInflater inflater = null;
     public Resources res;
     private Activity context;
 
-    public OrderItemGridViewAdapter(Activity a, ArrayList<OrderItem> d, Resources resLocal) {
-        super(a, R.layout.order_item_gridview, R.id.title, d);
+    public OrderItemGridViewAdapter(Activity a, ArrayList<MenuOrder> d, Resources resLocal) {
+        super(a, R.layout.order_item_gridview);
         context = a;
-        this.data = new ArrayList<OrderItem>();
+        this.data = new ArrayList<MenuOrder>();
         this.data.addAll(d);
-        this.originalData = new ArrayList<OrderItem>();
+        this.originalData = new ArrayList<MenuOrder>();
         this.originalData.addAll(d);
 
         res = resLocal;
@@ -59,21 +60,22 @@ public class OrderItemGridViewAdapter extends ArrayAdapter<OrderItem> {
         tbDetail = (TextView) convertView.findViewById(R.id.tbDetail);
         imgImageView = (ImageView) convertView.findViewById(R.id.imgImageView);
 
-        OrderItem orderItem = data.get(position);
+        MenuOrder orderItem = data.get(position);
         convertView.setTag(orderItem);
 
         // Setting all values in listview
-        tvPrice.setText(orderItem.getPrice());
+        tvPrice.setText(String.format("%,.0f", orderItem.getPrice()));
         if (orderItem.isOutOfStock()) {
             tvOutOfStock.setVisibility(View.VISIBLE);
         } else {
             tvOutOfStock.setVisibility(View.INVISIBLE);
         }
-        tbDetail.setText(orderItem.getDetail());
-        Picasso.with(context)
-                .load(orderItem.getUrlImage())
-                .into(imgImageView);
-
+        tbDetail.setText(orderItem.getName());
+        if(orderItem.hasImage()) {
+            Picasso.with(context)
+                    .load(orderItem.getPathImage())
+                    .into(imgImageView);
+        }
         return convertView;
     }
 
@@ -86,7 +88,7 @@ public class OrderItemGridViewAdapter extends ArrayAdapter<OrderItem> {
         } else {
 
             String noToneQuery = MethodsHelper.stripAccentsAndD(query);
-            for (OrderItem orderItem : originalData) {
+            for (MenuOrder orderItem : originalData) {
 
                if (orderItem.getEnglishDetail().contains(noToneQuery)) {
                    data.add(orderItem);

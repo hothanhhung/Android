@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.hth.data.ChannelGroup;
 import com.hth.data.ChannelItem;
+import com.hth.service.Areas;
+import com.hth.service.Desk;
+
 import java.util.ArrayList;
 
 /**
@@ -16,20 +19,20 @@ import java.util.ArrayList;
  */
 public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private ArrayList<ChannelGroup> channelGroups;
-    private ArrayList<ChannelGroup> originalChannelGroups;
+    private ArrayList<Areas> channelGroups;
+    private ArrayList<Areas> originalChannelGroups;
 
-    public ChannelsExpandableListAdapter(Context context, ArrayList<ChannelGroup> channelGroups) {
+    public ChannelsExpandableListAdapter(Context context, ArrayList<Areas> channelGroups) {
         this.context = context;
-        this.channelGroups = new ArrayList<ChannelGroup>();
+        this.channelGroups = new ArrayList<Areas>();
         this.channelGroups.addAll(channelGroups);
-        this.originalChannelGroups = new ArrayList<ChannelGroup>();
+        this.originalChannelGroups = new ArrayList<Areas>();
         this.originalChannelGroups.addAll(channelGroups);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        ArrayList<ChannelItem> channelList = channelGroups.get(groupPosition).getChannelList();
+        ArrayList<Desk> channelList = channelGroups.get(groupPosition).getDesks();
         return channelList.get(childPosition);
     }
 
@@ -42,14 +45,14 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                              View view, ViewGroup parent) {
 
-        ChannelItem channel = (ChannelItem) getChild(groupPosition, childPosition);
+        Desk desk = (Desk) getChild(groupPosition, childPosition);
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.channel_row, null);
         }
-        view.setTag(channel);
+        view.setTag(desk);
         TextView name = (TextView) view.findViewById(R.id.name);
-        name.setText(channel.getName().trim());
+        name.setText(desk.getName().trim());
         if(childPosition % 2 == 0) {
             view.setBackgroundColor(context.getResources().getColor(R.color.item_odd_color));
         }else {
@@ -61,7 +64,7 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
 
-        ArrayList<ChannelItem> countryList = channelGroups.get(groupPosition).getChannelList();
+        ArrayList<Desk> countryList = channelGroups.get(groupPosition).getDesks();
         return countryList.size();
 
     }
@@ -85,14 +88,14 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isLastChild, View view,
                              ViewGroup parent) {
 
-        ChannelGroup channelGroup = (ChannelGroup) getGroup(groupPosition);
+        Areas area = (Areas) getGroup(groupPosition);
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.group_channel_row, null);
         }
 
         TextView heading = (TextView) view.findViewById(R.id.heading);
-        heading.setText(channelGroup.getName().trim());
+        heading.setText(area.getName());
         if(groupPosition % 2 == 0) {
             view.setBackgroundColor(context.getResources().getColor(R.color.group_item_odd_color));
         }else {

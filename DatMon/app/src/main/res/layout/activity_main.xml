@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
     android:gravity="center_vertical"
     android:focusableInTouchMode="true">
-<LinearLayout
-    android:layout_width="400dp"
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView2">
+
+    <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     android:layout_marginBottom="70dp">
 
@@ -23,7 +30,16 @@
         android:textStyle="bold"
         android:textColor="@color/textColorBlue"
         android:paddingTop="10dp"
-        android:paddingBottom="50dp" />
+        android:paddingBottom="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="login fail"
+        android:id="@+id/tvMessage"
+        android:textColor="#f80404"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -104,4 +120,5 @@
             android:textSize="@dimen/activity_text_size" />
     </RelativeLayout>
 </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -24,7 +24,7 @@
             android:src="@drawable/menu"
             android:onClick="menuClick"/>
         <TextView
-            android:id="@+id/tvSelectedChannel"
+            android:id="@+id/tvSelectedDesk"
             android:layout_width="0sp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

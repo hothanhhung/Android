@@ -19,6 +19,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hth.data.ChannelGroup;
@@ -28,6 +29,10 @@ import com.hth.data.Data;
 import com.hth.data.OrderData;
 import com.hth.data.OrderItem;
 import com.hth.data.OrderedItem;
+import com.hth.data.ServiceProcess;
+import com.hth.service.Areas;
+import com.hth.service.Desk;
+import com.hth.service.MenuOrder;
 
 import java.util.ArrayList;
 
@@ -40,13 +45,17 @@ public class OrderActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private LinearLayout mLeftDrawerList;
     private LinearLayout mRightDrawerList;
+    private Desk selectedDesk;
+    private TextView tvSelectedDesk;
     SearchView search;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         grvOrderItems = (GridView) findViewById(R.id.grvOrderItems);
         lvOrderedItems = (ListView) findViewById(R.id.lvOrderedItems);
+        tvSelectedDesk = (TextView) findViewById(R.id.tvSelectedDesk);
         search = (SearchView) findViewById(R.id.search);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -78,7 +87,7 @@ public class OrderActivity extends AppCompatActivity {
 
     private void loadOrderItems()
     {
-        ArrayList<OrderItem> orderItems = Data.getOrderItems();
+        ArrayList<MenuOrder> orderItems = ServiceProcess.getMenuOrder();
         if(orderItems != null) {
             adapterGrvOrderItems = new OrderItemGridViewAdapter(
                     OrderActivity.this,
@@ -115,10 +124,10 @@ public class OrderActivity extends AppCompatActivity {
     }
     //method to expand all groups
     private void displayList() {
-        ArrayList<ChannelGroup> channelGroupList = Data.getChannelGroup();
+        ArrayList<Areas> areas = ServiceProcess.getAreas();
         ExpandableListView lvTables = (ExpandableListView) findViewById(R.id.lvTables);
         //create the adapter by passing your ArrayList data
-        ChannelsExpandableListAdapter lvChannelsAdapter = new ChannelsExpandableListAdapter(OrderActivity.this, channelGroupList);
+        ChannelsExpandableListAdapter lvChannelsAdapter = new ChannelsExpandableListAdapter(OrderActivity.this, areas);
         //attach the adapter to the list
         lvTables.setAdapter(lvChannelsAdapter);
         lvTables.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -126,8 +135,9 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                ChannelItem channelItem = (ChannelItem) v.getTag();
-                if (channelItem != null) {
+                selectedDesk = (Desk) v.getTag();
+                if (selectedDesk != null) {
+                    tvSelectedDesk.setText(selectedDesk.getName());
                     if (mDrawerLayout.isDrawerOpen(mLeftDrawerList)) {
                         mDrawerLayout.closeDrawer(mLeftDrawerList);
                     } else {

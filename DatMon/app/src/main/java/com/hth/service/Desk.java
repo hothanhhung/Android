@@ -1,0 +1,36 @@
+package com.hth.service;
+
+import java.util.Date;
+
+public class Desk {
+    public String ID;
+    public String Name;
+
+    public String AreaId;
+    public Areas Areas;
+    public boolean IsActive;
+    public boolean IsUpdate;
+    public String UserId;
+    public String CreatedDate;
+    public String UpdatedDate;
+
+    public String getAreaId() {
+        return AreaId;
+    }
+
+    public com.hth.service.Areas getAreas() {
+        return Areas;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public boolean isActive() {
+        return IsActive;
+    }
+
+    public String getID() {
+        return ID;
+    }
+}
