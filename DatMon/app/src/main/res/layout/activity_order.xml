@@ -31,7 +31,7 @@
             android:gravity="center"
             android:layout_marginLeft="5sp"
             android:layout_marginRight="5sp"
-            android:text="Khu A bàn 5.2"/>
+            android:text=""/>
         <ImageButton
             android:id="@+id/btFavorites"
             android:background="@android:drawable/list_selector_background"
@@ -44,8 +44,7 @@
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true">
+        android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -56,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:queryHint="Nhập mã/Tên món cần tìm"
                 android:hint="Nhập mã/Tên món cần tìm"
-                android:iconifiedByDefault="false" />
+                android:iconifiedByDefault="true" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -74,8 +73,7 @@
                     android:gravity="center"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_marginBottom="0dp"
-                    android:descendantFocusability="blocksDescendants"  />
+                    android:layout_marginBottom="0dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -190,6 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:minHeight="150dp"
                 android:background="@color/textColorWhite"
                 android:clickable="true"
                 android:clipToPadding="false">
@@ -221,10 +220,11 @@
                     android:layout_width="130sp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="1.400.000"
+                    android:text="0"
                     android:gravity="center_vertical"
                     android:textStyle="bold"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:id="@+id/tvTotalPrice" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"

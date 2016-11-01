@@ -2,7 +2,6 @@ package com.hth.datmon;
 
 import java.util.ArrayList;
 
-import com.hth.data.OrderItem;
 import com.hth.service.MenuOrder;
 import com.squareup.picasso.Picasso;
 
@@ -15,14 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class OrderItemGridViewAdapter extends ArrayAdapter<OrderItem> {
+public class MenuOrderGridViewAdapter extends ArrayAdapter<MenuOrder> {
     private ArrayList<MenuOrder> originalData;
     private ArrayList<MenuOrder> data;
     private static LayoutInflater inflater = null;
     public Resources res;
     private Activity context;
 
-    public OrderItemGridViewAdapter(Activity a, ArrayList<MenuOrder> d, Resources resLocal) {
+    public MenuOrderGridViewAdapter(Activity a, ArrayList<MenuOrder> d, Resources resLocal) {
         super(a, R.layout.order_item_gridview);
         context = a;
         this.data = new ArrayList<MenuOrder>();

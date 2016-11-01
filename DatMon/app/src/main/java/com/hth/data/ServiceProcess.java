@@ -5,6 +5,7 @@ import android.os.StrictMode;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hth.service.Areas;
+import com.hth.service.Customer;
 import com.hth.service.Desk;
 import com.hth.service.MenuOrder;
 
@@ -64,6 +65,80 @@ public class ServiceProcess {
                 return true;
             }
         }
+    }
+
+    static public Customer saveCustomer(Customer customer) {
+        if(true) return new Customer();
+        String link = serverLink + "/api/Manage/AddCustomer";
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httpget.addHeader("Authorization",loginInfo.getToken());
+            httpget.addHeader("Accept","application/json");
+            HttpResponse response = httpclient.execute(httpget);
+
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<ArrayList<Customer>>() {
+            }.getType();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static public ArrayList<Customer> getCustomers() {
+        String link = serverLink + "/api/Manage/GetListCustomer";
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httpget.addHeader("Authorization",loginInfo.getToken());
+            httpget.addHeader("Accept","application/json");
+            HttpResponse response = httpclient.execute(httpget);
+
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<ArrayList<Customer>>() {
+            }.getType();
+            return gSon.fromJson(json, collectionType);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Customer>();
     }
 
     static public ArrayList<Areas> getAreas() {

@@ -39,7 +39,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +69,8 @@
                 android:textAllCaps="false"
                 android:background="@color/backgroundColorBlue"
                 android:textColor="@color/textColorWhite"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:visibility="gone" />
             <SearchView
                 android:id="@+id/searchCustomer"
                 android:layout_width="0dp"
@@ -91,20 +92,47 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textColor="@color/textColorBlue"
-            android:text="KHÁCH HÀNG MỚI"
-            android:padding="10dp"
-            android:visibility="gone" />
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="45dip"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/btResetCustomer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="30sp"
+                android:textSize="14sp"
+                android:text="Thêm mới"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:background="@color/backgroundColorBlue"
+                android:textColor="@color/textColorWhite"
+                android:layout_margin="5dp"
+                android:padding="5dp" />
+
+            <Button
+                android:id="@+id/btGetFromCustomersList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="30sp"
+                android:textSize="14sp"
+                android:text="Lấy từ danh sách khách hàng"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:background="@color/backgroundColorBlue"
+                android:textColor="@color/textColorWhite"
+                android:layout_margin="5dp"
+                android:padding="5dp"/>
+        </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:id="@+id/scrollView">
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,11 +196,84 @@
                     android:id="@+id/etEmail"
                     android:layout_gravity="center_horizontal"
                     android:inputType="textEmailAddress" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nghề nghiệp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="@dimen/activity_text_size"  />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/etJob"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày Sinh"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="@dimen/activity_text_size"  />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/etBirthday"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Facebook"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="@dimen/activity_text_size"  />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/etFacebook"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zalo"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="@dimen/activity_text_size"  />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/etZalo"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CarNumber"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="@dimen/activity_text_size"  />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/etCarNumber"
+                android:layout_gravity="center_horizontal" />
             </LinearLayout>
     </ScrollView>
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="55dip"
+            android:layout_height="45dip"
             android:orientation="horizontal"
             android:gravity="center">
 

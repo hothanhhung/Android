@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eae9e9"
+        android:gravity="center"
+        android:text="Đang tải..."
+        android:textColor="#2b1818"
+        android:textStyle="bold"
+        android:textSize="16dp" />
+
+</RelativeLayout>

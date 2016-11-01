@@ -25,7 +25,9 @@ public class Desk {
     public String getName() {
         return Name;
     }
-
+    public String getFullName() {
+        return (Areas==null?"":Areas.getName()+">") + Name;
+    }
     public boolean isActive() {
         return IsActive;
     }

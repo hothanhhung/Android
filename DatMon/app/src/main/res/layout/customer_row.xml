@@ -36,14 +36,12 @@
             android:paddingLeft="5dp" />
     </LinearLayout>
 
-    <ImageButton
+    <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:id="@+id/btAddCustomer"
         android:src="@drawable/add_customer"
         android:background="@android:color/transparent"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:scaleType="fitXY"
-        android:onClick="btInOrderViewClick"/>
+        android:layout_margin="5dp"/>
 </LinearLayout>

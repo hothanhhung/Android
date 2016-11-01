@@ -2,18 +2,14 @@ package com.hth.datmon;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.hth.data.Customer;
-import com.hth.data.OrderedItem;
+import com.hth.service.Customer;
 
 import java.util.ArrayList;
 
@@ -72,7 +68,7 @@ public class OrderedCustomerRowAdapter extends ArrayAdapter<Customer> {
         btDelete.setTag(customer);
 
         // Setting all values in listview
-        tvFullname.setText(customer.getName());
+        tvFullname.setText(customer.getFirstName());
         tvPhoneNumber.setText(customer.getPhoneNumber());
         tvAddress.setText(customer.getAddress());
 

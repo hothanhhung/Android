@@ -1,6 +1,11 @@
 package com.hth.datmon;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     savedValues.setRecordPassword("");
                     savedValues.setRecordRemember(false);
                 }
+                showProgressDialog();
                 Intent intent = new Intent(this, OrderActivity.class);
                 startActivity(intent);
                 finish();
@@ -94,6 +100,26 @@ public class MainActivity extends AppCompatActivity {
             else{
                 tvMessage.setText(message);
             }
+        }
+    }
+
+    public void showProgressDialog()
+    {
+        Dialog loadingDialog = null;
+        if ((loadingDialog == null) || (!loadingDialog.isShowing())) {
+            loadingDialog= new Dialog(MainActivity.this);
+            loadingDialog.getWindow().getCurrentFocus();
+            Drawable d = new ColorDrawable(Color.WHITE);
+            d.setAlpha(100);
+            loadingDialog.getWindow().setBackgroundDrawable(d);
+            loadingDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+            loadingDialog.setContentView(R.layout.loading_dialog);
+            loadingDialog.setCancelable(false);
+            loadingDialog.setOwnerActivity(MainActivity.this);
+
+            loadingDialog.show();
+        } else {
+            loadingDialog.setOwnerActivity(MainActivity.this);
         }
     }
 }

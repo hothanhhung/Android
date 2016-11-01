@@ -9,8 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.hth.data.Customer;
-import com.hth.data.OrderItem;
+import com.hth.service.Customer;
 
 import java.util.ArrayList;
 
@@ -56,7 +55,7 @@ public class CustomerRowAdapter extends ArrayAdapter<Customer> {
         tvFullname = (TextView) convertView.findViewById(R.id.tvFullname);
         tvPhoneNumber = (TextView) convertView.findViewById(R.id.tvPhoneNumber);
         tvAddress = (TextView) convertView.findViewById(R.id.tvAddress);
-        btAddCustomer = (ImageButton) convertView.findViewById(R.id.btAddCustomer);
+        //btAddCustomer = (ImageButton) convertView.findViewById(R.id.btAddCustomer);
 
        /* btAddCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +67,10 @@ public class CustomerRowAdapter extends ArrayAdapter<Customer> {
         });*/
 
         Customer customer = data.get(position);
-        btAddCustomer.setTag(customer);
+        convertView.setTag(customer);
 
         // Setting all values in listview
-        tvFullname.setText(customer.getName());
+        tvFullname.setText(customer.getFirstName());
         tvPhoneNumber.setText(customer.getPhoneNumber());
         tvAddress.setText(customer.getAddress());
 
