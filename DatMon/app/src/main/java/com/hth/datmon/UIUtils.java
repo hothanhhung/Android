@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -147,5 +148,21 @@ public class UIUtils {
 		d.show();
 
 
+	}
+
+	static public void alert(Activity activity, String message, boolean isError)
+	{
+		String msg = message;
+		if(isError)
+		{
+			msg = "<font color='#FF7F27'>"+message+"</font>";
+		}/*else{
+			msg = "<font color='#EC407A'>"+message+"</font>";
+		}*/
+		new AlertDialog.Builder(activity)
+				.setTitle(isError ? "Lỗi" : "Thông báo")
+				.setMessage(Html.fromHtml(msg))
+						.setIcon(android.R.drawable.ic_dialog_alert)
+						.setNegativeButton("Bỏ qua", null).show();
 	}
 }

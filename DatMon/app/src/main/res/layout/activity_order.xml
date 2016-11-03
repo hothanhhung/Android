@@ -31,7 +31,8 @@
             android:gravity="center"
             android:layout_marginLeft="5sp"
             android:layout_marginRight="5sp"
-            android:text=""/>
+            android:text=""
+            android:textStyle="bold" />
         <ImageButton
             android:id="@+id/btFavorites"
             android:background="@android:drawable/list_selector_background"
@@ -49,18 +50,35 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <SearchView
-                android:id="@+id/search"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:queryHint="Nhập mã/Tên món cần tìm"
-                android:hint="Nhập mã/Tên món cần tìm"
-                android:iconifiedByDefault="true" />
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="10dp">
+
+                <Spinner
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/spMenuOrderType" />
+
+                <SearchView
+                    android:id="@+id/search"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:queryHint="Nhập mã/Tên món cần tìm"
+                    android:hint="Nhập mã/Tên món cần tìm"
+                    android:iconifiedByDefault="true" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="1">
                 <GridView
                     android:id="@+id/grvOrderItems"
                     android:layout_width="match_parent"
@@ -106,10 +124,10 @@
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_gravity="end"
             android:background="@drawable/custom_rectangle"
             android:choiceMode="singleChoice"
             android:divider="@android:color/darker_gray"
+            android:layout_gravity="end"
             android:dividerHeight="0dp"
             android:drawSelectorOnTop="false"
             android:paddingLeft="5px">
@@ -136,12 +154,12 @@
                     android:paddingRight="5dp"
                     android:onClick="btInOrderViewClick"/>
                 <Button
-                    android:id="@+id/btClear"
+                    android:id="@+id/btChangeTable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="40sp"
                     android:textSize="14sp"
-                    android:text="Xóa"
+                    android:text="Chuyển Bàn"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textAllCaps="false"
@@ -160,42 +178,42 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="@dimen/activity_text_size"
+                    android:textSize="14dp"
                     android:text="Tên món"
                     android:gravity="center_vertical"
                     android:textStyle="bold"
                     android:textColor="#000" />
                 <TextView
-                    android:layout_width="50sp"
+                    android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/activity_text_size"
+                    android:textSize="14dp"
                     android:text="Số lượng"
                     android:textStyle="bold"
                     android:textColor="#000"
                     android:gravity="center" />
 
                 <TextView
-                    android:layout_width="100sp"
+                    android:layout_width="80sp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/activity_text_size"
+                    android:textSize="14dp"
                     android:text="Thành tiền"
                     android:textStyle="bold"
                     android:textColor="#000"
                     android:gravity="center" />
             </LinearLayout>
-            <ListView
+            <ExpandableListView
                 android:id="@+id/lvOrderedItems"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:minHeight="150dp"
                 android:background="@color/textColorWhite"
-                android:clickable="true"
+                android:paddingBottom="30dp"
                 android:clipToPadding="false">
-            </ListView>
+            </ExpandableListView>
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="40sp"
+                android:layout_height="30sp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -245,8 +263,11 @@
                     android:gravity="center"
                     android:layout_margin="5dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
+                    android:paddingRight="5dp"
+                    android:id="@+id/btSendToCooker"
+                    android:onClick="btInOrderViewClick"/>
                 <Button
+                    android:id="@+id/btClear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="50sp"
@@ -257,9 +278,11 @@
                     android:textAllCaps="false"
                     android:background="#fff"
                     android:textColor="#d50d0d"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:onClick="btInOrderViewClick"  />
 
                 <Button
+                    android:id="@+id/btRequestPayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="50sp"
@@ -270,7 +293,8 @@
                     android:textColor="#fff"
                     android:background="#f5a878"
                     android:gravity="center"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:onClick="btInOrderViewClick" />
             </LinearLayout>
         </LinearLayout>
 

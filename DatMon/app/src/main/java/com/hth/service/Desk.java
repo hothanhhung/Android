@@ -13,6 +13,7 @@ public class Desk {
     public String UserId;
     public String CreatedDate;
     public String UpdatedDate;
+    public boolean IsUsing;
 
     public String getAreaId() {
         return AreaId;
@@ -34,5 +35,9 @@ public class Desk {
 
     public String getID() {
         return ID;
+    }
+
+    public boolean IsUsing() {
+        return IsUsing;
     }
 }

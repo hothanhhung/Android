@@ -1,8 +1,10 @@
 package com.hth.datmon;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -18,6 +21,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +38,14 @@ import java.util.ArrayList;
 public class OrderActivity extends AppCompatActivity implements ICallBack {
 
     private GridView grvOrderItems;
-    private ListView lvOrderedItems;
+    private ExpandableListView lvOrderedItems;
     private MenuOrderGridViewAdapter adapterGrvOrderItems;
-    private OrderDetailRowAdapter orderDetailRowAdapter;
+    private OrderDetailExpandableListAdapter orderDetailRowAdapter;
     private DrawerLayout mDrawerLayout;
     private LinearLayout mLeftDrawerList;
     private LinearLayout mRightDrawerList;
     private TextView tvSelectedDesk, tvTotalPrice;
+    private Spinner spMenuOrderType;
     SearchView search;
 
     Order orderData;
@@ -50,15 +55,16 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         grvOrderItems = (GridView) findViewById(R.id.grvOrderItems);
-        lvOrderedItems = (ListView) findViewById(R.id.lvOrderedItems);
+        lvOrderedItems = (ExpandableListView) findViewById(R.id.lvOrderedItems);
         tvSelectedDesk = (TextView) findViewById(R.id.tvSelectedDesk);
         tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
+        spMenuOrderType = (Spinner) findViewById(R.id.spMenuOrderType);
         search = (SearchView) findViewById(R.id.search);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (adapterGrvOrderItems != null) {
-                    adapterGrvOrderItems.filterData(query);
+                    adapterGrvOrderItems.filterData(query, spMenuOrderType.getSelectedItemPosition());
                 }
                 return false;
             }
@@ -66,26 +72,46 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (adapterGrvOrderItems != null) {
-                    adapterGrvOrderItems.filterData(newText);
+                    adapterGrvOrderItems.filterData(newText, spMenuOrderType.getSelectedItemPosition());
                 }
                 return false;
             }
         });
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+                new String[]{"Tất cả", "Món ăn", "Đồ uống", "Khác"});
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spMenuOrderType.setAdapter(adapter);
+        spMenuOrderType.setSelection(0);
+        spMenuOrderType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (adapterGrvOrderItems != null) {
+                    adapterGrvOrderItems.filterData(search.getQuery()==null?"":search.getQuery().toString(), spMenuOrderType.getSelectedItemPosition());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftDrawerList = (LinearLayout) findViewById(R.id.leftNavdrawer);
         mRightDrawerList = (LinearLayout) findViewById(R.id.rightNavdrawer);
 
         loadOrderItems();
         displayList();
-        loadOrderedItems(new Order());
+        //loadOrderedItems(new Order());
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerLayout.openDrawer(mLeftDrawerList);
     }
 
     private void loadOrderItems()
     {
-        ArrayList<MenuOrder> orderItems = ServiceProcess.getMenuOrder();
+        final ArrayList<MenuOrder> orderItems = ServiceProcess.getMenuOrder();
         if(orderItems != null) {
             adapterGrvOrderItems = new MenuOrderGridViewAdapter(
                     OrderActivity.this,
@@ -96,14 +122,17 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                    MenuOrder menuOrder = (MenuOrder) view.getTag();
-                    if(menuOrder.isOutOfStock())
-                    {
-                        Toast.makeText(OrderActivity.this, "Hết hàng" , Toast.LENGTH_LONG).show();
-                    }else{
-                        OrderDetail orderedItem = new OrderDetail(menuOrder, 1);
-                        orderDetailRowAdapter.addData(orderedItem);
-                        mDrawerLayout.openDrawer(mRightDrawerList);
+                    if(orderData.isRequestingPayment()){
+                        UIUtils.alert(OrderActivity.this, "Bàn đang được tính tiền", false);
+                    }else {
+                        MenuOrder menuOrder = (MenuOrder) view.getTag();
+                        if (menuOrder.isOutOfStock()) {
+                            Toast.makeText(OrderActivity.this, "Hết hàng", Toast.LENGTH_LONG).show();
+                        } else {
+                            OrderDetail orderedItem = new OrderDetail(menuOrder, 1);
+                            orderDetailRowAdapter.addData(orderedItem);
+                            mDrawerLayout.openDrawer(mRightDrawerList);
+                        }
                     }
                 }
             });
@@ -112,37 +141,47 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         }
     }
 
-    private void loadOrderedItems(Order order) {
-        this.orderData = order;
-        orderDetailRowAdapter = new OrderDetailRowAdapter(
+    private void loadOrderedItems() {
+        //this.orderData = order;
+        orderDetailRowAdapter = new OrderDetailExpandableListAdapter(
                 OrderActivity.this,
-                orderData.getOrderDetails(), getResources(), this);
+                orderData.getOrderDetails(), this);
         lvOrderedItems.setAdapter(orderDetailRowAdapter);
         updateCustomerButtonText();
         updateOrderedView();
+        updateUIBasedOnStatusOfOrder();
     }
     //method to expand all groups
+    ChannelsExpandableListAdapter lvTablesAdapter;
     private void displayList() {
-        ArrayList<Areas> areas = ServiceProcess.getAreas();
+        ArrayList<Areas> areas = ServiceProcess.getAreasFromCache(false);
         ExpandableListView lvTables = (ExpandableListView) findViewById(R.id.lvTables);
         //create the adapter by passing your ArrayList data
-        ChannelsExpandableListAdapter lvChannelsAdapter = new ChannelsExpandableListAdapter(OrderActivity.this, areas);
+        lvTablesAdapter = new ChannelsExpandableListAdapter(OrderActivity.this, areas);
         //attach the adapter to the list
-        lvTables.setAdapter(lvChannelsAdapter);
+        lvTables.setAdapter(lvTablesAdapter);
         lvTables.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                orderData.setDesk((Desk) v.getTag());
-                if (orderData.getDesk() != null) {
+                Desk desk = (Desk) v.getTag();
+                Order order = ServiceProcess.getOrderByDeskId(desk.getID());
+                if (order == null) {
+                    UIUtils.alert(OrderActivity.this, "Lỗi khi kết nối", true);
+                } else {
+                    orderData = order;
+                    orderData.setDesk((Desk) v.getTag());
                     tvSelectedDesk.setText(orderData.getDesk().getFullName());
-                    if (mDrawerLayout.isDrawerOpen(mLeftDrawerList)) {
-                        mDrawerLayout.closeDrawer(mLeftDrawerList);
+                    if (orderData.getDesk().IsUsing()) {
+                        tvSelectedDesk.setTextColor(Color.RED);
                     } else {
-                        mDrawerLayout.openDrawer(mLeftDrawerList);
+                        tvSelectedDesk.setTextColor(Color.GREEN);
                     }
+                    mDrawerLayout.closeDrawer(mLeftDrawerList);
+                    mDrawerLayout.openDrawer(mRightDrawerList);
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    loadOrderedItems();
                 }
                 return false;
             }
@@ -182,12 +221,49 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     }
 
     public void btInOrderViewClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
+            case R.id.btSendToCooker:
+                Order order = ServiceProcess.saveOrder(orderData);
+                if (order == null) {
+                    UIUtils.alert(OrderActivity.this, "Có lỗi khi gửi thông tin", true);
+                } else {
+                    UIUtils.alert(OrderActivity.this, "Thông tin gửi thành công", false);
+                   // if(orderData.isNew())
+                    {
+                        updateTableList();
+                    }
+                    orderData = order;
+                    if (orderData.getDesk().IsUsing()) {
+                        tvSelectedDesk.setTextColor(Color.RED);
+                    } else {
+                        tvSelectedDesk.setTextColor(Color.GREEN);
+                    }
+                    orderDetailRowAdapter.updateData(orderData.getOrderDetails());
+                }
+                break;
             case R.id.btCustomer:
-                showPopup(OrderActivity.this);
+                showPopupCustomer(OrderActivity.this);
+                break;
+            case R.id.btChangeTable:
+                showPopupChangeDesk(OrderActivity.this);
+                break;
+            case R.id.btRequestPayment:
+                if(ServiceProcess.requestPayment(orderData.getID()))
+                {
+                    orderData.setIsRequestingPayment(true);
+                    updateUIBasedOnStatusOfOrder();
+                    UIUtils.alert(OrderActivity.this, "Yêu cầu tính tiền đã được gửi", false);
+                }else{
+                    UIUtils.alert(OrderActivity.this, "Lỗi khi yêu cầu tính tiền", true);
+                }
                 break;
             case R.id.btClear:
-                loadOrderedItems(new Order());
+                if(orderData!=null && orderData.isNew()) {
+                    orderData.clearOrderDetail();
+                    loadOrderedItems();
+                }else{
+                    UIUtils.alert(OrderActivity.this, "Không thể hủy bỏ đơn đặt hàng đã gửi", true);
+                }
                 break;
             case R.id.btSaveCustomer:
                 break;
@@ -195,8 +271,28 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 break;
         }
     }
+
+    void updateTableList()
+    {
+        lvTablesAdapter.updateData(ServiceProcess.getAreasFromCache(true));
+    }
+
+    void updateUIBasedOnStatusOfOrder()
+    {
+        if(orderData.isRequestingPayment())
+        {
+            mRightDrawerList.setEnabled(false);
+            mRightDrawerList.setClickable(false);
+        }else{
+            mRightDrawerList.setEnabled(true);
+            mRightDrawerList.setClickable(true);
+        }
+    }
+
     OrderedCustomerRowAdapter orderedCustomerRowAdapter;
-    private void showPopup(final Activity context) {
+    Customer selectedCustomer;
+    private void showPopupCustomer(final Activity context) {
+        selectedCustomer = orderData.getCustomer();
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.customer_view);
         dialog.setTitle("KHÁCH HÀNG CỦA ĐƠN HÀNG");
@@ -229,8 +325,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         lvCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Customer selectedCustomer = (Customer) view.getTag();
-                orderData.setCustomer(selectedCustomer);
+                selectedCustomer = (Customer) view.getTag();
                 etUsername.setText(selectedCustomer.getFirstName());
                 etAddress.setText(selectedCustomer.getAddress());
                 etPhoneNumber.setText(selectedCustomer.getPhoneNumber());
@@ -269,6 +364,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 etFacebook.setText("");
                 etZalo.setText("");
                 etCarNumber.setText("");
+                selectedCustomer = null;
             }
         });
 
@@ -302,11 +398,11 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
             }
         });
 */
+
         // if button is clicked, close the custom dialog
         btSaveCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Customer selectedCustomer = orderData.getCustomer();
                 if(selectedCustomer == null)
                 {
                     selectedCustomer = new Customer();
@@ -325,7 +421,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     orderData.setCustomer(customer);
                     dialog.dismiss();
                 }else{
-                    Toast.makeText(OrderActivity.this, "Không thể lưu dữ liệu", Toast.LENGTH_LONG).show();
+                    UIUtils.alert(context, "Không thể lưu dữ liệu", true);
                 }
             }
         });
@@ -368,6 +464,93 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         });
 
 
+        if(selectedCustomer!=null) {
+            etUsername.setText(selectedCustomer.getFirstName());
+            etAddress.setText(selectedCustomer.getAddress());
+            etPhoneNumber.setText(selectedCustomer.getPhoneNumber());
+            etEmail.setText(selectedCustomer.getEmail());
+            etJob.setText(selectedCustomer.getJob());
+            etBirthday.setText(selectedCustomer.getBithDay());
+            etFacebook.setText(selectedCustomer.getFacebook());
+            etZalo.setText(selectedCustomer.getZalo());
+            etCarNumber.setText(selectedCustomer.getCarNumber());
+            llCustomers.setVisibility(View.GONE);
+            llAddCustomer.setVisibility(View.VISIBLE);
+        }
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener(){
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                updateCustomerButtonText();
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        dialog.show();
+    }
+
+    private void showPopupChangeDesk(final Activity context) {
+        selectedCustomer = orderData.getCustomer();
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.change_desk_layout);
+        dialog.setTitle("Chọn bàn chuyển đến");
+
+        Button btCancel = (Button) dialog.findViewById(R.id.btCancel);
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        ArrayList<Areas> areas = ServiceProcess.getAreasFromCache(false);
+        ExpandableListView lvTables = (ExpandableListView) dialog.findViewById(R.id.lvTables);
+        //create the adapter by passing your ArrayList data
+        ChannelsExpandableListAdapter lvChannelsAdapter = new ChannelsExpandableListAdapter(OrderActivity.this, areas);
+        //attach the adapter to the list
+        lvTables.setAdapter(lvChannelsAdapter);
+        lvTables.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                final Desk desk = (Desk) v.getTag();
+                if (desk.IsUsing()) {
+                    UIUtils.alert(context, "Bàn này đang được sử dụng", false);
+                } else {
+                    new AlertDialog.Builder(OrderActivity.this)
+                            .setTitle("Xác nhận chuyển bàn")
+                            .setMessage("Bạn thật sự muốn chuyển đến "+desk.getFullName() +" ?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Chấp nhận", new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dlg, int whichButton) {
+                                    orderData.setDesk(desk);
+                                    Order order = ServiceProcess.changeDesk(orderData);
+                                    if(order == null){
+                                        UIUtils.alert(context, "Lỗi khi đổi bàn", true);
+                                    }else{
+                                        orderData = order;
+                                        tvSelectedDesk.setText(orderData.getDesk().getFullName());
+                                        if(orderData.getDesk().IsUsing()){
+                                            tvSelectedDesk.setTextColor(Color.RED);
+                                        }else{
+                                            tvSelectedDesk.setTextColor(Color.GREEN);
+                                        }
+                                        orderDetailRowAdapter.updateData(orderData.getOrderDetails());
+                                        updateTableList();
+                                    }
+                                    dialog.dismiss();
+                                }})
+                            .setNegativeButton("Bỏ qua", null).show();
+                }
+                return false;
+            }
+        });
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener(){
             @Override
             public void onDismiss(DialogInterface dialog) {

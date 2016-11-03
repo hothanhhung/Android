@@ -5,10 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hth.data.ChannelGroup;
-import com.hth.data.ChannelItem;
 import com.hth.service.Areas;
 import com.hth.service.Desk;
 
@@ -20,14 +19,11 @@ import java.util.ArrayList;
 public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<Areas> channelGroups;
-    private ArrayList<Areas> originalChannelGroups;
 
     public ChannelsExpandableListAdapter(Context context, ArrayList<Areas> channelGroups) {
         this.context = context;
         this.channelGroups = new ArrayList<Areas>();
         this.channelGroups.addAll(channelGroups);
-        this.originalChannelGroups = new ArrayList<Areas>();
-        this.originalChannelGroups.addAll(channelGroups);
     }
 
     @Override
@@ -52,6 +48,12 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
         }
         view.setTag(desk);
         TextView name = (TextView) view.findViewById(R.id.name);
+        ImageView ivTable = (ImageView) view.findViewById(R.id.ivTable);
+        if(desk.IsUsing()){
+            ivTable.setImageResource(R.drawable.table_icon_red);
+        }else{
+            ivTable.setImageResource(R.drawable.table_icon_green);
+        }
         name.setText(desk.getName().trim());
         if(childPosition % 2 == 0) {
             view.setBackgroundColor(context.getResources().getColor(R.color.item_odd_color));
@@ -114,5 +116,9 @@ public class ChannelsExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-
+    public void updateData(ArrayList<Areas> channelGroups)
+    {
+        this.channelGroups = channelGroups;
+        notifyDataSetChanged();
+    }
 }

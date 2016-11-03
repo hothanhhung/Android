@@ -37,6 +37,20 @@ public class OrderDetail {
         Quantity = quantity;
     }
 
+    public OrderDetail clone()
+    {
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.MenuOrderID = this.MenuOrderID;
+        orderDetail.UnitPrice = this.UnitPrice;
+        orderDetail.MenuOrder = this.MenuOrder;
+        orderDetail.Quantity = this.Quantity;
+        return orderDetail;
+    }
+
+    public String getMenuOrderID() {
+        return MenuOrderID;
+    }
+
     public String getName() {
         return MenuOrder.getName();
     }
@@ -57,5 +71,7 @@ public class OrderDetail {
         return Quantity * getPrice();
     }
 
-
+    public int getStatus() {
+        return Status;
+    }
 }

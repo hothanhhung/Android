@@ -78,18 +78,18 @@ public class MenuOrderGridViewAdapter extends ArrayAdapter<MenuOrder> {
         return convertView;
     }
 
-    public void filterData(String query) {
+    public void filterData(String query, int type) {
 
         query = query.toLowerCase();
         data.clear();
-        if (query.isEmpty()) {
+        if (query.isEmpty() && type == 0) {
             data.addAll(originalData);
         } else {
 
             String noToneQuery = MethodsHelper.stripAccentsAndD(query);
             for (MenuOrder orderItem : originalData) {
 
-               if (orderItem.getEnglishDetail().contains(noToneQuery)) {
+               if ((query.isEmpty() || orderItem.getEnglishDetail().contains(noToneQuery)) && (type == 0 || orderItem.getType() == type)) {
                    data.add(orderItem);
                 }
             }

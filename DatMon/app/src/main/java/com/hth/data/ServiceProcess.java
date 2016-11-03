@@ -1,6 +1,7 @@
 package com.hth.data;
 
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -8,6 +9,7 @@ import com.hth.service.Areas;
 import com.hth.service.Customer;
 import com.hth.service.Desk;
 import com.hth.service.MenuOrder;
+import com.hth.service.Order;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,6 +18,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -67,9 +70,8 @@ public class ServiceProcess {
         }
     }
 
-    static public Customer saveCustomer(Customer customer) {
-        if(true) return new Customer();
-        String link = serverLink + "/api/Manage/AddCustomer";
+    static public boolean requestPayment(String orderId) {
+        String link = serverLink + "/api/Manage/RequestPayment?id="+orderId;
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -80,10 +82,50 @@ public class ServiceProcess {
                 StrictMode.setThreadPolicy(policy);
             }
             //execute http post
-            httpget.addHeader("Authorization",loginInfo.getToken());
-            httpget.addHeader("Accept","application/json");
+            httpget.addHeader("Authorization", loginInfo.getToken());
+            httpget.addHeader("Accept", "application/json");
             HttpResponse response = httpclient.execute(httpget);
+            if(response.getStatusLine().getStatusCode()!=200)
+            {
+                return false;
+            }
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            return Boolean.parseBoolean(json);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    static public Order getOrderByDeskId(String deskId) {
+        String link = serverLink + "/api/Manage/GetOrderByDesk?deskId="+deskId;
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httpget.addHeader("Authorization", loginInfo.getToken());
+            httpget.addHeader("Accept", "application/json");
+            HttpResponse response = httpclient.execute(httpget);
+            if(response.getStatusLine().getStatusCode()!=200)
+            {
+                return null;
+            }
             HttpEntity httpEntity = response.getEntity();
             StringBuilder jsonStringBuilder = new StringBuilder();
             InputStream in = httpEntity.getContent();
@@ -95,9 +137,149 @@ public class ServiceProcess {
             reader.close();
             String json = jsonStringBuilder.toString();
             Gson gSon = new Gson();
-            Type collectionType = new TypeToken<ArrayList<Customer>>() {
+            Type collectionType = new TypeToken<Order>() {
             }.getType();
+            Order order = gSon.fromJson(json, collectionType);
+            if(order == null)
+            {
+                order = new Order();
+            }
+            return order;
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static public Order changeDesk(Order order) {
+        String link = serverLink + "/api/Manage/changeDesk";
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httppost.addHeader("Authorization",loginInfo.getToken());
+            httppost.addHeader("Accept","application/json");
+            Gson gson = new Gson();
+            String jsonOut = gson.toJson(order);
+            httppost.setEntity(new StringEntity(jsonOut, "UTF-8"));
+            httppost.setHeader("Content-Type", "application/json");
+            HttpResponse response = httpclient.execute(httppost);
+            if(response.getStatusLine().getStatusCode()!=200)
+            {
+                return null;
+            }
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<Order>() {
+            }.getType();
+            return gSon.fromJson(json, collectionType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static public Order saveOrder(Order order) {
+        String link = serverLink + "/api/Manage/EditOrder";
+        if(order.isNew()){
+            link = serverLink + "/api/Manage/AddOrder";
+        }
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httppost.addHeader("Authorization",loginInfo.getToken());
+            httppost.addHeader("Accept","application/json");
+            Gson gson = new Gson();
+            String jsonOut = gson.toJson(order);
+            httppost.setEntity(new StringEntity(jsonOut, "UTF-8"));
+            httppost.setHeader("Content-Type", "application/json");
+            HttpResponse response = httpclient.execute(httppost);
+            if(response.getStatusLine().getStatusCode()!=200)
+            {
+                return null;
+            }
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<Order>() {
+            }.getType();
+            return gSon.fromJson(json, collectionType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static public Customer saveCustomer(Customer customer) {
+        String link = serverLink + "/api/Manage/AddCustomer";
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httppost.addHeader("Authorization",loginInfo.getToken());
+            httppost.addHeader("Accept","application/json");
+            Gson gson = new Gson();
+            String jsonOut = gson.toJson(customer);
+            httppost.setEntity(new StringEntity(jsonOut, "UTF-8"));
+            httppost.setHeader("Content-Type", "application/json");
+            HttpResponse response = httpclient.execute(httppost);
+
+            if(response.getStatusLine().getStatusCode()!=200)
+            {
+                return null;
+            }
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Log.d("saveCustomer",json);
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<Customer>() {
+            }.getType();
+            return gSon.fromJson(json, collectionType);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,6 +302,10 @@ public class ServiceProcess {
             httpget.addHeader("Accept","application/json");
             HttpResponse response = httpclient.execute(httpget);
 
+            if(response.getStatusLine().getStatusCode()!=200)
+            {
+                return null;
+            }
             HttpEntity httpEntity = response.getEntity();
             StringBuilder jsonStringBuilder = new StringBuilder();
             InputStream in = httpEntity.getContent();
@@ -141,7 +327,31 @@ public class ServiceProcess {
         return new ArrayList<Customer>();
     }
 
-    static public ArrayList<Areas> getAreas() {
+    static ArrayList<Areas> areasFromCache = null;
+    static public ArrayList<Areas> getAreasFromCache(boolean update)
+    {
+        if(areasFromCache == null || update)
+        {
+            areasFromCache = getAreas();
+        }
+        return areasFromCache;
+    }
+
+    static public void updateDeskInAreasFromCache(Desk newDesk)
+    {
+        for (Areas area:areasFromCache) {
+            ArrayList<Desk> desks = area.getDesks();
+            for (int i =0; i< desks.size(); i++){
+                if(desks.get(i).getID().equalsIgnoreCase(newDesk.getID())){
+                    desks.remove(i);
+                    desks.add(i, newDesk);
+                    return;
+                }
+            }
+        }
+    }
+
+    static private ArrayList<Areas> getAreas() {
         ArrayList<Areas> areas = new ArrayList<Areas>();
         ArrayList<Desk> Desks = getDesks();
         if(Desks != null && Desks.size() != 0){

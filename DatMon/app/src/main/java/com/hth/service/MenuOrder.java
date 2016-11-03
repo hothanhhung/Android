@@ -26,6 +26,7 @@ public class MenuOrder
         public String UserId;
         public String CreatedDate;
         public String UpdatedDate;
+        public int Type; //1: đồ uống, 2 đồ ăn, 3 khác
 
         public float getCost() {
             return Cost;
@@ -68,5 +69,9 @@ public class MenuOrder
 
         public boolean isOutOfStock() {
             return false;
+        }
+
+        public int getType() {
+            return Type;
         }
     }
