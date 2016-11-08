@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" android:layout_height="40dp"
     android:orientation="horizontal"
-    android:paddingLeft="25dp"
+    android:paddingLeft="28dp"
     android:gravity="center">
 
     <TextView android:id="@+id/tvDetail"
