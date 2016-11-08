@@ -8,20 +8,26 @@ import java.lang.reflect.Constructor;
 /**
  * Created by Lenovo on 10/28/2016.
  */
+
 public class MenuLookUpItem {
     String name;
     String detail;
     int drawableIcon;
     String viewClassName;
+    MenuLookUpItemKind kind;
 
     public MenuLookUpItem(){}
-
     public MenuLookUpItem(String name, int drawableIcon, String viewClassName, String detail)
+    {
+        this(name, drawableIcon, viewClassName, detail, MenuLookUpItemKind.None);
+    }
+    public MenuLookUpItem(String name, int drawableIcon, String viewClassName, String detail, MenuLookUpItemKind kind)
     {
         this.name = name;
         this.drawableIcon = drawableIcon;
         this.viewClassName = viewClassName;
         this.detail = detail;
+        this.kind = kind;
     }
 
     public int getDrawableIcon() {
@@ -44,8 +50,14 @@ public class MenuLookUpItem {
     {
         try {
             Class<?> clazz = Class.forName(viewClassName);
-            Constructor<?> constructor = clazz.getConstructor(Context.class);
-            return (View)constructor.newInstance(context);
+            if(kind == MenuLookUpItemKind.None)
+            {
+                Constructor<?> constructor = clazz.getConstructor(Context.class);
+                return (View)constructor.newInstance(context);
+            }else{
+                Constructor<?> constructor = clazz.getConstructor(Context.class, MenuLookUpItemKind.class);
+                return (View)constructor.newInstance(context, kind);
+            }
         }catch (Exception ex)
         {
             ex.printStackTrace();
