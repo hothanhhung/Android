@@ -184,7 +184,7 @@ public class ParserData {
     public static String getThoiTiet() {
         String urlpage = "http://laban.vn/p/weather";
         StringBuilder contentResult = new StringBuilder();
-        String joinContent="<style></style>";
+        String joinContent="<style>.table{width:100% !important; font-size: 10px;text-align: center;}</style>";
         try {
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -202,8 +202,10 @@ public class ParserData {
                     result.append(line);
                 }
                 int start = result.indexOf("<table"), end = result.indexOf("/table>");
+                String strResult = result.substring(start, end + 7).replace("\\n", "").replace("\\", "");
+                //Log.d("getThoiTiet", strResult);
                 contentResult.append(joinContent);
-                contentResult.append("<body>").append(result.subSequence(start, end + 7).toString().replaceAll("\n", "").replaceAll("\\", "").trim()).append("</body>");
+                contentResult.append("<body>").append(strResult).append("<div style=\"font-size:9px\">Nguồn: laban.vn</div>").append("</body>");
             } finally {
                 urlConnection.disconnect();
             }
