@@ -6,5 +6,5 @@ package com.hth.data;
 
 public enum MenuLookUpItemKind {
     None, TyGiaNgoaiTe, BangGiaVang, GiaXang, LaiSuatNganHang, DuBaoThoiTiet,
-    MaBienSo, DauSoDiDong
+    MaBienSo, DauSoDienThoai, BongDa
 }

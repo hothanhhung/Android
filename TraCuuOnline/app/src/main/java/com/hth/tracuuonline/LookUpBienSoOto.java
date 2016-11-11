@@ -52,7 +52,9 @@ public class LookUpBienSoOto extends LinearLayout {
         });
 
         WebSettings webViewSettings = webView.getSettings();
+        webViewSettings.setSupportZoom(true);
         webViewSettings.setBuiltInZoomControls(true);
+        webViewSettings.setDisplayZoomControls(false);
         webViewSettings.setJavaScriptEnabled(true);
         webViewSettings.setLoadWithOverviewMode(true);
         webViewSettings.setUseWideViewPort(false);

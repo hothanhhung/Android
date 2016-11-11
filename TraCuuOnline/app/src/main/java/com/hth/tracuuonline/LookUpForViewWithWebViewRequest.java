@@ -1,7 +1,6 @@
 package com.hth.tracuuonline;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -12,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hth.data.MenuLookUpItemKind;
-import com.hth.utils.ParserData;
 
 /**
  * Created by Lenovo on 10/28/2016.
@@ -78,8 +76,10 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
         {
             case MaBienSo:
                 return "http://hunght.com/htmlpage/lookuponline/mabienso.html";
-            case DauSoDiDong:
-                return "http://hunght.com/htmlpage/lookuponline/dausodidong.html";
+            case DauSoDienThoai:
+                return "http://hunght.com/htmlpage/lookuponline/dausodienthoai.html";
+            case BongDa:
+                return "http://hunght.com/htmlpage/lookuponline/bongda.html";
         }
         return "";
     }

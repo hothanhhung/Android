@@ -41,11 +41,11 @@ public class ParserData {
         return "Không xác định được dữ liêu";
     }
 	
-	public static WebResourceResponse getCSSDetail(String urlpage) {
+	public static WebResourceResponse getCSSDetail(String urlpage, String joinContent) {
 		StringBuilder contentResult = new StringBuilder();
 
         try {
-           /* if (android.os.Build.VERSION.SDK_INT > 9) {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
@@ -55,12 +55,10 @@ public class ParserData {
                     .get();
 
             contentResult.append(doc.text());
-            String joinContent =  MainActivity.getCurrent_Website_Page().GetReformatCssContent();
             Log.w("getCSSDetail", joinContent);
             contentResult.append(joinContent);
-            
             InputStream data = new ByteArrayInputStream(contentResult.toString().getBytes());
-            return new WebResourceResponse("text/css", "UTF-8", data);*/
+            return new WebResourceResponse("text/css", "UTF-8", data);
             
         } catch (Exception ex) {
             ex.printStackTrace();
