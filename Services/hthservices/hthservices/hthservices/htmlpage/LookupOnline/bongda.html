@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 	<style>
-	.giai {
+	.giai, tr:nth-child(1) {
     background: none repeat scroll 0% 0% #888C95;
     color: #FFF;
 }
@@ -37,7 +37,7 @@
     color: #209EBB;
     font-weight: 700;
     text-align: center;
-   	width: 10%;
+   	width: 15%;
 	min-width: 43px;
 }
 .text_right {
@@ -75,14 +75,18 @@ td{
     margin-right: auto;
 }
 .width90{
-    width: 90% !important;
+    width: 99% !important;
+}
+.col-md-6{
+	padding-right: 3px !important;
+	padding-left: 3px !important;
 }
 </style>
   </head>
   <body>
 	<div ng-app="starter" ng-controller="mainController">
-		<div class="container-fluid" style="margin: 0px 10px 10px 10px">    
-			<div class="row" style="margin:10px">
+		<div class="container-fluid" style="margin: 0px 0px 10px 0px">    
+			<div class="row" style="margin: 10px -10px 10px -10px;">
 			<div class="col-xs-6 col-md-6">
 			  <div class="dropdown width90">
 				  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -148,19 +152,22 @@ td{
 			$scope.selectedGiaiDauBongDa = kind;
 			$scope.updateInformationBongDa();
 		}
+		
 	   $scope.updateInformationBongDa = function(){
 			$scope.BongDa.Content = $sce.trustAsHtml("Đang lấy dữ liệu...");
 		  if($scope.selectedKindsOfViewBongDa.id == 3){
 			updateRankingInformationBongDa();
 			}else{
 			  var url = 'http://laban.vn/ajax/getScore?id='+$scope.selectedGiaiDauBongDa.id;
-			 
+			  
 			  $.ajax({
 				url: url,
+				xhrFields: {cors: false, withCredentials: true },
 				type: 'GET',
-				dataType: 'json',
+				dataType: 'jsonp',
+				jsonpCallback: 'callback',
 				timeout: 10000,
-				error: function(){
+				error: function(xhr, status, error){
 				  $scope.BongDa.Content = $sce.trustAsHtml("Không có dữ liệu");
 				  $scope.$apply();
 				},
@@ -187,8 +194,10 @@ td{
 		  
 		  $.ajax({
 			url: url,
+			xhrFields: {cors: false, withCredentials: true },
 			type: 'GET',
-			dataType: 'json',
+			dataType: 'jsonp',
+			jsonpCallback: 'callback',
 			timeout: 10000,
 			error: function(){
 			  $scope.BongDa.Content = $sce.trustAsHtml("Không có dữ liệu");

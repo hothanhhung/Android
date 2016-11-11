@@ -49,7 +49,11 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
         llWebView = (RelativeLayout) view.findViewById(R.id.llWebView);
 
         WebSettings webViewSettings = webView.getSettings();
+        webViewSettings.setSupportZoom(true);
         webViewSettings.setBuiltInZoomControls(true);
+        webViewSettings.setDisplayZoomControls(false);
+        webViewSettings.setJavaScriptEnabled(true);
+        webViewSettings.setDomStorageEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

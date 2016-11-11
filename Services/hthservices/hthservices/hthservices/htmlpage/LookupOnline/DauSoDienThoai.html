@@ -73,7 +73,7 @@ td{
     margin-right: auto;
 }
 .width90{
-    width: 90% !important;
+    width: 99% !important;
 }
 .text_center{
     text-align: center;
@@ -88,6 +88,7 @@ td{
     font-size: 13px;
     font-weight: 700;
     padding-right: 5px;
+	float: left;
 }
 
 .odd_text{
@@ -95,19 +96,27 @@ td{
     font-size: 13px;
     font-weight: 700;
     padding-right: 5px;
+	float: left;
 }
 
 .searched {
 	background-color: #E05C2B;
 	color: #FFFFFF;
 }
-
+.col-md-6{
+	padding-right: 3px !important;
+	padding-left: 3px !important;
+}
+.centerf{	
+    display: inline-block;
+    align-items: center;
+}
 </style>
   </head>
   <body>
 	<div ng-app="starter" ng-controller="mainController">
-		<div class="container-fluid" style="margin: 0px 10px 10px 10px">    
-			<div class="row" style="margin:10px">
+		<div class="container-fluid" style="margin: 10px 0px 10px 0px">    
+			<div class="row" style="margin: 10px -10px 10px -10px;">
 			<div class="col-xs-6 col-md-6">
 			  <div class="dropdown width90">
 				  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -125,29 +134,31 @@ td{
 			  </div>
 			</div>
 		  </div>
-		  <div class="row">
+		  <div class="row" style="margin: 10px -10px 10px -10px;">
 			<div ng-if="selectedKindsOfView.id == 1">
-				<div class="row date text_center rowRp">
-					<div class="col-xs-3 col-md-3">Tên Nhà Mạng</div>
-					<div class="col-xs-9 col-md-9">
+				<div class="row date text_center rowRp" style="margin: 0px">
+					<div class="col-xs-4 col-md-3">Tên Nhà Mạng</div>
+					<div class="col-xs-8 col-md-9">
 						Đầu Số
 					</div>
 				</div>
-				<div class="row text_center rowRp" ng-repeat="mang in maSoDiDong" ng-class-even="'grey_row'">
-					<div class="col-xs-3 col-md-3 time_f " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
-					<div class="col-xs-9 col-md-9">
-						<span ng-repeat="number in mang.numbers" ng-class-odd="'odd_text'" ng-class-even="'even_text'" ng-bind-html = "getTrustAsHtml(number.number + number.note)"></span>
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in maSoDiDong" ng-class-even="'grey_row'">
+					<div class="col-xs-4 col-md-3 time_f " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
+					<div class="col-xs-8 col-md-9">
+						<div class="centerf">
+							<span ng-repeat="number in mang.numbers" ng-class-odd="'odd_text'" ng-class-even="'even_text'" ng-bind-html = "getTrustAsHtml(number.number + number.note)"></span>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div ng-if="selectedKindsOfView.id == 2">
-				<div class="row" style="padding: 10px">Mã mới có hiệu lực từ 01-03-2015</div>
-				<div class="row date text_center rowRp">
+				<div class="row" style="padding: 10px; margin: 0px">Mã mới có hiệu lực từ 01-03-2015</div>
+				<div class="row date text_center rowRp" style="margin: 0px">
 					<div class="col-xs-6 col-md-6">Tỉnh / Thành</div>
 					<div class="col-xs-3 col-md-3">Số Cũ</div>
 					<div class="col-xs-3 col-md-3">Số Mới</div>
 				</div>
-				<div class="row text_center rowRp" ng-repeat="mang in maSoCoDinh" ng-class-even="'grey_row'">
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in maSoCoDinh" ng-class-even="'grey_row'">
 					<div class="col-xs-6 col-md-6 time_f " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
 					<div class="col-xs-3 col-md-3">
 						<span ng-bind-html = "getTrustAsHtml(mang.oldNumber)"></span>
@@ -158,11 +169,11 @@ td{
 				</div>
 			</div>
 			<div ng-if="selectedKindsOfView.id == 3">
-				<div class="row date text_center rowRp">
+				<div class="row date text_center rowRp" style="margin: 0px">
 					<div class="col-xs-6 col-md-6">Nội Dung</div>
 					<div class="col-xs-6 col-md-6">Đầu Số</div>
 				</div>
-				<div class="row text_center rowRp" ng-repeat="mang in otherInfoOriginal" ng-class-even="'grey_row'">
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in otherInfoOriginal" ng-class-even="'grey_row'">
 					<div class="col-xs-6 col-md-6 time_f " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
 					<div class="col-xs-6 col-md-6">
 						<span ng-bind-html = "getTrustAsHtml(mang.number)"></span>
