@@ -130,7 +130,7 @@ td{
 			</div>
 			<div class="col-xs-6 col-md-6">
 			  <div class="form-group width90" ng-if="selectedKindsOfView.id != 3">
-				<input type="text" class="form-control width90" ng-model="query" placeholder="Thông tin cần tìm" ng-change="search(query)">
+				<input type="text" class="form-control width90" ng-model="query" id="searchText" placeholder="Thông tin cần tìm" ng-change="search(query)">
 			  </div>
 			</div>
 		  </div>
@@ -291,7 +291,10 @@ td{
 		$scope.changeKindsOfView = function(kind)
 		{
 			$scope.selectedKindsOfView = kind;
-			$scope.query="";
+			if(document.getElementById("searchText")!=null){
+				document.getElementById("searchText").value  = "";	
+			}
+			$scope.search();
 			$scope.updateInformation();
 		}
 		
