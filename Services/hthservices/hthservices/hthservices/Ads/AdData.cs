@@ -63,7 +63,7 @@ namespace hthservices.Ads
             {
                 adItems.AddRange(ownerAds);
             }
-            adItems.AddRange(GetAdFromAdFlex(country, os));
+            //adItems.AddRange(GetAdFromAdFlex(country, os));
             try
             {
                 System.Threading.Thread th = new System.Threading.Thread(() =>

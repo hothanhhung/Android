@@ -78,5 +78,31 @@ namespace hthservices.Utils
         {
             return DateTime.UtcNow.AddHours(7);
         }
+
+
+        private static string absolutePathToDataFolder;
+        public static string GetAbsolutePathToDataFolder()
+        {
+            if (string.IsNullOrWhiteSpace(absolutePathToDataFolder))
+            {
+                if (HttpContext.Current == null)
+                {
+                    if (HttpRuntime.AppDomainAppPath.EndsWith("\\"))
+                    {
+                        absolutePathToDataFolder = HttpRuntime.AppDomainAppPath + "Data";
+                    }
+                    else
+                    {
+                        absolutePathToDataFolder = HttpRuntime.AppDomainAppPath + "\\Data";
+                    }
+                }
+                else
+                {
+                    absolutePathToDataFolder = HttpContext.Current.Server.MapPath("~/Data");
+                }
+            }
+            return absolutePathToDataFolder;
+
+        }
     }
 }
