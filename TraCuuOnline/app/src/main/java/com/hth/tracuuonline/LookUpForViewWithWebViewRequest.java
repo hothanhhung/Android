@@ -1,6 +1,7 @@
 package com.hth.tracuuonline;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -59,8 +60,13 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                textView.setVisibility(GONE);
-                llWebView.setVisibility(VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView.setVisibility(GONE);
+                        llWebView.setVisibility(VISIBLE);
+                    }
+                }, 500);
             }
         });
         firstLoadWeb();

@@ -56,7 +56,7 @@ public class ParseJSONAds {
 
 	public ParseJSONAds(Context context, String os){
 		this.context = context;
-		this.country =  context.getResources().getConfiguration().locale.getCountry();
+		this.country =  "VN";
 		this.os = os;
 		if( openKey == null || openKey.isEmpty())
 		{

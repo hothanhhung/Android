@@ -1,6 +1,7 @@
 package com.hth.tracuuonline;
 
 import android.content.Context;
+import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
@@ -73,8 +74,13 @@ public class LookUpBienSoOto extends LinearLayout {
                 // Inject CSS when page is done loading
                 injectCSS();
                 super.onPageFinished(view, url);
-                textView.setVisibility(GONE);
-                llWebView.setVisibility(VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView.setVisibility(GONE);
+                        llWebView.setVisibility(VISIBLE);
+                    }
+                }, 500);
             }
         });
         firstLoadWeb();
