@@ -2,6 +2,7 @@ package com.hth.lichtivi;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,8 @@ public class FlexibleFavoriteRowAdapter extends ArrayAdapter<ArrayList<ChannelIt
     public View getView(int position, View convertView, ViewGroup parent) {
         FavoriteViewHolder viewHolder;
         TextView tvName;
+        TextView tvNote;
+        ImageButton btEdit;
         ImageButton btUnFavorite;
         LinearLayout llRow;
 
@@ -52,6 +55,8 @@ public class FlexibleFavoriteRowAdapter extends ArrayAdapter<ArrayList<ChannelIt
 
             //viewHolder.llRow = llRow = (LinearLayout)convertView.findViewById(R.id.llRow); // title
         	viewHolder.tvName = tvName = (TextView)convertView.findViewById(R.id.tvName); // title
+            viewHolder.tvNote = tvNote = (TextView)convertView.findViewById(R.id.tvNote); // title
+            viewHolder.btEdit = btEdit = (ImageButton)convertView.findViewById(R.id.btEdit);
         	viewHolder.btUnFavorite = btUnFavorite = (ImageButton)convertView.findViewById(R.id.btUnFavorite);
         	convertView.setTag(viewHolder);
         }
@@ -59,10 +64,13 @@ public class FlexibleFavoriteRowAdapter extends ArrayAdapter<ArrayList<ChannelIt
             viewHolder = (FavoriteViewHolder)convertView.getTag();
             llRow = viewHolder.llRow;
             tvName = viewHolder.tvName; // title
+            tvNote = viewHolder.tvNote; // title
+            btEdit = viewHolder.btEdit;
             btUnFavorite = viewHolder.btUnFavorite;
         }
         ChannelItem channelItem = data.get(position);
         btUnFavorite.setTag(channelItem);
+        btEdit.setTag(channelItem);
 
         // Setting all values in listview
         if(position % 2 == 0) {
@@ -72,6 +80,15 @@ public class FlexibleFavoriteRowAdapter extends ArrayAdapter<ArrayList<ChannelIt
         }
 
         tvName.setText(channelItem.getName());
+        if(channelItem.getNote() == null || channelItem.getNote() == "")
+        {
+            tvNote.setText("Chưa có ghi chú");
+            tvNote.setTypeface(tvNote.getTypeface(), Typeface.ITALIC);
+            tvNote.setTextColor(Color.GRAY);
+        }else{
+            tvNote.setText(channelItem.getNote());
+            tvNote.setTypeface(tvNote.getTypeface(), Typeface.NORMAL);
+        }
 
         return convertView;
     }
@@ -86,6 +103,8 @@ public class FlexibleFavoriteRowAdapter extends ArrayAdapter<ArrayList<ChannelIt
 class FavoriteViewHolder
 {
     TextView tvName;
+    TextView tvNote;
+    ImageButton btEdit;
     ImageButton btUnFavorite;
     LinearLayout llRow;
 }

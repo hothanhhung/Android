@@ -15,10 +15,14 @@ android {
         applicationId "com.hth.lichtivi"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 400000
-        versionName "4.0.0"
+        versionCode 400001
+        versionName "4.0.1"
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -33,5 +37,5 @@ dependencies {
     compile 'com.ikimuhendis:ldrawer:0.1'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.google.code.gson:gson:2.5'
-    compile 'com.google.android.gms:play-services:9.0.2'
+    compile 'com.google.android.gms:play-services-ads:9.8.0'
 }

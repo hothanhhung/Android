@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -32,6 +33,7 @@ import com.hth.data.DataFavorite;
 import com.hth.utils.MethodsHelper;
 import com.hth.utils.ParseJSONScheduleItems;
 import com.hth.utils.ScheduleItem;
+import com.hth.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -140,6 +142,21 @@ public class MainActivity extends Activity implements
 
         thread.start();
     }
+
+    private void updateFavorite(ChannelItem item)
+    {
+        for(int i = 0; i< favoriteslList.size(); i++)
+        {
+            if(favoriteslList.get(i).getId().equalsIgnoreCase(item.getId()))
+            {
+                favoriteslList.get(i).setNote(item.getNote());
+                saveFavorites();
+                break;
+            }
+        }
+
+    }
+
     private void removeFavorite(ChannelItem item)
     {
         for(int i = 0; i< favoriteslList.size(); i++)
@@ -339,21 +356,62 @@ public class MainActivity extends Activity implements
         datePickerDialog.show();
     }
 
-    public void btUnFavoriteClick(View view)
+    public void btInFavoriteClick(View view)
     {
         final ChannelItem channelItem = (ChannelItem)view.getTag();
-        if(channelItem!=null){
-            new AlertDialog.Builder(this)
-                    .setTitle("Delete")
-                    .setMessage("Do you really want to remove " +channelItem.getName()+ " ?")
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        switch (view.getId())
+        {
+            case R.id.btUnFavorite:
+                if(channelItem!=null){
+                    new AlertDialog.Builder(this)
+                            .setTitle("Delete")
+                            .setMessage("Do you really want to remove " +channelItem.getName()+ " ?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            removeFavorite(channelItem);
-                        }})
-                    .setNegativeButton(android.R.string.no, null).show();
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    removeFavorite(channelItem);
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
+                }
+                break;
+            case R.id.btEdit:
+                if(channelItem != null){
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                    alertDialog.setTitle("Chỉnh sửa ghi chú");
+                    alertDialog.setMessage(channelItem.getName());
+
+                    final EditText input = new EditText(MainActivity.this);
+                    input.setText(channelItem.getNote());
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT);
+                    input.setLayoutParams(lp);
+                    alertDialog.setView(input);
+                    alertDialog.setIcon(R.drawable.edit);
+
+                    alertDialog.setPositiveButton("Lưu",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    channelItem.setNote(input.getText().toString());
+                                    updateFavorite(channelItem);
+                                    dialog.dismiss();
+                                }
+                            });
+
+                    alertDialog.setNegativeButton("Bỏ Qua",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    alertDialog.show();
+                }
+
+                break;
         }
+
     }
 
     public void menuClick(View view) {
@@ -377,6 +435,9 @@ public class MainActivity extends Activity implements
                 searchProgramView.setVisibility(View.VISIBLE);
                 btFavorite.setVisibility(View.GONE);
                 tvSelectedChannel.setText("Tìm Chương Trình");
+                break;
+            case R.id.btMoreApp:
+                UIUtils.showAlertGetMoreAppsServer(MainActivity.this);
                 break;
             case R.id.btAlarms:
                 if(searchProgramView.getVisibility() == View.VISIBLE)
@@ -471,7 +532,7 @@ public class MainActivity extends Activity implements
             if(scheduleItems == null)
             {
                 tvMessage.setVisibility(View.VISIBLE);
-                tvMessage.setText("Lỗi khi tải dữ liệu");
+                tvMessage.setText(R.string.connect_server_error);
             }else if(scheduleItems.size() == 0){
                 tvMessage.setVisibility(View.VISIBLE);
                 tvMessage.setText("Chưa có dữ liệu");

@@ -8,18 +8,53 @@
     android:paddingLeft="20dp"
     android:gravity="center_vertical"
     android:descendantFocusability="blocksDescendants">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="10sp">
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="VTV1"
         android:layout_margin="0sp"
         android:paddingLeft="5sp"
-        android:paddingBottom="10sp"
         android:paddingTop="10sp"
         android:textSize="14sp"
         android:gravity="center_vertical" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageButton
+                android:id="@+id/btEdit"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/edit"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="@android:drawable/list_selector_background"
+                android:onClick="btInFavoriteClick" />
+            <TextView
+                android:id="@+id/tvNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="25dp"
+                android:layout_weight="1"
+                android:text="ghi chú"
+                android:textStyle="italic"
+                android:layout_margin="0sp"
+                android:paddingLeft="5sp"
+                android:textSize="11sp"
+                android:gravity="center_vertical" />
+            </LinearLayout>
+    </LinearLayout>
     <ImageButton
         android:id="@+id/btUnFavorite"
         android:layout_width="30dp"
@@ -29,6 +64,6 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:background="@android:drawable/list_selector_background"
-        android:onClick="btUnFavoriteClick"
+        android:onClick="btInFavoriteClick"
         android:gravity="center_vertical" />
 </LinearLayout>

@@ -10,4 +10,5 @@
     <string name="hide_button">Tắt</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="warning_alarm">Với một số điện thoại, bạn cần khởi động lại ứng dụng sau khi khởi động lại máy để lịch hẹn chạy đúng</string>
+    <string name="connect_server_error">Lỗi khi kết nối với server.\n1. Kiểm tra kết nối máy bạn đã kết nối Internet chưa.\n2. Nếu máy bạn vẫn có thể kết nối Internet, có thể server của chúng tôi đang lỗi. Chúng tôi sẽ nhanh chóng giải quyết vấn đề, vui lòng quay lại sau.\nCảm ơn đã sử dụng ứng dụng này</string>
 </resources>

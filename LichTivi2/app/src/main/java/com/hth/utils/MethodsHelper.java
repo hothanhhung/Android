@@ -47,7 +47,7 @@ public class MethodsHelper {
     }
 
     static public String getCurrentDateToOrder(){
-        return getCurrentDate("yyyyMMddHHmmss");
+        return getCurrentDate("yyyyMMdd-HHmmss");
     }
 
     static public String getCurrentDate(){
@@ -128,6 +128,18 @@ public class MethodsHelper {
             ex.printStackTrace();
         }
         return android_id;
+
+    }
+
+    public static String getPackageName(Context context)
+    {
+        String packageName = "";
+        try {
+            packageName = context.getPackageName();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return packageName;
 
     }
 }

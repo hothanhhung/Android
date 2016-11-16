@@ -51,6 +51,11 @@
                                                    public <fields>;
                                                    protected <fields>;
                                                }
+-keepclassmembers class com.hth.utils.AdItem{
+                                                   private <fields>;
+                                                   public <fields>;
+                                                   protected <fields>;
+                                               }
 -keep class com.hth.utils.ScheduleAsyncTask
 -keep class com.squareup.okhttp.**
 -dontwarn com.squareup.okhttp.**

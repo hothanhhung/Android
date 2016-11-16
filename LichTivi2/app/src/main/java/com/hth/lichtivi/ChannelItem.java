@@ -8,6 +8,7 @@ import com.hth.utils.MethodsHelper;
 public class ChannelItem {
     String id;
     String name;
+    String note;
     String englishName;
 
     public ChannelItem(String id, String name){
@@ -37,6 +38,13 @@ public class ChannelItem {
         this.name = name;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
     public String getEnglishName()
     {
         if(englishName == null || englishName.isEmpty())
