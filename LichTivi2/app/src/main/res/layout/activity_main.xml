@@ -75,8 +75,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical">
@@ -106,14 +106,14 @@
                     android:text="Ngày"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp" />
-                <ImageButton
+                <Button
                     android:id="@+id/btMoreApp"
-                    android:background="@android:drawable/list_selector_background"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="15dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/hotapps"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_rectangle"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Apps"
                     android:onClick="menuClick"/>
             </LinearLayout>
             <TextView
