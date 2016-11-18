@@ -16,7 +16,9 @@ namespace hthservices.Models
     [KnownType(typeof(List<ScheduleRequestLog>))]
     [KnownType(typeof(ScheduleReport))]
     [KnownType(typeof(ReportForCurrentDate))] 
-    [KnownType(typeof(List<ReportForCurrentDate>))] 
+    [KnownType(typeof(List<ReportForCurrentDate>))]
+    [KnownType(typeof(AdsItemReport))]
+    [KnownType(typeof(List<AdsItemReport>))] 
     public class ResponseJson
     {
         public bool IsSuccess;

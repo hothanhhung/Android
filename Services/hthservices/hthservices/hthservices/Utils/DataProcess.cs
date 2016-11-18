@@ -313,6 +313,10 @@ namespace hthservices.Utils
         }
 
         #region Logger
+        public static List<RequestInfo> GetRequestInfoStatistic(string type, string fromDate, string toDate)
+        {
+            return SQLiteProcess.GetRequestInfoStatistic(type, fromDate, toDate);
+        }
         public static List<RequestInfo> GetRequestInfo(string type, string date, string order = "", bool desc = true, int page = 1, int size = 30)
         {
             return SQLiteProcess.GetRequestInfo(type, date, order, desc, page, size);

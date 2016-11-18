@@ -136,6 +136,7 @@
   <ItemGroup>
     <Compile Include="Ads\AdData.cs" />
     <Compile Include="Ads\AdItem.cs" />
+    <Compile Include="Ads\AdsItemReport.cs" />
     <Compile Include="Ads\OwnerAds.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

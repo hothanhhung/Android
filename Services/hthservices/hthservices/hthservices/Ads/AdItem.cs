@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace hthservices.Ads
@@ -58,6 +59,31 @@ namespace hthservices.Ads
                 }
             }
             return true;
+        }
+
+        private string packageName = null;
+        [IgnoreDataMember]
+        public string PackageName
+        {
+            get
+            {
+                if (packageName == null)
+                {
+                    if (!String.IsNullOrWhiteSpace(Link))
+                    {
+                        var start = Link.LastIndexOf("=", StringComparison.OrdinalIgnoreCase);
+                        if (start > 0)
+                        {
+                            packageName = Link.Substring(start + 1).Trim().ToLower();
+                        }
+                    }
+                    else
+                    {
+                        packageName = String.Empty;
+                    }
+                }
+                return packageName;
+            }
         }
     }
 }
