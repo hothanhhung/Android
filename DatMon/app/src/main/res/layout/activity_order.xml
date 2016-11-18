@@ -23,6 +23,14 @@
             android:scaleType="centerCrop"
             android:src="@drawable/menu"
             android:onClick="menuClick"/>
+        <ImageButton
+            android:id="@+id/btRefresh"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/refresh"
+            android:onClick="menuClick"/>
         <TextView
             android:id="@+id/tvSelectedDesk"
             android:layout_width="0sp"

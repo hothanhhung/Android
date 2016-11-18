@@ -14,7 +14,7 @@ public class Customer
         public String LastName;
 
         public String BithDay;
-        public byte[] Image ;
+        public String Image ;
         public String Job;
         public String Address;
         public String PhoneNumber;

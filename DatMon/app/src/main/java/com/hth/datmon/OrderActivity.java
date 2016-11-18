@@ -31,6 +31,7 @@ import com.hth.service.Customer;
 import com.hth.service.Desk;
 import com.hth.service.MenuOrder;
 import com.hth.service.Order;
+import com.hth.service.OrderCustomer;
 import com.hth.service.OrderDetail;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     SearchView search;
 
     Order orderData;
-
+    OrderCustomer orderCustomerData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +179,12 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     } else {
                         tvSelectedDesk.setTextColor(Color.GREEN);
                     }
+                    if(!orderData.isNew())
+                    {
+                        orderCustomerData = ServiceProcess.getCustomerByOrder(orderData.getID());
+                    }else{
+                        orderCustomerData = new OrderCustomer();
+                    }
                     mDrawerLayout.closeDrawer(mLeftDrawerList);
                     mDrawerLayout.openDrawer(mRightDrawerList);
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -215,6 +222,9 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 } else {
                     mDrawerLayout.openDrawer(mRightDrawerList);
                 }
+                break;
+            case R.id.btRefresh:
+                updateTableList();
                 break;
 
         }
@@ -292,7 +302,11 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     OrderedCustomerRowAdapter orderedCustomerRowAdapter;
     Customer selectedCustomer;
     private void showPopupCustomer(final Activity context) {
-        selectedCustomer = orderData.getCustomer();
+        if(orderCustomerData == null)
+        {
+            orderCustomerData = new OrderCustomer();
+        }
+        selectedCustomer = orderCustomerData.getCustomer();
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.customer_view);
         dialog.setTitle("KHÁCH HÀNG CỦA ĐƠN HÀNG");
@@ -319,7 +333,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
 
         final CustomerRowAdapter customerRowAdapter = new CustomerRowAdapter(
                 OrderActivity.this,
-                ServiceProcess.getCustomers(), getResources());
+                ServiceProcess.getListCustomerByOrderExcept(orderData.getID()), getResources());
         lvCustomers.setAdapter(customerRowAdapter);
 
         lvCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -418,8 +432,15 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 selectedCustomer.setCarNumber(etCarNumber.getText().toString());
                 Customer customer = ServiceProcess.saveCustomer(selectedCustomer);
                 if(customer!=null){
-                    orderData.setCustomer(customer);
-                    dialog.dismiss();
+                    orderCustomerData.setOrderId(orderData.getID());
+                    orderCustomerData.setCustomerId(customer.getID());
+                    OrderCustomer orderCustomer = ServiceProcess.saveOrderCustomer(orderCustomerData);
+                    if(orderCustomer!=null){
+                        orderCustomerData = orderCustomer;
+                        dialog.dismiss();
+                    }else{
+                        UIUtils.alert(context, "Không thể lưu dữ liệu", true);
+                    }
                 }else{
                     UIUtils.alert(context, "Không thể lưu dữ liệu", true);
                 }
@@ -570,9 +591,15 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
 
     private void updateCustomerButtonText() {
         Button btCustomer = (Button) this.findViewById(R.id.btCustomer);
-        if (orderData != null && btCustomer != null) {
-            int number = orderData.getCustomer() == null ? 0 : 1;
+        if (orderCustomerData != null && btCustomer != null) {
+            int number = orderCustomerData.isNew()? 0 : 1;
             btCustomer.setText("(" + number + ") Khách Hàng");
+        }
+        if(!orderData.isNew() && !orderData.isRequestingPayment())
+        {
+            btCustomer.setVisibility(View.VISIBLE);
+        }else{
+            btCustomer.setVisibility(View.INVISIBLE);
         }
     }
 
