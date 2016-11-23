@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context="${relativePackage}.${activityClass}" >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,11 +30,15 @@
             android:layout_weight="1"
             android:text="@string/loading_string" />
 
-        <FrameLayout
-            android:id="@+id/adsdkContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:adx="http://schemas.adflex.asia/apk/lib/ads"
+			android:orientation="vertical"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:id="@+id/adFlexView"
+            android:visibility="visible"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" />
     </LinearLayout>
 
     <ImageButton

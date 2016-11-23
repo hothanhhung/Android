@@ -1,9 +1,8 @@
 package com.hth.docbaotonghop;
 
-import com.admicroAds.sdk.AdmicroAd;
-import com.admicroAds.sdk.AdmicroAdListener;
-import com.admicroAds.sdk.banner.AdmicroAdView;
-import com.admicroAds.sdk.banner.BoxSize;
+import mobi.mclick.ad.*;
+
+import com.hth.docbaotonghop.R;
 import com.hth.utils.*;
 
 import android.annotation.SuppressLint;
@@ -21,21 +20,16 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-public class MainActivity extends Activity implements AdmicroAdListener {
+public class MainActivity extends Activity {
     static int width_Screen = 0;
     static int height_Screen = 0;
     static WebsitePage current_Website_Page = WebsitePage.VNExpressDotNet;
     private MyWebview viewArticleDetail;
-
-    private FrameLayout adFrame;
-    private AdmicroAdView bannerView;
-    private String unit_keyForBannerCatfishAds = "040cb58f7a6a36ed26768db64c1c9035"; //CATFISH 320x50
     
     public static WebsitePage getCurrent_Website_Page() {
         return current_Website_Page;
@@ -77,14 +71,19 @@ public class MainActivity extends Activity implements AdmicroAdListener {
         ImageButton bthome = (ImageButton) findViewById(R.id.button_home);
         bthome.setImageResource(MainActivity.getCurrent_Website_Page().getIcon());
         onCreateWebsiteMobileStyle();
+/*
+        adview = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adview.loadAd(adRequest);
 
-        adFrame = (FrameLayout) findViewById(R.id.adsdkContent);
+         */
+        //MobileAd.showGift(this,	MobileAd.GIFT_TOP_CENTER);
 
-        bannerView = new AdmicroAdView(this, unit_keyForBannerCatfishAds, true);
-        bannerView.setHideCloseButton(true);
-        bannerView.setBoxSize(BoxSize.CATFISH);
-        bannerView.setAdListener(this);
-        adFrame.addView(bannerView);
+        adsView= new AdsView(this);
+        LinearLayout layout = (LinearLayout)findViewById(R.id.adFlexView);
+        layout.addView(adsView);
+        adsView.loadAds(new AdsRequest());
+        //changeAddProvider();
 
     }
 
@@ -141,7 +140,9 @@ public class MainActivity extends Activity implements AdmicroAdListener {
             viewArticleDetail.loadDataWithBaseURL(null, "No Website Mobile", "text/html", "utf-8", null);
     }
 
-
+    AdsView adsView;
+    
+    static boolean isAdmod = true;
     static boolean needChanged = false;
     public void lastChangeAdProvider()
     {
@@ -200,8 +201,6 @@ public class MainActivity extends Activity implements AdmicroAdListener {
         super.onDestroy();
     	if(viewArticleDetail != null)
     		viewArticleDetail.destroy();
-        if (bannerView != null)
-            bannerView.release();
     }
     
     private static Context context;
@@ -279,35 +278,5 @@ public class MainActivity extends Activity implements AdmicroAdListener {
     		if(nagTop.getVisibility() != View.GONE) nagTop.setVisibility(View.GONE);
     	}
     	
-    }
-
-    @Override
-    public void adClicked() {
-
-    }
-
-    @Override
-    public void adClosed(AdmicroAd admicroAd, boolean b) {
-
-    }
-
-    @Override
-    public void adLoadSucceeded(AdmicroAd admicroAd) {
-
-    }
-
-    @Override
-    public void adShown(AdmicroAd admicroAd, boolean b) {
-
-    }
-
-    @Override
-    public void noAdFound() {
-
-    }
-
-    @Override
-    public void removeBanner() {
-
     }
 }

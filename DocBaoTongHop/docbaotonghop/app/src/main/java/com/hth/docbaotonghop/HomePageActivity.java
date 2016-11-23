@@ -1,8 +1,6 @@
 package com.hth.docbaotonghop;
 
-import com.admicroAds.sdk.AdmicroAd;
-import com.admicroAds.sdk.AdmicroAdListener;
-import com.admicroAds.sdk.AdmicroAdManager;
+import com.hth.docbaotonghop.R;
 import com.hth.utils.UIUtils;
 
 import android.app.Activity;
@@ -11,16 +9,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import java.util.Calendar;
 
-public class HomePageActivity extends Activity implements AdmicroAdListener {
+import mobi.mclick.ad.*;
 
-    private AdmicroAdManager adManager;
-    private String unit_keyForPopUpAds = "cd1ba2a470e25d528d312494fcdaf512";
+public class HomePageActivity extends Activity implements AdsListener {
+
+	private VideoAds videoAds;
+	private InterstitialAds interstitialAds;
 	
     Dialog loadingDialog = null;
     private static long timeForRun = 0;
@@ -33,11 +33,12 @@ public class HomePageActivity extends Activity implements AdmicroAdListener {
         context = getApplicationContext();
 
         timeForRun = Calendar.getInstance().getTime().getTime();
-
-        adManager = new AdmicroAdManager(this, unit_keyForPopUpAds);
-        adManager.setInterstitialAdsEnabled(true);
-        adManager.setVideoAdsEnabled(false);
-        adManager.setListener(this);
+        MobileAd.showGift(this,	MobileAd.GIFT_TOP_CENTER);
+        videoAds = new VideoAds(this);
+        videoAds.setAdsListener(this);
+        
+        interstitialAds = new InterstitialAds(this);
+        interstitialAds.setAdsListener(this);
 
 	}
 
@@ -89,12 +90,12 @@ public class HomePageActivity extends Activity implements AdmicroAdListener {
     private void showInterstitial()
     {
         long timenow = Calendar.getInstance().getTime().getTime();
-        long longtime = 500000 ;//(countShow*2000000 ) + 400000;
-        //if(longtime > 1000000) longtime = 1000000;
+        long longtime = (countShow*2000000 ) + 400000;
+        if(longtime > 1000000) longtime = 1000000;
         
         if(timeForRun > 0 && ((timenow - timeForRun) > longtime))
         {
-            adManager.requestAd();
+        	videoAds.loadAds(new AdsRequest());
         }
 
     }
@@ -153,46 +154,50 @@ public class HomePageActivity extends Activity implements AdmicroAdListener {
         }
     }
 
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        if (adManager != null)
-            adManager.release();
-    }
+	@Override
+	public void onAdsClosed(Ads ads) {
+	}
 
-    @Override
-    public void adClicked() {
+	@Override
+	public void onAdsFailedToLoad(Ads ads, ErrorCode arg1) {
 
-    }
 
-    @Override
-    public void adClosed(AdmicroAd admicroAd, boolean b) {
-
-    }
-
-    @Override
-    public void adLoadSucceeded(AdmicroAd admicroAd) {
-        if (adManager != null && adManager.isAdLoaded())
+		// TODO Auto-generated method stub
+		if (ads == videoAds) {
+            interstitialAds.loadAds(new AdsRequest());
+        }else if(ads == interstitialAds)
         {
-            adManager.showAd();
-            timeForRun = Calendar.getInstance().getTime().getTime();
+            UIUtils.showAlertGetMoreAppsServer(HomePageActivity.this);
         }
 
-    }
+	}
+	
+	@Override
+	public void onAdsLoaded(Ads ads) {
+		// TODO Auto-generated method stub
 
-    @Override
-    public void adShown(AdmicroAd admicroAd, boolean b) {
+		if (ads == videoAds) {
+			videoAds.show();
+            timeForRun = Calendar.getInstance().getTime().getTime();
+            countShow++;
+        }else if(ads == interstitialAds)
+        {
+        	interstitialAds.show();
+            timeForRun = Calendar.getInstance().getTime().getTime();
+            countShow++;
+        }
 
-    }
+	}
 
-    @Override
-    public void noAdFound() {
+	@Override
+	public void onAdsOpened(Ads arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    }
-
-    @Override
-    public void removeBanner() {
-
-    }
+	@Override
+	public void onLeaveApplication(Ads arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }
