@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import com.hth.service.Areas;
 import com.hth.service.Customer;
 import com.hth.service.Desk;
+import com.hth.service.ImageData;
 import com.hth.service.MenuOrder;
 import com.hth.service.Order;
 import com.hth.service.OrderCustomer;
@@ -32,9 +33,12 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Delayed;
 
 import static android.os.StrictMode.*;
 
@@ -43,7 +47,7 @@ import static android.os.StrictMode.*;
  */
 public class ServiceProcess {
     static LoginResponse loginInfo;
-    static String serverLink = "http://restapi.somee.com";
+    static String serverLink = "http://restapi.quanngonngon.com/";
     static class LoginResponse{
         String access_token;
         String token_type;
@@ -69,6 +73,46 @@ public class ServiceProcess {
                 return true;
             }
         }
+    }
+
+    static public String saveImage(ImageData imageData) {
+        String link = serverLink + "/api/Manage/SaveImage";
+
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httppost.addHeader("Authorization",loginInfo.getToken());
+            httppost.addHeader("Accept","application/json");
+            Gson gson = new Gson();
+            String jsonOut = gson.toJson(imageData);
+            httppost.setEntity(new StringEntity(jsonOut, "UTF-8"));
+            httppost.setHeader("Content-Type", "application/json");
+            HttpResponse response = httpclient.execute(httppost);
+            if(response.getStatusLine().getStatusCode()!=200)
+            {
+                return null;
+            }
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            return inputLine;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     static public boolean requestPayment(String orderId) {
@@ -639,5 +683,25 @@ public class ServiceProcess {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    static public ArrayList<ChatUser> getChatUsers() {
+        try {
+            Thread.sleep(5000);
+        }catch (Exception ex){
+
+        }
+        ArrayList<ChatUser> chatUsers = new ArrayList<ChatUser>();
+        chatUsers.add(new ChatUser("", "Chàng Trai năm ấy", 11));
+        chatUsers.add(new ChatUser("", "Nguyễn Văn B", 0));
+        chatUsers.add(new ChatUser("", "Trần Thắng", 1));
+        chatUsers.add(new ChatUser("", "Văn Thua", 91));
+        Collections.sort(chatUsers, new Comparator<ChatUser>() {
+            @Override
+            public int compare(ChatUser lhs, ChatUser rhs) {
+                return  rhs.getNumberOfCommingMessage() -lhs.getNumberOfCommingMessage();
+            }
+        });
+        return chatUsers;
     }
 }

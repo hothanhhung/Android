@@ -33,4 +33,30 @@ public class MethodsHelper {
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getWindow().getDecorView().getRootView().getWindowToken(), 0);
     }
+
+    static public String getddMMyyyyFromString(String date){
+        Date rs = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try
+        {
+            rs = simpleDateFormat.parse(date);
+            return outDateFormat.format(rs);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return "";
+    }
+
+    static public String getCurrentDateToOrder(){
+        return getCurrentDate("yyyyMMddHHmmss");
+    }
+
+    static public String getCurrentDate(String format){
+        Date now = new Date();
+        String formattedDate = new SimpleDateFormat(format).format(now);
+        return formattedDate;
+    }
 }

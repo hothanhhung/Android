@@ -7,6 +7,7 @@
     android:paddingBottom="0dp"
     tools:context="com.hth.datmon.OrderActivity"
     android:orientation="vertical">
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -21,15 +22,16 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/menu"
+            android:src="@drawable/tables"
+            android:layout_marginRight="10dp"
             android:onClick="menuClick"/>
         <ImageButton
             android:id="@+id/btRefresh"
             android:background="@android:drawable/list_selector_background"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/refresh"
+            android:src="@drawable/blue_refresh"
             android:onClick="menuClick"/>
         <TextView
             android:id="@+id/tvSelectedDesk"
@@ -41,15 +43,27 @@
             android:layout_marginRight="5sp"
             android:text=""
             android:textStyle="bold" />
+        <Button
+            android:id="@+id/btChats"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/chat_icon"
+            android:text="2"
+            android:textColor="@android:color/holo_red_dark"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"
+            android:onClick="menuClick"/>
         <ImageButton
             android:id="@+id/btFavorites"
             android:background="@android:drawable/list_selector_background"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/favorites"
+            android:src="@drawable/plate"
             android:onClick="menuClick"/>
     </LinearLayout>
+
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"

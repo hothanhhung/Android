@@ -115,6 +115,14 @@ public class Customer
         public void setZalo(String zalo) {
             Zalo = zalo;
         }
+        public String getImage() {
+            return Image;
+        }
+
+        public void setImage(String image) {
+            Image = image;
+        }
+
 
         String EnglishName;
         public String getEnglishName(){
@@ -123,6 +131,14 @@ public class Customer
                 EnglishName = MethodsHelper.stripAccentsAndD(FirstName);
             }
             return EnglishName;
+        }
+
+        public boolean hasImage(){
+            if(Image==null || Image.trim().isEmpty())
+            {
+                return false;
+            }
+            return true;
         }
     }
    

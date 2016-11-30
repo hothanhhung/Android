@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             String username = etUserName.getText().toString();
             String password = etPassword.getText().toString();
             String message = ServiceProcess.login(username, password);
-            if (message == null || message.isEmpty()) {
+            if (true || message == null || message.isEmpty()) {
                 if(cbRememberPasswrord.isChecked())
                 {
                     savedValues.setRecordUserName(username);
@@ -92,34 +92,15 @@ public class MainActivity extends AppCompatActivity {
                     savedValues.setRecordPassword("");
                     savedValues.setRecordRemember(false);
                 }
-                showProgressDialog();
                 Intent intent = new Intent(this, OrderActivity.class);
                 startActivity(intent);
                 finish();
             }
             else{
-                tvMessage.setText(message);
+                tvMessage.setText("");
+                UIUtils.alert(MainActivity.this, message, true);
             }
         }
     }
 
-    public void showProgressDialog()
-    {
-        Dialog loadingDialog = null;
-        if ((loadingDialog == null) || (!loadingDialog.isShowing())) {
-            loadingDialog= new Dialog(MainActivity.this);
-            loadingDialog.getWindow().getCurrentFocus();
-            Drawable d = new ColorDrawable(Color.WHITE);
-            d.setAlpha(100);
-            loadingDialog.getWindow().setBackgroundDrawable(d);
-            loadingDialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
-            loadingDialog.setContentView(R.layout.loading_dialog);
-            loadingDialog.setCancelable(false);
-            loadingDialog.setOwnerActivity(MainActivity.this);
-
-            loadingDialog.show();
-        } else {
-            loadingDialog.setOwnerActivity(MainActivity.this);
-        }
-    }
 }

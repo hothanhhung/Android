@@ -139,6 +139,43 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/custom_rectangle"
+                    android:src="@drawable/avatar"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="bottom">
+                    <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerInside"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="btCamera_Click"
+                        android:src="@drawable/camera"
+                        android:layout_marginBottom="5dp"/>
+                    <Button
+                        android:id="@+id/btUploadAvatar"
+                        android:layout_width="70dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/border_rectangle"
+                        android:scaleType="centerInside"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="btUploadAvatar_Click"
+                        android:text="Upload"/>
+                    </LinearLayout>
+            </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
