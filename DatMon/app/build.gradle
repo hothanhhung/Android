@@ -21,6 +21,8 @@ android {
 }
 
 dependencies {
+    compile files('libs/signalr-client-sdk.jar')
+    compile files('libs/signalr-client-sdk-android.jar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.picasso:picasso:2.5.2'

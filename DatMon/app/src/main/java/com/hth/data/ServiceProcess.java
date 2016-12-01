@@ -6,12 +6,14 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hth.service.Areas;
+import com.hth.service.Conversation;
 import com.hth.service.Customer;
 import com.hth.service.Desk;
 import com.hth.service.ImageData;
 import com.hth.service.MenuOrder;
 import com.hth.service.Order;
 import com.hth.service.OrderCustomer;
+import com.hth.service.ChatUser;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,33 +26,35 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Delayed;
-
-import static android.os.StrictMode.*;
 
 /**
  * Created by Lenovo on 10/31/2016.
  */
 public class ServiceProcess {
     static LoginResponse loginInfo;
-    static String serverLink = "http://restapi.quanngonngon.com/";
+    static String serverLink = "http://restapi.quanngonngon.com";
     static class LoginResponse{
         String access_token;
         String token_type;
+        ChatUser chatUser;
+
+        public ChatUser getChatUser() {
+            return chatUser;
+        }
+
+        public void setChatUser(ChatUser chatUser) {
+            this.chatUser = chatUser;
+        }
 
         public String getAccessToken() {
             return access_token;
@@ -75,6 +79,14 @@ public class ServiceProcess {
         }
     }
 
+    public static ChatUser getLoginUser()
+    {
+        if(loginInfo!=null)
+        {
+            return loginInfo.getChatUser();
+        }
+        return null;
+    }
     static public String saveImage(ImageData imageData) {
         String link = serverLink + "/api/Manage/SaveImage";
 
@@ -623,6 +635,7 @@ public class ServiceProcess {
             if (loginInfo == null || !loginInfo.hasAccessToken()) {
                 return "Tên đăng nhập và mật khẩu không đúng";
             } else {
+                loginInfo.setChatUser(getCurrentUser());
                 return "";
 
             }
@@ -686,22 +699,158 @@ public class ServiceProcess {
     }
 
     static public ArrayList<ChatUser> getChatUsers() {
-        try {
-            Thread.sleep(5000);
-        }catch (Exception ex){
+        String link = serverLink + "/api/Manage/GetListUserChat";
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet(link);
 
-        }
-        ArrayList<ChatUser> chatUsers = new ArrayList<ChatUser>();
-        chatUsers.add(new ChatUser("", "Chàng Trai năm ấy", 11));
-        chatUsers.add(new ChatUser("", "Nguyễn Văn B", 0));
-        chatUsers.add(new ChatUser("", "Trần Thắng", 1));
-        chatUsers.add(new ChatUser("", "Văn Thua", 91));
-        Collections.sort(chatUsers, new Comparator<ChatUser>() {
-            @Override
-            public int compare(ChatUser lhs, ChatUser rhs) {
-                return  rhs.getNumberOfCommingMessage() -lhs.getNumberOfCommingMessage();
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
             }
-        });
-        return chatUsers;
+            //execute http post
+            httpget.addHeader("Authorization",loginInfo.getToken());
+            httpget.addHeader("Accept","application/json");
+            HttpResponse response = httpclient.execute(httpget);
+
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<ArrayList<ChatUser>>() {
+            }.getType();
+            return gSon.fromJson(json, collectionType);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
+    static public ChatUser getCurrentUser() {
+        String link = serverLink + "/api/Manage/GetCurrentUser";
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httpget.addHeader("Authorization",loginInfo.getToken());
+            httpget.addHeader("Accept","application/json");
+            HttpResponse response = httpclient.execute(httpget);
+
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<ChatUser>() {
+            }.getType();
+            return gSon.fromJson(json, collectionType);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static public ArrayList<Conversation> getConversationsWithUser(String userId) {
+        String link = serverLink + "/api/Manage/GetByAllConversationWithUser?userId="+userId;
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httpget.addHeader("Authorization",loginInfo.getToken());
+            httpget.addHeader("Accept","application/json");
+            HttpResponse response = httpclient.execute(httpget);
+
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<ArrayList<Conversation>>() {
+            }.getType();
+            return gSon.fromJson(json, collectionType);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static public Conversation addConversation(Conversation conversation) {
+        String link = serverLink + "/api/Manage/AddConversation";
+
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(link);
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            //execute http post
+            httppost.addHeader("Authorization",loginInfo.getToken());
+            httppost.addHeader("Accept","application/json");
+            Gson gson = new Gson();
+            String jsonOut = gson.toJson(conversation);
+            httppost.setEntity(new StringEntity(jsonOut, "UTF-8"));
+            httppost.setHeader("Content-Type", "application/json");
+            HttpResponse response = httpclient.execute(httppost);
+            if(response.getStatusLine().getStatusCode()!=200)
+            {
+                return null;
+            }
+            HttpEntity httpEntity = response.getEntity();
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            InputStream in = httpEntity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            reader.close();
+            String json = jsonStringBuilder.toString();
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<Conversation>() {
+            }.getType();
+            return gSon.fromJson(json, collectionType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

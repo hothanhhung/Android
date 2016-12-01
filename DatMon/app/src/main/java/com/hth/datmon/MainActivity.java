@@ -2,10 +2,12 @@ package com.hth.datmon;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -80,27 +82,47 @@ public class MainActivity extends AppCompatActivity {
         }else {
             String username = etUserName.getText().toString();
             String password = etPassword.getText().toString();
-            String message = ServiceProcess.login(username, password);
-            if (true || message == null || message.isEmpty()) {
-                if(cbRememberPasswrord.isChecked())
-                {
+            (new PerformServiceProcessBackgroundTask()).execute(username, password);
+        }
+    }
+
+    public class PerformServiceProcessBackgroundTask extends AsyncTask< String, String, String > {
+        private ProgressDialog loadingDialog = new ProgressDialog(MainActivity.this);
+        private int type;
+
+        protected void onPreExecute() {
+            loadingDialog.setCancelable(false);
+            loadingDialog.setCanceledOnTouchOutside(false);
+            loadingDialog.setTitle("Processing");
+            loadingDialog.setMessage("Please wait");
+            loadingDialog.show();
+        }
+
+        protected String doInBackground(String... parameters) {
+            return  ServiceProcess.login(parameters[0], parameters[1]);
+        }
+
+        protected void onPostExecute(String message) {
+            loadingDialog.dismiss();
+            if (message == null || message.isEmpty()) {
+                if (cbRememberPasswrord.isChecked()) {
+                    String username = etUserName.getText().toString();
+                    String password = etPassword.getText().toString();
                     savedValues.setRecordUserName(username);
                     savedValues.setRecordPassword(password);
                     savedValues.setRecordRemember(true);
-                }else{
+                } else {
                     savedValues.setRecordUserName("");
                     savedValues.setRecordPassword("");
                     savedValues.setRecordRemember(false);
                 }
-                Intent intent = new Intent(this, OrderActivity.class);
+                Intent intent = new Intent(MainActivity.this, OrderActivity.class);
                 startActivity(intent);
                 finish();
-            }
-            else{
+            } else {
                 tvMessage.setText("");
                 UIUtils.alert(MainActivity.this, message, true);
             }
         }
     }
-
-}
+    }

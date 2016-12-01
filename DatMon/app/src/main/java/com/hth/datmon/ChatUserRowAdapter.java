@@ -2,16 +2,16 @@ package com.hth.datmon;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hth.data.ChatUser;
-import com.hth.service.Customer;
+import com.hth.service.ChatUser;
+import com.hth.service.Conversation;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,7 +26,10 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
         super(a, R.layout.chat_user_row, R.id.title, d);
         context = a;
         this.data = d;
-
+        if(this.data == null)
+        {
+            this.data = new ArrayList<ChatUser>();
+        }
         res = resLocal;
         inflater = LayoutInflater.from(a);
     }
@@ -52,13 +55,18 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
         imvAvatar = (ImageView) convertView.findViewById(R.id.imvAvatar);
 
         ChatUser chatUser = data.get(position);
-
+        convertView.setTag(chatUser);
         // Setting all values in listview
         tvFullname.setText(chatUser.getName());
-        tvNumberOfCommingText.setText(chatUser.getNumberOfCommingMessageInString());
+        if(chatUser.isOnline()) {
+            tvFullname.setTextColor(Color.BLUE);
+        }else{
+            tvFullname.setTextColor(Color.BLACK);
+        }
+        tvNumberOfCommingText.setText(chatUser.getNumberOfCommingConversationInString());
         if(chatUser.hasImage())
         {
-            Picasso.with(context).load(chatUser.getImage()).into(imvAvatar);
+            Picasso.with(context).load(chatUser.getPathImage()).into(imvAvatar);
         }else {
             imvAvatar.setImageResource(R.drawable.avatar);
         }

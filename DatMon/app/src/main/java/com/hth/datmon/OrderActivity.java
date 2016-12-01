@@ -5,18 +5,22 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -28,16 +32,18 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hth.data.ChatUser;
+import com.hth.service.ChatUser;
 import com.hth.data.MenuOption;
 import com.hth.data.Photo;
 import com.hth.data.ServiceProcess;
 import com.hth.service.Areas;
+import com.hth.service.Conversation;
 import com.hth.service.Customer;
 import com.hth.service.Desk;
 import com.hth.service.ImageData;
@@ -50,7 +56,6 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class OrderActivity extends AppCompatActivity implements ICallBack {
 
@@ -66,9 +71,14 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     final int SERVICE_PROCESS_GET_ORDER_BY_DESK_ID = SERVICE_PROCESS_LIST_CUSTOMER_BY_ORDER + 1;
     final int SERVICE_PROCESS_SAVE_ORDER = SERVICE_PROCESS_GET_ORDER_BY_DESK_ID + 1;
     final int SERVICE_PROCESS_REQUEST_PAYMENT = SERVICE_PROCESS_SAVE_ORDER + 1;
+    final int SERVICE_PROCESS_GET_ALL_CONVERSATIONS = SERVICE_PROCESS_REQUEST_PAYMENT + 1;
 
     private static final int CROP_FROM_CAMERA = 2;
     private static final int PICK_FROM_CAMERA = 1;
+
+    private final Context mContext = this;
+    private SignalRService mService;
+    private boolean mBound = false;
 
     private GridView grvOrderItems;
     private ExpandableListView lvOrderedItems;
@@ -138,9 +148,32 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_MENU_ORDER);
         (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE);
         //loadOrderedItems(new Order());
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
         mDrawerLayout.openDrawer(mLeftDrawerList);
+        mDrawerLayout.closeDrawer(mRightDrawerList);
+
+        Intent intent = new Intent();
+        intent.setClass(mContext, SignalRService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
+
+    private final ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to SignalRService, cast the IBinder and get SignalRService instance
+            SignalRService.LocalBinder binder = (SignalRService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
 
     private void loadOrderItems(final ArrayList<MenuOrder> orderItems)
     {
@@ -767,13 +800,34 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         lvChatUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                ChatUser toUser = (ChatUser) view.getTag();
+                (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_ALL_CONVERSATIONS, toUser);
+                popupChatUsersDialog.dismiss();
             }
         });
-        popupChatUsersDialog.setCancelable(false);
+        popupChatUsersDialog.setCancelable(true);
+        popupChatUsersDialog.setCanceledOnTouchOutside(true);
         popupChatUsersDialog.setOwnerActivity(OrderActivity.this);
 
         popupChatUsersDialog.show();
+    }
+
+    Dialog popupChatToUserDialog;
+    private void showPopupChatToUser(ChatUser toUser, ArrayList<Conversation> conversations)
+    {
+        if(popupChatToUserDialog != null && popupChatToUserDialog.isShowing())
+        {
+            popupChatToUserDialog.dismiss();
+        }
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
+
+        ChatView chatView = new ChatView(OrderActivity.this, ServiceProcess.getLoginUser(), toUser, conversations);
+        alertDialogBuilder.setView(chatView);
+
+        alertDialogBuilder.setCancelable(true);
+
+        popupChatToUserDialog = alertDialogBuilder.create();
+        popupChatToUserDialog.show();
     }
 
     private void updateCustomerButtonText() {
@@ -798,6 +852,22 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     @Override
     protected void onResume() {
         super.onResume();
+        if(orderData == null)
+        {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            mDrawerLayout.openDrawer(mLeftDrawerList);
+            mDrawerLayout.closeDrawer(mRightDrawerList);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        // Unbind from the service
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+        super.onStop();
     }
 
     @Override
@@ -850,12 +920,18 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     ArrayList<Object> deskAndOrder = new ArrayList<Object>();
                     Desk desk = (Desk) params[1];
                     deskAndOrder.add(desk);
-                    deskAndOrder.add(ServiceProcess.getOrderByDeskId(desk.toString()));
+                    deskAndOrder.add(ServiceProcess.getOrderByDeskId(desk.getID()));
                     return deskAndOrder;
                 case SERVICE_PROCESS_SAVE_ORDER:
                     return ServiceProcess.saveOrder(orderData);
                 case SERVICE_PROCESS_REQUEST_PAYMENT:
                     return ServiceProcess.requestPayment(orderData.getID());
+                case SERVICE_PROCESS_GET_ALL_CONVERSATIONS:
+                    ArrayList<Object> toUserAndConversations = new ArrayList<Object>();
+                    ChatUser toUser = (ChatUser) params[1];
+                    toUserAndConversations.add(toUser);
+                    toUserAndConversations.add(ServiceProcess.getConversationsWithUser(toUser.getUserId()));
+                    return toUserAndConversations;
             }
             return null;
         }
@@ -899,6 +975,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 case SERVICE_PROCESS_SAVE_ORDER_CUSTOMER:
                     if(object!=null){
                         orderCustomerData = (OrderCustomer) object;
+                        updateCustomerButtonText();
                     }else{
                         UIUtils.alert(OrderActivity.this, "Không thể lưu dữ liệu", true);
                     };
@@ -909,6 +986,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     }else{
                         UIUtils.alert(OrderActivity.this, "Không thể lấy dữ liệu", true);
                     };
+                    break;
                 case SERVICE_PROCESS_GET_ORDER_BY_DESK_ID:
                     getOrderByDeskIdResult((ArrayList<Object>) object);
                     break;
@@ -924,6 +1002,10 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     }else{
                         UIUtils.alert(OrderActivity.this, "Lỗi khi yêu cầu tính tiền", true);
                     }
+                    break;
+                case SERVICE_PROCESS_GET_ALL_CONVERSATIONS:
+                    ArrayList<Object> objects = (ArrayList<Object>)object;
+                    showPopupChatToUser((ChatUser) objects.get(0), (ArrayList<Conversation>) objects.get(1));
                     break;
             }
 
