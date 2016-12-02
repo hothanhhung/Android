@@ -77,7 +77,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     private static final int PICK_FROM_CAMERA = 1;
 
     private final Context mContext = this;
-    private SignalRService mService;
+   /* private SignalRService mService;*/
     private boolean mBound = false;
 
     private GridView grvOrderItems;
@@ -152,12 +152,14 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         mDrawerLayout.openDrawer(mLeftDrawerList);
         mDrawerLayout.closeDrawer(mRightDrawerList);
 
-        Intent intent = new Intent();
+        updatebtChats(ServiceProcess.getLoginUser().countUsersUnread());
+
+       /* Intent intent = new Intent();
         intent.setClass(mContext, SignalRService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
     }
 
-    private final ServiceConnection mConnection = new ServiceConnection() {
+   /* private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
@@ -172,7 +174,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         public void onServiceDisconnected(ComponentName arg0) {
             mBound = false;
         }
-    };
+    };*/
 
 
     private void loadOrderItems(final ArrayList<MenuOrder> orderItems)
@@ -265,6 +267,13 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     {
         tvTotalPrice.setText(String.format("%,.0f", orderDetailRowAdapter.getTotal()));
     }
+
+    private void updatebtChats(int number)
+    {
+        Button btChats = (Button) findViewById(R.id.btChats);
+        btChats.setText(number>0?""+number:"");
+    }
+
     public void menuClick(View view) {
        if(view.getId() != R.id.btChats && (orderData == null || orderData.getDesk() == null)) return;
         switch (view.getId()){
@@ -863,10 +872,10 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     @Override
     protected void onStop() {
         // Unbind from the service
-        if (mBound) {
+        /*if (mBound) {
             unbindService(mConnection);
             mBound = false;
-        }
+        }*/
         super.onStop();
     }
 

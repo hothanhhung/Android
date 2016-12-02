@@ -30,9 +30,9 @@ public class ChatView extends RelativeLayout {
 
     final int SERVICE_PROCESS_PUT_CONVERSATION = 1;
 
-    private SignalRService mService;
+    /*private SignalRService mService;
     private boolean mBound = false;
-
+*/
     private ChatUser fromUser;
     private ChatUser toUser;
     private Context context;
@@ -41,6 +41,9 @@ public class ChatView extends RelativeLayout {
     private Button btSend;
     private View rootView;
     private ArrayList<Conversation> conversations;
+
+    ChatItemRowAdapter chatItemRowAdapter;
+
     public ChatView(Context context, ChatUser fromUser, ChatUser toUser, ArrayList<Conversation> conversations) {
         super(context);
         this.context = context;
@@ -93,15 +96,21 @@ public class ChatView extends RelativeLayout {
             }
         });
 
-        ChatItemRowAdapter chatItemRowAdapter = new ChatItemRowAdapter(context, fromUser, toUser, conversations);
+        chatItemRowAdapter = new ChatItemRowAdapter(context, fromUser, toUser, conversations);
         lvChat.setAdapter(chatItemRowAdapter);
+        lvChat.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+                lvChat.setSelection(chatItemRowAdapter.getCount() - 1);
+            }
+        });
 
-
-        Intent intent = new Intent();
+       /* Intent intent = new Intent();
         intent.setClass(context, SignalRService.class);
-        context.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        context.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
     }
-    private final ServiceConnection mConnection = new ServiceConnection() {
+   /* private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
@@ -117,7 +126,7 @@ public class ChatView extends RelativeLayout {
             mBound = false;
         }
     };
-
+*/
 
     public class PerformServiceProcessBackgroundTask extends AsyncTask< Object, Object, Object > {
         private ProgressDialog loadingDialog = new ProgressDialog(context);

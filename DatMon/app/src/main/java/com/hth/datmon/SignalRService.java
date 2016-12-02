@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.hth.service.Conversation;
 
+/*
 import java.util.concurrent.ExecutionException;
 
 import microsoft.aspnet.signalr.client.Credentials;
@@ -22,6 +23,7 @@ import microsoft.aspnet.signalr.client.hubs.HubProxy;
 import microsoft.aspnet.signalr.client.hubs.SubscriptionHandler1;
 import microsoft.aspnet.signalr.client.transport.ClientTransport;
 import microsoft.aspnet.signalr.client.transport.ServerSentEventsTransport;
+*/
 
 /**
  * Created by Lenovo on 12/1/2016.
@@ -31,8 +33,8 @@ public class SignalRService extends Service {
     final String serverUrl = "http://192.168.1.100";
     final String CLIENT_METHOD_BROADAST_MESSAGE = "broadcastMessage";
 
-    private HubConnection mHubConnection;
-    private HubProxy mHubProxy;
+    /*private HubConnection mHubConnection;
+    private HubProxy mHubProxy;*/
     private Handler mHandler; // to display Toast message
     private final IBinder mBinder = new LocalBinder(); // Binder given to clients
 
@@ -54,7 +56,7 @@ public class SignalRService extends Service {
 
     @Override
     public void onDestroy() {
-        mHubConnection.stop();
+        /*mHubConnection.stop();*/
         super.onDestroy();
     }
 
@@ -81,11 +83,11 @@ public class SignalRService extends Service {
      */
     public void sendMessage(String message) {
         String SERVER_METHOD_SEND = "Send";
-        mHubProxy.invoke(SERVER_METHOD_SEND, message);
+       /* mHubProxy.invoke(SERVER_METHOD_SEND, message);*/
     }
 
     private void startSignalR() {
-        Platform.loadPlatformComponent(new AndroidPlatformComponent());
+        /*Platform.loadPlatformComponent(new AndroidPlatformComponent());
 
         Credentials credentials = new Credentials() {
             @Override
@@ -127,6 +129,6 @@ public class SignalRService extends Service {
                         });
                     }
                 }
-                , Conversation.class);
+                , Conversation.class);*/
     }
 }

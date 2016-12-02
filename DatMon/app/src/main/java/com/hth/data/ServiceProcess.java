@@ -635,7 +635,7 @@ public class ServiceProcess {
             if (loginInfo == null || !loginInfo.hasAccessToken()) {
                 return "Tên đăng nhập và mật khẩu không đúng";
             } else {
-                loginInfo.setChatUser(getCurrentUser());
+                loginInfo.setChatUser(getCurrentUser(user));
                 return "";
 
             }
@@ -735,8 +735,8 @@ public class ServiceProcess {
         return null;
     }
 
-    static public ChatUser getCurrentUser() {
-        String link = serverLink + "/api/Manage/GetCurrentUser";
+    static public ChatUser getCurrentUser(String userName) {
+        String link = serverLink + "/api/Manage/GetUserByUserName?userName="+userName;
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 

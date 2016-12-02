@@ -46,10 +46,12 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
         ImageView imvAvatar;
         TextView tvNumberOfCommingText;
         TextView tvFullname;
+        TextView tvLastMessage;
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.chat_user_row, null);
         }
+        tvLastMessage = (TextView) convertView.findViewById(R.id.tvLastMessage);
         tvFullname = (TextView) convertView.findViewById(R.id.tvFullname);
         tvNumberOfCommingText = (TextView) convertView.findViewById(R.id.tvNumberOfCommingText);
         imvAvatar = (ImageView) convertView.findViewById(R.id.imvAvatar);
@@ -70,7 +72,18 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
         }else {
             imvAvatar.setImageResource(R.drawable.avatar);
         }
-
+        if(chatUser.getConversations()!=null && chatUser.getConversations().size() > 0)
+        {
+            Conversation conversation = chatUser.getConversations().get(chatUser.getConversations().size() - 1);
+            if(conversation.isToUserIsRead())
+            {
+                tvLastMessage.setText(conversation.getMessage());
+                tvLastMessage.setTextColor(Color.BLUE);
+            }else{
+                tvLastMessage.setText(conversation.getMessage());
+                tvLastMessage.setTextColor(Color.BLACK);
+            }
+        }
         if(position % 2 == 0) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.ordered_item_odd_color));
         }else {

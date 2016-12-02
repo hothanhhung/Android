@@ -25,8 +25,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Nguyễn Văn A"
+            android:text=""
             android:id="@+id/tvFullname" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="14dp"
+            android:textStyle="italic"
+            android:text=""
+            android:id="@+id/tvLastMessage" />
     </LinearLayout>
 
     <TextView
