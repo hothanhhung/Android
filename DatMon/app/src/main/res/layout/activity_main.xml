@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:gravity="center_vertical"
     android:focusableInTouchMode="true">
 
+
     <ScrollView
+        android:paddingTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView2">
@@ -121,4 +122,18 @@
     </RelativeLayout>
 </LinearLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/btSetting"
+        android:background="@android:drawable/list_selector_background"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/setting"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:onClick="btClick"/>
+
 </RelativeLayout>

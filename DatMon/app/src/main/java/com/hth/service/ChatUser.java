@@ -2,6 +2,8 @@ package com.hth.service;
 
 import android.util.Patterns;
 
+import com.hth.data.ServiceProcess;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -29,7 +31,7 @@ public class ChatUser {
             if (Patterns.WEB_URL.matcher(PathImage).matches()) {
                 return PathImage;
             }
-            return "http://quanngonngon.com" + PathImage;
+            return ServiceProcess.getServerLink(PathImage);
         }
 
         return "";

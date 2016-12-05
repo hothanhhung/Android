@@ -1,6 +1,9 @@
 package com.hth.service;
 
 
+import android.util.Patterns;
+
+import com.hth.data.ServiceProcess;
 import com.hth.datmon.MethodsHelper;
 
 import java.util.Date;
@@ -118,7 +121,12 @@ public class Customer
         public String getImage() {
             return Image;
         }
-
+        public String getFullImage() {
+            if (Patterns.WEB_URL.matcher(Image).matches()) {
+                return Image;
+            }
+            return ServiceProcess.getServerLink(Image);
+        }
         public void setImage(String image) {
             Image = image;
         }

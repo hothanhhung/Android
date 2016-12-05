@@ -1,8 +1,10 @@
 package com.hth.datmon;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,10 +12,13 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hth.data.SavedValues;
 import com.hth.data.ServiceProcess;
@@ -66,6 +71,43 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btLogin:
                 login();
                 MethodsHelper.hideSoftKeyboard(MainActivity.this);
+                break;
+            case R.id.btSetting:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                //alertDialog.setTitle();
+                alertDialog.setMessage("Cập nhật địa chỉ API");
+
+                final EditText input = new EditText(MainActivity.this);
+                input.setText(ServiceProcess.getServerLink());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                alertDialog.setView(input);
+                //alertDialog.setIcon(R.drawable.setting);
+
+                alertDialog.setPositiveButton("Lưu",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String link = input.getText().toString();
+                                if (Patterns.WEB_URL.matcher(link).matches())
+                                    {
+                                        ServiceProcess.setServer(link);
+                                        dialog.dismiss();
+                                    }else{
+                                    Toast.makeText(MainActivity.this, "Url không đúng đinh dạng", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                alertDialog.setNegativeButton("Bỏ Qua",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                alertDialog.show();
                 break;
         }
     }

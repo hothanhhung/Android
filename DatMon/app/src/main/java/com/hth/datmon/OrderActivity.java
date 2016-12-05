@@ -546,7 +546,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 etCarNumber.setText(selectedCustomer.getCarNumber());
                 if(selectedCustomer.hasImage()) {
                     Picasso.with(context)
-                            .load(selectedCustomer.getImage())
+                            .load(selectedCustomer.getFullImage())
                             .into(imgAvatar);
                 }
                 btUploadAvatar.setVisibility(View.GONE);
@@ -690,6 +690,9 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
             etCarNumber.setText(selectedCustomer.getCarNumber());
             llCustomers.setVisibility(View.GONE);
             llAddCustomer.setVisibility(View.VISIBLE);
+            if(selectedCustomer.hasImage()) {
+                Picasso.with(OrderActivity.this).load(selectedCustomer.getFullImage()).into(imgAvatar);
+            }
         }
         dialogCustomer.setOnDismissListener(new DialogInterface.OnDismissListener(){
             @Override

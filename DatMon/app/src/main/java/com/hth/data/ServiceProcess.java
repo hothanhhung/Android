@@ -1,11 +1,14 @@
 package com.hth.data;
 
+import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hth.datmon.DatMonApp;
 import com.hth.service.Areas;
+import com.hth.service.ConstData;
 import com.hth.service.Conversation;
 import com.hth.service.Customer;
 import com.hth.service.Desk;
@@ -37,12 +40,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.hth.service.ConstData.APP_SHARED_PREFS;
+import static com.hth.service.ConstData.RECODE_SERVER;
+import static com.hth.service.ConstData.SERVER_DEFAULT;
+
 /**
  * Created by Lenovo on 10/31/2016.
  */
 public class ServiceProcess {
     static LoginResponse loginInfo;
-    static String serverLink = "http://restapi.quanngonngon.com";
     static class LoginResponse{
         String access_token;
         String token_type;
@@ -87,8 +93,40 @@ public class ServiceProcess {
         }
         return null;
     }
+
+    public static void setServer(String newDomain) {
+        SharedPreferences appSharedPrefs = DatMonApp.getAppContext().getSharedPreferences(APP_SHARED_PREFS, 0);
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+        prefsEditor.putString(RECODE_SERVER, newDomain);
+        prefsEditor.commit();
+    }
+
+    private static String getServer()
+    {
+        SharedPreferences appSharedPrefs = DatMonApp.getAppContext().getSharedPreferences(APP_SHARED_PREFS, 0);
+        return appSharedPrefs.getString(RECODE_SERVER, SERVER_DEFAULT);
+    }
+
+    static public String getServerLink()
+    {
+        String server = getServer();
+        if(server.endsWith("/")){
+            server = server.substring(0, server.length() - 1);
+        }
+        return server;
+    }
+
+    static public String getServerLink(String url)
+    {
+
+        if(url.startsWith("/")){
+            url = url.substring(1);
+        }
+        return getServerLink() + "/"+url;
+    }
+
     static public String saveImage(ImageData imageData) {
-        String link = serverLink + "/api/Manage/SaveImage";
+        String link = getServerLink() + "/api/Manage/SaveImage";
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(link);
@@ -104,7 +142,7 @@ public class ServiceProcess {
             httppost.addHeader("Accept","application/json");
             Gson gson = new Gson();
             String jsonOut = gson.toJson(imageData);
-            httppost.setEntity(new StringEntity(jsonOut, "UTF-8"));
+            httppost.setEntity(new StringEntity(jsonOut));//, "UTF-8"));
             httppost.setHeader("Content-Type", "application/json");
             HttpResponse response = httpclient.execute(httppost);
             if(response.getStatusLine().getStatusCode()!=200)
@@ -120,7 +158,15 @@ public class ServiceProcess {
                 jsonStringBuilder.append(inputLine);
             }
             reader.close();
-            return inputLine;
+            if(jsonStringBuilder.length() > 3) {
+                if (jsonStringBuilder.charAt(0) == '"') {
+                    jsonStringBuilder = jsonStringBuilder.deleteCharAt(0);
+                }
+                if (jsonStringBuilder.charAt(jsonStringBuilder.length() - 1) == '"') {
+                    jsonStringBuilder = jsonStringBuilder.deleteCharAt(jsonStringBuilder.length() - 1);
+                }
+                return jsonStringBuilder.toString();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,7 +174,7 @@ public class ServiceProcess {
     }
 
     static public boolean requestPayment(String orderId) {
-        String link = serverLink + "/api/Manage/RequestPayment?id="+orderId;
+        String link = getServerLink() + "/api/Manage/RequestPayment?id="+orderId;
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -165,7 +211,7 @@ public class ServiceProcess {
     }
 
     static public Order getOrderByDeskId(String deskId) {
-        String link = serverLink + "/api/Manage/GetOrderByDesk?deskId="+deskId;
+        String link = getServerLink() + "/api/Manage/GetOrderByDesk?deskId="+deskId;
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -210,7 +256,7 @@ public class ServiceProcess {
     }
 
     static public OrderCustomer getCustomerByOrder(String orderId) {
-        String link = serverLink + "/api/Manage/GetListCustomerByOrder?orderId="+orderId;
+        String link = getServerLink() + "/api/Manage/GetListCustomerByOrder?orderId="+orderId;
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -255,7 +301,7 @@ public class ServiceProcess {
     }
 
     static public Order changeDesk(Order order) {
-        String link = serverLink + "/api/Manage/changeDesk";
+        String link = getServerLink() + "/api/Manage/changeDesk";
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(link);
 
@@ -298,7 +344,7 @@ public class ServiceProcess {
     }
 
     static public OrderCustomer saveOrderCustomer(OrderCustomer orderCustomer) {
-        String link = serverLink + "/api/Manage/ResetOrderCustomerAndAdd";
+        String link = getServerLink() + "/api/Manage/ResetOrderCustomerAndAdd";
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(link);
@@ -342,9 +388,9 @@ public class ServiceProcess {
     }
 
     static public Order saveOrder(Order order) {
-        String link = serverLink + "/api/Manage/EditOrder";
+        String link = getServerLink() + "/api/Manage/EditOrder";
         if(order.isNew()){
-            link = serverLink + "/api/Manage/AddOrder";
+            link = getServerLink() + "/api/Manage/AddOrder";
         }
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(link);
@@ -388,7 +434,7 @@ public class ServiceProcess {
     }
 
     static public Customer saveCustomer(Customer customer) {
-        String link = serverLink + "/api/Manage/AddCustomer";
+        String link = getServerLink() + "/api/Manage/AddCustomer";
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(link);
 
@@ -433,7 +479,7 @@ public class ServiceProcess {
     }
 
     static public ArrayList<Customer> getListCustomerByOrderExcept(String orderId) {
-        String link = serverLink + "/api/Manage/GetListCustomerByOrderExcept?orderId="+orderId;
+        String link = getServerLink() + "/api/Manage/GetListCustomerByOrderExcept?orderId="+orderId;
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -524,7 +570,7 @@ public class ServiceProcess {
     }
 
     static public ArrayList<Desk> getDesks() {
-        String link = serverLink + "/api/Manage/GetListDesk";
+        String link = getServerLink() + "/api/Manage/GetListDesk";
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -561,7 +607,7 @@ public class ServiceProcess {
     }
 
     static public ArrayList<MenuOrder> getMenuOrder() {
-        String link = serverLink + "/api/Manage/GetListMenuOrder";
+        String link = getServerLink() + "/api/Manage/GetListMenuOrder";
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -598,7 +644,7 @@ public class ServiceProcess {
     }
 
     static public String login(String user, String pass) {
-        String link = serverLink + "/Token";
+        String link = getServerLink() + "/Token";
         String urlParameters = "grant_type=password&username=" + user + "&password=" + pass;
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(link);
@@ -648,7 +694,7 @@ public class ServiceProcess {
 
 
     static public boolean login1(String user, String pass) {
-        String link = serverLink + "/Token";
+        String link = getServerLink() + "/Token";
         String urlParameters = "grant_type=password&username=" + user + "&password=" + pass;
         Gson gSon = new Gson();
         try {
@@ -699,7 +745,7 @@ public class ServiceProcess {
     }
 
     static public ArrayList<ChatUser> getChatUsers() {
-        String link = serverLink + "/api/Manage/GetListUserChat";
+        String link = getServerLink() + "/api/Manage/GetListUserChat";
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -736,7 +782,7 @@ public class ServiceProcess {
     }
 
     static public ChatUser getCurrentUser(String userName) {
-        String link = serverLink + "/api/Manage/GetUserByUserName?userName="+userName;
+        String link = getServerLink() + "/api/Manage/GetUserByUserName?userName="+userName;
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -773,7 +819,7 @@ public class ServiceProcess {
     }
 
     static public ArrayList<Conversation> getConversationsWithUser(String userId) {
-        String link = serverLink + "/api/Manage/GetByAllConversationWithUser?userId="+userId;
+        String link = getServerLink() + "/api/Manage/GetByAllConversationWithUser?userId="+userId;
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(link);
 
@@ -810,7 +856,7 @@ public class ServiceProcess {
     }
 
     static public Conversation addConversation(Conversation conversation) {
-        String link = serverLink + "/api/Manage/AddConversation";
+        String link = getServerLink() + "/api/Manage/AddConversation";
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(link);
