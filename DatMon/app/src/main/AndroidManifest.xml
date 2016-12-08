@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:name=".DatMonApp"
         android:allowBackup="true"
@@ -20,6 +21,10 @@
         </activity>
         <activity android:name=".OrderActivity" >
         </activity>
+        <service
+            android:name=".SignalRService"
+            android:enabled="true" >
+        </service>
     </application>
 
 </manifest>

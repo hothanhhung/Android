@@ -11,6 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:divider="@null"
         android:layout_above="@+id/rlSend"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />

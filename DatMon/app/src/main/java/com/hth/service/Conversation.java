@@ -15,6 +15,15 @@ public class Conversation {
     public boolean FromUserIsRead;
     public boolean ToUserIsRead;
 
+    public Conversation(){
+
+    }
+    public Conversation(String fromUserId, String toUserId, String message, String createdDate){
+        FromUserId = fromUserId;
+        ToUserId = toUserId;
+        Message = message;
+        CreatedDate = createdDate;
+    }
     public String getMessage() {
         return Message;
     }

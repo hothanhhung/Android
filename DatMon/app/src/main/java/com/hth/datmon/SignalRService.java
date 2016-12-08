@@ -1,16 +1,21 @@
 package com.hth.datmon;
 
+import android.app.Notification;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Vibrator;
 import android.widget.Toast;
 
+import com.hth.data.ServiceProcess;
+import com.hth.service.ConstData;
 import com.hth.service.Conversation;
 
-/*
+
 import java.util.concurrent.ExecutionException;
 
 import microsoft.aspnet.signalr.client.Credentials;
@@ -23,22 +28,23 @@ import microsoft.aspnet.signalr.client.hubs.HubProxy;
 import microsoft.aspnet.signalr.client.hubs.SubscriptionHandler1;
 import microsoft.aspnet.signalr.client.transport.ClientTransport;
 import microsoft.aspnet.signalr.client.transport.ServerSentEventsTransport;
-*/
+
 
 /**
  * Created by Lenovo on 12/1/2016.
  */
 public class SignalRService extends Service {
-    final String SERVER_HUB_CHAT = "ChatHub";
-    final String serverUrl = "http://192.168.1.100";
-    final String CLIENT_METHOD_BROADAST_MESSAGE = "broadcastMessage";
+    final String SERVER_HUB_CHAT = "RestAPI";
+    String serverUrl = "http://restapi.quanngonngon.com:80";
+    final String CLIENT_METHOD_BROADAST_MESSAGE = "newMessage";
 
-    /*private HubConnection mHubConnection;
-    private HubProxy mHubProxy;*/
+    private HubConnection mHubConnection;
+    private HubProxy mHubProxy;
     private Handler mHandler; // to display Toast message
     private final IBinder mBinder = new LocalBinder(); // Binder given to clients
 
     public SignalRService() {
+        serverUrl = ServiceProcess.getServerLink() + ":80";
     }
 
     @Override
@@ -56,13 +62,17 @@ public class SignalRService extends Service {
 
     @Override
     public void onDestroy() {
-        /*mHubConnection.stop();*/
+        mHubConnection.stop();
         super.onDestroy();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         // Return the communication channel to the service.
+
+        /*long[] dataVibrate = {500,500,1000,1000};
+        Vibrator vibrator = (Vibrator) DatMonApp.getAppContext().getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(dataVibrate, -1);*/
         startSignalR();
         return mBinder;
     }
@@ -83,23 +93,23 @@ public class SignalRService extends Service {
      */
     public void sendMessage(String message) {
         String SERVER_METHOD_SEND = "Send";
-       /* mHubProxy.invoke(SERVER_METHOD_SEND, message);*/
+        mHubProxy.invoke(SERVER_METHOD_SEND, message);
     }
 
     private void startSignalR() {
-        /*Platform.loadPlatformComponent(new AndroidPlatformComponent());
-
+        Platform.loadPlatformComponent(new AndroidPlatformComponent());
+/*
         Credentials credentials = new Credentials() {
             @Override
             public void prepareRequest(Request request) {
                 request.addHeader("User-Name", "BNK");
             }
-        };
+        };*/
 
 
         mHubConnection = new HubConnection(serverUrl);
-        mHubConnection.setCredentials(credentials);
-
+      /*  mHubConnection.setCredentials(credentials);
+*/
         mHubProxy = mHubConnection.createHubProxy(SERVER_HUB_CHAT);
         ClientTransport clientTransport = new ServerSentEventsTransport(mHubConnection.getLogger());
         SignalRFuture<Void> signalRFuture = mHubConnection.start(clientTransport);
@@ -107,28 +117,33 @@ public class SignalRService extends Service {
         try {
             signalRFuture.get();
         } catch (InterruptedException | ExecutionException e) {
+            /*Notification mNotify  = new Notification.Builder(DatMonApp.getAppContext())
+                    .setContentTitle("startSignalR")
+                    .setContentText(e.getMessage())
+                    .setAutoCancel(true)
+                    .build();*/
             e.printStackTrace();
             return;
         }
 
-        String HELLO_MSG = "Hello from Android!";
-        sendMessage(HELLO_MSG);
+       // String HELLO_MSG = "Hello from Android!";
+       // sendMessage(HELLO_MSG);
 
 
         mHubProxy.on(CLIENT_METHOD_BROADAST_MESSAGE,
                 new SubscriptionHandler1<Conversation>() {
                     @Override
                     public void run(final Conversation conversation) {
-                        final String finalMsg = conversation.getFromUserName() + " says " + conversation.getMessage();
-                        // display Toast message
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), finalMsg, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+
+                        Intent intent = new Intent();
+                        intent.setAction(ConstData.ACTION_RECEIVE_CONVERSTATION);
+                        intent.putExtra(ConstData.RECEIVE_CONVERSTATION_FROM_USER_ID, conversation.getFromUserId());
+                        intent.putExtra(ConstData.RECEIVE_CONVERSTATION_TO_USER_ID, conversation.getToUserId());
+                        intent.putExtra(ConstData.RECEIVE_CONVERSTATION_MESSAGE, conversation.getMessage());
+                        intent.putExtra(ConstData.RECEIVE_CONVERSTATION_CREATE_TIME, conversation.getCreatedDate());
+                        sendBroadcast(intent);
                     }
                 }
-                , Conversation.class);*/
+                , Conversation.class);
     }
 }

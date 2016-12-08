@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.hth.service.ChatUser;
 import com.hth.service.Conversation;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,14 +44,16 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imvAvatar;
+        final ImageView imvAvatar;
         TextView tvNumberOfCommingText;
         TextView tvFullname;
         TextView tvLastMessage;
+        TextView tvLastTime;
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.chat_user_row, null);
         }
+        tvLastTime = (TextView) convertView.findViewById(R.id.tvLastTime);
         tvLastMessage = (TextView) convertView.findViewById(R.id.tvLastMessage);
         tvFullname = (TextView) convertView.findViewById(R.id.tvFullname);
         tvNumberOfCommingText = (TextView) convertView.findViewById(R.id.tvNumberOfCommingText);
@@ -68,7 +71,17 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
         tvNumberOfCommingText.setText(chatUser.getNumberOfCommingConversationInString());
         if(chatUser.hasImage())
         {
-            Picasso.with(context).load(chatUser.getPathImage()).into(imvAvatar);
+            Picasso.with(context).load(chatUser.getPathImage()).into(imvAvatar, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError() {
+                    imvAvatar.setImageResource(R.drawable.avatar);
+                }
+            });
         }else {
             imvAvatar.setImageResource(R.drawable.avatar);
         }
@@ -83,6 +96,7 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
                 tvLastMessage.setText(conversation.getMessage());
                 tvLastMessage.setTextColor(Color.BLACK);
             }
+            tvLastTime.setText(MethodsHelper.getTimeChat(conversation.getCreatedDate()));
         }
         if(position % 2 == 0) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.ordered_item_odd_color));

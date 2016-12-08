@@ -59,4 +59,18 @@ public class MethodsHelper {
         String formattedDate = new SimpleDateFormat(format).format(now);
         return formattedDate;
     }
+
+    static public String getTimeChat(String time)
+    {
+        try {
+            String rs = time.substring(5, 16).replace('T',' ');
+            String ngay = rs.substring(3,5);
+            String thang = rs.substring(0,2);
+            String ti = rs.substring(6,11);
+            return ngay + "/"+thang+" "+ti;
+        }catch (Exception ex){
+
+        }
+        return "";
+    }
 }

@@ -1,23 +1,23 @@
 package com.hth.datmon;
 
 import android.app.ProgressDialog;
-import android.content.ComponentName;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
-import android.os.IBinder;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.hth.data.ServiceProcess;
 import com.hth.service.ChatUser;
+import com.hth.service.ConstData;
 import com.hth.service.Conversation;
 
 import java.util.ArrayList;
@@ -30,9 +30,6 @@ public class ChatView extends RelativeLayout {
 
     final int SERVICE_PROCESS_PUT_CONVERSATION = 1;
 
-    /*private SignalRService mService;
-    private boolean mBound = false;
-*/
     private ChatUser fromUser;
     private ChatUser toUser;
     private Context context;
@@ -106,27 +103,14 @@ public class ChatView extends RelativeLayout {
             }
         });
 
-       /* Intent intent = new Intent();
-        intent.setClass(context, SignalRService.class);
-        context.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
     }
-   /* private final ServiceConnection mConnection = new ServiceConnection() {
 
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            // We've bound to SignalRService, cast the IBinder and get SignalRService instance
-            SignalRService.LocalBinder binder = (SignalRService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
+    @Override
+    public void onDetachedFromWindow() {
+        //
+        super.onDetachedFromWindow();
+    }
 
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
-*/
 
     public class PerformServiceProcessBackgroundTask extends AsyncTask< Object, Object, Object > {
         private ProgressDialog loadingDialog = new ProgressDialog(context);
@@ -162,5 +146,25 @@ public class ChatView extends RelativeLayout {
             }
 
         }
+    }
+
+    public void addConversation(Conversation conversation) {
+            if((fromUser.getUserId().equalsIgnoreCase(conversation.getFromUserId()) && toUser.getUserId().equalsIgnoreCase(conversation.getToUserId()))
+                    || (fromUser.getUserId().equalsIgnoreCase(conversation.getToUserId()) && toUser.getUserId().equalsIgnoreCase(conversation.getFromUserId())))
+            {
+                chatItemRowAdapter.addConversation(conversation);
+                lvChat.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Select the last row so it will scroll into view...
+                        lvChat.setSelection(chatItemRowAdapter.getCount() - 1);
+                    }
+                });
+            }
+    };
+
+    public boolean isCurrentChat(String userId)
+    {
+        return fromUser.getUserId().equalsIgnoreCase(userId) || toUser.getUserId().equalsIgnoreCase(userId);
     }
 }

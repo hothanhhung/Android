@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -15,6 +17,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +46,7 @@ import com.hth.data.MenuOption;
 import com.hth.data.Photo;
 import com.hth.data.ServiceProcess;
 import com.hth.service.Areas;
+import com.hth.service.ConstData;
 import com.hth.service.Conversation;
 import com.hth.service.Customer;
 import com.hth.service.Desk;
@@ -77,7 +81,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     private static final int PICK_FROM_CAMERA = 1;
 
     private final Context mContext = this;
-   /* private SignalRService mService;*/
+    private SignalRService mService;
     private boolean mBound = false;
 
     private GridView grvOrderItems;
@@ -154,12 +158,18 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
 
         updatebtChats(ServiceProcess.getLoginUser().countUsersUnread());
 
-       /* Intent intent = new Intent();
+        Intent intent = new Intent();
         intent.setClass(mContext, SignalRService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConstData.ACTION_RECEIVE_CONVERSTATION);
+        DatMonApp.getAppContext().registerReceiver(receiverChat, filter);
     }
 
-   /* private final ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
@@ -174,7 +184,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         public void onServiceDisconnected(ComponentName arg0) {
             mBound = false;
         }
-    };*/
+    };
 
 
     private void loadOrderItems(final ArrayList<MenuOrder> orderItems)
@@ -825,6 +835,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     }
 
     Dialog popupChatToUserDialog;
+    ChatView currentChatView;
     private void showPopupChatToUser(ChatUser toUser, ArrayList<Conversation> conversations)
     {
         if(popupChatToUserDialog != null && popupChatToUserDialog.isShowing())
@@ -833,13 +844,20 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         }
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
 
-        ChatView chatView = new ChatView(OrderActivity.this, ServiceProcess.getLoginUser(), toUser, conversations);
-        alertDialogBuilder.setView(chatView);
+        currentChatView = new ChatView(OrderActivity.this, ServiceProcess.getLoginUser(), toUser, conversations);
+        alertDialogBuilder.setView(currentChatView);
 
         alertDialogBuilder.setCancelable(true);
-
         popupChatToUserDialog = alertDialogBuilder.create();
+        popupChatToUserDialog.setOnDismissListener(new DialogInterface.OnDismissListener(){
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                currentChatView = null;
+            }
+        });
         popupChatToUserDialog.show();
+        currentComingUser.remove(toUser.getUserId());
+        updatebtChats(currentComingUser.size());
     }
 
     private void updateCustomerButtonText() {
@@ -872,13 +890,15 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         }
     }
 
+
     @Override
-    protected void onStop() {
+    protected void onDestroy() {
         // Unbind from the service
-        /*if (mBound) {
+        if (mBound) {
             unbindService(mConnection);
             mBound = false;
-        }*/
+        }
+        DatMonApp.getAppContext().unregisterReceiver(receiverChat);
         super.onStop();
     }
 
@@ -1024,4 +1044,39 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         }
 
     }
+
+    ArrayList<String> currentComingUser = new ArrayList<>();
+    private BroadcastReceiver receiverChat = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // your code here
+            /*long[] dataVibrate = {500,500,1000,1000};
+            Vibrator vibrator = (Vibrator) DatMonApp.getAppContext().getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(dataVibrate, -1);*/
+
+            String fromUserId = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_FROM_USER_ID);
+            String toUserId = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_TO_USER_ID);
+            String message = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_MESSAGE);
+            String createdDate = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_CREATE_TIME);
+            ChatUser userLogin = ServiceProcess.getLoginUser();
+            if(userLogin.getUserId().equalsIgnoreCase(fromUserId) || userLogin.getUserId().equalsIgnoreCase(toUserId))
+            {
+                if(currentChatView != null){
+                    currentChatView.addConversation(new Conversation(fromUserId, toUserId, message, createdDate));
+                }
+
+                if(currentChatView == null || !(currentChatView.isCurrentChat(fromUserId)))
+                {
+                    if(currentComingUser.indexOf(fromUserId) == -1)
+                    {
+                        currentComingUser.add(fromUserId);
+                        updatebtChats(currentComingUser.size());
+                        long[] dataVibrate = {500, 1000};
+                        Vibrator vibrator = (Vibrator) DatMonApp.getAppContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(dataVibrate, -1);
+                    }
+                }
+            }
+        }
+    };
 }

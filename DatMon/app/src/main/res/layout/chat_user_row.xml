@@ -25,7 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="18dp"
             android:text=""
+            android:textStyle="normal"
             android:id="@+id/tvFullname" />
         <TextView
             android:layout_width="wrap_content"
@@ -35,6 +37,14 @@
             android:textStyle="italic"
             android:text=""
             android:id="@+id/tvLastMessage" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="10dp"
+            android:textStyle="italic"
+            android:text=""
+            android:id="@+id/tvLastTime" />
     </LinearLayout>
 
     <TextView
