@@ -37,6 +37,7 @@ public class SignalRService extends Service {
     final String SERVER_HUB_CHAT = "RestAPI";
     String serverUrl = "http://restapi.quanngonngon.com:80";
     final String CLIENT_METHOD_BROADAST_MESSAGE = "newMessage";
+    final String CLIENT_METHOD_BROADAST_MESSAGE_UPDATE_DESK = "DeskRequest";
 
     private HubConnection mHubConnection;
     private HubProxy mHubProxy;
@@ -145,5 +146,16 @@ public class SignalRService extends Service {
                     }
                 }
                 , Conversation.class);
+        mHubProxy.on(CLIENT_METHOD_BROADAST_MESSAGE_UPDATE_DESK,
+                new SubscriptionHandler1<String>() {
+                    @Override
+                    public void run(final String conversation) {
+
+                        Intent intent = new Intent();
+                        intent.setAction(ConstData.ACTION_REQUEST_DESK_UPDATE);
+                        sendBroadcast(intent);
+                    }
+                }
+                , String.class);
     }
 }

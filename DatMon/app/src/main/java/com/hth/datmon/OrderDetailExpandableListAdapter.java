@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 
+import static android.view.View.GONE;
+
 /**
  * Created by Lenovo on 8/26/2016.
  */
@@ -113,6 +115,11 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
             btRemove.setVisibility(View.VISIBLE);
         }else{
             btRemove.setVisibility(View.INVISIBLE);
+        }
+        if(orderedItem.isPromotion()){
+            btRemove.setVisibility(View.INVISIBLE);
+        }else{
+            btRemove.setVisibility(View.VISIBLE);
         }
         // Setting all values in listview
         etQuantity.setText("" + orderedItem.getQuantity());

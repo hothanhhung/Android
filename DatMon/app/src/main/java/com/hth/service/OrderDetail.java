@@ -17,6 +17,7 @@ public class OrderDetail {
     public Order Order;
     public boolean IsActive;
     public boolean IsUpdate;
+    public boolean IsPromotion;
     public String UpdatedBy;
     public String CreatedBy;
     public String UserId;
@@ -73,5 +74,8 @@ public class OrderDetail {
 
     public int getStatus() {
         return Status;
+    }
+    public boolean isPromotion() {
+        return IsPromotion;
     }
 }

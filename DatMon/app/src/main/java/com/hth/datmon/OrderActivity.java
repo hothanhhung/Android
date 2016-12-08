@@ -166,6 +166,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConstData.ACTION_RECEIVE_CONVERSTATION);
+        filter.addAction(ConstData.ACTION_REQUEST_DESK_UPDATE);
         DatMonApp.getAppContext().registerReceiver(receiverChat, filter);
     }
 
@@ -817,7 +818,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         popupChatUsersDialog.setContentView(R.layout.popup_chat_users);
 
         ListView lvChatUsers = (ListView)popupChatUsersDialog.findViewById(R.id.lvChatUsers);
-        ChatUserRowAdapter chatUserRowAdapter = new ChatUserRowAdapter(OrderActivity.this, chatUsers, getResources());
+        ChatUserRowAdapter chatUserRowAdapter = new ChatUserRowAdapter(OrderActivity.this, chatUsers, getResources(), currentComingUser);
         lvChatUsers.setAdapter(chatUserRowAdapter);
         lvChatUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -1054,28 +1055,29 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
             Vibrator vibrator = (Vibrator) DatMonApp.getAppContext().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(dataVibrate, -1);*/
 
-            String fromUserId = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_FROM_USER_ID);
-            String toUserId = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_TO_USER_ID);
-            String message = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_MESSAGE);
-            String createdDate = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_CREATE_TIME);
-            ChatUser userLogin = ServiceProcess.getLoginUser();
-            if(userLogin.getUserId().equalsIgnoreCase(fromUserId) || userLogin.getUserId().equalsIgnoreCase(toUserId))
-            {
-                if(currentChatView != null){
-                    currentChatView.addConversation(new Conversation(fromUserId, toUserId, message, createdDate));
-                }
+            if(ConstData.ACTION_RECEIVE_CONVERSTATION.equalsIgnoreCase(intent.getAction())) {
+                String fromUserId = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_FROM_USER_ID);
+                String toUserId = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_TO_USER_ID);
+                String message = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_MESSAGE);
+                String createdDate = intent.getStringExtra(ConstData.RECEIVE_CONVERSTATION_CREATE_TIME);
+                ChatUser userLogin = ServiceProcess.getLoginUser();
+                if (userLogin.getUserId().equalsIgnoreCase(fromUserId) || userLogin.getUserId().equalsIgnoreCase(toUserId)) {
+                    if (currentChatView != null) {
+                        currentChatView.addConversation(new Conversation(fromUserId, toUserId, message, createdDate));
+                    }
 
-                if(currentChatView == null || !(currentChatView.isCurrentChat(fromUserId)))
-                {
-                    if(currentComingUser.indexOf(fromUserId) == -1)
-                    {
-                        currentComingUser.add(fromUserId);
-                        updatebtChats(currentComingUser.size());
-                        long[] dataVibrate = {500, 1000};
-                        Vibrator vibrator = (Vibrator) DatMonApp.getAppContext().getSystemService(Context.VIBRATOR_SERVICE);
-                        vibrator.vibrate(dataVibrate, -1);
+                    if (currentChatView == null || !(currentChatView.isCurrentChat(fromUserId))) {
+                        if (currentComingUser.indexOf(fromUserId) == -1) {
+                            currentComingUser.add(fromUserId);
+                            updatebtChats(currentComingUser.size());
+                            long[] dataVibrate = {500, 1000};
+                            Vibrator vibrator = (Vibrator) DatMonApp.getAppContext().getSystemService(Context.VIBRATOR_SERVICE);
+                            vibrator.vibrate(dataVibrate, -1);
+                        }
                     }
                 }
+            }else if(ConstData.ACTION_REQUEST_DESK_UPDATE.equalsIgnoreCase(intent.getAction())) {
+                (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE);
             }
         }
     };

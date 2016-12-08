@@ -22,8 +22,9 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
     private static LayoutInflater inflater = null;
     public Resources res;
     private Activity context;
+    private ArrayList<String> currentCommingChatUsers;
 
-    public ChatUserRowAdapter(Activity a, ArrayList<ChatUser> d, Resources resLocal) {
+    public ChatUserRowAdapter(Activity a, ArrayList<ChatUser> d, Resources resLocal, ArrayList<String> currentCommingChatUsers) {
         super(a, R.layout.chat_user_row, R.id.title, d);
         context = a;
         this.data = d;
@@ -31,6 +32,7 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
         {
             this.data = new ArrayList<ChatUser>();
         }
+        this.currentCommingChatUsers = currentCommingChatUsers;
         res = resLocal;
         inflater = LayoutInflater.from(a);
     }
@@ -69,6 +71,12 @@ public class ChatUserRowAdapter extends ArrayAdapter<ChatUser> {
             tvFullname.setTextColor(Color.BLACK);
         }
         tvNumberOfCommingText.setText(chatUser.getNumberOfCommingConversationInString());
+        if(currentCommingChatUsers!=null && currentCommingChatUsers.indexOf(chatUser.getUserId()) != -1)
+        {
+            tvNumberOfCommingText.setVisibility(View.VISIBLE);
+        }else{
+            tvNumberOfCommingText.setVisibility(View.GONE);
+        }
         if(chatUser.hasImage())
         {
             Picasso.with(context).load(chatUser.getPathImage()).into(imvAvatar, new Callback() {

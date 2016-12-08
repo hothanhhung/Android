@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hth.data.ServiceProcess;
 import com.hth.service.ChatUser;
@@ -34,6 +35,7 @@ public class ChatView extends RelativeLayout {
     private ChatUser toUser;
     private Context context;
     private ListView lvChat;
+    private TextView tvFullname;
     private EditText etMessage;
     private Button btSend;
     private View rootView;
@@ -56,6 +58,7 @@ public class ChatView extends RelativeLayout {
     private void init() {
         rootView = inflate(getContext(), R.layout.chat_view, null);
         addView(rootView);
+        tvFullname = (TextView) rootView.findViewById(R.id.tvFullname);
         lvChat = (ListView) rootView.findViewById(R.id.lvChat);
         etMessage = (EditText) rootView.findViewById(R.id.etMessage);
         btSend = (Button) rootView.findViewById(R.id.btSend);
@@ -70,7 +73,7 @@ public class ChatView extends RelativeLayout {
                 }
             }
         });
-
+        tvFullname.setText(toUser.getName());
         etMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

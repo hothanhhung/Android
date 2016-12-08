@@ -14,6 +14,8 @@ import com.hth.service.OrderDetail;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+
 public class OrderDetailRowAdapter extends ArrayAdapter<OrderDetail> implements ICallBack{
     private ArrayList<OrderDetail> data;
     private static LayoutInflater inflater = null;
@@ -80,6 +82,11 @@ public class OrderDetailRowAdapter extends ArrayAdapter<OrderDetail> implements 
         btRemove.setTag(orderedItem);
         etQuantity.setTag(orderedItem);
 
+        if(orderedItem.isPromotion()){
+            btRemove.setVisibility(GONE);
+        }else{
+            btRemove.setVisibility(View.VISIBLE);
+        }
         // Setting all values in listview
         etQuantity.setText("" + orderedItem.getQuantity());
         tvTotal.setText(String.format("%,.0f", orderedItem.getTotal()));

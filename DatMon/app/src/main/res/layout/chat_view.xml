@@ -5,16 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20dp"
+        android:text=""
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/backgroundColorBlue"
+        android:id="@+id/tvFullname" />
     <ListView
         android:id="@+id/lvChat"
         android:transcriptMode="alwaysScroll"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="@+id/tvFullname"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:divider="@null"
         android:layout_above="@+id/rlSend"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        />
     <RelativeLayout
         android:id="@+id/rlSend"
         android:layout_alignParentBottom="true"
