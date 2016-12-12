@@ -30,8 +30,8 @@
         android:gravity="center_vertical|right"/>
 
     <ImageButton android:id="@+id/btAddMore"
-        android:layout_width="20sp"
-        android:layout_height="20sp"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
         android:background="@android:color/transparent"
         android:src="@drawable/add_item"
         android:gravity="center_vertical"

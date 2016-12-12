@@ -251,7 +251,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
 
     private void getOrderByDeskIdResult(ArrayList<Object> objects)
     {
-        if (objects == null || objects.size() <2 || objects.get(1) == null) {
+        if (objects == null || objects.size() <3 || objects.get(1) == null) {
             UIUtils.alert(OrderActivity.this, "Lỗi khi kết nối", true);
         } else {
             orderData = (Order) objects.get(1);
@@ -268,9 +268,12 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
             }else{
                 orderCustomerData = new OrderCustomer();
             }
-            mDrawerLayout.closeDrawer(mLeftDrawerList);
-            mDrawerLayout.openDrawer(mRightDrawerList);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+            if(objects.get(2) == null || (boolean)objects.get(2)) {
+                mDrawerLayout.closeDrawer(mLeftDrawerList);
+                mDrawerLayout.openDrawer(mRightDrawerList);
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
             loadOrderedItems();
         }
     }
@@ -954,6 +957,11 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     Desk desk = (Desk) params[1];
                     deskAndOrder.add(desk);
                     deskAndOrder.add(ServiceProcess.getOrderByDeskId(desk.getID()));
+                    if(params.length > 2){
+                        deskAndOrder.add(params[2]);
+                    }else{
+                        deskAndOrder.add(true);
+                    }
                     return deskAndOrder;
                 case SERVICE_PROCESS_SAVE_ORDER:
                     return ServiceProcess.saveOrder(orderData);
@@ -1078,6 +1086,11 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 }
             }else if(ConstData.ACTION_REQUEST_DESK_UPDATE.equalsIgnoreCase(intent.getAction())) {
                 (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE);
+                String deskIds = intent.getStringExtra(ConstData.RECEIVE_REQUEST_DESK_UPDATE_DESK_ID);
+                if(deskIds!=null && orderData != null && orderData.getDesk() != null && deskIds.contains(orderData.getDesk().getID()))
+                {
+                    (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_ORDER_BY_DESK_ID, orderData.getDesk(), false);
+                }
             }
         }
     };

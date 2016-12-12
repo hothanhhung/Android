@@ -149,10 +149,11 @@ public class SignalRService extends Service {
         mHubProxy.on(CLIENT_METHOD_BROADAST_MESSAGE_UPDATE_DESK,
                 new SubscriptionHandler1<String>() {
                     @Override
-                    public void run(final String conversation) {
+                    public void run(final String deskIds) {
 
                         Intent intent = new Intent();
                         intent.setAction(ConstData.ACTION_REQUEST_DESK_UPDATE);
+                        intent.putExtra(ConstData.RECEIVE_REQUEST_DESK_UPDATE_DESK_ID, deskIds);
                         sendBroadcast(intent);
                     }
                 }
