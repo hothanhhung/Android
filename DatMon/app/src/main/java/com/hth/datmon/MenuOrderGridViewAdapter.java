@@ -3,6 +3,7 @@ package com.hth.datmon;
 import java.util.ArrayList;
 
 import com.hth.service.MenuOrder;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
@@ -49,7 +50,7 @@ public class MenuOrderGridViewAdapter extends ArrayAdapter<MenuOrder> {
         TextView tvPrice;
         TextView tvOutOfStock;
         TextView tbDetail;
-        ImageView imgImageView;
+        final ImageView imgImageView;
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.order_item_gridview, null);
@@ -73,6 +74,22 @@ public class MenuOrderGridViewAdapter extends ArrayAdapter<MenuOrder> {
         if(orderItem.hasImage()) {
             Picasso.with(context)
                     .load(orderItem.getPathImage())
+                    .into(imgImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(context)
+                                    .load(R.drawable.order_item1)
+                                    .into(imgImageView);
+                        }
+                    });
+        }else{
+            Picasso.with(context)
+                    .load(R.drawable.order_item1)
                     .into(imgImageView);
         }
         return convertView;

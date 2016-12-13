@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.hth.data.ServiceProcess;
@@ -17,6 +18,7 @@ import com.hth.service.Conversation;
 
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import microsoft.aspnet.signalr.client.Credentials;
 import microsoft.aspnet.signalr.client.Platform;
@@ -65,6 +67,7 @@ public class SignalRService extends Service {
     public void onDestroy() {
         mHubConnection.stop();
         super.onDestroy();
+        Log.d("SignalR", "onDestroy");
     }
 
     @Override
@@ -116,8 +119,8 @@ public class SignalRService extends Service {
         SignalRFuture<Void> signalRFuture = mHubConnection.start(clientTransport);
 
         try {
-            signalRFuture.get();
-        } catch (InterruptedException | ExecutionException e) {
+            signalRFuture.get(30, TimeUnit.SECONDS);
+        } catch (Exception e) {
             /*Notification mNotify  = new Notification.Builder(DatMonApp.getAppContext())
                     .setContentTitle("startSignalR")
                     .setContentText(e.getMessage())

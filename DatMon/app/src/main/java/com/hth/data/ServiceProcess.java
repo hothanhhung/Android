@@ -36,6 +36,8 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -564,6 +566,13 @@ public class ServiceProcess {
                 area.setDesks(entry.getValue());
                 areas.add(area);
             }
+
+            Collections.sort(areas, new Comparator<Areas>() {
+                @Override
+                public int compare(Areas lhs, Areas rhs) {
+                    return lhs.getName().compareToIgnoreCase(rhs.getName());
+                }
+            });
         }
 
         return areas;

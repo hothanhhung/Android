@@ -90,8 +90,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:queryHint="Nhập mã/Tên món cần tìm"
-                    android:hint="Nhập mã/Tên món cần tìm"
+                    android:queryHint="Nhập tên món cần tìm"
+                    android:hint="Nhập tên món cần tìm"
                     android:iconifiedByDefault="true" />
 
             </LinearLayout>

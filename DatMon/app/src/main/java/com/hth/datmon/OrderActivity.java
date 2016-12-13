@@ -21,6 +21,7 @@ import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -183,6 +184,8 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+
+            Log.d("onServiceDisconnected", "onServiceDisconnected");
             mBound = false;
         }
     };
@@ -364,6 +367,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 updateTableList();
             }
             orderData = order;
+            orderData.getDesk().setUsing();
             if (orderData.getDesk().IsUsing()) {
                 tvSelectedDesk.setTextColor(Color.RED);
             } else {
@@ -866,6 +870,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
 
     private void updateCustomerButtonText() {
         Button btCustomer = (Button) this.findViewById(R.id.btCustomer);
+        Button btChangeTable = (Button) this.findViewById(R.id.btChangeTable);
         if (orderCustomerData != null && btCustomer != null) {
             int number = orderCustomerData.isNew()? 0 : 1;
             btCustomer.setText("(" + number + ") Khách Hàng");
@@ -873,8 +878,25 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         if(!orderData.isNew() && !orderData.isRequestingPayment())
         {
             btCustomer.setVisibility(View.VISIBLE);
+            btChangeTable.setVisibility(View.VISIBLE);
         }else{
             btCustomer.setVisibility(View.INVISIBLE);
+            btChangeTable.setVisibility(View.INVISIBLE);
+        }
+
+        if(orderData.isRequestingPayment())
+        {
+            ((Button) this.findViewById(R.id.btClear)).setVisibility(View.INVISIBLE);
+            ((Button) this.findViewById(R.id.btSendToCooker)).setVisibility(View.INVISIBLE);
+        }else{
+            ((Button) this.findViewById(R.id.btRequestPayment)).setVisibility(View.VISIBLE);
+            ((Button) this.findViewById(R.id.btClear)).setVisibility(View.VISIBLE);
+            ((Button) this.findViewById(R.id.btSendToCooker)).setVisibility(View.VISIBLE);
+        }
+        if(orderData.isNew() || orderData.isRequestingPayment()){
+            ((Button) this.findViewById(R.id.btRequestPayment)).setVisibility(View.INVISIBLE);
+        }else{
+            ((Button) this.findViewById(R.id.btRequestPayment)).setVisibility(View.VISIBLE);
         }
     }
 
@@ -885,6 +907,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
 
     @Override
     protected void onResume() {
+        Log.d("DatMon", "onResume");
         super.onResume();
         if(orderData == null)
         {
@@ -898,11 +921,12 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     @Override
     protected void onDestroy() {
         // Unbind from the service
+        Log.d("DatMon", "onDestroy");
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
         }
-        DatMonApp.getAppContext().unregisterReceiver(receiverChat);
+        //DatMonApp.getAppContext().unregisterReceiver(receiverChat);
         super.onStop();
     }
 
@@ -939,11 +963,11 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 case SERVICE_PROCESS_GET_MENU_ORDER:
                     return ServiceProcess.getMenuOrder();
                 case SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE:
-                    return ServiceProcess.getAreasFromCache(false);
+                    return ServiceProcess.getAreasFromCache(true);
                 case SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE_UPDATE_TABLE_LIST:
                     return ServiceProcess.getAreasFromCache(true);
                 case  SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE_POPUP_CHANGE_DESK:
-                    return ServiceProcess.getAreasFromCache(false);
+                    return ServiceProcess.getAreasFromCache(true);
                 case SERVICE_PROCESS_CHANGE_DESK:
                     return ServiceProcess.changeDesk(orderData);
                 case SERVICE_PROCESS_SAVE_CUSTOMER:
@@ -1039,6 +1063,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     {
                         orderData.setIsRequestingPayment(true);
                         updateUIBasedOnStatusOfOrder();
+                        updateCustomerButtonText();
                         UIUtils.alert(OrderActivity.this, "Yêu cầu tính tiền đã được gửi", false);
                     }else{
                         UIUtils.alert(OrderActivity.this, "Lỗi khi yêu cầu tính tiền", true);
@@ -1093,5 +1118,6 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 }
             }
         }
+
     };
 }

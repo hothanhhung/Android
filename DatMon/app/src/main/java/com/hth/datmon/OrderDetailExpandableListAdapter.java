@@ -129,7 +129,9 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
         {
             case 0: tvStatus.setText("Mới"); break;
             case 1: tvStatus.setText("Đợi"); break;
-            case 2: tvStatus.setText("Xong"); break;
+            case 2: tvStatus.setText("Xong");
+                btRemove.setVisibility(View.INVISIBLE);
+                break;
         }
 
         if(childPosition % 2 == 0) {

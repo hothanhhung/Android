@@ -40,4 +40,8 @@ public class Desk {
     public boolean IsUsing() {
         return IsUsing;
     }
+
+    public void setUsing() {
+        IsUsing = true;
+    }
 }
