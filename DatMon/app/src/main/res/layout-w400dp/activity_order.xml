@@ -62,6 +62,14 @@
             android:scaleType="centerCrop"
             android:src="@drawable/plate"
             android:onClick="menuClick"/>
+        <ImageButton
+            android:id="@+id/btExit"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/exit"
+            android:onClick="menuClick"/>
     </LinearLayout>
 
     <android.support.v4.widget.DrawerLayout

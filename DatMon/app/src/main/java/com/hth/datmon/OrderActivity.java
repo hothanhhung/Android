@@ -85,6 +85,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     private SignalRService mService;
     private boolean mBound = false;
 
+    private boolean isDesksShouldUpdateData = false;
     private GridView grvOrderItems;
     private ExpandableListView lvOrderedItems;
     private MenuOrderGridViewAdapter adapterGrvOrderItems;
@@ -156,7 +157,30 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
         mDrawerLayout.openDrawer(mLeftDrawerList);
         mDrawerLayout.closeDrawer(mRightDrawerList);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
 
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                if(mDrawerLayout.isDrawerOpen(mLeftDrawerList) && isDesksShouldUpdateData)
+                {
+                    (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE);
+                }
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
         updatebtChats(ServiceProcess.getLoginUser().countUsersUnread());
 
         Intent intent = new Intent();
@@ -270,6 +294,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 orderCustomerData = ServiceProcess.getCustomerByOrder(orderData.getID());
             }else{
                 orderCustomerData = new OrderCustomer();
+                tvSelectedDesk.setTextColor(Color.GREEN);
             }
 
             if(objects.get(2) == null || (boolean)objects.get(2)) {
@@ -322,6 +347,11 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 break;
             case R.id.btRefresh:
                 updateTableList();
+                break;
+            case R.id.btExit:
+                Intent intent = new Intent(OrderActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
                 break;
 
         }
@@ -1018,6 +1048,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     break;
                 case SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE:
                     displayList((ArrayList<Areas>) object);
+                    isDesksShouldUpdateData = false;
                     break;
                 case SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE_UPDATE_TABLE_LIST:
                     lvTablesAdapter.updateData((ArrayList<Areas>) object);
@@ -1110,7 +1141,8 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     }
                 }
             }else if(ConstData.ACTION_REQUEST_DESK_UPDATE.equalsIgnoreCase(intent.getAction())) {
-                (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE);
+                //(new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_GET_AREAS_ORDER_FROM_CACHE);
+                isDesksShouldUpdateData = true;
                 String deskIds = intent.getStringExtra(ConstData.RECEIVE_REQUEST_DESK_UPDATE_DESK_ID);
                 if(deskIds!=null && orderData != null && orderData.getDesk() != null && deskIds.contains(orderData.getDesk().getID()))
                 {
