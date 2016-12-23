@@ -317,7 +317,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     }
 
     public void menuClick(View view) {
-       if(view.getId() != R.id.btChats && (orderData == null || orderData.getDesk() == null)) return;
+       if(view.getId() != R.id.btExit && view.getId() != R.id.btChats && (orderData == null || orderData.getDesk() == null)) return;
         switch (view.getId()){
             case R.id.btMenu:
 
