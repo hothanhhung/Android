@@ -1,0 +1,131 @@
+﻿<div>
+    <div ng-if="IsLoading" class="loading">
+        <span class="text-loading"> loading... </span>
+    </div>
+    <div id="CreateAndEditContentModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{SelectedProject == null || SelectedProject.Id <= 0 ?"Create Project":"Edit Project"}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12">
+                        <form name="SaveContentForm" ng-submit="SaveProject(SaveContentForm.$valid)">
+                            <div class="highlight">
+                                <div>
+                                    <div class="form-group">
+                                        <label>
+                                            Title
+                                        </label>
+                                        <input type="text" required ng-model="SelectedProject.Title" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            ShortContent
+                                        </label>
+                                        <textarea ng-model="SelectedProject.ShortContent" class="form-control" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Technical
+                                        </label>
+                                        <textarea ng-model="SelectedProject.Technical" class="form-control" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="txtSelectedFile" style="border:1px solid #ccc;cursor:pointer;padding:4px;width:80%;" value="Click here to select a file" onclick="openCustomRoxy2()">
+                                        <div id="roxyCustomPanel2" style="display: none;">
+                                            <iframe src="/fileman/index.html?integration=custom&type=image&txtFieldId=txtSelectedFile" style="width:100%;height:100%" frameborder="0"></iframe>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            ImageUrl
+                                        </label>
+                                        <input type="text" ng-model="SelectedProject.ImageUrl" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            IsDisplay
+                                        </label>
+                                        <input type="number" ng-model="SelectedProject.IsDisplay" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Content
+                                        </label>
+                                        <textarea ng-model="SelectedProject.Content" class="form-control" rows="5" name="Contenteditor" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-default">Save</button>
+                                </div>
+                            </div>
+                            <div role="alert">
+                                <span class="error" ng-show="SaveContentForm.input.$error.required">
+                                    Required!
+                                </span>
+                                <span class="error" ng-show="SaveContentForm.input.$error.number">
+                                    Not valid number!
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-default" ng-click="NewProject()">New</button>
+    </div>    
+    <div class="row">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Short Content</th>
+                    <!--<th>Image Url</th>-->
+                    <th>Is Display</th>
+                    <th>Created Date</th>
+                    <th>Updated Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in Projects">
+
+                    <td>{{item.Id}}</td>
+                    <td class="container"><div>{{item.Title}}</div></td>
+                    <td>{{item.CategoryName}}</td>
+                    <td class="container"><div>{{item.ShortContent}}</div></td>
+                    <!--<td>{{item.ImageUrl}}</td>-->
+                    <td>{{item.IsDisplay}}</td>
+                    <td>{{item.CreatedDate}}</td>
+                    <td>{{item.UpdatedDate}}</td>
+                    <td align="center">
+                        <a href="javascript:void(0)">
+                            <span ng-click="EditProject(item)" style="width:50px" class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <a href="javascript:void(0)">
+                            <span ng-click="DeleteProject(item)" style="width:50px" class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function openCustomRoxy2() {
+        $('#roxyCustomPanel2').dialog({ modal: true, width: 875, height: 600 });
+    }
+    function closeCustomRoxy2() {
+        $('#roxyCustomPanel2').dialog('close');
+    }
+</script>

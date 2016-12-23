@@ -24,7 +24,8 @@ namespace hthservices.DataBusiness
 
         public DbSet<ProgrammingContent> ProgrammingContents { get; set; }
         public DbSet<ProgrammingComment> ProgrammingComments { get; set; }
-
+        public DbSet<Project> Projects { get; set; }
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Chinook Database does not pluralize table names

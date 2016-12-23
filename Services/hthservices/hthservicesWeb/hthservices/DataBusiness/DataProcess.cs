@@ -72,6 +72,25 @@ namespace hthservices.DataBusiness
         }
         #endregion
 
+        #region Project
+        public static List<Project> GetProjects(int page = 0, int size = 10)
+        {
+            return SQLiteProcess.GetProjects(false, page, size);
+        }
+        public static Project GetProject(int contentId)
+        {
+            return SQLiteProcess.GetProject(contentId, false);
+        }
+
+        public static bool SaveProject(Project content)
+        {
+            return SQLiteProcess.SaveProject(content);
+        }
+        public static bool DeleteProject(int contentId)
+        {
+            return SQLiteProcess.DeleteProject(contentId);
+        }
+        #endregion
         #region User
         public static List<ProgrammingCategory> GetProgrammingCategoriesForUser()
         {
@@ -89,6 +108,16 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.GetProgrammingComments(null, true);
         }
+
+        public static List<Project> GetProjectsForUser(int page = 0, int size = 10)
+        {
+            return SQLiteProcess.GetProjects(true, page, size);
+        }
+        public static Project GetProjectForUser(int id)
+        {
+            return SQLiteProcess.GetProject(id, true);
+        }
+
         #endregion
     }
 }

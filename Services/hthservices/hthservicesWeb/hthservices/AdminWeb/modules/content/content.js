@@ -148,24 +148,27 @@ hthWebsiteApp.controller('ContentController',
 
           $scope.GetCategories();
           $scope.GetContents();
-          var roxyFileman = URL_SERVICE+'/fileman/index.html'; 
-          CKEDITOR.replace('Contenteditor',
-              {
-                  filebrowserImageUploadUrl: URL_SERVICE+'/CKEditorUpload.ashx',
-                  filebrowserBrowseUrl:roxyFileman,
-                  filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-                  removeDialogTabs: 'link:upload;image:upload'
-              }
-              /*{
-              toolbar: [
-                          ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
-                          ['Link', 'Unlink', 'Anchor'],
-                          ['Image', 'Table', 'Smiley', 'SpecialChar'],
-                          ['TextColor', 'BGColor'],
-                          '/',
-                          ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
-                          ['Styles', 'Format', 'Font', 'FontSize']
+          var roxyFileman = URL_SERVICE + '/fileman/index.html';
+          if (CKEDITOR.instances.Contenteditor !== undefined) {
+              CKEDITOR.instances.Contenteditor.destroy();
+          }
+              CKEDITOR.replace('Contenteditor',
+                  {
+                      filebrowserImageUploadUrl: URL_SERVICE+'/CKEditorUpload.ashx',
+                      filebrowserBrowseUrl:roxyFileman,
+                      filebrowserImageBrowseUrl:roxyFileman+'?type=image',
+                      removeDialogTabs: 'link:upload;image:upload'
+                  }
+                  /*{
+                  toolbar: [
+                              ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+                              ['Link', 'Unlink', 'Anchor'],
+                              ['Image', 'Table', 'Smiley', 'SpecialChar'],
+                              ['TextColor', 'BGColor'],
+                              '/',
+                              ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+                              ['Styles', 'Format', 'Font', 'FontSize']
 
-              ],
-          }*/);
-    }]);
+                  ],
+              }*/);
+        }]);

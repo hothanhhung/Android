@@ -251,6 +251,76 @@ namespace hthservices.DataBusiness
         }
         #endregion
 
+        #region Project
+
+        public static List<Project> GetProjects(bool isDisplay, int page = 0, int size = 10)
+        {
+            List<Project> projects = new List<Project>();
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var contents = context.Projects.Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);                
+                contents = contents.OrderBy(p => p.UpdatedDate);
+                contents = contents.Skip(page * size).Take(size);
+                projects = contents.ToList();
+            }
+            return projects;
+        }
+
+        public static Project GetProject(int id, bool isDisplay)
+        {
+            Project project = null;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var contents = context.Projects.Where(p => p.Id == id && (isDisplay == false || (p.IsDisplay ?? 0) > 0));
+                project = contents.FirstOrDefault();
+
+            }
+            return project;
+        }
+        public static bool SaveProject(Project content)
+        {
+            bool succ = false;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var project = context.Projects.FirstOrDefault(p => p.Id == content.Id);
+                if (project == null)
+                {
+                    content.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+                    content.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+                    context.Projects.Add(content);
+                }
+                else
+                {
+                    project.Title = content.Title;
+                    project.Technical = content.Technical;
+                    project.IsDisplay = content.IsDisplay;
+                    project.ImageUrl = content.ImageUrl;
+                    project.ShortContent = content.ShortContent;
+                    project.Content = content.Content;
+                    project.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+
+                }
+                succ = context.SaveChanges() > 0;
+            }
+            return succ;
+        }
+        public static bool DeleteProject(int contentId)
+        {
+            bool succ = false;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var project = context.Projects.FirstOrDefault(p => p.Id == contentId);
+                if (project != null)
+                {
+                    context.Projects.Remove(project);
+                    succ = context.SaveChanges() > 0;
+                }
+            }
+            return succ;
+        }
+
+        #endregion
+
         #region create data
 
         private static List<ProgrammingContent> CreateProgrammingContents()

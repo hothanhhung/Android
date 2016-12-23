@@ -348,5 +348,109 @@ namespace hthservices.Controllers
             return ResponseJson.GetResponseJson(resultObject);
         }
         #endregion
+
+        #region Project
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("GetProjects")]
+        public ResponseJson GetProjects(int page = 0, int size = 10)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+
+            var data = DataProcess.GetProjects(page, size)
+                .Select(x => new Project
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Technical = x.Technical,
+                    IsDisplay = x.IsDisplay,
+                    ImageUrl = x.ImageUrl,
+                    ShortContent = x.ShortContent,
+                    Content = x.Content,
+                    CreatedDate = x.CreatedDate,
+                    UpdatedDate = x.UpdatedDate
+                }).ToList();
+            return ResponseJson.GetResponseJson(data);
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("GetProject")]
+        public ResponseJson GetProject(int contentId)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+
+            var data = DataProcess.GetProject(contentId);
+            if (data != null)
+            {
+                data = new Project()
+                {
+                    Id = data.Id,
+                    Title = data.Title,
+                    Technical = data.Technical,
+                    IsDisplay = data.IsDisplay,
+                    ImageUrl = data.ImageUrl,
+                    ShortContent = data.ShortContent,
+                    Content = data.Content,
+                    CreatedDate = data.CreatedDate,
+                    UpdatedDate = data.UpdatedDate
+                };
+            }
+            return ResponseJson.GetResponseJson(data);
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.ActionName("SaveProject")]
+        public ResponseJson SaveProject([FromBody] Project content)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+
+            bool success = false;
+            if (content != null)
+            {
+                success = DataProcess.SaveProject(content);
+            }
+            var resultObject = new { IsSuccess = true, Message = "SaveProject" };
+            return ResponseJson.GetResponseJson(resultObject);
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("DeleteContent")]
+        public ResponseJson DeleteProject(int contentId)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+
+            bool success = DataProcess.DeleteProject(contentId);
+
+            var resultObject = new { IsSuccess = true, Message = "DeleteProject" };
+            return ResponseJson.GetResponseJson(resultObject);
+        }
+        #endregion
     }
 }

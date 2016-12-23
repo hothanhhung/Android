@@ -50,10 +50,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="logo-right">
                     <span class="menu"><img src="/Web/images/menu.png" alt=" " /></span>
                     <ul class="nav1">
-                        <li class="cap">@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Programming", "", "Programming")</li>
-                        <li>@Html.ActionLink("Projects", "", "Projects")</li>
-                        <li><a href="contact.html">Contact</a></li>
+                        @{
+                            string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+                        }
+                        <li class="@("Home".Equals(controllerName,StringComparison.OrdinalIgnoreCase)?"cap":"")">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li class="@("Programming".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Programming", "", "Programming")</li>
+                        <li class="@("Projects".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Projects", "", "Projects")</li>
+                        <li class="@("Contact".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")"><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>

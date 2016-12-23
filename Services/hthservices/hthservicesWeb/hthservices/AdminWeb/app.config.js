@@ -26,5 +26,9 @@
     .when('/comment/:contentId?', {
         templateUrl: "/adminweb/modules/comment/comment.tpl.html",
         controller: 'CommentController'
+    })
+    .when('/project', {
+        templateUrl: "/adminweb/modules/project/project.tpl.html",
+        controller: 'ProjectController'
     });
 }]);

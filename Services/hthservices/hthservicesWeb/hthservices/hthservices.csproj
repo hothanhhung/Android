@@ -173,6 +173,7 @@
     <Compile Include="Models\Website\ProgrammingCategory.cs" />
     <Compile Include="Models\Website\ProgrammingComment.cs" />
     <Compile Include="Models\Website\ProgrammingContent.cs" />
+    <Compile Include="Models\Website\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sudoku\Generator.cs" />
     <Compile Include="Sudoku\HtmlHelper.cs" />
@@ -199,6 +200,8 @@
     <Content Include="AdminWeb\index.html" />
     <Content Include="AdminWeb\modules\comment\comment.js" />
     <Content Include="AdminWeb\modules\comment\comment.tpl.html" />
+    <Content Include="AdminWeb\modules\project\project.js" />
+    <Content Include="AdminWeb\modules\project\project.tpl.html" />
     <Content Include="AdminWeb\modules\content\content.js" />
     <Content Include="AdminWeb\modules\content\content.tpl.html" />
     <Content Include="AdminWeb\modules\category\category.js" />
