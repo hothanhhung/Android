@@ -88,5 +88,43 @@ namespace hthservices.Models
                 return infoRequest;
             }
         }
+
+        private string ipRequest = null;
+        [IgnoreDataMember]
+        public string IpRequest
+        {
+            get
+            {
+                if (ipRequest == null)
+                {
+                    if (!String.IsNullOrWhiteSpace(RequestLink))
+                    {
+                        var start = RequestLink.IndexOf("ipUser=", StringComparison.OrdinalIgnoreCase);
+                        if (start > 0)
+                        {
+                            var end = RequestLink.IndexOf("&", start, StringComparison.OrdinalIgnoreCase);
+                            if (end < 0)
+                            {
+                                ipRequest = RequestLink.Substring(start + 7).Trim().ToLower();
+                            }
+                            else
+                            {
+                                ipRequest = RequestLink.Substring(start + 7, end - start - 7).Trim().ToLower();
+                            }
+                        }
+                        else
+                        {
+                            ipRequest = String.Empty;
+                        }
+
+                    }
+                    else
+                    {
+                        ipRequest = String.Empty;
+                    }
+                }
+                return ipRequest;
+            }
+        }
     }
 }

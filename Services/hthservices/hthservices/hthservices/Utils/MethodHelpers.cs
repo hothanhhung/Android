@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 
 namespace hthservices.Utils
@@ -103,6 +104,29 @@ namespace hthservices.Utils
             }
             return absolutePathToDataFolder;
 
+        }
+
+        public static string GetClientIp(HttpRequestMessage request)
+        {
+            if (request.Properties.ContainsKey("MS_HttpContext"))
+            {
+                var ip = ((HttpContextWrapper)request.Properties["MS_HttpContext"]).Request.UserHostAddress;
+                try
+                {
+                    if (ip != null)
+                    {
+                        return ip.Trim();
+                    }
+                }
+                catch { }
+            }
+            
+            return string.Empty;
+        }
+
+        public static string GetUrlToLog(HttpRequestMessage request)
+        {
+            return request.RequestUri.ToString() + "&ipUser=" + MethodHelpers.GetClientIp(request);
         }
     }
 }

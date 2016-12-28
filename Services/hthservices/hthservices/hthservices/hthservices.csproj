@@ -169,6 +169,7 @@
     <Compile Include="Utils\Channel.cs" />
     <Compile Include="Utils\DataProcess.cs" />
     <Compile Include="Utils\DataStatic.cs" />
+    <Compile Include="Utils\DenyInfo.cs" />
     <Compile Include="Utils\EncrypeString.cs" />
     <Compile Include="Utils\GuideItem.cs" />
     <Compile Include="Utils\HtmlHelper.cs" />
@@ -1074,6 +1075,7 @@
     <Content Include="Scripts\bower_components\jQuery-3.1.0\jquery-3.1.0.min.map" />
     <Content Include="Data\Reports.db3" />
     <Content Include="Data\OwnerAdsData.json" />
+    <Content Include="Data\DenyIPs.json" />
     <None Include="Properties\PublishProfiles\hung.pubxml" />
     <None Include="Properties\PublishProfiles\hung1.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
