@@ -16,11 +16,6 @@ namespace hthservices.Controllers
         //
         // GET: /ReportApi/
 
-        public ActionResult Index()
-        {
-            return ResponseJson.GetResponseJson(string.Empty, false);
-        }
-
         [System.Web.Http.HttpGet]
         [System.Web.Http.HttpPost]
         [System.Web.Http.ActionName("Delete")]

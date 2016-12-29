@@ -174,6 +174,7 @@
     <Compile Include="Utils\GuideItem.cs" />
     <Compile Include="Utils\HtmlHelper.cs" />
     <Compile Include="Utils\MethodHelpers.cs" />
+    <Compile Include="Utils\RequestFilterHandler.cs" />
     <Compile Include="Utils\ScheduleRequestLog.cs" />
     <Compile Include="Utils\SearchItem.cs" />
     <Compile Include="Utils\SQLiteProcess.cs" />
@@ -1075,7 +1076,7 @@
     <Content Include="Scripts\bower_components\jQuery-3.1.0\jquery-3.1.0.min.map" />
     <Content Include="Data\Reports.db3" />
     <Content Include="Data\OwnerAdsData.json" />
-    <Content Include="Data\DenyIPs.json" />
+    <Content Include="Data\DeniedConfig.json" />
     <None Include="Properties\PublishProfiles\hung.pubxml" />
     <None Include="Properties\PublishProfiles\hung1.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

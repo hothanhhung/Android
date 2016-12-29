@@ -26,7 +26,7 @@ namespace hthservices.Models
         public string NewDomain;
         public dynamic Data;
 
-        public static dynamic GetResponseJson(dynamic data, bool isSuccess = true)
+        public static ResponseJson GetResponseJson(dynamic data, bool isSuccess = true)
         {
             var responseJson = new ResponseJson()
             {
