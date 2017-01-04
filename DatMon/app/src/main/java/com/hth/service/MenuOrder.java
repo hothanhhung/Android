@@ -1,5 +1,8 @@
 package com.hth.service;
 
+import android.util.Patterns;
+
+import com.hth.data.ServiceProcess;
 import com.hth.datmon.MethodsHelper;
 
 import java.util.Date;
@@ -48,6 +51,16 @@ public class MenuOrder
             return PathImage;
         }
 
+        public String getFullPathImage() {
+            if(hasImage()) {
+                if (Patterns.WEB_URL.matcher(PathImage).matches()) {
+                    return PathImage;
+                }
+                return ServiceProcess.getServerLink(PathImage);
+            }
+
+            return "";
+        }
         public float getPrice() {
             return Price;
         }

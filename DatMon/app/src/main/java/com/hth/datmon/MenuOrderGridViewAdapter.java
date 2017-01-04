@@ -73,7 +73,7 @@ public class MenuOrderGridViewAdapter extends ArrayAdapter<MenuOrder> {
         tbDetail.setText(orderItem.getName());
         if(orderItem.hasImage()) {
             Picasso.with(context)
-                    .load(orderItem.getPathImage())
+                    .load(orderItem.getFullPathImage())
                     .into(imgImageView, new Callback() {
                         @Override
                         public void onSuccess() {

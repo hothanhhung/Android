@@ -243,7 +243,7 @@
             </ExpandableListView>
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="30sp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -256,23 +256,33 @@
                     android:textStyle="bold"
                     android:textColor="#000" />
                 <TextView
-                    android:layout_width="150sp"
+                    android:layout_width="85sp"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="Tổng tiền"
-                    android:gravity="center_vertical"
-                    android:textStyle="bold"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:layout_width="130sp"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="0"
-                    android:gravity="center_vertical"
+                    android:textSize="13sp"
+                    android:text="Thành tiền\n915000"
                     android:textStyle="bold"
                     android:textColor="#000"
-                    android:id="@+id/tvTotalPrice" />
+                    android:id="@+id/tvTotalPrice"
+                    android:gravity="center_horizontal" />
+                <TextView
+                    android:layout_width="85sp"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="Giảm (10%)\n15000"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:id="@+id/tvDiscountPrice"  />
+
+                <TextView
+                    android:layout_width="85sp"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="Tổng tiền\n0"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:id="@+id/tvTotalFinalPrice"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"

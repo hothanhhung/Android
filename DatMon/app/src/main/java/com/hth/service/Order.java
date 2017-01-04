@@ -25,6 +25,10 @@ public class Order {
     public String UpdatedBy;
     public String CreatedBy;
     public String CompletedDate;
+    public float PromotionPercent;
+    public float TotalPromotion;
+    public float Total;
+    public float TotalPrice;
     public ArrayList<OrderDetail> OrderDetails;
        /* public List<HistoryOrderDetail> HistoryOrderDetails;*/
 
@@ -85,5 +89,21 @@ public class Order {
 
     public void setIsRequestingPayment(boolean isRequestingPayment) {
         IsRequestingPayment = isRequestingPayment;
+    }
+
+    public float getTotal() {
+        return Total;
+    }
+
+    public float getTotalPrice() {
+        return TotalPrice;
+    }
+
+    public float getTotalPromotion() {
+        return TotalPromotion;
+    }
+
+    public float getPercentPromotion() {
+        return PromotionPercent;
     }
 }

@@ -74,6 +74,7 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
         TextView tvDetail;
         TextView tvStatus;
         ImageButton btRemove;
+        ImageView imGift;
 
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -84,6 +85,7 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
         tvDetail = (TextView) view.findViewById(R.id.tvDetail);
         tvStatus = (TextView)  view.findViewById(R.id.tvStatus);
         btRemove = (ImageButton) view.findViewById(R.id.btRemove);
+        imGift = (ImageView) view.findViewById(R.id.imGift);
 
         btRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,12 +120,16 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
         }
         if(orderedItem.isPromotion()){
             btRemove.setVisibility(View.INVISIBLE);
+            tvTotal.setVisibility(View.INVISIBLE);
+            imGift.setVisibility(View.VISIBLE);
         }else{
             btRemove.setVisibility(View.VISIBLE);
+            tvTotal.setVisibility(View.VISIBLE);
+            tvTotal.setText(String.format("%,.0f", orderedItem.getTotal()));
+            imGift.setVisibility(View.INVISIBLE);
         }
         // Setting all values in listview
         etQuantity.setText("" + orderedItem.getQuantity());
-        tvTotal.setText(String.format("%,.0f", orderedItem.getTotal()));
         tvDetail.setText(orderedItem.getName());
         switch (orderedItem.getStatus())
         {
@@ -209,15 +215,20 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
 
         ArrayList<OrderDetail> orderedItems = (ArrayList<OrderDetail>)getGroup(groupPosition);
         float totalQuantity = 0;
+        float totalcalQuantity = 0;
         for (OrderDetail orderDetail: orderedItems)
         {
             totalQuantity += orderDetail.getQuantity();
+            if(!orderDetail.isPromotion())
+            {
+                totalcalQuantity  += orderDetail.getQuantity();
+            }
         }
         OrderDetail orderedItem = orderedItems.get(0);
         btAddMore.setTag(orderedItem);
         // Setting all values in listview
         tvQuantity.setText("" + totalQuantity);
-        tvTotal.setText(String.format("%,.0f", totalQuantity * orderedItem.getPrice()));
+        tvTotal.setText(String.format("%,.0f", totalcalQuantity * orderedItem.getPrice()));
         tvDetail.setText(orderedItem.getName());
 
         if(groupPosition % 2 == 0) {
@@ -260,7 +271,10 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
     {
         float total = 0;
         for (OrderDetail orderedItem:orderDetails  ) {
-            total += orderedItem.getTotal();
+            if(!orderedItem.isPromotion())
+            {
+                total += orderedItem.getTotal();
+            }
         }
         return total;
     }

@@ -93,7 +93,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     private DrawerLayout mDrawerLayout;
     private LinearLayout mLeftDrawerList;
     private LinearLayout mRightDrawerList;
-    private TextView tvSelectedDesk, tvTotalPrice;
+    private TextView tvSelectedDesk, tvTotalPrice,tvDiscountPrice, tvTotalFinalPrice;
     private Spinner spMenuOrderType;
     SearchView search;
 
@@ -107,6 +107,8 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
         lvOrderedItems = (ExpandableListView) findViewById(R.id.lvOrderedItems);
         tvSelectedDesk = (TextView) findViewById(R.id.tvSelectedDesk);
         tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
+        tvDiscountPrice = (TextView) findViewById(R.id.tvDiscountPrice);
+        tvTotalFinalPrice = (TextView) findViewById(R.id.tvTotalFinalPrice);
         spMenuOrderType = (Spinner) findViewById(R.id.spMenuOrderType);
         search = (SearchView) findViewById(R.id.search);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -307,7 +309,19 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
     }
     private void updateOrderedView()
     {
-        tvTotalPrice.setText(String.format("%,.0f", orderDetailRowAdapter.getTotal()));
+
+        if(orderData!=null && orderDetailRowAdapter!=null) {
+            float total = orderDetailRowAdapter.getTotal();
+            float discount = total * orderData.getPercentPromotion()/100;
+            float finalPrice = total - discount;
+            tvTotalPrice.setText(String.format("Thành tiền\n%,.0f", total));
+            tvDiscountPrice.setText(String.format("Giảm (%,.0f%%)\n%,.0f", orderData.getPercentPromotion(), discount));
+            tvTotalFinalPrice.setText(String.format("Tổng tiền\n%,.0f", finalPrice));
+        }else{
+            tvTotalPrice.setText(String.format("Thành tiền\n"));
+            tvDiscountPrice.setText(String.format("Giảm (0%)\n"));
+            tvTotalFinalPrice.setText(String.format("Tổng tiền\n"));
+        }
     }
 
     private void updatebtChats(int number)
