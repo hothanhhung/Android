@@ -3,6 +3,11 @@
     <div ng-if="$ctrl.ScheduleRequestLogs.IsLoading" class="loading">
         <span class="text-loading"> loading... </span>
     </div>
+    <div class="form-inline" style="padding:5px; line-height: 30px;">
+        <span class="condition" ng-repeat ="condition in $ctrl.ScheduleRequestLogs.Filter.Conditions">
+            {{condition.Key}} like {{condition.Value}}<span ng-click="$ctrl.RemoveCondition(condition)" class="glyphicon glyphicon-remove-circle" />
+        </span>
+    </div>
     <div class="form-inline" style="padding:5px">
         <div class="btn-group" role="group" aria-label="...">
             <button type="button" ng-model="ScheduleRequestLogs.Filter.ChannelKey" ng-init="ScheduleRequestLogs.Filter.ChannelKey=!$ctrl.ScheduleRequestLogs.Filter.NoChannelKey" class="btn {{ScheduleRequestLogs.Filter.ChannelKey?'btn-info':'btn-default'}}" ng-click="ScheduleRequestLogs.Filter.ChannelKey=!ScheduleRequestLogs.Filter.ChannelKey">Channel Key</button>
@@ -69,12 +74,24 @@
             </thead>
             <tbody>
                 <tr ng-repeat="item in $ctrl.ScheduleRequestLogs.ScheduleLogs">
-                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoChannelKey">{{item.ChannelKey}}</td>
-                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDeviceId">{{item.DeviceId}}</td>
-                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoOpenKey">{{item.OpenKey}}</td>
-                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoAppVersion">{{item.AppVersion}}</td>
-                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate">{{item.CurrentDate}}</td>
-                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDateOn">{{item.DateOn}}</td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoChannelKey">
+                        <span href="javascript:void(0)" ng-click="$ctrl.AddCondition('ChannelKey', item.ChannelKey)">{{item.ChannelKey}}</span>
+                    </td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDeviceId">
+                        <span href="javascript:void(0)" ng-click="$ctrl.AddCondition('DeviceId', item.DeviceId)">{{item.DeviceId}}</span>
+                    </td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoOpenKey">
+                        <span href="javascript:void(0)" ng-click="$ctrl.AddCondition('OpenKey', item.OpenKey)">{{item.OpenKey}}</span>
+                    </td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoAppVersion">
+                        <span href="javascript:void(0)" ng-click="$ctrl.AddCondition('AppVersion', item.AppVersion)">{{item.AppVersion}}</span>
+                    </td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoCurrentDate">
+                        <span href="javascript:void(0)" ng-click="$ctrl.AddCondition('CurrentDate', item.CurrentDate)">{{item.CurrentDate}}</span>
+                    </td>
+                    <td ng-if="!$ctrl.ScheduleRequestLogs.Filter.NoDateOn">
+                        <span href="javascript:void(0)" ng-click="$ctrl.AddCondition('DateOn', item.DateOn)">{{item.DateOn}}</span>
+                    </td>
                     <td>{{item.NumberOfRequests}}</td>
                     <td align="center" ng-if="$ctrl.isShowAction">
                         <a href="javascript:void(0)">

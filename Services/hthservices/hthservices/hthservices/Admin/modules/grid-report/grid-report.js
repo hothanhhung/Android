@@ -47,8 +47,20 @@ function GridReportController($scope, $rootScope, $http, $location) {
         Desc: true,
         OrderField: initByTop?'NumberOfRequests':'CurrentDate',
         FromDate: '',
-        ToDate:''
+        ToDate: '',
+        Conditions: []
     };
+
+    ctrl.AddCondition = function(key, value)
+    {
+        ctrl.ScheduleRequestLogs.Filter.Conditions.push({ Key: key, Value: value });
+        ctrl.GetReport();
+    }
+
+    ctrl.RemoveCondition = function (condition) {
+        ctrl.ScheduleRequestLogs.Filter.Conditions.pop(condition);
+        ctrl.GetReport();
+    }
 
     ctrl.GetReport = function () {
         var getReportUrl = URL_SERVICE + '/api/ReportApi/GroupRequest/?token=' + $rootScope.AuthInfo.Token;

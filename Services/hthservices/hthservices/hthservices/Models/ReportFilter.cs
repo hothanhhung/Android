@@ -7,6 +7,7 @@ namespace hthservices.Models
 {
     public class ReportFilter
     {
+        private readonly string[] Fields = new string[] { "ChannelKey", "CurrentDate", "DateOn", "DeviceId", "OpenKey", "AppVersion" };
         public bool NoChannelKey {get; set;}
         public bool NoCurrentDate {get; set;} 
         public bool NoDateOn {get; set;}
@@ -20,6 +21,8 @@ namespace hthservices.Models
         public string OrderField {get; set;}
         public string FromDate { get; set; }
         public string ToDate { get; set; }
+
+        public List<KeyValuePair<string, string>> Conditions { get; set; }
 
         public int GetCorrectSize()
         {
@@ -36,8 +39,6 @@ namespace hthservices.Models
             string order_by = "";
             string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn") + (NoDeviceId ? "" : ", DeviceId") + (NoOpenKey ? "" : ", OpenKey") + (NoAppVersion ? "" : ", AppVersion");
             string select = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn") + (NoDeviceId ? "" : ", DeviceId") + (NoOpenKey ? "" : ", OpenKey") + (NoAppVersion ? "" : ", AppVersion");
-
-            string where = "";
 
             group = group.Trim(',');
             select = select.Trim(',');
@@ -57,12 +58,8 @@ namespace hthservices.Models
                 order_by = " ORDER BY " + OrderField + ((Desc??true)?" DESC":" ASC");
             }
 
-            if(!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
-            {
-                where = " WHERE CurrentDate >= '" + FromDate + "' AND CurrentDate <= '" + ToDate + "' ";
-            }
 
-            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + where + group + order_by + " LIMIT " + GetCorrectSize() + " OFFSET " + (((Page ?? 1) - 1) * GetCorrectSize());
+            string sqlSaveChannel = "SELECT " + select + ", SUM(NumberOfRequests) AS NumberOfRequests FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + WhereCondition + group + order_by + " LIMIT " + GetCorrectSize() + " OFFSET " + (((Page ?? 1) - 1) * GetCorrectSize());
             
             return sqlSaveChannel;
         }
@@ -71,7 +68,7 @@ namespace hthservices.Models
         {
             string group = (NoChannelKey ? "" : ", ChannelKey") + (NoCurrentDate ? "" : ", CurrentDate") + (NoDateOn ? "" : ", DateOn") + (NoDeviceId ? "" : ", DeviceId") + (NoOpenKey ? "" : ", OpenKey") + (NoAppVersion ? "" : ", AppVersion");
             group = group.Trim(',');
-            string where = "";
+            
             if (!string.IsNullOrWhiteSpace(group))
             {
                 group = " GROUP BY " + group;
@@ -80,13 +77,47 @@ namespace hthservices.Models
             {
                 group = " GROUP BY ChannelKey, CurrentDate, DateOn, DeviceId, OpenKey, AppVersion";
             }
-            if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
-            {
-                where = " WHERE CurrentDate >= '" + FromDate + "' AND CurrentDate <= '" + ToDate + "' ";
-            }
-            string sqlSaveChannel = "SELECT count(*) FROM (SELECT * FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + where + group + " )";
+
+            string sqlSaveChannel = "SELECT count(*) FROM (SELECT * FROM " + (isFailRequest ? "ScheduleFailedRequestLogs" : "ScheduleRequestLogs") + " " + WhereCondition + group + " )";
 
             return sqlSaveChannel;
+        }
+
+        private string WhereCondition
+        {
+            get
+            {
+                string where = "";
+                if (!string.IsNullOrWhiteSpace(FromDate) && !string.IsNullOrWhiteSpace(ToDate))
+                {
+                    where = " WHERE CurrentDate >= '" + FromDate + "' AND CurrentDate <= '" + ToDate + "' ";
+                }
+                if (Conditions != null && Conditions.Count > 0)
+                {
+                    string field;
+                    foreach (var condition in Conditions)
+                    {
+                        field = GetFieldName(condition.Key);
+                        if (!string.IsNullOrWhiteSpace(field))
+                        {
+                            if (string.IsNullOrWhiteSpace(where))
+                            {
+                                where += " WHERE " + field + " like '" + condition.Value + "' ";
+                            }
+                            else
+                            {
+                                where += " AND " + field + " like '" + condition.Value + "' ";
+                            }
+                        }
+                    }
+                }
+                return where;
+            }
+        }
+
+        private string GetFieldName(string field)
+        {
+            return Fields.Where(p => p.Equals(field, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
         }
     }
 }
