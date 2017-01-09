@@ -463,7 +463,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                         doCrop();
                     }
                     ((ImageView) dialogCustomer.findViewById(R.id.imgAvatar)).setImageBitmap(PhotoManager.getPhoto().getSmallPhoto());
-                    ((Button)dialogCustomer.findViewById(R.id.btUploadAvatar)).setVisibility(View.VISIBLE);
+                    //((Button)dialogCustomer.findViewById(R.id.btUploadAvatar)).setVisibility(View.VISIBLE);
                     break;
                 case CROP_FROM_CAMERA:
                     if (cameraPhotoFile != null) {
@@ -475,7 +475,8 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                         break;
                     PhotoManager.getPhoto().cropImage((Bitmap) localBundle.getParcelable("data"));
                     ((ImageView) dialogCustomer.findViewById(R.id.imgAvatar)).setImageBitmap(PhotoManager.getPhoto().getSmallPhoto());
-                    ((Button)dialogCustomer.findViewById(R.id.btUploadAvatar)).setVisibility(View.VISIBLE);
+                    //((Button)dialogCustomer.findViewById(R.id.btUploadAvatar)).setVisibility(View.VISIBLE);
+                    btUploadAvatar_Click(null);
                     break;
             }
         }
@@ -520,6 +521,7 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                     public void onCancel(DialogInterface dialog) {
                     }
                 });
+                builder.setCancelable(false);
                 AlertDialog alert = builder.create();
                 alert.show();
             } else {
@@ -529,7 +531,8 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 startActivityForResult(i, CROP_FROM_CAMERA);
             }
         } else {
-            UIUtils.alert(OrderActivity.this, "Không tìm thấy ứng dụng để crop ảnh", true);
+            //UIUtils.alert(OrderActivity.this, "Không tìm thấy ứng dụng để crop ảnh", true);
+            btUploadAvatar_Click(null);
         }
     }
 
@@ -696,8 +699,12 @@ public class OrderActivity extends AppCompatActivity implements ICallBack {
                 selectedCustomer.setFacebook(etFacebook.getText().toString());
                 selectedCustomer.setZalo(etZalo.getText().toString());
                 selectedCustomer.setCarNumber(etCarNumber.getText().toString());
-                (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_SAVE_CUSTOMER, selectedCustomer);
-                dialogCustomer.dismiss();
+                if(!selectedCustomer.getFirstName().trim().isEmpty() || !selectedCustomer.getPhoneNumber().trim().isEmpty()) {
+                    (new PerformServiceProcessBackgroundTask()).execute(SERVICE_PROCESS_SAVE_CUSTOMER, selectedCustomer);
+                    dialogCustomer.dismiss();
+                }else{
+                    UIUtils.alert(OrderActivity.this, "Vui lòng nhập tên hoặc số điện thoại", true);
+                }
 
             }
         });

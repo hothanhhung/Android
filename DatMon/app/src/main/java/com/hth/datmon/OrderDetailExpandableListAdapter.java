@@ -1,5 +1,6 @@
 package com.hth.datmon;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,7 +31,7 @@ import static android.view.View.GONE;
  * Created by Lenovo on 8/26/2016.
  */
 public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter implements ICallBack{
-    private Context context;
+    private Activity context;
     private ArrayList<OrderDetail> orderDetails;
     private HashMap<String, ArrayList<OrderDetail>> groupOrderDetails;
     private ICallBack callBack;
@@ -47,7 +48,7 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
         }
     }
 
-    public OrderDetailExpandableListAdapter(Context context, ArrayList<OrderDetail> orderDetails, ICallBack callBack) {
+    public OrderDetailExpandableListAdapter(Activity context, ArrayList<OrderDetail> orderDetails, ICallBack callBack) {
         this.context = context;
         this.orderDetails = orderDetails;
         this.callBack = callBack;
@@ -130,6 +131,22 @@ public class OrderDetailExpandableListAdapter extends BaseExpandableListAdapter 
         }
         // Setting all values in listview
         etQuantity.setText("" + orderedItem.getQuantity());
+        if(orderedItem.isAllowedChangeQuatity()){
+
+            etQuantity.setVisibility(View.VISIBLE);
+            if(orderedItem.getStatus() != 2 && !orderedItem.isPromotion())
+            {
+                etQuantity.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        OrderDetail orderedItem = (OrderDetail) v.getTag();
+                        UIUtils.showNumberPickerDialog(context,orderedItem,OrderDetailExpandableListAdapter.this);
+                    }
+                });
+            }
+        }else {
+            etQuantity.setVisibility(View.GONE);
+        }
         tvDetail.setText(orderedItem.getName());
         switch (orderedItem.getStatus())
         {

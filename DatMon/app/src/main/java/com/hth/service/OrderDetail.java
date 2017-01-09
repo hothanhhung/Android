@@ -78,4 +78,9 @@ public class OrderDetail {
     public boolean isPromotion() {
         return IsPromotion;
     }
+
+    public boolean isAllowedChangeQuatity()
+    {
+        return MenuOrder.getType() == 2 || MenuOrder.getType() == 3;
+    }
 }

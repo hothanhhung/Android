@@ -11,8 +11,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.text.Html;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 import com.hth.service.OrderDetail;
@@ -96,7 +99,7 @@ public class UIUtils {
         return alertDialog;
     }
 
-	public static void showNumberPickerDialog(Activity activity, final OrderDetail orderedItem, final ICallBack callBack)
+	public static void showNumberPickerDialog1(Activity activity, final OrderDetail orderedItem, final ICallBack callBack)
 	{
 		String numberInString = String.valueOf(orderedItem.getQuantity());
 		String [] parts = numberInString.indexOf('.')==-1? numberInString.split("[,]"):numberInString.split("[.]");
@@ -147,6 +150,48 @@ public class UIUtils {
 		});
 		d.show();
 
+
+	}
+	public static void showNumberPickerDialog(final Activity activity, final OrderDetail orderedItem, final ICallBack callBack)
+	{
+		if(orderedItem != null){
+			AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+			alertDialog.setTitle("Chỉnh sửa số lượng");
+			alertDialog.setMessage(orderedItem.getName());
+
+			final EditText input = new EditText(activity);
+			input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+			input.setText(""+orderedItem.getQuantity());
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.MATCH_PARENT);
+			input.setLayoutParams(lp);
+			alertDialog.setView(input);
+			alertDialog.setIcon(R.drawable.edit);
+
+			alertDialog.setPositiveButton("Lưu",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							try {
+								float quatity = Float.valueOf(input.getText().toString());
+								orderedItem.setQuantity(quatity);
+								dialog.dismiss();
+								callBack.onNumberPikerDialogSave();
+							}catch (Exception ex){
+								UIUtils.alert(activity,"Vui lòng nhập số",true);
+							}
+						}
+					});
+
+			alertDialog.setNegativeButton("Bỏ Qua",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+
+			alertDialog.show();
+		}
 
 	}
 
