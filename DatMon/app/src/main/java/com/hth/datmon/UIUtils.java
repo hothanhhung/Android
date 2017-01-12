@@ -160,8 +160,8 @@ public class UIUtils {
 			alertDialog.setMessage(orderedItem.getName());
 
 			final EditText input = new EditText(activity);
-			input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-			input.setText(""+orderedItem.getQuantity());
+			input.setInputType(InputType.TYPE_CLASS_NUMBER);
+			input.setText(String.format("%.0f",orderedItem.getQuantity()));
 			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.MATCH_PARENT);
@@ -173,12 +173,12 @@ public class UIUtils {
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							try {
-								float quatity = Float.valueOf(input.getText().toString());
+								int quatity = Integer.valueOf(input.getText().toString());
 								orderedItem.setQuantity(quatity);
 								dialog.dismiss();
 								callBack.onNumberPikerDialogSave();
 							}catch (Exception ex){
-								UIUtils.alert(activity,"Vui lòng nhập số",true);
+								UIUtils.alert(activity,"Vui lòng nhập số nguyên",true);
 							}
 						}
 					});
