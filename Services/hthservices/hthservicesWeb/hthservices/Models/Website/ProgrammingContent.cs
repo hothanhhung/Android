@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
-
+using hthservices.Utils;
 namespace hthservices.Models.Website
 {
     public class ProgrammingContent
@@ -35,7 +35,7 @@ namespace hthservices.Models.Website
 
         public string GetSomeContent()
         {
-            return Content == null? "":(Content.Count() > 100 ? Content.Substring(100) : Content);
+            return Content == null ? string.Empty : Content.GetShortTextFromHmlContent();
         }
 
         public string GetUpdatedDateToShow()

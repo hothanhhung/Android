@@ -1,6 +1,8 @@
 ﻿@using hthservices.Utils;
+@using hthservices.Models.Website;
 @{
     ViewBag.Title = "Home Page";
+    var category = ViewBag.Category as ProgrammingCategory;
 }
 
 <div class="content">
@@ -28,7 +30,7 @@
                                     </p>
                                     <p class="Sed">
                                         <span>
-                                            @content.GetSomeContent()
+                                            @Html.Raw(content.GetSomeContent())
                                         </span>
                                     </p>
                                 </div>
@@ -46,29 +48,36 @@
                 <div>
                     <div class="border1">
                         <div class="pre">
-                            <a href="#">Prev</a>
+                            @if (ViewBag.CurrentPage > 1)
+                            {
+                                <a href="?page=@(ViewBag.CurrentPage-1)&size=@ViewBag.PageSize">Prev</a>
+                            }
                         </div>
                         <div class="number">
                             <ul>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">6</a></li>
-                                <li><a href="#">7</a></li>
-                                <li><a href="#">8</a></li>
-                                <li><a href="#">9</a></li>
-                                <li><a href="#">10</a></li>
-                                <li><a href="#">11</a></li>
-                                <li><a href="#">12</a></li>
+                                @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                                {
+                                    if (i != ViewBag.CurrentPage)
+                                    {
+                                        <li><a href="?page=@i&size=@ViewBag.PageSize">@i</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li>@i</li>
+                                    }
+                                }
                             </ul>
                         </div>
                         <div class="next">
-                            <a href="#">Next</a>
+                            @if (ViewBag.CurrentPage < ViewBag.TotalPage)
+                            {
+                                <a href="?page=@(ViewBag.CurrentPage + 1)&size=@ViewBag.PageSize">Next</a>
+                            }
                         </div>
+
                         <div class="clearfix"> </div>
                     </div>
+
                 </div>
             </div>
             @Html.Action("RightProgrammingPartial", "Programming");

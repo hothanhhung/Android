@@ -1,7 +1,9 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -111,6 +113,16 @@ namespace hthservices.Utils
             urlToEncode = urlToEncode.Replace(" ", "-");
             urlToEncode = System.Text.RegularExpressions.Regex.Replace(urlToEncode, @"[^a-z0-9]", "-");
             return urlToEncode.ToString();
+        }
+
+        public static string GetShortTextFromHmlContent(this String content)
+        {
+            if (content == null) return string.Empty;
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(content);
+            string text = doc.DocumentNode.InnerText;
+            text = Regex.Replace(text, @"\s+", " ").Trim();
+            return text == null ? string.Empty : (text.Count() > 100 ? text.Substring(0, 400)+"..." : text);
         }
         //public static string ToUnsign(this UrlHelper helper,
         //string urlToEncode)

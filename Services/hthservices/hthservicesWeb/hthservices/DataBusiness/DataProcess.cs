@@ -13,6 +13,10 @@ namespace hthservices.DataBusiness
     public class DataProcess
     {
         #region Category
+        public static int CountProgrammingCategories()
+        {
+            return SQLiteProcess.CountProgrammingCategories(false);
+        }
         public static List<ProgrammingCategory> GetProgrammingCategories()
         {
             return SQLiteProcess.GetProgrammingCategories(false, false);
@@ -33,6 +37,10 @@ namespace hthservices.DataBusiness
         #endregion
 
         #region Content
+        public static int CountProgrammingContents(int? categoryId)
+        {
+            return SQLiteProcess.CountProgrammingContents(categoryId, false);
+        }
         public static List<ProgrammingContent> GetProgrammingContents(int? categoryId, int page = 0, int size = 10)
         {
             return SQLiteProcess.GetProgrammingContents(categoryId, false, page, size);
@@ -53,9 +61,13 @@ namespace hthservices.DataBusiness
         #endregion
 
         #region Comment
-        public static List<ProgrammingComment> GetProgrammingComments(int? contentId, int page = 0, int size = 10)
+        public static int CountProgrammingComments(int? contentId)
         {
-            return SQLiteProcess.GetProgrammingComments(contentId, false, page, size);
+            return SQLiteProcess.CountProgrammingComments(contentId, false);
+        }
+        public static List<ProgrammingComment> GetProgrammingComments(int? contentId, int page = 0, int size = 10, bool isDesc = false)
+        {
+            return SQLiteProcess.GetProgrammingComments(contentId, false, page, size, isDesc);
         }
         public static ProgrammingComment GetProgrammingComment(int commentId)
         {
@@ -73,6 +85,10 @@ namespace hthservices.DataBusiness
         #endregion
 
         #region Project
+        public static int CountProjects()
+        {
+            return SQLiteProcess.CountProjects(false);
+        }
         public static List<Project> GetProjects(int page = 0, int size = 10)
         {
             return SQLiteProcess.GetProjects(false, page, size);
@@ -92,9 +108,17 @@ namespace hthservices.DataBusiness
         }
         #endregion
         #region User
+        public static int CountProgrammingCategoriesForUser()
+        {
+            return SQLiteProcess.CountProgrammingCategories(true);
+        }
         public static List<ProgrammingCategory> GetProgrammingCategoriesForUser()
         {
             return SQLiteProcess.GetProgrammingCategories(true, true);
+        }
+        public static int CountProgrammingContentsForUser(int? categoryId)
+        {
+            return SQLiteProcess.CountProgrammingContents(categoryId, true);
         }
         public static List<ProgrammingContent> GetProgrammingContentsForUser(int? categoryId, int page = 0, int size = 10)
         {
@@ -106,9 +130,12 @@ namespace hthservices.DataBusiness
         }
         public static List<ProgrammingComment> GetProgrammingCurrentCommentsForUser()
         {
-            return SQLiteProcess.GetProgrammingComments(null, true);
+            return SQLiteProcess.GetProgrammingComments(null, true, 0, 10, true);
         }
-
+        public static int CountProjectsForUser()
+        {
+            return SQLiteProcess.CountProjects(true);
+        }
         public static List<Project> GetProjectsForUser(int page = 0, int size = 10)
         {
             return SQLiteProcess.GetProjects(true, page, size);

@@ -8,7 +8,10 @@
             <h3>Categories</h3>
             <ul>
                 @foreach (ProgrammingCategory catergory in ViewBag.Categories) { 
-                    <li><a href="@Url.RouteUrl("ProgrammingCategory", new { category_name = Url.ToFriendlyUrl(catergory.Name), id = catergory.Id })">@catergory.Name</a></li>
+                    <li>
+                        <a href="@Url.RouteUrl("ProgrammingCategory", new { category_name = Url.ToFriendlyUrl(catergory.Name), id = catergory.Id})">@catergory.Name</a>
+                        <span>(@catergory.NumberOfContents)</span>
+                    </li>
                 }
             </ul>
         </div>

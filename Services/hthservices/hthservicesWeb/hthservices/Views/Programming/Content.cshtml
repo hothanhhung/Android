@@ -3,6 +3,7 @@
 @{
     ProgrammingContent programmingContent = ViewBag.Content;
     List<ProgrammingContent> relatedProgrammingContents = ViewBag.RelatedContents;
+    ViewBag.Title = programmingContent.Title;
 }
 <div class="content sing">
     <div class="container">
@@ -23,7 +24,10 @@
                         </div>
                         <div class="clearfix"> </div>
                         <div class="tilte-grid">
-                            <img src="@programmingContent.ImageUrl" alt=" " />
+                            @if (!string.IsNullOrWhiteSpace(programmingContent.ImageUrl))
+                            {
+                                <img class="img" src="@programmingContent.ImageUrl" alt=" " />
+                            }
                             <p class="vel">
                                 @programmingContent.ShortContent
                             </p>
@@ -80,7 +84,7 @@
                                     </div>
                                     <div class="clearfix"> </div>
                                     <div class="aliqua">
-                                        <a href="#">Reply</a>
+                                       <!--<a href="#">Reply</a>--> 
                                     </div>
                                 </div>
                             }

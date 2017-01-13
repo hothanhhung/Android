@@ -296,12 +296,12 @@ header{
 	font-size:16px;
 	font-weight:600;
 	text-decoration:underline;
-	background:url(../images/1.png) no-repeat 5em .5em;
+	/*background:url(../images/1.png) no-repeat 5em .5em;*/
 	display:block;
 	}
 .view a:hover{
 	color:#47443A;
-	background:url(../images/1-.png) no-repeat 5em .5em;
+	/*background:url(../images/1-.png) no-repeat 5em .5em;*/
 	display:block;
 	}
 .free{
@@ -377,7 +377,7 @@ header{
 	text-decoration:none;
 	border: 2px solid #EFF2EE;
 	}
-.tilte-grid img{
+.tilte-grid .img{
 	width:100%;
 	border:8px solid #ECE5D0;
 	box-shadow: 0px 1px 8px #adadad;
@@ -425,7 +425,8 @@ p.vel a:hover{
 	}
 .read{
 	margin:0em 0 2em;
-	padding-left: 52em;
+	/*padding-left: 52em;*/
+    text-align: right;
 	}
 .read a{
 	color:#DB7037;
@@ -434,12 +435,12 @@ p.vel a:hover{
 	font-size:16px;
 	font-weight:600;
 	text-decoration:underline;
-	background:url(../images/1.png) no-repeat 5.5em .5em;
+	/*background:url(../images/1.png) no-repeat 5.5em .5em;*/
 	display:block;
 	}
 .read a:hover{
 	color:#47443A;
-	background:url(../images/1-.png) no-repeat 5.5em .5em;
+	/*background:url(../images/1-.png) no-repeat 5.5em .5em;*/
 	display:block;
 	}
 .border{

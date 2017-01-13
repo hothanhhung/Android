@@ -9,16 +9,25 @@ namespace hthservices.Controllers
 {
     public class ProgrammingController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int size = 5)
         {
-            ViewBag.Contents = DataBusiness.DataProcess.GetProgrammingContentsForUser(null);
+            ViewBag.Contents = DataBusiness.DataProcess.GetProgrammingContentsForUser(null, page - 1, size);
+            ViewBag.TotalPage = Math.Ceiling(1.0 * DataBusiness.DataProcess.CountProgrammingContentsForUser(null) / size);
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = size;
             return View();
         }
 
-        public ActionResult Category(int? id)
+        public ActionResult Category(int? id, int page = 1, int size = 5)
         {
-            ViewBag.Contents = DataBusiness.DataProcess.GetProgrammingContentsForUser(id);
-
+            ViewBag.Contents = DataBusiness.DataProcess.GetProgrammingContentsForUser(id, page - 1, size);
+            ViewBag.TotalPage = Math.Ceiling(1.0*DataBusiness.DataProcess.CountProgrammingContentsForUser(id) / size);
+            if (id.HasValue)
+            {
+                ViewBag.Category = DataBusiness.DataProcess.GetProgrammingCategory(id.Value);
+            }
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = size;
             return View();
         }
 

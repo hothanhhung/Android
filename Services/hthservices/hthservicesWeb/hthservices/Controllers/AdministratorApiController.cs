@@ -36,7 +36,7 @@ namespace hthservices.Controllers
                     Note=x.Note,
                     NumberOfAccess=x.NumberOfAccess,
                     Sort = x.Sort,
-                    NumberOfContents = x.Contents.Count
+                    NumberOfContents = x.NumberOfContents
             }).ToList();
             return ResponseJson.GetResponseJson(data);
         }
@@ -65,7 +65,7 @@ namespace hthservices.Controllers
                     Note = data.Note,
                     NumberOfAccess = data.NumberOfAccess,
                     Sort = data.Sort,
-                    NumberOfContents = data.Contents.Count
+                    NumberOfContents = data.NumberOfContents
                 };
             }
             return ResponseJson.GetResponseJson(data);

@@ -41,15 +41,32 @@ namespace hthservices.DataBusiness
 
 
         #region Category
+        public static int CountProgrammingCategories(bool isDisplay)
+        {
+            int total = 0;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var categories = context.ProgrammingCategories.Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
+
+                total = categories.Count();
+            }
+            return total;
+        }
+
         public static List<ProgrammingCategory> GetProgrammingCategories(bool isDisplay, bool isOrder = false)
         {
             List<ProgrammingCategory> programmingCategories = new List<ProgrammingCategory>();
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
-                var categories = context.ProgrammingCategories.Include("Contents").Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
+                var categories = context.ProgrammingCategories.Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
 
                 if (isOrder) programmingCategories = categories.OrderBy(p => p.Sort).ToList();
                 else programmingCategories = categories.ToList();
+
+                foreach(var cat in programmingCategories)
+                {
+                    cat.NumberOfContents = context.ProgrammingContents.Where(p => p.CategoryId == cat.Id && (isDisplay == false || (p.IsDisplay ?? 0) > 0)).Count();
+                }
             }
             return programmingCategories;
         }
@@ -61,7 +78,8 @@ namespace hthservices.DataBusiness
                 var categories = context.ProgrammingCategories.Where(p => p.Id == categorId &&(isDisplay == false || (p.IsDisplay ?? 0) > 0));
 
                 programmingCategory = categories.FirstOrDefault();
-                context.Entry(programmingCategory).Collection(p => p.Contents).Load();
+                //context.Entry(programmingCategory).Collection(p => p.Contents).Load();
+                programmingCategory.NumberOfContents = context.ProgrammingContents.Where(p => p.CategoryId == programmingCategory.Id && (isDisplay == false || (p.IsDisplay ?? 0) > 0)).Count();
             }
             return programmingCategory;
         }
@@ -106,6 +124,21 @@ namespace hthservices.DataBusiness
 
         #region Content
 
+        public static int CountProgrammingContents(int? categoryId, bool isDisplay)
+        {
+            int total = 0;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var contents = context.ProgrammingContents.Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
+                if (categoryId.HasValue)
+                {
+                    contents = contents.Where(p => p.CategoryId == categoryId.Value);
+                }
+                total = contents.Count();
+            }
+            return total;
+        }
+
         public static List<ProgrammingContent> GetProgrammingContents(int? categoryId, bool isDisplay, int page=0, int size = 10)
         {
             List<ProgrammingContent> programmingContents = new List<ProgrammingContent>();
@@ -116,7 +149,7 @@ namespace hthservices.DataBusiness
                 {
                     contents = contents.Where(p => p.CategoryId == categoryId.Value);
                 }
-                contents = contents.OrderBy(p => p.UpdatedDate);
+                contents = contents.OrderByDescending(p => p.UpdatedDate);
                 contents = contents.Skip(page * size).Take(size);
                 programmingContents = contents.ToList();
             }
@@ -183,7 +216,22 @@ namespace hthservices.DataBusiness
 
         #region Comment
 
-        public static List<ProgrammingComment> GetProgrammingComments(int? contentId, bool isDisplay, int page = 0, int size = 10)
+        public static int CountProgrammingComments(int? contentId, bool isDisplay)
+        {
+            int total = 0;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var contents = context.ProgrammingComments.Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
+                if (contentId.HasValue)
+                {
+                    contents = contents.Where(p => p.ContentId == contentId.Value);
+                }
+                total = contents.Count();
+            }
+            return total;
+        }
+
+        public static List<ProgrammingComment> GetProgrammingComments(int? contentId, bool isDisplay, int page = 0, int size = 10, bool isDesc = false)
         {
             List<ProgrammingComment> programmingComments = new List<ProgrammingComment>();
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -193,7 +241,14 @@ namespace hthservices.DataBusiness
                 {
                     contents = contents.Where(p => p.ContentId == contentId.Value);
                 }
-                contents = contents.OrderBy(p => p.UpdatedDate);
+                if (isDesc)
+                {
+                    contents = contents.OrderByDescending(p => p.UpdatedDate);
+                }
+                else
+                {
+                    contents = contents.OrderBy(p => p.UpdatedDate);
+                }
                 contents = contents.Skip(page * size).Take(size);
                 programmingComments = contents.ToList();
             }
@@ -252,6 +307,17 @@ namespace hthservices.DataBusiness
         #endregion
 
         #region Project
+
+        public static int CountProjects(bool isDisplay)
+        {
+            int total = 0;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var contents = context.Projects.Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
+                total = contents.Count();
+            }
+            return total;
+        }
 
         public static List<Project> GetProjects(bool isDisplay, int page = 0, int size = 10)
         {

@@ -34,7 +34,7 @@ namespace hthservices
                     defaults: new
                     {
                         controller = "Programming",
-                        action = "Content",
+                        action = "Category",
                         category_name = UrlParameter.Optional,
                         id = UrlParameter.Optional
                     }
