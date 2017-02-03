@@ -17,6 +17,7 @@ public class Map : MonoBehaviour
 	public GameObject startPanel;
 	public GameObject helpPanel;
 	public GameObject winPanel;
+	public GameObject toastMessagePanel;
 	public GameObject gameoverPanel;
 	public GameObject pausePanel;
 	public GameObject headerPanel;
@@ -182,8 +183,33 @@ public class Map : MonoBehaviour
 		 
 	}
 
+	int timeToExit = 0;
+	void QuitAndroid ()
+	{
+		if (Input.GetKeyDown (KeyCode.Escape))
+		{
+			if(timeToExit > 0) 
+			{
+				Application.Quit ();
+			}else{
+				toastMessagePanel.SetActive(true);
+				timeToExit = 1;
+			}
+		}
+		if(timeToExit > 200){
+			timeToExit = 0;
+		}
+		if(timeToExit > 100){
+			toastMessagePanel.SetActive(false);
+		}
+		if(timeToExit > 0){
+			timeToExit = timeToExit + 1;
+		}
+	}
+
 	void Update () 
 	{
+		QuitAndroid ();
 		if (stopGame)
 			return;
 		if(totalTime < 0)
@@ -1119,8 +1145,14 @@ public class Map : MonoBehaviour
 		if(Application.systemLanguage == SystemLanguage.Vietnamese) lg="VN";
 		else if(Application.systemLanguage == SystemLanguage.ChineseSimplified) lg="CN"; 
 		else if(Application.systemLanguage == SystemLanguage.ChineseTraditional) lg="TW"; 
-		string urlMoreGame = "http://hunght.com/adsweb/?country="+lg+"&os=android&device=" + SystemInfo.deviceUniqueIdentifier + "&open=" + timeToOpenApp + "&version=1.0.5&package=com.hth.animalconnection";
+		string urlMoreGame = "http://hunght.com/adsweb/?country="+lg+"&os=android&device=0&open=" + timeToOpenApp + "&version=1.0.6&package=com.hth.animalconnection";
 		Debug.Log("GotoMoreGame: " + urlMoreGame);
+		Application.OpenURL (urlMoreGame);
+	}
+
+	public void GotoPrivacyPolicy()
+	{
+		string urlMoreGame = "http://hunght.com/htmlpage/privacy.html";
 		Application.OpenURL (urlMoreGame);
 	}
 }

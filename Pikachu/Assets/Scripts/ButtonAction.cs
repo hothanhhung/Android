@@ -80,6 +80,12 @@ public class ButtonAction : MonoBehaviour {
 		mapScrip.GotoMoreGame ();
 	}
 
+	public void GotoPrivacyPolicy()
+	{
+		Map mapScrip = (Map) map.GetComponent(typeof(Map));
+		mapScrip.GotoPrivacyPolicy ();
+	}
+
 	public void ResetData()
 	{
 		SaveLoad.SetData (0, 0, 0);
