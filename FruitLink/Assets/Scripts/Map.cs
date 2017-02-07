@@ -1049,7 +1049,7 @@ public class Map : MonoBehaviour
 
 	public void GotoMoreGame()
 	{
-		string urlMoreGame = "http://hunght.com/adsweb/?country=EN&os=android&device=" + SystemInfo.deviceUniqueIdentifier + "&open=" + timeToOpenApp + "&version=1.0.1&package=com.hth.fruitlink";
+		string urlMoreGame = "http://hunght.com/adsweb/?country=EN&os=android&device=0&open=" + timeToOpenApp + "&version=1.0.1&package=com.hth.fruitlink";
 		Debug.Log("GotoMoreGame: " + urlMoreGame);
 		Application.OpenURL (urlMoreGame);
 	}
