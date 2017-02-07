@@ -1,3 +1,8 @@
-.adsbygoogle, [id^="adm_zone"], #admbackground {
+.adsbygoogle, [id^="adm_zone"], #admbackground, #ifrp_popup_ifr, #admBannerPopup, #admtpmPopup {
 display:none !important;
+}
+
+#admwrapper{
+    opacity: 999999999999 !important;
+    z-index: 999999999999 !important;
 }

@@ -1,3 +1,7 @@
-.charge_vnmoney, .install_app, iframe, [id^="adm_zone"], #admtpmPopup {
+.charge_vnmoney, .install_app, iframe, [id^="adm_zone"], #admBannerPopup, #admtpmPopup {
 display:none !important;
+}
+#admwrapper{
+    opacity: 999999999999 !important;
+    z-index: 999999999999 !important;
 }
