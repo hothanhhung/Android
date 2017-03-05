@@ -19,6 +19,7 @@ public class SavedValues {
 	private static final String RECORD_LEVEL = "RECORD_LEVEL";
 	private static final String RECORD_PLAYBACKGROUND = "RECORD_PLAYBACKGROUND";
 	private static final String RECORD_STARTAT = "RECORD_STARTAT";
+	private static final String RECORD_NUMBER_OF_HINT = "RECORD_NUMBER_OF_HINT";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -28,6 +29,9 @@ public class SavedValues {
 		prefsEditor = appSharedPrefs.edit();
 	}
 
+	public int getRecordNumberOfHints() {
+		return appSharedPrefs.getInt(RECORD_NUMBER_OF_HINT, 10);
+	}
 	public int getRecordChanges() {
 		return appSharedPrefs.getInt(RECORD_CHANGES, 0);
 	}
@@ -64,6 +68,11 @@ public class SavedValues {
 
 	public String getRecordStartAt() {
 		return appSharedPrefs.getString(RECORD_STARTAT, MethodsHelper.getCurrentDate());
+	}
+
+	public void setRecordNumberOfHints(int var1) {
+		prefsEditor.putInt(RECORD_NUMBER_OF_HINT, var1);
+		prefsEditor.commit();
 	}
 
 	public void setRecordChanges(int var1) {
