@@ -122,7 +122,7 @@ namespace hthservices.Utils
             doc.LoadHtml(content);
             string text = doc.DocumentNode.InnerText;
             text = Regex.Replace(text, @"\s+", " ").Trim();
-            return text == null ? string.Empty : (text.Count() > 100 ? text.Substring(0, 400)+"..." : text);
+            return text == null ? string.Empty : (text.Count() > 400 ? text.Substring(0, 400)+"..." : text);
         }
         //public static string ToUnsign(this UrlHelper helper,
         //string urlToEncode)

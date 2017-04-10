@@ -114,6 +114,7 @@ hthWebsiteApp.controller('ContentController',
               {
                   var url = URL_SERVICE + '/api/AdministratorApi/SaveContent/';
                   $scope.SelectedContent.CategoryId = $scope.SelectedCategory.Id;
+                  $scope.SelectedContent.ImageUrl = $("#txtSelectedFile").val();
                   $scope.SelectedContent.Content = CKEDITOR.instances.Contenteditor.getData();
                   $scope.IsLoading = true;
                   $http.post(url, $scope.SelectedContent).then(

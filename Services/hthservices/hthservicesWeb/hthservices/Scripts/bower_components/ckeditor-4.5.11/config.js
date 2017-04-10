@@ -21,4 +21,5 @@ CKEDITOR.editorConfig = function( config ) {
 
     //uploader
     config.extraPlugins = 'imageuploader';
+    config.baseFloatZIndex = 100001;
 };

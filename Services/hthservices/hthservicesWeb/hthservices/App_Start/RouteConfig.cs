@@ -39,6 +39,17 @@ namespace hthservices
                         id = UrlParameter.Optional
                     }
                     );
+            routes.MapRoute(
+                    name: "ProjectContent",
+                    url: "chi-tiet/du-an/{content_name}/{id}",
+                    defaults: new
+                    {
+                        controller = "Project",
+                        action = "Content",
+                        content_name = UrlParameter.Optional,
+                        id = UrlParameter.Optional
+                    }
+                    );
 
             routes.MapRoute(
                 name: "Default",

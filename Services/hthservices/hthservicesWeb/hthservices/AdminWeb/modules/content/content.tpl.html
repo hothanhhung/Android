@@ -28,17 +28,20 @@
                                         <textarea ng-model="SelectedContent.ShortContent" class="form-control" rows="3"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" id="txtSelectedFile" style="border:1px solid #ccc;cursor:pointer;padding:4px;width:80%;" value="Click here to select a file" onclick="openCustomRoxy2()">
-                                        <div id="roxyCustomPanel2" style="display: none;">
-                                            <iframe src="/fileman/index.html?integration=custom&type=image&txtFieldId=txtSelectedFile" style="width:100%;height:100%" frameborder="0"></iframe>
+                                        <label>
+                                            ImageUrl
+                                        </label>
+                                        <input type="text" id="txtSelectedFile" ng-value="SelectedContent.ImageUrl" class="form-control" style="border:1px solid #ccc;cursor:pointer;padding:4px;width:80%;" value="Click here to select a file" onclick="openCustomRoxy2()">
+                                        <div id="roxyCustomPanel2" style="z-index:2147483647;display: none;" class="modal-content">
+                                            <iframe src="/fileman/index.html?integration=custom&type=image&txtFieldId=txtSelectedFile" style="width:100%;height:100%; z-index:2147483647" frameborder="0"></iframe>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!--<div class="form-group">
                                         <label>
                                             ImageUrl
                                         </label>
                                         <input type="text" ng-model="SelectedContent.ImageUrl" class="form-control" />
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
                                         <label>
                                             IsDisplay
@@ -140,6 +143,8 @@
 <script>
     function openCustomRoxy2() {
         $('#roxyCustomPanel2').dialog({ modal: true, width: 875, height: 600 });
+        $('#roxyCustomPanel2').parent().addClass("modal-content");
+        $('#roxyCustomPanel2').parent().css("z-index", 2147483647);
     }
     function closeCustomRoxy2() {
         $('#roxyCustomPanel2').dialog('close');
