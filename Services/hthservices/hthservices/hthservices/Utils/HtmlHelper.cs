@@ -196,18 +196,49 @@ namespace hthservices.Utils
             List<GuideItem> guideItems = new List<GuideItem>();
             try
             {
-                using (var http = new HttpClient())
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 {
-                    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                    var stringContent = "channelId=" + channelToServer.Value + "&dateSchedule=" + date.ToString("dd/MM/yyyy");
+                    byte[] buffer = Encoding.UTF8.GetBytes(stringContent);
+                    req.Host = "www.mytv.com.vn";
+                    req.Referer = "https://www.mytv.com.vn/lich-phat-song";
+                    req.Method = "POST";
+                    req.ContentType = "application/x-www-form-urlencoded";
+                    req.ContentLength = buffer.Length;
+                    req.KeepAlive = true;
+                    req.Timeout = System.Threading.Timeout.Infinite;
+                    req.ProtocolVersion = HttpVersion.Version10;
+                    req.AllowWriteStreamBuffering = false;
+                    req.Accept = "application/json, text/javascript, */*; q=0.01";
+                    req.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0";
+
+                    WebHeaderCollection myWebHeaderCollection = req.Headers;
+                    myWebHeaderCollection.Add("Accept-Encoding: gzip, deflate, br");
+                    myWebHeaderCollection.Add("Accept-Language: en-US,en;q=0.5");
+                    myWebHeaderCollection.Add("X-Requested-With: XMLHttpRequest");
                     
-                    var stringContent = "channelId="+channelToServer.Value+"&dateSchedule="+date.ToString("dd/MM/yyyy");
-                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
-                    var response = http.PostAsync(url, httpContent).Result;
-                    
-                    if (response.IsSuccessStatusCode)
+                    //req.CookieContainer = new CookieContainer();
+                    ////req.CookieContainer.Add(new Uri(url), new Cookie("__utma", "1.268565172.1470799796.1474424801.1474426720.10"));
+                    ////req.CookieContainer.Add(new Uri(url), new Cookie("__utmz", "1.1470803901.2.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("PHPSESSID", "kphgfqvsajuipgooosthakvl35"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utma", "216719242.2069266193.1495166431.1495166431.1495166431.1"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utmb", "216719242.1.10.1495166431"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utmc", "216719242"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utmz", "216719242.1495166431.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utmt", "1"));
+
+
+                    Stream stream = req.GetRequestStream();
+                    stream.Write(buffer, 0, buffer.Length);
+                    stream.Close();
+                    WebResponse response = req.GetResponse();
+
+                    if (((HttpWebResponse)response).StatusDescription.Equals("OK", StringComparison.OrdinalIgnoreCase))
                     {
-                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
-                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        stream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(stream);
+                        string source = reader.ReadToEnd();
+                        response.Close();
                         source = System.Text.RegularExpressions.Regex.Unescape(source);
                         source = WebUtility.HtmlDecode(source.Replace("\"", ""));
                         HtmlDocument resultat = new HtmlDocument();
@@ -238,7 +269,59 @@ namespace hthservices.Utils
                             }
                         }
                     }
-                }          
+                }
+                //using (var http = new HttpClient())
+                //{
+                //    //http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                //    http.DefaultRequestHeaders.Add("Host", "www.mytv.com.vn");
+                //    http.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0");
+                //    http.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript, */*; q=0.01");
+                //    http.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.5");
+                //    http.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+                //    http.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                //    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                //    http.DefaultRequestHeaders.Add("Referer", "https://www.mytv.com.vn/lich-phat-song");
+                //    http.DefaultRequestHeaders.Add("Cookie", "; ; ; =; =216719242.1495166431.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)");
+
+                //    var stringContent = "channelId=" + channelToServer.Value + "&dateSchedule=" + date.ToString("dd/MM/yyyy");
+                //    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                //    var response = http.PostAsync(url, httpContent).Result;
+
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                //        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                //        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                //        source = WebUtility.HtmlDecode(source.Replace("\"", ""));
+                //        HtmlDocument resultat = new HtmlDocument();
+                //        resultat.LoadHtml(source);
+
+                //        var items = resultat.DocumentNode.SelectNodes("//p");
+
+                //        if (items != null)
+                //        {
+                //            foreach (var item in items)
+                //            {
+                //                string startOn = "", programName = "";
+                //                // get start time
+                //                var timeTV = item.SelectNodes("strong");
+                //                if (timeTV != null && timeTV.Count > 0)
+                //                {
+                //                    startOn = timeTV.FirstOrDefault().InnerText.Trim();
+                //                }
+                //                var tDetail = item.ChildNodes;
+
+                //                // get program name
+                //                if (tDetail != null && tDetail.Count > 1)
+                //                {
+                //                    programName = item.ChildNodes[1].InnerText.Trim();
+                //                }
+                //                var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                //                guideItems.Add(guideItem);
+                //            }
+                //        }
+                //    }
+                //}
 
             }
             catch (Exception ex)

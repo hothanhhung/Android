@@ -130,7 +130,7 @@ namespace hthservices.Utils
         public static Channel GetChannel(string channelKey)
         {
             Channel channel = new Channel();
-            string sqlSaveChannel = "SELECT ChannelId, ChannelKey, ChannelGroupName, ChannelName, VietBaoLink FROM Channels WHERE ChannelKey = @ChannelKey ";
+            string sqlSaveChannel = "SELECT ChannelId, ChannelKey, ChannelGroupName, ChannelName, VietBaoLink FROM Channels WHERE ChannelKey like @ChannelKey ";
             using (var sql_con = new SQLiteConnection(ConnectString))
             {
                 sql_con.Open();

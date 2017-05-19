@@ -1,8 +1,18 @@
 ﻿@{
     ViewBag.Title = "Contact";
+    int[,] ArrayPositions = ViewBag.ArrayPositions;
 }
 
 <hgroup class="title">
     <h1>@ViewBag.Title.</h1>
     <h2>@ViewBag.Message</h2>
+    @{
+        for (int i = 0; i < ArrayPositions.GetLength(0); i++)
+        {   for(int j = 0; j< ArrayPositions.GetLength(1); j++)
+            {
+                <span style="width: 30px; float: left;">@ArrayPositions[i,j]</span>
+            }
+            <br/>
+        }
+    }
 </hgroup>
