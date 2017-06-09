@@ -7,12 +7,16 @@
     <h1>@ViewBag.Title.</h1>
     <h2>@ViewBag.Message</h2>
     @{
+        String str = "";
         for (int i = 0; i < ArrayPositions.GetLength(0); i++)
         {   for(int j = 0; j< ArrayPositions.GetLength(1); j++)
             {
                 <span style="width: 30px; float: left;">@ArrayPositions[i,j]</span>
+               str+="|"+ArrayPositions[i,j];
             }
             <br/>
         }
+        
+        @str;
     }
 </hgroup>

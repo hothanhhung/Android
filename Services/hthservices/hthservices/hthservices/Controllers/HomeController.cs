@@ -36,7 +36,8 @@ namespace hthservices.Controllers
             block = bl;
 
             ViewBag.Message = "Your contact page.";
-            ViewBag.ArrayPositions = create(numbRow, numbCol, block);
+            var values = create(numbRow, numbCol, block);
+            ViewBag.ArrayPositions = values;
             return View("Contact");
         }
 
