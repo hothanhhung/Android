@@ -62,7 +62,7 @@ public class GridviewGameItemAdapter extends BaseAdapter {
 
         GameItem gameItem = (GameItem) getItem(i);
         btGameItem.setText(String.valueOf(i + 1));
-        btGameItem.setTag(getItem(i));
+        view.setTag(getItem(i));
 
         return view;
 

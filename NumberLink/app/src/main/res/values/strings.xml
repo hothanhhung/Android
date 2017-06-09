@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">NumberLink</string>
+    <string name="app_name">Number Link</string>
+    <string name="ad_unit_id">ca-app-pub-4576847792571626/5498866799</string>
+    <string name="ad_unit_id_interstitial">ca-app-pub-4576847792571626/8452333192</string>
+    <string name="ad_unit_id_rewarded_video">ca-app-pub-4576847792571626/1306063199</string>
 </resources>
