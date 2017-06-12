@@ -10,11 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
+import com.hunght.data.StaticData;
+
 /**
  * Created by Lenovo on 6/3/2016.
  */
 public class PuzzleView extends View {
     private final GameActivity game;
+    private boolean needDelete = false;
 
     public PuzzleView(Context context)
     {
@@ -46,8 +49,8 @@ public class PuzzleView extends View {
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh)
     {
-        width = w/9f;
-        height = h/9f;
+        width = w/(1.0f * StaticData.getNumberColumns());
+        height = h/(1.0f * StaticData.getNumberRows());
         getRect(selX, selY, selRect);
         super.onSizeChanged(w, h, oldw, oldh);
     }
@@ -81,26 +84,20 @@ public class PuzzleView extends View {
         Paint light = new Paint();
         light.setColor(getResources().getColor(R.color.puzzle_light));
 
-        for(int i =0; i<9; i++)
+        for(int i =0; i<StaticData.getNumberColumns(); i++)
         {
             canvas.drawLine(0, i*height, getWidth(), i*height, light);
             canvas.drawLine(0, i*height + 1, getWidth(), i*height+1, hilite);
+        }
+
+        for(int i =0; i<StaticData.getNumberRows(); i++)
+        {
             canvas.drawLine(i*width, 0, i*width,getHeight(), light);
             canvas.drawLine(i*width + 1,0,i*width + 1, getHeight(), hilite);
         }
-        for(int i=0; i<9;i++)
-        {
-            if(i%3 == 0){
-                canvas.drawLine(0, i*height, getWidth(), i*height, dark);
-               // canvas.drawLine(0, i*height - 1, getWidth(), i*height-1, hilite);
-                canvas.drawLine(i*width, 0, i*width,getHeight(), dark);
-               // canvas.drawLine(i*width - 1,0,i*width - 1, getHeight(), hilite);
-
-            }
-        }
-        canvas.drawLine(0, 9*height - 1, getWidth(), 9*height - 1, dark);
+        canvas.drawLine(0, StaticData.getNumberRows()*height - 1, getWidth(), StaticData.getNumberRows()*height - 1, dark);
         //canvas.drawLine(0, 9*height - 2, getWidth(), 9*height - 2, hilite);
-        canvas.drawLine(9*width - 1, 0, 9*width - 1,getHeight(), dark);
+        canvas.drawLine(StaticData.getNumberColumns()*width - 1, 0, StaticData.getNumberColumns()*width - 1,getHeight(), dark);
         //canvas.drawLine(9*width - 2,0,9*width - 2, getHeight(), hilite);
 
         Paint canNotChangeValue = new Paint();
@@ -118,9 +115,9 @@ public class PuzzleView extends View {
         float y = height / 2 - (fm.ascent + fm.descent) / 2;
 
         Rect canNotChange = new Rect();
-        for(int i = 0; i < 9; i++)
+        for(int i = 0; i < StaticData.getNumberRows(); i++)
         {
-            for(int j = 0; j < 9; j++){
+            for(int j = 0; j < StaticData.getNumberColumns(); j++){
                 if(!this.game.canChangeValue(i,j)){
                     getRect(i,j, canNotChange);
                     canvas.drawRect(canNotChange, canNotChangeValue);
@@ -158,9 +155,10 @@ public class PuzzleView extends View {
 
     public void select(int x, int y){
         if(game.canChangeValue(x, y)) {
+            needDelete = true;
             invalidate(selRect);
-            selX = Math.min(Math.max(x, 0), 8);
-            selY = Math.min(Math.max(y, 0), 8);
+            selX = Math.min(Math.max(x, 0), StaticData.getNumberRows() - 1);
+            selY = Math.min(Math.max(y, 0), StaticData.getNumberColumns() - 1);
             getRect(selX, selY, selRect);
             invalidate(selRect);
         }
@@ -177,7 +175,16 @@ public class PuzzleView extends View {
     }
 
     protected  void setSelectedTile(int tile){
-        if(game.setTileIfValid(selX, selY, tile)){
+
+        int value = tile;
+        if(!needDelete){
+            value = game.getGameItem(selX, selY) * 10 + tile;
+        }
+        needDelete = false;
+        if(tile == -1 || tile == -2){
+            value = 0;
+        }
+        if(game.setTileIfValid(selX, selY, value)){
             invalidate();
         }else{
             startAnimation(AnimationUtils.loadAnimation(game,R.anim.anim));

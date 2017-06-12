@@ -1,6 +1,7 @@
 package com.hunght.numberlink;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 import com.hunght.data.GameItem;
+import com.hunght.data.StaticData;
 
 /**
  * Created by Lenovo on 5/15/2017.
@@ -59,10 +61,19 @@ public class GridviewGameItemAdapter extends BaseAdapter {
 
         }
         btGameItem = (Button) view.findViewById(R.id.btGameItem);
+        btGameItem.setTag(getItem(i));
+        btGameItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GameItem gameItem = (GameItem) view.getTag();
+                Intent intent = new Intent(mContext, GameActivity.class);
+                StaticData.setCurrentGame(gameItem);
+                mContext.startActivity(intent);
+            }
+        });
 
-        GameItem gameItem = (GameItem) getItem(i);
         btGameItem.setText(String.valueOf(i + 1));
-        view.setTag(getItem(i));
+
 
         return view;
 

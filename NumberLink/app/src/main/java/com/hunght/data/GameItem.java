@@ -1,13 +1,15 @@
 package com.hunght.data;
 
 import java.io.Serializable;
+import java.util.regex.Pattern;
 
 /**
  * Created by Lenovo on 5/15/2017.
  */
 
 public class GameItem implements Serializable {
-    final String splitValue = "|";
+    final static String splitValue = "|";
+    final static int errorNumber = - 99999;
     String name;
     String id;
     boolean isCompleted;
@@ -127,12 +129,18 @@ public class GameItem implements Serializable {
 
     private int[][] convertGameMapFromString(String strGame){
         int[][] twoDimensionalGameMap = new int[gameRow][gameColumn];
-        if(strGame == null) {
-            String[] oneDimensionalGameMap = strGame.split(splitValue);
-            if (oneDimensionalGameMap.length == gameColumn * gameRow) {
-                for(int i=0; i<gameColumn; i++)
+        if(strGame != null) {
+            String[] oneDimensionalGameMap = strGame.split(Pattern.quote(splitValue));
+            if (oneDimensionalGameMap.length >= gameColumn * gameRow) {
+                int count = 0;
+                for(int i=0; i<oneDimensionalGameMap.length; i++)
                     {
-                    twoDimensionalGameMap[i/gameColumn][i%gameColumn] = convertStringToInt(oneDimensionalGameMap[i]);
+                        int value = convertStringToInt(oneDimensionalGameMap[i]);
+                        if(value != errorNumber) {
+                            twoDimensionalGameMap[count / gameColumn][count % gameColumn] = value;
+                            count++;
+                        }
+                        if(count >= gameColumn * gameRow) break;
                 }
             }
         }
@@ -141,7 +149,7 @@ public class GameItem implements Serializable {
 
     private String convertGameMapToString(int[][] gameMap){
         StringBuilder oneDimensionalGameMap = new StringBuilder();
-        if(gameMap == null) {
+        if(gameMap != null) {
             {
                 for(int i=0; i<gameMap.length; i++)
                 {
@@ -163,7 +171,7 @@ public class GameItem implements Serializable {
         try {
             return Integer.parseInt(value);
         }catch (Exception ex){
-            return 0;
+            return errorNumber;
         }
     }
 }

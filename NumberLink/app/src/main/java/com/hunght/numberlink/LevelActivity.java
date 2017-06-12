@@ -3,6 +3,7 @@ package com.hunght.numberlink;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -12,6 +13,7 @@ import com.hunght.data.GameItem;
 import com.hunght.data.StaticData;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class LevelActivity extends AppCompatActivity {
 
@@ -27,14 +29,5 @@ public class LevelActivity extends AppCompatActivity {
         GridviewGameItemAdapter gridviewGameItemAdapter = new GridviewGameItemAdapter(this, gameItems);
         grvGameItems.setAdapter(gridviewGameItemAdapter);
 
-        grvGameItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                GameItem gameItem = (GameItem) view.getTag();
-                Intent intent = new Intent(LevelActivity.this, GameItem.class);
-                intent.putExtra(StaticData.GAME_ITEM_KEY, gameItem);
-                startActivity(intent);
-            }
-        });
     }
 }
