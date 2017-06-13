@@ -1,5 +1,7 @@
 package com.hunght.data;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lenovo on 5/15/2017.
  */
@@ -30,5 +32,9 @@ public class StaticData {
     public static void setCurrentGame(GameItem gameItem)
     {
         currentGameItem = gameItem;
+    }
+
+    public static ArrayList<ArrayList<Integer>> getLines() {
+        return StaticData.getCurrentGame().getLines();
     }
 }

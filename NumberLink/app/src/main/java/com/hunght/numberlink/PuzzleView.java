@@ -2,6 +2,7 @@ package com.hunght.numberlink;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 
 import com.hunght.data.StaticData;
+
+import java.util.ArrayList;
 
 /**
  * Created by Lenovo on 6/3/2016.
@@ -84,6 +87,13 @@ public class PuzzleView extends View {
         Paint light = new Paint();
         light.setColor(getResources().getColor(R.color.puzzle_light));
 
+        Paint paintLine = new Paint();
+        paintLine.setColor(Color.rgb(255, 153, 51));
+        paintLine.setStrokeWidth(5);
+        Paint paintLineStartEnd = new Paint();
+        paintLineStartEnd.setColor(Color.argb(200, 255, 153, 51));
+        paintLineStartEnd.setStrokeWidth(5);
+
         for(int i =0; i<StaticData.getNumberColumns(); i++)
         {
             canvas.drawLine(0, i*height, getWidth(), i*height, light);
@@ -126,7 +136,47 @@ public class PuzzleView extends View {
                         j*height+y, foreground);
             }
         }
+        ArrayList<ArrayList<Integer>> lines =StaticData.getLines();
+        for (ArrayList<Integer> line:lines) {
+            for(int i = 1; i<line.size(); i++)
+            {
+                int point1 = line.get(i-1) % 100, point2 = line.get(i) % 100;
+                float startX, startY, stopX, stopY;
+                startX = point1/StaticData.getNumberColumns()*width+ width/2;
+                startY = point1%StaticData.getNumberColumns()*height + height/2;
+                stopX = point2/StaticData.getNumberColumns()*width+ width/2;
+                stopY = point2%StaticData.getNumberColumns()*height + height/2;
 
+                /*if(startX>stopX)
+                {
+                    startX = startX - width/2;
+                    stopX = stopX + width/2;
+                }else{
+                    startX = startX + width/2;
+                    stopX = stopX - width/2;
+                }
+
+                if(startY>stopY)
+                {
+                    startY = startY - height/2;
+                    stopY = stopY + height/2;
+                }else{
+                    startY = startY + height/2;
+                    stopY = stopY - height/2;
+                }*/
+
+                canvas.drawLine(startX, startY, stopX, stopY, paintLine);
+
+                canvas.drawCircle(startX, startY,15, paintLine);
+                canvas.drawCircle(stopX, stopY,15, paintLine);
+
+                /*if(i==1){
+                    canvas.drawCircle(startX, startX,25, paintLineStartEnd);
+                }else if(i==line.size() - 1){
+                    canvas.drawCircle(stopX, stopY,25, paintLineStartEnd);
+                }*/
+            }
+        }
         Paint selected = new Paint();
         selected.setColor(getResources().getColor(R.color.puzzle_selected));
         canvas.drawRect(selRect, selected);

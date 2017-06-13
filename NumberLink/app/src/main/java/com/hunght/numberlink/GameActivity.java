@@ -7,6 +7,8 @@ import android.view.View;
 import com.hunght.data.GameItem;
 import com.hunght.data.StaticData;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity {
 
     private PuzzleView puzzleView;
