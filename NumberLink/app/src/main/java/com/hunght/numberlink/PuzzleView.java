@@ -88,10 +88,19 @@ public class PuzzleView extends View {
         light.setColor(getResources().getColor(R.color.puzzle_light));
 
         Paint paintLine = new Paint();
-        paintLine.setColor(Color.rgb(255, 153, 51));
+        if(StaticData.getCurrentGame().isWin()) {
+            paintLine.setColor(Color.rgb(51, 160, 75));
+        }else{
+            paintLine.setColor(Color.rgb(255, 153, 51));
+        }
         paintLine.setStrokeWidth(5);
         Paint paintLineStartEnd = new Paint();
-        paintLineStartEnd.setColor(Color.argb(200, 255, 153, 51));
+        if(StaticData.getCurrentGame().isWin()) {
+            paintLineStartEnd.setColor(Color.argb(200, 51, 160, 75));
+        }else{
+            paintLineStartEnd.setColor(Color.argb(200, 255, 153, 51));
+        }
+
         paintLineStartEnd.setStrokeWidth(5);
 
         for(int i =0; i<StaticData.getNumberColumns(); i++)
@@ -169,12 +178,13 @@ public class PuzzleView extends View {
 
                 canvas.drawCircle(startX, startY,15, paintLine);
                 canvas.drawCircle(stopX, stopY,15, paintLine);
-
-                /*if(i==1){
-                    canvas.drawCircle(startX, startX,25, paintLineStartEnd);
-                }else if(i==line.size() - 1){
-                    canvas.drawCircle(stopX, stopY,25, paintLineStartEnd);
-                }*/
+                if(StaticData.getCurrentGame().isWin()) {
+                    if (i == 1) {
+                        canvas.drawCircle(startX, startX, 25, paintLineStartEnd);
+                    } else if (i == line.size() - 1) {
+                        canvas.drawCircle(stopX, stopY, 25, paintLineStartEnd);
+                    }
+                }
             }
         }
         Paint selected = new Paint();
@@ -215,6 +225,7 @@ public class PuzzleView extends View {
     }
 
     public boolean onTouchEvent(MotionEvent event){
+        if(StaticData.getCurrentGame().isWin()) return true;
         if(event.getAction() != MotionEvent.ACTION_DOWN){
             return super.onTouchEvent(event);
         }

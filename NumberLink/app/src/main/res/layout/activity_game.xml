@@ -51,17 +51,6 @@
                     android:background="@android:color/transparent"
                     android:onClick="btClick"
                     android:src="@drawable/speaker"/>
-
-                <Button
-                    android:id="@+id/btPlay"
-                    android:layout_width="50dp"
-                    android:layout_height="35dp"
-                    android:scaleType="fitXY"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/custom_rectangle"
-                    android:onClick="btClick"
-                    android:text="PLAY"/>
-
                 <Button
                     android:id="@+id/btHint"
                     android:layout_width="35dp"
@@ -76,8 +65,8 @@
                     android:layout_marginRight="5dp"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:scaleType="fitXY" android:alpha="0.3"
-                    android:clickable="false"
+                    android:scaleType="fitXY"
+                    android:clickable="true"
                     android:layout_toLeftOf="@id/btHint"
                     android:background="@android:color/transparent"
                     android:onClick="btClick"

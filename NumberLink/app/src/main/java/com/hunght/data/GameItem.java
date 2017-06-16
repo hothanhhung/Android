@@ -1,6 +1,7 @@
 package com.hunght.data;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,6 +22,9 @@ public class GameItem implements Serializable {
     int[][] gameStart;
     int gameColumn;
     int gameRow;
+    boolean isWin = false;
+
+    long lSeconds;
 
     ArrayList<ArrayList<Integer>> lines;
 
@@ -37,6 +41,21 @@ public class GameItem implements Serializable {
         this.gameTarget = convertGameMapFromString(gameTarget);
         this.gameCurrent = convertGameMapFromString(gameCurrent);
         this.gameStart = convertGameMapFromString(gameStart);
+    }
+
+    public void resetGame()
+    {
+        isWin = false;
+        for(int i = 0; i<gameRow; i++)
+            for(int j =0; j<gameColumn; j++) gameCurrent[i][j] = gameStart[i][j];
+    }
+
+    public long getGamePlaySeconds() {
+        return lSeconds;
+    }
+
+    public void setGamePlaySeconds(long lSeconds) {
+        this.lSeconds = lSeconds;
     }
 
     public String getName() {
@@ -57,6 +76,10 @@ public class GameItem implements Serializable {
 
     public boolean isCompleted() {
         return isCompleted;
+    }
+
+    public boolean isWin() {
+        return isWin;
     }
 
     public void setCompleted(boolean completed) {
@@ -133,7 +156,28 @@ public class GameItem implements Serializable {
     }
     public ArrayList<ArrayList<Integer>> getLines()
     {
-        return findLines(gameCurrent);
+        ArrayList<ArrayList<Integer>> lines = findLines(gameCurrent);
+        if(lines!=null && lines.size() == 1){
+            ArrayList<Integer> line = lines.get(0);
+            if(line!=null){
+                int ignore = 0;
+                for(int i =0;i<gameCurrent.length;i++)
+                    for(int j=0; j<gameCurrent[i].length; j++)
+                    {
+                        if(gameCurrent[i][j] == -1 ) {
+                            ignore++;
+                        }
+                    }
+                if(line.size() == gameRow * gameColumn - ignore) {
+                    boolean win = true;
+                    for (int i = 0; i < line.size(); i++) {
+                        if (!(line.get(i) /100 == i + 1)) win = false;
+                    }
+                    isWin = win;
+                }
+            }
+        }
+        return lines;
     }
 
     private int[][] convertGameMapFromString(String strGame){
@@ -184,6 +228,9 @@ public class GameItem implements Serializable {
         }
     }
 
+    private boolean hasLine(int val1, int val2){
+        return (val1/100 - val2/100) == -1 || (val1/100 - val2/100) == 1;
+    }
     private ArrayList<ArrayList<Integer>> findLines(int[][] gameMap)
     {
         ArrayList<ArrayList<Integer>> lines = new ArrayList<>();
@@ -198,42 +245,42 @@ public class GameItem implements Serializable {
                             // left = 0,
                             if(j - 1 >= 0 && gameMap[i][j - 1]>0){
                                 val2 = gameMap[i][j - 1] * 100 + i*gameMap[i].length + j - 1;
-                                if((val1 - val2)/100 > -1 && (val1 - val2)/100 < 1) calculateLine(lines, val1, val2);
+                                if(hasLine(val1, val2)) calculateLine(lines, val1, val2);
                             }
                             //, leftTop = 0
                             if(j - 1 >= 0 && i - 1 >=0 && gameMap[i - 1][j - 1]>0){
                                 val2 = gameMap[i - 1][j - 1] * 100  + (i-1)*gameMap[i].length + j - 1;
-                                if((val1 - val2)/100 > -1 && (val1 - val2)/100 < 1) calculateLine(lines, val1, val2);
+                                if(hasLine(val1, val2)) calculateLine(lines, val1, val2);
                             }
                             //leftBottom = 0
                             if(j - 1 >= 0 &&  i + 1 < gameMap.length && gameMap[i + 1][j - 1]>0){
                                 val2 = gameMap[i + 1][j - 1] * 100  + (i+1)*gameMap[i].length + j - 1;
-                                if((val1 - val2)/100 > -1 && (val1 - val2)/100 < 1) calculateLine(lines, val1, val2);
+                                if(hasLine(val1, val2)) calculateLine(lines, val1, val2);
                             }
                             // top = 0,
                             if(i - 1 >= 0 && gameMap[i - 1][j]>0){
                                 val2 = gameMap[i - 1][j] * 100  + (i-1)*gameMap[i].length + j;
-                                if((val1 - val2)/100 > -1 && (val1 - val2)/100 < 1) calculateLine(lines, val1, val2);
+                                if(hasLine(val1, val2)) calculateLine(lines, val1, val2);
                             }
                             //rightTop =0,
                             if(j + 1 < gameMap[i].length && i - 1 >= 0 && gameMap[i - 1][j + 1]>0){
                                 val2 = gameMap[i - 1][j + 1] * 100  + (i-1)*gameMap[i].length + j + 1;
-                                if((val1 - val2)/100 > -1 && (val1 - val2)/100 < 1) calculateLine(lines, val1, val2);
+                                if(hasLine(val1, val2)) calculateLine(lines, val1, val2);
                             }
                             //right = 0,
                             if(j + 1 < gameMap[i].length && gameMap[i][j + 1]>0){
                                 val2 = gameMap[i][j + 1] * 100  + (i)*gameMap[i].length + j + 1;
-                                if((val1 - val2)/100 > -1 && (val1 - val2)/100 < 1) calculateLine(lines, val1, val2);
+                                if(hasLine(val1, val2)) calculateLine(lines, val1, val2);
                             }
                             //rightBottom = 0;
                             if(j + 1 < gameMap[i].length && i + 1 < gameMap.length && gameMap[i + 1][j + 1]>0){
                                 val2 = gameMap[i + 1][j + 1] * 100  + (i+1)*gameMap[i].length + j + 1;
-                                if((val1 - val2)/100 > -1 && (val1 - val2)/100 < 1) calculateLine(lines, val1, val2);
+                                if(hasLine(val1, val2)) calculateLine(lines, val1, val2);
                             }
                             //bottom = 0;
                             if(i + 1 < gameMap.length && gameMap[i + 1][j]>0){
                                 val2 = gameMap[i + 1][j] * 100  + (i+1)*gameMap[i].length + j;
-                                if((val1 - val2)/100 > -1 && (val1 - val2)/100 < 1) calculateLine(lines, val1, val2);
+                                if(hasLine(val1, val2)) calculateLine(lines, val1, val2);
                             }
 
                         }

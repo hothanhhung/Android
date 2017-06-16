@@ -37,4 +37,9 @@ public class StaticData {
     public static ArrayList<ArrayList<Integer>> getLines() {
         return StaticData.getCurrentGame().getLines();
     }
+    public static void resetGame()
+    {
+        StaticData.getCurrentGame().resetGame();
+    }
+
 }
