@@ -22,7 +22,6 @@ public class GameItem implements Serializable {
     int[][] gameStart;
     int gameColumn;
     int gameRow;
-    boolean isWin = false;
 
     long lSeconds;
 
@@ -45,7 +44,7 @@ public class GameItem implements Serializable {
 
     public void resetGame()
     {
-        isWin = false;
+        isCompleted = false;
         for(int i = 0; i<gameRow; i++)
             for(int j =0; j<gameColumn; j++) gameCurrent[i][j] = gameStart[i][j];
     }
@@ -79,7 +78,7 @@ public class GameItem implements Serializable {
     }
 
     public boolean isWin() {
-        return isWin;
+        return isCompleted;
     }
 
     public void setCompleted(boolean completed) {
@@ -154,6 +153,12 @@ public class GameItem implements Serializable {
         }
         return false;
     }
+    public int getHint(int x, int y){
+        if (x >= 0 && x < gameRow && y >= 0 && y < gameColumn) {
+            return gameTarget[x][y];
+        }
+        return 0;
+    }
     public ArrayList<ArrayList<Integer>> getLines()
     {
         ArrayList<ArrayList<Integer>> lines = findLines(gameCurrent);
@@ -173,7 +178,7 @@ public class GameItem implements Serializable {
                     for (int i = 0; i < line.size(); i++) {
                         if (!(line.get(i) /100 == i + 1)) win = false;
                     }
-                    isWin = win;
+                    isCompleted = win;
                 }
             }
         }

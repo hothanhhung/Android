@@ -24,7 +24,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         tvTime = (TextView) findViewById(R.id.tvTime);
         puzzleView = (PuzzleView)findViewById(R.id.puzzleView);
-        timeStart();
+        updateHintUI();
+       // timeStart();
     }
 
     @Override
@@ -39,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         timeStart();
+        textViewTimer();
         System.gc();
     }
 
@@ -156,7 +158,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void btNumberClick(View view) {
-
+        if(StaticData.isCompleted()) return;
         resetNumberButton();
         switch (view.getId()){
             case R.id.keypad_0:
@@ -194,7 +196,13 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case R.id.keypad_help:
                 puzzleView.setSelectedTile(-2);
+                updateHintUI();
                 break;
         }
+    }
+
+    private void updateHintUI()
+    {
+
     }
 }

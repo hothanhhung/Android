@@ -11,6 +11,7 @@ public class StaticData {
     public static final String GAME_ITEM_KEY = "GAME_ITEM_KEY";
     public static final int GAME_COLUMN = 0;
     public static final int GAME_ROW = 0;
+    public static int currentNumberOfHints = 10;
 
     private static GameItem currentGameItem;
 
@@ -41,5 +42,21 @@ public class StaticData {
     {
         StaticData.getCurrentGame().resetGame();
     }
-
+    public static boolean isCompleted()
+    {
+        return StaticData.getCurrentGame().isCompleted();
+    }
+    public static int execHint(int x, int y)
+    {
+        currentNumberOfHints --;
+        return StaticData.getCurrentGame().getHint(x, y);
+    }
+    public static int getNumberOfHint()
+    {
+        return currentNumberOfHints;
+    }
+    public static void awardNumberOfHint()
+    {
+        currentNumberOfHints = currentNumberOfHints + 1;
+    }
 }

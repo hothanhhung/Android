@@ -187,9 +187,11 @@ public class PuzzleView extends View {
                 }
             }
         }
-        Paint selected = new Paint();
-        selected.setColor(getResources().getColor(R.color.puzzle_selected));
-        canvas.drawRect(selRect, selected);
+        if(!StaticData.getCurrentGame().isWin()) {
+            Paint selected = new Paint();
+            selected.setColor(getResources().getColor(R.color.puzzle_selected));
+            canvas.drawRect(selRect, selected);
+        }
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event){
@@ -242,8 +244,11 @@ public class PuzzleView extends View {
             value = game.getGameItem(selX, selY) * 10 + tile;
         }
         needDelete = false;
-        if(tile == -1 || tile == -2){
+        if(tile == -1){
             value = 0;
+        }else if(tile == -2)
+        {
+            value = StaticData.execHint(selX, selY);
         }
         if(game.setTileIfValid(selX, selY, value)){
             invalidate();
