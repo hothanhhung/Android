@@ -2,6 +2,7 @@ package com.hunght.numberlink;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +61,9 @@ public class GridviewGameItemAdapter extends BaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.game_item, null);
 
         }
+        GameItem gameItem = (GameItem)getItem(i);
         btGameItem = (Button) view.findViewById(R.id.btGameItem);
-        btGameItem.setTag(getItem(i));
+        btGameItem.setTag(gameItem);
         btGameItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,8 +75,12 @@ public class GridviewGameItemAdapter extends BaseAdapter {
         });
 
         btGameItem.setText(String.valueOf(i + 1));
-
-
+        btGameItem.setEnabled(gameItem.isEnable());
+        if(gameItem.isWin()){
+            btGameItem.setTextColor(Color.parseColor("#297247"));
+        }else{
+            btGameItem.setTextColor(Color.WHITE);
+        }
         return view;
 
     }

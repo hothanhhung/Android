@@ -14,6 +14,7 @@ public class StaticData {
     public static int currentNumberOfHints = 10;
 
     private static GameItem currentGameItem;
+    private static LevelItem currentLevelItem;
 
     public static int getNumberRows()
     {
@@ -33,6 +34,16 @@ public class StaticData {
     public static void setCurrentGame(GameItem gameItem)
     {
         currentGameItem = gameItem;
+    }
+
+    public static LevelItem getCurrentLevelm()
+    {
+        return currentLevelItem;
+    }
+
+    public static void setCurrentLevel(LevelItem levelItem)
+    {
+        currentLevelItem = levelItem;
     }
 
     public static ArrayList<ArrayList<Integer>> getLines() {

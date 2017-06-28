@@ -23,6 +23,7 @@ public class GameItem implements Serializable {
     int gameColumn;
     int gameRow;
 
+    boolean isEnable;
     long lSeconds;
 
     ArrayList<ArrayList<Integer>> lines;
@@ -31,9 +32,10 @@ public class GameItem implements Serializable {
 
     }
 
-    public GameItem(String name, String id, boolean isCompleted, int gameColumn, int gameRow, String gameStart, String gameCurrent, String gameTarget){
+    public GameItem(String name, String id, boolean isEnable, boolean isCompleted, int gameColumn, int gameRow, String gameStart, String gameCurrent, String gameTarget){
         this.name = name;
         this.id = id;
+        this.isEnable = isEnable;
         this.isCompleted = isCompleted;
         this.gameColumn = gameColumn;
         this.gameRow = gameRow;
@@ -55,6 +57,14 @@ public class GameItem implements Serializable {
 
     public void setGamePlaySeconds(long lSeconds) {
         this.lSeconds = lSeconds;
+    }
+
+    public boolean isEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
     }
 
     public String getName() {
