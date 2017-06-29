@@ -149,6 +149,7 @@ public class GameActivity extends AppCompatActivity {
                 timeStart();
                 break;
             case R.id.btHint:
+                puzzleView.changeIsShowLineValue();
                 break;
             case R.id.btSpeaker:
                 break;

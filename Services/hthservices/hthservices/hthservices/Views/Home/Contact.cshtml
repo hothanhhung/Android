@@ -11,6 +11,7 @@
         for (int i = 0; i < ArrayPositions.GetLength(0); i++)
         {   for(int j = 0; j< ArrayPositions.GetLength(1); j++)
             {
+                if (ArrayPositions[i, j] == 0) { ArrayPositions[i, j] = -1; }
                 <span style="width: 30px; float: left;">@ArrayPositions[i,j]</span>
                str+="|"+ArrayPositions[i,j];
             }
@@ -24,7 +25,8 @@
             {
                 for (int j = 0; j < ArrayPositions.GetLength(1); j++)
                 {
-                    if (ran.Next(1) == 1 || ArrayPositions[i, j] < 0)
+                    if (ArrayPositions[i, j] == 0) {ArrayPositions[i, j] = -1;}
+                    if (ran.Next(2) == 1 || ArrayPositions[i, j] < 0)
                     {
                     <span style="width: 30px; float: left;">@ArrayPositions[i, j]</span>
                     str += "|" + ArrayPositions[i, j];

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class PuzzleView extends View {
     private final GameActivity game;
     private boolean needDelete = false;
-
+    private boolean isShowLine = true;
     public PuzzleView(Context context)
     {
         super(context);
@@ -54,6 +54,8 @@ public class PuzzleView extends View {
     {
         width = w/(1.0f * StaticData.getNumberColumns());
         height = h/(1.0f * StaticData.getNumberRows());
+        if(width > height) width = height;
+        else height = width;
         getRect(selX, selY, selRect);
         super.onSizeChanged(w, h, oldw, oldh);
     }
@@ -87,21 +89,6 @@ public class PuzzleView extends View {
         Paint light = new Paint();
         light.setColor(getResources().getColor(R.color.puzzle_light));
 
-        Paint paintLine = new Paint();
-        if(StaticData.getCurrentGame().isWin()) {
-            paintLine.setColor(Color.rgb(51, 160, 75));
-        }else{
-            paintLine.setColor(Color.rgb(255, 153, 51));
-        }
-        paintLine.setStrokeWidth(5);
-        Paint paintLineStartEnd = new Paint();
-        if(StaticData.getCurrentGame().isWin()) {
-            paintLineStartEnd.setColor(Color.argb(200, 51, 160, 75));
-        }else{
-            paintLineStartEnd.setColor(Color.argb(200, 255, 153, 51));
-        }
-
-        paintLineStartEnd.setStrokeWidth(5);
 
         for(int i =0; i<StaticData.getNumberColumns(); i++)
         {
@@ -125,7 +112,7 @@ public class PuzzleView extends View {
         Paint foreground = new Paint(Paint.ANTI_ALIAS_FLAG);
         foreground.setColor(getResources().getColor(R.color.puzzle_foreground));
         foreground.setStyle(Paint.Style.FILL);
-        foreground.setTextSize(height * 0.75f);
+        foreground.setTextSize(height * 0.7f);
         foreground.setTextScaleX(width / height);
         foreground.setTextAlign(Paint.Align.CENTER);
 
@@ -145,16 +132,35 @@ public class PuzzleView extends View {
                         j*height+y, foreground);
             }
         }
-        ArrayList<ArrayList<Integer>> lines =StaticData.getLines();
-        for (ArrayList<Integer> line:lines) {
-            for(int i = 1; i<line.size(); i++)
-            {
-                int point1 = line.get(i-1) % 100, point2 = line.get(i) % 100;
-                float startX, startY, stopX, stopY;
-                startX = point1/StaticData.getNumberColumns()*width+ width/2;
-                startY = point1%StaticData.getNumberColumns()*height + height/2;
-                stopX = point2/StaticData.getNumberColumns()*width+ width/2;
-                stopY = point2%StaticData.getNumberColumns()*height + height/2;
+        if(isShowLine) {
+            Paint paintLine = new Paint();
+            if(StaticData.getCurrentGame().isWin()) {
+                paintLine.setColor(Color.rgb(51, 160, 75));
+            }else{
+                paintLine.setColor(Color.rgb(255, 153, 51));
+            }
+            paintLine.setStrokeWidth(5);
+            Paint paintLineStartEnd = new Paint();
+            if(StaticData.getCurrentGame().isWin()) {
+                paintLineStartEnd.setColor(Color.argb(200, 51, 160, 75));
+            }else{
+                paintLineStartEnd.setColor(Color.argb(200, 255, 153, 51));
+            }
+
+            paintLineStartEnd.setStrokeWidth(5);
+
+            float cycleSize = height / 8;
+            if(cycleSize > 15) cycleSize = 15;
+
+            ArrayList<ArrayList<Integer>> lines = StaticData.getLines();
+            for (ArrayList<Integer> line : lines) {
+                for (int i = 1; i < line.size(); i++) {
+                    int point1 = line.get(i - 1) % 100, point2 = line.get(i) % 100;
+                    float startX, startY, stopX, stopY;
+                    startX = point1 / StaticData.getNumberColumns() * width + width / 2;
+                    startY = point1 % StaticData.getNumberColumns() * height + height / 2;
+                    stopX = point2 / StaticData.getNumberColumns() * width + width / 2;
+                    stopY = point2 % StaticData.getNumberColumns() * height + height / 2;
 
                 /*if(startX>stopX)
                 {
@@ -174,15 +180,16 @@ public class PuzzleView extends View {
                     stopY = stopY - height/2;
                 }*/
 
-                canvas.drawLine(startX, startY, stopX, stopY, paintLine);
+                    canvas.drawLine(startX, startY, stopX, stopY, paintLine);
 
-                canvas.drawCircle(startX, startY,15, paintLine);
-                canvas.drawCircle(stopX, stopY,15, paintLine);
-                if(StaticData.getCurrentGame().isWin()) {
-                    if (i == 1) {
-                        canvas.drawCircle(startX, startX, 25, paintLineStartEnd);
-                    } else if (i == line.size() - 1) {
-                        canvas.drawCircle(stopX, stopY, 25, paintLineStartEnd);
+                    canvas.drawCircle(startX, startY, cycleSize, paintLine);
+                    canvas.drawCircle(stopX, stopY, cycleSize, paintLine);
+                    if (StaticData.getCurrentGame().isWin()) {
+                        if (i == 1) {
+                            canvas.drawCircle(startX, startX, 25, paintLineStartEnd);
+                        } else if (i == line.size() - 1) {
+                            canvas.drawCircle(stopX, stopY, 25, paintLineStartEnd);
+                        }
                     }
                 }
             }
@@ -235,6 +242,12 @@ public class PuzzleView extends View {
         //game.showKeypadOrError(selX,selY);
         game.resetNumberButton();
         return true;
+    }
+
+    public void changeIsShowLineValue()
+    {
+        isShowLine = !isShowLine;
+        invalidate();
     }
 
     protected  void setSelectedTile(int tile){

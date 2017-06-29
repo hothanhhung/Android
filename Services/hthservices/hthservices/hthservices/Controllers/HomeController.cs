@@ -53,9 +53,9 @@ namespace hthservices.Controllers
 
             int[,] array = new int[row, col];
 
-            for (int x = 0; x < col; x++)
+            for (int x = 0; x < row; x++)
             {
-                for (int y = 0; y < row; y++)
+                for (int y = 0; y < col; y++)
                 {
                     array[x, y] = -1;
                 }

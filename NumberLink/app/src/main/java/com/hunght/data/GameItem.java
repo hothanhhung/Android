@@ -32,16 +32,20 @@ public class GameItem implements Serializable {
 
     }
 
-    public GameItem(String name, String id, boolean isEnable, boolean isCompleted, int gameColumn, int gameRow, String gameStart, String gameCurrent, String gameTarget){
+    public GameItem(String name, String id, boolean isEnable, boolean isCompleted, int gameRow, int gameColumn, String gameStart, String gameCurrent, String gameTarget){
         this.name = name;
         this.id = id;
         this.isEnable = isEnable;
         this.isCompleted = isCompleted;
         this.gameColumn = gameColumn;
         this.gameRow = gameRow;
-        this.gameTarget = convertGameMapFromString(gameTarget);
-        this.gameCurrent = convertGameMapFromString(gameCurrent);
         this.gameStart = convertGameMapFromString(gameStart);
+        this.gameTarget = convertGameMapFromString(gameTarget);
+        if(gameCurrent == null || gameCurrent == ""){
+            this.gameCurrent = this.gameStart;
+        }else{
+            this.gameCurrent = convertGameMapFromString(gameCurrent);
+        }
     }
 
     public void resetGame()
