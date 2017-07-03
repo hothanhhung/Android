@@ -83,8 +83,8 @@ namespace hthservices.Controllers
         private bool repeart(int[,] array, int number, int x, int y)
         {
             array[x, y] = number;
-
-            if (!isFull(array))
+            //print(array);
+            if (number < numbRow * numbCol - block)
             {
                 var positions = GetListPosition(array, x, y);
                 if (positions == null || positions.Count == 0)
@@ -107,13 +107,13 @@ namespace hthservices.Controllers
                     positions.RemoveAt(index);
                 }
 
-                if (!isFull(array))
+                //if (!isFull(array))
+                //{
+                //    return false;
+                //}
+                //else
                 {
                     return false;
-                }
-                else
-                {
-                    return true;
                 }
 
             }
@@ -188,6 +188,18 @@ namespace hthservices.Controllers
                 }
             }
             return true;
+        }
+
+        private void print(int[,] array)
+        {
+            for (int x = 0; x < numbRow; x++)
+            {
+                for (int y = 0; y < numbCol; y++)
+                {
+                    System.Diagnostics.Debug.Write(String.Format("{0:3}", array[x, y]));
+                }
+                System.Diagnostics.Debug.WriteLine("");
+            }
         }
     }
 }

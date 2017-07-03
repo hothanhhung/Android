@@ -42,7 +42,7 @@ public class GameItem implements Serializable {
         this.gameStart = convertGameMapFromString(gameStart);
         this.gameTarget = convertGameMapFromString(gameTarget);
         if(gameCurrent == null || gameCurrent == ""){
-            this.gameCurrent = this.gameStart;
+            this.gameCurrent = convertGameMapFromString(gameStart);
         }else{
             this.gameCurrent = convertGameMapFromString(gameCurrent);
         }
@@ -74,7 +74,9 @@ public class GameItem implements Serializable {
     public String getName() {
         return name;
     }
-
+    public int getGroupId() {
+        return gameRow * 10 + gameColumn;
+    }
     public void setName(String name) {
         this.name = name;
     }
@@ -107,11 +109,13 @@ public class GameItem implements Serializable {
         return gameCurrent;
     }
 
-    public void setGameCurrent(int x, int y, int value) {
+    public boolean setGameCurrent(int x, int y, int value) {
 
         if (x >= 0 && x < gameRow && y >= 0 && y < gameColumn) {
             gameCurrent[x][y] = value;
+            return true;
         }
+        return false;
     }
 
     public int getGameCurrent(int x, int y) {

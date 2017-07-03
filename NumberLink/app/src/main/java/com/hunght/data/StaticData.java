@@ -36,7 +36,7 @@ public class StaticData {
         currentGameItem = gameItem;
     }
 
-    public static LevelItem getCurrentLevelm()
+    public static LevelItem getCurrentLevel()
     {
         return currentLevelItem;
     }

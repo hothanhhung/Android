@@ -1,5 +1,7 @@
 package com.hunght.data;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lenovo on 6/28/2017.
  */
@@ -8,22 +10,14 @@ public class LevelItem {
     int levelId;
     int numberRows;
     int numberColumns;
-    int numberWinGame;
-    int totalGames;
-    String [] gameIds;
+    ArrayList<GameItem> gameItems;
     public LevelItem(){}
 
-    public LevelItem(int levelId, int numberRows, int numberColumns, int numberWinGame, String [] gameIds){
+    public LevelItem(int levelId, int numberRows, int numberColumns, ArrayList<GameItem> gameItems){
         this.levelId = levelId;
         this.numberRows = numberRows;
         this.numberColumns = numberColumns;
-        this.numberWinGame = numberWinGame;
-        this.gameIds = gameIds;
-        if(this.gameIds == null){
-            this.totalGames = 0;
-        }else {
-            this.totalGames = this.gameIds.length;
-        }
+        this.gameItems = gameItems;
     }
 
     public int getLevelId() {
@@ -51,29 +45,29 @@ public class LevelItem {
     }
 
     public int getNumberWinGame() {
+        int numberWinGame = 0;
+        for (GameItem gameItem:getGameItems()
+             ) {
+            if(gameItem.isWin()){
+                numberWinGame++;
+            }
+        }
         return numberWinGame;
     }
 
-    public void setNumberWinGame(int numberWinGame) {
-        this.numberWinGame = numberWinGame;
-    }
-
     public int getTotalGames() {
-        return totalGames;
+        return getGameItems().size();
     }
 
-    public void setTotalGames(int totalGames) {
-        this.totalGames = totalGames;
-    }
-
-    public String [] getGameIds()
+    public ArrayList<GameItem> getGameItems()
     {
-        return gameIds;
+        if(gameItems == null) gameItems = new ArrayList<>();
+        return gameItems;
     }
 
     public boolean isAllComplete()
     {
-        return totalGames == numberWinGame;
+        return getNumberWinGame() == getTotalGames();
     }
 
     public String getSize()

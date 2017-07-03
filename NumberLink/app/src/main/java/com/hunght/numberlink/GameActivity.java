@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hunght.data.GameItem;
+import com.hunght.data.SavedValues;
 import com.hunght.data.StaticData;
 
 import java.util.ArrayList;
@@ -17,13 +18,14 @@ public class GameActivity extends AppCompatActivity {
     private boolean fTimeStart = false;
     private boolean fTimeStop = true;
     Thread timestart;
-
+    SavedValues savedValues;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         tvTime = (TextView) findViewById(R.id.tvTime);
         puzzleView = (PuzzleView)findViewById(R.id.puzzleView);
+        savedValues= new SavedValues(this);
         updateHintUI();
        // timeStart();
     }
@@ -65,8 +67,12 @@ public class GameActivity extends AppCompatActivity {
 
     public boolean setTileIfValid(int x, int y, int val)
     {
-        StaticData.getCurrentGame().setGameCurrent(x, y, val);
-        return true;
+        if(StaticData.getCurrentGame().setGameCurrent(x, y, val))
+        {
+            savedValues.setGameItem(StaticData.getCurrentGame());
+            return true;
+        }
+        return false;
     }
 
     private void textViewTimer() {
@@ -117,6 +123,7 @@ public class GameActivity extends AppCompatActivity {
                                     puzzleView.invalidate();
                                 }
                             });
+                            savedValues.setGameItem(StaticData.getCurrentGame());
                         }
 
                     } catch (InterruptedException exception) {

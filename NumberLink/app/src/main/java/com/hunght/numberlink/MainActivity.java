@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     GridView grvLevelItems;
+    GridviewLevelItemAdapter gridviewLevelItemAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
         grvLevelItems = (GridView) findViewById(R.id.grvLevelItems);
 
-        ArrayList<LevelItem> levelItems = DataProcess.getLevelItems();
-        GridviewLevelItemAdapter gridviewLevelItemAdapter = new GridviewLevelItemAdapter(this, levelItems);
+        ArrayList<LevelItem> levelItems = DataProcess.getLevelItems(this);
+        gridviewLevelItemAdapter = new GridviewLevelItemAdapter(this, levelItems);
         grvLevelItems.setAdapter(gridviewLevelItemAdapter);
     }
 
+    protected void onResume() {
+        super.onResume();
+        if(gridviewLevelItemAdapter != null) gridviewLevelItemAdapter.notifyDataSetChanged();
+        System.gc();
+    }
     public void btOnClick(View view)
     {
         switch (view.getId())
