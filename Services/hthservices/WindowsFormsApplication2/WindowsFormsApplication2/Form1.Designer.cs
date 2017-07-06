@@ -174,14 +174,14 @@
             this.webBrowser3.Location = new System.Drawing.Point(388, 287);
             this.webBrowser3.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser3.Name = "webBrowser3";
-            this.webBrowser3.Size = new System.Drawing.Size(250, 159);
+            this.webBrowser3.Size = new System.Drawing.Size(250, 207);
             this.webBrowser3.TabIndex = 16;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 458);
+            this.ClientSize = new System.Drawing.Size(671, 506);
             this.Controls.Add(this.webBrowser3);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label2);
