@@ -47,7 +47,7 @@
             // 
             // txtRows
             // 
-            this.txtRows.Location = new System.Drawing.Point(274, 55);
+            this.txtRows.Location = new System.Drawing.Point(324, 55);
             this.txtRows.Name = "txtRows";
             this.txtRows.Size = new System.Drawing.Size(100, 20);
             this.txtRows.TabIndex = 0;
@@ -55,7 +55,7 @@
             // 
             // txtColumns
             // 
-            this.txtColumns.Location = new System.Drawing.Point(274, 81);
+            this.txtColumns.Location = new System.Drawing.Point(324, 81);
             this.txtColumns.Name = "txtColumns";
             this.txtColumns.Size = new System.Drawing.Size(100, 20);
             this.txtColumns.TabIndex = 1;
@@ -63,7 +63,7 @@
             // 
             // txtBlock
             // 
-            this.txtBlock.Location = new System.Drawing.Point(274, 107);
+            this.txtBlock.Location = new System.Drawing.Point(324, 107);
             this.txtBlock.Name = "txtBlock";
             this.txtBlock.Size = new System.Drawing.Size(100, 20);
             this.txtBlock.TabIndex = 2;
@@ -71,7 +71,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(274, 144);
+            this.button1.Location = new System.Drawing.Point(324, 144);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
@@ -82,7 +82,7 @@
             // button2
             // 
             this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(274, 173);
+            this.button2.Location = new System.Drawing.Point(324, 173);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 5;
@@ -93,7 +93,7 @@
             // button3
             // 
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(274, 203);
+            this.button3.Location = new System.Drawing.Point(324, 203);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 6;
@@ -106,34 +106,34 @@
             this.webBrowser1.Location = new System.Drawing.Point(-4, 12);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(250, 238);
+            this.webBrowser1.Size = new System.Drawing.Size(300, 238);
             this.webBrowser1.TabIndex = 8;
             // 
             // webBrowser2
             // 
-            this.webBrowser2.Location = new System.Drawing.Point(388, 12);
+            this.webBrowser2.Location = new System.Drawing.Point(438, 12);
             this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.Size = new System.Drawing.Size(250, 238);
+            this.webBrowser2.Size = new System.Drawing.Size(309, 238);
             this.webBrowser2.TabIndex = 9;
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(13, 261);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(233, 20);
+            this.textBox1.Size = new System.Drawing.Size(283, 20);
             this.textBox1.TabIndex = 10;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(388, 261);
+            this.textBox2.Location = new System.Drawing.Point(438, 261);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(250, 20);
+            this.textBox2.Size = new System.Drawing.Size(309, 20);
             this.textBox2.TabIndex = 11;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(274, 12);
+            this.progressBar1.Location = new System.Drawing.Point(324, 12);
             this.progressBar1.MarqueeAnimationSpeed = 200;
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(100, 23);
@@ -143,7 +143,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(294, 233);
+            this.label1.Location = new System.Drawing.Point(344, 233);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(17, 17);
             this.label1.TabIndex = 13;
@@ -153,7 +153,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(282, 264);
+            this.label2.Location = new System.Drawing.Point(332, 264);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 14;
@@ -161,7 +161,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(274, 287);
+            this.button4.Location = new System.Drawing.Point(324, 287);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 15;
@@ -171,17 +171,17 @@
             // 
             // webBrowser3
             // 
-            this.webBrowser3.Location = new System.Drawing.Point(388, 287);
+            this.webBrowser3.Location = new System.Drawing.Point(438, 287);
             this.webBrowser3.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser3.Name = "webBrowser3";
-            this.webBrowser3.Size = new System.Drawing.Size(250, 207);
+            this.webBrowser3.Size = new System.Drawing.Size(309, 245);
             this.webBrowser3.TabIndex = 16;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(671, 506);
+            this.ClientSize = new System.Drawing.Size(769, 544);
             this.Controls.Add(this.webBrowser3);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label2);

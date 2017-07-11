@@ -323,14 +323,18 @@ namespace WindowsFormsApplication2
         {
             int numberOnePath = 0;
             var positions = GetListPositionNeedCheck(array);
-            if (positions != null && positions.Count > 2)
+            if (positions != null && positions.Count > 1)
             {
                 var position = positions[0];
+                if (position.Key == targetX && targetY == position.Value)
+                {
+                    position = positions[1];
+                }
                 int[,] array1 = tryFillPath(array, position.Key, position.Value, targetX, targetY);
 
                 foreach (var pos in positions)
                 {
-                    if (pos.Key != targetX && pos.Value != targetY)
+                    if (pos.Key != targetX || pos.Value != targetY)
                     {
                         if (array1[pos.Key, pos.Value] != 0)
                         {
@@ -344,7 +348,7 @@ namespace WindowsFormsApplication2
                         {
                             numberOnePath++;
                         }
-                        if (numberOnePath > 1) return false;
+                        if (numberOnePath > 2) return false;
                     }
                 }
             }
@@ -372,17 +376,22 @@ namespace WindowsFormsApplication2
                         }
                 }
             }
+            array1[x1, y1] = 0;
             fillPath(array1, x1, y1);
             return array1;
         }
 
         private void fillPath(int[,] array1, int x1, int y1)
         {
-            array1[x1, y1] = 0;
+            //array1[x1, y1] = 0;
             var positions = GetListPosition(array1, x1, y1);
             if (positions == null || positions.Count == 0)
             {
                 return ;
+            }
+            foreach(var position in positions)
+            {
+                array1[position.Key, position.Value] = 0;
             }
             while (positions.Count > 0)
             {
