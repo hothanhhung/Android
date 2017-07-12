@@ -1,10 +1,15 @@
 package com.hunght.numberlink;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -22,17 +27,22 @@ public class PuzzleView extends View {
     private final GameActivity game;
     private boolean needDelete = false;
     private boolean isShowLine = true;
+    BitmapShader mBitmapShaderBackground;
+    BitmapShader mBitmapShaderRock;
+
     public PuzzleView(Context context)
     {
         super(context);
         this.game = (GameActivity) context;
         setFocusable(true);
         setFocusableInTouchMode(true);
+        initVars(context);
     }
 
     public PuzzleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.game = (GameActivity) context;
+        initVars(context);
         //setFocusable(true);
         //setFocusableInTouchMode(true);
     }
@@ -42,6 +52,7 @@ public class PuzzleView extends View {
         this.game = (GameActivity) context;
         setFocusable(true);
         setFocusableInTouchMode(true);
+        initVars(context);
     }
 
     private float width;
@@ -71,15 +82,27 @@ public class PuzzleView extends View {
         }
     }
 
+    private void initVars(Context context)
+    {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.rock);
+        mBitmapShaderBackground = new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.wall);
+        mBitmapShaderRock = new BitmapShader(bitmap1, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+    }
+
     private void getRect(int x, int y, Rect rect)
     {
-        rect.set((int) (x * width) + 2, (int) (y * height) + 2, (int) ((x + 1) * width) -2, (int) ((y + 1) * height - 2));
+        rect.set((int) (x * width) + 2, (int) (y * height) + 2, (int) ((x + 1) * width)/* -2*/, (int) ((y + 1) * height/* - 2*/));
     }
 
     protected void onDraw(Canvas canvas)
     {
         Paint background = new Paint();
-        background.setColor(getResources().getColor(R.color.puzzle_background));
+        //background.setColor(getResources().getColor(R.color.puzzle_background));
+        background.setShader(mBitmapShaderBackground);
+        Paint rockPaint = new Paint();
+        rockPaint.setShader(mBitmapShaderRock);
+
         canvas.drawRect(0, 0, getWidth(), getHeight(), background);
 
         Paint dark = new Paint();
@@ -126,7 +149,11 @@ public class PuzzleView extends View {
             for(int j = 0; j < StaticData.getNumberColumns(); j++){
                 if(!this.game.canChangeValue(i,j)){
                     getRect(i,j, canNotChange);
-                    canvas.drawRect(canNotChange, canNotChangeValue);
+                    if(this.game.canSeeValue(i,j)) {
+                        canvas.drawRect(canNotChange, canNotChangeValue);
+                    }else{
+                        canvas.drawRect(canNotChange, rockPaint);
+                    }
                 }
                 canvas.drawText(this.game.getGameItemString(i, j), i * width + x,
                         j*height+y, foreground);
@@ -137,7 +164,7 @@ public class PuzzleView extends View {
             if(StaticData.getCurrentGame().isWin()) {
                 paintLine.setColor(Color.rgb(51, 160, 75));
             }else{
-                paintLine.setColor(Color.rgb(255, 153, 51));
+                paintLine.setColor(Color.rgb(119, 206, 168));
             }
             paintLine.setStrokeWidth(5);
             Paint paintLineStartEnd = new Paint();
