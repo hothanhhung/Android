@@ -79,4 +79,18 @@ public class LevelItem {
     {
         return getNumberWinGame()+"/"+getTotalGames();
     }
+
+    public boolean isAllWin() {
+        for (GameItem gameItem: getGameItems()) {
+            if(!gameItem.isWin()) return false;
+        }
+        return true;
+    }
+
+    public boolean isPlaying() {
+        for (GameItem gameItem: getGameItems()) {
+            if(gameItem.isPlaying()) return true;
+        }
+        return false;
+    }
 }

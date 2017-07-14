@@ -7,17 +7,17 @@
     </item>
     <item android:state_pressed="true">
         <shape android:shape="oval">
-            <solid android:color="#96ada7"/>
+            <solid android:color="#c20586"/>
         </shape>
     </item>
     <item android:state_pressed="false">
         <shape android:shape="oval">
-            <solid android:color="#b5cec7"/>
+            <solid android:color="#fa09ad"/>
         </shape>
     </item>
     <item>
         <shape android:shape="oval">
-            <solid android:color="#b5cec7"/>
+            <solid android:color="#fa09ad"/>
         </shape>
     </item>
 </selector>

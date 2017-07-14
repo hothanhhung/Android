@@ -13,9 +13,17 @@ public class StaticData {
     public static final int GAME_ROW = 0;
     public static int currentNumberOfHints = 10;
 
+    private static boolean isStart = true;
     private static GameItem currentGameItem;
     private static LevelItem currentLevelItem;
 
+    public static boolean isStart(){
+        if(isStart){
+            isStart = false;
+            return true;
+        }
+        return false;
+    }
     public static int getNumberRows()
     {
         return getCurrentGame().getGameRow();

@@ -1,5 +1,6 @@
 package com.hunght.numberlink;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,10 +23,10 @@ import java.util.ArrayList;
  */
 
 public class GridviewLevelItemAdapter extends BaseAdapter {
-    private Context mContext;
+    private Activity mContext;
     private ArrayList<LevelItem> data;
 
-    public GridviewLevelItemAdapter(Context mContext, ArrayList<LevelItem> data)
+    public GridviewLevelItemAdapter(Activity mContext, ArrayList<LevelItem> data)
     {
         this.mContext = mContext;
         this.data = data;
@@ -80,17 +81,18 @@ public class GridviewLevelItemAdapter extends BaseAdapter {
                 Intent intent = new Intent(mContext, LevelActivity.class);
                 StaticData.setCurrentLevel(levelItem);
                 mContext.startActivity(intent);
+                mContext.finish();
             }
         });
 
         tvSize.setText(levelItem.getSize());
         tvStatus.setText(levelItem.getStatus());
-        if(levelItem.isAllComplete()){
-            tvSize.setTextColor(Color.parseColor("#297247"));
-            tvStatus.setTextColor(Color.parseColor("#297247"));
-        }else{
-            tvSize.setTextColor(Color.WHITE);
-            tvStatus.setTextColor(Color.WHITE);
+        if(levelItem.isAllWin()){
+            btLevelItem.setBackgroundResource(R.drawable.selector_level_win);
+        }else if (levelItem.isPlaying()){
+            btLevelItem.setBackgroundResource(R.drawable.selector_level_playing);
+        }else {
+            btLevelItem.setBackgroundResource(R.drawable.selector_level);
         }
         return view;
 

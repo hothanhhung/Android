@@ -13,6 +13,8 @@ public class SavedValues {
 	private static final String APP_SHARED_PREFS = "com.hth.numberlink";
 	private static final String RECORD_PLAYBACKGROUND = "RECORD_PLAYBACKGROUND";
 	private static final String RECORD_HIGHSCORE = "RECORD_HIGHSCORE";
+	private static final String RECORD_CURRENT_GAME_ID = "RECORD_CURRENT_GAME_ID";
+    private static final String RECORD_NUMBER_OF_HINT = "RECORD_NUMBER_OF_HINT";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -21,7 +23,25 @@ public class SavedValues {
 				APP_SHARED_PREFS, 0);
 		prefsEditor = appSharedPrefs.edit();
 	}
+    public int getRecordNumberOfHints() {
+        return appSharedPrefs.getInt(RECORD_NUMBER_OF_HINT, 10);
+    }
 
+	public String getCurrentGameId() {
+		try {
+			String item = appSharedPrefs.getString(RECORD_CURRENT_GAME_ID, "");
+			return item;
+		}catch (Exception ex){
+			return null;
+		}
+	}
+	public void setCurrentGameId(String currentGameId) {
+		try {
+			prefsEditor.putString(RECORD_CURRENT_GAME_ID, currentGameId);
+			prefsEditor.commit();
+		}catch (Exception ex){
+		}
+	}
 
 	public GameItem getGameItem(String key) {
 		try {
@@ -38,6 +58,11 @@ public class SavedValues {
 		return appSharedPrefs.getBoolean(RECORD_PLAYBACKGROUND, true);
 	}
 
+
+    public void setRecordNumberOfHints(int var1) {
+        prefsEditor.putInt(RECORD_NUMBER_OF_HINT, var1);
+        prefsEditor.commit();
+    }
 
 	public void setGameItem(GameItem item) {
 		Gson gson = new Gson();

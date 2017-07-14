@@ -96,7 +96,9 @@ public class GameItem implements Serializable {
     public boolean isWin() {
         return isCompleted;
     }
-
+    public boolean isPlaying() {
+        return lSeconds > 0;
+    }
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }

@@ -1,5 +1,6 @@
 package com.hunght.numberlink;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,10 +19,10 @@ import com.hunght.data.StaticData;
  */
 
 public class GridviewGameItemAdapter extends BaseAdapter {
-    private Context mContext;
+    private Activity mContext;
     private ArrayList<GameItem> data;
 
-    public GridviewGameItemAdapter(Context mContext, ArrayList<GameItem> data)
+    public GridviewGameItemAdapter(Activity mContext, ArrayList<GameItem> data)
     {
         this.mContext = mContext;
         this.data = data;
@@ -71,15 +72,18 @@ public class GridviewGameItemAdapter extends BaseAdapter {
                 Intent intent = new Intent(mContext, GameActivity.class);
                 StaticData.setCurrentGame(gameItem);
                 mContext.startActivity(intent);
+                mContext.finish();
             }
         });
 
         btGameItem.setText(String.valueOf(i + 1));
         btGameItem.setEnabled(gameItem.isEnable());
         if(gameItem.isWin()){
-            btGameItem.setTextColor(Color.parseColor("#297247"));
-        }else{
-            btGameItem.setTextColor(Color.WHITE);
+            btGameItem.setBackgroundResource(R.drawable.round_button_win);
+        }else if (gameItem.isPlaying()){
+            btGameItem.setBackgroundResource(R.drawable.round_button_playing);
+        }else {
+            btGameItem.setBackgroundResource(R.drawable.round_button);
         }
         return view;
 

@@ -1,5 +1,6 @@
 package com.hunght.numberlink;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.GridView;
@@ -26,5 +27,12 @@ public class LevelActivity extends AppCompatActivity {
         super.onResume();
         if(gridviewGameItemAdapter != null) gridviewGameItemAdapter.notifyDataSetChanged();
         System.gc();
+    }
+    @Override
+    public void onBackPressed()
+    {
+        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
     }
 }

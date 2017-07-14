@@ -1,8 +1,11 @@
 package com.hunght.numberlink;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.hunght.data.GameItem;
@@ -19,6 +22,9 @@ public class GameActivity extends AppCompatActivity {
     private boolean fTimeStop = true;
     Thread timestart;
     SavedValues savedValues;
+
+    private MediaPlayer backgroundMusic = null;
+    private boolean isPlayMusic = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +32,19 @@ public class GameActivity extends AppCompatActivity {
         tvTime = (TextView) findViewById(R.id.tvTime);
         puzzleView = (PuzzleView)findViewById(R.id.puzzleView);
         savedValues= new SavedValues(this);
+        isPlayMusic = savedValues.getRecordPlaybackground();
+        backgroundMusic = MediaPlayer.create(this, R.raw.backgroundmusic);
+        backgroundMusic.setLooping(true);
         updateHintUI();
+        savedValues.setCurrentGameId(StaticData.getCurrentGame().getId());
+        ImageButton btSpeaker = (ImageButton) findViewById(R.id.btSpeaker);
+        if(isPlayMusic)
+        {
+            backgroundMusic.start();
+            btSpeaker.setImageResource(R.drawable.speaker);
+        }else{
+            btSpeaker.setImageResource(R.drawable.speaker_mute);
+        }
        // timeStart();
     }
 
@@ -34,18 +52,32 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         timeStop();
+        if (backgroundMusic.isPlaying()) {
+            backgroundMusic.pause();
+        }
     }
     @Override
     protected void onDestroy() {
+        backgroundMusic.release();
+        backgroundMusic = null;
         super.onDestroy();
     }
     protected void onResume() {
         super.onResume();
+        if (isPlayMusic) {
+            backgroundMusic.start();
+        }
         timeStart();
         textViewTimer();
         System.gc();
     }
-
+    @Override
+    public void onBackPressed()
+    {
+        finish();
+        Intent intent = new Intent(this, LevelActivity.class);
+        this.startActivity(intent);
+    }
     public String getGameItemString(int x, int y) {
         return StaticData.getCurrentGame().getGameCurrentInString(x, y);
     }
@@ -146,8 +178,6 @@ public class GameActivity extends AppCompatActivity {
 
     public void btClick(View view) {
         switch (view.getId()){
-            case R.id.btMenu:
-                break;
             case R.id.btUndo:
                 StaticData.resetGame();
                 puzzleView.invalidate();
@@ -159,6 +189,17 @@ public class GameActivity extends AppCompatActivity {
                 puzzleView.changeIsShowLineValue();
                 break;
             case R.id.btSpeaker:
+                isPlayMusic = !isPlayMusic;
+                savedValues.setRecordPlaybackground(isPlayMusic);
+                ImageButton btSpeaker = (ImageButton) findViewById(R.id.btSpeaker);
+                if(isPlayMusic)
+                {
+                    backgroundMusic.start();
+                    btSpeaker.setImageResource(R.drawable.speaker);
+                }else{
+                    backgroundMusic.pause();
+                    btSpeaker.setImageResource(R.drawable.speaker_mute);
+                }
                 break;
             case R.id.btRewarded:
                 break;
