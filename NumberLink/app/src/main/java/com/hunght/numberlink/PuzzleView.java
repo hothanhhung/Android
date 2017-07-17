@@ -282,6 +282,10 @@ public class PuzzleView extends View {
         int value = tile;
         if(!needDelete){
             value = game.getGameItem(selX, selY) * 10 + tile;
+            if(value > StaticData.getMaxValue())
+            {
+                value = tile;
+            }
         }
         needDelete = false;
         if(tile == -1){

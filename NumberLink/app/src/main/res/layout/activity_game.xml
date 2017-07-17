@@ -95,31 +95,68 @@
                 android:layout_height="wrap_content">
                 <TableRow>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_1" android:text="1" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_1" android:text="1" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_2" android:text="2" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_2" android:text="2" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_3" android:text="3" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_3" android:text="3" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_4" android:text="4" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_4" android:text="4" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_5" android:text="5" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_5" android:text="5" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_0" android:text="0" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_0" android:text="0" android:background="@drawable/number_button"></Button>
                 </TableRow>
                 <TableRow>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_6" android:text="6" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_6" android:text="6" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_7" android:text="7" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_7" android:text="7" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_8" android:text="8" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_8" android:text="8" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_9" android:text="9" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_9" android:text="9" android:background="@drawable/number_button"></Button>
                     <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_del" android:text="Del" android:background="@drawable/number_default"></Button>
-                    <Button android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
-                        android:id="@+id/keypad_help" android:text="\?" android:background="@drawable/number_default"></Button>
+                        android:layout_margin="5dp"
+                        android:id="@+id/keypad_del" android:text="Del" android:background="@drawable/number_button"></Button>
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:onClick="btNumberClick"
+                        android:layout_margin="5dp" android:orientation="vertical" android:layout_height="match_parent"
+                        android:id="@+id/keypad_help" android:text="\?" android:background="@drawable/number_button">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:gravity="bottom|center"
+                            android:text="HINT"
+                            android:textSize="10sp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:background="#e0e5e2"
+                            android:text=""/>
+                        <TextView
+                            android:id="@+id/tvNumberOfHints"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="3"
+                            android:gravity="top|center"
+                            android:text="1"
+                            android:textColor="#0b842e"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </TableRow>
             </TableLayout>
         </LinearLayout>

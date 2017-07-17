@@ -102,7 +102,10 @@ public class GameItem implements Serializable {
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
-
+    public int getMaxValue()
+    {
+        return gameColumn * gameColumn;
+    }
     public int[][] getGameTarget() {
         return gameTarget;
     }

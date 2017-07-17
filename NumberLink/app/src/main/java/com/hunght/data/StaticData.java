@@ -70,6 +70,17 @@ public class StaticData {
         currentNumberOfHints --;
         return StaticData.getCurrentGame().getHint(x, y);
     }
+
+    public static int getCurrentHint()
+    {
+        return currentNumberOfHints;
+    }
+
+    public static int getMaxValue()
+    {
+        return StaticData.getCurrentGame().getMaxValue();
+    }
+
     public static int getNumberOfHint()
     {
         return currentNumberOfHints;

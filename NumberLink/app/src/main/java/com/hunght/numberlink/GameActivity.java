@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class GameActivity extends AppCompatActivity {
 
     private PuzzleView puzzleView;
-    private TextView tvTime;
+    private TextView tvTime, tvNumberOfHints;
     private boolean fTimeStart = false;
     private boolean fTimeStop = true;
     Thread timestart;
@@ -30,6 +30,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         tvTime = (TextView) findViewById(R.id.tvTime);
+        tvNumberOfHints = (TextView) findViewById(R.id.tvNumberOfHints);
         puzzleView = (PuzzleView)findViewById(R.id.puzzleView);
         savedValues= new SavedValues(this);
         isPlayMusic = savedValues.getRecordPlaybackground();
@@ -244,14 +245,16 @@ public class GameActivity extends AppCompatActivity {
                 puzzleView.setSelectedTile(-1);
                 break;
             case R.id.keypad_help:
-                puzzleView.setSelectedTile(-2);
-                updateHintUI();
+                if(StaticData.getCurrentHint() > 0) {
+                    puzzleView.setSelectedTile(-2);
+                    updateHintUI();
+                }
                 break;
         }
     }
 
     private void updateHintUI()
     {
-
+        tvNumberOfHints.setText("" + StaticData.getCurrentHint());
     }
 }
