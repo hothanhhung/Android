@@ -271,9 +271,9 @@ public class PuzzleView extends View {
         return true;
     }
 
-    public void changeIsShowLineValue()
+    public void changeIsShowLineValue(boolean isShowLines)
     {
-        isShowLine = !isShowLine;
+        this.isShowLine = isShowLines;
         invalidate();
     }
 

@@ -15,6 +15,7 @@ public class SavedValues {
 	private static final String RECORD_HIGHSCORE = "RECORD_HIGHSCORE";
 	private static final String RECORD_CURRENT_GAME_ID = "RECORD_CURRENT_GAME_ID";
     private static final String RECORD_NUMBER_OF_HINT = "RECORD_NUMBER_OF_HINT";
+	private static final String RECORD_NEED_SHOW_LINES = "RECORD_NEED_SHOW_LINES";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -59,6 +60,10 @@ public class SavedValues {
 	}
 
 
+	public boolean getNeedShowLines() {
+		return appSharedPrefs.getBoolean(RECORD_NEED_SHOW_LINES, true);
+	}
+
     public void setRecordNumberOfHints(int var1) {
         prefsEditor.putInt(RECORD_NUMBER_OF_HINT, var1);
         prefsEditor.commit();
@@ -71,6 +76,10 @@ public class SavedValues {
 		prefsEditor.commit();
 	}
 
+	public void setNeedShowLines(boolean var1) {
+		prefsEditor.putBoolean(RECORD_NEED_SHOW_LINES, var1);
+		prefsEditor.commit();
+	}
 
 	public void setRecordPlaybackground(boolean var1) {
 		prefsEditor.putBoolean(RECORD_PLAYBACKGROUND, var1);

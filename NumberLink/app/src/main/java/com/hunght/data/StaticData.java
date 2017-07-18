@@ -16,6 +16,7 @@ public class StaticData {
     private static boolean isStart = true;
     private static GameItem currentGameItem;
     private static LevelItem currentLevelItem;
+    private static boolean isShowLine;
 
     public static boolean isStart(){
         if(isStart){

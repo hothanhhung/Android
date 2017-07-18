@@ -47,18 +47,19 @@
                     android:background="@android:color/transparent"
                     android:onClick="btClick"
                     android:src="@drawable/undo"/>
-                <Button
-                    android:id="@+id/btHint"
-                    android:layout_marginRight="5dp"
+
+                <ImageButton
+                    android:id="@+id/btShowLines"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:scaleType="fitXY"
-                    android:onClick="btClick"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/hint"
+                    android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/btUndo"
                     android:layout_toStartOf="@+id/btUndo"
-                    android:text="10" />
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/link"
+                    android:onClick="btClick"
+                    android:scaleType="fitXY" />
                 <TextView android:textSize="15.0sp" android:textColor="#000"
                     android:id="@+id/tvTime"
                     android:paddingLeft="10dp"
@@ -74,13 +75,13 @@
                     android:id="@+id/btRewarded"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/btShowLines"
+                    android:layout_toStartOf="@+id/btShowLines"
                     android:background="@android:color/transparent"
                     android:onClick="btClick"
                     android:scaleType="fitXY"
-                    android:src="@drawable/rewarded_ads"
-                    android:layout_toLeftOf="@+id/btHint"
-                    android:layout_toStartOf="@+id/btHint"
-                    android:layout_marginRight="5dp" />
+                    android:src="@drawable/rewarded_ads_new" />
             </RelativeLayout>
             <com.hunght.numberlink.PuzzleView
                 android:id="@+id/puzzleView"

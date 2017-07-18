@@ -1,30 +1,55 @@
 package com.hunght.numberlink;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.hunght.data.GameItem;
 import com.hunght.data.SavedValues;
 import com.hunght.data.StaticData;
+import com.hunght.utils.UIUtils;
 
 import java.util.ArrayList;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements RewardedVideoAdListener {
 
     private PuzzleView puzzleView;
     private TextView tvTime, tvNumberOfHints;
     private boolean fTimeStart = false;
     private boolean fTimeStop = true;
+    private boolean isShowLines = true;
     Thread timestart;
     SavedValues savedValues;
 
     private MediaPlayer backgroundMusic = null;
     private boolean isPlayMusic = true;
+    Dialog loadingDialog;
+
+    private AdView mAdView = null;
+    static private boolean isShowInterstitial = true;
+    private InterstitialAd interstitial = null;
+    private RewardedVideoAd mAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +58,20 @@ public class GameActivity extends AppCompatActivity {
         tvNumberOfHints = (TextView) findViewById(R.id.tvNumberOfHints);
         puzzleView = (PuzzleView)findViewById(R.id.puzzleView);
         savedValues= new SavedValues(this);
+        isShowLines = savedValues.getNeedShowLines();
         isPlayMusic = savedValues.getRecordPlaybackground();
         backgroundMusic = MediaPlayer.create(this, R.raw.backgroundmusic);
         backgroundMusic.setLooping(true);
         updateHintUI();
         savedValues.setCurrentGameId(StaticData.getCurrentGame().getId());
+        ImageButton btShowLines = (ImageButton) findViewById(R.id.btShowLines);
+        if(isShowLines)
+        {
+            btShowLines.setImageResource(R.drawable.link);
+        }else{
+            btShowLines.setImageResource(R.drawable.unlink);
+        }
+        puzzleView.changeIsShowLineValue(isShowLines);
         ImageButton btSpeaker = (ImageButton) findViewById(R.id.btSpeaker);
         if(isPlayMusic)
         {
@@ -47,6 +81,12 @@ public class GameActivity extends AppCompatActivity {
             btSpeaker.setImageResource(R.drawable.speaker_mute);
         }
        // timeStart();
+        mAdView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAd = MobileAds.getRewardedVideoAdInstance(this);
+        mAd.setRewardedVideoAdListener(this);
+        timePlay= System.currentTimeMillis();
     }
 
     @Override
@@ -71,6 +111,7 @@ public class GameActivity extends AppCompatActivity {
         timeStart();
         textViewTimer();
         System.gc();
+        showInterstitial(false);
     }
     @Override
     public void onBackPressed()
@@ -79,6 +120,36 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LevelActivity.class);
         this.startActivity(intent);
     }
+
+    private long timePlay = 0;
+    private void showInterstitial(boolean needShow) {
+        if(needShow || (timePlay!=0 && System.currentTimeMillis() - timePlay > 15 * 60000)) {
+            if (interstitial == null) {
+                interstitial = new InterstitialAd(this);
+                interstitial.setAdUnitId(getResources().getString(R.string.ad_unit_id_interstitial));
+                interstitial.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        if (interstitial.isLoaded()) {
+                            timePlay = System.currentTimeMillis();
+                            interstitial.show();
+                        }
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                    }
+                });
+            }
+            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+            interstitial.loadAd(adRequest_interstitial);
+        }
+    }
+
     public String getGameItemString(int x, int y) {
         return StaticData.getCurrentGame().getGameCurrentInString(x, y);
     }
@@ -151,6 +222,7 @@ public class GameActivity extends AppCompatActivity {
 
                         if(StaticData.getCurrentGame().isWin())
                         {
+                            showInterstitial(true);
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     puzzleView.invalidate();
@@ -186,8 +258,17 @@ public class GameActivity extends AppCompatActivity {
                 StaticData.getCurrentGame().setGamePlaySeconds(0);
                 timeStart();
                 break;
-            case R.id.btHint:
-                puzzleView.changeIsShowLineValue();
+            case R.id.btShowLines:
+                isShowLines=!isShowLines;
+                ImageButton btShowLines = (ImageButton) findViewById(R.id.btShowLines);
+                if(isShowLines)
+                {
+                    btShowLines.setImageResource(R.drawable.link);
+                }else{
+                    btShowLines.setImageResource(R.drawable.unlink);
+                }
+                puzzleView.changeIsShowLineValue(isShowLines);
+                savedValues.setNeedShowLines(isShowLines);
                 break;
             case R.id.btSpeaker:
                 isPlayMusic = !isPlayMusic;
@@ -203,6 +284,13 @@ public class GameActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btRewarded:
+                timeStop();
+                if(rewardedVideoAdsDialog == null){
+                    rewardedVideoAdsDialog = createRewardedVideoAds();
+                }
+                if(!rewardedVideoAdsDialog.isShowing()){
+                    rewardedVideoAdsDialog.show();
+                }
                 break;
         }
     }
@@ -248,6 +336,14 @@ public class GameActivity extends AppCompatActivity {
                 if(StaticData.getCurrentHint() > 0) {
                     puzzleView.setSelectedTile(-2);
                     updateHintUI();
+                }else{
+                    timeStop();
+                    if(rewardedVideoAdsDialog == null){
+                        rewardedVideoAdsDialog = createRewardedVideoAds();
+                    }
+                    if(!rewardedVideoAdsDialog.isShowing()){
+                        rewardedVideoAdsDialog.show();
+                    }
                 }
                 break;
         }
@@ -256,5 +352,102 @@ public class GameActivity extends AppCompatActivity {
     private void updateHintUI()
     {
         tvNumberOfHints.setText("" + StaticData.getCurrentHint());
+    }
+    Dialog rewardedVideoAdsDialog;
+    private Dialog createRewardedVideoAds()
+    {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.menu_rewarded);
+        ColorDrawable dialogColor = new ColorDrawable(Color.GRAY);
+        dialogColor.setAlpha(0);
+        dialog.getWindow().setBackgroundDrawable(dialogColor);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);;
+
+
+
+        dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                                 KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss();
+                    timeStart();
+                }
+                return true;
+            }
+        });
+        return dialog;
+    }
+    public void btRewardedAdsClick(View view) {
+        if(rewardedVideoAdsDialog !=null) rewardedVideoAdsDialog.dismiss();
+        switch (view.getId()) {
+            case R.id.btRewardGetHint:
+                requestRewardedVideoAdShow();
+                break;
+            /*case R.id.btRewardedTurnOffInterstitialAds:
+                requestRewardedVideoAdShow();
+                break;
+            case R.id.btRewardedTurnOffBannerAds:
+                requestRewardedVideoAdShow();
+                break;*/
+            case R.id.btRewardedCancel:
+                timeStart();
+                break;
+        }
+    }
+
+    private void requestRewardedVideoAdShow()
+    {
+        loadingDialog = UIUtils.showProgressDialog(loadingDialog, this);
+        mAd.loadAd(getResources().getString(R.string.ad_unit_id_rewarded_video), new AdRequest.Builder().build());
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        if(loadingDialog!=null && loadingDialog.isShowing())
+        {
+            loadingDialog.hide();
+        }
+        mAd.show();
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        timeStart();
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+        StaticData.awardNumberOfHint();
+        timeStart();
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+        if(loadingDialog!=null && loadingDialog.isShowing())
+        {
+            loadingDialog.hide();
+        }
+        Toast.makeText(this,"Failed to load video",Toast.LENGTH_LONG).show();
+        timeStart();
     }
 }
