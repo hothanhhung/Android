@@ -82,9 +82,9 @@ public class StaticData {
         return StaticData.getCurrentGame().getMaxValue();
     }
 
-    public static int getNumberOfHint()
+    public static void setCurrentHint(int val)
     {
-        return currentNumberOfHints;
+        currentNumberOfHints = val;
     }
     public static void awardNumberOfHint()
     {

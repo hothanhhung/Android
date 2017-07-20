@@ -5,9 +5,9 @@
             <stroke
                 android:height="2dp"
                 android:width="2dp"
-                android:color="#eca1c3c4" />
+                android:color="#71cfe2" />
 
-            <solid android:color="#eca1c3c4" />
+            <solid android:color="#71cfe2" />
 
             <corners
                 android:bottomLeftRadius="5dp"
@@ -22,9 +22,9 @@
             <stroke
                 android:height="2dp"
                 android:width="2dp"
-                android:color="#ecafd5d6" />
+                android:color="#5099a8" />
 
-            <solid android:color="#ecafd5d6" />
+            <solid android:color="#5099a8" />
 
             <corners
                 android:bottomLeftRadius="5dp"

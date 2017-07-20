@@ -65,6 +65,7 @@ public class PuzzleView extends View {
     {
         width = w/(1.0f * StaticData.getNumberColumns());
         height = h/(1.0f * StaticData.getNumberRows());
+        if(width > 75)width = 75;
         if(width > height) width = height;
         else height = width;
         getRect(selX, selY, selRect);
@@ -74,8 +75,12 @@ public class PuzzleView extends View {
     public void onMeasure(int widthSpec, int heightSpec) {
         try{
             super.onMeasure(widthSpec, heightSpec);
-            int size = Math.min(getMeasuredWidth(), getMeasuredHeight());
-            setMeasuredDimension(size, size);
+            if(StaticData.getNumberColumns() > 6) {
+                int size = Math.min(getMeasuredWidth(), getMeasuredHeight());
+                setMeasuredDimension(size, size);
+            }else {
+                setMeasuredDimension((int) (StaticData.getNumberColumns() * 75), (int) (StaticData.getNumberRows() * 75));
+            }
         }catch(Exception ex)
         {
             //ex.printStackTrace();

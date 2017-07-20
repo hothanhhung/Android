@@ -83,15 +83,21 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/rewarded_ads_new" />
             </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="0dp">
             <com.hunght.numberlink.PuzzleView
                 android:id="@+id/puzzleView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 />
+            </LinearLayout>
             <TableLayout
                 android:paddingTop="3dp"
+                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TableRow>

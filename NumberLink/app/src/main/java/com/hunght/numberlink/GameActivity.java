@@ -60,6 +60,7 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
         savedValues= new SavedValues(this);
         isShowLines = savedValues.getNeedShowLines();
         isPlayMusic = savedValues.getRecordPlaybackground();
+        StaticData.setCurrentHint(savedValues.getRecordNumberOfHints());
         backgroundMusic = MediaPlayer.create(this, R.raw.backgroundmusic);
         backgroundMusic.setLooping(true);
         updateHintUI();
@@ -132,7 +133,11 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
                     public void onAdLoaded() {
                         if (interstitial.isLoaded()) {
                             timePlay = System.currentTimeMillis();
-                            interstitial.show();
+                            runOnUiThread(new Runnable() {
+                                @Override public void run() {
+                                        interstitial.show();
+                                }
+                            });
                         }
                     }
 
@@ -145,8 +150,13 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
                     }
                 });
             }
-            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-            interstitial.loadAd(adRequest_interstitial);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+                    interstitial.loadAd(adRequest_interstitial);
+                }
+            });
         }
     }
 
@@ -352,6 +362,7 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
     private void updateHintUI()
     {
         tvNumberOfHints.setText("" + StaticData.getCurrentHint());
+        savedValues.setRecordNumberOfHints(StaticData.getCurrentHint());
     }
     Dialog rewardedVideoAdsDialog;
     private Dialog createRewardedVideoAds()
@@ -433,6 +444,7 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
     @Override
     public void onRewarded(RewardItem rewardItem) {
         StaticData.awardNumberOfHint();
+        updateHintUI();
         timeStart();
     }
 
