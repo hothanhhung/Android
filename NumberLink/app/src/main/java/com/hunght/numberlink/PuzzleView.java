@@ -95,7 +95,7 @@ public class PuzzleView extends View {
         mBitmapShaderRock = new BitmapShader(bitmap1, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
     }
 
-    private void getRect(int x, int y, Rect rect)
+    private void getRect(int y, int x, Rect rect)
     {
         rect.set((int) (x * width) + 2, (int) (y * height) + 2, (int) ((x + 1) * width)/* -2*/, (int) ((y + 1) * height/* - 2*/));
     }
@@ -120,14 +120,14 @@ public class PuzzleView extends View {
 
         for(int i =0; i<StaticData.getNumberColumns(); i++)
         {
-            canvas.drawLine(0, i*height, getWidth(), i*height, light);
-            canvas.drawLine(0, i*height + 1, getWidth(), i*height+1, hilite);
+            canvas.drawLine(i*width, 0, i*width, getHeight(), light);
+            canvas.drawLine(i*width + 1,0,i*width + 1, getHeight(), hilite);
         }
 
         for(int i =0; i<StaticData.getNumberRows(); i++)
         {
-            canvas.drawLine(i*width, 0, i*width,getHeight(), light);
-            canvas.drawLine(i*width + 1,0,i*width + 1, getHeight(), hilite);
+            canvas.drawLine(0, i*height, getWidth(), i*height, light);
+            canvas.drawLine(0, i*height + 1, getWidth(), i*height+1, hilite);
         }
         canvas.drawLine(0, StaticData.getNumberRows()*height - 1, getWidth(), StaticData.getNumberRows()*height - 1, dark);
         //canvas.drawLine(0, 9*height - 2, getWidth(), 9*height - 2, hilite);
@@ -160,11 +160,11 @@ public class PuzzleView extends View {
                         canvas.drawRect(canNotChange, rockPaint);
                     }
                 }
-                canvas.drawText(this.game.getGameItemString(i, j), i * width + x,
-                        j*height+y, foreground);
+                canvas.drawText(this.game.getGameItemString(i, j), j * width + x,
+                        i*height+y, foreground);
             }
         }
-        if(isShowLine) {
+        if(isShowLine || StaticData.getCurrentGame().isWin()) {
             Paint paintLine = new Paint();
             if(StaticData.getCurrentGame().isWin()) {
                 paintLine.setColor(Color.rgb(51, 160, 75));
@@ -189,10 +189,10 @@ public class PuzzleView extends View {
                 for (int i = 1; i < line.size(); i++) {
                     int point1 = line.get(i - 1) % 100, point2 = line.get(i) % 100;
                     float startX, startY, stopX, stopY;
-                    startX = point1 / StaticData.getNumberColumns() * width + width / 2;
-                    startY = point1 % StaticData.getNumberColumns() * height + height / 2;
-                    stopX = point2 / StaticData.getNumberColumns() * width + width / 2;
-                    stopY = point2 % StaticData.getNumberColumns() * height + height / 2;
+                    startY = point1 / StaticData.getNumberColumns() * width + width / 2;
+                    startX = point1 % StaticData.getNumberColumns() * height + height / 2;
+                    stopY = point2 / StaticData.getNumberColumns() * width + width / 2;
+                    stopX = point2 % StaticData.getNumberColumns() * height + height / 2;
 
                 /*if(startX>stopX)
                 {
@@ -218,7 +218,7 @@ public class PuzzleView extends View {
                     canvas.drawCircle(stopX, stopY, cycleSize, paintLine);
                     if (StaticData.getCurrentGame().isWin()) {
                         if (i == 1) {
-                            canvas.drawCircle(startX, startX, 25, paintLineStartEnd);
+                            canvas.drawCircle(startX, startY, 25, paintLineStartEnd);
                         } else if (i == line.size() - 1) {
                             canvas.drawCircle(stopX, stopY, 25, paintLineStartEnd);
                         }
@@ -254,7 +254,7 @@ public class PuzzleView extends View {
         return true;
     }
 
-    public void select(int x, int y){
+    public void select(int y, int x){
         if(game.canChangeValue(x, y)) {
             needDelete = true;
             invalidate(selRect);
