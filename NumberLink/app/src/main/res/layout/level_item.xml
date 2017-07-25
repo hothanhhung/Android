@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/tvSize"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:fontFamily="serif"
             android:textAlignment="center"
             android:textColor="#fff"
@@ -20,19 +20,46 @@
             android:gravity="fill"
             android:text="Size: 3-3"/>
         <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="match_parent"
+            android:id="@+id/tvNumberWinGames"
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:fontFamily="serif"
             android:textAlignment="center"
-            android:textColor="#fff"
+            android:background="@drawable/circle_item"
+            android:textColor="#c1bfbf"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="fill"
-            android:text="3/20"
+            android:text="3"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/tvNumberGames"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:fontFamily="serif"
+            android:textAlignment="center"
+            android:background="@drawable/circle_item"
+            android:textColor="#c1bfbf"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="fill"
+            android:text="20"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" />
+        <RelativeLayout
+            android:id="@+id/btLockLevelItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/selector_level_lock">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/lock"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"  />
+            </RelativeLayout>
 
     </RelativeLayout>
 </LinearLayout>

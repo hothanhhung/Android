@@ -12,27 +12,69 @@
         android:alpha="0.8"
         android:padding="30dp"
         android:gravity="center">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Watch Video To"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <Button
+        <LinearLayout
             android:id="@+id/btRewardGetHint"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
+            android:orientation="vertical"
             android:background="@drawable/menu_item"
-            android:text="Get More Hints (Helps)"
-            android:textAllCaps="true"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:text="Watch Video To"
+                android:textSize="15dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:text=""/>
+            <TextView
+                android:id="@+id/tvNumberOfGames"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="top|center"
+                android:textSize="15dp"
+                android:text="Get More Hints (Helps)"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btDownloadMoreGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:textColor="#fff"
             android:textSize="15dp"
+            android:textStyle="bold"
             android:onClick="btRewardedAdsClick"
-            android:textStyle="bold" />
+            android:background="@drawable/menu_item"
+            android:text="Download More Games"/>
+        <!--       <TextView
+                   android:id="@+id/textView"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Watch Video To"
+                   android:textAlignment="center"
+                   android:textSize="20dp"
+                   android:textStyle="bold" />
+
+               <Button
+                   android:id="@+id/btRewardGetHint"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/menu_item"
+                   android:text="Get More Hints (Helps)"
+                   android:textAllCaps="true"
+                   android:textColor="#fff"
+                   android:textSize="15dp"
+                   android:onClick="btRewardedAdsClick"
+                   android:textStyle="bold" />-->
         <!--<Button
             android:id="@+id/btRewardedTurnOffInterstitialAds"
             android:layout_width="match_parent"
@@ -59,12 +101,12 @@
             android:id="@+id/btRewardedCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="#fff"
             android:textSize="15dp"
             android:textStyle="bold"
             android:onClick="btRewardedAdsClick"
             android:background="@drawable/menu_item"
-            android:text="Cancel"/>
+            android:text="Close"/>
     </LinearLayout>
 </AbsoluteLayout>

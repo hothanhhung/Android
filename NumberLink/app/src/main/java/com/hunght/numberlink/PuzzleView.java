@@ -91,7 +91,7 @@ public class PuzzleView extends View {
     {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.rock);
         mBitmapShaderBackground = new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.wall);
+        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.walll);
         mBitmapShaderRock = new BitmapShader(bitmap1, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
     }
 
@@ -169,7 +169,7 @@ public class PuzzleView extends View {
             if(StaticData.getCurrentGame().isWin()) {
                 paintLine.setColor(Color.rgb(51, 160, 75));
             }else{
-                paintLine.setColor(Color.rgb(119, 206, 168));
+                paintLine.setColor(Color.rgb(40, 165, 135));
             }
             paintLine.setStrokeWidth(5);
             Paint paintLineStartEnd = new Paint();

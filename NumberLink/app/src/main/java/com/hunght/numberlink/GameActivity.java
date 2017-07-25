@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -376,8 +377,13 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);;
 
-
-
+        LinearLayout btRewardGetHint = (LinearLayout)dialog.findViewById(R.id.btRewardGetHint);
+        btRewardGetHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btRewardedAdsClick(view);
+            }
+        });
         dialog.setOnKeyListener(new Dialog.OnKeyListener() {
 
             @Override
@@ -394,10 +400,13 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
         return dialog;
     }
     public void btRewardedAdsClick(View view) {
-        if(rewardedVideoAdsDialog !=null) rewardedVideoAdsDialog.dismiss();
+
         switch (view.getId()) {
             case R.id.btRewardGetHint:
                 requestRewardedVideoAdShow();
+                break;
+            case R.id.btDownloadMoreGame:
+                UIUtils.showAlertGetMoreApps(this);
                 break;
             /*case R.id.btRewardedTurnOffInterstitialAds:
                 requestRewardedVideoAdShow();
@@ -406,6 +415,7 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
                 requestRewardedVideoAdShow();
                 break;*/
             case R.id.btRewardedCancel:
+                if(rewardedVideoAdsDialog !=null) rewardedVideoAdsDialog.dismiss();
                 timeStart();
                 break;
         }
@@ -438,14 +448,14 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     @Override
     public void onRewardedVideoAdClosed() {
-        timeStart();
+        //timeStart();
     }
 
     @Override
     public void onRewarded(RewardItem rewardItem) {
         StaticData.awardNumberOfHint();
         updateHintUI();
-        timeStart();
+        //timeStart();
     }
 
     @Override
@@ -460,6 +470,6 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
             loadingDialog.hide();
         }
         Toast.makeText(this,"Failed to load video",Toast.LENGTH_LONG).show();
-        timeStart();
+        //timeStart();
     }
 }

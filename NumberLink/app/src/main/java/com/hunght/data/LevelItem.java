@@ -11,13 +11,16 @@ public class LevelItem {
     int numberRows;
     int numberColumns;
     ArrayList<GameItem> gameItems;
+    LevelItem referedLevelItem;
+
     public LevelItem(){}
 
-    public LevelItem(int levelId, int numberRows, int numberColumns, ArrayList<GameItem> gameItems){
+    public LevelItem(int levelId, int numberRows, int numberColumns, ArrayList<GameItem> gameItems, LevelItem referedLevelItem){
         this.levelId = levelId;
         this.numberRows = numberRows;
         this.numberColumns = numberColumns;
         this.gameItems = gameItems;
+        this.referedLevelItem = referedLevelItem;
     }
 
     public int getLevelId() {
@@ -59,6 +62,17 @@ public class LevelItem {
         return getGameItems().size();
     }
 
+    public int getTotalPlayingGames() {
+        int number = 0;
+        for (GameItem gameItem:getGameItems()
+                ) {
+            if(gameItem.isPlaying() && !gameItem.isWin()){
+                number++;
+            }
+        }
+        return number;
+    }
+
     public ArrayList<GameItem> getGameItems()
     {
         if(gameItems == null) gameItems = new ArrayList<>();
@@ -92,5 +106,24 @@ public class LevelItem {
             if(gameItem.isPlaying()) return true;
         }
         return false;
+    }
+
+    public boolean isLock()
+    {
+        if(true) return false;
+        if(referedLevelItem != null)
+        {
+            return !referedLevelItem.isAllWin();
+        }
+        return false;
+    }
+
+    public String getLockMessage()
+    {
+        if(referedLevelItem != null)
+        {
+            return "Complete "+referedLevelItem.getSize()+ " session to Unlock";
+        }
+        return "Complete all previous sessions to Unlock";
     }
 }

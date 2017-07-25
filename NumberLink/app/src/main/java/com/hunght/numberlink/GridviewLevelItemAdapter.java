@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.hunght.data.GameItem;
 import com.hunght.data.LevelItem;
 import com.hunght.data.StaticData;
+import com.hunght.utils.UIUtils;
 
 import java.util.ArrayList;
 
@@ -60,20 +61,28 @@ public class GridviewLevelItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        RelativeLayout btLevelItem;
-        TextView tvSize, tvStatus;
+        RelativeLayout btLevelItem, btLockLevelItem;
+        TextView tvSize, tvNumberWinGames, tvNumberGames;
 
         if (view == null) {
             // if it's not recycled, initialize some attributes
             view = LayoutInflater.from(mContext).inflate(R.layout.level_item, null);
 
         }
-        LevelItem levelItem = (LevelItem)getItem(i);
+        final LevelItem levelItem = (LevelItem)getItem(i);
         btLevelItem = (RelativeLayout) view.findViewById(R.id.btLevelItem);
+        btLockLevelItem = (RelativeLayout) view.findViewById(R.id.btLockLevelItem);
         tvSize = (TextView) view.findViewById(R.id.tvSize);
-        tvStatus = (TextView) view.findViewById(R.id.tvStatus);
+        tvNumberWinGames = (TextView) view.findViewById(R.id.tvNumberWinGames);
+        tvNumberGames = (TextView) view.findViewById(R.id.tvNumberGames);
 
         btLevelItem.setTag(levelItem);
+        btLockLevelItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UIUtils.showAlertInform(mContext, levelItem.getLockMessage());
+            }
+        });
         btLevelItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,8 +94,10 @@ public class GridviewLevelItemAdapter extends BaseAdapter {
             }
         });
 
+        btLockLevelItem.setVisibility( levelItem.isLock()? View.VISIBLE : View.GONE);
         tvSize.setText(levelItem.getSize());
-        tvStatus.setText(levelItem.getStatus());
+        tvNumberWinGames.setText(""+levelItem.getNumberWinGame());
+        tvNumberGames.setText(""+levelItem.getTotalGames());
         if(levelItem.isAllWin()){
             btLevelItem.setBackgroundResource(R.drawable.selector_level_win);
         }else if (levelItem.isPlaying()){

@@ -97,7 +97,7 @@
             </LinearLayout>
             <TableLayout
                 android:paddingTop="3dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TableRow>
@@ -161,7 +161,7 @@
                             android:layout_weight="3"
                             android:gravity="top|center"
                             android:text="1"
-                            android:textColor="#0b842e"
+                            android:textColor="#ba0303"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </TableRow>

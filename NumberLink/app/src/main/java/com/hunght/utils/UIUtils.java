@@ -55,7 +55,7 @@ public class UIUtils {
     public static void showAlertInform(final Activity activity, String message)
     {
         new AlertDialog.Builder(activity)
-                .setTitle("Thông báo")
+                .setTitle("Alert")
                 .setMessage(message)
                 .setNeutralButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {

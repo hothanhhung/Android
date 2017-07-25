@@ -9,17 +9,141 @@
     tools:context="com.hunght.numberlink.LevelActivity">
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_margin="5dp" android:orientation="vertical" android:layout_height="match_parent"
+                android:background="@drawable/number_button">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|center"
+                    android:text="SESSION"
+                    android:textSize="10sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="#e0e5e2"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/tvSesion"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="top|center"
+                    android:text="3-3"
+                    android:textColor="#a0032f"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_margin="5dp" android:orientation="vertical" android:layout_height="match_parent"
+                android:background="@drawable/number_button">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|center"
+                    android:text="WIN"
+                    android:textSize="10sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="#e0e5e2"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/tvNumberOfWins"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="top|center"
+                    android:text="1"
+                    android:textColor="#a0032f"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_margin="5dp" android:orientation="vertical" android:layout_height="match_parent"
+                android:background="@drawable/number_button">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|center"
+                    android:text="PLAYING"
+                    android:textSize="10sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="#e0e5e2"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/tvNumberOfPlayings"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="top|center"
+                    android:text="3"
+                    android:textColor="#a0032f"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_margin="5dp" android:orientation="vertical" android:layout_height="match_parent"
+                android:background="@drawable/number_button">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|center"
+                    android:text="TOTAL"
+                    android:textSize="10sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="#e0e5e2"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/tvNumberOfGames"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="top|center"
+                    android:text="1"
+                    android:textColor="#a0032f"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
         <GridView
             android:id="@+id/grvGameItems"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
             android:numColumns="3"
             android:verticalSpacing="5dp"
             android:layout_gravity="center"
