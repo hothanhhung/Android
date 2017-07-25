@@ -164,12 +164,12 @@ namespace WindowsFormsApplication2
                 if (blocks.Count > 0)
                 {
                     int blockIndex = rand.Next(blocks.Count);
-                    array[blocks[blockIndex] / numbRow, blocks[blockIndex] % numbCol] = 0;
+                    array[blocks[blockIndex] / numbCol, blocks[blockIndex] % numbCol] = 0;
                     blocks.Remove(blockIndex);
                 }
             }
 
-            repeart(array, 1, start / numbRow, start % numbCol);
+            repeart(array, 1, start / numbCol, start % numbCol);
 
             return array;
         }
