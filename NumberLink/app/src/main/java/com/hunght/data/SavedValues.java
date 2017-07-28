@@ -25,7 +25,7 @@ public class SavedValues {
 		prefsEditor = appSharedPrefs.edit();
 	}
     public int getRecordNumberOfHints() {
-        return 10;// appSharedPrefs.getInt(RECORD_NUMBER_OF_HINT, 10);
+        return appSharedPrefs.getInt(RECORD_NUMBER_OF_HINT, 10);
     }
 
 	public String getCurrentGameId() {

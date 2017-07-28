@@ -110,7 +110,6 @@ public class LevelItem {
 
     public boolean isLock()
     {
-        if(true) return false;
         if(referedLevelItem != null)
         {
             return !referedLevelItem.isAllWin();
