@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -263,11 +264,8 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
     public void btClick(View view) {
         switch (view.getId()){
             case R.id.btUndo:
-                StaticData.resetGame();
-                puzzleView.invalidate();
-                timeStop();
-                StaticData.getCurrentGame().setGamePlaySeconds(0);
-                timeStart();
+                AlertDialog diaBox = AskOption();
+                diaBox.show();
                 break;
             case R.id.btShowLines:
                 isShowLines=!isShowLines;
@@ -358,6 +356,40 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
                 }
                 break;
         }
+    }
+    private AlertDialog AskOption()
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(this)
+                //set message, title, and icon
+                .setTitle("Reset")
+                .setMessage("Do you want to re-play this game?")
+              //  .setIcon(R.drawable.delete)
+
+                .setPositiveButton("Re-play", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        StaticData.resetGame();
+                        puzzleView.invalidate();
+                        timeStop();
+                        StaticData.getCurrentGame().setGamePlaySeconds(0);
+                        timeStart();
+                        dialog.dismiss();
+                    }
+
+                })
+
+
+
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
     }
 
     private void updateHintUI()
