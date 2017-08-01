@@ -7,11 +7,25 @@
 	  },
 	{
 		Type : "Google play",
+		Name : "Number Link",
+		Desc : "Need fill numbers to connect all of them which only one line. There are a lot of levels. You need finish some levels before other are unlocked",
+		Link : "https://play.google.com/store/apps/details?id=com.hunght.numberlink",
+		UrlImage : "https://lh3.googleusercontent.com/plegy6zyJkPG0yNoK8l896lTMZ9Dx9PYZVCO_dW-NdbAGxwn-ZeKaWbW00DJI_LOsNQ=w300",
+	},
+	{
+		Type : "Google play",
 		Name : "Tra Cứu Online",
 		Desc : "Tra cứu các thông tin tiện ích như Thông Tin Phương Tiện Từ Biển Số Ôtô, Mã Biển Số Xe, Đầu Số Điện Thoại, Lịch thi đấu, kết quả thì đấu và bảng xếp hạng Bóng đá...",
 		Link : "https://play.google.com/store/apps/details?id=com.hth.tracuuOnline",
 		UrlImage : "https://lh3.googleusercontent.com/usqEhB9UzEbAvYV_KD7eyDx91P5Vh_4ehJr_bSov55Aei2u6M1-5Va9qa_-3eqHRYss=w300",
 		InCountries : "VN"
+	},
+	{
+		Type : "Google play",
+		Name : "Solitaire",
+		Desc : "Solitaire offers several single player card games: Baker's Game, Black Widow, Forty Thieves, Freecell, Klondike (deal 1), Klondike (deal 3), Spider, Vegas (deal 1), Vegas (deal 3), ...",
+		Link : "https://play.google.com/store/apps/details?id=com.hth.solitaire",
+		UrlImage : "https://lh3.googleusercontent.com/bFW7L2wmG6pC5Lf3pRfPdew0-5dvU7wdM1ORq772SPKi7JIzUs32zOnizylBln2CuA=w300"
 	},
 	{
 		Type : "Google play",

@@ -90,6 +90,12 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
                 return "http://hunght.com/htmlpage/lookuponline/dausodienthoai.html";
             case BongDa:
                 return "http://hunght.com/htmlpage/lookuponline/bongda.html";
+            case MaBuuDien:
+                return "http://hunght.com/htmlpage/lookuponline/MaBuuDien.html";
+            case SwiftCode:
+                return "http://hunght.com/htmlpage/lookuponline/SwiftCode.html";
+            case OtherLookUp:
+                return "http://hunght.com/htmlpage/lookuponline/TraCuuKhac.html";
         }
         return "";
     }
