@@ -37,6 +37,7 @@
     color: #209EBB;
     font-weight: 700;
     text-align: center;
+	word-wrap: break-word;
 }
 .text_right {
     text-align: right;
@@ -115,6 +116,7 @@ td{
 .text_left {
     text-align: left;
     color: black;//#209EBB;
+	word-wrap: break-word;
 }
 .item{
 	display: table;
@@ -127,7 +129,9 @@ td{
     box-shadow: 2px -5px 10px #716c6c;;
 }
 
-
+.grid-header{
+font-weight: bold;
+}
 </style>
   </head>
   <body>
@@ -161,14 +165,25 @@ td{
 					<span>{{message}}</span>
 				</div>
 				<div class="row">
+					<div class="row text_center rowRp grey_row" style="margin: 0px">
+						<div class="col-xs-4 grid-header">
+							Ngân Hàng
+						</div>
+						<div class="col-xs-4 grid-header">
+							Swift Code
+						</div>
+						<div class="col-xs-4 grid-header">
+							Website
+						</div>
+					</div>
 					<div class="row text_center rowRp" style="margin: 0px" ng-class-even="'grey_row'" ng-repeat="maSo in items"  ng-click="onClickItem(maSo)">
-						<div class="col-xs-6 text_left">
+						<div class="col-xs-4 text_left">
 							<span class="" ng-bind-html = "getTrustAsHtml(maSo.name)"> </span>
 						</div>
-						<div class="time_f col-xs-2">
+						<div class="time_f col-xs-4">
 							<span class="centerf"ng-bind-html = "getTrustAsHtml(maSo.code)"> </span>
 						</div>
-						<div class="col-xs-3 text_left">
+						<div class="col-xs-4 text_left">
 							<a target="_blank" href="http://{{maSo.link}}"><span class="" ng-bind-html = "getTrustAsHtml(maSo.link)"> </span></a>
 						</div>
 					</div>
