@@ -14,10 +14,10 @@ namespace hthservices.Controllers
         public ResponseJson GetSchedules(string channel, string date, string device = "", string open = "", string version = "")
         {
             var ip = MethodHelpers.GetClientIp(Request);
-            //if (DenyInfo.IsDenyUserRequest(Request))
-            //{
-            //    return ResponseJson.GetResponseJson(DenyInfo.DenyMessage);
-            //}
+            if (DenyInfo.IsDenyUserRequest(Request))
+            {
+                return ResponseJson.GetResponseJson(DenyInfo.DenyMessage);
+            }
 
             string channelKey = "VTV1";
             DateTime dateOn = DateTime.Now;
