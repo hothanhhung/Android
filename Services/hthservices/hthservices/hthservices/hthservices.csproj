@@ -150,6 +150,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\LichTiviController.cs" />
     <Compile Include="Controllers\RetrieveDataController.cs" />
+    <Compile Include="Controllers\TraCuuOnlineController.cs" />
     <Compile Include="Data\AuthData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -178,6 +179,7 @@
     <Compile Include="Utils\ScheduleRequestLog.cs" />
     <Compile Include="Utils\SearchItem.cs" />
     <Compile Include="Utils\SQLiteProcess.cs" />
+    <Compile Include="Utils\TraCuuOnlineHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ads\AdFlexData.cs" />
@@ -1128,6 +1130,7 @@
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Report\Group.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\TraCuuOnline\VietlottMega645.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
