@@ -27,6 +27,7 @@ public class PlayListsFragment extends Fragment {
 	private static final int REQ_START_STANDALONE_PLAYER = 1;
 	private static final int REQ_RESOLVE_SERVICE_MISSING = 2;
 	private ArrayList<YouTubeVideoDetail> lstPlaylists = null;
+	private YouTubeDetailParserJSObject request = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,7 +35,9 @@ public class PlayListsFragment extends Fragment {
 
 		View rootView = inflater.inflate(R.layout.fragment_playlists,
 				container, false);
-		YouTubeDetailParserJSObject request = YouTubeService.getPlaylist();
+		if(request == null) {
+			request = YouTubeService.getPlaylist();
+		}
 		if (request != null)
 			lstPlaylists = request.getYouTubeVideoDetail();
 		else

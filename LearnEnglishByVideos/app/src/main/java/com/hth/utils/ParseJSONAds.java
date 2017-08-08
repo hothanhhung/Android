@@ -19,6 +19,7 @@ import android.util.Log;
 public class ParseJSONAds {
 	private static final String APP_SHARED_PREFS = "com.hth.LearnVietnameseByVideos";
 	static public final String SERVER_DEFAULT = "http://hunght.com/api/ads/getAds/";
+	static public final String SERVER_DONATE = "http://hunght.com/htmlpage/donate.html";
 	static public final String SERVER_DEFAULT_1 = "http://hunght.com/api/ads/userclickad/";
 	static public final String RECODE_SERVER = "RECODE_SERVER";
 	static public final String RECODE_USERCLICKAD = "RECODE_USERCLICKAD";
@@ -32,6 +33,10 @@ public class ParseJSONAds {
 	static private String appVersion;
 	static private String packageName;
 
+	public static Uri getDonateServer()
+	{
+		return Uri.parse(SERVER_DONATE);
+	}
 	private String getAndroidId(){
 		if(androidId == null || androidId.isEmpty())
 		{

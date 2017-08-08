@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class SearchMoviesFragment extends Fragment {
 
 	private ArrayList<YouTubeVideo> lstAdvantageYouTubeVideo = null;
 	private View rootView;
+	private ProgressDialog progressDialog = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -135,7 +137,13 @@ public class SearchMoviesFragment extends Fragment {
 
 	private YouTubeParserJSObject youTubeParserJSObject = null;
 	private void loadAdvantageYouTubeVideo() {
-				
+		/*if(progressDialog == null)
+		{
+			progressDialog = ProgressDialog.show(getContext(), "Loading", "Please wait for a moment...", true);;
+		}else{
+			progressDialog.show();
+		}*/
+
 		youTubeParserJSObject = YouTubeService
 				.searchPublishedVideos(txtQuerySearch, txtFromDateSearch, txtToDateSearch, txtOrderSearch, txtPageSearch);
 
@@ -239,6 +247,10 @@ public class SearchMoviesFragment extends Fragment {
 				}
 			});
 		}
+		/*if(progressDialog != null && progressDialog.isShowing())
+		{
+			progressDialog.dismiss();
+		}*/
 	}
 
 	View selectedDate = null;
