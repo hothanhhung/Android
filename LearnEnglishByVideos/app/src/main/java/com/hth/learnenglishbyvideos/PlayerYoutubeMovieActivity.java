@@ -19,6 +19,7 @@ import com.hth.data.YouTubeVideoDetail;
 import com.hth.learnenglishbyvideos.R;
 import com.hth.utils.UIUtils;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -36,6 +37,7 @@ public class PlayerYoutubeMovieActivity extends YouTubeBaseActivity implements
 	private AdView mAdView = null;
 	private static final int RECOVERY_DIALOG_REQUEST = 1;
 	private YouTubeVideoDetail youTubeVideo = null;
+	private ProgressDialog progressDialog = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,10 @@ public class PlayerYoutubeMovieActivity extends YouTubeBaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+		if(progressDialog != null && progressDialog.isShowing())
+		{
+			progressDialog.dismiss();
+		}
         if(mAdView!=null) mAdView.resume();
     }
 
@@ -119,6 +125,12 @@ public class PlayerYoutubeMovieActivity extends YouTubeBaseActivity implements
 						UIUtils.showAlertErrorNoInternet(
 								PlayerYoutubeMovieActivity.this, false);
 						return;
+					}
+					if(progressDialog == null)
+					{
+						progressDialog = UIUtils.showPopUpLoading(PlayerYoutubeMovieActivity.this);
+					}else{
+						progressDialog.show();
 					}
 					Intent playerYoutubeMovieIntent = new Intent(
 							PlayerYoutubeMovieActivity.this,

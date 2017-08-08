@@ -34,7 +34,7 @@ public class YouTubeService {
 		{
 			//https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=10&q=podEnglish&type=channel&key=AIzaSyBMhBxnjBMMFOeqO_nqw7TyFf0jN07CHKw
 			//https://www.googleapis.com/youtube/v3/playlists?channelId=UCWxOpOr_KomHHPXmzD-YB-Q&part=snippet,id,player&maxResults=20&key=AIzaSyBMhBxnjBMMFOeqO_nqw7TyFf0jN07CHKw
-			String url_select = "https://www.googleapis.com/youtube/v3/playlists?channelId="+getCurrentChannelID()+"&part=contentDetails,snippet,id,player&maxResults=25&key="+DeveloperConst.DEVELOPER_KEY;
+			String url_select = "https://www.googleapis.com/youtube/v3/playlists?channelId="+getCurrentChannelID()+"&part=contentDetails,snippet,id,player&maxResults=50&key="+DeveloperConst.DEVELOPER_KEY;
 			
 			if (android.os.Build.VERSION.SDK_INT > 9) {
 				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -71,12 +71,12 @@ public class YouTubeService {
 	
 	public static YouTubeParserJSObject getOlderPublishYouTubeVideo(String publishedBefore)
 	{
-		return searchPublishedVideos("", "", publishedBefore, "date", "", "10", false);
+		return searchPublishedVideos("", "", publishedBefore, "date", "", "25", false);
 	}
 	
 	public static YouTubeParserJSObject searchPublishedVideos(String query, String publishedAfter, String publishedBefore, String order, String pageToken)
 	{
-		return searchPublishedVideos(query, publishedAfter, publishedBefore, order, pageToken, "20", true);
+		return searchPublishedVideos(query, publishedAfter, publishedBefore, order, pageToken, "50", true);
 	}
 	
 	public static YouTubeParserJSObject searchPublishedVideos(String query, String publishedAfter, String publishedBefore, String order, String pageToken, String maxResults, boolean needCorrectDate)
@@ -170,7 +170,7 @@ public class YouTubeService {
 		
 
 		if(maxResults!="") url_select += "&maxResults=" + maxResults; 
-		else url_select += "&maxResults=25";
+		else url_select += "&maxResults=50";
 			
 		return url_select;
 	}

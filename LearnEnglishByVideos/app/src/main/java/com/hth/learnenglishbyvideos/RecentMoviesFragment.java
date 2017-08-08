@@ -22,7 +22,7 @@ import android.widget.ListView;
 public class RecentMoviesFragment extends Fragment {
 
 	private ArrayList<YouTubeVideo> lstRecentPublishYouTubeVideo = null;
-
+	private YouTubeParserJSObject request = null;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -30,7 +30,9 @@ public class RecentMoviesFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_recentmovies,
 				container, false);
 		try {
-			YouTubeParserJSObject request = YouTubeService.getRecentPublishVideo();
+			if(request == null){
+				request = YouTubeService.getRecentPublishVideo();
+			}
 			if (request != null)
 				lstRecentPublishYouTubeVideo = request.getYouTubeVideos();
 			else

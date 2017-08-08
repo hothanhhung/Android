@@ -8,8 +8,10 @@ import com.hth.data.Data;
 import com.hth.data.ObjectChannel;
 import com.hth.data.YouTubeService;
 import com.hth.learnenglishbyvideos.R;
+import com.hth.utils.ParseJSONAds;
 import com.hth.utils.UIUtils;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ public class HomeActivity extends Activity {
 
 	private AdView mAdView = null;
 	private static ArrayList<ObjectChannel> _lstChannels = null;
+	private ProgressDialog progressDialog = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,6 +45,7 @@ public class HomeActivity extends Activity {
 		{
 			if( i == 4){
 				addMoreGameButton(layoutEnglishChannels);
+				addDonateButton(layoutEnglishChannels);
 			}
 			ObjectChannel channel = _lstChannels.get(i); 
 			Button button = new Button(this);
@@ -61,7 +65,12 @@ public class HomeActivity extends Activity {
 						UIUtils.showAlertErrorNoInternet(HomeActivity.this, false);
 						return;
 					}
-
+					if(progressDialog == null)
+					{
+						progressDialog = UIUtils.showPopUpLoading(HomeActivity.this);
+					}else{
+						progressDialog.show();
+					}
 					ObjectChannel channel = (ObjectChannel) v.getTag();
 					YouTubeService.setCurrentChannel(channel);
 					Intent channelIntent = new Intent(HomeActivity.this, MainActivity.class);
@@ -105,6 +114,37 @@ public class HomeActivity extends Activity {
 		button.setAlpha(0.98f);
 		layoutEnglishChannels.addView(button);
 	}
+
+	private void addDonateButton(LinearLayout layoutEnglishChannels) {
+		Button button = new Button(this);
+		button.setTextColor(Color.RED);
+		button.setText("Donate!");
+		button.setTypeface(button.getTypeface(), Typeface.BOLD);
+
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+
+		params.setMargins(2, 5, 2, 5);
+		button.setLayoutParams(params);
+		button.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (!UIUtils.isOnline(HomeActivity.this)) {
+					UIUtils.showAlertErrorNoInternet(HomeActivity.this, false);
+					return;
+				}
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, ParseJSONAds.getDonateServer());
+				startActivity(browserIntent);
+			}
+		});
+		//button.setBackgroundColor(Color.WHITE);
+		button.setAlpha(0.98f);
+		layoutEnglishChannels.addView(button);
+	}
+
 	@Override
     protected void onPause() {
         if(mAdView!=null) mAdView.pause();
@@ -114,6 +154,10 @@ public class HomeActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+		if(progressDialog != null && progressDialog.isShowing())
+		{
+			progressDialog.dismiss();
+		}
         if(mAdView!=null) mAdView.resume();
     }
 
