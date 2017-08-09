@@ -1,0 +1,57 @@
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="0dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/custom_rectangle">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:padding="30dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tvLockLevelMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="Complete all previous sessions to Unlock"
+            android:textAlignment="center"
+            android:textColor="#c40d6c"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:paddingBottom="5sp"
+            android:paddingTop="5sp"
+            android:text="OR"
+            android:textColor="@android:color/secondary_text_light_nodisable" />
+
+        <Button
+            android:id="@+id/btBuyOneLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_item"
+            android:textColor="#fff"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:text="Click to Unlock" />
+
+        <Button
+            android:id="@+id/btClose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_item"
+            android:textColor="#fff"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:text="Close" />
+    </LinearLayout>
+</AbsoluteLayout>
