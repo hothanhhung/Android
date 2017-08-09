@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 
 public class StaticData {
+    private static String base64EncodedPublicKey =
+            "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzkQKTsT81Dv2Awahyq7nhEYn/O9iw0xmvSLNbpTOt927lmE8oDp/ida1IofatTFh59k5a9xgDgDinOT7ZQoyn6+ylhfCRfTj2QKuYZpbOlCLW1KDsG7ya9EswPb614ui+9oVvX186bHtVn8m6cAIulh6gK5m6S78JoXs2mznYfcBfKcsC1ryaoCnmP+MrS8dGQxHyKdmcLu54YdUo/OvAp46tCxyFMV7H9U+qYax51mvXuf/FTYP6EPR7CtLfHsuLxzVutNsjRstt5l2pnv2xNwEk5F0H5YBe/nfAvR0AoHPo70/KhvnsUudmXYhI2bCna0qVQTpp9LuGP8cSU6cTwIDAQAB";
     public static final String DIFFICULTY_KEY = "DIFFICULTY_KEY";
     public static final String GAME_ITEM_KEY = "GAME_ITEM_KEY";
     public static final int GAME_COLUMN = 0;
@@ -17,6 +19,11 @@ public class StaticData {
     private static GameItem currentGameItem;
     private static LevelItem currentLevelItem;
     private static boolean isShowLine;
+
+    public  static String getLicenseKey()
+    {
+        return base64EncodedPublicKey;
+    }
 
     public static boolean isStart(){
         if(isStart){
