@@ -77,6 +77,7 @@ public class GridviewLevelItemAdapter extends BaseAdapter {
         tvNumberGames = (TextView) view.findViewById(R.id.tvNumberGames);
 
         btLevelItem.setTag(levelItem);
+        btLockLevelItem.setTag(levelItem);
         btLockLevelItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

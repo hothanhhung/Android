@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     static final int RC_REQUEST = 10001;
     // The helper object
     IabHelper mHelper;
-    static final String SKU_GAS = "gas";
+    static final String SKU_GAS = "android.test.purchased";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 // successfully consumed, so we apply the effects of the item in our
                 // game world's logic, which in our case means filling the gas tank a bit
                 Log.d(TAG, "Consumption successful. Provisioning.");
-                vLockLevel.setVisibility(View.GONE);
+                updateUIandSaveData();
             }
             else {
                 complain("Error while consuming: " + result);
@@ -289,7 +289,19 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    void complain(String message) {
+    private void updateUIandSaveData(){
+        if(vLockLevel!=null) {
+            LevelItem levelItem = (LevelItem)vLockLevel.getTag();
+            if(levelItem!=null)
+            {
+                StaticData.addUnloclLevel(levelItem.getLevelIdInString());
+                savedValues.setUnlockLevels(StaticData.getUnloclLevels());
+            }
+            vLockLevel.setVisibility(View.GONE);
+        }
+    }
+
+    private void complain(String message) {
         Log.e(TAG, "**** TrivialDrive Error: " + message);
         Toast.makeText(this, "Error: " + message, Toast.LENGTH_LONG).show();
     }
