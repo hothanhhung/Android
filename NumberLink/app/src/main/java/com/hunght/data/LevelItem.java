@@ -1,6 +1,7 @@
 package com.hunght.data;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by Lenovo on 6/28/2017.
@@ -12,21 +13,26 @@ public class LevelItem {
     int numberColumns;
     ArrayList<GameItem> gameItems;
     LevelItem referedLevelItem;
+    Set<String> unlockLevels;
 
     public LevelItem(){}
 
-    public LevelItem(int levelId, int numberRows, int numberColumns, ArrayList<GameItem> gameItems, LevelItem referedLevelItem){
+    public LevelItem(int levelId, int numberRows, int numberColumns, ArrayList<GameItem> gameItems, LevelItem referedLevelItem, Set<String> unlockLevels){
         this.levelId = levelId;
         this.numberRows = numberRows;
         this.numberColumns = numberColumns;
         this.gameItems = gameItems;
         this.referedLevelItem = referedLevelItem;
+        this.unlockLevels = unlockLevels;
     }
 
     public int getLevelId() {
-        return numberRows;
+        return numberRows*10 + numberColumns;
     }
 
+    public String getLevelIdInString() {
+        return String.valueOf(getLevelId());
+    }
     public void setLevelId(int levelId) {
         this.levelId = levelId;
     }
@@ -110,6 +116,13 @@ public class LevelItem {
 
     public boolean isLock()
     {
+        if(unlockLevels!=null)
+        {
+            if(unlockLevels.contains(getLevelIdInString()))
+            {
+                return false;
+            }
+        }
         if(referedLevelItem != null)
         {
             return !referedLevelItem.isAllWin();

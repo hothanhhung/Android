@@ -235,6 +235,7 @@ public class DataProcess {
     {
         ArrayList<GameItem> gameItems = new ArrayList<>(Arrays.asList(originalGameItems));
         SavedValues savedValues= new SavedValues(context);
+        StaticData.addUnloclLevel(savedValues.getUnlockLevels());
         for (int i =0 ; i<gameItems.size(); i++) {
             GameItem recordGameItem = savedValues.getGameItem(gameItems.get(i).getId());
             if(recordGameItem!=null){
@@ -331,17 +332,17 @@ public class DataProcess {
             }
         }
         ArrayList<LevelItem> levelItems = new ArrayList<LevelItem>();
-        levelItems.add(new LevelItem(1, 3, 3, size0303, null));
-        levelItems.add(new LevelItem(2, 4, 3, size0403, null));
-        levelItems.add(new LevelItem(3, 4, 4, size0404, null));
-        levelItems.add(new LevelItem(4, 4, 5, size0405, levelItems.get(1)));
-        levelItems.add(new LevelItem(5, 5, 5, size0505, levelItems.get(2)));
-        levelItems.add(new LevelItem(6, 5, 6, size0506, levelItems.get(3)));
-        levelItems.add(new LevelItem(7, 6, 6, size0606, levelItems.get(4)));
+        levelItems.add(new LevelItem(1, 3, 3, size0303, null, StaticData.getUnloclLevels()));
+        levelItems.add(new LevelItem(2, 4, 3, size0403, null, StaticData.getUnloclLevels()));
+        levelItems.add(new LevelItem(3, 4, 4, size0404, null, StaticData.getUnloclLevels()));
+        levelItems.add(new LevelItem(4, 4, 5, size0405, levelItems.get(1), StaticData.getUnloclLevels()));
+        levelItems.add(new LevelItem(5, 5, 5, size0505, levelItems.get(2), StaticData.getUnloclLevels()));
+        levelItems.add(new LevelItem(6, 5, 6, size0506, levelItems.get(3), StaticData.getUnloclLevels()));
+        levelItems.add(new LevelItem(7, 6, 6, size0606, levelItems.get(4), StaticData.getUnloclLevels()));
       //  levelItems.add(new LevelItem(7, 7, 6, 3, new String[]{}));
-        levelItems.add(new LevelItem(8, 7, 7, size0707, levelItems.get(5)));
-        levelItems.add(new LevelItem(9, 8, 8, size0808, levelItems.get(6)));
-        levelItems.add(new LevelItem(10, 9, 9, size0909, levelItems.get(7)));
+        levelItems.add(new LevelItem(8, 7, 7, size0707, levelItems.get(5), StaticData.getUnloclLevels()));
+        levelItems.add(new LevelItem(9, 8, 8, size0808, levelItems.get(6), StaticData.getUnloclLevels()));
+        levelItems.add(new LevelItem(10, 9, 9, size0909, levelItems.get(7), StaticData.getUnloclLevels()));
 
         return levelItems;
     }

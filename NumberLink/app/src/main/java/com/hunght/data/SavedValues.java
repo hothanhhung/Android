@@ -7,10 +7,12 @@ import android.content.SharedPreferences.Editor;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class SavedValues {
 
 	private static final String APP_SHARED_PREFS = "com.hth.numberlink";
+	private static final String RECORD_UNLOCK_LEVELS = "RECORD_UNLOCK_LEVELS";
 	private static final String RECORD_PLAYBACKGROUND = "RECORD_PLAYBACKGROUND";
 	private static final String RECORD_HIGHSCORE = "RECORD_HIGHSCORE";
 	private static final String RECORD_CURRENT_GAME_ID = "RECORD_CURRENT_GAME_ID";
@@ -41,6 +43,14 @@ public class SavedValues {
 			prefsEditor.putString(RECORD_CURRENT_GAME_ID, currentGameId);
 			prefsEditor.commit();
 		}catch (Exception ex){
+		}
+	}
+
+	public Set<String> getUnlockLevels() {
+		try {
+			return appSharedPrefs.getStringSet(RECORD_UNLOCK_LEVELS, null);
+		}catch (Exception ex){
+			return null;
 		}
 	}
 
@@ -86,4 +96,8 @@ public class SavedValues {
 		prefsEditor.commit();
 	}
 
+	public void setUnlockLevels(Set<String> var1) {
+		prefsEditor.putStringSet(RECORD_UNLOCK_LEVELS, var1);
+		prefsEditor.commit();
+	}
 }

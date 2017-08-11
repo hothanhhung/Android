@@ -1,6 +1,12 @@
 package com.hunght.data;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by Lenovo on 5/15/2017.
@@ -15,10 +21,31 @@ public class StaticData {
     public static final int GAME_ROW = 0;
     public static int currentNumberOfHints = 10;
 
+    private static Set<String> unloclLevels;
     private static boolean isStart = true;
     private static GameItem currentGameItem;
     private static LevelItem currentLevelItem;
     private static boolean isShowLine;
+
+    public static Set<String> getUnloclLevels()
+    {
+        if(unloclLevels == null){
+            unloclLevels = new HashSet<String>();
+        }
+        return unloclLevels;
+    }
+
+    public static void addUnloclLevel(Set<String> unloclLevels)
+    {
+        if(unloclLevels!=null) {
+            getUnloclLevels().addAll(unloclLevels);
+        }
+    }
+
+    public static void addUnloclLevel(String key)
+    {
+        getUnloclLevels().add(key);
+    }
 
     public  static String getLicenseKey()
     {
@@ -93,8 +120,8 @@ public class StaticData {
     {
         currentNumberOfHints = val;
     }
-    public static void awardNumberOfHint()
+    public static void awardNumberOfHint(int number)
     {
-        currentNumberOfHints = currentNumberOfHints + 1;
+        currentNumberOfHints = currentNumberOfHints + number;
     }
 }
