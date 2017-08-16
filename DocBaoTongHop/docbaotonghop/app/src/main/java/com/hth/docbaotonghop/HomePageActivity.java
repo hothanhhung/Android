@@ -2,6 +2,8 @@ package com.hth.docbaotonghop;
 
 import com.hth.docbaotonghop.R;
 import com.hth.utils.UIUtils;
+import com.startapp.android.publish.adsCommon.StartAppAd;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,12 +17,9 @@ import android.view.View;
 
 import java.util.Calendar;
 
-import mobi.mclick.ad.*;
 
-public class HomePageActivity extends Activity implements AdsListener {
+public class HomePageActivity extends Activity {
 
-	private VideoAds videoAds;
-	private InterstitialAds interstitialAds;
 	
     Dialog loadingDialog = null;
     private static long timeForRun = 0;
@@ -32,13 +31,8 @@ public class HomePageActivity extends Activity implements AdsListener {
 		setContentView(R.layout.activity_home_page);
         context = getApplicationContext();
 
+        StartAppSDK.init(this, "207910015", false);
         timeForRun = Calendar.getInstance().getTime().getTime();
-        MobileAd.showGift(this,	MobileAd.GIFT_TOP_CENTER);
-        videoAds = new VideoAds(this);
-        videoAds.setAdsListener(this);
-        
-        interstitialAds = new InterstitialAds(this);
-        interstitialAds.setAdsListener(this);
 
 	}
 
@@ -95,7 +89,7 @@ public class HomePageActivity extends Activity implements AdsListener {
         
         if(timeForRun > 0 && ((timenow - timeForRun) > longtime))
         {
-        	videoAds.loadAds(new AdsRequest());
+            StartAppAd.showAd(this);;
         }
 
     }
@@ -153,51 +147,4 @@ public class HomePageActivity extends Activity implements AdsListener {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-	@Override
-	public void onAdsClosed(Ads ads) {
-	}
-
-	@Override
-	public void onAdsFailedToLoad(Ads ads, ErrorCode arg1) {
-
-
-		// TODO Auto-generated method stub
-		if (ads == videoAds) {
-            interstitialAds.loadAds(new AdsRequest());
-        }else if(ads == interstitialAds)
-        {
-            UIUtils.showAlertGetMoreAppsServer(HomePageActivity.this);
-        }
-
-	}
-	
-	@Override
-	public void onAdsLoaded(Ads ads) {
-		// TODO Auto-generated method stub
-
-		if (ads == videoAds) {
-			videoAds.show();
-            timeForRun = Calendar.getInstance().getTime().getTime();
-            countShow++;
-        }else if(ads == interstitialAds)
-        {
-        	interstitialAds.show();
-            timeForRun = Calendar.getInstance().getTime().getTime();
-            countShow++;
-        }
-
-	}
-
-	@Override
-	public void onAdsOpened(Ads arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onLeaveApplication(Ads arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }

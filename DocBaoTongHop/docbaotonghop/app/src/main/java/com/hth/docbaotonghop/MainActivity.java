@@ -1,9 +1,9 @@
 package com.hth.docbaotonghop;
 
-import mobi.mclick.ad.*;
 
 import com.hth.docbaotonghop.R;
 import com.hth.utils.*;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -68,6 +68,8 @@ public class MainActivity extends Activity {
         context = getApplicationContext();
 
         setContentView(R.layout.activity_main_website);
+        StartAppSDK.init(this, "207910015", true);
+
         ImageButton bthome = (ImageButton) findViewById(R.id.button_home);
         bthome.setImageResource(MainActivity.getCurrent_Website_Page().getIcon());
         onCreateWebsiteMobileStyle();
@@ -78,13 +80,13 @@ public class MainActivity extends Activity {
 
          */
         //MobileAd.showGift(this,	MobileAd.GIFT_TOP_CENTER);
-
+/*
         adsView= new AdsView(this);
         LinearLayout layout = (LinearLayout)findViewById(R.id.adFlexView);
         layout.addView(adsView);
         adsView.loadAds(new AdsRequest());
         //changeAddProvider();
-
+*/
     }
 
     com.hth.utils.MyHomeWebViewClient myHomeWebViewClient;
@@ -140,7 +142,7 @@ public class MainActivity extends Activity {
             viewArticleDetail.loadDataWithBaseURL(null, "No Website Mobile", "text/html", "utf-8", null);
     }
 
-    AdsView adsView;
+  //  AdsView adsView;
     
     static boolean isAdmod = true;
     static boolean needChanged = false;
