@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hth.docbaotonghop" >
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -29,9 +32,23 @@
             </intent-filter>
         </activity>
 
-        <service android:name="mobi.mclick.ad.AdsService" android:process=":adflexService"/>
-        <activity android:name="mobi.mclick.ad.AdsActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:configChanges="keyboardHidden|orientation|screenSize" />
-        <meta-data android:name="mobi.mclick.ad.publisher.id" android:value="thanhhung1012"/>
+        <activity android:name="com.startapp.android.publish.ads.list3d.List3DActivity"
+            android:theme="@android:style/Theme" />
+
+        <activity android:name="com.startapp.android.publish.adsCommon.activities.OverlayActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <activity android:name="com.startapp.android.publish.adsCommon.activities.FullScreenActivity"
+            android:theme="@android:style/Theme"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <service android:name="com.startapp.android.publish.common.metaData.PeriodicMetaDataService" />
+        <service android:name="com.startapp.android.publish.common.metaData.InfoEventService" />
+        <receiver android:name="com.startapp.android.publish.common.metaData.BootCompleteListener" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

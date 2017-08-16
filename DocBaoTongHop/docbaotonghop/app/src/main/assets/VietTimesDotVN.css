@@ -1,0 +1,3 @@
+#admbackground, [id*="adm_zone"], [id*="adm-slot"]{
+display:none !important;
+}

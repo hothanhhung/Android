@@ -381,6 +381,51 @@
                     android:tag="33" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_viettimes"
+                    android:tag="35" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_tintuconline"
+                    android:tag="23" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_genk"
+                    android:tag="37" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty_string"
+                    android:onClick="goToMainPage"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_tinhte"
+                    android:tag="36" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

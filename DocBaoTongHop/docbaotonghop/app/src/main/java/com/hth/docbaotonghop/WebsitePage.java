@@ -38,9 +38,12 @@ public enum WebsitePage {
 	VNReviewDotVN(31, "VNReviewDotVN.css", "vnreview.vn", "http://vnreview.vn/", "http://m.vnreview.vn/", R.drawable.icon_vnreview),
 	GenkDotVN(32, "GenkDotVN.css", "genk.vn", "http://genk.vn/", "http://m.genk.vn/", R.drawable.icon_genk),
 	TinhTeDotVN(33, "TinhTeDotVN.css", "tinhte.vn", "https://www.tinhte.vn/", "https://www.tinhte.vn/", R.drawable.icon_tinhte),
-	BaoMoiDotCom(34, "BaoMoiDotCom.css", "baomoi.com", "http://www.baomoi.com/", "http://m.baomoi.com/", R.drawable.icon_baomoi);
-	
-	
+	BaoMoiDotCom(34, "BaoMoiDotCom.css", "baomoi.com", "http://www.baomoi.com/", "http://m.baomoi.com/", R.drawable.icon_baomoi),
+	VietTimesDotVN(35, "VietTimesDotVN.css", "viettimes.vn", "http://viettimes.vn/", "http://m.viettimes.vn/", R.drawable.icon_viettimes),
+    DaiKyNguynVNDotCom(36, "DaiKyNguynVNDotCom.css", "daikynguyenvn.com", "http://daikynguyenvn.com/", "http://mb.daikynguyenvn.com/", R.drawable.icon_daikynguyen),
+	GiaDinhDotNet(37, "GiaDinhDotNetDotVN.css", "giadinh.net.vn", "http://giadinh.net.vn/", "http://m.giadinh.net.vn/", R.drawable.icon_giadinh);
+
+
 	private String stringValue;
 	private String homePageLink;
     private int intValue;
