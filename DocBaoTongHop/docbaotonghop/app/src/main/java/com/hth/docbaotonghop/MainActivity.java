@@ -3,6 +3,7 @@ package com.hth.docbaotonghop;
 
 import com.hth.docbaotonghop.R;
 import com.hth.utils.*;
+import com.startapp.android.publish.adsCommon.StartAppAd;
 import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 import android.annotation.SuppressLint;
@@ -69,6 +70,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main_website);
         StartAppSDK.init(this, "207910015", true);
+        if(PageApp.IsDisableSplash) StartAppAd.disableSplash();
 
         ImageButton bthome = (ImageButton) findViewById(R.id.button_home);
         bthome.setImageResource(MainActivity.getCurrent_Website_Page().getIcon());

@@ -1,5 +1,4 @@
-.adsbygoogle, ins, [id*="popupBlock"]{
-z-index:-1 !important;
+.adsbygoogle, [id*="popupBlock"], [id*="ads"], .box_sponsor, .popup_right{
 display:none !important;
 }
 

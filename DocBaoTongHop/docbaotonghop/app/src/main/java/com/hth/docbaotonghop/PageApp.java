@@ -19,4 +19,6 @@ public class PageApp {
     static final int TIME_FOR_CHANGE_IMAGE = 10000;
 
     static final String SETTING_DEFAULT_APP_STRING = "0101111111|0";
+
+    static public boolean IsDisableSplash = true;
 }

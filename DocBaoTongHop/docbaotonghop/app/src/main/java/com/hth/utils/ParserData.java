@@ -53,7 +53,7 @@ public class ParserData {
             contentResult.append(doc.text());
             String joinContent =  MainActivity.getCurrent_Website_Page().GetReformatCssContent();
             Log.w("getCSSDetail", joinContent);
-            contentResult.append(joinContent);
+            contentResult.append(" ").append(joinContent);
             
             InputStream data = new ByteArrayInputStream(contentResult.toString().getBytes());
             return new WebResourceResponse("text/css", "UTF-8", data);

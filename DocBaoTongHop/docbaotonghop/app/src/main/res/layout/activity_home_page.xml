@@ -412,8 +412,8 @@
                     android:contentDescription="@string/empty_string"
                     android:onClick="goToMainPage"
                     android:scaleType="centerInside"
-                    android:src="@drawable/logo_genk"
-                    android:tag="37" />
+                    android:src="@drawable/logo_daikynguyen"
+                    android:tag="36" />
 
                 <ImageButton
                     android:layout_width="0dp"
@@ -422,8 +422,8 @@
                     android:contentDescription="@string/empty_string"
                     android:onClick="goToMainPage"
                     android:scaleType="centerInside"
-                    android:src="@drawable/logo_tinhte"
-                    android:tag="36" />
+                    android:src="@drawable/logo_giadinh"
+                    android:tag="37" />
 
             </LinearLayout>
         </LinearLayout>

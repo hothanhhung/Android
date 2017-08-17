@@ -1,4 +1,7 @@
-.adsbygoogle, ins, [id*="popupBlock"]{
-z-index:-1 !important;
+.adsbygoogle, .popupttvh, [id*="adm_zone"], [id*="google_ads"]{
 display:none !important;
 }
+[id*="admwrapper"]{
+display:block !important;
+}
+.

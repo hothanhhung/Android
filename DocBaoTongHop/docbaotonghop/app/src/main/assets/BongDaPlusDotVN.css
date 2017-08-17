@@ -1,4 +1,3 @@
-#tbanner, iframe, .banner, #ajaxshop, #PopupBanner, .qciframe-transparent, .banner180 {
-height: 0px !important;
+#tbanner, iframe, #PopupBanner, [id*="qc"] {
 display:none !important;
 }
