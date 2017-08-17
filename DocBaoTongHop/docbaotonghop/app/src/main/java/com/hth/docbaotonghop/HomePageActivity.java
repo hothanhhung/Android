@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.Calendar;
+import java.util.Random;
 
 
 public class HomePageActivity extends Activity {
@@ -32,6 +33,11 @@ public class HomePageActivity extends Activity {
         context = getApplicationContext();
 
         StartAppSDK.init(this, "207910015", false);
+        Random rand = new Random();
+        if(rand.nextInt(4) == 3) PageApp.IsDisableSplash = false;
+        else PageApp.IsDisableSplash = true;
+        if(PageApp.IsDisableSplash) StartAppAd.disableSplash();
+
         timeForRun = Calendar.getInstance().getTime().getTime();
 
 	}
@@ -89,7 +95,8 @@ public class HomePageActivity extends Activity {
         
         if(timeForRun > 0 && ((timenow - timeForRun) > longtime))
         {
-            StartAppAd.showAd(this);;
+            StartAppAd.showAd(this);
+            timeForRun = Calendar.getInstance().getTime().getTime();
         }
 
     }
