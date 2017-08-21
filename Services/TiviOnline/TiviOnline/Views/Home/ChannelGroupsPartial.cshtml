@@ -1,0 +1,114 @@
+﻿<ul class="nav nav-tabs channelGroups">
+    <li class="active"><a href="javascript:void(0)" onclick="tabClick(this, '#HotChannels')">Hot</a></li>
+    <li><a href="javascript:void(0)" onclick="tabClick(this, '#VTV_VTCChannels')">VTV - VTC</a></li>
+    <li><a href="javascript:void(0)" onclick="tabClick(this, '#SCTV_HTVChannels')">SCTV - HTV</a></li>
+    <li><a href="javascript:void(0)" onclick="tabClick(this, '#LocalChannels')">Địa Phương</a></li>
+    <li><a href="javascript:void(0)" onclick="tabClick(this, '#ForeignChannels')">Nước Ngoài</a></li>
+    <li><a href="javascript:void(0)" onclick="tabClick(this, '#FootballChannels')">Bóng Đá</a></li>
+    <li><a href="javascript:void(0)" onclick="tabClick(this, '#OthersChannels')">Khác</a></li>
+</ul>
+<div id="HotChannels">
+    <ul>
+        @foreach (TiviOnline.Models.Channel channel in ViewBag.HotChannels)
+        {
+            <li class="list_movie_image">
+                <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
+                    <img src="@Url.Content(channel.Logo)" class="channel_img" />
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+<div class="list_channels">
+    <div id="VTV_VTCChannels" style="display:none">
+        <ul>
+            @foreach (TiviOnline.Models.Channel channel in ViewBag.VTV_VTCChannels)
+            {
+                <li class="list_movie_image">
+                    <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
+                        <img src="@Url.Content(channel.Logo)" class="channel_img" align="middle" />
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div id="SCTV_HTVChannels" style="display:none">
+        <ul>
+            @foreach (TiviOnline.Models.Channel channel in ViewBag.SCTV_HTVChannels)
+            {
+                <li class="list_movie_image">
+                    <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
+                        <img src="@Url.Content(channel.Logo)" class="channel_img" />
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div id="LocalChannels" style="display:none">
+        <ul>
+            @foreach (TiviOnline.Models.Channel channel in ViewBag.LocalChannels)
+            {
+                <li class="list_movie_image">
+                    <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
+                        <img src="@Url.Content(channel.Logo)" class="channel_img" />
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div id="ForeignChannels" style="display:none">
+        <ul>
+            @foreach (TiviOnline.Models.Channel channel in ViewBag.ForeignChannels)
+            {
+                <li class="list_movie_image">
+                    <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
+                        <img src="@Url.Content(channel.Logo)" class="channel_img" />
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div id="FootballChannels" style="display:none">
+        <ul>
+            @foreach (TiviOnline.Models.Channel channel in ViewBag.FootballChannels)
+            {
+                <li class="list_movie_image">
+                    <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
+                        <img src="@Url.Content(channel.Logo)" class="channel_img" />
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div id="OthersChannels" style="display:none">
+        <ul>
+            @foreach (TiviOnline.Models.Channel channel in ViewBag.OthersChannels)
+            {
+                <li class="list_movie_image">
+                    <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
+                        <img src="@Url.Content(channel.Logo)" class="channel_img" />
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<script>
+    function tabClick(obj, id) {
+        $(".channelGroups li").each(function( index ) {$(this).removeClass("active")});
+        $("#HotChannels").hide();
+        $("#VTV_VTCChannels").hide();
+        $("#SCTV_HTVChannels").hide();
+        $("#LocalChannels").hide();
+        $("#ForeignChannels").hide();
+        $("#FootballChannels").hide();
+        $("#OthersChannels").hide();
+        $(id).show();
+        $(obj).parent().addClass("active");
+    }
+</script>

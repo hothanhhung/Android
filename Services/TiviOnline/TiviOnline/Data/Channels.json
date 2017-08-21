@@ -1,0 +1,32 @@
+﻿/*
+    0. Hot
+    1. VTV - VTC
+    2. SCTV - HTV
+    3. Địa Phương
+    4. Nước Ngoài
+    5. Bóng Đá
+    6. Khác
+*/
+
+[
+    { ID: "VTV1", IsActive: 1, Group: [ 1 ], Logo: "~/Content/Logos/VTV1.png" },
+    { ID: "VTV2", IsActive: 1, Group: [ 1 ], Logo: "~/Content/Logos/VTV2.png" },
+    { ID: "VTV3", IsActive: 1, Group: [ 1 ], Logo: "~/Content/Logos/VTV3.png" },
+    { ID: "VTV4", IsActive: 1, Group: [ 1 ], Logo: "~/Content/Logos/VTV4.png" },
+    { ID: "VTV5", IsActive: 0, Group: [ 1 ], Logo: "~/Content/Logos/VTV5.png" },
+    { ID: "VTV6", IsActive: 0, Group: [ 1 ], Logo: "~/Content/Logos/VTV6.png" },
+    { ID: "VTV7", IsActive: 0, Group: [ 1 ], Logo: "~/Content/Logos/VTV7.png" },
+    { ID: "VTV8", IsActive: 0, Group: [ 1 ], Logo: "~/Content/Logos/VTV8.png" },
+    { ID: "VTV9", IsActive: 0, Group: [ 1 ], Logo: "~/Content/Logos/VTV9.png" },
+    { ID: "VTC1", IsActive: 1, Group: [ 1 ], Logo: "~/Content/Logos/VTC1.png" },
+    { ID: "VTC10", IsActive: 1, Group: [ 1 ], Logo: "~/Content/Logos/NetViet.png" },
+    { ID: "VTC16", IsActive: 1, Group: [ 1 ], Logo: "~/Content/Logos/VTC16.png" },
+    { ID: "HTV9", IsActive: 1, Group: [ 3 ], Logo: "~/Content/Logos/HTV9.png" },
+    { ID: "HNHD1", IsActive: 1, Group: [ 3 ], Logo: "~/Content/Logos/HNHD1.png" },
+    { ID: "TTXVN", IsActive: 1, Group: [ 6 ], Logo: "~/Content/Logos/TTXVN.png" },
+    { ID: "VOV1", IsActive: 1,  Group: [ 6 ], Logo: "~/Content/Logos/VOV1.png" },
+    { ID: "VOV2", IsActive: 1, Group: [ 6 ], Logo: "~/Content/Logos/VOV2.png" },
+    { ID: "VOV3", IsActive: 1, Group: [ 6 ], Logo: "~/Content/Logos/VOV3.png" },
+    { ID: "VOV5", IsActive: 1, Group: [ 6 ], Logo: "~/Content/Logos/VOV5.png" },
+
+]
