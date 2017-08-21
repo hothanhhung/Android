@@ -1,0 +1,17 @@
+﻿.list_channels{
+    margin: 5px;
+}
+.list_movie_image{
+    margin-left: 5px;
+    position: relative;
+    float: left;
+    list-style: none;
+}
+
+.channel_img {
+    height: 53px;
+    width: 85px;
+    border: 1px solid #FFADAD;
+    border-radius: 5px;
+    margin: 0 auto;
+}

@@ -1,0 +1,19 @@
+﻿/*
+    1. vn.tvnet.gov.vn
+*/
+[
+    { ID: "VTV1_1", ServerId: 1, ChannelId: "VTV1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1011/vtv1" },
+    { ID: "VTV2_1", ServerId: 1, ChannelId: "VTV2", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1010/vtv2"},
+    { ID: "VTV3_1", ServerId: 1, ChannelId: "VTV3", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1013/vtv3"},
+    { ID: "VTV4_1", ServerId: 1, ChannelId: "VTV4", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1009/vtv4"},
+    { ID: "VTC1_1", ServerId: 1, ChannelId: "VTC1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1007/vtc1"},
+    { ID: "VTC10_1", ServerId: 1, ChannelId: "VTC10", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1006/netviet"},
+    { ID: "VTC16_1", ServerId: 1, ChannelId: "VTC16", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1018/vtc16"},
+    { ID: "HTV9_1", ServerId: 1, ChannelId: "HTV9", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1012/htv9"},
+    { ID: "HNHD1_1", ServerId: 1, ChannelId: "HNHD1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1008/hn"},
+    { ID: "TTXVN_1", ServerId: 1, ChannelId: "TTXVN", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1019/ttxvn"},
+    { ID: "VOV1_1", ServerId: 1, ChannelId: "VOV1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1014/vov1"},
+    { ID: "VOV2_1", ServerId: 1, ChannelId: "VOV2", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1015/vov2"},
+    { ID: "VOV3_1", ServerId: 1, ChannelId: "VOV3", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1016/vov3"},
+    { ID: "VOV4_5", ServerId: 1, ChannelId: "VOV5", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1017/vov5"}
+]
