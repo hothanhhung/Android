@@ -13,6 +13,11 @@ namespace TiviOnline.Controllers
         //
         // GET: /Home/
 
+        public ActionResult Update(){
+            DataJsonProcess.ResetJsonData();
+            return Content("Updated!");
+        }
+
         public ActionResult Index(string channel = "VTV1", string id="")
         {
             if (string.IsNullOrWhiteSpace(channel)) channel = "VTV1";
@@ -22,7 +27,16 @@ namespace TiviOnline.Controllers
             {
                 streamServer = streamServers.First();
             }
-            ViewBag.StreamUrl = BussinessProcess.GetUrlStream(streamServer);
+
+            ViewBag.StreamServer = streamServer;
+            if (streamServer.IsIframe)
+            {
+                ViewBag.StreamUrl = streamServer.URL;
+            }
+            else
+            {
+                ViewBag.StreamUrl = BussinessProcess.GetUrlStream(streamServer);
+            }
             ViewBag.StreamServers = streamServers;
 
             return View();

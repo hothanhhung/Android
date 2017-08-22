@@ -17,6 +17,8 @@ namespace TiviOnline.Bussiness
             {
                 switch (streamServer.ServerId)
                 {
+                    case 0:
+                        return streamServer.URL;
                     case 1:
                         return HtmlHelper.GetUrlStreamFromTVNet(streamServer.URL);
                 }

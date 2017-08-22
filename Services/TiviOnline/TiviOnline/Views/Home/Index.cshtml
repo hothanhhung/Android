@@ -1,56 +1,69 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var StreamServers = (List<TiviOnline.Models.StreamServer>) ViewBag.StreamServers;
+    var StreamServers = (List<TiviOnline.Models.StreamServer>)ViewBag.StreamServers;
+    var StreamServer = (TiviOnline.Models.StreamServer)ViewBag.StreamServer;
+    
 }
 <div class="row">
-    <video id="my-video" class="video-js" controls preload="auto" width="600" height="264"
-           data-setup="{}">
-        <source src="@ViewBag.StreamUrl" type='application/x-mpegURL'>
-        <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-        </p>
-    </video>
+    <div class="col-xs-12 col-md-12 text-center">
+        @if (StreamServer.IsIframe)
+        {
+            <iframe id="videoIframe" frameborder="no" height="425" scrolling="no" allowfullscreen="true" src="@ViewBag.StreamUrl" width="100%"></iframe>
+        }
+        else
+        {
+        <video id="my-video" class="video-js col-xs-12 col-md-12 text-center" controls preload="auto" width="600" height="264"
+               data-setup="{}">
+            @*<source src="http://2co2.vp9.tv/chn/DNG14/v.m3u8" type='application/x-mpegURL'>*@
+            <source src="@ViewBag.StreamUrl" type='application/x-mpegURL'>
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+        </video>
+        <script src="~/Scripts/VideoJS/video.js"></script>
+        <script src="~/Scripts/VideoJS/videojs-contrib-hls.min.js"></script>
+        <script>
+
+            @*function play(src) {
+                player = videojs("my-video");
+                player.ready(function () {
+                    player.src({
+                        src: src,
+                        type: "application/x-mpegURL",
+                    });
+                });
+               // player.play();
+            }
+            function reload(i) {
+                if (player.paused() && player.error_ != null) {
+                    play('@ViewBag.StreamUrl');
+                }
+            }
+
+            $(function () {
+                var i = 1;
+                play('@ViewBag.StreamUrl');
+                setInterval(function () { reload(i); i++ }, 1000);
+            });*@
+
+        </script>
+
+        }
+    </div>
 </div>
-<div class="row">
-   @for(int i = 0; i < StreamServers.Count; i++)
-   {
-       <span>
-           <a href="@Url.RouteUrl("WatchTivi", new { channel = StreamServers[i].ChannelId, id = StreamServers[i].ID })">
-                Link @(i+1)
+<div class="row" style="margin:15px">
+    <div class="col-xs-12 col-md-12 text-center">
+        @for (int i = 0; i < StreamServers.Count; i++)
+        {
+            <a class="btn btn-primary btn-xs" href="@Url.RouteUrl("WatchTivi", new { channel = StreamServers[i].ChannelId, id = StreamServers[i].ID })">
+                Link @(i + 1)
             </a>
-    </span>
-   }
+        }
+    </div>
 </div>
+
 <div class="row"> 
     @Html.Action("ChannelGroupsPartial", "Home");
 </div>
-
-    <script src="~/Scripts/VideoJS/video.js"></script>
-    <script src="~/Scripts/VideoJS/videojs-contrib-hls.min.js"></script>
-    <script>
-
-        @*function play(src) {
-            player = videojs("my-video");
-            player.ready(function () {
-                player.src({
-                    src: src,
-                    type: "application/x-mpegURL",
-                });
-            });
-           // player.play();
-        }
-        function reload(i) {
-            if (player.paused() && player.error_ != null) {
-                play('@ViewBag.StreamUrl');
-            }
-        }
-
-        $(function () {
-            var i = 1;
-            play('@ViewBag.StreamUrl');
-            setInterval(function () { reload(i); i++ }, 1000);
-        });*@
-
-    </script>

@@ -69,5 +69,47 @@ namespace TiviOnline.Bussiness
             }
             return streamUrl;
         }
+
+        //http://m.xemtvhd.com/htv7.php
+        public static string GetUrlStreamFromXemTVHD(string url)
+        {
+            string streamUrl = string.Empty;
+            try
+            {
+                HttpClient http = new HttpClient();
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(GetStringContentFromResponse(response, true));
+
+                    var chanelMediaplayer = resultat.DocumentNode.SelectSingleNode("//div[@id='mediaplayer']");
+                    if (chanelMediaplayer != null)
+                    {
+                        var requestStreamUrl = chanelMediaplayer.GetAttributeValue("data-file", string.Empty);
+                        if (!string.IsNullOrWhiteSpace(requestStreamUrl))
+                        {
+                            var responseStreamObject = http.GetAsync(requestStreamUrl).Result;
+                            if (responseStreamObject.IsSuccessStatusCode)
+                            {
+                                var contentJson = GetStringContentFromResponse(responseStreamObject, false).Trim();
+                                if (!contentJson.EndsWith("]")) contentJson += "]";
+                                var items = JsonConvert.DeserializeObject<List<TVNetStreamJson>>(contentJson);
+                                if (items != null && items.Count > 0)
+                                {
+                                    streamUrl = items[0].url;
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return streamUrl;
+        }
     }
 }
