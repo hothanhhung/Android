@@ -1,4 +1,9 @@
-﻿.list_channels{
+﻿.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.list_channels{
     margin: 5px;
 }
 .list_movie_image{

@@ -7,19 +7,19 @@
     <li><a href="javascript:void(0)" onclick="tabClick(this, '#FootballChannels')">Bóng Đá</a></li>
     <li><a href="javascript:void(0)" onclick="tabClick(this, '#OthersChannels')">Khác</a></li>
 </ul>
-<div id="HotChannels">
-    <ul>
-        @foreach (TiviOnline.Models.Channel channel in ViewBag.HotChannels)
-        {
-            <li class="list_movie_image">
-                <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
-                    <img src="@Url.Content(channel.Logo)" class="channel_img" />
-                </a>
-            </li>
-        }
-    </ul>
-</div>
 <div class="list_channels">
+    <div id="HotChannels">
+        <ul>
+            @foreach (TiviOnline.Models.Channel channel in ViewBag.HotChannels)
+            {
+                <li class="list_movie_image">
+                    <a href="@Url.RouteUrl("WatchTivi", new { channel = channel.ID })">
+                        <img src="@Url.Content(channel.Logo)" class="channel_img" />
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
     <div id="VTV_VTCChannels" style="display:none">
         <ul>
             @foreach (TiviOnline.Models.Channel channel in ViewBag.VTV_VTCChannels)

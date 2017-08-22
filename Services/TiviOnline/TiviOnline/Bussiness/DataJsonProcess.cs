@@ -86,6 +86,12 @@ namespace TiviOnline.Bussiness
             }
         }
 
+        public static void ResetJsonData()
+        {
+            streamServers = null;
+            channels = null;
+        }
+
         public static List<Channel> GetHotChannels()
         {
             return Channels.Where(p => p.Group.Any(g => g == 0)).ToList();

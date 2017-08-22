@@ -12,5 +12,6 @@ namespace TiviOnline.Models
         public int ServerId { get; set; }
         public string ChannelId { get; set; }
         public bool IsActive { get; set; }
+        public bool IsIframe { get; set; }
     }
 }

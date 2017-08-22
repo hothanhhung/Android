@@ -144,9 +144,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\logos\BRT.png" />
     <Content Include="Content\logos\hnhd1.png" />
+    <Content Include="Content\logos\htv1.png" />
+    <Content Include="Content\logos\htv2hd.png" />
+    <Content Include="Content\logos\htv3.png" />
+    <Content Include="Content\logos\htv4.png" />
+    <Content Include="Content\logos\HTV7HD.png" />
     <Content Include="Content\logos\htv9.png" />
+    <Content Include="Content\logos\HTVPhim.png" />
+    <Content Include="Content\logos\htvtt.png" />
     <Content Include="Content\logos\netviet.png" />
+    <Content Include="Content\logos\THUANVIETHD.png" />
     <Content Include="Content\logos\ttxvn.png" />
     <Content Include="Content\logos\vov1.png" />
     <Content Include="Content\logos\vov2.png" />
@@ -263,7 +272,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51958</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50355/</IISUrl>
+          <IISUrl>http://localhost:50555/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
