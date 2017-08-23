@@ -1,11 +1,11 @@
 ﻿<ul class="nav nav-tabs channelGroups">
-    <li class="active"><a href="javascript:void(0)" onclick="tabClick(this, '#HotChannels')">Hot</a></li>
-    <li><a href="javascript:void(0)" onclick="tabClick(this, '#VTV_VTCChannels')">VTV - VTC</a></li>
-    <li><a href="javascript:void(0)" onclick="tabClick(this, '#SCTV_HTVChannels')">SCTV - HTV</a></li>
-    <li><a href="javascript:void(0)" onclick="tabClick(this, '#LocalChannels')">Địa Phương</a></li>
-    <li><a href="javascript:void(0)" onclick="tabClick(this, '#ForeignChannels')">Nước Ngoài</a></li>
-    <li><a href="javascript:void(0)" onclick="tabClick(this, '#FootballChannels')">Bóng Đá</a></li>
-    <li><a href="javascript:void(0)" onclick="tabClick(this, '#OthersChannels')">Khác</a></li>
+    <li class="active" id="HotChannelsTab"><a href="javascript:void(0)" onclick="tabClick(1)">Hot</a></li>
+    <li id="VTV_VTCChannelsTab"><a href="javascript:void(0)" onclick="tabClick(2)">VTV - VTC</a></li>
+    <li id="SCTV_HTVChannelsTab"><a href="javascript:void(0)" onclick="tabClick(3)">SCTV - HTV</a></li>
+    <li id="LocalChannelsTab"><a href="javascript:void(0)" onclick="tabClick(4)">Địa Phương</a></li>
+    <li id="ForeignChannelsTab"><a href="javascript:void(0)" onclick="tabClick(5)">Nước Ngoài</a></li>
+    <li id="FootballChannelsTab"><a href="javascript:void(0)" onclick="tabClick(6)">Bóng Đá</a></li>
+    <li id="OthersChannelsTab"><a href="javascript:void(0)" onclick="tabClick(7)">Khác</a></li>
 </ul>
 <div class="list_channels">
     <div id="HotChannels">
@@ -99,8 +99,8 @@
     </div>
 </div>
 <script>
-    function tabClick(obj, id) {
-        $(".channelGroups li").each(function( index ) {$(this).removeClass("active")});
+    function tabClick(index) {
+        $(".channelGroups li").each(function (index) { $(this).removeClass("active") });
         $("#HotChannels").hide();
         $("#VTV_VTCChannels").hide();
         $("#SCTV_HTVChannels").hide();
@@ -108,7 +108,50 @@
         $("#ForeignChannels").hide();
         $("#FootballChannels").hide();
         $("#OthersChannels").hide();
-        $(id).show();
-        $(obj).parent().addClass("active");
+        switch (index) {
+            case 1:
+                $("#HotChannels").show();
+                $("#HotChannelsTab").addClass("active");
+                break;
+            case 2:
+                $("#VTV_VTCChannels").show();
+                $("#VTV_VTCChannelsTab").addClass("active");
+                break;
+            case 3:
+                $("#SCTV_HTVChannels").show();
+                $("#SCTV_HTVChannelsTab").addClass("active");
+                break;
+            case 4:
+                $("#LocalChannels").show();
+                $("#LocalChannelsTab").addClass("active");
+                break;
+            case 5:
+                $("#ForeignChannels").show();
+                $("#ForeignChannelsTab").addClass("active");
+                break;
+            case 6:
+                $("#FootballChannels").show();
+                $("#FootballChannelsTab").addClass("active");
+                break;
+            case 7:
+                $("#OthersChannels").show();
+                $("#OthersChannelsTab").addClass("active");
+                break;
+            default:
+                $("#HotChannels").show();
+                $("#HotChannelsTab").addClass("active");
+                break;
+        }
+        $.cookie('active_channel_tab', index);
     }
+
+    $( document ).ready(function() {
+        var index = $.cookie('active_channel_tab');
+        if (index === undefined) index = 1;
+        else {
+            index = parseInt(index);
+        }
+        tabClick(index)
+    });
+    
 </script>

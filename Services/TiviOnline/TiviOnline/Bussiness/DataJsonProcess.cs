@@ -92,6 +92,11 @@ namespace TiviOnline.Bussiness
             channels = null;
         }
 
+        public static Channel GetChannel(string id)
+        {
+            return Channels.Where(p => p.ID.Equals(id, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+        }
+
         public static List<Channel> GetHotChannels()
         {
             return Channels.Where(p => p.Group.Any(g => g == 0)).ToList();
