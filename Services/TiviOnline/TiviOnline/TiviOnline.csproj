@@ -144,7 +144,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\logos\antv.png" />
     <Content Include="Content\logos\BRT.png" />
+    <Content Include="Content\logos\DRT1.png" />
+    <Content Include="Content\logos\DRT2.png" />
     <Content Include="Content\logos\hnhd1.png" />
     <Content Include="Content\logos\htv1.png" />
     <Content Include="Content\logos\htv2hd.png" />
@@ -155,7 +158,9 @@
     <Content Include="Content\logos\HTVPhim.png" />
     <Content Include="Content\logos\htvtt.png" />
     <Content Include="Content\logos\netviet.png" />
+    <Content Include="Content\logos\THTPCT.png" />
     <Content Include="Content\logos\THUANVIETHD.png" />
+    <Content Include="Content\logos\TPPTCT.png" />
     <Content Include="Content\logos\ttxvn.png" />
     <Content Include="Content\logos\vov1.png" />
     <Content Include="Content\logos\vov2.png" />
@@ -216,6 +221,7 @@
     <Content Include="Content\Images\section-parallax.jpg" />
     <Content Include="Content\Images\signature.jpg" />
     <Content Include="Content\Images\ui.totop.png" />
+    <Content Include="Scripts\JQuery\jquery.cookie.js" />
     <Content Include="Scripts\Theme\gallery\isotope.js" />
     <Content Include="Scripts\Theme\jquery.appear.js" />
     <Content Include="Scripts\Theme\jquery.min.js" />

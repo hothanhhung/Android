@@ -1,10 +1,15 @@
 ﻿@{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var StreamServers = (List<TiviOnline.Models.StreamServer>)ViewBag.StreamServers;
     var StreamServer = (TiviOnline.Models.StreamServer)ViewBag.StreamServer;
+    var Channel = (TiviOnline.Models.Channel)ViewBag.Channel;
+    ViewBag.Title = "Xem truyền hình trực tuyến - " + Channel.ID;
     
 }
+<div class="row" style="padding-bottom: 10px;">
+    <img src="@Url.Content(Channel.Logo)" class="channel_img" />
+    <span style="font-size:20px;font-weight: 600;color: darkgreen;">Xem truyền hình trực tuyến - @(string.IsNullOrWhiteSpace(Channel.Description) ? Channel.ID : Channel.Description)</span>
+</div>
 <div class="row">
     <div class="col-xs-12 col-md-12 text-center">
         @if (StreamServer.IsIframe)
@@ -13,42 +18,42 @@
         }
         else
         {
-        <video id="my-video" class="video-js col-xs-12 col-md-12 text-center" controls preload="auto" width="600" height="264"
-               data-setup="{}">
-            @*<source src="http://2co2.vp9.tv/chn/DNG14/v.m3u8" type='application/x-mpegURL'>*@
-            <source src="@ViewBag.StreamUrl" type='application/x-mpegURL'>
-            <p class="vjs-no-js">
-                To view this video please enable JavaScript, and consider upgrading to a web browser that
-                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-            </p>
-        </video>
-        <script src="~/Scripts/VideoJS/video.js"></script>
-        <script src="~/Scripts/VideoJS/videojs-contrib-hls.min.js"></script>
-        <script>
+            <video id="my-video" class="video-js col-xs-12 col-md-12 text-center" controls preload="auto" width="600" height="425"
+                    data-setup="{}">
+                @*<source src="http://2co2.vp9.tv/chn/DNG14/v.m3u8" type='application/x-mpegURL'>*@
+                <source src="@ViewBag.StreamUrl" type='application/x-mpegURL'>
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+            </video>
+            <script src="~/Scripts/VideoJS/video.js"></script>
+            <script src="~/Scripts/VideoJS/videojs-contrib-hls.min.js"></script>
+            <script>
 
-            @*function play(src) {
-                player = videojs("my-video");
-                player.ready(function () {
-                    player.src({
-                        src: src,
-                        type: "application/x-mpegURL",
-                    });
+                @*function play(src) {
+            player = videojs("my-video");
+            player.ready(function () {
+                player.src({
+                    src: src,
+                    type: "application/x-mpegURL",
                 });
-               // player.play();
-            }
-            function reload(i) {
-                if (player.paused() && player.error_ != null) {
-                    play('@ViewBag.StreamUrl');
-                }
-            }
-
-            $(function () {
-                var i = 1;
+            });
+            // player.play();
+        }
+        function reload(i) {
+            if (player.paused() && player.error_ != null) {
                 play('@ViewBag.StreamUrl');
-                setInterval(function () { reload(i); i++ }, 1000);
-            });*@
+            }
+        }
 
-        </script>
+        $(function () {
+            var i = 1;
+            play('@ViewBag.StreamUrl');
+            setInterval(function () { reload(i); i++ }, 1000);
+        });*@
+
+            </script>
 
         }
     </div>
@@ -64,6 +69,6 @@
     </div>
 </div>
 
-<div class="row"> 
+<div class="row">
     @Html.Action("ChannelGroupsPartial", "Home");
 </div>

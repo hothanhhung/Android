@@ -21,11 +21,21 @@ namespace TiviOnline.Controllers
         public ActionResult Index(string channel = "VTV1", string id="")
         {
             if (string.IsNullOrWhiteSpace(channel)) channel = "VTV1";
+            var channelObject = DataJsonProcess.GetChannel(channel);
             var streamServers = DataJsonProcess.GetStreamServersOfChannel(channel);
             var streamServer = DataJsonProcess.GetStreamServer(id);
             if (streamServer == null && streamServers!= null && streamServers.Count > 0)
             {
                 streamServer = streamServers.First();
+            }
+
+            if (streamServer == null )
+            {
+                streamServer = new StreamServer();
+            }
+            if (channelObject == null)
+            {
+                channelObject = new Channel();
             }
 
             ViewBag.StreamServer = streamServer;
@@ -38,6 +48,9 @@ namespace TiviOnline.Controllers
                 ViewBag.StreamUrl = BussinessProcess.GetUrlStream(streamServer);
             }
             ViewBag.StreamServers = streamServers;
+            ViewBag.Channel = channelObject;
+            //stop load video to work on UI
+            ViewBag.StreamUrl = "";
 
             return View();
         }

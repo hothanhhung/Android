@@ -2,11 +2,16 @@
     0. Redrict
     1. vn.tvnet.gov.vn
     2. http://m.xemtvhd.com/htv7.php
+    3. http://m.xemtvhd.com/htv7.php
 */
 [
+    { ID: "VTV1_0", ServerId: 0, ChannelId: "VTV1", IsActive: 1, IsIframe: 1, URL: "http://qc.tclup.com/libs/cutref.php?url=http://plus.trumtv.net/vtv1.php" },
     { ID: "VTV1_1", ServerId: 1, ChannelId: "VTV1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1011/vtv1" },
     { ID: "VTV2_1", ServerId: 1, ChannelId: "VTV2", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1010/vtv2" },
     { ID: "VTV3_1", ServerId: 1, ChannelId: "VTV3", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1013/vtv3" },
+    { ID: "VTV3_0", ServerId: 1, ChannelId: "VTV3", IsActive: 1, IsIframe: 1, URL: "http://qc.tclup.com/libs/cutref.php?url=http://plus.trumtv.net/vtv3.php" },
+    { ID: "VTV7_0", ServerId: 1, ChannelId: "VTV7", IsActive: 1, IsIframe: 1, URL: "http://href.li/http://tv.xemtivingon.com/ok/vtv/vtv7show.php" },
+    { ID: "VTV8_0", ServerId: 1, ChannelId: "VTV8", IsActive: 1, IsIframe: 1, URL: "http://href.li/http://mi.tvmienphi.biz/2017/08/vtv8-101.html" },
     { ID: "VTV4_1", ServerId: 1, ChannelId: "VTV4", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1009/vtv4" },
     { ID: "VTC1_1", ServerId: 1, ChannelId: "VTC1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1007/vtc1" },
     { ID: "VTC10_1", ServerId: 1, ChannelId: "VTC10", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1006/netviet" },
@@ -21,7 +26,10 @@
     { ID: "BPTV1_0", ServerId: 0, ChannelId: "BPTV1", IsActive: 1, URL: "http://118.69.197.145/hls/bptv1.m3u8" },
     { ID: "BPTV2_0", ServerId: 0, ChannelId: "BPTV2", IsActive: 1, URL: "http://118.69.197.145/hls/bptv2.m3u8" },
     { ID: "PTQ_0", ServerId: 0, ChannelId: "PTQ", IsActive: 1, URL: "http://113.160.244.44/liveevent.m3u8" },
+    { ID: "DRT1_0", ServerId: 0, ChannelId: "DRT1", IsActive: 1, URL: "http://drtdnglive.e49a7c38.cdnviet.com/livedrt1/playlist.m3u8" },
+    { ID: "DRT2_0", ServerId: 0, ChannelId: "DRT2", IsActive: 1, URL: "http://drtdnglive.e49a7c38.cdnviet.com/livestream/playlist.m3u8" },
     { ID: "TTXVN_1", ServerId: 1, ChannelId: "TTXVN", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1019/ttxvn" },
+    { ID: "ANTV_0", ServerId: 0, ChannelId: "ANTV", IsActive: 1, URL: "http://123.30.191.202/hls/antv.m3u8" },
     { ID: "VOV1_1", ServerId: 1, ChannelId: "VOV1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1014/vov1" },
     { ID: "VOV2_1", ServerId: 1, ChannelId: "VOV2", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1015/vov2" },
     { ID: "VOV3_1", ServerId: 1, ChannelId: "VOV3", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1016/vov3" },
