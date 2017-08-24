@@ -23,9 +23,11 @@
     <link href="~/Content/Themes/style.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Themes/responsive.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="http://vjs.zencdn.net/6.2.5/video-js.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="~/Scripts/JQuery/jquery.cookie.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
     <div id="loader-wrapper">
@@ -38,11 +40,11 @@
                     <div class="col-md-3 col-sm-3 logo-content"><img src="~/Content/Images/logo_mini.jpg" alt="" /></div>
                     <div class="mini-menu"><i class="fa fa-bars"></i></div>
                     <ul class="col-md-9 col-sm-9 menu">
-                        <li class="cl-effect-11"><a class="active" data-hover="Xem Tivi Trực Tuyến" href="#section1">Xem Tivi Trực Tuyến</a></li>
-                        <li class="cl-effect-11"><a data-hover="Lịch Tivi" href="#section2">Lịch Tivi</a></li>
+                        <li class="cl-effect-11"><a class="@(ViewBag.Tab == null || ViewBag.Tab == 1? "active":string.Empty)" data-hover="Xem Tivi Trực Tuyến" href="@Url.RouteUrl("WatchTivi", null)">Xem Tivi Trực Tuyến</a></li>
+                        <li class="cl-effect-11"><a class="@(ViewBag.Tab != null && ViewBag.Tab == 2? "active":string.Empty)" data-hover="Lịch Tivi" href="@Url.RouteUrl("Schedule", null)">Lịch Tivi</a></li>
                         @*<li class="cl-effect-11"><a data-hover="EXPERIENCES" href="#section3">Experiences</a></li>
                         <li class="cl-effect-11"><a data-hover="BLOG" href="#section_blog">Blog</a></li>*@
-                        <li class="cl-effect-11"><a data-hover="Liên Hệ" href="#section4">Liên Hệ</a></li>
+                        <li class="cl-effect-11"><a class="@(ViewBag.Tab != null && ViewBag.Tab == 3? "active":string.Empty)" data-hover="Liên Hệ" href="@Url.RouteUrl("Contact", null)">Liên Hệ</a></li>
                     </ul>
                 </nav>
             </div>

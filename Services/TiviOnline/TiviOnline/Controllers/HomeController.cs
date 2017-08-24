@@ -50,8 +50,8 @@ namespace TiviOnline.Controllers
             ViewBag.StreamServers = streamServers;
             ViewBag.Channel = channelObject;
             //stop load video to work on UI
-            ViewBag.StreamUrl = "";
-
+            //ViewBag.StreamUrl = "";
+            ViewBag.Tab = 1;
             return View();
         }
 
@@ -67,5 +67,16 @@ namespace TiviOnline.Controllers
             return PartialView();
         }
 
+        public ActionResult Schedule(string channel = "VTV1", string date = "")
+        {
+            ViewBag.Tab = 2;
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Tab = 3;
+            return View();
+        }
     }
 }

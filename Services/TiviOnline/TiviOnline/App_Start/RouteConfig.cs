@@ -16,6 +16,26 @@ namespace TiviOnline
             routes.IgnoreRoute("Scripts/*");
             routes.IgnoreRoute("Images/*");
             routes.MapRoute(
+                    name: "Contact",
+                    url: "lien-he",
+                    defaults: new
+                    {
+                        controller = "Home",
+                        action = "Contact"
+                    }
+                    );
+            routes.MapRoute(
+                    name: "Schedule",
+                    url: "lich-phat-song",
+                    defaults: new
+                    {
+                        controller = "Home",
+                        action = "Schedule",
+                        channel = UrlParameter.Optional,
+                        date = UrlParameter.Optional
+                    }
+                    );
+            routes.MapRoute(
                     name: "WatchTivi",
                     url: "Xem-Tivi/{channel}/{id}",
                     defaults: new
