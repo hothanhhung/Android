@@ -10,6 +10,10 @@ namespace TiviOnline.Bussiness
 {
     public class BussinessProcess
     {
+        public static List<ScheduleItem> GetSchedule(string channel, string date)
+        {
+            return HtmlHelper.GetSchedule(channel, date);
+        }
 
         public static string GetUrlStream(StreamServer streamServer)
         {

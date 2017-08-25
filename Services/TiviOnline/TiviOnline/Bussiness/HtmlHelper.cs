@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web;
+using TiviOnline.Models;
 
 namespace TiviOnline.Bussiness
 {
@@ -23,6 +24,40 @@ namespace TiviOnline.Bussiness
             }
             return string.Empty;
         }
+
+        class ObjectSchedule
+        {
+            public List<ScheduleItem> Data;
+        }
+
+        public static List<ScheduleItem> GetSchedule(string channel, string date)
+        {
+            List<ScheduleItem> items = null;
+            string url = string.Format("http://hunght.com/api/lichtivi/GetSchedules/?channel={0}&date={1}&device=TiviOnline&open={2}&version=4.0.2", channel, date, DateTime.Now.Ticks);
+            try
+            {
+                HttpClient http = new HttpClient();
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    HtmlDocument resultat = new HtmlDocument();
+                    var contentJson = GetStringContentFromResponse(response, false).Trim();
+                    if (!contentJson.EndsWith("}")) contentJson += "}";
+                    var obj = JsonConvert.DeserializeObject<ObjectSchedule>(contentJson);
+                    if (obj != null)
+                    {
+                        items = obj.Data;
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return items;
+        }
+
         private class TVNetStreamJson
         {
             public string name;

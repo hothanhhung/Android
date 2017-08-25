@@ -40,8 +40,8 @@
                     <div class="col-md-3 col-sm-3 logo-content"><img src="~/Content/Images/logo_mini.jpg" alt="" /></div>
                     <div class="mini-menu"><i class="fa fa-bars"></i></div>
                     <ul class="col-md-9 col-sm-9 menu">
-                        <li class="cl-effect-11"><a class="@(ViewBag.Tab == null || ViewBag.Tab == 1? "active":string.Empty)" data-hover="Xem Tivi Trực Tuyến" href="@Url.RouteUrl("WatchTivi", null)">Xem Tivi Trực Tuyến</a></li>
-                        <li class="cl-effect-11"><a class="@(ViewBag.Tab != null && ViewBag.Tab == 2? "active":string.Empty)" data-hover="Lịch Tivi" href="@Url.RouteUrl("Schedule", null)">Lịch Tivi</a></li>
+                        <li class="cl-effect-11"><a class="@(ViewBag.Tab == null || ViewBag.Tab == 1? "active":string.Empty)" data-hover="Xem Tivi Trực Tuyến" href="@Url.RouteUrl("WatchTivi", new { channel = ""})">Xem Tivi Trực Tuyến</a></li>
+                        <li class="cl-effect-11"><a class="@(ViewBag.Tab != null && ViewBag.Tab == 2? "active":string.Empty)" data-hover="Lịch Tivi" href="@Url.RouteUrl("Schedule", new { channel = ""})">Lịch Tivi</a></li>
                         @*<li class="cl-effect-11"><a data-hover="EXPERIENCES" href="#section3">Experiences</a></li>
                         <li class="cl-effect-11"><a data-hover="BLOG" href="#section_blog">Blog</a></li>*@
                         <li class="cl-effect-11"><a class="@(ViewBag.Tab != null && ViewBag.Tab == 3? "active":string.Empty)" data-hover="Liên Hệ" href="@Url.RouteUrl("Contact", null)">Liên Hệ</a></li>

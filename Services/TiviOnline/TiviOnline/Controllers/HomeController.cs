@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hthservices.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -69,6 +70,21 @@ namespace TiviOnline.Controllers
 
         public ActionResult Schedule(string channel = "VTV1", string date = "")
         {
+            string channelKey = "VTV1";
+            DateTime dateOn = DateTime.Now;
+            if (!String.IsNullOrWhiteSpace(channel))
+            {
+                channelKey = MethodHelpers.DecodeString(channel);
+            }
+            if (!String.IsNullOrWhiteSpace(date))
+            {
+                if (DateTime.TryParseExact(date, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dateOn));
+                else dateOn = DateTime.Now;
+            }
+
+            ViewBag.ScheduleItems = BussinessProcess.GetSchedule(channelKey, dateOn.ToString("dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture));
+            ViewBag.Channel = channelKey;
+            ViewBag.Date = dateOn.ToString("dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
             ViewBag.Tab = 2;
             return View();
         }
