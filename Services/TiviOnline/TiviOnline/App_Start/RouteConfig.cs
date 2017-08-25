@@ -26,7 +26,7 @@ namespace TiviOnline
                     );
             routes.MapRoute(
                     name: "Schedule",
-                    url: "lich-phat-song",
+                    url: "lich-phat-song/{channel}/{date}",
                     defaults: new
                     {
                         controller = "Home",

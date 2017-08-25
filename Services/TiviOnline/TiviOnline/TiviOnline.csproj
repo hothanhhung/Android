@@ -135,11 +135,13 @@
     <Compile Include="Bussiness\BussinessProcess.cs" />
     <Compile Include="Bussiness\DataJsonProcess.cs" />
     <Compile Include="Bussiness\HtmlHelper.cs" />
+    <Compile Include="Utils\MethodHelpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Channel.cs" />
+    <Compile Include="Models\ScheduleItem.cs" />
     <Compile Include="Models\StreamServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

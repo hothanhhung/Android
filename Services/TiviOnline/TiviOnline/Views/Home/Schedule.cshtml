@@ -1,30 +1,464 @@
 ﻿@{
     ViewBag.Title = "Schedule";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<TiviOnline.Models.ScheduleItem> ScheduleItems = (List<TiviOnline.Models.ScheduleItem>)ViewBag.ScheduleItems;
 }
 
-<h2>Schedule</h2>
+<h2>Xem lịch phát sóng @ViewBag.Channel ngày @ViewBag.Date</h2>
 <div class="row">
     <div class="col-md-6">
-        <select style="height: 30px;width: 100%;">
-            <optgroup label="Swedish Cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
+        <select style="height: 30px;width: 100%;" name="channel" id="channel">
+            <optgroup label="Đài Truyền hình Việt Nam - VTV">
+                <option value="VTV1">VTV1</option>
+                <option value="VTV2">VTV2</option>
+                <option value="VTV3">VTV3</option>
+                <option value="VTV4">VTV4</option>
+                <option value="VTV5">VTV5</option>
+                <option value="VTV6">VTV6</option>
+                <option value="VTV7">VTV7</option>
+                <option value="VTV8">VTV8</option>
+                <option value="VTV9">VTV9</option>
             </optgroup>
-            <optgroup label="German Cars">
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+            <optgroup label="Đài Tiếng nói Việt Nam">
+                <option value="VOVTV">VOVTV</option>
+            </optgroup>
+            <optgroup label="Đài Phát thanh và Truyền hình Hà Nội">
+                <option value="HaNoiTV1">HaNoiTV 1</option>
+                <option value="HaNoiTV2">HaNoiTV 2</option>
+            </optgroup>
+            <optgroup label="Đài Truyền hình TP Hồ Chí Minh - HTV">
+                <option value="HTV1">HTV1</option>
+                <option value="HTV2">HTV2</option>
+                <option value="HTV3">HTV3</option>
+                <option value="HTV4">HTV4</option>
+                <option value="HTV7">HTV7</option>
+                <option value="HTV9">HTV9</option>
+            </optgroup>
+            <optgroup label="Đài truyền hình An Viên AVG">
+                <option value="AmnhacNamBo">Âm nhạc Nam Bộ</option>
+                <option value="AnNinhTheGioi">An Ninh Thế Giới</option>
+                <option value="AnVien-BTV9">An Viên - BTV9</option>
+                <option value="Canhacthieunhi">Ca nhạc thiếu nhi</option>
+                <option value="DocSach">Đọc Sách">Doc Sach</option>
+                <option value="MienTay-THDT2">Miền Tây - THĐT2</option>
+                <option value="NCM-BTV10">NCM - BTV10</option>
+                <option value="NhacCachMang">Nhạc Cách Mạng</option>
+                <option value="NhacCodien">Nhạc Cổ điển">nhac co dien</option>
+                <option value="NhacDantoc">Nhạc Dân tộc</option>
+                <option value="NhacNhe">Nhạc Nhẹ</option>
+                <option value="Nhactre">Nhạc trẻ</option>
+                <option value="NhacTrutinh">Nhạc Trữ tình</option>
+                <option value="Phimhay">Phim hay</option>
+                <option value="SAM-BTV11">SAM - BTV11</option>
+                <option value="VietTeen-BTV62idol">ViệtTeen - BTV6 2idol</option>
+            </optgroup>
+            <optgroup label="Đài Truyền hình Cáp TP Hồ Chí Minh - HTVC">
+                <option value="HTVCo.op">HTV Co.op</option>
+                <option value="HTVThethao">HTV Thể thao</option>
+                <option value="HTVCCANHAC">HTVC CA NHẠC</option>
+                <option value="HTVCDuLichCuocSong">HTVC Du Lịch Cuộc Sống</option>
+                <option value="HTVCFBNC">HTVC FBNC</option>
+                <option value="HTVCGIADINH">HTVC GIA ĐÌNH">HTVC GIA DINH</option>
+                <option value="HTVCPHIM">HTVC PHIM</option>
+                <option value="HTVCPHUNU">HTVC PHỤ NỮ</option>
+                <option value="HTVCShopping">HTVC Shopping</option>
+                <option value="HTVC+">HTVC+</option>
+                <option value="ThuanViet">Thuần Việt</option>
+            </optgroup>
+            <optgroup label="Đài Truyền hình Cáp Việt Nam">
+                <option value="VTVcab1-GiaitriTV">VTVcab 1 - Giải trí TV</option>
+                <option value="VTVcab2-PhimViet">VTVcab 2 - Phim Việt</option>
+                <option value="VTVcab3-TheThaoTV">VTVcab 3 - Thể Thao TV</option>
+                <option value="VTVcab4-Vanhoa">VTVcab 4 - Văn hóa</option>
+                <option value="VTVcab5-Echannel">VTVcab 5 - E channel</option>
+                <option value="VTVcab6-HayTV">VTVcab 6 - Hay TV</option>
+                <option value="VTVcab7-DDramas">VTVcab 7 - D Dramas</option>
+                <option value="VTVcab8-BiBi">VTVcab 8 - BiBi</option>
+                <option value="VTVcab9-INFOTV">VTVcab 9 - INFO TV</option>
+                <option value="VTVcab10-O2TV">VTVcab 10 - O2TV</option>
+                <option value="VTVcab11-TVShopping">VTVcab 11 - TV Shopping</option>
+                <option value="VTVcab12-StyleTV">VTVcab 12 - Style TV</option>
+                <option value="VTVcab14-LotteShopping">VTVcab 14 - Lotte Shopping</option>
+                <option value="VTVcab15-InvestTV">VTVcab 15 - Invest TV</option>
+                <option value="VTVcab16-BongdaTV">VTVcab 16 - Bóng đá TV">VTVcab 16 - Bong da TV</option>
+                <option value="VTVcab17-Yeah1TV">VTVcab 17 - Yeah1 TV </option>
+                <option value="VTVcab19-KenhPhim">VTVcab 19 - Kênh Phim </option>
+                <option value="VTVcab20-VFamily">VTVcab 20 - V Family</option>
+                <option value="VTVcab21">VTVcab 21</option>
+                <option value="MTVVietNam">MTV Việt Nam</option>
+            </optgroup>
+            <optgroup label="Đài truyền hình cáp Hà Nội">
+                <option value="HCaTV">HCaTV</option>
+                <option value="HiTV">HiTV</option>
+                <option value="MOV">MOV</option>
+                <option value="YOUTV">YOUTV</option>
+            </optgroup>
+            <optgroup label="Đài truyền hình cáp Sài Gòn">
+                <option value="SCTV1">SCTV1</option>
+                <option value="SCTV2-YanTV">SCTV2 - Yan TV</option>
+                <option value="SCTV3-SaoTV">SCTV3 - Sao TV</option>
+                <option value="SCTV4">SCTV4</option>
+                <option value="SCTV5-SCJTVShopping">SCTV5 - SCJ TV Shopping</option>
+                <option value="SCTV6-SNTV">SCTV6 - SNTV</option>
+                <option value="SCTV7">SCTV7</option>
+                <option value="SCTV8-VITV">SCTV8 - VITV</option>
+                <option value="SCTV9">SCTV9</option>
+                <option value="SCTV10-HomeshoppingNetwork">SCTV10 - Home shopping Network</option>
+                <option value="SCTV11">SCTV11</option>
+                <option value="SCTV12">SCTV12</option>
+                <option value="SCTV13-TVF">SCTV13 - TVF</option>
+                <option value="SCTV14">SCTV14</option>
+                <option value="SCTV15">SCTV15</option>
+                <option value="SCTV16">SCTV16</option>
+                <option value="SCTVHDThethao">SCTV HD Thể thao</option>
+                <option value="SCTVPhimtonghop">SCTV Phim tổng hợp</option>
+            </optgroup>
+            <optgroup label="Đài truyền hình số VTC">
+                <option value="VTC1">VTC1</option>
+                <option value="VTCHD1">VTC HD1</option>
+                <option value="VTC2">VTC2</option>
+                <option value="VTCHD2">VTC HD2</option>
+                <option value="VTC3">VTC3</option>
+                <option value="VTCHD3">VTC HD3</option>
+                <option value="VTC4-Yeah1Family">VTC4 - Yeah1 Family</option>
+                <option value="VTC5">VTC5</option>
+                <option value="VTC6">VTC6</option>
+                <option value="VTC7-TodayTV">VTC7 - Today TV</option>
+                <option value="VTC8-VIEWTV">VTC8 - VIEW TV</option>
+                <option value="VTC9-LETSVIET">VTC9 - LETS VIỆT</option>
+                <option value="VTC10-NetViet">VTC10 - NetViet</option>
+                <option value="VTC11-Kids\u0026FamilyTV">VTC11 - Kids \u0026 Family TV</option>
+                <option value="VTC12">VTC12</option>
+                <option value="VTC13-iTV">VTC13 - iTV</option>
+                <option value="VTC14">VTC14</option>
+                <option value="VTC16-3NTV">VTC16-3NTV</option>
+            </optgroup>
+            <optgroup label="Truyền hình số vệ tinh k+">
+                <option value="K+PM">K+PM</option>
+                <option value="K+1">K+1</option>
+                <option value="K+NS">K+NS</option>
+                <option value="K+PC">K+ PC</option>
+            </optgroup>
+            <optgroup label="Đài TH địa phương">
+                <option value="TruyenHinhAnGiangATV">Truyền Hình An Giang ATV</option>
+                <option value="TruyenhinhBaRia-VungTauBRT">Truyền hình Bà Rịa - Vũng Tàu BRT</option>
+                <option value="TruyenhinhBacGiangBGTV">Truyền hình Bắc Giang BGTV</option>
+                <option value="TruyenhinhBacLieuBTV">Truyền hình Bạc Liêu BTV</option>
+                <option value="TruyenhinhBacNinhBNTV">Truyền hình Bắc Ninh BNTV</option>
+                <option value="TruyenHinhBenTreTHBT">Truyền Hình Bến Tre THBT</option>
+                <option value="TruyenhinhBinhDinhBTV">Truyền hình Bình Định BTV">Truyen hinh Binh Dinh BTV</option>
+                <option value="TruyenhinhBinhDuongBTV1">Truyền hình Bình Dương BTV1</option>
+                <option value="TruyenhinhBinhDuongBTV2">Truyền hình Bình Dương BTV2</option>
+                <option value="TruyenhinhBinhDuongBTV3">Truyền hình Bình Dương BTV3</option>
+                <option value="TruyenhinhBinhDuongBTV4">Truyền hình Bình Dương BTV4</option>
+                <option value="TruyenHinhBinhPhuocBPTV1">Truyền Hình Bình Phước BPTV1</option>
+                <option value="TruyenhinhBinhPhuocBPTV2">Truyền hình Bình Phước BPTV2</option>
+                <option value="TruyenHinhBinhThuanBTV">Truyền Hình Bình Thuận BTV</option>
+                <option value="TruyenhinhCaMauCTV">Truyền hình Cà Mau CTV</option>
+                <option value="TruyenhinhCanThoTHTPCT">Truyền hình Cần Thơ THTPCT</option>
+                <option value="TruyenhinhCaoBangCRTV">Truyền hình Cao Bằng CRTV</option>
+                <option value="TruyenhinhCongAnNhanDanANTV">Truyền hình Công An Nhân Dân ANTV</option>
+                <option value="TruyenhinhDaNangDRT1">Truyền hình Đà Nẵng DRT1">Truyen hinh Da Nang DRT1</option>
+                <option value="TruyenhinhDaNangDRT2">Truyền hình Đà Nẵng DRT2">Truyen hinh Da Nang DRT2</option>
+                <option value="TruyenhinhDakLakDRT">Truyền hình Đăk Lăk DRT">Truyen hinh Dak Lak DRT</option>
+                <option value="TruyenhinhDakNongPTD">Truyền hình Đắk Nông PTD">Truyen hinh Dak Nong PTD</option>
+                <option value="TruyenhinhDienBienDBTV">Truyền hình Điện Biên ĐBTV">Truyen hinh Dien Bien DBTV</option>
+                <option value="TruyenhinhDongNaiDN1">Truyền hình Đồng Nai DN1">Truyen hinh Dong Nai DN1</option>
+                <option value="TruyenhinhDongNaiDN2">Truyền hình Đồng Nai DN2">Truyen hinh Dong Nai DN2</option>
+                <option value="TruyenhinhDongThapTHDT">Truyền hình Đồng Tháp THĐT">Truyen hinh Dong Thap THDT</option>
+                <option value="TruyenhinhGiaLaiTHGL">Truyền hình Gia Lai THGL</option>
+                <option value="TruyenhinhHaGiangHTV">Truyền hình Hà Giang HTV</option>
+                <option value="TruyenhinhHaNam">Truyền hình Hà Nam </option>
+                <option value="TruyenhinhHaTinhHTTV">Truyền hình Hà Tĩnh HTTV</option>
+                <option value="TruyenhinhHaiDuong">Truyền hình Hải Dương</option>
+                <option value="TruyenhinhHaiPhongTHP">Truyền hình Hải Phòng THP</option>
+                <option value="TruyenHinhHauGiangHGTV">Truyền Hình Hậu Giang HGTV</option>
+                <option value="TruyenhinhHoaBinhHBTV">Truyền hình Hòa Bình HBTV</option>
+                <option value="TruyenhinhHungYenHY">Truyền hình Hưng Yên HY</option>
+                <option value="TruyenhinhKhanhHoaKTV">Truyền hình Khánh Hòa KTV</option>
+                <option value="TruyenhinhKienGiang">Truyền hình Kiên Giang</option>
+                <option value="TruyenhinhKonTumKRT">Truyền hình Kon Tum KRT</option>
+                <option value="TruyenhinhLaiChauLTV">Truyền hình Lai Châu LTV</option>
+                <option value="TruyenhinhLamDongLTV">Truyền hình Lâm Đồng LTV">Truyen hinh Lam Dong LTV</option>
+                <option value="TruyenhinhLangSonLSTV">Truyền hình Lạng Sơn LSTV</option>
+                <option value="TruyenhinhLaoCaiTHLC">Truyền hình Lào Cai THLC</option>
+                <option value="TruyenHinhLongAnLA34">Truyền Hình Long An LA34</option>
+                <option value="TruyenhinhNamDinhNTV">Truyền hình Nam Định NTV">Truyen hinh Nam Dinh NTV</option>
+                <option value="TruyenhinhNgheAnNTV">Truyền hình Nghệ An NTV</option>
+                <option value="TruyenhinhNhanDan">Truyền hình Nhân Dân</option>
+                <option value="TruyenhinhNinhBinhNTV">Truyền hình Ninh Bình NTV</option>
+                <option value="TruyenhinhNinhThuanNTV">Truyền hình Ninh Thuận NTV</option>
+                <option value="TruyenhinhPhuThoPTV">Truyền hình Phú Thọ PTV</option>
+                <option value="TruyenhinhQuangBinhQBTV">Truyền hình Quảng Bình QBTV</option>
+                <option value="TruyenhinhQuangNamQRT">Truyền hình Quảng Nam QRT</option>
+                <option value="TruyenhinhQuangNgaiPTQ">Truyền hình Quảng Ngãi PTQ</option>
+                <option value="TruyenhinhQuangNinhQTV1">Truyền hình Quảng Ninh QTV1</option>
+                <option value="TruyenhinhQuangNinhQTV3">Truyền hình Quảng Ninh QTV3</option>
+                <option value="TruyenhinhQuangTriQTV">Truyền hình Quảng Trị QTV</option>
+                <option value="TruyenhinhQuocHoi">Truyền hình Quốc Hội</option>
+                <option value="TruyenhinhQuocPhongQPVN">Truyền hình Quốc Phòng QPVN</option>
+                <option value="TruyenhinhSocTrangSTV">Truyền hình Sóc Trăng STV</option>
+                <option value="TruyenhinhSonLaSTV">Truyền hình Sơn La STV</option>
+                <option value="TruyenhinhTayNinhTTV">Truyền hình Tây Ninh TTV</option>
+                <option value="TruyenhinhThaiBinhTBTV">Truyền hình Thái Bình TBTV</option>
+                <option value="TruyenhinhThaiNguyenTV1">Truyền hình Thái Nguyên TV1</option>
+                <option value="TruyenhinhThanhHoaTTV">Truyền hình Thanh Hóa TTV</option>
+                <option value="TruyenhinhThongtanxaVietNamTTXVN">Truyền hình Thông tấn xã Việt Nam TTXVN</option>
+                <option value="TruyenHinhThuaThienHueTRT">Truyền Hình Thừa Thiên Huế TRT</option>
+                <option value="TruyenHinhTienGiangTHTG">Truyền Hình Tiền Giang THTG</option>
+                <option value="TruyenhinhTraVinhTHTV">Truyền hình Trà Vinh THTV</option>
+                <option value="TruyenhinhTuyenQuangTTV">Truyền hình Tuyên Quang TTV</option>
+                <option value="TruyenHinhVinhLongTHVL1">Truyền Hình Vĩnh Long THVL1</option>
+                <option value="TruyenhinhVinhLongTHVL2">Truyền hình Vĩnh Long THVL2</option>
+                <option value="TruyenhinhVinhPhucVP">Truyền hình Vĩnh Phúc VP</option>
+                <option value="TruyenhinhYenBaiYTV">Truyền hình Yên Bái YTV</option>
+                <option value="VietNamNet">VietNamNet</option>
+            </optgroup>
+            <optgroup label="Kênh TH quốc tế">
+                <option value="(HD)mioStadium102">(HD) mioStadium 102</option>
+                <option value="(HD)mioStadium103">(HD) mioStadium 103</option>
+                <option value="(HD)mioStadium104">(HD) mioStadium 104</option>
+                <option value="(HD)mioStadium105">(HD) mioStadium 105</option>
+                <option value="(HD)mioStadium106">(HD) mioStadium 106</option>
+                <option value="[V]China">[V] China</option>
+                <option value="[V]Taiwan">[V] Taiwan</option>
+                <option value="AllSportsNetwork">All Sports Network</option>
+                <option value="AnHuy-TrungQuoc">An Huy - Trung Quốc</option>
+                <option value="ANC">ANC</option>
+                <option value="AnimalPlanet">Animal Planet</option>
+                <option value="Animax">Animax</option>
+                <option value="ANIPLUSHD">ANIPLUS HD</option>
+                <option value="ArirangTV">Arirang TV</option>
+                <option value="ASIANEWS">ASIA NEWS</option>
+                <option value="AsiaTravel">Asia Travel</option>
+                <option value="AsianFoodChannel">Asian Food Channel</option>
+                <option value="Asianet">Asianet</option>
+                <option value="AustraliaNetwork">Australia Network</option>
+                <option value="AXN">AXN</option>
+                <option value="BabyTV">BabyTV</option>
+                <option value="BBC">BBC</option>
+                <option value="BBCEntertainment">BBC Entertainment</option>
+                <option value="BBCKnowledge">BBC Knowledge</option>
+                <option value="BBCLifestyle">BBC Lifestyle</option>
+                <option value="BBCWorldNews">BBC World News</option>
+                <option value="beTV">beTV</option>
+                <option value="BLOOMBERG">BLOOMBERG</option>
+                <option value="CartoonNetworks">Cartoon Networks</option>
+                <option value="CBeebies">CBeebies</option>
+                <option value="CBN">CBN</option>
+                <option value="CCTVHD">CCTV HD</option>
+                <option value="CCTVNews">CCTV News</option>
+                <option value="CCTV-4">CCTV-4</option>
+                <option value="CelestialClassicMovies">Celestial Classic Movies</option>
+                <option value="CelestialMovies">Celestial Movies</option>
+                <option value="Channel[V]">Channel [V]</option>
+                <option value="Channel[V]India">Channel [V] India</option>
+                <option value="Channeli">Channel i</option>
+                <option value="channelM">channel M</option>
+                <option value="ChietGiangTV">Chiết Giang TV</option>
+                <option value="CinemaOneGlobal">Cinema One Global</option>
+                <option value="CinemaWorldHD">CinemaWorld HD</option>
+                <option value="CINEMAX">CINEMAX</option>
+                <option value="CNBC">CNBC</option>
+                <option value="CNNHEADLINES">CNN HEADLINES</option>
+                <option value="COLORS">COLORS</option>
+                <option value="ComedyCentralAsiaHD">Comedy Central Asia HD</option>
+                <option value="Crime\u0026InvestigationNetworkHD">Crime \u0026 Investigation Network HD</option>
+                <option value="CTITV">CTI TV</option>
+                <option value="DaVinci">Da Vinci</option>
+                <option value="DDNATIONAL">DD NATIONAL</option>
+                <option value="DISCOVERY">DISCOVERY</option>
+                <option value="DiscoveryChannel">Discovery Channel</option>
+                <option value="DiscoveryKids">Discovery Kids</option>
+                <option value="DiscoveryScience">Discovery Science</option>
+                <option value="DiscoveryWorldHD">Discovery World HD</option>
+                <option value="DisneyChannel">Disney Channel</option>
+                <option value="DisneyJunior">Disney Junior</option>
+                <option value="DIVAUniversal">DIVA Universal</option>
+                <option value="DMAX">DMAX</option>
+                <option value="DragonTV">Dragon TV</option>
+                <option value="DW">DW</option>
+                <option value="DW-TVAsia+">DW-TV Asia+</option>
+                <option value="ECity">E City</option>
+                <option value="ECity(+2)">E City (+2)</option>
+                <option value="E!Entertainment">E! Entertainment</option>
+                <option value="ESPN">ESPN</option>
+                <option value="Eurosport">Eurosport</option>
+                <option value="Eurosportnews">Eurosportnews</option>
+                <option value="EVE">EVE</option>
+                <option value="FashionTV">Fashion TV</option>
+                <option value="FIFAWorldCup(TM)1">FIFA World Cup (TM) 1</option>
+                <option value="FIFAWorldCup(TM)2">FIFA World Cup (TM) 2</option>
+                <option value="FoodNetworkAsia">Food Network Asia</option>
+                <option value="FootballChannel">Football Channel</option>
+                <option value="FOX">FOX</option>
+                <option value="FOXActionMoviesHD">FOX Action Movies HD</option>
+                <option value="FOXFamilyMoviesHD">FOX Family Movies HD</option>
+                <option value="FOXMoviesPremiumHD">FOX Movies Premium HD</option>
+                <option value="FOXNewsChannel">FOX News Channel</option>
+                <option value="FoxSport">Fox Sport</option>
+                <option value="FoxSport2">Fox Sport 2</option>
+                <option value="FOXSPORTSNEWS">FOX SPORTS NEWS</option>
+                <option value="FOXSPORTSPLUS(HD)">FOX SPORTS PLUS (HD)</option>
+                <option value="FOXCRIME">FOXCRIME</option>
+                <option value="FX">FX</option>
+                <option value="GiangToTV">Giang Tô TV</option>
+                <option value="GINX(HD)">GINX (HD)</option>
+                <option value="GMMChannel">GMM Channel</option>
+                <option value="GolfChannel">Golf Channel</option>
+                <option value="H2HD">H2 HD</option>
+                <option value="HBO">HBO</option>
+                <option value="HBOFamily">HBO Family</option>
+                <option value="HBOHits">HBO Hits</option>
+                <option value="HBOSignature">HBO Signature</option>
+                <option value="Hello!Japan">Hello! Japan</option>
+                <option value="HISTORYHD">HISTORY HD</option>
+                <option value="HITSHD">HITS HD</option>
+                <option value="HoNamTV">Hồ Nam TV</option>
+                <option value="HorseRacingCh88">Horse Racing Ch88</option>
+                <option value="HorseRacingCh89">Horse Racing Ch89</option>
+                <option value="iConcerts">iConcerts</option>
+                <option value="JAJA TV">JAJA TV</option>
+                <option value="JiangsuSatelliteChannel">Jiangsu Satellite Channel</option>
+                <option value="KBSWorld">KBS World</option>
+                <option value="KBS2">KBS2</option>
+                <option value="KisCo">KisCo</option>
+                <option value="KIX">KIX</option>
+                <option value="KMTV">KMTV</option>
+                <option value="LifeOK">Life OK</option>
+                <option value="LifetimeHD">Lifetime HD</option>
+                <option value="LUXEHD">LUXE HD</option>
+                <option value="MBC">MBC</option>
+                <option value="mioStadiumMultiview101">mioStadium Multiview 101</option>
+                <option value="MNCBusiness">MNC Business</option>
+                <option value="MNCInternational">MNC International</option>
+                <option value="momokidsAsia">momokids Asia</option>
+                <option value="MTV">MTV</option>
+                <option value="MTVChina">MTV China</option>
+                <option value="MTVLIVEHD">MTV LIVE HD</option>
+                <option value="MTVS.E.A">MTV S.E.A</option>
+                <option value="NatGeoMusic">Nat Geo Music</option>
+                <option value="NatGeoPeople">Nat Geo People</option>
+                <option value="NatGeoWild">Nat Geo Wild</option>
+                <option value="NATIONALGEOGRAPHICCHANNEL">NATIONAL GEOGRAPHIC CHANNEL</option>
+                <option value="NaverTVcast">Naver TVcast</option>
+                <option value="NBATV">NBA TV</option>
+                <option value="NDTV24x7">NDTV 24x7</option>
+                <option value="NDTVGoodTimes">NDTV Good Times</option>
+                <option value="NHKWORLD">NHK WORLD</option>
+                <option value="NHKWorldPremium">NHK World Premium</option>
+                <option value="NickJr">Nick Jr</option>
+                <option value="Nickelodeon">Nickelodeon</option>
+                <option value="nowBaoguMovies">now Baogu Movies</option>
+                <option value="nowHairunomneon">now Hairunomneon</option>
+                <option value="nowMango">now Mango</option>
+                <option value="ONE">ONE</option>
+                <option value="ONEHD">ONE HD</option>
+                <option value="OPT1">OPT1</option>
+                <option value="OutdoorChannel(HD)">Outdoor Channel (HD)</option>
+                <option value="PhoenixChineseChannel">Phoenix Chinese Channel</option>
+                <option value="PhoenixInfoNewsChannel">Phoenix InfoNews Channel</option>
+                <option value="PLAYHOUSE">PLAY HOUSE</option>
+                <option value="RacquetChannel">Racquet Channel</option>
+                <option value="RAI">RAI</option>
+                <option value="RedCard">Red Card</option>
+                <option value="RTLCBSExtremeHD">RTL CBS Extreme HD</option>
+                <option value="RTM1">RTM1</option>
+                <option value="RussiaToday">Russia Today</option>
+                <option value="SABTV">SAB TV</option>
+                <option value="SBS">SBS</option>
+                <option value="Sensasi">Sensasi</option>
+                <option value="SetantaSports">Setanta Sports</option>
+                <option value="ShenZhouNewsChannel">Shen Zhou News Channel</option>
+                <option value="SKYNEWS">SKY NEWS</option>
+                <option value="SonyEntertainmentTelevision">Sony Entertainment Television</option>
+                <option value="SONYMax">SONY Max</option>
+                <option value="SportsHD">Sports HD</option>
+                <option value="STARChineseChannel">STAR Chinese Channel</option>
+                <option value="STARChineseMovies">STAR Chinese Movies</option>
+                <option value="STARChineseMoviesLegend">STAR Chinese Movies Legend</option>
+                <option value="STARCricket">STAR Cricket</option>
+                <option value="STARGold">STAR Gold</option>
+                <option value="STARPlus">STAR Plus</option>
+                <option value="STARSports">STAR Sports</option>
+                <option value="StarMovies">StarMovies</option>
+                <option value="StarWorld">StarWorld</option>
+                <option value="SunMusic">Sun Music</option>
+                <option value="SUNTV">SUN TV</option>
+                <option value="SuperSports">SuperSports</option>
+                <option value="SuperSportsArena">SuperSports Arena</option>
+                <option value="SuperSportsPlus">SuperSports Plus</option>
+                <option value="Syfy">Syfy</option>
+                <option value="TCM">TCM</option>
+                <option value="TenCricket">Ten Cricket</option>
+                <option value="TheBiographyChannelHD">The Biography Channel HD</option>
+                <option value="TheFilipinoChannel">The Filipino Channel</option>
+                <option value="Thrill">Thrill</option>
+                <option value="Toonami">Toonami</option>
+                <option value="TRAVEL\u0026LIVING">TRAVEL \u0026 LIVING</option>
+                <option value="TravelChannelHD">Travel Channel HD</option>
+                <option value="TrueVisionSport1">True Vision Sport 1</option>
+                <option value="truTV">truTV</option>
+                <option value="TurnerClassicMovies">Turner Classic Movies</option>
+                <option value="TV4Me">TV4Me</option>
+                <option value="TV5Monde">TV5 Monde</option>
+                <option value="TVB8">TVB 8</option>
+                <option value="TVBClassic">TVB Classic</option>
+                <option value="TVBXingHe">TVB Xing He</option>
+                <option value="TVBJ">TVBJ</option>
+                <option value="TVBSAsia">TVBS Asia</option>
+                <option value="TVBS-NEWS">TVBS-NEWS</option>
+                <option value="TVE">TVE</option>
+                <option value="TVN">TVN</option>
+                <option value="UniversalChannel">Universal Channel</option>
+                <option value="VThamizh">V Thamizh</option>
+                <option value="Vannathirai">Vannathirai</option>
+                <option value="Verna">Verna</option>
+                <option value="VIJAY">VIJAY</option>
+                <option value="VVDrama">VV Drama</option>
+                <option value="VVDrama(+3)">VV Drama (+3)</option>
+                <option value="WarnerTV">WarnerTV</option>
+                <option value="XINGKONG">XING KONG</option>
+                <option value="YTN">YTN</option>
+                <option value="ZeeCinema">Zee Cinema</option>
+                <option value="ZeeKhanaKhazana">Zee Khana Khazana</option>
+                <option value="ZeeNews">Zee News</option>
+                <option value="ZeeTamizh">Zee Tamizh</option>
+                <option value="ZeeTV">Zee TV</option>
+                <option value="ZooMooHD">ZooMoo HD</option>
             </optgroup>
         </select>
     </div>
     <div class="col-md-6">
-        Date: <input type="text" id="datepicker"> <a class="btn btn-primary">Xem Lịch</a>
+        Ngày: <input type="text" id="datepicker"> <a class="btn btn-primary" href="javascript:void(0)" onclick="getSchedule()">Xem Lịch</a>
     </div>
 </div>
+<div class="row">
+    @if (ScheduleItems == null || ScheduleItems.Count == 0)
+    {
+        @("Chưa có lịch")
+    }
+    else
+    {
+        foreach(var item in ScheduleItems)
+        {
+            @(item.StartOn+" "+ item.ProgramName) <br/>
+        }
+    }
+</div>
     <script>
+        function getSchedule()
+        {
+            var channel = $("#channel").val();
+            var date = $("#datepicker").datepicker({
+                dateFormat: "dd-mm-yy"
+            }).val();
+            window.location = "/lich-phat-song/" + channel + "/" + date;
+        }
         $(function () {
             $("#datepicker").datepicker({
                 dateFormat: "dd-mm-yy"
-            }).datepicker('setDate', new Date());;
+            }).datepicker('setDate', new Date());
+            $('#channel').val("@ViewBag.Channel").change();
         });
     </script>
