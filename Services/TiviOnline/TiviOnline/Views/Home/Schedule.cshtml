@@ -3,8 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<TiviOnline.Models.ScheduleItem> ScheduleItems = (List<TiviOnline.Models.ScheduleItem>)ViewBag.ScheduleItems;
 }
-
-<h2>Xem lịch phát sóng @ViewBag.Channel ngày @ViewBag.Date</h2>
+<div class="row">
+    <span style="font-size:20px;font-weight: 600;color: darkgreen;">Xem lịch phát sóng @ViewBag.Channel ngày @ViewBag.Date</span>
+</div>
 <div class="row">
     <div class="col-md-6">
         <select style="height: 30px;width: 100%;" name="channel" id="channel">
@@ -430,10 +431,10 @@
         </select>
     </div>
     <div class="col-md-6">
-        Ngày: <input type="text" id="datepicker"> <a class="btn btn-primary" href="javascript:void(0)" onclick="getSchedule()">Xem Lịch</a>
+        Ngày  <input type="text" id="datepicker"> <a class="btn btn-primary" href="javascript:void(0)" onclick="getSchedule()">Xem Lịch</a>
     </div>
 </div>
-<div class="row">
+<div class="row" style="font-size: 20px;font-family: initial;padding-top: 15px;line-height: 1.5;margin: 10px 0px 10px 0px;">
     @if (ScheduleItems == null || ScheduleItems.Count == 0)
     {
         @("Chưa có lịch")
@@ -442,7 +443,7 @@
     {
         foreach(var item in ScheduleItems)
         {
-            @(item.StartOn+" "+ item.ProgramName) <br/>
+            @Html.Raw(item.StartOn + " " + item.DecodedProgramName) <br/>
         }
     }
 </div>

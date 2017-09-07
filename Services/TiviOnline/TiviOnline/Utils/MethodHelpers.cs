@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 
 namespace hthservices.Utils
@@ -41,7 +44,7 @@ namespace hthservices.Utils
                     str = str.Replace(VietnameseSigns[i][j].ToString(), VietnameseSigns[0][i - 1].ToString());
                 }
             }
-            for (int i =0;i< str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
                 if (str[i] > 500)
                 {
@@ -64,7 +67,7 @@ namespace hthservices.Utils
 
         public static string ConvertDateToCorrectString(DateTime date)
         {
-            if(date != null)
+            if (date != null)
             {
                 return date.ToString("yyyy-MM-dd");
             }
@@ -120,13 +123,116 @@ namespace hthservices.Utils
                 }
                 catch { }
             }
-            
+
             return string.Empty;
         }
 
         public static string GetUrlToLog(HttpRequestMessage request)
         {
             return request.RequestUri.ToString() + "&ipUser=" + MethodHelpers.GetClientIp(request);
+        }
+
+        static public String DecodeProgramName(String str)
+        {
+            if (!string.IsNullOrWhiteSpace(str) && str.StartsWith("<"))
+            {
+                StringBuilder rs = new StringBuilder();
+                char ch;
+                for (int i = str.Length; i > 1; i--)
+                {
+                    if (str[i - 1] == '0')
+                    {
+                        ch = '5';
+                    }
+                    else if (str[i - 1] == '9')
+                    {
+                        ch = '6';
+                    }
+                    else if (str[i - 1] == 'a')
+                    {
+                        ch = 'm';
+                    }
+                    else if (str[i - 1] == 'z')
+                    {
+                        ch = 'n';
+                    }
+                    else if (str[i - 1] == 'M')
+                    {
+                        ch = 'A';
+                    }
+                    else if (str[i - 1] == 'N')
+                    {
+                        ch = 'Z';
+                    }
+                    else if (str[i - 1] > '0' && str[i - 1] <= '5')
+                    {
+                        ch = (char)(str[i - 1] - 1);
+                    }
+                    else if (str[i - 1] >= '6' && str[i - 1] < '9')
+                    {
+                        ch = (char)(str[i - 1] + 1);
+                    }
+                    else if (str[i - 1] > 'a' && str[i - 1] <= 'm')
+                    {
+                        ch = (char)(str[i - 1] - 1);
+                    }
+                    else if (str[i - 1] >= 'n' && str[i - 1] < 'z')
+                    {
+                        ch = (char)(str[i - 1] + 1);
+                    }
+                    else if (str[i - 1] >= 'A' && str[i - 1] < 'M')
+                    {
+                        ch = (char)(str[i - 1] + 1);
+                    }
+                    else if (str[i - 1] > 'N' && str[i - 1] <= 'Z')
+                    {
+                        ch = (char)(str[i - 1] - 1);
+                    }
+                    else
+                    {
+                        ch = str[i - 1];
+                    }
+                    rs.Append(ch);
+                }
+
+                return rs.ToString();
+            }
+            return str;
+        }
+
+        public static bool SendEmail(String content)
+        {
+            try
+            {
+                var fromAddress = new MailAddress("connit712@gmail.com", "TiviOnline");
+                var toAddress = new MailAddress("connit712@gmail.com", "TiviOnline");
+                const string fromPassword = "thanhhung";
+                const string subject = "TiviOnline Report";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
+                    Timeout = 20000
+                };
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = content
+                })
+                {
+                    smtp.Send(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

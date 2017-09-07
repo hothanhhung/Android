@@ -47,8 +47,11 @@ namespace TiviOnline.Bussiness
                     if (obj != null)
                     {
                         items = obj.Data;
+                        foreach(var item in items)
+                        {
+                            item.DecodedProgramName = hthservices.Utils.MethodHelpers.DecodeProgramName(item.ProgramName);
+                        }
                     }
-                    
                 }
             }
             catch (Exception ex)
@@ -104,6 +107,62 @@ namespace TiviOnline.Bussiness
             }
             return streamUrl;
         }
+
+        public static string GetUrlFromVietBao(string url)
+        {
+            string streamUrl = string.Empty;
+            try
+            {
+                HttpClient http = new HttpClient();
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(GetStringContentFromResponse(response, true));
+
+                    var chanelMediaplayer = resultat.DocumentNode.SelectSingleNode("//div[@class='view-online']/iframe");
+                    if (chanelMediaplayer != null)
+                    {
+                        streamUrl = chanelMediaplayer.GetAttributeValue("src", string.Empty);                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return streamUrl;
+        }
+   
+        public static string GetContent(string url)
+        {
+            string streamUrl = string.Empty;
+            try
+            {
+                Uri uri = new Uri(url);
+                HttpClient http = new HttpClient();
+                http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                http.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0");
+                http.DefaultRequestHeaders.Add("Referer", uri.Host);
+                http.DefaultRequestHeaders.Add("Pragma", "no-cache");
+                http.DefaultRequestHeaders.Add("Connection", "keep-alive");
+                http.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.5");
+                http.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    HtmlDocument resultat = new HtmlDocument();
+                    streamUrl = GetStringContentFromResponse(response, true);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return streamUrl;
+        }
+
 
         //http://m.xemtvhd.com/htv7.php
         public static string GetUrlStreamFromXemTVHD(string url)
