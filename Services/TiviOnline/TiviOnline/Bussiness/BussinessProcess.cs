@@ -25,7 +25,18 @@ namespace TiviOnline.Bussiness
                         return streamServer.URL;
                     case 1:
                         return HtmlHelper.GetUrlStreamFromTVNet(streamServer.URL);
+                    case 2:
+                        return HtmlHelper.GetUrlFromVietBao(streamServer.URL);
                 }
+            }
+            return string.Empty;
+        }
+
+        public static string GetContent(string url)
+        {
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                return HtmlHelper.GetContent(url);
             }
             return string.Empty;
         }

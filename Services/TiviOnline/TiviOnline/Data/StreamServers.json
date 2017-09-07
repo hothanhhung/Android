@@ -1,18 +1,20 @@
 ﻿/*
     0. Redrict
     1. vn.tvnet.gov.vn
-    2. http://m.xemtvhd.com/htv7.php
-    3. http://m.xemtvhd.com/htv7.php
+    2. http://tv.vietbao.vn/lich-phat-song/vtv1.html
 */
 [
-    { ID: "VTV1_0", ServerId: 0, ChannelId: "VTV1", IsActive: 1, IsIframe: 1, URL: "http://qc.tclup.com/libs/cutref.php?url=http://plus.trumtv.net/vtv1.php" },
+    { ID: "VTV1_2", ServerId: 2, ChannelId: "VTV1", IsActive: 1, IsIframe: 1, URL: "http://tv.vietbao.vn/lich-phat-song/vtv1.html" },
+    { ID: "VTV1_0", ServerId: 0, ChannelId: "VTV1", IsActive: 1, IsIframe: 1, URL: "http://m.xemtvhd.com/vtv1.php" },
     { ID: "VTV1_1", ServerId: 1, ChannelId: "VTV1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1011/vtv1" },
     { ID: "VTV2_1", ServerId: 1, ChannelId: "VTV2", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1010/vtv2" },
+    { ID: "VTV2_0", ServerId: 0, ChannelId: "VTV2", IsActive: 1, IsIframe: 1, URL: "http://m.xemtvhd.com/vtv2.php" },
     { ID: "VTV3_1", ServerId: 1, ChannelId: "VTV3", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1013/vtv3" },
-    { ID: "VTV3_0", ServerId: 0, ChannelId: "VTV3", IsActive: 1, IsIframe: 1, URL: "http://qc.tclup.com/libs/cutref.php?url=http://plus.trumtv.net/vtv3.php" },
+    { ID: "VTV3_2", ServerId: 2, ChannelId: "VTV3", IsActive: 1, IsIframe: 1, URL: "http://tv.vietbao.vn/lich-phat-song/vtv3.html" },
+    { ID: "VTV3_0", ServerId: 0, ChannelId: "VTV3", IsActive: 1, IsIframe: 1, URL: "http://m.xemtvhd.com/vtv3.php" },
     { ID: "VTV6_0", ServerId: 0, ChannelId: "VTV6", IsActive: 1, URL: "http://live.csmtalk.vcdn.vn/hls/52c3dd58fe66239719f0f41b3798d6d8/15e13282540/triggerthefever/index.m3u8" },
-    { ID: "VTV7_0", ServerId: 0, ChannelId: "VTV7", IsActive: 1, IsIframe: 1, URL: "http://href.li/http://tv.xemtivingon.com/ok/vtv/vtv7show.php" },
-    { ID: "VTV8_0", ServerId: 0, ChannelId: "VTV8", IsActive: 1, IsIframe: 1, URL: "http://href.li/http://mi.tvmienphi.biz/2017/08/vtv8-101.html" },
+    { ID: "VTV7_2", ServerId: 2, ChannelId: "VTV7", IsActive: 1, IsIframe: 1, URL: "http://tv.vietbao.vn/lich-phat-song/vtv7.html" },
+    { ID: "VTV8_2", ServerId: 2, ChannelId: "VTV8", IsActive: 1, IsIframe: 1, URL: "http://tv.vietbao.vn/lich-phat-song/vtv8.html" },
     { ID: "VTV4_1", ServerId: 1, ChannelId: "VTV4", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1009/vtv4" },
     { ID: "VTC1_1", ServerId: 1, ChannelId: "VTC1", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1007/vtc1" },
     { ID: "VTC3_0", ServerId: 0, ChannelId: "VTC3", IsActive: 1, IsIframe: 1, URL: "http://plus.trumtv.net/vtc3.php" },
@@ -22,7 +24,7 @@
     { ID: "VTC8_0", ServerId: 0, ChannelId: "VTC8", IsActive: 1, IsIframe: 1, URL: "http://plus.trumtv.net/vtc8.php" },
     { ID: "VTC9_0", ServerId: 0, ChannelId: "VTC9", IsActive: 1, IsIframe: 1, URL: "http://tv.101vn.com/ok/vtc/vtc9_1.php" },
     { ID: "VTC10_1", ServerId: 1, ChannelId: "VTC10", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1006/netviet" },
-    { ID: "VTC14_0", ServerId: 0, ChannelId: "VTC14", IsActive: 1, IsIframe: 1, URL: "ttp://plus.trumtv.net/vtc14.php" },
+    { ID: "VTC14_0", ServerId: 0, ChannelId: "VTC14", IsActive: 1, IsIframe: 1, URL: "http://plus.trumtv.net/vtc14.php" },
     { ID: "VTC16_1", ServerId: 1, ChannelId: "VTC16", IsActive: 1, URL: "http://vn.tvnet.gov.vn/kenh-truyen-hinh/1018/vtc16" },
     { ID: "HTV1_0", ServerId: 0, ChannelId: "HTV1", IsActive: 1, IsIframe: 1, URL: "http://sv.kenh1.info/hplus.php?sv=htv1" },
     { ID: "HTV2_0", ServerId: 0, ChannelId: "HTV2", IsActive: 1, IsIframe: 1, URL: "http://plus.trumtv.net/htv2.php" },

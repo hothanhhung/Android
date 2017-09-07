@@ -14,23 +14,24 @@ namespace TiviOnline.Controllers
         //
         // GET: /Home/
 
-        public ActionResult Update(){
+        public ActionResult Update()
+        {
             DataJsonProcess.ResetJsonData();
             return Content("Updated!");
         }
 
-        public ActionResult Index(string channel = "VTV1", string id="")
+        public ActionResult Index(string channel = "VTV1", string id = "")
         {
             if (string.IsNullOrWhiteSpace(channel)) channel = "VTV1";
             var channelObject = DataJsonProcess.GetChannel(channel);
             var streamServers = DataJsonProcess.GetStreamServersOfChannel(channel);
             var streamServer = DataJsonProcess.GetStreamServer(id);
-            if (streamServer == null && streamServers!= null && streamServers.Count > 0)
+            if (streamServer == null && streamServers != null && streamServers.Count > 0)
             {
                 streamServer = streamServers.First();
             }
 
-            if (streamServer == null )
+            if (streamServer == null)
             {
                 streamServer = new StreamServer();
             }
@@ -42,7 +43,7 @@ namespace TiviOnline.Controllers
             ViewBag.StreamServer = streamServer;
             if (streamServer.IsIframe)
             {
-                ViewBag.StreamUrl = streamServer.URL;
+                ViewBag.StreamUrl = BussinessProcess.GetUrlStream(streamServer);
             }
             else
             {
@@ -78,7 +79,7 @@ namespace TiviOnline.Controllers
             }
             if (!String.IsNullOrWhiteSpace(date))
             {
-                if (DateTime.TryParseExact(date, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dateOn));
+                if (DateTime.TryParseExact(date, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dateOn)) ;
                 else dateOn = DateTime.Now;
             }
 
@@ -94,5 +95,27 @@ namespace TiviOnline.Controllers
             ViewBag.Tab = 3;
             return View();
         }
+
+        public ActionResult GetContent(string url)
+        {
+            return Content(BussinessProcess.GetContent(url), "text/html");
+        }
+
+        public ActionResult Report(string channel = "", string id = "")
+        {
+            if (!string.IsNullOrWhiteSpace(channel) && !string.IsNullOrWhiteSpace(id))
+            {
+                if (MethodHelpers.SendEmail(string.Format("channel {0} with server {1}", channel, id)))
+                {
+                    return Content("Thanks");
+                }
+                else
+                {
+                    return Content("Error");
+                }
+            }
+            return Content("No Data");
+        }
+    
     }
 }

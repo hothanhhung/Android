@@ -18,7 +18,7 @@
         }
         else
         {
-            <video id="my-video" class="video-js col-xs-12 col-md-12 text-center" controls preload="auto" width="600" height="425"
+            <video id="my-video" class="video-js col-xs-12 col-md-12 text-center" controls preload="auto" autoplay="autoplay" width="600" height="425"
                     data-setup="{}">
                 @*<source src="http://2co2.vp9.tv/chn/DNG14/v.m3u8" type='application/x-mpegURL'>*@
                 <source src="@ViewBag.StreamUrl" type='application/x-mpegURL'>
@@ -52,10 +52,34 @@
             play('@ViewBag.StreamUrl');
             setInterval(function () { reload(i); i++ }, 1000);
         });*@
-
             </script>
 
         }
+        <script>
+            function report() {
+                $.get("@Url.RouteUrl("Report", new { channel = StreamServer.ChannelId, id = StreamServer.ID })", function () {
+                    alert("Cảm ơn bạn đã báo với chúng tôi, chúng tôi sẽ sớm khắc phục. Vui lòng chọn link khác để xem.");
+                })
+                .done(function () {
+
+                })
+                .fail(function () {
+                    alert("Có lỗi khi kết nối đến server.");
+                })
+                .always(function () {
+                });
+
+            }
+        </script>
+
+    </div>
+    
+</div>
+<div class="row" style="margin:15px">
+    <div class="col-xs-12 col-md-12 text-center">
+        <a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="report()">
+               Báo Link Hỏng
+        </a>
     </div>
 </div>
 <div class="row" style="margin:15px">

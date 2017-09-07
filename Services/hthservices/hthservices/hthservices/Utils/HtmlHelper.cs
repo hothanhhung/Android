@@ -684,9 +684,9 @@ namespace hthservices.Utils
 
             return guideItems;
         }
-        static public List<GuideItem> GetDataFromHTVONLINEUrl(ChannelToServer channelToServer, DateTime date)
+        static public List<GuideItem> GetDataFromHTVPLUSUrl(ChannelToServer channelToServer, int index, DateTime date)
         {
-            string url = String.Format(channelToServer.Server);
+            string url = channelToServer.Server;
 
             List<GuideItem> guideItems = new List<GuideItem>();
             try
@@ -694,15 +694,10 @@ namespace hthservices.Utils
                 using (HttpClient http = new HttpClient())
                 {
                     http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-                    var obj = new
-                    {
-                        //must
-                        id_live = channelToServer.Value,
-                        date = date.ToString("yyyy-MM-dd")
-                    };
-
-                    var stringContent = JsonConvert.SerializeObject(obj).ToString();
-                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/json");
+                   // http.DefaultRequestHeaders.Add("Referer", "http://hplus.com.vn/xem-kenh-htv1-2631.html");
+                   
+                    var stringContent = string.Format("id={0}&num={1}", channelToServer.Value, index);
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
                     var response = http.PostAsync(url, httpContent).Result;
                    // http.BaseAddress = new Uri(url);
                     
@@ -716,22 +711,24 @@ namespace hthservices.Utils
                         HtmlDocument resultat = new HtmlDocument();
                         resultat.LoadHtml(source);
 
-                        var items = resultat.DocumentNode.SelectNodes("//p");
+                        var items = resultat.DocumentNode.SelectNodes("/div/div");
                         if (items != null)
                         {
                             foreach (var item in items)
                             {
+                                if (item.ChildNodes.Count != 5) continue;
+
                                 string startOn = "", programName = "";
                                 // get start time
-                                var times = item.SelectNodes("b");
-                                if (times != null && times.Count > 0)
+                                var times = item.ChildNodes[1].InnerText.Trim();
+                                if (times != null && times.Length > 5)
                                 {
-                                    startOn = times.ElementAt(0).InnerText.Trim();                                    
+                                    startOn = times.Substring(0, 5);                                    
                                 }
-                                var details = item.SelectNodes("span");
-                                if (details != null && details.Count > 0)
+                                var details = item.ChildNodes[2].InnerText.Trim();
+                                if (details != null && details.Length > 0)
                                 {
-                                    programName = details.ElementAt(0).InnerText.Trim();
+                                    programName = details.Trim(':').Trim();
                                 }
                                 if (!string.IsNullOrWhiteSpace(startOn))
                                 {
@@ -1422,36 +1419,46 @@ namespace hthservices.Utils
             {
                 using (HttpClient http = new HttpClient())
                 {
-                    var response = http.GetByteArrayAsync(url).Result;
-                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
-                    //     source = System.Text.RegularExpressions.Regex.Unescape(source);
-                    source = WebUtility.HtmlDecode(source);
-                    HtmlDocument resultat = new HtmlDocument();
-                    resultat.LoadHtml(source);
+                    var stringContent = string.Format("id={0}&num={1}&height=380", channelToServer.Value, date.ToString("yyyy-MM-dd"));
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    var response = http.PostAsync(url, httpContent).Result;
 
-                    var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@id='schedule-table']");
-                    if (schedulerMain != null && schedulerMain.Count > 0)
+                    if (response.IsSuccessStatusCode)
                     {
-                        var timeItems = schedulerMain.FirstOrDefault().SelectNodes("div[@class='col1']");
-                        var detailItems = schedulerMain.FirstOrDefault().SelectNodes("div[@class='col2']");
-                        var moreDetailItems = schedulerMain.FirstOrDefault().SelectNodes("div[@class='col3']");
-                        if (timeItems != null && detailItems != null && moreDetailItems != null && timeItems.Count == detailItems.Count && moreDetailItems.Count == detailItems.Count)
+                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        source = WebUtility.HtmlDecode(source);
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var moreDetailItems = resultat.DocumentNode.SelectNodes("//tr");
+                        if (moreDetailItems != null && moreDetailItems.Count > 0)
                         {
-                            for (int i = 0; i < timeItems.Count; i++)
+                            foreach (var moreDetailItem in moreDetailItems)
                             {
-                                string startOn = "", programName = "", more="";
-                                // get start time
-                                startOn = timeItems.ElementAt(i).InnerText.Trim();
-                                programName = detailItems.ElementAt(i).InnerText.Trim();
-                                more = moreDetailItems.ElementAt(i).InnerText.Trim();
-                                if (!String.IsNullOrWhiteSpace(more))
+                                var tds = moreDetailItem.SelectNodes("td");
+                                if (tds != null && tds.Count == 3)
                                 {
-                                    programName +=" - " + more;
-                                }
-                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
-                                {
-                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
-                                    guideItems.Add(guideItem);
+                                    string startOn = "", programName = "", more = "";
+                                    // get start time
+                                    startOn = tds[0].InnerText.Trim();
+                                    programName = tds[1].InnerText.Trim();
+                                    more = tds[2].InnerText.Trim();
+                                    if (!String.IsNullOrWhiteSpace(more))
+                                    {
+                                        programName += " - " + more;
+                                    }
+
+                                    if (startOn.Length == 4)
+                                    {
+                                        startOn = "0" + startOn;
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length == 5)
+                                    {
+                                        var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                        guideItems.Add(guideItem);
+                                    }
                                 }
                             }
                         }
@@ -1468,7 +1475,7 @@ namespace hthservices.Utils
 
         static public List<GuideItem> GetDataFromLA34Url(ChannelToServer channelToServer, DateTime date)
         {
-            string url = String.Format(channelToServer.Server, date.ToString("dd-MM-yyyy"));
+            string url = String.Format(channelToServer.Server, date.ToString("yyyy-MM-dd"));
 
             List<GuideItem> guideItems = new List<GuideItem>();
             try
@@ -1482,27 +1489,27 @@ namespace hthservices.Utils
                     HtmlDocument resultat = new HtmlDocument();
                     resultat.LoadHtml(source);
 
-                    var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@class='sch-content']");
-                    if (schedulerMain != null && schedulerMain.Count > 0)
+                    var items = resultat.DocumentNode.SelectNodes("li");
+                    if (items != null)
                     {
-                        var items = schedulerMain.FirstOrDefault().SelectNodes("table//tr");
-                        if (items != null)
+                        foreach (var item in items)
                         {
-                            foreach (var item in items)
+                            string startOn = "", programName = "";
+                            // get start time
+                            var tdTags = item.SelectNodes("span");
+                            if (tdTags != null && tdTags.Count == 2)
                             {
-                                string startOn = "", programName = "";
-                                // get start time
-                                var tdTags = item.SelectNodes("td");
-                                if (tdTags != null && tdTags.Count > 3)
+                                startOn = tdTags.ElementAt(1).InnerText.Trim();
+                                programName = tdTags.ElementAt(0).InnerText.Trim();
+                                if (startOn.Length == 4)
                                 {
-                                    startOn = tdTags.ElementAt(1).InnerText.Trim();
-                                    programName = tdTags.ElementAt(3).InnerText.Trim();
+                                    startOn = "0" + startOn;
                                 }
-                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
-                                {
-                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
-                                    guideItems.Add(guideItem);
-                                }
+                            }
+                            if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
+                            {
+                                var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                guideItems.Add(guideItem);
                             }
                         }
                     }
@@ -1546,6 +1553,10 @@ namespace hthservices.Utils
                             if (tdTags != null && tdTags.Count > 1)
                             {
                                 startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                if (startOn.Length == 4)
+                                {
+                                    startOn = "0" + startOn;
+                                }
                                 programName = MethodHelpers.ToTitleCase(tdTags.ElementAt(1).InnerText.Trim());
                             }
                             if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
@@ -2705,6 +2716,68 @@ namespace hthservices.Utils
 
             return guideItems;
         }
+
+        static public List<GuideItem> GetDataFromTODAYTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            long orignalTime = 1504717200L;
+            DateTime origanalDate = new DateTime(2017, 9, 7);
+            long time = orignalTime + 86400 * (date - origanalDate).Days;
+            List<GuideItem> guideItems = new List<GuideItem>();
+
+            string url = string.Format(channelToServer.Server + "/{0}/{1}", time,date.ToString("dd-MM-yyyy")) ;
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    //     source = System.Text.RegularExpressions.Regex.Unescape(source);
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
+
+                    var items = resultat.DocumentNode.SelectNodes("//div[@id='content']/div/div/div/div/div");
+                    if (items != null && items.Count > 0)
+                    {
+                        for (int i = 0; i < items.Count; i++)
+                        {
+                            string startOn = "", programName = "";
+                            var divs = items[i].SelectNodes("div");
+                            if (divs != null && divs.Count == 5)
+                            {
+                                startOn = divs[1].InnerText.Trim();
+                                var first = divs[2].InnerText.Trim();
+                                var last = divs[3].InnerText.Trim();
+                                if (string.IsNullOrWhiteSpace(first))
+                                {
+                                    programName = last;
+                                }
+                                else if (string.IsNullOrWhiteSpace(last))
+                                {
+                                    programName = first;
+                                }
+                                else
+                                {
+                                    programName = first + " : " + last;
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+
 
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)

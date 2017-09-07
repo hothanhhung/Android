@@ -48,7 +48,7 @@ namespace hthservices.Utils
         public const string FROM_HTV3TV_PAGE = "http://www.htv3tv.vn/schedules/jview?day={0}"; //day=2016-05-31 start from 06:00
         public const string FROM_HTV2CHANNEL_PAGE = "https://htv2channel.vn/lich-chieu/{0}"; //2016/5/31 start from 06:00
         public const string FROM_QPVN_PAGE = "http://qpvn.vn/ajax/getChannelSchedule?channel=QPVN&date={0}"; //date=03/06/2016
-        public const string FROM_HTVONLINE_PAGE = "http://htvonline.com.vn/livetv/show-schedule";// POST date:"2016-06-01"  id_live:"22"
+        public const string FROM_HTVPLUS_PAGE = "http://hplus.com.vn/content/ajax_schedule/";
         public const string FROM_FBNC_PAGE = "http://fbnc.vn/schedule/update/?state=all&date={0}";//=Thu+Jun+02+2016
         public const string FROM_VTVCab_PAGE = "http://www.vtvcab.vn/lich-phat-song?day={1}&month={2}&year={3}&channel={0}";//=03&month=06&year=2016&channel=4077
         public const string FROM_TRAVINH_PAGE = "http://travinhtv.vn/thtv/ajax/ajax.php";//ngay:"2016-06-02"
@@ -62,8 +62,8 @@ namespace hthservices.Utils
         public const string FROM_LETSVIET_PAGE = "http://letsviet.vn/Control/ListHotProgram.aspx?date={0}&channel=vi";//date=2016-06-03&channel=vi
         public const string FROM_KGTV_PAGE = "http://kgtv.vn/category/lich-phat-song/?kenh={0}&ngay={1}";//kenh=TV&ngay=2016-06-14
         public const string FROM_BRT_PAGE = "http://brt.vn/";//
-        public const string FROM_BTV_PAGE = "http://www.btv.org.vn/live/{0}.html";//http://www.btv.org.vn/live/btv1.html
-        public const string FROM_LA34_PAGE = "http://la34.com.vn/lich-phat-song/?schtype=th&schedule={0}";//schedule=15-06-2016
+        public const string FROM_BTV_PAGE = "http://www.btv.org.vn/home/vod/ajax_schedule/";//http://www.btv.org.vn/live/btv1.html
+        public const string FROM_LA34_PAGE = "http://la34.com.vn/lichphatsong.php?ngay={0}&kenh=TV";//ngay=2017-09-08
         public const string FROM_CANTHOTV_PAGE = "http://canthotv.vn/";
         public const string FROM_TRT_PAGE = "http://www.trt.com.vn/lichPhatSong/tabid/59/Default.aspx";// default is current date
         public const string FROM_PHUTHOTV_PAGE = "http://phuthotv.vn/Modules/Video/Components/VideoHandler.ashx";//
@@ -85,6 +85,7 @@ namespace hthservices.Utils
         public const string FROM_GIALAITV_PAGE = "http://gialaitv.vn/lich-phat-song/?ngay={0}&kenh=1";// 2016-08-20
         public const string FROM_DRT_PAGE = "http://www.drt.danang.vn/default.aspx";
         public const string FROM_MOBITV_PAGE = "http://mobitv.net.vn/lich-phat-song/";
+        public const string FROM_TODAYTV_PAGE = "http://todaytv.vn/lichchieu";
         
         #endregion
 
@@ -152,21 +153,22 @@ namespace hthservices.Utils
              //new ChannelToServer(){Server=FROM_HTV3TV_PAGE, ChannelKey="HTV3", Value=""},       // start from 06:00   
              //new ChannelToServer(){Server=FROM_HTV2CHANNEL_PAGE, ChannelKey="HTV2", Value=""},       // start from 06:00 
              new ChannelToServer(){Server=FROM_QPVN_PAGE, ChannelKey="TruyenhinhQuocPhongQPVN", Value=""},
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTV1", Value="22"},
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCDuLichCuocSong", Value="39"},///// phut 91
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCGIADINH", Value="45"},///// phut 91,
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCCANHAC", Value="47"},
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVThethao", Value="48"},///// phut 91,
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTV3", Value="49"},       // FROM_HTV3TV_PAGE start from 00:00   
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVC+", Value="51"}, 
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCPHUNU", Value="55"}, //phut 91,
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="ThuanViet", Value="109"},///// phut 91,
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCPHIM", Value="110"},///// phut 91,
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="VTC4-Yeah1Family", Value="116"},///// phut 91,
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTV9", Value="75"},       // FROM_HTV2TV_PAGE start from 00:00   
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTV7", Value="43"}, 
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTV2", Value="122"}, 
-             new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="KBSWorld", Value="168"},
+             new ChannelToServer(){Server=FROM_HTVPLUS_PAGE, ChannelKey="HTV1", Value="http://hplus.com.vn/xem-kenh-htv1-2631.html"},
+            //new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCDuLichCuocSong", Value="39"},///// phut 91
+            // new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCGIADINH", Value="45"},///// phut 91,
+            // new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCCANHAC", Value="47"},
+           //  new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVThethao", Value="48"},///// phut 91,
+             new ChannelToServer(){Server=FROM_HTVPLUS_PAGE, ChannelKey="HTV3", Value="http://hplus.com.vn/xem-kenh-htv3-2535.html"},       // FROM_HTV3TV_PAGE start from 00:00   
+          //   new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVC+", Value="51"}, 
+         //    new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="HTVCPHUNU", Value="55"}, //phut 91,
+             new ChannelToServer(){Server=FROM_HTVPLUS_PAGE, ChannelKey="ThuanViet", Value="http://hplus.com.vn/xem-kenh-htvc-thuan-viet-2396.html"},///// phut 91,
+             new ChannelToServer(){Server=FROM_HTVPLUS_PAGE, ChannelKey="HTVCPHIM", Value="http://hplus.com.vn/xem-kenh-htvc-phim-hd-2399.html"},///// phut 91,
+            // new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="VTC4-Yeah1Family", Value="116"},///// phut 91,
+             new ChannelToServer(){Server=FROM_HTVPLUS_PAGE, ChannelKey="HTV9", Value="http://hplus.com.vn/xem-kenh-htv9-hd-2667.html"},       // FROM_HTV2TV_PAGE start from 00:00   
+             new ChannelToServer(){Server=FROM_HTVPLUS_PAGE, ChannelKey="HTV7", Value="http://hplus.com.vn/xem-kenh-htv7-hd-256.html"}, 
+             new ChannelToServer(){Server=FROM_HTVPLUS_PAGE, ChannelKey="HTV2", Value="http://hplus.com.vn/xem-kenh-htv2-hd-2669.html"}, 
+       //      new ChannelToServer(){Server=FROM_HTVONLINE_PAGE, ChannelKey="KBSWorld", Value="168"},
+           
              new ChannelToServer(){Server=FROM_FBNC_PAGE, ChannelKey="HTVCFBNC", Value=""},
 
              new ChannelToServer(){Server=FROM_VTVCab_PAGE, ChannelKey="StarMovies", Value="4703"},
@@ -255,8 +257,8 @@ namespace hthservices.Utils
              
              new ChannelToServer(){Server=FROM_KGTV_PAGE, ChannelKey="TruyenhinhKienGiang", Value="TV"}, //TV2
              new ChannelToServer(){Server=FROM_BRT_PAGE, ChannelKey="TruyenhinhBaRia-VungTauBRT", Value=""},
-             new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV1", Value="btv1"},
-             new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV2", Value="btv2"},
+             new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV1", Value="1"},
+             new ChannelToServer(){Server=FROM_BTV_PAGE, ChannelKey="TruyenhinhBinhDuongBTV2", Value="2"},
              new ChannelToServer(){Server=FROM_LA34_PAGE, ChannelKey="TruyenHinhLongAnLA34", Value=""},
              new ChannelToServer(){Server=FROM_CANTHOTV_PAGE, ChannelKey="TruyenhinhCanThoTHTPCT", Value=""},
              new ChannelToServer(){Server=FROM_TRT_PAGE, ChannelKey="TruyenHinhThuaThienHueTRT", Value=""},
@@ -270,7 +272,8 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC3", Value="3"},
              new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTCHD3", Value="3"},
              new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC6", Value="4"},
-             new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="VTC7-TodayTV", Value="today-tv-36"},
+             new ChannelToServer(){Server=FROM_TODAYTV_PAGE, ChannelKey="VTC7-TodayTV", Value=""},
+             //new ChannelToServer(){Server=FROM_PHUT91_PAGE, ChannelKey="VTC7-TodayTV", Value="today-tv-36"},
              new ChannelToServer(){Server=FROM_LETSVIET_PAGE, ChannelKey="VTC9-LETSVIET", Value=""}, 
              new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC10-NetViet", Value="7"},
              new ChannelToServer(){Server=FROM_VTC16_PAGE, ChannelKey="VTC12", Value="6"},
@@ -318,6 +321,18 @@ namespace hthservices.Utils
                 }; ;
             }
             return null;
+        }
+
+        public static List<ChannelToServer> GetListChannelToServer(string channelKey)
+        {
+            List<ChannelToServer> channelToServers = new List<ChannelToServer>();
+            var channelToServer = ChannelsToServers.Where(p => p.ChannelKey.Equals(channelKey, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (channelToServer != null)
+            {
+                channelToServers.AddRange(channelToServer);
+            }
+            channelToServers.Add(new ChannelToServer() { Server = "", ChannelKey = channelKey, Value = "" });
+            return channelToServers;
         }
     }
 }
