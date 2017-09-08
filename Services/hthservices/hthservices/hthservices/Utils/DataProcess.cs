@@ -230,6 +230,9 @@ namespace hthservices.Utils
                 case DataStatic.FROM_TODAYTV_PAGE:                    
                         guideItems = HtmlHelper.GetDataFromTODAYTVUrl(channelToServer, date);
                     break;
+                case DataStatic.FROM_DNRTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromDNRTVUrl(channelToServer, date);
+                    break;                    
                 case DataStatic.FROM_VIETBAO_PAGE:
                 default:
                     var channel = SQLiteProcess.GetChannel(channelKey);

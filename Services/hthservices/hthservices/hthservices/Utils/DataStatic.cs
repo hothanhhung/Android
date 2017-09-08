@@ -86,6 +86,7 @@ namespace hthservices.Utils
         public const string FROM_DRT_PAGE = "http://www.drt.danang.vn/default.aspx";
         public const string FROM_MOBITV_PAGE = "http://mobitv.net.vn/lich-phat-song/";
         public const string FROM_TODAYTV_PAGE = "http://todaytv.vn/lichchieu";
+        public const string FROM_DNRTV_PAGE = "http://www.dnrtv.org.vn/";
         
         #endregion
 
@@ -294,7 +295,9 @@ namespace hthservices.Utils
              new ChannelToServer(){Server=FROM_BINHDINHTV_PAGE, ChannelKey="TruyenhinhBinhDinhBTV", Value=""},
              new ChannelToServer(){Server=FROM_GIALAITV_PAGE, ChannelKey="TruyenhinhGiaLaiTHGL", Value=""},
              new ChannelToServer(){Server2=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT1", Value2="1", Server=FROM_MYTIVI_PAGE, Value="73"},
-             new ChannelToServer(){Server2=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT2", Value2="2", Server=FROM_MYTIVI_PAGE, Value="74"}
+             new ChannelToServer(){Server2=FROM_DRT_PAGE, ChannelKey="TruyenhinhDaNangDRT2", Value2="2", Server=FROM_MYTIVI_PAGE, Value="74"},
+             new ChannelToServer(){Server=FROM_DNRTV_PAGE, ChannelKey="TruyenhinhDongNaiDN1", Value="ĐNRTV1"},
+             new ChannelToServer(){Server=FROM_DNRTV_PAGE, ChannelKey="TruyenhinhDongNaiDN2", Value="ĐNRTV2"}
              
         };
         #endregion
