@@ -2777,7 +2777,97 @@ namespace hthservices.Utils
 
             return guideItems;
         }
+        static public List<GuideItem> GetDataFromDNRTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = channelToServer.Server;
+            string idForRequest = string.Empty;
 
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    //     source = System.Text.RegularExpressions.Regex.Unescape(source);
+                    source = source.Replace("<option", "<bugoptionbug").Replace("option>", "bugoptionbug>");
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
+
+                    var options = resultat.DocumentNode.SelectNodes("//select[@class='select-channel']/bugoptionbug");
+                    if (options != null)
+                    {
+                        var keyvalue = string.Format("{0} ({1})", channelToServer.Value, date.ToString("dd-MM-yyyy"));
+                        foreach (var option in options)
+                        {
+                            var optionText = option.InnerText;
+                            if (!string.IsNullOrWhiteSpace(optionText) && optionText.Trim().Equals(keyvalue, StringComparison.OrdinalIgnoreCase))
+                            {
+                                idForRequest = option.Attributes["value"] == null ? string.Empty : option.Attributes["value"].Value;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(idForRequest))
+                {
+                    using (HttpClient http = new HttpClient())
+                    {
+                        var urlSchedule = string.Format("{0}module/schedule.php?schedule_id={1}", url, idForRequest);
+                        var response = http.GetByteArrayAsync(urlSchedule).Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                        //     source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        source = WebUtility.HtmlDecode(source);
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var items = resultat.DocumentNode.SelectNodes("//tr");
+                        if (items != null)
+                        {
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var tdTags = item.SelectNodes("td");
+                                if (tdTags != null && tdTags.Count > 1)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                    startOn = startOn.Replace('g', ':');
+                                    if (startOn.Length == 4)
+                                    {
+                                        startOn = "0" + startOn;
+                                    }
+                                    programName = MethodHelpers.ToTitleCase(tdTags.ElementAt(1).InnerText.Trim());
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length == 5)
+                                {
+                                    if (guideItems.LastOrDefault() == null || startOn.CompareTo(guideItems.LastOrDefault().StartOn) >= 0)
+                                    {
+                                        var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                        guideItems.Add(guideItem);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                else if (guideItems.LastOrDefault() != null && !string.IsNullOrWhiteSpace(programName))
+                                {
+                                    guideItems.Last().ProgramName += " - " + programName;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
 
         #region search from vietbao
         static public List<SearchItem> SearchDataFromVietBaoUrl(string query, int stationID, DateTime date)
