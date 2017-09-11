@@ -22,7 +22,7 @@
                         <div class="tilte-grid">
                             <div class="row">
                                 <div class="pull-left cell_img">
-                                    <img class="img" src="/Web/images/1.jpg" />
+                                    <img class="img" src="@content.ImageUrl" />
                                 </div>
                                 <div class="cell_content">
                                     <p class="vel">
@@ -45,6 +45,7 @@
                     </div>
                 }
 
+                @if (ViewBag.TotalPage > 1) { 
                 <div>
                     <div class="border1">
                         <div class="pre">
@@ -79,8 +80,9 @@
                     </div>
 
                 </div>
+                }
             </div>
-            @Html.Action("RightProgrammingPartial", "Programming");
+            @Html.Action("RightProgrammingPartial", "Programming")
             <div class="clearfix"> </div>
         </div>
     </div>
