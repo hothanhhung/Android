@@ -5,7 +5,7 @@
 <div class="categories">
     <div class="categ">
         <div class="cat">
-            <h3>Categories</h3>
+            <h3>Chuyên Mục</h3>
             <ul>
                 @foreach (ProgrammingCategory catergory in ViewBag.Categories) { 
                     <li>
@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="recent-com">
-            <h3>Recent Comments</h3>
+            <h3>Phản Hồi Mới</h3>
             <ul>
                 @foreach (ProgrammingComment comment in ViewBag.CurrentComments)
                 {
@@ -32,8 +32,8 @@
                 }                
             </ul>
         </div>
-        <div class="view">
-            <a href="single.html">View More</a>
-        </div>
+        @*<div class="view">
+            <a href="single.html">Xem Thêm</a>
+        </div>*@
     </div>
 </div>
