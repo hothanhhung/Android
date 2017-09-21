@@ -1,4 +1,5 @@
 ﻿using hthservices.Models.Website;
+using hthservices.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -126,10 +127,11 @@ namespace hthservices.DataBusiness
 
         public static int CountProgrammingContents(int? categoryId, bool isDisplay)
         {
+            string today = MethodHelpers.GetCurrentVNDateTimeInCorrectString();
             int total = 0;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
-                var contents = context.ProgrammingContents.Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
+                var contents = context.ProgrammingContents.Where(p => isDisplay == false || ((p.IsDisplay ?? 0) > 0 && today.CompareTo(p.PublishedDate) > 0));
                 if (categoryId.HasValue)
                 {
                     contents = contents.Where(p => p.CategoryId == categoryId.Value);
@@ -141,10 +143,11 @@ namespace hthservices.DataBusiness
 
         public static List<ProgrammingContent> GetProgrammingContents(int? categoryId, bool isDisplay, int page=0, int size = 10)
         {
+            string today = MethodHelpers.GetCurrentVNDateTimeInCorrectString();
             List<ProgrammingContent> programmingContents = new List<ProgrammingContent>();
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
-                var contents = context.ProgrammingContents.Include("Comments").Include("Category").Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
+                var contents = context.ProgrammingContents.Include("Comments").Include("Category").Where(p => isDisplay == false || ((p.IsDisplay ?? 0) > 0 && today.CompareTo(p.PublishedDate) > 0));
                 if (categoryId.HasValue)
                 {
                     contents = contents.Where(p => p.CategoryId == categoryId.Value);
@@ -158,10 +161,11 @@ namespace hthservices.DataBusiness
 
         public static ProgrammingContent GetProgrammingContent(int id, bool isDisplay)
         {
+            string today = MethodHelpers.GetCurrentVNDateTimeInCorrectString();
             ProgrammingContent programmingContent = null;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
-                var contents = context.ProgrammingContents.Where(p => p.Id == id && (isDisplay == false || (p.IsDisplay ?? 0) > 0));
+                var contents = context.ProgrammingContents.Where(p => p.Id == id && (isDisplay == false || ((p.IsDisplay ?? 0) > 0 && today.CompareTo(p.PublishedDate) > 0)));
                 programmingContent = contents.FirstOrDefault();
 
                 context.Entry(programmingContent).Reference(p => p.Category).Load();
@@ -190,6 +194,7 @@ namespace hthservices.DataBusiness
                     programmingContent.ShortContent = content.ShortContent;
                     programmingContent.Content = content.Content;
                     programmingContent.NumberOfViews = content.NumberOfViews;
+                    programmingContent.PublishedDate = content.PublishedDate;
                     programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
             
                 }

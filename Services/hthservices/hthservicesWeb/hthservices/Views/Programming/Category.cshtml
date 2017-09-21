@@ -16,7 +16,7 @@
                             <h3><a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(content.Category.Name), content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.Title</a></h3>
                         </div>
                         <div class="john">
-                            <p><span>@content.GetUpdatedDateToShow()</span></p>
+                            <p><span>@content.GetPublishedDateToShow()</span></p>
                         </div>
                         <div class="clearfix"> </div>
                         <div class="tilte-grid">

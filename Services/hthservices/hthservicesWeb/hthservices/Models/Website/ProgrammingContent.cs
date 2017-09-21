@@ -20,6 +20,7 @@ namespace hthservices.Models.Website
         public int? IsDisplay { get; set; }
         public string CreatedDate { get; set; }
         public string UpdatedDate { get; set; }
+        public string PublishedDate { get; set; }
         public string NumberOfViews { get; set; }
         [NotMapped]
         public int NumberOfComments { get; set; }
@@ -46,6 +47,33 @@ namespace hthservices.Models.Website
                 return date.Value.ToString("hh:mm:ss MMM dd, yyyy");
             }
             return string.Empty;
+        }
+
+        public string GetPublishedDateToShow()
+        {
+            DateTime? date = Utils.MethodHelpers.ConvertCorrectStringToDateTime(PublishedDate);
+            if (!date.HasValue)
+            {
+                date = Utils.MethodHelpers.ConvertCorrectStringToDateTime(UpdatedDate);
+            }
+            if (date.HasValue)
+            {
+                return date.Value.ToString("hh:mm:ss MMM dd, yyyy");
+            }
+            return string.Empty;
+        }
+        [NotMapped]
+        public string PublishedInDateTime
+        {
+            get
+            {
+                string dateToCompare = string.IsNullOrWhiteSpace(PublishedDate) ? UpdatedDate : PublishedDate;
+                if (string.IsNullOrWhiteSpace(dateToCompare))
+                {
+                    dateToCompare = Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+                }
+                return dateToCompare.Replace(' ', 'T').Substring(0, 13) + ":00";
+            }
         }
     }
 }

@@ -79,6 +79,12 @@ namespace hthservices.Utils
             return date.ToString("yyyy-MM-dd hh:mm:ss");
         }
 
+        public static bool IsEarlierToDay(string publishedDate, string updatedDate)
+        {
+            string dateToCompare = string.IsNullOrWhiteSpace(publishedDate) ? updatedDate : publishedDate;
+            var date = DateTime.UtcNow.AddHours(7);
+            return date.ToString("yyyy-MM-dd hh:mm:ss").CompareTo(dateToCompare) > 0;
+        }
         public static string ConvertDateTimeToCorrectString(DateTime date)
         {
             if (date != null)
