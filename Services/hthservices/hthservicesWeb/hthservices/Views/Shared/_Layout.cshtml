@@ -53,10 +53,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         @{
                             string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
                         }
-                        <li class="@("Home".Equals(controllerName,StringComparison.OrdinalIgnoreCase)?"cap":"")">@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li class="@("Programming".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Programming", "", "Programming")</li>
-                        <li class="@("Project".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Projects", "", "Projects")</li>
-                        <li class="@("Contact".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")"><a href="contact.html">Contact</a></li>
+                        <li class="@("Programming".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Lập Trình", "", "Programming")</li>
+                        <li style="display:none" class="@("Home".Equals(controllerName,StringComparison.OrdinalIgnoreCase)?"cap":"")">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li style="display:none" class="@("Project".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Projects", "", "Projects")</li>
+                        <li class="@("Contact".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")"><a href="contact.html">Liên Hệ</a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>

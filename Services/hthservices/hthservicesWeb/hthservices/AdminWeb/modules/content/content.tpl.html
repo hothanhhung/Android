@@ -44,6 +44,13 @@
                                     </div>-->
                                     <div class="form-group">
                                         <label>
+                                            PublishedDate
+                                        </label>
+                                        <input type="datetime-local" id="dateTimelocal" name="dateTimelocal" ng-model="SelectedContent.PublishedInDateTime"
+                                               min="2001-01-01T00:00:00" max="2113-12-31T00:00:00" required class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
                                             IsDisplay
                                         </label>
                                         <input type="number" ng-model="SelectedContent.IsDisplay" class="form-control" />
@@ -80,6 +87,9 @@
                                 <span class="error" ng-show="SaveContentForm.input.$error.number">
                                     Not valid number!
                                 </span>
+                                <span class="error" ng-show="SaveContentForm.input.$error.datetimelocal">
+                                    Not valid datetime!
+                                </span>
                             </div>
                         </form>
                     </div>
@@ -106,6 +116,7 @@
                     <th>Number Of Comments</th>
                     <th>Number Of Views</th>
                     <th>Created Date</th>
+                    <th>Published Date</th>
                     <th>Updated Date</th>
                     <th>Action</th>
                 </tr>
@@ -126,6 +137,7 @@
                     </td>
                     <td>{{item.NumberOfViews}}</td>
                     <td>{{item.CreatedDate}}</td>
+                    <td>{{item.PublishedDate}}</td>
                     <td>{{item.UpdatedDate}}</td>
                     <td align="center">
                         <a href="javascript:void(0)">

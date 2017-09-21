@@ -161,6 +161,7 @@ namespace hthservices.Controllers
                     Content = x.Content,
                     NumberOfViews = x.NumberOfViews,
                     CreatedDate = x.CreatedDate,
+                    PublishedDate = x.PublishedDate,
                     UpdatedDate = x.UpdatedDate,
                     CategoryName = x.Category == null ? "" : x.Category.Name,
                     NumberOfComments = x.Comments.Count
@@ -195,6 +196,7 @@ namespace hthservices.Controllers
                     Content = data.Content,
                     NumberOfViews = data.NumberOfViews,
                     CreatedDate = data.CreatedDate,
+                    PublishedDate = data.PublishedDate,
                     UpdatedDate = data.UpdatedDate,
                     CategoryName = data.Category == null ? "" : data.Category.Name,
                     NumberOfComments = data.Comments.Count        

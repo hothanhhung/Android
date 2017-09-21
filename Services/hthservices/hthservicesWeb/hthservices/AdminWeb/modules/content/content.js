@@ -91,6 +91,7 @@ hthWebsiteApp.controller('ContentController',
           }
           $scope.EditContent = function (item) {
               $scope.SelectedContent = item;
+              $scope.SelectedContent.PublishedInDateTime = new Date($scope.SelectedContent.PublishedInDateTime);
               $scope.SelectedCategory = $scope.Categories[0];
               CKEDITOR.instances.Contenteditor.setData($scope.SelectedContent.Content);
               for (var i = 1; i < $scope.Categories.length; i++)
@@ -104,10 +105,23 @@ hthWebsiteApp.controller('ContentController',
               $('#CreateAndEditContentModal').modal('show');
           }
           $scope.NewContent = function () {
+              var date = new Date();
               $scope.SelectedCategory = $scope.Categories[0];
-              $scope.SelectedContent = { Id: 0 };
+              $scope.SelectedContent = { Id: 0, PublishedInDateTime: new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), 0) };
               CKEDITOR.instances.Contenteditor.setData("");
               $('#CreateAndEditContentModal').modal('show');
+          }
+          $scope.getStringDateInCorrectFormat = function (date)
+          {
+              if (!date) date = new Date();
+              var MM = date.getMonth() + 1; // getMonth() is zero-based
+              var dd = date.getDate();
+              var hh = date.getHours();
+              var mm = date.getMinutes();
+              return [date.getFullYear(),
+                      (MM > 9 ? '' : '0') + MM,
+                      (dd > 9 ? '' : '0') + dd
+              ].join('-') + " " + [(hh > 9 ? '' : '0') + hh, (mm > 9 ? '' : '0') + mm, '00'].join(':');
           }
           $scope.SaveContent = function (valid) {
               if (valid && $scope.SelectedContent != null)
@@ -115,6 +129,7 @@ hthWebsiteApp.controller('ContentController',
                   var url = URL_SERVICE + '/api/AdministratorApi/SaveContent/';
                   $scope.SelectedContent.CategoryId = $scope.SelectedCategory.Id;
                   $scope.SelectedContent.ImageUrl = $("#txtSelectedFile").val();
+                  $scope.SelectedContent.PublishedDate = $scope.getStringDateInCorrectFormat($scope.SelectedContent.PublishedInDateTime);
                   $scope.SelectedContent.Content = CKEDITOR.instances.Contenteditor.getData();
                   $scope.IsLoading = true;
                   $http.post(url, $scope.SelectedContent).then(
