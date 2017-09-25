@@ -9,22 +9,26 @@ CKEDITOR.editorConfig = function( config ) {
     // config.uiColor = '#AADC6E';
     config.skin = 'icy_orange';
     //copy or drop image
-    config.extraPlugins = 'uploadimage';
-    config.extraPlugins = 'uploadwidget';
-    config.extraPlugins = 'widget';
-    config.extraPlugins = 'lineutils';
-    config.extraPlugins = 'filetools';
-    config.extraPlugins = 'notificationaggregator';
-    config.extraPlugins = 'notification';
-    config.extraPlugins = 'toolbar';
-    config.extraPlugins = 'button';
+    //config.extraPlugins = 'uploadimage';
+    //config.extraPlugins = 'uploadwidget';
+    //config.extraPlugins = 'widget';
+    //config.extraPlugins = 'lineutils';
+    //config.extraPlugins = 'filetools';
+    //config.extraPlugins = 'notificationaggregator';
+    //config.extraPlugins = 'notification';
+    //config.extraPlugins = 'toolbar';
+    //config.extraPlugins = 'button';
 
-    //uploader
-    config.extraPlugins = 'imageuploader';
+    ////uploader
+    //config.extraPlugins = 'imageuploader';
+    //config.baseFloatZIndex = 100001;
+
+    //config.extraPlugins = 'codesnippet';
+    //config.extraPlugins = 'dialog';
+    //config.extraPlugins = 'dialogui';
+    //config.extraPlugins = 'codeTag';
+    config.extraPlugins = 'uploadimage,uploadwidget,widget,lineutils,filetools,notificationaggregator,notification,toolbar,button,imageuploader,codesnippet,dialog,dialogui,codeTag';
     config.baseFloatZIndex = 100001;
+    config.imageUploadUrl = '/CKEditorUpload.ashx';
 
-    config.extraPlugins = 'codesnippet';
-    config.extraPlugins = 'dialog';
-    config.extraPlugins = 'dialogui';
-    config.extraPlugins = 'codeTag';
 };

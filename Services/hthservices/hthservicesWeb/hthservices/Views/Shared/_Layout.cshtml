@@ -13,6 +13,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href="/Scripts/bower_components/ckeditor-4.5.11/plugins/codesnippet/lib/highlight/styles/default.css" rel="stylesheet">
+    <script src="/Scripts/bower_components/ckeditor-4.5.11/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <!-- js -->
     <script src="/Web/js/jquery.min.js"></script>
     <!-- //js -->
@@ -34,6 +36,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 event.preventDefault();
                 $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
             });
+			
+			if($(".content").height()!=null && $(".content-text").height()!=null)
+			{
+				$(".content").height($(".content-text").height());
+			}
         });
     </script>
     <!-- start-smoth-scrolling -->
@@ -45,18 +52,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="container">
             <div class="header-info">
                 <div class="logo">
-                    <a href="index.html"><img src="/Web/images/logo.png" alt=" " /></a>
+                    <a href="/"><img src="/Web/images/logo.png" alt=" " /></a>
                 </div>
                 <div class="logo-right">
                     <span class="menu"><img src="/Web/images/menu.png" alt=" " /></span>
                     <ul class="nav1">
                         @{
                             string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+                            string actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
                         }
                         <li class="@("Programming".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Lập Trình", "", "Programming")</li>
                         <li style="display:none" class="@("Home".Equals(controllerName,StringComparison.OrdinalIgnoreCase)?"cap":"")">@Html.ActionLink("Home", "Index", "Home")</li>
                         <li style="display:none" class="@("Project".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Projects", "", "Projects")</li>
-                        <li class="@("Contact".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")"><a href="contact.html">Liên Hệ</a></li>
+                        <li class="@("Contact".Equals(actionName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")"><a href="/lien-he">Liên Hệ</a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -88,7 +96,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="container">
                 <div class="footer-grids">
                     <div class="footer-grid">
-                        <h3>About Us</h3>
+                        <h3>Giới Thiệu</h3>
                         <p>
                             Nullam ac urna velit. Pellentesque in arcu tortor.
                             Pellentesque nec est et elit varius pulvinar eget vitae sapien.
@@ -102,20 +110,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="footer-grid">
                         <h3>Site Page</h3>
                         <ul>
-                            <li class="cap1"><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="articles.html">Gallery</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li class="@("Programming".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap1" : "")"><a href="/">Trang Chủ</a></li>
+                            <li class="@("About".Equals(actionName, StringComparison.OrdinalIgnoreCase) ? "cap1" : "")"><a href="/gioi-thieu">Giới Thiệu</a></li>
+                            <li class="@("Contact".Equals(actionName, StringComparison.OrdinalIgnoreCase) ? "cap1" : "")"><a href="/lien-he">Liên Hệ</a></li>
                         </ul>
                     </div>
                     <div class="footer-grid">
-                        <h3>Praesent pharetra</h3>
+                        <h3>Websites Hay</h3>
                         <ul>
-                            <li><a href="single.html">Vestibulum iaculis scelerisque</a></li>
-                            <li><a href="single.html">Cras aliquam erat</a></li>
-                            <li><a href="single.html">Morbi imperdiet ipsum</a></li>
-                            <li><a href="single.html">Donec faucibus mollis</a></li>
-                            <li><a href="single.html">Praesent lacinia nisi</a></li>
+                            <li><a href="https://www.w3schools.com">w3schools</a></li>
+                            <li><a href="https://www.codeschool.com/">code school</a></li>
+                            <li><a href="https://www.codecademy.com">code cademy</a></li>
                         </ul>
                     </div>
                     <div class="clearfix"> </div>
@@ -146,6 +151,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
         });
     </script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <!-- //here ends scrolling icon -->
 </body>
 </html>

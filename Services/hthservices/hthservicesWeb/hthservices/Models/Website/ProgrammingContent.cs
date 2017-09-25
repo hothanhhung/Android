@@ -44,7 +44,7 @@ namespace hthservices.Models.Website
             DateTime? date = Utils.MethodHelpers.ConvertCorrectStringToDateTime(UpdatedDate);
             if (date.HasValue)
             {
-                return date.Value.ToString("hh:mm:ss MMM dd, yyyy");
+                return date.Value.ToString("HH:mm:ss MMM dd, yyyy");
             }
             return string.Empty;
         }
@@ -58,7 +58,7 @@ namespace hthservices.Models.Website
             }
             if (date.HasValue)
             {
-                return date.Value.ToString("hh:mm:ss MMM dd, yyyy");
+                return date.Value.ToString("HH:mm:ss MMM dd, yyyy");
             }
             return string.Empty;
         }

@@ -152,7 +152,7 @@ namespace hthservices.DataBusiness
                 {
                     contents = contents.Where(p => p.CategoryId == categoryId.Value);
                 }
-                contents = contents.OrderByDescending(p => p.UpdatedDate);
+                contents = contents.OrderByDescending(p => p.PublishedDate);
                 contents = contents.Skip(page * size).Take(size);
                 programmingContents = contents.ToList();
             }
