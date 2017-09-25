@@ -45,7 +45,7 @@ padding:0;
 
 
 .sing {
-	min-height:2400px !important;
+	min-height:1400px !important;
 	background-size: cover !important;
 }
 .tut {
@@ -54,12 +54,13 @@ padding:0;
 }
 .cnt-txt{
 	position: absolute !important;
-	top:-6% !important;
+/*-- hunght		top:-6% !important; --*/
 }
 /*-- header --*/
 header{
 	background:url(../images/header.jpg) no-repeat -18em 0em;
-	min-height:326px;
+/*-- hunght	min-height:326px; --*/
+    padding-bottom: 45px;
 	}
 .header-info{
 	padding:3em 0 0;
@@ -124,11 +125,13 @@ header{
 	background: url(../images/banner.png) no-repeat -14em 0px;
 	min-height: 1100px;
 	position: relative;
+	background-size: cover !important;
 	}
 .content-text{
 	position:absolute;
-	top:-13%;
+/*-- hunght	top:-13%; --*/
 	left: 12%;
+	top: -25px;;
 	}
 .content-text{
 	background: #fefcea; /* Old browsers */

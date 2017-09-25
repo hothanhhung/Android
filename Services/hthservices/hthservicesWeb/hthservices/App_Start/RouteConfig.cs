@@ -11,6 +11,7 @@ namespace hthservices
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("Web/*");
             routes.IgnoreRoute("FileMan/*");
             routes.IgnoreRoute("Admin/*");
             routes.IgnoreRoute("AdminWeb/*");
@@ -50,6 +51,18 @@ namespace hthservices
                         id = UrlParameter.Optional
                     }
                     );
+
+            routes.MapRoute(
+                name: "About",
+                url: "gioi-thieu",
+                defaults: new { controller = "Home", action = "About", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Contact",
+                url: "lien-he",
+                defaults: new { controller = "Home", action = "Contact", id = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "Default",
