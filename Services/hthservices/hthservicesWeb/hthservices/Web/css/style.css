@@ -167,7 +167,7 @@ header{
 .some-title{
 	float:left;
 	}
-.some-title h3{
+.some-title h2{
 	margin:0 0 .8em;
 	color:#47443A;
 	font-size: 30px;
@@ -175,14 +175,14 @@ header{
 	font-weight: 600;
 	text-decoration:none;
 	}
-.some-title h3 a{
+.some-title h2 a{
 	color:#47443A;
 	font-size: 30px;
 	font-family: 'Playfair Display', serif;
 	font-weight: 600;
 	text-decoration:none;
 	}
-.some-title h3 a:hover{
+.some-title h2 a:hover{
 	text-decoration:none;
 	color:#DB7037;
 	}
@@ -279,7 +279,7 @@ header{
 .related-posts{
 	padding:2em 0 0;
 	}
-.related-posts h3{
+.related-posts h2{
 	color:#47443A;
 	font-size: 26px;
 	margin:0;
@@ -1234,7 +1234,7 @@ p.lom{
   -o-transform: rotate(-3deg);
   transform: rotate(-3deg);
 }
-.consequat h4{
+.consequat h2{
 	color: #47443A;
 	font-size: 26px;
 	margin: 0 0 .5em;
@@ -1331,7 +1331,7 @@ p.lom{
   text-decoration:none;
   transition:.5s all;
 }
-.comments h4{
+.comments h2{
   color: #47443A;
   font-size: 26px;
   margin: 0;
@@ -1531,7 +1531,7 @@ p.lom{
 	  left: 1%;
 	  width: 98%;
 	}
-	.some-title h3 a {
+	.some-title h2 a {
 		font-size: 26px;
 	}
 	.title {
@@ -1587,16 +1587,16 @@ p.lom{
 	.number {
 	  margin-left: 2em;
 	}
-	.related-posts h3 {
+	.related-posts h2 {
 		margin: 0.5em 0 0;
 	}
-	.some-title h3 {
+	.some-title h2 {
 		font-size: 25px;
 	}
-	.related-posts h3,.consequat h4,.comments h4 {
+	.related-posts h2,.consequat h2,.comments h2{
 		font-size: 25px;
 	}
-	.content-text-bottom h3 {
+	.content-text-bottom h2 {
 		margin: 0px 0 0.5em;
 	}
 	.content-text-bottom {
@@ -1620,10 +1620,10 @@ p.lom{
 	.header1 {
 	  min-height: 170px;
 	}
-	.contact-left1 h3 {
+	.contact-left1 h2 {
 		font-size: 1.7em;
 	}
-	.contact-right1 h3 {
+	.contact-right1 h2 {
 		font-size: 1.8em;
 	}
 	.contact-right {
@@ -1640,7 +1640,7 @@ p.lom{
 	  padding: 10px 0px;
 	  width: 68%;
 	}
-	.contact-left1 h3 {
+	.contact-left1 h2 {
 		margin: 0 0 1.55em;
 	}
 	.article-grid-left img {
@@ -1690,13 +1690,13 @@ p.lom{
 	.content-text {
 		padding: 3em 1em 3em;
 	}
-	.some-title h3 a {
+	.some-title h2 a {
 	  font-size: 23px;
 	}
 	.tilte-grid p span {
 		margin: 1.3em 0 0;
 	}
-	.cat h3 {
+	.cat h2 {
 	  font-size: 19px;
 	}
 	.cat ul {
@@ -1706,7 +1706,7 @@ p.lom{
 	  padding-bottom: .5em;
 	  margin-bottom: .5em;
 	}
-	.recent-com h3 {
+	.recent-com h2 {
 		font-size: 19px;
 	}
 	.read {
@@ -1739,7 +1739,7 @@ p.lom{
 	.free {
 	  margin: 4em 0 3.5em;
 	}
-	.footer-grid h3 {
+	.footer-grid h2 {
 	  font-size: 20px;
 	}
 	.footer-grid:nth-child(2) {
@@ -1767,13 +1767,13 @@ p.lom{
 	.related-posts-grid h4 {
 	  margin: .5em 0 0;
 	}
-	.related-posts h3,.consequat h4,.comments h4 {
+	.related-posts h2,.consequat h2,.comments h2 {
 	  font-size: 20px;
 	}
 	.related-posts-grids:nth-child(2) {
 	  margin: 0;
 	}
-	.some-title h3 {
+	.some-title h2 {
 	  font-size: 20px;
 	}
 	.john {
@@ -1830,17 +1830,17 @@ p.lom{
 	.about-grd p {
 		margin: 0.5em 0 0;
 	}
-	.content-text-bottom h3 {
+	.content-text-bottom h2 {
 		font-size: 20px;
 	}
-	.people-left h3 {
+	.people-left h2 {
 	  font-size: 18px;
 	  margin: 0 0 .5em;
 	}
 	.content-text-bottom {
 	  margin: 0 0 1em;
 	}
-	.people-right h3 {
+	.people-right h2 {
 	  font-size: 18px;
 	  margin: 0 0 .5em;
 	}
@@ -1853,13 +1853,13 @@ p.lom{
 	.people-left ul li {
 	  margin-bottom: 1em;
 	}
-	.content-text-bottom h3 {
+	.content-text-bottom h2 {
 		font-size: 18px;
 	}
 	.about-grd h4 {
 		font-size: 16px;
 	}
-	.fig-text1-right h3 {
+	.fig-text1-right h2 {
 	  font-size: 18px;
 	  margin: 0 0 .5em;
 	}
@@ -1899,7 +1899,7 @@ p.lom{
 	.contact-left iframe {
 	  height: 281px;
 	}
-	.contact-right1 h3 {
+	.contact-right1 h2 {
 	  font-size: 1.6em;
 	}
 	.contact-right1 {
@@ -1909,7 +1909,7 @@ p.lom{
 	  font-size: 1.1em;
 	  margin:4em 0 2em;
 	}
-	.contact-left1 h3 {
+	.contact-left1 h2 {
 	  font-size: 1.5em;
 	}
 	.contact-left1 {
@@ -2102,7 +2102,7 @@ p.lom{
 	.footer {
 	  padding: 14em 0em 2em;
 	}
-	.footer-grid h3 {
+	.footer-grid h2 {
 	  font-size: 18px;
 	}
 	.footer-grid:nth-child(2) {
@@ -2286,7 +2286,7 @@ p.lom{
 	.article-right-grid:nth-child(11){
 		display:none;
 	}
-	.consequat h4{
+	.consequat h2{
 		font-size:19px;
 	}
 	.consequat input[type="text"], .consequat input[type="email"], .consequat textarea {
@@ -2396,7 +2396,7 @@ p.lom{
 	.read {
 	  padding-left: 24em;
 	}
-	.some-title h3 a {
+	.some-title h2 a {
 	  font-size: 20px;
 	}
 	.pre a {
@@ -2423,19 +2423,19 @@ p.lom{
 	.read a {
 		font-size: 13px;
 	}
-	.cat h3 {
+	.cat h2 {
 	  padding: 1em 0em .5em;
 	}
 	.cat ul {
 	  padding: 1em 0 0;
 	}
-	.recent-com h3,.cat h3,.some-title h3,.related-posts h3,.consequat h4{
+	.recent-com h2,.cat h2,.some-title h2,.related-posts h2,.consequat h2{
 	  font-size: 18px;
 	}
 	.sing {
 	  min-height:3216px !important;
 	}
-	.recent-com h3 {
+	.recent-com h2 {
 	  margin: 1em 0 0;
 	}
 	.view a {
@@ -2445,7 +2445,7 @@ p.lom{
 	  margin:2em 0;
 	  width:22%;
 	}
-	.footer-grid h3 {
+	.footer-grid h2 {
 	  font-size: 15px;
 		padding-bottom: .5em;
 	}
@@ -2622,7 +2622,7 @@ p.lom{
 	  padding: 2em 0 0;
 	  min-height: 155px;
 	}
-	.some-title h3 a {
+	.some-title h2 a {
 	  font-size: 15px;
 	}
 	.john p {
@@ -2673,7 +2673,7 @@ p.lom{
 	.footer-grid p {
 		font-size: 12px;
 	}
-	.footer-grid h3 {
+	.footer-grid h2 {
 	  font-size: 14px;
 	}
 	.footer-grid ul li {
@@ -2707,13 +2707,13 @@ p.lom{
 	.article-right-grid:nth-child(11) {
 	  margin: 0 0 0 1em;
 	}
-	.some-title h3 {
+	.some-title h2 {
 	  font-size: 15px;
 	}
-	.some-title h3 {
+	.some-title h2 {
 		margin: 0.5em 0 .8em;
 	}
-	.related-posts h3 {
+	.related-posts h2 {
 	  font-size: 16px;
 	}
 	.related-posts {
@@ -2747,7 +2747,7 @@ p.lom{
 	  font-size: 12px;
 	  line-height: 20px;
 	}
-	.people-left h3 {
+	.people-left h2 {
 		font-size: 14px;
 	}
 	.numer-right h4 a {
@@ -2767,7 +2767,7 @@ p.lom{
 	  font-size: 8px;
 	  margin-top: .5em;
 	}
-	.people-right h3 {
+	.people-right h2 {
 		font-size: 15px;
 	}
 	.people-right {
@@ -2784,7 +2784,7 @@ p.lom{
 	  font-size: 13px;
 	  background: url(../images/1.png) no-repeat 4.7em .5em;
 	}
-	.fig-text1-right h3 {
+	.fig-text1-right h2 {
 		font-size: 15px;
 	}
 	.header1 {
@@ -2819,14 +2819,14 @@ p.lom{
 	  font-size: 13px;
 	  padding: 10px 10px;
 	}
-	.contact-left1 h3 {
+	.contact-left1 h2 {
 	  font-size: 1.2em;
 	}
 	.in-right textarea {
 	  min-height: 186px;
 	  margin-bottom: 1em;
 	}
-	.contact-right1 h3 {
+	.contact-right1 h2 {
 	  font-size: 1.2em;
 	}
 	.contact-right1 h4 {
@@ -2922,7 +2922,7 @@ p.lom{
 	span.menu {
 	  margin: 6px 0;
 	}
-	.recent-com h3, .cat h3, .some-title h3, .related-posts h3, .consequat h4 {
+	.recent-com h2, .cat h2, .some-title h2, .related-posts h2, .consequat h2 {
 	  font-size: 15px;
 	}
 	.content {
@@ -2935,7 +2935,7 @@ p.lom{
 	  width: 50%;
 	  font-size: 13px;
 	}
-	.tutorial-grid h3 {
+	.tutorial-grid h2 {
 		font-size: 14px;
 	}
 	.tutorial-grid iframe {

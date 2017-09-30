@@ -26,6 +26,8 @@ namespace hthservices.Models.Website
         public int NumberOfComments { get; set; }
 
         public int? CategoryId { get; set; }
+        public string Keywords { get; set; }
+        public string Subject { get; set; }
         [NotMapped]
         public string CategoryName { get; set; }
         [IgnoreDataMemberAttribute]

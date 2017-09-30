@@ -2,9 +2,12 @@
 @using hthservices.Models.Website;
 @{
     ViewBag.Title = "Home Page";
+    ViewBag.Keywords = "Android, C#, ASP.Net, C, C++, HTML, CSS, JavaScript, JQuery, AngularJS, Database, SQL SERVER, MySQL";
+	ViewBag.Description = "Chia sẽ các bài viết về Android, C#, ASP.Net, C, C++, HTML, CSS, JavaScript, JQuery, AngularJS, Database, SQL SERVER, MySQL";
     var category = ViewBag.Category as ProgrammingCategory;
 }
 
+<h1 style="display:none"> Các bài viết về Android, C#, ASP.Net, C, C++, HTML, CSS, JavaScript, JQuery, AngularJS, Database, SQL SERVER, MySQL</h1>
 <div class="content">
     <div class="container">
         <div class="content-text">
@@ -13,7 +16,7 @@
                 {
                     <div>
                         <div class="some-title">
-                            <h3><a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(content.Category.Name), content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.Title</a></h3>
+                            <h2><a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(content.Category.Name), content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.Title</a></h2>
                         </div>
                         <div class="john">
                             <p><span>@content.GetPublishedDateToShow()</span></p>
@@ -22,7 +25,7 @@
                         <div class="tilte-grid">
                             <div class="row">
                                 <div class="pull-left cell_img">
-                                    <img class="img" src="@content.ImageUrl" />
+                                    <img class="img" src="@content.ImageUrl" alt="@content.Title" title="@content.Title"  />
                                 </div>
                                 <div class="cell_content">
                                     <p class="vel">
