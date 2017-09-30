@@ -36,37 +36,45 @@
                                             <iframe src="/fileman/index.html?integration=custom&type=image&txtFieldId=txtSelectedFile" style="width:100%;height:100%; z-index:2147483647" frameborder="0"></iframe>
                                         </div>
                                     </div>
-                                    <!--<div class="form-group">
-                                        <label>
-                                            ImageUrl
-                                        </label>
-                                        <input type="text" ng-model="SelectedContent.ImageUrl" class="form-control" />
-                                    </div>-->
                                     <div class="form-group">
                                         <label>
-                                            PublishedDate
+                                            Keywords
                                         </label>
-                                        <input type="datetime-local" id="dateTimelocal" name="dateTimelocal" ng-model="SelectedContent.PublishedInDateTime"
-                                               min="2001-01-01T00:00:00" max="2113-12-31T00:00:00" required class="form-control" />
+                                        <input type="text" ng-model="SelectedContent.Keywords" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <label>
-                                            IsDisplay
+                                            Subject
                                         </label>
-                                        <input type="number" ng-model="SelectedContent.IsDisplay" class="form-control" />
+                                        <input type="text" ng-model="SelectedContent.Subject" class="form-control" />
                                     </div>
-                                    <div class="form-group">
-                                        <label>
-                                            Category
-                                        </label>
-                                        <div class="dropdown" style="width:100px">
-                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                {{SelectedCategory.Name}}
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li ng-repeat="category in Categories"><a href="javascript:void(0)" ng-click="CategorySelect(category)">{{category.Name}}</a></li>
-                                            </ul>
+                                    <div class ="row">
+                                        <div class="form-group col-sm-12 col-md-4">
+                                            <label>
+                                                PublishedDate
+                                            </label>
+                                            <input type="datetime-local" id="dateTimelocal" name="dateTimelocal" ng-model="SelectedContent.PublishedInDateTime"
+                                                   min="2001-01-01T00:00:00" max="2113-12-31T00:00:00" required class="form-control" />
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-4">
+                                            <label>
+                                                IsDisplay
+                                            </label>
+                                            <input type="number" ng-model="SelectedContent.IsDisplay" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-4">
+                                            <label>
+                                                Category
+                                            </label>
+                                            <div class="dropdown" style="width:100px">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    {{SelectedCategory.Name}}
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                    <li ng-repeat="category in Categories"><a href="javascript:void(0)" ng-click="CategorySelect(category)">{{category.Name}}</a></li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
