@@ -4,6 +4,8 @@
     ProgrammingContent programmingContent = ViewBag.Content;
     List<ProgrammingContent> relatedProgrammingContents = ViewBag.RelatedContents;
     ViewBag.Title = programmingContent.Title;
+    ViewBag.Keywords = programmingContent.Keywords;
+	ViewBag.Description = programmingContent.ShortContent;
 }
 <div class="content sing">
     <div class="container">
@@ -17,7 +19,7 @@
             }else{
                     <div class="title">
                         <div class="some-title">
-                            <h3>@programmingContent.Title</h3>
+                            <h1>@programmingContent.Title</h1>
                         </div>
                         <div class="john">
                             <p><span>@programmingContent.GetPublishedDateToShow()</span></p>
@@ -36,7 +38,7 @@
                             </div>
                         </div>
                         <div class="related-posts">
-                            <h3>Bài Viết Cùng Chuyên Mục</h3>
+                            <h2>Bài Viết Cùng Chuyên Mục</h2>
                             @if(relatedProgrammingContents!=null){
                                 for(int i = 0; i< relatedProgrammingContents.Count; i++)
                                 {
@@ -46,7 +48,7 @@
                                         @:<div class="related-posts-grids">
                                     }
                                         <div class="related-posts-grid">
-                                            <a href="@Url.RouteUrl("programmingcontent", new { category_name=Url.ToFriendlyUrl(relatedContent.Category.Name), content_name=Url.ToFriendlyUrl(relatedContent.Title), id=relatedContent.Id })"><img class="img" src="@relatedContent.ImageUrl" /></a>
+                                            <a href="@Url.RouteUrl("programmingcontent", new { category_name=Url.ToFriendlyUrl(relatedContent.Category.Name), content_name=Url.ToFriendlyUrl(relatedContent.Title), id=relatedContent.Id })"><img class="img" src="@relatedContent.ImageUrl"  alt="@relatedContent.Title" title="@relatedContent.Title"  /></a>
                                             <h4><a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(relatedContent.Category.Name), content_name = Url.ToFriendlyUrl(relatedContent.Title), id = relatedContent.Id })">@relatedContent.Title</a></h4>
                                             <p>
                                                 @relatedContent.ShortContent
@@ -65,7 +67,7 @@
                     @Html.Action("RightProgrammingPartial","Programming")
                     <div class="clearfix"> </div>
                     <div class="comments">
-                        <h4>Phản Hồi</h4>
+                        <h2>Phản Hồi</h2>
                         <div id="comments">
                             @foreach (ProgrammingComment comment in programmingContent.Comments)
                             {
@@ -89,7 +91,7 @@
                         </div>
                     </div>
                     <div class="consequat">
-                        <h4>Viết Phản Hồi</h4>
+                        <h2>Viết Phản Hồi</h2>
                         <input type="text" value="Name" id="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="">
                         <input type="email" value="Email" id="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
                         <textarea name="commenteditor" id="Message" type="text" required=""></textarea>
