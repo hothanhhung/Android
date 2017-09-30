@@ -163,6 +163,8 @@ namespace hthservices.Controllers
                     CreatedDate = x.CreatedDate,
                     PublishedDate = x.PublishedDate,
                     UpdatedDate = x.UpdatedDate,
+                    Keywords = x.Keywords,
+                    Subject = x.Subject,
                     CategoryName = x.Category == null ? "" : x.Category.Name,
                     NumberOfComments = x.Comments.Count
                 }).ToList();
@@ -198,6 +200,8 @@ namespace hthservices.Controllers
                     CreatedDate = data.CreatedDate,
                     PublishedDate = data.PublishedDate,
                     UpdatedDate = data.UpdatedDate,
+                    Keywords = data.Keywords,
+                    Subject = data.Subject,
                     CategoryName = data.Category == null ? "" : data.Category.Name,
                     NumberOfComments = data.Comments.Count        
                 };

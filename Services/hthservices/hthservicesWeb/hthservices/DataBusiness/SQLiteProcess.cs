@@ -195,6 +195,8 @@ namespace hthservices.DataBusiness
                     programmingContent.Content = content.Content;
                     programmingContent.NumberOfViews = content.NumberOfViews;
                     programmingContent.PublishedDate = content.PublishedDate;
+                    programmingContent.Keywords = content.Keywords;
+                    programmingContent.Subject = content.Subject;
                     programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
             
                 }
