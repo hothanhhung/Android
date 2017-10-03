@@ -90,17 +90,18 @@
             this.btReceipt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btReceipt.Location = new System.Drawing.Point(3, 3);
             this.btReceipt.Name = "btReceipt";
-            this.btReceipt.Size = new System.Drawing.Size(119, 25);
+            this.btReceipt.Size = new System.Drawing.Size(125, 44);
             this.btReceipt.TabIndex = 0;
             this.btReceipt.Text = "Nhập Hàng";
             this.btReceipt.UseVisualStyleBackColor = true;
+            this.btReceipt.Click += new System.EventHandler(this.btReceipt_Click);
             // 
             // btInventory
             // 
             this.btInventory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btInventory.Location = new System.Drawing.Point(3, 34);
+            this.btInventory.Location = new System.Drawing.Point(3, 53);
             this.btInventory.Name = "btInventory";
-            this.btInventory.Size = new System.Drawing.Size(119, 25);
+            this.btInventory.Size = new System.Drawing.Size(125, 44);
             this.btInventory.TabIndex = 1;
             this.btInventory.Text = "Hàng Tồn";
             this.btInventory.UseVisualStyleBackColor = true;
@@ -108,9 +109,9 @@
             // btOrder
             // 
             this.btOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btOrder.Location = new System.Drawing.Point(3, 65);
+            this.btOrder.Location = new System.Drawing.Point(3, 103);
             this.btOrder.Name = "btOrder";
-            this.btOrder.Size = new System.Drawing.Size(119, 55);
+            this.btOrder.Size = new System.Drawing.Size(125, 44);
             this.btOrder.TabIndex = 2;
             this.btOrder.Text = "Đơn Hàng";
             this.btOrder.UseVisualStyleBackColor = true;
@@ -118,9 +119,9 @@
             // btProduct
             // 
             this.btProduct.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btProduct.Location = new System.Drawing.Point(3, 126);
+            this.btProduct.Location = new System.Drawing.Point(3, 153);
             this.btProduct.Name = "btProduct";
-            this.btProduct.Size = new System.Drawing.Size(119, 52);
+            this.btProduct.Size = new System.Drawing.Size(125, 44);
             this.btProduct.TabIndex = 3;
             this.btProduct.Text = "Sản Phẩm";
             this.btProduct.UseVisualStyleBackColor = true;
@@ -129,9 +130,9 @@
             // btFeeToSell
             // 
             this.btFeeToSell.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btFeeToSell.Location = new System.Drawing.Point(3, 184);
+            this.btFeeToSell.Location = new System.Drawing.Point(3, 203);
             this.btFeeToSell.Name = "btFeeToSell";
-            this.btFeeToSell.Size = new System.Drawing.Size(119, 51);
+            this.btFeeToSell.Size = new System.Drawing.Size(125, 44);
             this.btFeeToSell.TabIndex = 4;
             this.btFeeToSell.Text = "Chi Phí Bán Hàng";
             this.btFeeToSell.UseVisualStyleBackColor = true;
@@ -139,9 +140,9 @@
             // btReport
             // 
             this.btReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btReport.Location = new System.Drawing.Point(3, 241);
+            this.btReport.Location = new System.Drawing.Point(3, 253);
             this.btReport.Name = "btReport";
-            this.btReport.Size = new System.Drawing.Size(119, 60);
+            this.btReport.Size = new System.Drawing.Size(125, 44);
             this.btReport.TabIndex = 5;
             this.btReport.Text = "Báo Cáo Doanh Thu";
             this.btReport.UseVisualStyleBackColor = true;

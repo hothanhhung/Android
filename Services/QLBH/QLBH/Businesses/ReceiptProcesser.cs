@@ -9,62 +9,62 @@ using System.Threading.Tasks;
 
 namespace QLBH.Businesses
 {
-    public class CategoryProcesser
+    public class ReceiptProcesser
     {
-        public static List<Category> GetCategories()
+        public static List<Receipt> GetReceipts()
         {
-            List<Category> categories = new List<Category>();
+            List<Receipt> receipts = new List<Receipt>();
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                categories = context.Categories.ToList();
-                foreach (var cat in categories)
-                {
-                    cat.NumberOfProducts = context.Products.Where(p => p.CategoryId == cat.CategoryId).Count();
-                }
+                receipts = context.Receipts.ToList();
             }
-            return categories;
+            return receipts;
         }
-        public static Category GetCategory(int categorId)
+        public static Receipt GetReceipt(int receiptId)
         {
-            Category obj = null;
+            Receipt obj = null;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var categories = context.Categories.Where(p => p.CategoryId == categorId);
+                var receipts = context.Receipts.Where(p => p.ReceiptId == receiptId);
 
-                obj = categories.FirstOrDefault();
+                obj = receipts.FirstOrDefault();
             }
             return obj;
         }
 
-        public static bool SaveCategory(Category category)
+        public static bool SaveReceipt(Receipt receipt)
         {
             bool succ = false;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var obj = context.Categories.FirstOrDefault(p => p.CategoryId == category.CategoryId);
+                var obj = context.Receipts.FirstOrDefault(p => p.ReceiptId == receipt.ReceiptId);
                 if (obj == null)
                 {
-                    context.Categories.Add(category);
+                    obj.IsSellAll = 0;
+                    obj.DatedReceipt = MethodHelpers.ConvertDateTimeToCorrectString(DateTime.Now);
+                    context.Receipts.Add(receipt);
                 }
                 else
                 {
-                    obj.CategoryName = category.CategoryName;
-                    obj.Note = category.Note;
+                    obj.ProductId = receipt.ProductId;
+                    obj.Quantity = receipt.Quantity;
+                    obj.IsSellAll = receipt.IsSellAll;
+                    obj.Note = receipt.Note;
                 }
                 succ = context.SaveChanges() > 0;
             }
             return succ;
         }
 
-        public static bool DeleteCategory(int categoryId)
+        public static bool DeleteReceipt(int receiptId)
         {
             bool succ = false;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var obj = context.Categories.FirstOrDefault(p => p.CategoryId == categoryId);
+                var obj = context.Receipts.FirstOrDefault(p => p.ReceiptId == receiptId);
                 if (obj != null)
                 {
-                    context.Categories.Remove(obj);
+                    context.Receipts.Remove(obj);
                     succ = context.SaveChanges() > 0;
                 }
             }

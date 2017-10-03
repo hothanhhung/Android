@@ -14,6 +14,8 @@ namespace QLBH
     public partial class Form1 : Form
     {
         ProductManagement productManagement = new ProductManagement();
+        ReceiptsManager receiptsManager = new ReceiptsManager();
+
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +30,17 @@ namespace QLBH
             productManagement.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(productManagement);
+        }
+
+        private void btReceipt_Click(object sender, EventArgs e)
+        {
+            if (receiptsManager == null)
+            {
+                receiptsManager = new QLBH.Views.ReceiptsManager();
+            }
+            receiptsManager.Dock = DockStyle.Fill;
+            pnlMain.Controls.Clear();
+            pnlMain.Controls.Add(receiptsManager);
         }
     }
 }
