@@ -11,11 +11,15 @@ namespace QLBH.Models
     public class Product
     {
         [Key]
-        public int ProductId;
-        public int CategoryId;
-        public string ProductName;
-        public int PriceForSelling;
-        public string Unit;
-        public string Note;
+        public int ProductId {get; set;}
+        public int CategoryId { get; set; }
+        public string ProductName { get; set; }
+        public int PriceForSelling { get; set; }
+        public string Unit { get; set; }
+        public string Note { get; set; }
+        [NotMapped]
+        public string CategoryName { get; set; }
+        [NotMapped]
+        public int Quantity { get; set; }
     }
 }

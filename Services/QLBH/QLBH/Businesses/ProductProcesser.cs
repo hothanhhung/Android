@@ -9,62 +9,65 @@ using System.Threading.Tasks;
 
 namespace QLBH.Businesses
 {
-    public class CategoryProcesser
+    public class ProductProcesser
     {
-        public static List<Category> GetCategories()
+        public static List<Product> GetProducts()
         {
-            List<Category> categories = new List<Category>();
+            List<Product> products = new List<Product>();
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                categories = context.Categories.ToList();
-                foreach (var cat in categories)
+                products = context.Products.ToList();
+                foreach (var pd in products)
                 {
-                    cat.NumberOfProducts = context.Products.Where(p => p.CategoryId == cat.CategoryId).Count();
+                    pd.CategoryName = context.Categories.Where(p => p.CategoryId == pd.CategoryId).First().CategoryName;
                 }
             }
-            return categories;
+            return products;
         }
-        public static Category GetCategory(int categorId)
+        public static Product GetProduct(int productId)
         {
-            Category obj = null;
+            Product obj = null;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var categories = context.Categories.Where(p => p.CategoryId == categorId);
+                var products = context.Products.Where(p => p.ProductId == productId);
 
-                obj = categories.FirstOrDefault();
+                obj = products.FirstOrDefault();
             }
             return obj;
         }
 
-        public static bool SaveCategory(Category category)
+        public static bool SaveProduct(Product product)
         {
             bool succ = false;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var obj = context.Categories.FirstOrDefault(p => p.CategoryId == category.CategoryId);
+                var obj = context.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
                 if (obj == null)
                 {
-                    context.Categories.Add(category);
+                    context.Products.Add(product);
                 }
                 else
                 {
-                    obj.CategoryName = category.CategoryName;
-                    obj.Note = category.Note;
+                    obj.ProductName = product.ProductName;
+                    obj.CategoryId = product.CategoryId;
+                    obj.PriceForSelling = product.PriceForSelling;
+                    obj.Unit = product.Unit;
+                    obj.Note = product.Note;
                 }
                 succ = context.SaveChanges() > 0;
             }
             return succ;
         }
 
-        public static bool DeleteCategory(int categoryId)
+        public static bool DeleteProduct(int productId)
         {
             bool succ = false;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var obj = context.Categories.FirstOrDefault(p => p.CategoryId == categoryId);
+                var obj = context.Products.FirstOrDefault(p => p.ProductId == productId);
                 if (obj != null)
                 {
-                    context.Categories.Remove(obj);
+                    context.Products.Remove(obj);
                     succ = context.SaveChanges() > 0;
                 }
             }
