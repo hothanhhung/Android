@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabProductManager = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -47,7 +48,6 @@
             this.cbbCategories = new System.Windows.Forms.ComboBox();
             this.txtProductUnit = new System.Windows.Forms.TextBox();
             this.txtProductName = new System.Windows.Forms.TextBox();
-            this.txtProductPriceForSelling = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,18 +71,19 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.btAddCategory = new System.Windows.Forms.Button();
             this.btSaveCategory = new System.Windows.Forms.Button();
-            this.CategoryName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceForSellingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noteDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtPriceForSelling = new System.Windows.Forms.NumericUpDown();
             this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.categoryIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.categoryNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numberOfProductsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.categoryBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CategoryName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceForSellingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noteDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabProductManager.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -106,6 +107,7 @@
             this.panel6.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPriceForSelling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoryBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -166,6 +168,7 @@
             // 
             // grdProducts
             // 
+            this.grdProducts.AllowUserToAddRows = false;
             this.grdProducts.AutoGenerateColumns = false;
             this.grdProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -179,6 +182,7 @@
             this.grdProducts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdProducts.Location = new System.Drawing.Point(0, 0);
             this.grdProducts.Name = "grdProducts";
+            this.grdProducts.ReadOnly = true;
             this.grdProducts.Size = new System.Drawing.Size(684, 193);
             this.grdProducts.TabIndex = 0;
             this.grdProducts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdProducts_CellDoubleClick);
@@ -272,13 +276,13 @@
             this.tableLayoutPanel1.Controls.Add(this.cbbCategories, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.txtProductUnit, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.txtProductName, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtProductPriceForSelling, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtProductNote, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.label5, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.txtPriceForSelling, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -312,14 +316,6 @@
             this.txtProductName.Name = "txtProductName";
             this.txtProductName.Size = new System.Drawing.Size(197, 20);
             this.txtProductName.TabIndex = 0;
-            // 
-            // txtProductPriceForSelling
-            // 
-            this.txtProductPriceForSelling.Location = new System.Drawing.Point(206, 29);
-            this.txtProductPriceForSelling.Name = "txtProductPriceForSelling";
-            this.txtProductPriceForSelling.Size = new System.Drawing.Size(197, 20);
-            this.txtProductPriceForSelling.TabIndex = 3;
-            this.txtProductPriceForSelling.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProductPriceForSelling_KeyPress);
             // 
             // label3
             // 
@@ -559,41 +555,19 @@
             this.btSaveCategory.UseVisualStyleBackColor = true;
             this.btSaveCategory.Click += new System.EventHandler(this.btSaveCategory_Click);
             // 
-            // CategoryName
+            // txtPriceForSelling
             // 
-            this.CategoryName.DataPropertyName = "CategoryName";
-            this.CategoryName.HeaderText = "Tên Danh Mục";
-            this.CategoryName.Name = "CategoryName";
-            // 
-            // productIdDataGridViewTextBoxColumn
-            // 
-            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductId";
-            this.productIdDataGridViewTextBoxColumn.HeaderText = "Mã Sản Phẩm";
-            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
-            // 
-            // productNameDataGridViewTextBoxColumn
-            // 
-            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            this.productNameDataGridViewTextBoxColumn.HeaderText = "Tên Sản Phẩm";
-            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            // 
-            // priceForSellingDataGridViewTextBoxColumn
-            // 
-            this.priceForSellingDataGridViewTextBoxColumn.DataPropertyName = "PriceForSelling";
-            this.priceForSellingDataGridViewTextBoxColumn.HeaderText = "Giá Bán";
-            this.priceForSellingDataGridViewTextBoxColumn.Name = "priceForSellingDataGridViewTextBoxColumn";
-            // 
-            // unitDataGridViewTextBoxColumn
-            // 
-            this.unitDataGridViewTextBoxColumn.DataPropertyName = "Unit";
-            this.unitDataGridViewTextBoxColumn.HeaderText = "Đơn Vị";
-            this.unitDataGridViewTextBoxColumn.Name = "unitDataGridViewTextBoxColumn";
-            // 
-            // noteDataGridViewTextBoxColumn1
-            // 
-            this.noteDataGridViewTextBoxColumn1.DataPropertyName = "Note";
-            this.noteDataGridViewTextBoxColumn1.HeaderText = "Ghi Chú";
-            this.noteDataGridViewTextBoxColumn1.Name = "noteDataGridViewTextBoxColumn1";
+            this.txtPriceForSelling.Location = new System.Drawing.Point(206, 29);
+            this.txtPriceForSelling.Maximum = new decimal(new int[] {
+            -1294967296,
+            0,
+            0,
+            0});
+            this.txtPriceForSelling.Name = "txtPriceForSelling";
+            this.txtPriceForSelling.Size = new System.Drawing.Size(120, 20);
+            this.txtPriceForSelling.TabIndex = 10;
+            this.txtPriceForSelling.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPriceForSelling.ThousandsSeparator = true;
             // 
             // productBindingSource
             // 
@@ -631,6 +605,52 @@
             // 
             this.categoryBindingSource.DataSource = typeof(QLBH.Models.Category);
             // 
+            // productIdDataGridViewTextBoxColumn
+            // 
+            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductId";
+            this.productIdDataGridViewTextBoxColumn.HeaderText = "Mã Sản Phẩm";
+            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
+            this.productIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // productNameDataGridViewTextBoxColumn
+            // 
+            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            this.productNameDataGridViewTextBoxColumn.HeaderText = "Tên Sản Phẩm";
+            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
+            this.productNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // CategoryName
+            // 
+            this.CategoryName.DataPropertyName = "CategoryName";
+            this.CategoryName.HeaderText = "Tên Danh Mục";
+            this.CategoryName.Name = "CategoryName";
+            this.CategoryName.ReadOnly = true;
+            // 
+            // priceForSellingDataGridViewTextBoxColumn
+            // 
+            this.priceForSellingDataGridViewTextBoxColumn.DataPropertyName = "PriceForSelling";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.priceForSellingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.priceForSellingDataGridViewTextBoxColumn.HeaderText = "Giá Bán";
+            this.priceForSellingDataGridViewTextBoxColumn.Name = "priceForSellingDataGridViewTextBoxColumn";
+            this.priceForSellingDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // unitDataGridViewTextBoxColumn
+            // 
+            this.unitDataGridViewTextBoxColumn.DataPropertyName = "Unit";
+            this.unitDataGridViewTextBoxColumn.HeaderText = "Đơn Vị";
+            this.unitDataGridViewTextBoxColumn.Name = "unitDataGridViewTextBoxColumn";
+            this.unitDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // noteDataGridViewTextBoxColumn1
+            // 
+            this.noteDataGridViewTextBoxColumn1.DataPropertyName = "Note";
+            this.noteDataGridViewTextBoxColumn1.HeaderText = "Ghi Chú";
+            this.noteDataGridViewTextBoxColumn1.Name = "noteDataGridViewTextBoxColumn1";
+            this.noteDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
             // ProductManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -665,6 +685,7 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtPriceForSelling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.productBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoryBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -686,7 +707,6 @@
         private System.Windows.Forms.ComboBox cbbCategories;
         private System.Windows.Forms.TextBox txtProductUnit;
         private System.Windows.Forms.TextBox txtProductName;
-        private System.Windows.Forms.TextBox txtProductPriceForSelling;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
@@ -722,6 +742,7 @@
         private System.Windows.Forms.Button btSaveProduct;
         private System.Windows.Forms.BindingSource productBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn categoryIdDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.NumericUpDown txtPriceForSelling;
         private System.Windows.Forms.DataGridViewTextBoxColumn productIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CategoryName;

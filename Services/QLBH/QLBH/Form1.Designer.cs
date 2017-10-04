@@ -37,6 +37,7 @@
             this.btFeeToSell = new System.Windows.Forms.Button();
             this.btReport = new System.Windows.Forms.Button();
             this.pnlMain = new System.Windows.Forms.Panel();
+            this.btCustomers = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -71,10 +72,12 @@
             this.tableLayoutPanel1.Controls.Add(this.btProduct, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.btFeeToSell, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.btReport, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.btCustomers, 0, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
@@ -155,6 +158,17 @@
             this.pnlMain.Size = new System.Drawing.Size(561, 404);
             this.pnlMain.TabIndex = 0;
             // 
+            // btCustomers
+            // 
+            this.btCustomers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btCustomers.Location = new System.Drawing.Point(3, 303);
+            this.btCustomers.Name = "btCustomers";
+            this.btCustomers.Size = new System.Drawing.Size(125, 44);
+            this.btCustomers.TabIndex = 6;
+            this.btCustomers.Text = "Khách Hàng";
+            this.btCustomers.UseVisualStyleBackColor = true;
+            this.btCustomers.Click += new System.EventHandler(this.btCustomers_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -183,6 +197,7 @@
         private System.Windows.Forms.Button btFeeToSell;
         private System.Windows.Forms.Button btReport;
         private System.Windows.Forms.Panel pnlMain;
+        private System.Windows.Forms.Button btCustomers;
     }
 }
 

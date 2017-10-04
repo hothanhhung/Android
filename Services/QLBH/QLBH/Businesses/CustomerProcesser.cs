@@ -1,4 +1,5 @@
-﻿using QLBH.Commons;
+﻿
+using QLBH.Commons;
 using QLBH.Models;
 using System;
 using System.Collections.Generic;
@@ -9,61 +10,60 @@ using System.Threading.Tasks;
 
 namespace QLBH.Businesses
 {
-    public class ProductProcesser
+    public class CustomerProcesser
     {
-        public static List<Product> GetProducts()
+        public static List<Customer> GetCustomers()
         {
-            List<Product> products = new List<Product>();
+            List<Customer> customers = new List<Customer>();
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                products = context.Products.ToList();
+                customers = context.Customers.ToList();
             }
-            return products;
+            return customers;
         }
-        public static Product GetProduct(int productId)
+        public static Customer GetCustomer(string phoneNumber)
         {
-            Product obj = null;
+            Customer obj = null;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var products = context.Products.Where(p => p.ProductId == productId);
+                var customers = context.Customers.Where(p => p.PhoneNumber == phoneNumber);
 
-                obj = products.FirstOrDefault();
+                obj = customers.FirstOrDefault();
             }
             return obj;
         }
 
-        public static bool SaveProduct(Product product)
+        public static bool SaveCustomer(Customer customer)
         {
             bool succ = false;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var obj = context.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+                var obj = context.Customers.FirstOrDefault(p => p.PhoneNumber == customer.PhoneNumber);
                 if (obj == null)
                 {
-                    context.Products.Add(product);
+                    context.Customers.Add(customer);
                 }
                 else
                 {
-                    obj.ProductName = product.ProductName;
-                    obj.CategoryId = product.CategoryId;
-                    obj.PriceForSelling = product.PriceForSelling;
-                    obj.Unit = product.Unit;
-                    obj.Note = product.Note;
+                    obj.CustomerName = customer.CustomerName;
+                    obj.Address = customer.Address;
+                    obj.Email = customer.Email;
+                    obj.Note = customer.Note;
                 }
                 succ = context.SaveChanges() > 0;
             }
             return succ;
         }
 
-        public static bool DeleteProduct(int productId)
+        public static bool DeleteCustomer(string phoneNumber)
         {
             bool succ = false;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                var obj = context.Products.FirstOrDefault(p => p.ProductId == productId);
+                var obj = context.Customers.FirstOrDefault(p => p.PhoneNumber == phoneNumber);
                 if (obj != null)
                 {
-                    context.Products.Remove(obj);
+                    context.Customers.Remove(obj);
                     succ = context.SaveChanges() > 0;
                 }
             }

@@ -13,8 +13,9 @@ namespace QLBH
 {
     public partial class Form1 : Form
     {
-        ProductManagement productManagement = new ProductManagement();
-        ReceiptsManager receiptsManager = new ReceiptsManager();
+        ProductManagement productManagement = null;
+        ReceiptsManager receiptsManager = null;
+        CustomersManagement customersManagement = null;
 
         public Form1()
         {
@@ -41,6 +42,17 @@ namespace QLBH
             receiptsManager.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(receiptsManager);
+        }
+
+        private void btCustomers_Click(object sender, EventArgs e)
+        {
+            if (customersManagement == null)
+            {
+                customersManagement = new QLBH.Views.CustomersManagement();
+            }
+            customersManagement.Dock = DockStyle.Fill;
+            pnlMain.Controls.Clear();
+            pnlMain.Controls.Add(customersManagement);
         }
     }
 }
