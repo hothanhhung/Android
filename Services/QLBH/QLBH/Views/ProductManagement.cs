@@ -33,7 +33,7 @@ namespace QLBH.Views
                 if (_currentProduct == null)
                 {
                     txtProductName.Text = string.Empty;
-                    txtProductPriceForSelling.Text = string.Empty;
+                    txtPriceForSelling.Value = 0;
                     txtProductUnit.Text = string.Empty;
                     txtProductNote.Text = string.Empty;
                     cbbCategories.SelectedIndex = -1;
@@ -42,7 +42,7 @@ namespace QLBH.Views
                 {
                     cbbCategories.SelectedIndex = -1;
                     txtProductName.Text = _currentProduct.ProductName;
-                    txtProductPriceForSelling.Text = _currentProduct.PriceForSelling.ToString();
+                    txtPriceForSelling.Value = _currentProduct.PriceForSelling;
                     txtProductUnit.Text = _currentProduct.Unit;
                     txtProductNote.Text = _currentProduct.Note;
                     foreach (var item in cbbCategories.Items)
@@ -167,6 +167,17 @@ namespace QLBH.Views
             if (Products == null || isReload)
             {
                 Products = ProductProcesser.GetProducts();
+                if (Categories != null)
+                {
+                    foreach (var product in Products)
+                    {
+                        var category = Categories.Where(c => c.CategoryId == product.CategoryId).FirstOrDefault();
+                        if (category != null)
+                        {
+                            product.CategoryName = category.CategoryName;
+                        }
+                    }
+                }
             }
             if (string.IsNullOrWhiteSpace(filter))
             {
@@ -199,16 +210,15 @@ namespace QLBH.Views
 
         private void btSaveProduct_Click(object sender, EventArgs e)
         {
-            int price = 0;
             if (string.IsNullOrWhiteSpace(txtProductName.Text))
             {
                 MessageBox.Show("Tên Sản Phẩm chưa được nhập", "Lưu Sản Phẩm", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtProductName.Focus();
             }
-            else if (string.IsNullOrWhiteSpace(txtProductPriceForSelling.Text) || !Int32.TryParse(txtProductPriceForSelling.Text, out price))
+            else if (txtPriceForSelling.Value<0)
             {
                 MessageBox.Show("Giá bán chưa được nhập", "Lưu Sản Phẩm", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtProductPriceForSelling.Focus();
+                txtPriceForSelling.Focus();
             }
             else if (string.IsNullOrWhiteSpace(cbbCategories.Text) || cbbCategories.SelectedItem == null)
             {
@@ -218,7 +228,7 @@ namespace QLBH.Views
             else
             {
                 CurrentProduct.ProductName = txtProductName.Text;
-                CurrentProduct.PriceForSelling = price;
+                CurrentProduct.PriceForSelling = Decimal.ToInt32(txtPriceForSelling.Value);
                 CurrentProduct.CategoryId = ((Category)cbbCategories.SelectedItem).CategoryId;
                 CurrentProduct.Unit = txtProductUnit.Text;
                 CurrentProduct.Note = txtProductNote.Text;

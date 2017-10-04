@@ -11,12 +11,37 @@ namespace QLBH.Businesses
 {
     public class ReceiptProcesser
     {
-        public static List<Receipt> GetReceipts()
+        public static List<Receipt> GetReceipts(int? productId = null, string from = "", string to = "", bool isGroup = false)
         {
             List<Receipt> receipts = new List<Receipt>();
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
-                receipts = context.Receipts.ToList();
+                var query = context.Receipts.AsQueryable();
+                if (productId.HasValue && productId.Value > 0)
+                {
+                    query = query.Where(p => p.ProductId == productId.Value);
+                }
+                if(!string.IsNullOrWhiteSpace(from))
+                {
+                    query = query.Where(p => p.DatedReceipt.CompareTo(from) >= 0);
+                }
+                if (!string.IsNullOrWhiteSpace(to))
+                {
+                    query = query.Where(p => p.DatedReceipt.CompareTo(to) <= 0);
+                }
+                if (isGroup)
+                {
+                    receipts = query.ToList().GroupBy(p => p.ProductId).Select(group => new Receipt() { 
+                        ProductId = group.First().ProductId, 
+                        Quantity = group.Sum(g => g.Quantity), 
+                        PriceOfAllForReceipting = group.Sum(g => g.PriceOfAllForReceipting),
+                        IsSellAll = group.Any(g=>g.IsSellAll==0)?0:1
+                    }).ToList();
+                }
+                else
+                {
+                    receipts = query.ToList();
+                }
             }
             return receipts;
         }
@@ -40,8 +65,6 @@ namespace QLBH.Businesses
                 var obj = context.Receipts.FirstOrDefault(p => p.ReceiptId == receipt.ReceiptId);
                 if (obj == null)
                 {
-                    obj.IsSellAll = 0;
-                    obj.DatedReceipt = MethodHelpers.ConvertDateTimeToCorrectString(DateTime.Now);
                     context.Receipts.Add(receipt);
                 }
                 else
@@ -49,6 +72,7 @@ namespace QLBH.Businesses
                     obj.ProductId = receipt.ProductId;
                     obj.Quantity = receipt.Quantity;
                     obj.IsSellAll = receipt.IsSellAll;
+                    obj.DatedReceipt = receipt.DatedReceipt;
                     obj.Note = receipt.Note;
                 }
                 succ = context.SaveChanges() > 0;

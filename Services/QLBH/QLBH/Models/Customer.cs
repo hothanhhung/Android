@@ -5,10 +5,11 @@ namespace QLBH.Models
     public class Customer
     {
         [Key]
-       public int PhoneNumber {get; set;}
-       public int CustomerName {get; set;}
-       public int Address {get; set;}
-       public int Email {get; set;}
-       public int Note {get; set;}
+        public string PhoneNumber { get; set; }
+        public string CustomerName { get; set; }
+        public string Address { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string Email { get; set; }
+        public string Note { get; set; }
     }
 }

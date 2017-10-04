@@ -61,6 +61,14 @@ namespace QLBH.Commons
             return string.Empty;
         }
 
+        public static string ConvertDateToCorrectString(DateTime date)
+        {
+            if (date != null)
+            {
+                return date.ToString("yyyy-MM-dd")+" 00:00:00";
+            }
+            return string.Empty;
+        }
         public static DateTime GetVNCurrentDate()
         {
             return DateTime.UtcNow.AddHours(7);

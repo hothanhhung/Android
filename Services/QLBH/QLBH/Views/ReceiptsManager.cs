@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using QLBH.Models;
 using QLBH.Businesses;
+using QLBH.Commons;
 
 namespace QLBH.Views
 {
@@ -21,9 +22,31 @@ namespace QLBH.Views
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void LoadReceipts()
         {
+            int productId = 0;
+            string from = MethodHelpers.ConvertDateToCorrectString(dtMinForView.Value),
+                to =  MethodHelpers.ConvertDateToCorrectString(dtMaxForView.Value.AddDays(1));
 
+            if(cbbProductsForView.SelectedItem!=null)
+            {
+                productId = ((Product)cbbProductsForView.SelectedItem).ProductId;
+            }
+
+            var receipts = ReceiptProcesser.GetReceipts(productId, from, to, cbGroupProduct.Checked);
+
+            if (Products != null)
+            {
+                foreach (var receipt in receipts)
+                {
+                    var product = Products.Where(p => p.ProductId == receipt.ProductId).FirstOrDefault();
+                    if (product != null)
+                    {
+                        receipt.ProductName = product.ProductName;
+                    }
+                }
+            }
+            grdReceipts.DataSource = receipts;
         }
 
         private void loadProducts(bool isReload = true)
@@ -66,6 +89,7 @@ namespace QLBH.Views
             cbbQuickView.SelectedIndex = 0;
             UpdateView();
             loadProducts();
+            LoadReceipts();
         }
 
         private void UpdateView()
@@ -82,20 +106,83 @@ namespace QLBH.Views
                     dtMaxForView.Value = now.AddDays(-1);
                     break;
                 case 3:
-                    dtMinForView.Value = now;
+                    dtMinForView.Value = now.AddDays(-(int)now.DayOfWeek);
                     dtMaxForView.Value = now;
                     break;
-                case 4: break;
-                case 5: break;
-                case 6: break;
-                case 7: break;
-                case 8: break;
+                case 4:
+                    dtMinForView.Value = now.AddDays(-(int)now.DayOfWeek - 6);
+                    dtMaxForView.Value = dtMinForView.Value.AddDays(6);
+                    break;
+                case 5:
+                    dtMinForView.Value = new DateTime(now.Year, now.Month, 1);
+                    dtMaxForView.Value = now;
+                    break;
+                case 6:
+                    dtMinForView.Value = new DateTime(now.Year, now.Month, 1);
+                    dtMaxForView.Value = (new DateTime(now.Year, now.Month + 1, 1)).AddDays(-1);
+                    break;
+                case 7:
+                    dtMinForView.Value = new DateTime(now.Year, 1, 1);
+                    dtMaxForView.Value = now;
+                    break;
+                case 8:
+                    dtMinForView.Value = new DateTime(now.Year - 1, 1, 1);
+                    dtMaxForView.Value = new DateTime(now.Year - 1, 12, 31);
+                    break;
             }
         }
 
         private void cbbQuickView_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateView();
+        }
+
+        private void btReceipt_Click(object sender, EventArgs e)
+        {
+            if (cbbProductForReceipt.SelectedItem == null && ((Product)cbbProductForReceipt.SelectedItem).ProductId <= 0)
+            {
+                MessageBox.Show("Chọn sản phẩm", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cbbProductForReceipt.Focus();
+            }
+            else if (txtQuantity.Value < 0)
+            {
+                MessageBox.Show("Nhập số lượng", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtQuantity.Focus();
+            }
+            else if (txtTotalPrice.Value < 0)
+            {
+                MessageBox.Show("Nhập giá nhập hàng", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtTotalPrice.Focus();
+            }
+            else
+            {
+                var receipt = new Receipt()
+                {
+                    ProductId = ((Product)cbbProductForReceipt.SelectedItem).ProductId,
+                    Quantity = Decimal.ToInt32(txtQuantity.Value),
+                    PriceOfAllForReceipting = Decimal.ToInt32(txtTotalPrice.Value),
+                    Note = txtNote.Text,
+                    IsSellAll = 0,
+                    DatedReceipt = MethodHelpers.ConvertDateTimeToCorrectString(dtReceiptedDate.Value)
+                };
+                if (ReceiptProcesser.SaveReceipt(receipt))
+                {
+                    cbbProductForReceipt.SelectedIndex = -1;
+                    txtQuantity.Value = 0;
+                    txtTotalPrice.Value = 0;
+                    txtNote.Text = string.Empty;
+                    LoadReceipts();
+                }
+                else
+                {
+                    MessageBox.Show("Có lỗi khi nhập hàng", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btViewReceipt_Click(object sender, EventArgs e)
+        {
+            LoadReceipts();
         }
     }
 }

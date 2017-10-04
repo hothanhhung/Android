@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLBH.Models
 {
@@ -12,5 +13,7 @@ namespace QLBH.Models
        public int IsSellAll {get; set;}
        public string DatedReceipt {get; set;}
        public string Note { get; set; }
+        [NotMapped]
+       public string ProductName { get; set; }
     }
 }
