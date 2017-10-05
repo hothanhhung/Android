@@ -36,8 +36,8 @@
             this.btProduct = new System.Windows.Forms.Button();
             this.btFeeToSell = new System.Windows.Forms.Button();
             this.btReport = new System.Windows.Forms.Button();
-            this.pnlMain = new System.Windows.Forms.Panel();
             this.btCustomers = new System.Windows.Forms.Button();
+            this.pnlMain = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -118,6 +118,7 @@
             this.btOrder.TabIndex = 2;
             this.btOrder.Text = "Đơn Hàng";
             this.btOrder.UseVisualStyleBackColor = true;
+            this.btOrder.Click += new System.EventHandler(this.btOrder_Click);
             // 
             // btProduct
             // 
@@ -150,14 +151,6 @@
             this.btReport.Text = "Báo Cáo Doanh Thu";
             this.btReport.UseVisualStyleBackColor = true;
             // 
-            // pnlMain
-            // 
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(0, 0);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(561, 404);
-            this.pnlMain.TabIndex = 0;
-            // 
             // btCustomers
             // 
             this.btCustomers.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -168,6 +161,14 @@
             this.btCustomers.Text = "Khách Hàng";
             this.btCustomers.UseVisualStyleBackColor = true;
             this.btCustomers.Click += new System.EventHandler(this.btCustomers_Click);
+            // 
+            // pnlMain
+            // 
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 0);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(561, 404);
+            this.pnlMain.TabIndex = 0;
             // 
             // Form1
             // 
