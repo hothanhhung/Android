@@ -16,6 +16,7 @@ namespace QLBH
         ProductManagement productManagement = null;
         ReceiptsManager receiptsManager = null;
         CustomersManagement customersManagement = null;
+        IssuesManagement issuesManagement = null;
 
         public Form1()
         {
@@ -53,6 +54,18 @@ namespace QLBH
             customersManagement.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(customersManagement);
+        }
+
+        private void btOrder_Click(object sender, EventArgs e)
+        {
+            if (issuesManagement == null)
+            {
+                issuesManagement = new QLBH.Views.IssuesManagement();
+            }
+            issuesManagement.Dock = DockStyle.Fill;
+            pnlMain.Controls.Clear();
+            pnlMain.Controls.Add(issuesManagement);
+            
         }
     }
 }

@@ -94,6 +94,12 @@
     <Compile Include="Views\CustomersManagement.Designer.cs">
       <DependentUpon>CustomersManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\IssuesManagement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\IssuesManagement.Designer.cs">
+      <DependentUpon>IssuesManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReceiptsManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -121,6 +127,9 @@
     <EmbeddedResource Include="Views\CustomersManagement.resx">
       <DependentUpon>CustomersManagement.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\IssuesManagement.resx">
+      <DependentUpon>IssuesManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ReceiptsManager.resx">
       <DependentUpon>ReceiptsManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,6 +142,7 @@
     </None>
     <None Include="Properties\DataSources\QLBH.Models.Category.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Customer.datasource" />
+    <None Include="Properties\DataSources\QLBH.Models.OrderDetail.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Product.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Receipt.datasource" />
     <None Include="Properties\Settings.settings">
