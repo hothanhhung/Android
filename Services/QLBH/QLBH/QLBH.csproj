@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Businesses\CustomerProcesser.cs" />
+    <Compile Include="Businesses\OrderDetailProcesser.cs" />
+    <Compile Include="Businesses\OrderProcesser.cs" />
     <Compile Include="Businesses\ReceiptProcesser.cs" />
     <Compile Include="Businesses\CategoryProcesser.cs" />
     <Compile Include="Businesses\ProductProcesser.cs" />
@@ -78,6 +80,12 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SelectCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectCustomerForm.Designer.cs">
+      <DependentUpon>SelectCustomerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -114,6 +122,9 @@
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectCustomerForm.resx">
+      <DependentUpon>SelectCustomerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
