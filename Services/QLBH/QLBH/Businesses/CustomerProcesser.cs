@@ -33,7 +33,7 @@ namespace QLBH.Businesses
             return obj;
         }
 
-        public static bool SaveCustomer(Customer customer)
+        public static bool SaveCustomer(Customer customer, bool isUpdatingInfo = false)
         {
             bool succ = false;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
@@ -46,9 +46,14 @@ namespace QLBH.Businesses
                 else
                 {
                     obj.CustomerName = customer.CustomerName;
-                    obj.Address = customer.Address;
-                    obj.Email = customer.Email;
-                    obj.Note = customer.Note;
+                    obj.DeliveryAddress = customer.DeliveryAddress;
+
+                    if (!isUpdatingInfo)
+                    {
+                        obj.Address = customer.Address;
+                        obj.Email = customer.Email;
+                        obj.Note = customer.Note;
+                    }
                 }
                 succ = context.SaveChanges() > 0;
             }

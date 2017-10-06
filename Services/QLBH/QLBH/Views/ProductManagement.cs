@@ -91,7 +91,7 @@ namespace QLBH.Views
         {
             if (tabProductManager.SelectedIndex == 0)
             {
-                loadProducts();
+                loadProducts(true);
                 loadCbbCategories(true);
             }
             else if (tabProductManager.SelectedIndex == 1)
@@ -166,7 +166,7 @@ namespace QLBH.Views
         {
             if (Products == null || isReload)
             {
-                Products = ProductProcesser.GetProducts();
+                Products = ProductProcesser.GetProducts(true);
                 if (Categories != null)
                 {
                     foreach (var product in Products)

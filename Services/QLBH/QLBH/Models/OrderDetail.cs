@@ -12,6 +12,7 @@ namespace QLBH.Models
        public int Quantity {get; set;}
        public int PriceForUnit {get; set;}
        public string Note { get; set; }
+       public int Lock { get; set; }
         [NotMapped]
        public string ProductName { get; set; }
         [NotMapped]
