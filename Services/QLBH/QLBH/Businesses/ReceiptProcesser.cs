@@ -35,7 +35,7 @@ namespace QLBH.Businesses
                         ProductId = group.First().ProductId, 
                         Quantity = group.Sum(g => g.Quantity), 
                         PriceOfAllForReceipting = group.Sum(g => g.PriceOfAllForReceipting),
-                        IsSellAll = group.Any(g=>g.IsSellAll==0)?0:1
+                        RemainAfterDone = group.Sum(g => g.RemainAfterDone)
                     }).ToList();
                 }
                 else
@@ -71,7 +71,7 @@ namespace QLBH.Businesses
                 {
                     obj.ProductId = receipt.ProductId;
                     obj.Quantity = receipt.Quantity;
-                    obj.IsSellAll = receipt.IsSellAll;
+                    obj.RemainAfterDone = receipt.RemainAfterDone;
                     obj.DatedReceipt = receipt.DatedReceipt;
                     obj.Note = receipt.Note;
                 }

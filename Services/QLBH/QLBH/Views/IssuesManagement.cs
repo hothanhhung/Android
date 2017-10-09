@@ -17,6 +17,7 @@ namespace QLBH.Views
     public partial class IssuesManagement : UserControl
     {
         List<Product> Products = null;
+        List<Order> Orders = new List<Order>();
         List<OrderDetail> OrderDetails = new List<OrderDetail>();
         Order CurrentOrder = new Order();
         public BindingSource OrderDetailsBinding = new BindingSource();
@@ -33,6 +34,8 @@ namespace QLBH.Views
             OrderDetailsBinding.DataSource = OrderDetails;
             OrderDetailsBinding.ResetBindings(true);
             ResetUIAddProduct();
+            cbbIssuesQuickSelectionForSearch.SelectedIndex = 2;
+            UpdateMinMaxDateView();
         }
 
         private void loadcbbProducts(bool isReload = false)
@@ -43,6 +46,7 @@ namespace QLBH.Views
             cbbProducts.ValueMember = "ProductId";
             cbbProducts.Text = string.Empty;
             cbbProducts.SelectedIndex = -1;
+            cbbIssuesStatusForSearch.SelectedIndex = 0;
         }
 
         private void ResetUIAddProduct()
@@ -64,6 +68,24 @@ namespace QLBH.Views
 
         }
         
+        private void LoadOrders(bool isReload = false){
+            if (Orders == null || isReload)
+            {
+                int? status = null;
+                if (cbbIssuesStatusForSearch.SelectedIndex > 0)
+                {
+                    status = cbbIssuesStatusForSearch.SelectedIndex - 1;
+                }
+                string from = MethodHelpers.ConvertDateToCorrectString(dtIssuesMinDateForSearch.Value);
+                string to = MethodHelpers.ConvertDateToCorrectString(dtIssuesMaxDateForSearch.Value.AddDays(1));
+                Orders = OrderProcesser.GetOrders(status, txtIssuesNameForSearch.Text.Trim(), txtIssuesPhoneForSearch.Text.Trim(), from, to);
+                grdOrders.DataSource = Orders;
+            }
+
+
+        }
+
+
         private void btAddOrderDetail_Click(object sender, EventArgs e)
         {
             if (cbbProducts.SelectedItem == null)
@@ -126,7 +148,7 @@ namespace QLBH.Views
 
         private void btDeleteOrderDetail_Click(object sender, EventArgs e)
         {
-            if (CurrentOrder != null && CurrentOrder.OrderId > 0)
+            if (CurrentOrder != null && CurrentOrder.OrderId == 0)
             {
                 if (grdOrderDetail.CurrentRow != null && grdOrderDetail.CurrentRow.DataBoundItem != null)
                 {
@@ -249,6 +271,181 @@ namespace QLBH.Views
         private void grdOrderDetail_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             lblTotalPrice.Text = string.Format("{0:n0}", OrderDetails.Sum(o => o.OrderDetailTotalPrice));
+        }
+
+
+        private void UpdateMinMaxDateView()
+        {
+            DateTime now = DateTime.Now;
+            switch (cbbIssuesQuickSelectionForSearch.SelectedIndex + 1)
+            {
+                case 1:
+                    dtIssuesMinDateForSearch.Value = now;
+                    dtIssuesMaxDateForSearch.Value = now;
+                    break;
+                case 2:
+                    dtIssuesMinDateForSearch.Value = now.AddDays(-1);
+                    dtIssuesMaxDateForSearch.Value = now.AddDays(-1);
+                    break;
+                case 3:
+                    dtIssuesMinDateForSearch.Value = now.AddDays(-7);
+                    dtIssuesMaxDateForSearch.Value = now;
+                    break;
+                case 4:
+                    dtIssuesMinDateForSearch.Value = now.AddDays(-(int)now.DayOfWeek);
+                    dtIssuesMaxDateForSearch.Value = now;
+                    break;
+                case 5:
+                    dtIssuesMinDateForSearch.Value = now.AddDays(-(int)now.DayOfWeek - 6);
+                    dtIssuesMaxDateForSearch.Value = dtIssuesMinDateForSearch.Value.AddDays(6);
+                    break;
+                case 6:
+                    dtIssuesMinDateForSearch.Value = new DateTime(now.Year, now.Month, 1);
+                    dtIssuesMaxDateForSearch.Value = now;
+                    break;
+                case 7:
+                    dtIssuesMinDateForSearch.Value = new DateTime(now.Year, now.Month, 1);
+                    dtIssuesMaxDateForSearch.Value = (new DateTime(now.Year, now.Month + 1, 1)).AddDays(-1);
+                    break;
+                case 8:
+                    dtIssuesMinDateForSearch.Value = new DateTime(now.Year, 1, 1);
+                    dtIssuesMaxDateForSearch.Value = now;
+                    break;
+                case 9:
+                    dtIssuesMinDateForSearch.Value = new DateTime(now.Year - 1, 1, 1);
+                    dtIssuesMaxDateForSearch.Value = new DateTime(now.Year - 1, 12, 31);
+                    break;
+            }
+        }
+
+        private void cbbIssuesQuickSelectionForSearch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateMinMaxDateView();
+        }
+
+        private void tabIssues_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch(tabIssues.SelectedIndex){
+                case 0:
+                    break;
+                case 1:
+                    LoadOrders(false);
+                    break;
+            }
+        }
+
+        private void btIssuesSeach_Click(object sender, EventArgs e)
+        {
+            LoadOrders(true);
+        }
+
+        private void grdOrders_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && grdOrders.CurrentRow.DataBoundItem != null)
+            {
+                var order = (Order)grdOrders.CurrentRow.DataBoundItem;
+                loadUIFromOrder(OrderProcesser.GetOrder(order.OrderId));
+                tabIssues.SelectedIndex = 0;
+                tabCreateOrder.Text = "Xem Đơn Hàng #" + order.OrderId;
+            }
+        }
+
+        private void loadUIFromOrder(Order order)
+        {
+            CurrentOrder = order;
+            grdOrderDetail.ClearSelection();
+            if (CurrentOrder != null)
+            {
+                txtCustomerDeliveryAddress.Text = CurrentOrder.Address;
+                txtCustomerName.Text = CurrentOrder.CustomerName;
+                txtCustomerPhone.Text = CurrentOrder.Phone;
+                txtCustomerShipFee.Value = CurrentOrder.FeeForShipping;
+                txtCustomerNote.Text = CurrentOrder.Note;
+                dtDateForSelling.Value = MethodHelpers.ConvertStringDateTimeToDateTime(CurrentOrder.CreatedDate);
+                OrderDetails.Clear();
+                OrderDetails.AddRange(OrderDetailProcesser.GetOrderDetails(order.OrderId));
+                foreach (var orderDetail in OrderDetails)
+                {
+                    var product = Products.Where(p=>p.ProductId == orderDetail.ProductId).FirstOrDefault();
+                    if(product!=null)
+                    {
+                        orderDetail.ProductName = product.ProductName;
+                    }
+                }
+                OrderDetailsBinding.ResetBindings(true);
+            }
+            else
+            {
+                CurrentOrder = new Order();
+                OrderDetails.Clear();
+            }
+            btStatusOfOrder.Text = CurrentOrder.StatusInString;
+            return;
+            switch (CurrentOrder.Status)
+            {
+                case 0:
+                    grpCustomerInfo.Enabled = true;
+                    grpOrderDetail.Enabled = true;
+                    btStatusOfOrder.BackColor = Color.Green; 
+                    break;
+                case 1:
+                    grpCustomerInfo.Enabled = true;
+                    grpOrderDetail.Enabled = true;
+                    btStatusOfOrder.BackColor = Color.SeaGreen; 
+                    break;
+                case 2:
+                    grpCustomerInfo.Enabled = false;
+                    grpOrderDetail.Enabled = false;
+                    btStatusOfOrder.BackColor = Color.Blue;
+                    break;
+                case 3:
+                    grpCustomerInfo.Enabled = false;
+                    grpOrderDetail.Enabled = false;
+                    btStatusOfOrder.BackColor = Color.Red; 
+                    break;
+                default:
+                    grpCustomerInfo.Enabled = false;
+                    grpOrderDetail.Enabled = false; 
+                    btStatusOfOrder.BackColor = Color.Gray; 
+                    break;
+            }
+        }
+
+        private void btCreateNewOrder_Click(object sender, EventArgs e)
+        {
+            loadUIFromOrder(null);
+            tabIssues.SelectedIndex = 0;
+            tabCreateOrder.Text = "Tạo Đơn Hàng";
+        }
+
+        private void btCancelOrder_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Đơn Hàng Bị Hủy Không Thể Chỉnh Sửa.\nBạn Muốn Hủy Đơn Hàng Này?", "Xử Lý Đơn Hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (OrderProcesser.CancelOrder(CurrentOrder))
+                {
+                    loadUIFromOrder(CurrentOrder);
+                }
+                else
+                {
+                    MessageBox.Show("Có  Lỗi Khi Hủy Đơn Hàng Này", "Xử Lý Đơn Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btDoneOrder_Click(object sender, EventArgs e)
+        {
+           if (MessageBox.Show("Đơn Hàng Đã Xong Không Thể Chỉnh Sửa.\nBạn Muốn Cập Nhật?", "Xử Lý Đơn Hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (OrderProcesser.DoneOrder(CurrentOrder))
+                {
+                    loadUIFromOrder(CurrentOrder);
+                }
+                else
+                {
+                    MessageBox.Show("Có  Lỗi Khi Cập Nhật Trạng Thái Đơn Hàng Này", "Xử Lý Đơn Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            } 
         }
     }
 }

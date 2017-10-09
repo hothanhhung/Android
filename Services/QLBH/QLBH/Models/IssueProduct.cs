@@ -8,5 +8,6 @@ namespace QLBH.Models
        public int IssueProductId {get; set;}
        public int ReceiptId {get; set;}
        public int OrderDetailId { get; set; }
+       public int Quantity { get; set; }
     }
 }

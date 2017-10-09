@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLBH.Models
 {
@@ -13,5 +14,24 @@ namespace QLBH.Models
        public string CreatedDate { get; set; }
        public int Status {get; set;}
        public string Note { get; set; }
+       [NotMapped]
+       public string StatusInString
+       {
+           get
+           {
+               switch (Status)
+               {
+                   case 0: return "Đang Tạo";
+                   case 1: return "Đang Xử Lý";
+                   case 2: return "Hoàn Thành";
+                   case 3: return "Đã Hủy Bỏ";
+                   default: return "Không Xác Định";
+               }
+           }
+       }
+       [NotMapped]
+       public int NumberOfProducts { get; set; }
+       [NotMapped]
+       public int TotalPrices { get; set; }
     }
 }
