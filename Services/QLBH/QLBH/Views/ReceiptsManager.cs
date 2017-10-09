@@ -74,18 +74,6 @@ namespace QLBH.Views
 
         private void ReceiptsManager_Load(object sender, EventArgs e)
         {
-            Dictionary<string, string> quickView = new Dictionary<string, string>();
-            quickView.Add("1", "Hôm Nay");
-            quickView.Add("2", "Hôm Qua");
-            quickView.Add("3", "Tuần Này");
-            quickView.Add("4", "Tuần Trước");
-            quickView.Add("5", "Tháng Này");
-            quickView.Add("6", "Tháng Trước");
-            quickView.Add("7", "Năm Này");
-            quickView.Add("8", "Năm Trước");
-            cbbQuickView.DataSource = new BindingSource(quickView, null);
-            cbbQuickView.DisplayMember = "Value";
-            cbbQuickView.ValueMember = "Key";
             cbbQuickView.SelectedIndex = 0;
             UpdateView();
             loadProducts();
@@ -106,26 +94,30 @@ namespace QLBH.Views
                     dtMaxForView.Value = now.AddDays(-1);
                     break;
                 case 3:
-                    dtMinForView.Value = now.AddDays(-(int)now.DayOfWeek);
+                    dtMinForView.Value = now.AddDays(-7);
                     dtMaxForView.Value = now;
                     break;
                 case 4:
+                    dtMinForView.Value = now.AddDays(-(int)now.DayOfWeek);
+                    dtMaxForView.Value = now;
+                    break;
+                case 5:
                     dtMinForView.Value = now.AddDays(-(int)now.DayOfWeek - 6);
                     dtMaxForView.Value = dtMinForView.Value.AddDays(6);
                     break;
-                case 5:
+                case 6:
                     dtMinForView.Value = new DateTime(now.Year, now.Month, 1);
                     dtMaxForView.Value = now;
                     break;
-                case 6:
+                case 7:
                     dtMinForView.Value = new DateTime(now.Year, now.Month, 1);
                     dtMaxForView.Value = (new DateTime(now.Year, now.Month + 1, 1)).AddDays(-1);
                     break;
-                case 7:
+                case 8:
                     dtMinForView.Value = new DateTime(now.Year, 1, 1);
                     dtMaxForView.Value = now;
                     break;
-                case 8:
+                case 9:
                     dtMinForView.Value = new DateTime(now.Year - 1, 1, 1);
                     dtMaxForView.Value = new DateTime(now.Year - 1, 12, 31);
                     break;
@@ -162,7 +154,7 @@ namespace QLBH.Views
                     Quantity = Decimal.ToInt32(txtQuantity.Value),
                     PriceOfAllForReceipting = Decimal.ToInt32(txtTotalPrice.Value),
                     Note = txtNote.Text,
-                    IsSellAll = 0,
+                    RemainAfterDone = 0,
                     DatedReceipt = MethodHelpers.ConvertDateTimeToCorrectString(dtReceiptedDate.Value)
                 };
                 if (ReceiptProcesser.SaveReceipt(receipt))

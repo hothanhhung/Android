@@ -21,7 +21,7 @@ namespace QLBH.Businesses
                 {
                     foreach (var product in products)
                     {
-                        var receiptsForProduct = context.Receipts.Where(r => r.IsSellAll == 0 && r.ProductId == product.ProductId);
+                        var receiptsForProduct = context.Receipts.Where(r => r.RemainAfterDone > 0 && r.ProductId == product.ProductId);
                         if (receiptsForProduct.Any())
                         {
                             var issueProducts = context.IssueProducts.Where(i => receiptsForProduct.Any(r => r.ReceiptId == i.ReceiptId));
@@ -52,7 +52,7 @@ namespace QLBH.Businesses
                     {
                         foreach (var product in products)
                         {
-                            var receiptsForProduct = context.Receipts.Where(r => r.IsSellAll == 0 && r.ProductId == product.ProductId && r.DatedReceipt.CompareTo(beforeDate)<=0);
+                            var receiptsForProduct = context.Receipts.Where(r => r.RemainAfterDone > 0 && r.ProductId == product.ProductId && r.DatedReceipt.CompareTo(beforeDate)<=0);
                             if (receiptsForProduct.Any())
                             {
                                 var issueProducts = context.IssueProducts.Where(i => receiptsForProduct.Any(r => r.ReceiptId == i.ReceiptId));

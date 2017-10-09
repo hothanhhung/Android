@@ -69,6 +69,20 @@ namespace QLBH.Commons
             }
             return string.Empty;
         }
+
+        public static DateTime ConvertStringDateTimeToDateTime(string strDate)
+        {
+            DateTime date = DateTime.Now;
+            if (!string.IsNullOrWhiteSpace(strDate))
+            {
+                if(!DateTime.TryParseExact(strDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out date))
+                {
+                    DateTime.TryParseExact(strDate, "yyyy-MM-dd", CultureInfo.CurrentCulture, DateTimeStyles.None, out date);
+                }
+            }
+            return date;
+        }
+
         public static DateTime GetVNCurrentDate()
         {
             return DateTime.UtcNow.AddHours(7);

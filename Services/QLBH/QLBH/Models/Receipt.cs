@@ -10,7 +10,7 @@ namespace QLBH.Models
        public int ProductId {get; set;}
        public int Quantity {get; set;}
        public int PriceOfAllForReceipting {get; set;}
-       public int IsSellAll {get; set;}
+       public int RemainAfterDone {get; set;}
        public string DatedReceipt {get; set;}
        public string Note { get; set; }
         [NotMapped]

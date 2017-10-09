@@ -153,6 +153,7 @@
     </None>
     <None Include="Properties\DataSources\QLBH.Models.Category.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Customer.datasource" />
+    <None Include="Properties\DataSources\QLBH.Models.Order.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.OrderDetail.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Product.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Receipt.datasource" />
