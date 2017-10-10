@@ -27,6 +27,7 @@ namespace QLBH.Businesses
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<OperationFee> OperationFees { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

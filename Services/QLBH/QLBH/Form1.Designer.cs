@@ -140,6 +140,7 @@
             this.btFeeToSell.TabIndex = 4;
             this.btFeeToSell.Text = "Chi Phí Bán Hàng";
             this.btFeeToSell.UseVisualStyleBackColor = true;
+            this.btFeeToSell.Click += new System.EventHandler(this.btFeeToSell_Click);
             // 
             // btReport
             // 

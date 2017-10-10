@@ -17,7 +17,7 @@ namespace QLBH.Views
     public partial class IssuesManagement : UserControl
     {
         List<Product> Products = null;
-        List<Order> Orders = new List<Order>();
+        List<Order> Orders = null;
         List<OrderDetail> OrderDetails = new List<OrderDetail>();
         Order CurrentOrder = new Order();
         public BindingSource OrderDetailsBinding = new BindingSource();
@@ -29,6 +29,8 @@ namespace QLBH.Views
 
         private void IssuesManagement_Load(object sender, EventArgs e)
         {
+            btDoneOrder.Visible = false;
+            btCancelOrder.Visible = false;
             loadProducts(true);
             grdOrderDetail.DataSource = OrderDetailsBinding;
             OrderDetailsBinding.DataSource = OrderDetails;
@@ -265,6 +267,8 @@ namespace QLBH.Views
                     };
                     CustomerProcesser.SaveCustomer(customer, true);
                 }
+                loadUIFromOrder(CurrentOrder);
+                LoadOrders(true);
             }
         }
 
@@ -353,7 +357,8 @@ namespace QLBH.Views
         private void loadUIFromOrder(Order order)
         {
             CurrentOrder = order;
-            grdOrderDetail.ClearSelection();
+           // grdOrderDetail.ClearSelection();
+           // grdOrderDetail.Refresh();
             if (CurrentOrder != null)
             {
                 txtCustomerDeliveryAddress.Text = CurrentOrder.Address;
@@ -377,36 +382,52 @@ namespace QLBH.Views
             else
             {
                 CurrentOrder = new Order();
+                txtCustomerDeliveryAddress.Text = CurrentOrder.Address;
+                txtCustomerName.Text = CurrentOrder.CustomerName;
+                txtCustomerPhone.Text = CurrentOrder.Phone;
+                txtCustomerShipFee.Value = CurrentOrder.FeeForShipping;
+                txtCustomerNote.Text = CurrentOrder.Note;
+                dtDateForSelling.Value = DateTime.Now;
                 OrderDetails.Clear();
+                OrderDetailsBinding.ResetBindings(true);
             }
             btStatusOfOrder.Text = CurrentOrder.StatusInString;
-            return;
             switch (CurrentOrder.Status)
             {
                 case 0:
                     grpCustomerInfo.Enabled = true;
                     grpOrderDetail.Enabled = true;
-                    btStatusOfOrder.BackColor = Color.Green; 
+                    btStatusOfOrder.BackColor = Color.Green;
+                    btDoneOrder.Visible = false;
+                    btCancelOrder.Visible = false;
                     break;
                 case 1:
                     grpCustomerInfo.Enabled = true;
                     grpOrderDetail.Enabled = true;
                     btStatusOfOrder.BackColor = Color.SeaGreen; 
+                    btDoneOrder.Visible = true;
+                    btCancelOrder.Visible = true;
                     break;
                 case 2:
                     grpCustomerInfo.Enabled = false;
                     grpOrderDetail.Enabled = false;
                     btStatusOfOrder.BackColor = Color.Blue;
+                    btDoneOrder.Visible = false;
+                    btCancelOrder.Visible = false;
                     break;
                 case 3:
                     grpCustomerInfo.Enabled = false;
                     grpOrderDetail.Enabled = false;
                     btStatusOfOrder.BackColor = Color.Red; 
+                    btDoneOrder.Visible = false;
+                    btCancelOrder.Visible = false;
                     break;
                 default:
                     grpCustomerInfo.Enabled = false;
                     grpOrderDetail.Enabled = false; 
                     btStatusOfOrder.BackColor = Color.Gray; 
+                    btDoneOrder.Visible = false;
+                    btCancelOrder.Visible = false;
                     break;
             }
         }

@@ -56,7 +56,7 @@ namespace QLBH.Businesses
                             if (receiptsForProduct.Any())
                             {
                                 var issueProducts = context.IssueProducts.Where(i => receiptsForProduct.Any(r => r.ReceiptId == i.ReceiptId));
-                                var orderDetailsOfIssuedProduct = context.OrderDetails.Where(o => (issueProducts.Any(i => i.OrderDetailId == o.OrderDetailId)) || (o.Lock == 0 && o.ProductId == product.ProductId) || (ignoreOrderId.HasValue && o.OrderDetailId == ignoreOrderId.Value));
+                                var orderDetailsOfIssuedProduct = context.OrderDetails.Where(o => ((issueProducts.Any(i => i.OrderDetailId == o.OrderDetailId)) || (o.Lock == 0 && o.ProductId == product.ProductId)) && (!ignoreOrderId.HasValue || o.OrderId != ignoreOrderId.Value));
 
                                 product.Quantity = receiptsForProduct.Sum(r => r.Quantity);
                                 if (orderDetailsOfIssuedProduct.Any())

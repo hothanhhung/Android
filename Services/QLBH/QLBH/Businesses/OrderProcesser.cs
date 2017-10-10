@@ -13,7 +13,7 @@ namespace QLBH.Businesses
     {
         public static List<Order> GetOrders(int ?status, string name = "", string phone = "", string from = "", string to = "")
         {
-            List<Order> categories = new List<Order>();
+            List<Order> orders = new List<Order>();
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
                 var query = context.Orders.AsQueryable();
@@ -33,14 +33,19 @@ namespace QLBH.Businesses
                 {
                     query = query.Where(p => p.CreatedDate.CompareTo(to) <= 0);
                 }
-                categories = query.ToList();
+                orders = query.ToList();
 
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    categories = categories.Where(p => MethodHelpers.RemoveSign4VietnameseString(p.CustomerName.Trim().ToLower()).Contains(MethodHelpers.RemoveSign4VietnameseString(name.Trim().ToLower()))).ToList();
+                    orders = orders.Where(p => MethodHelpers.RemoveSign4VietnameseString(p.CustomerName.Trim().ToLower()).Contains(MethodHelpers.RemoveSign4VietnameseString(name.Trim().ToLower()))).ToList();
+                }
+                foreach(var order in orders)
+                {
+                    order.NumberOfProducts = context.OrderDetails.Where(o => o.OrderId == order.OrderId).Count();
+                    order.TotalPrices = context.OrderDetails.Where(o => o.OrderId == order.OrderId).Sum(o => o.PriceForUnit * o.Quantity);
                 }
             }
-            return categories;
+            return orders;
         }
         public static Order GetOrder(int orderId)
         {
