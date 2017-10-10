@@ -74,7 +74,7 @@ namespace QLBH.Views
 
         private void ReceiptsManager_Load(object sender, EventArgs e)
         {
-            cbbQuickView.SelectedIndex = 0;
+            cbbQuickView.SelectedIndex = 2;
             UpdateView();
             loadProducts();
             LoadReceipts();
@@ -152,9 +152,9 @@ namespace QLBH.Views
                 {
                     ProductId = ((Product)cbbProductForReceipt.SelectedItem).ProductId,
                     Quantity = Decimal.ToInt32(txtQuantity.Value),
+                    RemainAfterDone = Decimal.ToInt32(txtQuantity.Value),
                     PriceOfAllForReceipting = Decimal.ToInt32(txtTotalPrice.Value),
                     Note = txtNote.Text,
-                    RemainAfterDone = 0,
                     DatedReceipt = MethodHelpers.ConvertDateTimeToCorrectString(dtReceiptedDate.Value)
                 };
                 if (ReceiptProcesser.SaveReceipt(receipt))

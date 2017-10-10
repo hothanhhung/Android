@@ -17,6 +17,7 @@ namespace QLBH
         ReceiptsManager receiptsManager = null;
         CustomersManagement customersManagement = null;
         IssuesManagement issuesManagement = null;
+        OperationFeesManagement operationFeesManagement = null;
 
         public Form1()
         {
@@ -66,6 +67,17 @@ namespace QLBH
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(issuesManagement);
             
+        }
+
+        private void btFeeToSell_Click(object sender, EventArgs e)
+        {
+            if (operationFeesManagement == null)
+            {
+                operationFeesManagement = new QLBH.Views.OperationFeesManagement();
+            }
+            operationFeesManagement.Dock = DockStyle.Fill;
+            pnlMain.Controls.Clear();
+            pnlMain.Controls.Add(operationFeesManagement);
         }
     }
 }

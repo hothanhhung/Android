@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Businesses\CustomerProcesser.cs" />
+    <Compile Include="Businesses\OperationFeeProcesser.cs" />
     <Compile Include="Businesses\OrderDetailProcesser.cs" />
     <Compile Include="Businesses\OrderProcesser.cs" />
     <Compile Include="Businesses\ReceiptProcesser.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IssueProduct.cs" />
+    <Compile Include="Models\OperationFee.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Product.cs" />
@@ -107,6 +109,12 @@
     </Compile>
     <Compile Include="Views\IssuesManagement.Designer.cs">
       <DependentUpon>IssuesManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OperationFeesManagement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\OperationFeesManagement.Designer.cs">
+      <DependentUpon>OperationFeesManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ReceiptsManager.cs">
       <SubType>UserControl</SubType>
@@ -141,6 +149,9 @@
     <EmbeddedResource Include="Views\IssuesManagement.resx">
       <DependentUpon>IssuesManagement.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\OperationFeesManagement.resx">
+      <DependentUpon>OperationFeesManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ReceiptsManager.resx">
       <DependentUpon>ReceiptsManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -153,6 +164,7 @@
     </None>
     <None Include="Properties\DataSources\QLBH.Models.Category.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Customer.datasource" />
+    <None Include="Properties\DataSources\QLBH.Models.OperationFee.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Order.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.OrderDetail.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Product.datasource" />

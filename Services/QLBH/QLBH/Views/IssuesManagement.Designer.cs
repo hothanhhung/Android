@@ -29,16 +29,24 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabIssues = new System.Windows.Forms.TabControl();
             this.tabCreateOrder = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.grpOrderDetail = new System.Windows.Forms.GroupBox();
             this.panel10 = new System.Windows.Forms.Panel();
             this.grdOrderDetail = new System.Windows.Forms.DataGridView();
+            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceForUnitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel12 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -89,11 +97,27 @@
             this.cbUpdateCustomerInfo = new System.Windows.Forms.CheckBox();
             this.linkGetCustomerInfo = new System.Windows.Forms.LinkLabel();
             this.panel29 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.btStatusOfOrder = new System.Windows.Forms.Button();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.btDoneOrder = new System.Windows.Forms.Button();
+            this.btCancelOrder = new System.Windows.Forms.Button();
             this.tabManagerOrders = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel21 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.grdOrders = new System.Windows.Forms.DataGridView();
+            this.orderIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customerNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NumberOfProducts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TotalPrices = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.feeForShippingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.createdDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noteDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel20 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel23 = new System.Windows.Forms.Panel();
@@ -117,31 +141,13 @@
             this.panel22 = new System.Windows.Forms.Panel();
             this.btCreateNewOrder = new System.Windows.Forms.Button();
             this.btIssuesSeach = new System.Windows.Forms.Button();
-            this.btStatusOfOrder = new System.Windows.Forms.Button();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.btDoneOrder = new System.Windows.Forms.Button();
-            this.btCancelOrder = new System.Windows.Forms.Button();
-            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceForUnitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.orderIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customerNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.feeForShippingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.createdDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noteDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabIssues.SuspendLayout();
             this.tabCreateOrder.SuspendLayout();
             this.panel2.SuspendLayout();
             this.grpOrderDetail.SuspendLayout();
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdOrderDetail)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.orderDetailBindingSource)).BeginInit();
             this.panel9.SuspendLayout();
             this.panel12.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -165,11 +171,14 @@
             this.panel8.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel29.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.tabManagerOrders.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.panel21.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdOrders)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.orderBindingSource)).BeginInit();
             this.panel20.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel23.SuspendLayout();
@@ -179,10 +188,6 @@
             this.panel27.SuspendLayout();
             this.panel28.SuspendLayout();
             this.panel22.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.orderDetailBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.orderBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabIssues
@@ -261,6 +266,35 @@
             this.grdOrderDetail.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOrderDetail_CellEndEdit);
             this.grdOrderDetail.SelectionChanged += new System.EventHandler(this.grdOrderDetail_SelectionChanged);
             // 
+            // productIdDataGridViewTextBoxColumn
+            // 
+            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            this.productIdDataGridViewTextBoxColumn.HeaderText = "Sản Phẩm";
+            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
+            this.productIdDataGridViewTextBoxColumn.ReadOnly = true;
+            this.productIdDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // quantityDataGridViewTextBoxColumn
+            // 
+            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "Số Lượng";
+            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            // 
+            // priceForUnitDataGridViewTextBoxColumn
+            // 
+            this.priceForUnitDataGridViewTextBoxColumn.DataPropertyName = "PriceForUnit";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.priceForUnitDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.priceForUnitDataGridViewTextBoxColumn.HeaderText = "Giá Bán";
+            this.priceForUnitDataGridViewTextBoxColumn.Name = "priceForUnitDataGridViewTextBoxColumn";
+            this.priceForUnitDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // Column1
             // 
             this.Column1.DataPropertyName = "OrderDetailTotalPrice";
@@ -271,6 +305,16 @@
             this.Column1.HeaderText = "Thành Tiền";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
+            // 
+            // noteDataGridViewTextBoxColumn
+            // 
+            this.noteDataGridViewTextBoxColumn.DataPropertyName = "Note";
+            this.noteDataGridViewTextBoxColumn.HeaderText = "Note";
+            this.noteDataGridViewTextBoxColumn.Name = "noteDataGridViewTextBoxColumn";
+            // 
+            // orderDetailBindingSource
+            // 
+            this.orderDetailBindingSource.DataSource = typeof(QLBH.Models.OrderDetail);
             // 
             // panel9
             // 
@@ -803,6 +847,70 @@
             this.panel29.Size = new System.Drawing.Size(128, 95);
             this.panel29.TabIndex = 1;
             // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.btStatusOfOrder, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 1);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(128, 95);
+            this.tableLayoutPanel4.TabIndex = 1;
+            // 
+            // btStatusOfOrder
+            // 
+            this.btStatusOfOrder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btStatusOfOrder.Enabled = false;
+            this.btStatusOfOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btStatusOfOrder.Location = new System.Drawing.Point(3, 3);
+            this.btStatusOfOrder.Name = "btStatusOfOrder";
+            this.btStatusOfOrder.Size = new System.Drawing.Size(122, 41);
+            this.btStatusOfOrder.TabIndex = 0;
+            this.btStatusOfOrder.Text = "Đang Tạo";
+            this.btStatusOfOrder.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.btDoneOrder, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.btCancelOrder, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 50);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(122, 42);
+            this.tableLayoutPanel5.TabIndex = 1;
+            // 
+            // btDoneOrder
+            // 
+            this.btDoneOrder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btDoneOrder.Location = new System.Drawing.Point(3, 3);
+            this.btDoneOrder.Name = "btDoneOrder";
+            this.btDoneOrder.Size = new System.Drawing.Size(55, 36);
+            this.btDoneOrder.TabIndex = 0;
+            this.btDoneOrder.Text = "Xong";
+            this.btDoneOrder.UseVisualStyleBackColor = true;
+            this.btDoneOrder.Click += new System.EventHandler(this.btDoneOrder_Click);
+            // 
+            // btCancelOrder
+            // 
+            this.btCancelOrder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btCancelOrder.Location = new System.Drawing.Point(64, 3);
+            this.btCancelOrder.Name = "btCancelOrder";
+            this.btCancelOrder.Size = new System.Drawing.Size(55, 36);
+            this.btCancelOrder.TabIndex = 1;
+            this.btCancelOrder.Text = "Hủy";
+            this.btCancelOrder.UseVisualStyleBackColor = true;
+            this.btCancelOrder.Click += new System.EventHandler(this.btCancelOrder_Click);
+            // 
             // tabManagerOrders
             // 
             this.tabManagerOrders.Controls.Add(this.groupBox3);
@@ -857,6 +965,8 @@
             this.customerNameDataGridViewTextBoxColumn,
             this.phoneDataGridViewTextBoxColumn,
             this.addressDataGridViewTextBoxColumn,
+            this.NumberOfProducts,
+            this.TotalPrices,
             this.feeForShippingDataGridViewTextBoxColumn,
             this.createdDateDataGridViewTextBoxColumn,
             this.statusDataGridViewTextBoxColumn,
@@ -869,6 +979,90 @@
             this.grdOrders.Size = new System.Drawing.Size(733, 219);
             this.grdOrders.TabIndex = 0;
             this.grdOrders.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOrders_CellDoubleClick);
+            // 
+            // orderIdDataGridViewTextBoxColumn
+            // 
+            this.orderIdDataGridViewTextBoxColumn.DataPropertyName = "OrderId";
+            this.orderIdDataGridViewTextBoxColumn.HeaderText = "OrderId";
+            this.orderIdDataGridViewTextBoxColumn.Name = "orderIdDataGridViewTextBoxColumn";
+            this.orderIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // customerNameDataGridViewTextBoxColumn
+            // 
+            this.customerNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerName";
+            this.customerNameDataGridViewTextBoxColumn.HeaderText = "Tên Khách Hàng";
+            this.customerNameDataGridViewTextBoxColumn.Name = "customerNameDataGridViewTextBoxColumn";
+            this.customerNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // phoneDataGridViewTextBoxColumn
+            // 
+            this.phoneDataGridViewTextBoxColumn.DataPropertyName = "Phone";
+            this.phoneDataGridViewTextBoxColumn.HeaderText = "Số Điện Thoại";
+            this.phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
+            this.phoneDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // addressDataGridViewTextBoxColumn
+            // 
+            this.addressDataGridViewTextBoxColumn.DataPropertyName = "Address";
+            this.addressDataGridViewTextBoxColumn.HeaderText = "Địa Chỉ Giao Hàng";
+            this.addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
+            this.addressDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // NumberOfProducts
+            // 
+            this.NumberOfProducts.DataPropertyName = "NumberOfProducts";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.NumberOfProducts.DefaultCellStyle = dataGridViewCellStyle4;
+            this.NumberOfProducts.HeaderText = "Số Lượng";
+            this.NumberOfProducts.Name = "NumberOfProducts";
+            this.NumberOfProducts.ReadOnly = true;
+            // 
+            // TotalPrices
+            // 
+            this.TotalPrices.DataPropertyName = "TotalPrices";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.TotalPrices.DefaultCellStyle = dataGridViewCellStyle5;
+            this.TotalPrices.HeaderText = "Giá Bán";
+            this.TotalPrices.Name = "TotalPrices";
+            this.TotalPrices.ReadOnly = true;
+            // 
+            // feeForShippingDataGridViewTextBoxColumn
+            // 
+            this.feeForShippingDataGridViewTextBoxColumn.DataPropertyName = "FeeForShipping";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N0";
+            dataGridViewCellStyle6.NullValue = null;
+            this.feeForShippingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.feeForShippingDataGridViewTextBoxColumn.HeaderText = "Phí Vận Chuyển";
+            this.feeForShippingDataGridViewTextBoxColumn.Name = "feeForShippingDataGridViewTextBoxColumn";
+            this.feeForShippingDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // createdDateDataGridViewTextBoxColumn
+            // 
+            this.createdDateDataGridViewTextBoxColumn.DataPropertyName = "CreatedDate";
+            this.createdDateDataGridViewTextBoxColumn.HeaderText = "Ngày Tạo";
+            this.createdDateDataGridViewTextBoxColumn.Name = "createdDateDataGridViewTextBoxColumn";
+            this.createdDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // statusDataGridViewTextBoxColumn
+            // 
+            this.statusDataGridViewTextBoxColumn.DataPropertyName = "StatusInString";
+            this.statusDataGridViewTextBoxColumn.HeaderText = "Trạng Thái";
+            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
+            this.statusDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // noteDataGridViewTextBoxColumn1
+            // 
+            this.noteDataGridViewTextBoxColumn1.DataPropertyName = "Note";
+            this.noteDataGridViewTextBoxColumn1.HeaderText = "Ghi Chú";
+            this.noteDataGridViewTextBoxColumn1.Name = "noteDataGridViewTextBoxColumn1";
+            this.noteDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // orderBindingSource
+            // 
+            this.orderBindingSource.DataSource = typeof(QLBH.Models.Order);
             // 
             // panel20
             // 
@@ -1121,169 +1315,6 @@
             this.btIssuesSeach.UseVisualStyleBackColor = true;
             this.btIssuesSeach.Click += new System.EventHandler(this.btIssuesSeach_Click);
             // 
-            // btStatusOfOrder
-            // 
-            this.btStatusOfOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btStatusOfOrder.Enabled = false;
-            this.btStatusOfOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btStatusOfOrder.Location = new System.Drawing.Point(3, 3);
-            this.btStatusOfOrder.Name = "btStatusOfOrder";
-            this.btStatusOfOrder.Size = new System.Drawing.Size(122, 41);
-            this.btStatusOfOrder.TabIndex = 0;
-            this.btStatusOfOrder.Text = "Đang Tạo";
-            this.btStatusOfOrder.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.btStatusOfOrder, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 1);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(128, 95);
-            this.tableLayoutPanel4.TabIndex = 1;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.btDoneOrder, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.btCancelOrder, 1, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 50);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(122, 42);
-            this.tableLayoutPanel5.TabIndex = 1;
-            // 
-            // btDoneOrder
-            // 
-            this.btDoneOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btDoneOrder.Location = new System.Drawing.Point(3, 3);
-            this.btDoneOrder.Name = "btDoneOrder";
-            this.btDoneOrder.Size = new System.Drawing.Size(55, 36);
-            this.btDoneOrder.TabIndex = 0;
-            this.btDoneOrder.Text = "Xong";
-            this.btDoneOrder.UseVisualStyleBackColor = true;
-            this.btDoneOrder.Click += new System.EventHandler(this.btDoneOrder_Click);
-            // 
-            // btCancelOrder
-            // 
-            this.btCancelOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btCancelOrder.Location = new System.Drawing.Point(64, 3);
-            this.btCancelOrder.Name = "btCancelOrder";
-            this.btCancelOrder.Size = new System.Drawing.Size(55, 36);
-            this.btCancelOrder.TabIndex = 1;
-            this.btCancelOrder.Text = "Hủy";
-            this.btCancelOrder.UseVisualStyleBackColor = true;
-            this.btCancelOrder.Click += new System.EventHandler(this.btCancelOrder_Click);
-            // 
-            // productIdDataGridViewTextBoxColumn
-            // 
-            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            this.productIdDataGridViewTextBoxColumn.HeaderText = "Sản Phẩm";
-            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
-            this.productIdDataGridViewTextBoxColumn.ReadOnly = true;
-            this.productIdDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // quantityDataGridViewTextBoxColumn
-            // 
-            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.quantityDataGridViewTextBoxColumn.HeaderText = "Số Lượng";
-            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
-            // 
-            // priceForUnitDataGridViewTextBoxColumn
-            // 
-            this.priceForUnitDataGridViewTextBoxColumn.DataPropertyName = "PriceForUnit";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.priceForUnitDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.priceForUnitDataGridViewTextBoxColumn.HeaderText = "Giá Bán";
-            this.priceForUnitDataGridViewTextBoxColumn.Name = "priceForUnitDataGridViewTextBoxColumn";
-            this.priceForUnitDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // noteDataGridViewTextBoxColumn
-            // 
-            this.noteDataGridViewTextBoxColumn.DataPropertyName = "Note";
-            this.noteDataGridViewTextBoxColumn.HeaderText = "Note";
-            this.noteDataGridViewTextBoxColumn.Name = "noteDataGridViewTextBoxColumn";
-            // 
-            // orderDetailBindingSource
-            // 
-            this.orderDetailBindingSource.DataSource = typeof(QLBH.Models.OrderDetail);
-            // 
-            // orderIdDataGridViewTextBoxColumn
-            // 
-            this.orderIdDataGridViewTextBoxColumn.DataPropertyName = "OrderId";
-            this.orderIdDataGridViewTextBoxColumn.HeaderText = "OrderId";
-            this.orderIdDataGridViewTextBoxColumn.Name = "orderIdDataGridViewTextBoxColumn";
-            this.orderIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // customerNameDataGridViewTextBoxColumn
-            // 
-            this.customerNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerName";
-            this.customerNameDataGridViewTextBoxColumn.HeaderText = "Tên Khách Hàng";
-            this.customerNameDataGridViewTextBoxColumn.Name = "customerNameDataGridViewTextBoxColumn";
-            this.customerNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // phoneDataGridViewTextBoxColumn
-            // 
-            this.phoneDataGridViewTextBoxColumn.DataPropertyName = "Phone";
-            this.phoneDataGridViewTextBoxColumn.HeaderText = "Số Điện Thoại";
-            this.phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
-            this.phoneDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // addressDataGridViewTextBoxColumn
-            // 
-            this.addressDataGridViewTextBoxColumn.DataPropertyName = "Address";
-            this.addressDataGridViewTextBoxColumn.HeaderText = "Địa Chỉ Giao Hàng";
-            this.addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
-            this.addressDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // feeForShippingDataGridViewTextBoxColumn
-            // 
-            this.feeForShippingDataGridViewTextBoxColumn.DataPropertyName = "FeeForShipping";
-            this.feeForShippingDataGridViewTextBoxColumn.HeaderText = "Phí Vận Chuyên";
-            this.feeForShippingDataGridViewTextBoxColumn.Name = "feeForShippingDataGridViewTextBoxColumn";
-            this.feeForShippingDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // createdDateDataGridViewTextBoxColumn
-            // 
-            this.createdDateDataGridViewTextBoxColumn.DataPropertyName = "CreatedDate";
-            this.createdDateDataGridViewTextBoxColumn.HeaderText = "Ngày Tạo";
-            this.createdDateDataGridViewTextBoxColumn.Name = "createdDateDataGridViewTextBoxColumn";
-            this.createdDateDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // statusDataGridViewTextBoxColumn
-            // 
-            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
-            this.statusDataGridViewTextBoxColumn.HeaderText = "Trạng Thái";
-            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
-            this.statusDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // noteDataGridViewTextBoxColumn1
-            // 
-            this.noteDataGridViewTextBoxColumn1.DataPropertyName = "Note";
-            this.noteDataGridViewTextBoxColumn1.HeaderText = "Ghi Chú";
-            this.noteDataGridViewTextBoxColumn1.Name = "noteDataGridViewTextBoxColumn1";
-            this.noteDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // orderBindingSource
-            // 
-            this.orderBindingSource.DataSource = typeof(QLBH.Models.Order);
-            // 
             // IssuesManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1298,6 +1329,7 @@
             this.grpOrderDetail.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdOrderDetail)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.orderDetailBindingSource)).EndInit();
             this.panel9.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -1334,11 +1366,14 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel29.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
             this.tabManagerOrders.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.panel21.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdOrders)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.orderBindingSource)).EndInit();
             this.panel20.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panel23.ResumeLayout(false);
@@ -1354,10 +1389,6 @@
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
             this.panel22.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.orderDetailBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.orderBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1452,14 +1483,6 @@
         private System.Windows.Forms.Button btIssuesSeach;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.DataGridView grdOrders;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderIdDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn customerNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn feeForShippingDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn createdDateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn noteDataGridViewTextBoxColumn1;
         private System.Windows.Forms.BindingSource orderBindingSource;
         private System.Windows.Forms.Button btCreateNewOrder;
         private System.Windows.Forms.Panel panel29;
@@ -1468,5 +1491,15 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button btDoneOrder;
         private System.Windows.Forms.Button btCancelOrder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderIdDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn customerNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NumberOfProducts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalPrices;
+        private System.Windows.Forms.DataGridViewTextBoxColumn feeForShippingDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn createdDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn noteDataGridViewTextBoxColumn1;
     }
 }
