@@ -29,33 +29,46 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabProductManager = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel9 = new System.Windows.Forms.Panel();
             this.grdProducts = new System.Windows.Forms.DataGridView();
+            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CategoryName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceForSellingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noteDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel8 = new System.Windows.Forms.Panel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtSmartSearchProduct = new System.Windows.Forms.TextBox();
             this.btAddProduct = new System.Windows.Forms.Button();
+            this.btDeleteProduct = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.cbbCategories = new System.Windows.Forms.ComboBox();
-            this.txtProductUnit = new System.Windows.Forms.TextBox();
+            this.panel10 = new System.Windows.Forms.Panel();
             this.txtProductName = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.txtPriceForSelling = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.cbbCategories = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.txtProductUnit = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
             this.txtProductNote = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtPriceForSelling = new System.Windows.Forms.NumericUpDown();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btSaveProduct = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -71,20 +84,16 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtCategoryNote = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.panel15 = new System.Windows.Forms.Panel();
             this.txtCategoryName = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.txtCategoryNote = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.btDeleteCategory = new System.Windows.Forms.Button();
             this.btAddCategory = new System.Windows.Forms.Button();
             this.btSaveCategory = new System.Windows.Forms.Button();
-            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CategoryName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceForSellingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noteDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabProductManager.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -99,7 +108,12 @@
             this.panel4.SuspendLayout();
             this.panel7.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPriceForSelling)).BeginInit();
+            this.panel12.SuspendLayout();
+            this.panel13.SuspendLayout();
+            this.panel14.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.pnlCategories.SuspendLayout();
@@ -110,6 +124,8 @@
             this.groupBox3.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.panel15.SuspendLayout();
+            this.panel16.SuspendLayout();
             this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,9 +157,9 @@
             // 
             this.panel2.Controls.Add(this.groupBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 127);
+            this.panel2.Location = new System.Drawing.Point(3, 104);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(690, 266);
+            this.panel2.Size = new System.Drawing.Size(690, 289);
             this.panel2.TabIndex = 1;
             // 
             // groupBox1
@@ -153,7 +169,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(690, 266);
+            this.groupBox1.Size = new System.Drawing.Size(690, 289);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Danh Sách Sản Phẩm";
@@ -162,9 +178,9 @@
             // 
             this.panel9.Controls.Add(this.grdProducts);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(3, 70);
+            this.panel9.Location = new System.Drawing.Point(3, 64);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(684, 193);
+            this.panel9.Size = new System.Drawing.Size(684, 222);
             this.panel9.TabIndex = 2;
             // 
             // grdProducts
@@ -186,9 +202,62 @@
             this.grdProducts.Location = new System.Drawing.Point(0, 0);
             this.grdProducts.Name = "grdProducts";
             this.grdProducts.ReadOnly = true;
-            this.grdProducts.Size = new System.Drawing.Size(684, 193);
+            this.grdProducts.Size = new System.Drawing.Size(684, 222);
             this.grdProducts.TabIndex = 0;
             this.grdProducts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdProducts_CellDoubleClick);
+            // 
+            // productIdDataGridViewTextBoxColumn
+            // 
+            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductId";
+            this.productIdDataGridViewTextBoxColumn.HeaderText = "Mã Sản Phẩm";
+            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
+            this.productIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // productNameDataGridViewTextBoxColumn
+            // 
+            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            this.productNameDataGridViewTextBoxColumn.HeaderText = "Tên Sản Phẩm";
+            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
+            this.productNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // CategoryName
+            // 
+            this.CategoryName.DataPropertyName = "CategoryName";
+            this.CategoryName.HeaderText = "Tên Danh Mục";
+            this.CategoryName.Name = "CategoryName";
+            this.CategoryName.ReadOnly = true;
+            // 
+            // priceForSellingDataGridViewTextBoxColumn
+            // 
+            this.priceForSellingDataGridViewTextBoxColumn.DataPropertyName = "PriceForSelling";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.priceForSellingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.priceForSellingDataGridViewTextBoxColumn.HeaderText = "Giá Bán";
+            this.priceForSellingDataGridViewTextBoxColumn.Name = "priceForSellingDataGridViewTextBoxColumn";
+            this.priceForSellingDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // Quantity
+            // 
+            this.Quantity.DataPropertyName = "Quantity";
+            this.Quantity.HeaderText = "Còn Lại";
+            this.Quantity.Name = "Quantity";
+            this.Quantity.ReadOnly = true;
+            // 
+            // unitDataGridViewTextBoxColumn
+            // 
+            this.unitDataGridViewTextBoxColumn.DataPropertyName = "Unit";
+            this.unitDataGridViewTextBoxColumn.HeaderText = "Đơn Vị";
+            this.unitDataGridViewTextBoxColumn.Name = "unitDataGridViewTextBoxColumn";
+            this.unitDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // noteDataGridViewTextBoxColumn1
+            // 
+            this.noteDataGridViewTextBoxColumn1.DataPropertyName = "Note";
+            this.noteDataGridViewTextBoxColumn1.HeaderText = "Ghi Chú";
+            this.noteDataGridViewTextBoxColumn1.Name = "noteDataGridViewTextBoxColumn1";
+            this.noteDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // productBindingSource
             // 
@@ -198,10 +267,11 @@
             // 
             this.panel8.Controls.Add(this.groupBox5);
             this.panel8.Controls.Add(this.btAddProduct);
+            this.panel8.Controls.Add(this.btDeleteProduct);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(3, 16);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(684, 54);
+            this.panel8.Size = new System.Drawing.Size(684, 48);
             this.panel8.TabIndex = 1;
             // 
             // groupBox5
@@ -210,7 +280,7 @@
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(609, 54);
+            this.groupBox5.Size = new System.Drawing.Size(503, 48);
             this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Nhập Sản Phẩm cần tìm vào bên dưới";
@@ -220,20 +290,31 @@
             this.txtSmartSearchProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSmartSearchProduct.Location = new System.Drawing.Point(3, 16);
             this.txtSmartSearchProduct.Name = "txtSmartSearchProduct";
-            this.txtSmartSearchProduct.Size = new System.Drawing.Size(603, 20);
+            this.txtSmartSearchProduct.Size = new System.Drawing.Size(497, 20);
             this.txtSmartSearchProduct.TabIndex = 0;
             this.txtSmartSearchProduct.TextChanged += new System.EventHandler(this.txtSmartSearchProduct_TextChanged);
             // 
             // btAddProduct
             // 
             this.btAddProduct.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btAddProduct.Location = new System.Drawing.Point(609, 0);
+            this.btAddProduct.Location = new System.Drawing.Point(503, 0);
             this.btAddProduct.Name = "btAddProduct";
-            this.btAddProduct.Size = new System.Drawing.Size(75, 54);
+            this.btAddProduct.Size = new System.Drawing.Size(94, 48);
             this.btAddProduct.TabIndex = 2;
             this.btAddProduct.Text = "Thêm Sản Phẩm";
             this.btAddProduct.UseVisualStyleBackColor = true;
             this.btAddProduct.Click += new System.EventHandler(this.btAddProduct_Click);
+            // 
+            // btDeleteProduct
+            // 
+            this.btDeleteProduct.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btDeleteProduct.Location = new System.Drawing.Point(597, 0);
+            this.btDeleteProduct.Name = "btDeleteProduct";
+            this.btDeleteProduct.Size = new System.Drawing.Size(87, 48);
+            this.btDeleteProduct.TabIndex = 4;
+            this.btDeleteProduct.Text = "Xóa Sản Phẩm";
+            this.btDeleteProduct.UseVisualStyleBackColor = true;
+            this.btDeleteProduct.Click += new System.EventHandler(this.btDeleteProduct_Click);
             // 
             // panel1
             // 
@@ -241,7 +322,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(690, 124);
+            this.panel1.Size = new System.Drawing.Size(690, 101);
             this.panel1.TabIndex = 0;
             // 
             // groupBox2
@@ -251,7 +332,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(690, 124);
+            this.groupBox2.Size = new System.Drawing.Size(690, 101);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông Tin Sản Phẩm";
@@ -262,7 +343,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 16);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(574, 105);
+            this.panel4.Size = new System.Drawing.Size(574, 82);
             this.panel4.TabIndex = 3;
             // 
             // panel7
@@ -271,7 +352,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(574, 105);
+            this.panel7.Size = new System.Drawing.Size(574, 82);
             this.panel7.TabIndex = 8;
             // 
             // tableLayoutPanel1
@@ -280,115 +361,169 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 168F));
-            this.tableLayoutPanel1.Controls.Add(this.cbbCategories, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.txtProductUnit, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.txtProductName, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txtProductNote, 2, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.txtPriceForSelling, 1, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Controls.Add(this.panel10, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel11, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel12, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel13, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel14, 2, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(574, 105);
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(574, 79);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
-            // cbbCategories
+            // panel10
             // 
-            this.cbbCategories.FormattingEnabled = true;
-            this.cbbCategories.Location = new System.Drawing.Point(3, 81);
-            this.cbbCategories.Name = "cbbCategories";
-            this.cbbCategories.Size = new System.Drawing.Size(197, 21);
-            this.cbbCategories.TabIndex = 2;
-            this.cbbCategories.SelectedIndexChanged += new System.EventHandler(this.cbbCategories_SelectedIndexChanged);
-            // 
-            // txtProductUnit
-            // 
-            this.txtProductUnit.Location = new System.Drawing.Point(206, 81);
-            this.txtProductUnit.Name = "txtProductUnit";
-            this.txtProductUnit.Size = new System.Drawing.Size(197, 20);
-            this.txtProductUnit.TabIndex = 4;
+            this.panel10.Controls.Add(this.txtProductName);
+            this.panel10.Controls.Add(this.label1);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel10.Location = new System.Drawing.Point(3, 3);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(197, 33);
+            this.panel10.TabIndex = 11;
             // 
             // txtProductName
             // 
-            this.txtProductName.Location = new System.Drawing.Point(3, 29);
+            this.txtProductName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtProductName.Location = new System.Drawing.Point(0, 13);
             this.txtProductName.Name = "txtProductName";
             this.txtProductName.Size = new System.Drawing.Size(197, 20);
             this.txtProductName.TabIndex = 0;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 52);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Danh Mục";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(206, 52);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Đơn Vị Tính";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Tên Sản Phẩm";
             // 
-            // label2
+            // panel11
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(206, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Giá Bán";
-            // 
-            // txtProductNote
-            // 
-            this.txtProductNote.Location = new System.Drawing.Point(409, 81);
-            this.txtProductNote.Name = "txtProductNote";
-            this.txtProductNote.Size = new System.Drawing.Size(159, 20);
-            this.txtProductNote.TabIndex = 8;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(409, 52);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(45, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Ghi Chú";
+            this.panel11.Controls.Add(this.txtPriceForSelling);
+            this.panel11.Controls.Add(this.label2);
+            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel11.Location = new System.Drawing.Point(206, 3);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(197, 33);
+            this.panel11.TabIndex = 12;
             // 
             // txtPriceForSelling
             // 
-            this.txtPriceForSelling.Location = new System.Drawing.Point(206, 29);
+            this.txtPriceForSelling.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPriceForSelling.Location = new System.Drawing.Point(0, 13);
             this.txtPriceForSelling.Maximum = new decimal(new int[] {
             -1294967296,
             0,
             0,
             0});
             this.txtPriceForSelling.Name = "txtPriceForSelling";
-            this.txtPriceForSelling.Size = new System.Drawing.Size(120, 20);
+            this.txtPriceForSelling.Size = new System.Drawing.Size(197, 20);
             this.txtPriceForSelling.TabIndex = 10;
             this.txtPriceForSelling.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtPriceForSelling.ThousandsSeparator = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Giá Bán";
+            // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.cbbCategories);
+            this.panel12.Controls.Add(this.label3);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel12.Location = new System.Drawing.Point(3, 42);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(197, 34);
+            this.panel12.TabIndex = 13;
+            // 
+            // cbbCategories
+            // 
+            this.cbbCategories.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbbCategories.FormattingEnabled = true;
+            this.cbbCategories.Location = new System.Drawing.Point(0, 13);
+            this.cbbCategories.Name = "cbbCategories";
+            this.cbbCategories.Size = new System.Drawing.Size(197, 21);
+            this.cbbCategories.TabIndex = 2;
+            this.cbbCategories.SelectedIndexChanged += new System.EventHandler(this.cbbCategories_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Danh Mục";
+            // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.txtProductUnit);
+            this.panel13.Controls.Add(this.label4);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel13.Location = new System.Drawing.Point(206, 42);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(197, 34);
+            this.panel13.TabIndex = 14;
+            // 
+            // txtProductUnit
+            // 
+            this.txtProductUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtProductUnit.Location = new System.Drawing.Point(0, 13);
+            this.txtProductUnit.Name = "txtProductUnit";
+            this.txtProductUnit.Size = new System.Drawing.Size(197, 20);
+            this.txtProductUnit.TabIndex = 4;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Đơn Vị Tính";
+            // 
+            // panel14
+            // 
+            this.panel14.Controls.Add(this.txtProductNote);
+            this.panel14.Controls.Add(this.label5);
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel14.Location = new System.Drawing.Point(409, 42);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(162, 34);
+            this.panel14.TabIndex = 15;
+            // 
+            // txtProductNote
+            // 
+            this.txtProductNote.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtProductNote.Location = new System.Drawing.Point(0, 13);
+            this.txtProductNote.Name = "txtProductNote";
+            this.txtProductNote.Size = new System.Drawing.Size(162, 20);
+            this.txtProductNote.TabIndex = 8;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label5.Location = new System.Drawing.Point(0, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(45, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Ghi Chú";
             // 
             // panel3
             // 
@@ -396,7 +531,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel3.Location = new System.Drawing.Point(577, 16);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(110, 105);
+            this.panel3.Size = new System.Drawing.Size(110, 82);
             this.panel3.TabIndex = 2;
             // 
             // btSaveProduct
@@ -404,7 +539,7 @@
             this.btSaveProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btSaveProduct.Location = new System.Drawing.Point(0, 0);
             this.btSaveProduct.Name = "btSaveProduct";
-            this.btSaveProduct.Size = new System.Drawing.Size(110, 105);
+            this.btSaveProduct.Size = new System.Drawing.Size(110, 82);
             this.btSaveProduct.TabIndex = 0;
             this.btSaveProduct.Text = "Lưu Sản Phẩm";
             this.btSaveProduct.UseVisualStyleBackColor = true;
@@ -426,9 +561,9 @@
             // 
             this.pnlCategories.Controls.Add(this.groupBox4);
             this.pnlCategories.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlCategories.Location = new System.Drawing.Point(3, 103);
+            this.pnlCategories.Location = new System.Drawing.Point(3, 68);
             this.pnlCategories.Name = "pnlCategories";
-            this.pnlCategories.Size = new System.Drawing.Size(690, 290);
+            this.pnlCategories.Size = new System.Drawing.Size(690, 325);
             this.pnlCategories.TabIndex = 1;
             // 
             // groupBox4
@@ -437,7 +572,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(690, 290);
+            this.groupBox4.Size = new System.Drawing.Size(690, 325);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Các Danh Mục";
@@ -458,7 +593,7 @@
             this.grvCategories.Location = new System.Drawing.Point(3, 16);
             this.grvCategories.Name = "grvCategories";
             this.grvCategories.ReadOnly = true;
-            this.grvCategories.Size = new System.Drawing.Size(684, 271);
+            this.grvCategories.Size = new System.Drawing.Size(684, 306);
             this.grvCategories.TabIndex = 0;
             this.grvCategories.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grvCategories_CellDoubleClick);
             // 
@@ -500,7 +635,7 @@
             this.pnlCategoryDetail.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlCategoryDetail.Location = new System.Drawing.Point(3, 3);
             this.pnlCategoryDetail.Name = "pnlCategoryDetail";
-            this.pnlCategoryDetail.Size = new System.Drawing.Size(690, 100);
+            this.pnlCategoryDetail.Size = new System.Drawing.Size(690, 65);
             this.pnlCategoryDetail.TabIndex = 0;
             // 
             // groupBox3
@@ -510,7 +645,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(690, 100);
+            this.groupBox3.Size = new System.Drawing.Size(690, 65);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Thông Tin Danh Mục";
@@ -521,7 +656,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 16);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(484, 81);
+            this.panel6.Size = new System.Drawing.Size(418, 46);
             this.panel6.TabIndex = 2;
             // 
             // tableLayoutPanel3
@@ -529,48 +664,67 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.txtCategoryNote, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.txtCategoryName, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.label7, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.panel15, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.panel16, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(484, 81);
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 84F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(418, 46);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
-            // txtCategoryNote
+            // panel15
             // 
-            this.txtCategoryNote.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtCategoryNote.Location = new System.Drawing.Point(245, 53);
-            this.txtCategoryNote.Name = "txtCategoryNote";
-            this.txtCategoryNote.Size = new System.Drawing.Size(236, 20);
-            this.txtCategoryNote.TabIndex = 2;
+            this.panel15.Controls.Add(this.txtCategoryName);
+            this.panel15.Controls.Add(this.label6);
+            this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel15.Location = new System.Drawing.Point(3, 3);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(203, 78);
+            this.panel15.TabIndex = 3;
+            // 
+            // txtCategoryName
+            // 
+            this.txtCategoryName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCategoryName.Location = new System.Drawing.Point(0, 13);
+            this.txtCategoryName.Name = "txtCategoryName";
+            this.txtCategoryName.Size = new System.Drawing.Size(203, 20);
+            this.txtCategoryName.TabIndex = 1;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(79, 13);
             this.label6.TabIndex = 0;
             this.label6.Text = "Tên Danh Mục";
             // 
-            // txtCategoryName
+            // panel16
             // 
-            this.txtCategoryName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtCategoryName.Location = new System.Drawing.Point(3, 53);
-            this.txtCategoryName.Name = "txtCategoryName";
-            this.txtCategoryName.Size = new System.Drawing.Size(236, 20);
-            this.txtCategoryName.TabIndex = 1;
+            this.panel16.Controls.Add(this.txtCategoryNote);
+            this.panel16.Controls.Add(this.label7);
+            this.panel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel16.Location = new System.Drawing.Point(212, 3);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(203, 78);
+            this.panel16.TabIndex = 4;
+            // 
+            // txtCategoryNote
+            // 
+            this.txtCategoryNote.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCategoryNote.Location = new System.Drawing.Point(0, 13);
+            this.txtCategoryNote.Name = "txtCategoryNote";
+            this.txtCategoryNote.Size = new System.Drawing.Size(203, 20);
+            this.txtCategoryNote.TabIndex = 2;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(245, 0);
+            this.label7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label7.Location = new System.Drawing.Point(0, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 13);
             this.label7.TabIndex = 3;
@@ -578,20 +732,32 @@
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.btDeleteCategory);
             this.panel5.Controls.Add(this.btAddCategory);
             this.panel5.Controls.Add(this.btSaveCategory);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(487, 16);
+            this.panel5.Location = new System.Drawing.Point(421, 16);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(200, 81);
+            this.panel5.Size = new System.Drawing.Size(266, 46);
             this.panel5.TabIndex = 1;
+            // 
+            // btDeleteCategory
+            // 
+            this.btDeleteCategory.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btDeleteCategory.Location = new System.Drawing.Point(179, 0);
+            this.btDeleteCategory.Name = "btDeleteCategory";
+            this.btDeleteCategory.Size = new System.Drawing.Size(84, 46);
+            this.btDeleteCategory.TabIndex = 2;
+            this.btDeleteCategory.Text = "Xóa Danh Mục";
+            this.btDeleteCategory.UseVisualStyleBackColor = true;
+            this.btDeleteCategory.Click += new System.EventHandler(this.btDeleteCategory_Click);
             // 
             // btAddCategory
             // 
-            this.btAddCategory.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btAddCategory.Location = new System.Drawing.Point(0, 35);
+            this.btAddCategory.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btAddCategory.Location = new System.Drawing.Point(88, 0);
             this.btAddCategory.Name = "btAddCategory";
-            this.btAddCategory.Size = new System.Drawing.Size(200, 23);
+            this.btAddCategory.Size = new System.Drawing.Size(91, 46);
             this.btAddCategory.TabIndex = 1;
             this.btAddCategory.Text = "Thêm Danh Mục";
             this.btAddCategory.UseVisualStyleBackColor = true;
@@ -599,67 +765,14 @@
             // 
             // btSaveCategory
             // 
-            this.btSaveCategory.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btSaveCategory.Location = new System.Drawing.Point(0, 58);
+            this.btSaveCategory.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btSaveCategory.Location = new System.Drawing.Point(0, 0);
             this.btSaveCategory.Name = "btSaveCategory";
-            this.btSaveCategory.Size = new System.Drawing.Size(200, 23);
+            this.btSaveCategory.Size = new System.Drawing.Size(88, 46);
             this.btSaveCategory.TabIndex = 0;
             this.btSaveCategory.Text = "Lưu Danh Mục";
             this.btSaveCategory.UseVisualStyleBackColor = true;
             this.btSaveCategory.Click += new System.EventHandler(this.btSaveCategory_Click);
-            // 
-            // productIdDataGridViewTextBoxColumn
-            // 
-            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductId";
-            this.productIdDataGridViewTextBoxColumn.HeaderText = "Mã Sản Phẩm";
-            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
-            this.productIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // productNameDataGridViewTextBoxColumn
-            // 
-            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            this.productNameDataGridViewTextBoxColumn.HeaderText = "Tên Sản Phẩm";
-            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            this.productNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // CategoryName
-            // 
-            this.CategoryName.DataPropertyName = "CategoryName";
-            this.CategoryName.HeaderText = "Tên Danh Mục";
-            this.CategoryName.Name = "CategoryName";
-            this.CategoryName.ReadOnly = true;
-            // 
-            // priceForSellingDataGridViewTextBoxColumn
-            // 
-            this.priceForSellingDataGridViewTextBoxColumn.DataPropertyName = "PriceForSelling";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.priceForSellingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.priceForSellingDataGridViewTextBoxColumn.HeaderText = "Giá Bán";
-            this.priceForSellingDataGridViewTextBoxColumn.Name = "priceForSellingDataGridViewTextBoxColumn";
-            this.priceForSellingDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // Quantity
-            // 
-            this.Quantity.DataPropertyName = "Quantity";
-            this.Quantity.HeaderText = "Còn Lại";
-            this.Quantity.Name = "Quantity";
-            this.Quantity.ReadOnly = true;
-            // 
-            // unitDataGridViewTextBoxColumn
-            // 
-            this.unitDataGridViewTextBoxColumn.DataPropertyName = "Unit";
-            this.unitDataGridViewTextBoxColumn.HeaderText = "Đơn Vị";
-            this.unitDataGridViewTextBoxColumn.Name = "unitDataGridViewTextBoxColumn";
-            this.unitDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // noteDataGridViewTextBoxColumn1
-            // 
-            this.noteDataGridViewTextBoxColumn1.DataPropertyName = "Note";
-            this.noteDataGridViewTextBoxColumn1.HeaderText = "Ghi Chú";
-            this.noteDataGridViewTextBoxColumn1.Name = "noteDataGridViewTextBoxColumn1";
-            this.noteDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // ProductManagement
             // 
@@ -684,8 +797,17 @@
             this.panel4.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPriceForSelling)).EndInit();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.pnlCategories.ResumeLayout(false);
@@ -696,7 +818,10 @@
             this.groupBox3.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
+            this.panel15.ResumeLayout(false);
+            this.panel15.PerformLayout();
+            this.panel16.ResumeLayout(false);
+            this.panel16.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -760,6 +885,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn unitDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn noteDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.Button btDeleteCategory;
+        private System.Windows.Forms.Button btDeleteProduct;
 
     }
 }

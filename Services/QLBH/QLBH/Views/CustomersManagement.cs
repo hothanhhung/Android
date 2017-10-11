@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using QLBH.Models;
 using QLBH.Businesses;
+using QLBH.Commons;
 
 namespace QLBH.Views
 {
@@ -39,7 +40,7 @@ namespace QLBH.Views
             }
             if (!string.IsNullOrWhiteSpace(txtNameForSearch.Text))
             {
-                query = query.Where(p => p.CustomerName.Contains(txtNameForSearch.Text.Trim()));
+                query = query.Where(p => MethodHelpers.RemoveSign4VietnameseString(p.CustomerName.ToLower()).Contains(MethodHelpers.RemoveSign4VietnameseString(txtNameForSearch.Text.Trim())));
             }
             grdCustomers.DataSource = query.ToList();
         }
@@ -100,14 +101,15 @@ namespace QLBH.Views
         
         private void grdCustomers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (customers != null && e.RowIndex > -1 && customers.Count >= e.RowIndex)
+            if (grdCustomers.CurrentRow!=null && grdCustomers.CurrentRow.DataBoundItem!=null)
             {
-                txtCustomerPhone.Text = customers[e.RowIndex].PhoneNumber;
-                txtCustomerName.Text = customers[e.RowIndex].CustomerName;
-                txtCustomerAddress.Text = customers[e.RowIndex].Address;
-                txtDeliveryAddress.Text = customers[e.RowIndex].DeliveryAddress;
-                txtCustomerEmail.Text = customers[e.RowIndex].DeliveryAddress;
-                txtCustomerNote.Text = customers[e.RowIndex].Note;
+                var customer = (Customer)grdCustomers.CurrentRow.DataBoundItem;
+                txtCustomerPhone.Text = customer.PhoneNumber;
+                txtCustomerName.Text = customer.CustomerName;
+                txtCustomerAddress.Text = customer.Address;
+                txtDeliveryAddress.Text = customer.DeliveryAddress;
+                txtCustomerEmail.Text = customer.Email;
+                txtCustomerNote.Text = customer.Note;
             }
         }
 

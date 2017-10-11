@@ -38,6 +38,7 @@
             this.phoneNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeliveryAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.customerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
@@ -51,18 +52,24 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.txtCustomerPhone = new System.Windows.Forms.TextBox();
-            this.txtCustomerAddress = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtCustomerName = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.txtCustomerEmail = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.txtCustomerAddress = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.txtCustomerName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel11 = new System.Windows.Forms.Panel();
             this.txtCustomerNote = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.panel12 = new System.Windows.Forms.Panel();
             this.txtDeliveryAddress = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.btSaveCustomer = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -77,6 +84,12 @@
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel11.SuspendLayout();
+            this.panel12.SuspendLayout();
             this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,6 +146,7 @@
             this.phoneNumberDataGridViewTextBoxColumn,
             this.emailDataGridViewTextBoxColumn,
             this.addressDataGridViewTextBoxColumn,
+            this.DeliveryAddress,
             this.noteDataGridViewTextBoxColumn});
             this.grdCustomers.DataSource = this.customerBindingSource;
             this.grdCustomers.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -170,6 +184,13 @@
             this.addressDataGridViewTextBoxColumn.HeaderText = "Địa Chỉ";
             this.addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
             this.addressDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // DeliveryAddress
+            // 
+            this.DeliveryAddress.DataPropertyName = "DeliveryAddress";
+            this.DeliveryAddress.HeaderText = "Địa Chỉ Nhận Hàng";
+            this.DeliveryAddress.Name = "DeliveryAddress";
+            this.DeliveryAddress.ReadOnly = true;
             // 
             // noteDataGridViewTextBoxColumn
             // 
@@ -297,101 +318,149 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txtCustomerPhone, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtCustomerAddress, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.txtCustomerName, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txtCustomerEmail, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtCustomerNote, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.txtDeliveryAddress, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panel7, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel8, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel9, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel10, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel11, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel12, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(660, 97);
             this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.txtCustomerPhone);
+            this.panel7.Controls.Add(this.label1);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(3, 3);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(192, 42);
+            this.panel7.TabIndex = 12;
+            // 
+            // txtCustomerPhone
+            // 
+            this.txtCustomerPhone.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCustomerPhone.Location = new System.Drawing.Point(0, 13);
+            this.txtCustomerPhone.Name = "txtCustomerPhone";
+            this.txtCustomerPhone.Size = new System.Drawing.Size(192, 20);
+            this.txtCustomerPhone.TabIndex = 5;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Số Điện Thoại";
             // 
-            // label3
+            // panel8
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(399, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Địa Chỉ";
+            this.panel8.Controls.Add(this.txtCustomerEmail);
+            this.panel8.Controls.Add(this.label4);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(201, 3);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(192, 42);
+            this.panel8.TabIndex = 13;
             // 
-            // txtCustomerPhone
+            // txtCustomerEmail
             // 
-            this.txtCustomerPhone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCustomerPhone.Location = new System.Drawing.Point(3, 27);
-            this.txtCustomerPhone.Name = "txtCustomerPhone";
-            this.txtCustomerPhone.Size = new System.Drawing.Size(192, 20);
-            this.txtCustomerPhone.TabIndex = 5;
-            // 
-            // txtCustomerAddress
-            // 
-            this.txtCustomerAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCustomerAddress.Location = new System.Drawing.Point(399, 27);
-            this.txtCustomerAddress.Name = "txtCustomerAddress";
-            this.txtCustomerAddress.Size = new System.Drawing.Size(258, 20);
-            this.txtCustomerAddress.TabIndex = 7;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Họ Tên";
-            // 
-            // txtCustomerName
-            // 
-            this.txtCustomerName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCustomerName.Location = new System.Drawing.Point(3, 75);
-            this.txtCustomerName.Name = "txtCustomerName";
-            this.txtCustomerName.Size = new System.Drawing.Size(192, 20);
-            this.txtCustomerName.TabIndex = 6;
+            this.txtCustomerEmail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCustomerEmail.Location = new System.Drawing.Point(0, 13);
+            this.txtCustomerEmail.Name = "txtCustomerEmail";
+            this.txtCustomerEmail.Size = new System.Drawing.Size(192, 20);
+            this.txtCustomerEmail.TabIndex = 8;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(201, 0);
+            this.label4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label4.Location = new System.Drawing.Point(0, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Email";
             // 
-            // txtCustomerEmail
+            // panel9
             // 
-            this.txtCustomerEmail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCustomerEmail.Location = new System.Drawing.Point(201, 27);
-            this.txtCustomerEmail.Name = "txtCustomerEmail";
-            this.txtCustomerEmail.Size = new System.Drawing.Size(192, 20);
-            this.txtCustomerEmail.TabIndex = 8;
+            this.panel9.Controls.Add(this.txtCustomerAddress);
+            this.panel9.Controls.Add(this.label3);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(399, 3);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(258, 42);
+            this.panel9.TabIndex = 14;
+            // 
+            // txtCustomerAddress
+            // 
+            this.txtCustomerAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCustomerAddress.Location = new System.Drawing.Point(0, 13);
+            this.txtCustomerAddress.Name = "txtCustomerAddress";
+            this.txtCustomerAddress.Size = new System.Drawing.Size(258, 20);
+            this.txtCustomerAddress.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Địa Chỉ";
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.txtCustomerName);
+            this.panel10.Controls.Add(this.label2);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel10.Location = new System.Drawing.Point(3, 51);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(192, 43);
+            this.panel10.TabIndex = 15;
+            // 
+            // txtCustomerName
+            // 
+            this.txtCustomerName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCustomerName.Location = new System.Drawing.Point(0, 13);
+            this.txtCustomerName.Name = "txtCustomerName";
+            this.txtCustomerName.Size = new System.Drawing.Size(192, 20);
+            this.txtCustomerName.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Họ Tên";
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.txtCustomerNote);
+            this.panel11.Controls.Add(this.label5);
+            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel11.Location = new System.Drawing.Point(201, 51);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(192, 43);
+            this.panel11.TabIndex = 16;
             // 
             // txtCustomerNote
             // 
             this.txtCustomerNote.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCustomerNote.Location = new System.Drawing.Point(201, 75);
+            this.txtCustomerNote.Location = new System.Drawing.Point(0, 13);
             this.txtCustomerNote.Name = "txtCustomerNote";
             this.txtCustomerNote.Size = new System.Drawing.Size(192, 20);
             this.txtCustomerNote.TabIndex = 9;
@@ -399,28 +468,40 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(201, 48);
+            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label5.Location = new System.Drawing.Point(0, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(45, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Ghi Chú";
             // 
-            // label6
+            // panel12
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(399, 48);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(95, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Địa Chỉ Giao Hàng";
+            this.panel12.Controls.Add(this.txtDeliveryAddress);
+            this.panel12.Controls.Add(this.label6);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel12.Location = new System.Drawing.Point(399, 51);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(258, 43);
+            this.panel12.TabIndex = 17;
             // 
             // txtDeliveryAddress
             // 
             this.txtDeliveryAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDeliveryAddress.Location = new System.Drawing.Point(399, 75);
+            this.txtDeliveryAddress.Location = new System.Drawing.Point(0, 13);
             this.txtDeliveryAddress.Name = "txtDeliveryAddress";
             this.txtDeliveryAddress.Size = new System.Drawing.Size(258, 20);
             this.txtDeliveryAddress.TabIndex = 11;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label6.Location = new System.Drawing.Point(0, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(95, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Địa Chỉ Giao Hàng";
             // 
             // panel5
             // 
@@ -463,7 +544,18 @@
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -502,10 +594,17 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Button btClearAll;
         private System.Windows.Forms.BindingSource customerBindingSource;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.DataGridViewTextBoxColumn customerNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn phoneNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn emailDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeliveryAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn noteDataGridViewTextBoxColumn;
     }
 }

@@ -85,6 +85,9 @@ namespace QLBH.Businesses
             bool succ = false;
             using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
             {
+                if(context.IssueProducts.Any(i=>i.ReceiptId == receiptId)){
+                    return false;
+                }
                 var obj = context.Receipts.FirstOrDefault(p => p.ReceiptId == receiptId);
                 if (obj != null)
                 {
