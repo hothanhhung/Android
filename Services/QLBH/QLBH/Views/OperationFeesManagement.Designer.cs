@@ -29,9 +29,34 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.grdOperationFees = new System.Windows.Forms.DataGridView();
+            this.operationFeeIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operationFeeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.feeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.createdDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operationFeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.txtViewName = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.dtViewMin = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.dtViewMax = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.cbbViewQuick = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.btDeleteFee = new System.Windows.Forms.Button();
+            this.btCreateFee = new System.Windows.Forms.Button();
+            this.btView = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -49,33 +74,17 @@
             this.label4 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btFeeSave = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtViewName = new System.Windows.Forms.TextBox();
-            this.dtViewMin = new System.Windows.Forms.DateTimePicker();
-            this.dtViewMax = new System.Windows.Forms.DateTimePicker();
-            this.cbbViewQuick = new System.Windows.Forms.ComboBox();
-            this.btView = new System.Windows.Forms.Button();
-            this.btCreateFee = new System.Windows.Forms.Button();
-            this.btDeleteFee = new System.Windows.Forms.Button();
-            this.grdOperationFees = new System.Windows.Forms.DataGridView();
-            this.operationFeeIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operationFeeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.feeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.createdDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operationFeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdOperationFees)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.operationFeeBindingSource)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel11.SuspendLayout();
+            this.panel12.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -85,15 +94,6 @@
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.panel8.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.panel9.SuspendLayout();
-            this.panel10.SuspendLayout();
-            this.panel11.SuspendLayout();
-            this.panel12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdOperationFees)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.operationFeeBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -117,6 +117,269 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(697, 251);
             this.panel2.TabIndex = 1;
+            // 
+            // grdOperationFees
+            // 
+            this.grdOperationFees.AllowUserToAddRows = false;
+            this.grdOperationFees.AllowUserToDeleteRows = false;
+            this.grdOperationFees.AutoGenerateColumns = false;
+            this.grdOperationFees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdOperationFees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.operationFeeIdDataGridViewTextBoxColumn,
+            this.operationFeeNameDataGridViewTextBoxColumn,
+            this.feeDataGridViewTextBoxColumn,
+            this.noteDataGridViewTextBoxColumn,
+            this.createdDateDataGridViewTextBoxColumn});
+            this.grdOperationFees.DataSource = this.operationFeeBindingSource;
+            this.grdOperationFees.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdOperationFees.Location = new System.Drawing.Point(0, 69);
+            this.grdOperationFees.Name = "grdOperationFees";
+            this.grdOperationFees.ReadOnly = true;
+            this.grdOperationFees.Size = new System.Drawing.Size(697, 182);
+            this.grdOperationFees.TabIndex = 1;
+            this.grdOperationFees.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOperationFees_CellDoubleClick);
+            // 
+            // operationFeeIdDataGridViewTextBoxColumn
+            // 
+            this.operationFeeIdDataGridViewTextBoxColumn.DataPropertyName = "OperationFeeId";
+            this.operationFeeIdDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.operationFeeIdDataGridViewTextBoxColumn.Name = "operationFeeIdDataGridViewTextBoxColumn";
+            this.operationFeeIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // operationFeeNameDataGridViewTextBoxColumn
+            // 
+            this.operationFeeNameDataGridViewTextBoxColumn.DataPropertyName = "OperationFeeName";
+            this.operationFeeNameDataGridViewTextBoxColumn.HeaderText = "Tên Chi Phí";
+            this.operationFeeNameDataGridViewTextBoxColumn.Name = "operationFeeNameDataGridViewTextBoxColumn";
+            this.operationFeeNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // feeDataGridViewTextBoxColumn
+            // 
+            this.feeDataGridViewTextBoxColumn.DataPropertyName = "Fee";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.feeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.feeDataGridViewTextBoxColumn.HeaderText = "Chi Phí";
+            this.feeDataGridViewTextBoxColumn.Name = "feeDataGridViewTextBoxColumn";
+            this.feeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // noteDataGridViewTextBoxColumn
+            // 
+            this.noteDataGridViewTextBoxColumn.DataPropertyName = "Note";
+            this.noteDataGridViewTextBoxColumn.HeaderText = "Ghi Chú";
+            this.noteDataGridViewTextBoxColumn.Name = "noteDataGridViewTextBoxColumn";
+            this.noteDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // createdDateDataGridViewTextBoxColumn
+            // 
+            this.createdDateDataGridViewTextBoxColumn.DataPropertyName = "CreatedDate";
+            this.createdDateDataGridViewTextBoxColumn.HeaderText = "Ngày Chi";
+            this.createdDateDataGridViewTextBoxColumn.Name = "createdDateDataGridViewTextBoxColumn";
+            this.createdDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // operationFeeBindingSource
+            // 
+            this.operationFeeBindingSource.DataSource = typeof(QLBH.Models.OperationFee);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.tableLayoutPanel2);
+            this.groupBox3.Controls.Add(this.panel8);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(697, 69);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.Controls.Add(this.panel9, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel10, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel11, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel12, 3, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(466, 50);
+            this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.txtViewName);
+            this.panel9.Controls.Add(this.label5);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(3, 3);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(110, 44);
+            this.panel9.TabIndex = 0;
+            // 
+            // txtViewName
+            // 
+            this.txtViewName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtViewName.Location = new System.Drawing.Point(0, 13);
+            this.txtViewName.Name = "txtViewName";
+            this.txtViewName.Size = new System.Drawing.Size(110, 20);
+            this.txtViewName.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label5.Location = new System.Drawing.Point(0, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(64, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Tên Chi Phí";
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.dtViewMin);
+            this.panel10.Controls.Add(this.label6);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel10.Location = new System.Drawing.Point(119, 3);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(110, 44);
+            this.panel10.TabIndex = 1;
+            // 
+            // dtViewMin
+            // 
+            this.dtViewMin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtViewMin.Location = new System.Drawing.Point(0, 13);
+            this.dtViewMin.Name = "dtViewMin";
+            this.dtViewMin.Size = new System.Drawing.Size(110, 20);
+            this.dtViewMin.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label6.Location = new System.Drawing.Point(0, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Từ Ngày";
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.dtViewMax);
+            this.panel11.Controls.Add(this.label7);
+            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel11.Location = new System.Drawing.Point(235, 3);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(110, 44);
+            this.panel11.TabIndex = 2;
+            // 
+            // dtViewMax
+            // 
+            this.dtViewMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtViewMax.Location = new System.Drawing.Point(0, 13);
+            this.dtViewMax.Name = "dtViewMax";
+            this.dtViewMax.Size = new System.Drawing.Size(110, 20);
+            this.dtViewMax.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label7.Location = new System.Drawing.Point(0, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Đến Ngày";
+            // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.cbbViewQuick);
+            this.panel12.Controls.Add(this.label8);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel12.Location = new System.Drawing.Point(351, 3);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(112, 44);
+            this.panel12.TabIndex = 3;
+            // 
+            // cbbViewQuick
+            // 
+            this.cbbViewQuick.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbbViewQuick.FormattingEnabled = true;
+            this.cbbViewQuick.Items.AddRange(new object[] {
+            "Hôm Nay",
+            "Hôm Qua",
+            "Trong 7 Ngày",
+            "Tuần Này",
+            "Tuần Trước",
+            "Tháng Này",
+            "Tháng Trước",
+            "Năm Này",
+            "Năm Trước"});
+            this.cbbViewQuick.Location = new System.Drawing.Point(0, 13);
+            this.cbbViewQuick.Name = "cbbViewQuick";
+            this.cbbViewQuick.Size = new System.Drawing.Size(112, 21);
+            this.cbbViewQuick.TabIndex = 1;
+            this.cbbViewQuick.SelectedIndexChanged += new System.EventHandler(this.cbbViewQuick_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.Location = new System.Drawing.Point(0, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(67, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Chọn Nhanh";
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.btDeleteFee);
+            this.panel8.Controls.Add(this.btCreateFee);
+            this.panel8.Controls.Add(this.btView);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel8.Location = new System.Drawing.Point(469, 16);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(225, 50);
+            this.panel8.TabIndex = 0;
+            // 
+            // btDeleteFee
+            // 
+            this.btDeleteFee.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btDeleteFee.Location = new System.Drawing.Point(138, 0);
+            this.btDeleteFee.Name = "btDeleteFee";
+            this.btDeleteFee.Size = new System.Drawing.Size(68, 50);
+            this.btDeleteFee.TabIndex = 2;
+            this.btDeleteFee.Text = "Xóa";
+            this.btDeleteFee.UseVisualStyleBackColor = true;
+            this.btDeleteFee.Click += new System.EventHandler(this.btDeleteFee_Click);
+            // 
+            // btCreateFee
+            // 
+            this.btCreateFee.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btCreateFee.Location = new System.Drawing.Point(69, 0);
+            this.btCreateFee.Name = "btCreateFee";
+            this.btCreateFee.Size = new System.Drawing.Size(69, 50);
+            this.btCreateFee.TabIndex = 1;
+            this.btCreateFee.Text = "Tạo Mới";
+            this.btCreateFee.UseVisualStyleBackColor = true;
+            this.btCreateFee.Click += new System.EventHandler(this.btCreateFee_Click);
+            // 
+            // btView
+            // 
+            this.btView.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btView.Location = new System.Drawing.Point(0, 0);
+            this.btView.Name = "btView";
+            this.btView.Size = new System.Drawing.Size(69, 50);
+            this.btView.TabIndex = 0;
+            this.btView.Text = "Xem";
+            this.btView.UseVisualStyleBackColor = true;
+            this.btView.Click += new System.EventHandler(this.btView_Click);
             // 
             // panel1
             // 
@@ -297,269 +560,6 @@
             this.btFeeSave.UseVisualStyleBackColor = true;
             this.btFeeSave.Click += new System.EventHandler(this.btFeeSave_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox3.Controls.Add(this.panel8);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox3.Location = new System.Drawing.Point(0, 0);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(697, 69);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.btDeleteFee);
-            this.panel8.Controls.Add(this.btCreateFee);
-            this.panel8.Controls.Add(this.btView);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel8.Location = new System.Drawing.Point(469, 16);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(225, 50);
-            this.panel8.TabIndex = 0;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.Controls.Add(this.panel9, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel10, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel11, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel12, 3, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(466, 50);
-            this.tableLayoutPanel2.TabIndex = 1;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.txtViewName);
-            this.panel9.Controls.Add(this.label5);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(3, 3);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(110, 44);
-            this.panel9.TabIndex = 0;
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.dtViewMin);
-            this.panel10.Controls.Add(this.label6);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel10.Location = new System.Drawing.Point(119, 3);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(110, 44);
-            this.panel10.TabIndex = 1;
-            // 
-            // panel11
-            // 
-            this.panel11.Controls.Add(this.dtViewMax);
-            this.panel11.Controls.Add(this.label7);
-            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel11.Location = new System.Drawing.Point(235, 3);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(110, 44);
-            this.panel11.TabIndex = 2;
-            // 
-            // panel12
-            // 
-            this.panel12.Controls.Add(this.cbbViewQuick);
-            this.panel12.Controls.Add(this.label8);
-            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel12.Location = new System.Drawing.Point(351, 3);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(112, 44);
-            this.panel12.TabIndex = 3;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label5.Location = new System.Drawing.Point(0, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Tên Chi Phí";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label6.Location = new System.Drawing.Point(0, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Từ Ngày";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label7.Location = new System.Drawing.Point(0, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Đến Ngày";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.Location = new System.Drawing.Point(0, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(67, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Chọn Nhanh";
-            // 
-            // txtViewName
-            // 
-            this.txtViewName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtViewName.Location = new System.Drawing.Point(0, 13);
-            this.txtViewName.Name = "txtViewName";
-            this.txtViewName.Size = new System.Drawing.Size(110, 20);
-            this.txtViewName.TabIndex = 1;
-            // 
-            // dtViewMin
-            // 
-            this.dtViewMin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtViewMin.Location = new System.Drawing.Point(0, 13);
-            this.dtViewMin.Name = "dtViewMin";
-            this.dtViewMin.Size = new System.Drawing.Size(110, 20);
-            this.dtViewMin.TabIndex = 1;
-            // 
-            // dtViewMax
-            // 
-            this.dtViewMax.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtViewMax.Location = new System.Drawing.Point(0, 13);
-            this.dtViewMax.Name = "dtViewMax";
-            this.dtViewMax.Size = new System.Drawing.Size(110, 20);
-            this.dtViewMax.TabIndex = 1;
-            // 
-            // cbbViewQuick
-            // 
-            this.cbbViewQuick.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbbViewQuick.FormattingEnabled = true;
-            this.cbbViewQuick.Items.AddRange(new object[] {
-            "Hôm Nay",
-            "Hôm Qua",
-            "Trong 7 Ngày",
-            "Tuần Này",
-            "Tuần Trước",
-            "Tháng Này",
-            "Tháng Trước",
-            "Năm Này",
-            "Năm Trước"});
-            this.cbbViewQuick.Location = new System.Drawing.Point(0, 13);
-            this.cbbViewQuick.Name = "cbbViewQuick";
-            this.cbbViewQuick.Size = new System.Drawing.Size(112, 21);
-            this.cbbViewQuick.TabIndex = 1;
-            this.cbbViewQuick.SelectedIndexChanged += new System.EventHandler(this.cbbViewQuick_SelectedIndexChanged);
-            // 
-            // btView
-            // 
-            this.btView.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btView.Location = new System.Drawing.Point(0, 0);
-            this.btView.Name = "btView";
-            this.btView.Size = new System.Drawing.Size(69, 50);
-            this.btView.TabIndex = 0;
-            this.btView.Text = "Xem";
-            this.btView.UseVisualStyleBackColor = true;
-            this.btView.Click += new System.EventHandler(this.btView_Click);
-            // 
-            // btCreateFee
-            // 
-            this.btCreateFee.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btCreateFee.Location = new System.Drawing.Point(69, 0);
-            this.btCreateFee.Name = "btCreateFee";
-            this.btCreateFee.Size = new System.Drawing.Size(69, 50);
-            this.btCreateFee.TabIndex = 1;
-            this.btCreateFee.Text = "Tạo Mới";
-            this.btCreateFee.UseVisualStyleBackColor = true;
-            this.btCreateFee.Click += new System.EventHandler(this.btCreateFee_Click);
-            // 
-            // btDeleteFee
-            // 
-            this.btDeleteFee.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btDeleteFee.Location = new System.Drawing.Point(138, 0);
-            this.btDeleteFee.Name = "btDeleteFee";
-            this.btDeleteFee.Size = new System.Drawing.Size(68, 50);
-            this.btDeleteFee.TabIndex = 2;
-            this.btDeleteFee.Text = "Xóa";
-            this.btDeleteFee.UseVisualStyleBackColor = true;
-            this.btDeleteFee.Click += new System.EventHandler(this.btDeleteFee_Click);
-            // 
-            // grdOperationFees
-            // 
-            this.grdOperationFees.AllowUserToAddRows = false;
-            this.grdOperationFees.AllowUserToDeleteRows = false;
-            this.grdOperationFees.AutoGenerateColumns = false;
-            this.grdOperationFees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdOperationFees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.operationFeeIdDataGridViewTextBoxColumn,
-            this.operationFeeNameDataGridViewTextBoxColumn,
-            this.feeDataGridViewTextBoxColumn,
-            this.noteDataGridViewTextBoxColumn,
-            this.createdDateDataGridViewTextBoxColumn});
-            this.grdOperationFees.DataSource = this.operationFeeBindingSource;
-            this.grdOperationFees.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdOperationFees.Location = new System.Drawing.Point(0, 69);
-            this.grdOperationFees.Name = "grdOperationFees";
-            this.grdOperationFees.ReadOnly = true;
-            this.grdOperationFees.Size = new System.Drawing.Size(697, 182);
-            this.grdOperationFees.TabIndex = 1;
-            this.grdOperationFees.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOperationFees_CellDoubleClick);
-            // 
-            // operationFeeIdDataGridViewTextBoxColumn
-            // 
-            this.operationFeeIdDataGridViewTextBoxColumn.DataPropertyName = "OperationFeeId";
-            this.operationFeeIdDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.operationFeeIdDataGridViewTextBoxColumn.Name = "operationFeeIdDataGridViewTextBoxColumn";
-            this.operationFeeIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // operationFeeNameDataGridViewTextBoxColumn
-            // 
-            this.operationFeeNameDataGridViewTextBoxColumn.DataPropertyName = "OperationFeeName";
-            this.operationFeeNameDataGridViewTextBoxColumn.HeaderText = "Tên Chi Phí";
-            this.operationFeeNameDataGridViewTextBoxColumn.Name = "operationFeeNameDataGridViewTextBoxColumn";
-            this.operationFeeNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // feeDataGridViewTextBoxColumn
-            // 
-            this.feeDataGridViewTextBoxColumn.DataPropertyName = "Fee";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.feeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.feeDataGridViewTextBoxColumn.HeaderText = "Chi Phí";
-            this.feeDataGridViewTextBoxColumn.Name = "feeDataGridViewTextBoxColumn";
-            this.feeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // noteDataGridViewTextBoxColumn
-            // 
-            this.noteDataGridViewTextBoxColumn.DataPropertyName = "Note";
-            this.noteDataGridViewTextBoxColumn.HeaderText = "Ghi Chú";
-            this.noteDataGridViewTextBoxColumn.Name = "noteDataGridViewTextBoxColumn";
-            this.noteDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // createdDateDataGridViewTextBoxColumn
-            // 
-            this.createdDateDataGridViewTextBoxColumn.DataPropertyName = "CreatedDate";
-            this.createdDateDataGridViewTextBoxColumn.HeaderText = "Ngày Chi";
-            this.createdDateDataGridViewTextBoxColumn.Name = "createdDateDataGridViewTextBoxColumn";
-            this.createdDateDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // operationFeeBindingSource
-            // 
-            this.operationFeeBindingSource.DataSource = typeof(QLBH.Models.OperationFee);
-            // 
             // OperationFeesManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -570,6 +570,19 @@
             this.Load += new System.EventHandler(this.OperationFeesManagement_Load);
             this.groupBox1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdOperationFees)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.operationFeeBindingSource)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
+            this.panel8.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -583,19 +596,6 @@
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.panel8.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
-            this.panel10.ResumeLayout(false);
-            this.panel10.PerformLayout();
-            this.panel11.ResumeLayout(false);
-            this.panel11.PerformLayout();
-            this.panel12.ResumeLayout(false);
-            this.panel12.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdOperationFees)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.operationFeeBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

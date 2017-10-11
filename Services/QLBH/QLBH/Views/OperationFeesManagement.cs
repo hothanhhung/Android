@@ -144,7 +144,7 @@ namespace QLBH.Views
                 }
                 CurrentOperationFee.OperationFeeName = txtFeeName.Text.Trim();
                 CurrentOperationFee.Fee = decimal.ToInt32(txtFeeNumber.Value);
-                CurrentOperationFee.Note = txtViewName.Text.Trim();
+                CurrentOperationFee.Note = txtFeeNote.Text.Trim();
                 CurrentOperationFee.CreatedDate = MethodHelpers.ConvertDateTimeToCorrectString(dtFeeDate.Value);
                 CurrentOperationFee = OperationFeeProcesser.SaveCustomer(CurrentOperationFee);
                 if (CurrentOperationFee.OperationFeeId > 0)
@@ -165,7 +165,7 @@ namespace QLBH.Views
             {
                 txtFeeName.Text = CurrentOperationFee.OperationFeeName;
                 txtFeeNumber.Value = CurrentOperationFee.Fee;
-                txtViewName.Text = CurrentOperationFee.Note;
+                txtFeeNote.Text = CurrentOperationFee.Note;
                 dtFeeDate.Value = MethodHelpers.ConvertStringDateTimeToDateTime(CurrentOperationFee.CreatedDate);
                 
             }
@@ -174,7 +174,7 @@ namespace QLBH.Views
                 CurrentOperationFee = new OperationFee();
                 txtFeeName.Text = CurrentOperationFee.OperationFeeName;
                 txtFeeNumber.Value = CurrentOperationFee.Fee;
-                txtViewName.Text = CurrentOperationFee.Note;
+                txtFeeNote.Text = CurrentOperationFee.Note;
                 dtFeeDate.Value = DateTime.Now;
             }
         }

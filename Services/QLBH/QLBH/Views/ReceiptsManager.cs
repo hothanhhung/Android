@@ -16,10 +16,44 @@ namespace QLBH.Views
     public partial class ReceiptsManager : UserControl
     {
         List<Product> Products = null;
+        Receipt CurrentReceipt = null;
 
         public ReceiptsManager()
         {
             InitializeComponent();
+        }
+
+        private void LoadReceiptUI(Receipt receipt)
+        {
+            CurrentReceipt = receipt;
+            if (CurrentReceipt == null)
+            {
+                CurrentReceipt = new Receipt();
+                cbbProductForReceipt.SelectedIndex = -1;
+                txtQuantity.Value = 0;
+                txtQuantity.Value = 0;
+                txtTotalPrice.Value = 0;
+                txtNote.Text = string.Empty;
+                dtReceiptedDate.Value = DateTime.Now;
+                btReceipt.Text = "Nhập Hàng";
+                btCancelReceipt.Enabled = false;
+            }
+            else
+            {
+                foreach(var item in cbbProductForReceipt.Items)
+                {
+                    if (((Product)item).ProductId == CurrentReceipt.ProductId)
+                    {
+                        cbbProductForReceipt.SelectedItem = item;
+                    }
+                }
+                txtQuantity.Value = CurrentReceipt.Quantity;
+                txtTotalPrice.Value = CurrentReceipt.PriceOfAllForReceipting;
+                txtNote.Text = CurrentReceipt.Note;
+                dtReceiptedDate.Value = MethodHelpers.ConvertStringDateTimeToDateTime(CurrentReceipt.DatedReceipt);
+                btReceipt.Text = "Lưu";
+                btCancelReceipt.Enabled = true;
+            }
         }
 
         private void LoadReceipts()
@@ -78,6 +112,7 @@ namespace QLBH.Views
             UpdateView();
             loadProducts();
             LoadReceipts();
+            LoadReceiptUI(null);
         }
 
         private void UpdateView()
@@ -131,6 +166,19 @@ namespace QLBH.Views
 
         private void btReceipt_Click(object sender, EventArgs e)
         {
+            int offsetQuantity = Decimal.ToInt32(txtQuantity.Value) - CurrentReceipt.Quantity;
+            if (offsetQuantity + CurrentReceipt.RemainAfterDone<0)
+            {
+                MessageBox.Show("Số Lượng Sản Phẩm Giảm Không Được Phép", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (offsetQuantity < 0)
+            {
+                if (MessageBox.Show("Số Lượng Sản Phẩm Đang Giảm. Điều Này Có Thể Làm Một Số Đơn Hàng Thiếu Hàng.\nBạn Muốn Tiếp Tục", "Nhập Hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                {
+                    return;
+                }
+            }
             if (cbbProductForReceipt.SelectedItem == null && ((Product)cbbProductForReceipt.SelectedItem).ProductId <= 0)
             {
                 MessageBox.Show("Chọn sản phẩm", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -148,22 +196,17 @@ namespace QLBH.Views
             }
             else
             {
-                var receipt = new Receipt()
+                CurrentReceipt.ProductId = ((Product)cbbProductForReceipt.SelectedItem).ProductId;
+                CurrentReceipt.Quantity = Decimal.ToInt32(txtQuantity.Value);
+                CurrentReceipt.RemainAfterDone = CurrentReceipt.RemainAfterDone + offsetQuantity;
+                CurrentReceipt.PriceOfAllForReceipting = Decimal.ToInt32(txtTotalPrice.Value);
+                CurrentReceipt.Note = txtNote.Text;
+                CurrentReceipt.DatedReceipt = MethodHelpers.ConvertDateTimeToCorrectString(dtReceiptedDate.Value);
+
+                if (ReceiptProcesser.SaveReceipt(CurrentReceipt))
                 {
-                    ProductId = ((Product)cbbProductForReceipt.SelectedItem).ProductId,
-                    Quantity = Decimal.ToInt32(txtQuantity.Value),
-                    RemainAfterDone = Decimal.ToInt32(txtQuantity.Value),
-                    PriceOfAllForReceipting = Decimal.ToInt32(txtTotalPrice.Value),
-                    Note = txtNote.Text,
-                    DatedReceipt = MethodHelpers.ConvertDateTimeToCorrectString(dtReceiptedDate.Value)
-                };
-                if (ReceiptProcesser.SaveReceipt(receipt))
-                {
-                    cbbProductForReceipt.SelectedIndex = -1;
-                    txtQuantity.Value = 0;
-                    txtTotalPrice.Value = 0;
-                    txtNote.Text = string.Empty;
                     LoadReceipts();
+                    LoadReceiptUI(null);
                 }
                 else
                 {
@@ -175,6 +218,43 @@ namespace QLBH.Views
         private void btViewReceipt_Click(object sender, EventArgs e)
         {
             LoadReceipts();
+        }
+
+        private void btDeleteReceipt_Click(object sender, EventArgs e)
+        {
+            if (grdReceipts.CurrentRow != null && grdReceipts.CurrentRow.DataBoundItem != null)
+            {
+                var receipt = (Receipt)grdReceipts.CurrentRow.DataBoundItem;
+                if(receipt.Quantity > receipt.RemainAfterDone)
+                {
+                    MessageBox.Show("Hàng Đã Xuất, Không Thể Xóa", "Xóa Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else if (MessageBox.Show("Bạn Đang Xóa #" + receipt.ReceiptId + ". Điều Này Có Thể Làm Một Số Đơn Hàng Thiếu Hàng.\nBạn Muốn Tiếp Tục", "Xóa Hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (ReceiptProcesser.DeleteReceipt(receipt.ReceiptId))
+                    {
+                        LoadReceipts();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Có lỗi khi xóa hàng", "Xóa Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void grdReceipts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (grdReceipts.CurrentRow != null && grdReceipts.CurrentRow.DataBoundItem != null)
+            {
+                LoadReceiptUI((Receipt)grdReceipts.CurrentRow.DataBoundItem);
+            }
+        }
+
+        private void btCancelReceipt_Click(object sender, EventArgs e)
+        {
+            LoadReceiptUI(null);
         }
     }
 }

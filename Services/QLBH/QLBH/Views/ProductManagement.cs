@@ -91,8 +91,8 @@ namespace QLBH.Views
         {
             if (tabProductManager.SelectedIndex == 0)
             {
-                loadProducts(true);
                 loadCbbCategories(true);
+                loadProducts(true);
             }
             else if (tabProductManager.SelectedIndex == 1)
             {
@@ -105,7 +105,7 @@ namespace QLBH.Views
             if(tabProductManager.SelectedIndex == 0)
             {
                 loadProducts();
-                loadCbbCategories(true);
+                loadCbbCategories(false);
             }
             else if (tabProductManager.SelectedIndex == 1)
             {
@@ -124,7 +124,7 @@ namespace QLBH.Views
                 CurrentCategory.CategoryName = txtCategoryName.Text;
                 CurrentCategory.Note = txtCategoryNote.Text;
                 CategoryProcesser.SaveCategory(CurrentCategory);
-                loadCategories();
+                loadCategories(true);
             }
         }
 
@@ -155,9 +155,12 @@ namespace QLBH.Views
             }
         }
 
-        private void loadCategories()
+        private void loadCategories(bool isReload = false)
         {
-            Categories = CategoryProcesser.GetCategories();
+            if (Categories == null || isReload)
+            {
+                Categories = CategoryProcesser.GetCategories();
+            }
             grvCategories.DataSource = Categories;
 
         }
@@ -265,6 +268,50 @@ namespace QLBH.Views
         private void txtSmartSearchProduct_TextChanged(object sender, EventArgs e)
         {
             loadProducts(false, txtSmartSearchProduct.Text);
+        }
+
+        private void btDeleteCategory_Click(object sender, EventArgs e)
+        {
+            if(grvCategories.CurrentRow!=null && grvCategories.CurrentRow.DataBoundItem!=null)
+            {
+                var category = (Category)grvCategories.CurrentRow.DataBoundItem;
+                if (category.NumberOfProducts > 0 )
+                {
+                    MessageBox.Show("Không Thể Xóa Danh Mục Đang Có Sản Phẩm", "Xóa Danh Mục", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }else if(MessageBox.Show("Bạn Muốn Xóa Danh Mục: "+category.CategoryName+"?","Xóa Danh Mục",MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if(CategoryProcesser.DeleteCategory(category.CategoryId))
+                    {
+                        loadCategories(true);
+                    }
+                    else { 
+                        MessageBox.Show("Có Lỗi Khi Xóa Danh Mục", "Xóa Danh Mục", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                    }
+                }
+            }
+        }
+
+        private void btDeleteProduct_Click(object sender, EventArgs e)
+        {
+            if (grdProducts.CurrentRow != null && grdProducts.CurrentRow.DataBoundItem != null)
+            {
+                var product = (Product)grdProducts.CurrentRow.DataBoundItem;
+                if (product.Quantity > 0)
+                {
+                    MessageBox.Show("Không Thể Xóa Sản Phẩm Còn Hàng", "Xóa Sản Phẩm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (MessageBox.Show("Bạn Muốn Xóa Sản Phẩm: " + product.ProductName + "?", "Xóa Sản Phẩm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (ProductProcesser.DeleteProduct(product.ProductId))
+                    {
+                        loadProducts(true);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Có Lỗi Khi Xóa sản Phẩm. Sản Phẩm Đã Được Nhập/Xuất, Không Thể Xóa", "Xóa Sản Phẩm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
         
     }
