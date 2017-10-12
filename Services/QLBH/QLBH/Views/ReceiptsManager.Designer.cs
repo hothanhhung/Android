@@ -29,14 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.grdReceipts = new System.Windows.Forms.DataGridView();
+            this.receiptIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RemainAfterDone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceOfAllForReceiptingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.datedReceiptDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.receiptBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -46,6 +54,7 @@
             this.cbbQuickView = new System.Windows.Forms.ComboBox();
             this.cbGroupProduct = new System.Windows.Forms.CheckBox();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.btDeleteReceipt = new System.Windows.Forms.Button();
             this.btViewReceipt = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -67,22 +76,14 @@
             this.txtNote = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.btReceipt = new System.Windows.Forms.Button();
-            this.RemainAfterDone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.receiptIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceOfAllForReceiptingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.datedReceiptDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.receiptBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btDeleteReceipt = new System.Windows.Forms.Button();
             this.btCancelReceipt = new System.Windows.Forms.Button();
+            this.btReceipt = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdReceipts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.receiptBindingSource)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -99,7 +100,6 @@
             this.panel12.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.receiptBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -166,6 +166,71 @@
             this.grdReceipts.Size = new System.Drawing.Size(648, 187);
             this.grdReceipts.TabIndex = 0;
             this.grdReceipts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdReceipts_CellDoubleClick);
+            // 
+            // receiptIdDataGridViewTextBoxColumn
+            // 
+            this.receiptIdDataGridViewTextBoxColumn.DataPropertyName = "ReceiptId";
+            this.receiptIdDataGridViewTextBoxColumn.HeaderText = "ReceiptId";
+            this.receiptIdDataGridViewTextBoxColumn.Name = "receiptIdDataGridViewTextBoxColumn";
+            this.receiptIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // productIdDataGridViewTextBoxColumn
+            // 
+            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            this.productIdDataGridViewTextBoxColumn.HeaderText = "Tên Sản Phẩm";
+            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
+            this.productIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // quantityDataGridViewTextBoxColumn
+            // 
+            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "Số Lượng";
+            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // RemainAfterDone
+            // 
+            this.RemainAfterDone.DataPropertyName = "RemainAfterDone";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.RemainAfterDone.DefaultCellStyle = dataGridViewCellStyle5;
+            this.RemainAfterDone.HeaderText = "Còn Lại (Gồm ĐH đang XL)";
+            this.RemainAfterDone.Name = "RemainAfterDone";
+            this.RemainAfterDone.ReadOnly = true;
+            // 
+            // priceOfAllForReceiptingDataGridViewTextBoxColumn
+            // 
+            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.DataPropertyName = "PriceOfAllForReceipting";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N0";
+            dataGridViewCellStyle6.NullValue = null;
+            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.HeaderText = "Tổng Giá Nhập";
+            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.Name = "priceOfAllForReceiptingDataGridViewTextBoxColumn";
+            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // datedReceiptDataGridViewTextBoxColumn
+            // 
+            this.datedReceiptDataGridViewTextBoxColumn.DataPropertyName = "DatedReceipt";
+            this.datedReceiptDataGridViewTextBoxColumn.HeaderText = "Ngày Nhập";
+            this.datedReceiptDataGridViewTextBoxColumn.Name = "datedReceiptDataGridViewTextBoxColumn";
+            this.datedReceiptDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // noteDataGridViewTextBoxColumn
+            // 
+            this.noteDataGridViewTextBoxColumn.DataPropertyName = "Note";
+            this.noteDataGridViewTextBoxColumn.HeaderText = "Ghi Chú";
+            this.noteDataGridViewTextBoxColumn.Name = "noteDataGridViewTextBoxColumn";
+            this.noteDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // receiptBindingSource
+            // 
+            this.receiptBindingSource.DataSource = typeof(QLBH.Models.Receipt);
             // 
             // panel3
             // 
@@ -272,6 +337,17 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(137, 40);
             this.panel5.TabIndex = 4;
+            // 
+            // btDeleteReceipt
+            // 
+            this.btDeleteReceipt.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btDeleteReceipt.Location = new System.Drawing.Point(66, 0);
+            this.btDeleteReceipt.Name = "btDeleteReceipt";
+            this.btDeleteReceipt.Size = new System.Drawing.Size(65, 40);
+            this.btDeleteReceipt.TabIndex = 4;
+            this.btDeleteReceipt.Text = "Xóa";
+            this.btDeleteReceipt.UseVisualStyleBackColor = true;
+            this.btDeleteReceipt.Click += new System.EventHandler(this.btDeleteReceipt_Click);
             // 
             // btViewReceipt
             // 
@@ -500,93 +576,6 @@
             this.panel8.Size = new System.Drawing.Size(137, 51);
             this.panel8.TabIndex = 1;
             // 
-            // btReceipt
-            // 
-            this.btReceipt.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btReceipt.Location = new System.Drawing.Point(0, 0);
-            this.btReceipt.Name = "btReceipt";
-            this.btReceipt.Size = new System.Drawing.Size(66, 51);
-            this.btReceipt.TabIndex = 0;
-            this.btReceipt.Text = "Nhập Hàng";
-            this.btReceipt.UseVisualStyleBackColor = true;
-            this.btReceipt.Click += new System.EventHandler(this.btReceipt_Click);
-            // 
-            // RemainAfterDone
-            // 
-            this.RemainAfterDone.DataPropertyName = "RemainAfterDone";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.Format = "N0";
-            dataGridViewCellStyle13.NullValue = null;
-            this.RemainAfterDone.DefaultCellStyle = dataGridViewCellStyle13;
-            this.RemainAfterDone.HeaderText = "Còn Lại (Gồm ĐH đang XL)";
-            this.RemainAfterDone.Name = "RemainAfterDone";
-            this.RemainAfterDone.ReadOnly = true;
-            // 
-            // receiptIdDataGridViewTextBoxColumn
-            // 
-            this.receiptIdDataGridViewTextBoxColumn.DataPropertyName = "ReceiptId";
-            this.receiptIdDataGridViewTextBoxColumn.HeaderText = "ReceiptId";
-            this.receiptIdDataGridViewTextBoxColumn.Name = "receiptIdDataGridViewTextBoxColumn";
-            this.receiptIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // productIdDataGridViewTextBoxColumn
-            // 
-            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            this.productIdDataGridViewTextBoxColumn.HeaderText = "Tên Sản Phẩm";
-            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
-            this.productIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // quantityDataGridViewTextBoxColumn
-            // 
-            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle14.Format = "N0";
-            dataGridViewCellStyle14.NullValue = null;
-            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle14;
-            this.quantityDataGridViewTextBoxColumn.HeaderText = "Số Lượng";
-            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
-            this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // priceOfAllForReceiptingDataGridViewTextBoxColumn
-            // 
-            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.DataPropertyName = "PriceOfAllForReceipting";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle15.Format = "N0";
-            dataGridViewCellStyle15.NullValue = null;
-            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle15;
-            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.HeaderText = "Tổng Giá Nhập";
-            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.Name = "priceOfAllForReceiptingDataGridViewTextBoxColumn";
-            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // datedReceiptDataGridViewTextBoxColumn
-            // 
-            this.datedReceiptDataGridViewTextBoxColumn.DataPropertyName = "DatedReceipt";
-            this.datedReceiptDataGridViewTextBoxColumn.HeaderText = "Ngày Nhập";
-            this.datedReceiptDataGridViewTextBoxColumn.Name = "datedReceiptDataGridViewTextBoxColumn";
-            this.datedReceiptDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // noteDataGridViewTextBoxColumn
-            // 
-            this.noteDataGridViewTextBoxColumn.DataPropertyName = "Note";
-            this.noteDataGridViewTextBoxColumn.HeaderText = "Ghi Chú";
-            this.noteDataGridViewTextBoxColumn.Name = "noteDataGridViewTextBoxColumn";
-            this.noteDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // receiptBindingSource
-            // 
-            this.receiptBindingSource.DataSource = typeof(QLBH.Models.Receipt);
-            // 
-            // btDeleteReceipt
-            // 
-            this.btDeleteReceipt.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btDeleteReceipt.Location = new System.Drawing.Point(66, 0);
-            this.btDeleteReceipt.Name = "btDeleteReceipt";
-            this.btDeleteReceipt.Size = new System.Drawing.Size(65, 40);
-            this.btDeleteReceipt.TabIndex = 4;
-            this.btDeleteReceipt.Text = "Xóa";
-            this.btDeleteReceipt.UseVisualStyleBackColor = true;
-            this.btDeleteReceipt.Click += new System.EventHandler(this.btDeleteReceipt_Click);
-            // 
             // btCancelReceipt
             // 
             this.btCancelReceipt.Dock = System.Windows.Forms.DockStyle.Left;
@@ -598,6 +587,17 @@
             this.btCancelReceipt.Text = "Hủy";
             this.btCancelReceipt.UseVisualStyleBackColor = true;
             this.btCancelReceipt.Click += new System.EventHandler(this.btCancelReceipt_Click);
+            // 
+            // btReceipt
+            // 
+            this.btReceipt.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btReceipt.Location = new System.Drawing.Point(0, 0);
+            this.btReceipt.Name = "btReceipt";
+            this.btReceipt.Size = new System.Drawing.Size(66, 51);
+            this.btReceipt.TabIndex = 0;
+            this.btReceipt.Text = "Nhập Hàng";
+            this.btReceipt.UseVisualStyleBackColor = true;
+            this.btReceipt.Click += new System.EventHandler(this.btReceipt_Click);
             // 
             // ReceiptsManager
             // 
@@ -612,6 +612,7 @@
             this.groupBox2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdReceipts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.receiptBindingSource)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -634,7 +635,6 @@
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.receiptBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -41,6 +41,8 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,6 +58,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.105.2\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -96,6 +99,7 @@
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Receipt.cs" />
+    <Compile Include="Models\ReportItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\CustomersManagement.cs">
@@ -128,6 +132,12 @@
     <Compile Include="Views\ProductManagement.Designer.cs">
       <DependentUpon>ProductManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReportsManagement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ReportsManagement.Designer.cs">
+      <DependentUpon>ReportsManagement.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,6 +168,9 @@
     <EmbeddedResource Include="Views\ProductManagement.resx">
       <DependentUpon>ProductManagement.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\ReportsManagement.resx">
+      <DependentUpon>ReportsManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Data\QuanLyBanHang.db3" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -169,6 +182,7 @@
     <None Include="Properties\DataSources\QLBH.Models.OrderDetail.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Product.datasource" />
     <None Include="Properties\DataSources\QLBH.Models.Receipt.datasource" />
+    <None Include="Properties\DataSources\QLBH.Models.ReportItem.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

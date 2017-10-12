@@ -31,7 +31,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btReceipt = new System.Windows.Forms.Button();
-            this.btInventory = new System.Windows.Forms.Button();
             this.btOrder = new System.Windows.Forms.Button();
             this.btProduct = new System.Windows.Forms.Button();
             this.btFeeToSell = new System.Windows.Forms.Button();
@@ -67,17 +66,15 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.btReceipt, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btInventory, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btOrder, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btProduct, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.btFeeToSell, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.btReport, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.btCustomers, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.btOrder, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btProduct, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.btFeeToSell, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btReport, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.btCustomers, 0, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 8;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
@@ -85,12 +82,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(131, 404);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // btReceipt
             // 
             this.btReceipt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btReceipt.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btReceipt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btReceipt.Location = new System.Drawing.Point(3, 3);
             this.btReceipt.Name = "btReceipt";
             this.btReceipt.Size = new System.Drawing.Size(125, 44);
@@ -99,20 +100,13 @@
             this.btReceipt.UseVisualStyleBackColor = true;
             this.btReceipt.Click += new System.EventHandler(this.btReceipt_Click);
             // 
-            // btInventory
-            // 
-            this.btInventory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btInventory.Location = new System.Drawing.Point(3, 53);
-            this.btInventory.Name = "btInventory";
-            this.btInventory.Size = new System.Drawing.Size(125, 44);
-            this.btInventory.TabIndex = 1;
-            this.btInventory.Text = "Hàng Tồn";
-            this.btInventory.UseVisualStyleBackColor = true;
-            // 
             // btOrder
             // 
             this.btOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btOrder.Location = new System.Drawing.Point(3, 103);
+            this.btOrder.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btOrder.Location = new System.Drawing.Point(3, 53);
             this.btOrder.Name = "btOrder";
             this.btOrder.Size = new System.Drawing.Size(125, 44);
             this.btOrder.TabIndex = 2;
@@ -123,7 +117,10 @@
             // btProduct
             // 
             this.btProduct.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btProduct.Location = new System.Drawing.Point(3, 153);
+            this.btProduct.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btProduct.Location = new System.Drawing.Point(3, 103);
             this.btProduct.Name = "btProduct";
             this.btProduct.Size = new System.Drawing.Size(125, 44);
             this.btProduct.TabIndex = 3;
@@ -134,7 +131,10 @@
             // btFeeToSell
             // 
             this.btFeeToSell.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btFeeToSell.Location = new System.Drawing.Point(3, 203);
+            this.btFeeToSell.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btFeeToSell.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btFeeToSell.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btFeeToSell.Location = new System.Drawing.Point(3, 153);
             this.btFeeToSell.Name = "btFeeToSell";
             this.btFeeToSell.Size = new System.Drawing.Size(125, 44);
             this.btFeeToSell.TabIndex = 4;
@@ -145,7 +145,10 @@
             // btReport
             // 
             this.btReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btReport.Location = new System.Drawing.Point(3, 253);
+            this.btReport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btReport.Location = new System.Drawing.Point(3, 203);
             this.btReport.Name = "btReport";
             this.btReport.Size = new System.Drawing.Size(125, 44);
             this.btReport.TabIndex = 5;
@@ -155,7 +158,10 @@
             // btCustomers
             // 
             this.btCustomers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btCustomers.Location = new System.Drawing.Point(3, 303);
+            this.btCustomers.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btCustomers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btCustomers.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btCustomers.Location = new System.Drawing.Point(3, 253);
             this.btCustomers.Name = "btCustomers";
             this.btCustomers.Size = new System.Drawing.Size(125, 44);
             this.btCustomers.TabIndex = 6;
@@ -178,7 +184,7 @@
             this.ClientSize = new System.Drawing.Size(696, 404);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Quản Lý Bán Hàng";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -193,7 +199,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button btReceipt;
-        private System.Windows.Forms.Button btInventory;
         private System.Windows.Forms.Button btOrder;
         private System.Windows.Forms.Button btProduct;
         private System.Windows.Forms.Button btFeeToSell;
