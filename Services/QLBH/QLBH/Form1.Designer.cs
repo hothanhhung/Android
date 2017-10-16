@@ -90,7 +90,6 @@
             // 
             this.btReceipt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btReceipt.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btReceipt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btReceipt.Location = new System.Drawing.Point(3, 3);
             this.btReceipt.Name = "btReceipt";
@@ -104,7 +103,6 @@
             // 
             this.btOrder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btOrder.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btOrder.Location = new System.Drawing.Point(3, 53);
             this.btOrder.Name = "btOrder";
@@ -118,7 +116,6 @@
             // 
             this.btProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btProduct.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btProduct.Location = new System.Drawing.Point(3, 103);
             this.btProduct.Name = "btProduct";
@@ -132,7 +129,6 @@
             // 
             this.btFeeToSell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btFeeToSell.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btFeeToSell.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btFeeToSell.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btFeeToSell.Location = new System.Drawing.Point(3, 153);
             this.btFeeToSell.Name = "btFeeToSell";
@@ -146,7 +142,6 @@
             // 
             this.btReport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btReport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btReport.Location = new System.Drawing.Point(3, 203);
             this.btReport.Name = "btReport";
@@ -154,12 +149,12 @@
             this.btReport.TabIndex = 5;
             this.btReport.Text = "Báo Cáo Doanh Thu";
             this.btReport.UseVisualStyleBackColor = true;
+            this.btReport.Click += new System.EventHandler(this.btReport_Click);
             // 
             // btCustomers
             // 
             this.btCustomers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btCustomers.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btCustomers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btCustomers.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btCustomers.Location = new System.Drawing.Point(3, 253);
             this.btCustomers.Name = "btCustomers";

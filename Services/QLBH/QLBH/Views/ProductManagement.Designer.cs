@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabProductManager = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -230,10 +230,10 @@
             // priceForSellingDataGridViewTextBoxColumn
             // 
             this.priceForSellingDataGridViewTextBoxColumn.DataPropertyName = "PriceForSelling";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.priceForSellingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.priceForSellingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.priceForSellingDataGridViewTextBoxColumn.HeaderText = "Giá Bán";
             this.priceForSellingDataGridViewTextBoxColumn.Name = "priceForSellingDataGridViewTextBoxColumn";
             this.priceForSellingDataGridViewTextBoxColumn.ReadOnly = true;

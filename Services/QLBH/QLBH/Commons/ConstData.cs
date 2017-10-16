@@ -8,6 +8,30 @@ namespace QLBH.Commons
 {
     public class ConstData
     {
-        public const string ConnectionString = @"Data Source=D:\hung\github\android\Android\Services\QLBH\QLBH\Data\QuanLyBanHang.db3;Version=3;New=False;Compress=True;UTF8Encoding=True";
+        public static string _connectionString = null;
+        public static string ConnectionString{
+            get{if(string.IsNullOrWhiteSpace(_connectionString)){
+                string path = System.IO.Path.GetFullPath(".\\Data\\QuanLyBanHang.db3");
+                if( System.IO.File.Exists(path))
+                {
+                    _connectionString = string.Format("Data Source={0};Version=3;New=False;Compress=True;UTF8Encoding=True", path);
+                }
+                else
+                {
+                    path = System.IO.Path.GetFullPath(".\\..\\..\\Data\\QuanLyBanHang.db3");
+                    if (System.IO.File.Exists(path))
+                    {
+                        _connectionString = string.Format("Data Source={0};Version=3;New=False;Compress=True;UTF8Encoding=True", path);
+                    }
+                    else
+                    {
+                        _connectionString = string.Empty;
+                    }
+                }
+            }
+            return _connectionString;
+            }
+            
+        }
     }
 }

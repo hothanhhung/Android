@@ -15,5 +15,7 @@ namespace QLBH.Models
        public string Note { get; set; }
         [NotMapped]
        public string ProductName { get; set; }
+        [NotMapped]
+        public int PriceOfAllForReceiptingAndAllQuantity { get { return Quantity * PriceOfAllForReceipting; } }
     }
 }

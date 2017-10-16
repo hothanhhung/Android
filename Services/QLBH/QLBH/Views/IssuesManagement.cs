@@ -392,6 +392,14 @@ namespace QLBH.Views
                 OrderDetailsBinding.ResetBindings(true);
             }
             btStatusOfOrder.Text = CurrentOrder.StatusInString;
+            if (OrderDetails != null)
+            {
+                lblTotalPrice.Text = string.Format("{0:n0}", OrderDetails.Sum(o => o.OrderDetailTotalPrice));
+            }
+            else
+            {
+                lblTotalPrice.Text = string.Format("{0:n0}", 0);
+            }
             switch (CurrentOrder.Status)
             {
                 case 0:
