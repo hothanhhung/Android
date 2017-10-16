@@ -23,6 +23,11 @@ namespace QLBH.Views
             InitializeComponent();
         }
 
+        public void ReLoadData()
+        {
+            loadProducts(true);
+        }
+
         private void LoadReceiptUI(Receipt receipt)
         {
             CurrentReceipt = receipt;
@@ -32,7 +37,7 @@ namespace QLBH.Views
                 cbbProductForReceipt.SelectedIndex = -1;
                 txtQuantity.Value = 0;
                 txtQuantity.Value = 0;
-                txtTotalPrice.Value = 0;
+                txtUnitPrice.Value = 0;
                 txtNote.Text = string.Empty;
                 dtReceiptedDate.Value = DateTime.Now;
                 btReceipt.Text = "Nhập Hàng";
@@ -48,7 +53,7 @@ namespace QLBH.Views
                     }
                 }
                 txtQuantity.Value = CurrentReceipt.Quantity;
-                txtTotalPrice.Value = CurrentReceipt.PriceOfAllForReceipting;
+                txtUnitPrice.Value = CurrentReceipt.PriceOfAllForReceipting;
                 txtNote.Text = CurrentReceipt.Note;
                 dtReceiptedDate.Value = MethodHelpers.ConvertStringDateTimeToDateTime(CurrentReceipt.DatedReceipt);
                 btReceipt.Text = "Lưu";
@@ -81,6 +86,14 @@ namespace QLBH.Views
                 }
             }
             grdReceipts.DataSource = receipts;
+            if (receipts != null)
+            {
+                txtTotalPriceForAll.Value = receipts.Sum(r => r.PriceOfAllForReceipting * r.Quantity);
+            }
+            else
+            {
+                txtTotalPriceForAll.Value = 0;
+            }
         }
 
         private void loadProducts(bool isReload = true)
@@ -189,17 +202,17 @@ namespace QLBH.Views
                 MessageBox.Show("Nhập số lượng", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtQuantity.Focus();
             }
-            else if (txtTotalPrice.Value < 0)
+            else if (txtUnitPrice.Value < 0)
             {
                 MessageBox.Show("Nhập giá nhập hàng", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtTotalPrice.Focus();
+                txtUnitPrice.Focus();
             }
             else
             {
                 CurrentReceipt.ProductId = ((Product)cbbProductForReceipt.SelectedItem).ProductId;
                 CurrentReceipt.Quantity = Decimal.ToInt32(txtQuantity.Value);
                 CurrentReceipt.RemainAfterDone = CurrentReceipt.RemainAfterDone + offsetQuantity;
-                CurrentReceipt.PriceOfAllForReceipting = Decimal.ToInt32(txtTotalPrice.Value);
+                CurrentReceipt.PriceOfAllForReceipting = Decimal.ToInt32(txtUnitPrice.Value);
                 CurrentReceipt.Note = txtNote.Text;
                 CurrentReceipt.DatedReceipt = MethodHelpers.ConvertDateTimeToCorrectString(dtReceiptedDate.Value);
 
@@ -255,6 +268,16 @@ namespace QLBH.Views
         private void btCancelReceipt_Click(object sender, EventArgs e)
         {
             LoadReceiptUI(null);
+        }
+
+        private void txtUnitPrice_ValueChanged(object sender, EventArgs e)
+        {
+            txtTotalPrice.Value = txtUnitPrice.Value * txtQuantity.Value;
+        }
+
+        private void txtQuantity_ValueChanged(object sender, EventArgs e)
+        {
+            txtTotalPrice.Value = txtUnitPrice.Value * txtQuantity.Value;
         }
     }
 }

@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -42,6 +43,7 @@
             this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RemainAfterDone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priceOfAllForReceiptingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PriceOfAllForReceiptingAndAllQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.datedReceiptDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.receiptBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -53,6 +55,8 @@
             this.dtMaxForView = new System.Windows.Forms.DateTimePicker();
             this.cbbQuickView = new System.Windows.Forms.ComboBox();
             this.cbGroupProduct = new System.Windows.Forms.CheckBox();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.txtTotalPriceForAll = new System.Windows.Forms.NumericUpDown();
             this.panel5 = new System.Windows.Forms.Panel();
             this.btDeleteReceipt = new System.Windows.Forms.Button();
             this.btViewReceipt = new System.Windows.Forms.Button();
@@ -67,12 +71,15 @@
             this.txtQuantity = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.txtTotalPrice = new System.Windows.Forms.NumericUpDown();
+            this.txtUnitPrice = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.txtTotalPrice = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
             this.dtReceiptedDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.panel13 = new System.Windows.Forms.Panel();
+            this.panel14 = new System.Windows.Forms.Panel();
             this.txtNote = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -87,6 +94,8 @@
             this.panel3.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPriceForAll)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -96,9 +105,11 @@
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtQuantity)).BeginInit();
             this.panel11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUnitPrice)).BeginInit();
             this.panel12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPrice)).BeginInit();
             this.panel13.SuspendLayout();
+            this.panel14.SuspendLayout();
             this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,6 +167,7 @@
             this.quantityDataGridViewTextBoxColumn,
             this.RemainAfterDone,
             this.priceOfAllForReceiptingDataGridViewTextBoxColumn,
+            this.PriceOfAllForReceiptingAndAllQuantity,
             this.datedReceiptDataGridViewTextBoxColumn,
             this.noteDataGridViewTextBoxColumn});
             this.grdReceipts.DataSource = this.receiptBindingSource;
@@ -184,10 +196,10 @@
             // quantityDataGridViewTextBoxColumn
             // 
             this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N0";
-            dataGridViewCellStyle4.NullValue = null;
-            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.quantityDataGridViewTextBoxColumn.HeaderText = "Số Lượng";
             this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
             this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
@@ -195,10 +207,10 @@
             // RemainAfterDone
             // 
             this.RemainAfterDone.DataPropertyName = "RemainAfterDone";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "N0";
-            dataGridViewCellStyle5.NullValue = null;
-            this.RemainAfterDone.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.RemainAfterDone.DefaultCellStyle = dataGridViewCellStyle2;
             this.RemainAfterDone.HeaderText = "Còn Lại (Gồm ĐH đang XL)";
             this.RemainAfterDone.Name = "RemainAfterDone";
             this.RemainAfterDone.ReadOnly = true;
@@ -206,13 +218,24 @@
             // priceOfAllForReceiptingDataGridViewTextBoxColumn
             // 
             this.priceOfAllForReceiptingDataGridViewTextBoxColumn.DataPropertyName = "PriceOfAllForReceipting";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N0";
-            dataGridViewCellStyle6.NullValue = null;
-            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.HeaderText = "Tổng Giá Nhập";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.priceOfAllForReceiptingDataGridViewTextBoxColumn.HeaderText = "Giá Nhập";
             this.priceOfAllForReceiptingDataGridViewTextBoxColumn.Name = "priceOfAllForReceiptingDataGridViewTextBoxColumn";
             this.priceOfAllForReceiptingDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // PriceOfAllForReceiptingAndAllQuantity
+            // 
+            this.PriceOfAllForReceiptingAndAllQuantity.DataPropertyName = "PriceOfAllForReceiptingAndAllQuantity";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.PriceOfAllForReceiptingAndAllQuantity.DefaultCellStyle = dataGridViewCellStyle4;
+            this.PriceOfAllForReceiptingAndAllQuantity.HeaderText = "Tổng Giá";
+            this.PriceOfAllForReceiptingAndAllQuantity.Name = "PriceOfAllForReceiptingAndAllQuantity";
+            this.PriceOfAllForReceiptingAndAllQuantity.ReadOnly = true;
             // 
             // datedReceiptDataGridViewTextBoxColumn
             // 
@@ -253,17 +276,19 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 5;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnCount = 6;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.Controls.Add(this.cbbProductsForView, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.dtMinForView, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.dtMaxForView, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.cbbQuickView, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.cbGroupProduct, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel15, 5, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -278,23 +303,23 @@
             this.cbbProductsForView.FormattingEnabled = true;
             this.cbbProductsForView.Location = new System.Drawing.Point(3, 3);
             this.cbbProductsForView.Name = "cbbProductsForView";
-            this.cbbProductsForView.Size = new System.Drawing.Size(96, 21);
+            this.cbbProductsForView.Size = new System.Drawing.Size(75, 21);
             this.cbbProductsForView.TabIndex = 0;
             // 
             // dtMinForView
             // 
             this.dtMinForView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtMinForView.Location = new System.Drawing.Point(105, 3);
+            this.dtMinForView.Location = new System.Drawing.Point(84, 3);
             this.dtMinForView.Name = "dtMinForView";
-            this.dtMinForView.Size = new System.Drawing.Size(96, 20);
+            this.dtMinForView.Size = new System.Drawing.Size(75, 20);
             this.dtMinForView.TabIndex = 1;
             // 
             // dtMaxForView
             // 
             this.dtMaxForView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtMaxForView.Location = new System.Drawing.Point(207, 3);
+            this.dtMaxForView.Location = new System.Drawing.Point(165, 3);
             this.dtMaxForView.Name = "dtMaxForView";
-            this.dtMaxForView.Size = new System.Drawing.Size(96, 20);
+            this.dtMaxForView.Size = new System.Drawing.Size(75, 20);
             this.dtMaxForView.TabIndex = 2;
             // 
             // cbbQuickView
@@ -311,9 +336,9 @@
             "Tháng Trước",
             "Năm Này",
             "Năm Trước"});
-            this.cbbQuickView.Location = new System.Drawing.Point(309, 3);
+            this.cbbQuickView.Location = new System.Drawing.Point(246, 3);
             this.cbbQuickView.Name = "cbbQuickView";
-            this.cbbQuickView.Size = new System.Drawing.Size(96, 21);
+            this.cbbQuickView.Size = new System.Drawing.Size(75, 21);
             this.cbbQuickView.TabIndex = 3;
             this.cbbQuickView.Text = "Xem Nhanh";
             this.cbbQuickView.SelectedIndexChanged += new System.EventHandler(this.cbbQuickView_SelectedIndexChanged);
@@ -321,12 +346,37 @@
             // cbGroupProduct
             // 
             this.cbGroupProduct.AutoSize = true;
-            this.cbGroupProduct.Location = new System.Drawing.Point(411, 3);
+            this.cbGroupProduct.Location = new System.Drawing.Point(327, 3);
             this.cbGroupProduct.Name = "cbGroupProduct";
-            this.cbGroupProduct.Size = new System.Drawing.Size(97, 17);
+            this.cbGroupProduct.Size = new System.Drawing.Size(75, 17);
             this.cbGroupProduct.TabIndex = 4;
             this.cbGroupProduct.Text = "Nhóm Sản Phẩm";
             this.cbGroupProduct.UseVisualStyleBackColor = true;
+            // 
+            // panel15
+            // 
+            this.panel15.Controls.Add(this.txtTotalPriceForAll);
+            this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel15.Location = new System.Drawing.Point(408, 3);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(100, 34);
+            this.panel15.TabIndex = 5;
+            // 
+            // txtTotalPriceForAll
+            // 
+            this.txtTotalPriceForAll.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtTotalPriceForAll.Location = new System.Drawing.Point(0, 0);
+            this.txtTotalPriceForAll.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.txtTotalPriceForAll.Name = "txtTotalPriceForAll";
+            this.txtTotalPriceForAll.ReadOnly = true;
+            this.txtTotalPriceForAll.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalPriceForAll.TabIndex = 0;
+            this.txtTotalPriceForAll.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtTotalPriceForAll.ThousandsSeparator = true;
             // 
             // panel5
             // 
@@ -392,17 +442,19 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 5;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.ColumnCount = 6;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.Controls.Add(this.panel9, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel10, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel11, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel12, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel13, 4, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel14, 5, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -418,7 +470,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(96, 45);
+            this.panel9.Size = new System.Drawing.Size(75, 45);
             this.panel9.TabIndex = 10;
             // 
             // cbbProductForReceipt
@@ -427,7 +479,7 @@
             this.cbbProductForReceipt.FormattingEnabled = true;
             this.cbbProductForReceipt.Location = new System.Drawing.Point(0, 13);
             this.cbbProductForReceipt.Name = "cbbProductForReceipt";
-            this.cbbProductForReceipt.Size = new System.Drawing.Size(96, 21);
+            this.cbbProductForReceipt.Size = new System.Drawing.Size(75, 21);
             this.cbbProductForReceipt.TabIndex = 0;
             // 
             // label1
@@ -445,9 +497,9 @@
             this.panel10.Controls.Add(this.txtQuantity);
             this.panel10.Controls.Add(this.label2);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel10.Location = new System.Drawing.Point(105, 3);
+            this.panel10.Location = new System.Drawing.Point(84, 3);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(96, 45);
+            this.panel10.Size = new System.Drawing.Size(75, 45);
             this.panel10.TabIndex = 11;
             // 
             // txtQuantity
@@ -460,10 +512,11 @@
             0,
             0});
             this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(96, 20);
+            this.txtQuantity.Size = new System.Drawing.Size(75, 20);
             this.txtQuantity.TabIndex = 1;
             this.txtQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtQuantity.ThousandsSeparator = true;
+            this.txtQuantity.ValueChanged += new System.EventHandler(this.txtQuantity_ValueChanged);
             // 
             // label2
             // 
@@ -477,13 +530,49 @@
             // 
             // panel11
             // 
-            this.panel11.Controls.Add(this.txtTotalPrice);
+            this.panel11.Controls.Add(this.txtUnitPrice);
             this.panel11.Controls.Add(this.label3);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel11.Location = new System.Drawing.Point(207, 3);
+            this.panel11.Location = new System.Drawing.Point(165, 3);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(96, 45);
+            this.panel11.Size = new System.Drawing.Size(75, 45);
             this.panel11.TabIndex = 12;
+            // 
+            // txtUnitPrice
+            // 
+            this.txtUnitPrice.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUnitPrice.Location = new System.Drawing.Point(0, 13);
+            this.txtUnitPrice.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.txtUnitPrice.Name = "txtUnitPrice";
+            this.txtUnitPrice.Size = new System.Drawing.Size(75, 20);
+            this.txtUnitPrice.TabIndex = 2;
+            this.txtUnitPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtUnitPrice.ThousandsSeparator = true;
+            this.txtUnitPrice.ValueChanged += new System.EventHandler(this.txtUnitPrice_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Giá Nhập";
+            // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.txtTotalPrice);
+            this.panel12.Controls.Add(this.label6);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel12.Location = new System.Drawing.Point(246, 3);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(75, 45);
+            this.panel12.TabIndex = 13;
             // 
             // txtTotalPrice
             // 
@@ -495,37 +584,38 @@
             0,
             0});
             this.txtTotalPrice.Name = "txtTotalPrice";
-            this.txtTotalPrice.Size = new System.Drawing.Size(96, 20);
-            this.txtTotalPrice.TabIndex = 2;
+            this.txtTotalPrice.ReadOnly = true;
+            this.txtTotalPrice.Size = new System.Drawing.Size(75, 20);
+            this.txtTotalPrice.TabIndex = 1;
             this.txtTotalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtTotalPrice.ThousandsSeparator = true;
             // 
-            // label3
+            // label6
             // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Location = new System.Drawing.Point(0, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Tổng Giá Nhập";
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label6.Location = new System.Drawing.Point(0, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(80, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Tổng Giá Nhập";
             // 
-            // panel12
+            // panel13
             // 
-            this.panel12.Controls.Add(this.dtReceiptedDate);
-            this.panel12.Controls.Add(this.label4);
-            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel12.Location = new System.Drawing.Point(309, 3);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(96, 45);
-            this.panel12.TabIndex = 13;
+            this.panel13.Controls.Add(this.dtReceiptedDate);
+            this.panel13.Controls.Add(this.label4);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel13.Location = new System.Drawing.Point(327, 3);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(75, 45);
+            this.panel13.TabIndex = 14;
             // 
             // dtReceiptedDate
             // 
             this.dtReceiptedDate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtReceiptedDate.Location = new System.Drawing.Point(0, 13);
             this.dtReceiptedDate.Name = "dtReceiptedDate";
-            this.dtReceiptedDate.Size = new System.Drawing.Size(96, 20);
+            this.dtReceiptedDate.Size = new System.Drawing.Size(75, 20);
             this.dtReceiptedDate.TabIndex = 3;
             // 
             // label4
@@ -538,22 +628,22 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Ngày Nhập";
             // 
-            // panel13
+            // panel14
             // 
-            this.panel13.Controls.Add(this.txtNote);
-            this.panel13.Controls.Add(this.label5);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(411, 3);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(97, 45);
-            this.panel13.TabIndex = 14;
+            this.panel14.Controls.Add(this.txtNote);
+            this.panel14.Controls.Add(this.label5);
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel14.Location = new System.Drawing.Point(408, 3);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(100, 45);
+            this.panel14.TabIndex = 15;
             // 
             // txtNote
             // 
             this.txtNote.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtNote.Location = new System.Drawing.Point(0, 13);
             this.txtNote.Name = "txtNote";
-            this.txtNote.Size = new System.Drawing.Size(97, 20);
+            this.txtNote.Size = new System.Drawing.Size(100, 20);
             this.txtNote.TabIndex = 9;
             // 
             // label5
@@ -617,6 +707,8 @@
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel15.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPriceForAll)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -629,11 +721,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtQuantity)).EndInit();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUnitPrice)).EndInit();
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalPrice)).EndInit();
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
+            this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -661,7 +756,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.ComboBox cbbProductForReceipt;
         private System.Windows.Forms.NumericUpDown txtQuantity;
-        private System.Windows.Forms.NumericUpDown txtTotalPrice;
+        private System.Windows.Forms.NumericUpDown txtUnitPrice;
         private System.Windows.Forms.DateTimePicker dtReceiptedDate;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -679,14 +774,20 @@
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Button btDeleteReceipt;
+        private System.Windows.Forms.Button btCancelReceipt;
+        private System.Windows.Forms.NumericUpDown txtTotalPrice;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.NumericUpDown txtTotalPriceForAll;
         private System.Windows.Forms.DataGridViewTextBoxColumn receiptIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn productIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn RemainAfterDone;
         private System.Windows.Forms.DataGridViewTextBoxColumn priceOfAllForReceiptingDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PriceOfAllForReceiptingAndAllQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn datedReceiptDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn noteDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Button btDeleteReceipt;
-        private System.Windows.Forms.Button btCancelReceipt;
     }
 }
