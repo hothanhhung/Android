@@ -42,8 +42,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabReports = new System.Windows.Forms.TabControl();
             this.tabReportCommom = new System.Windows.Forms.TabPage();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.grdReports = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.chartProfit = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -65,11 +70,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btViewReport = new System.Windows.Forms.Button();
             this.tabReportForProduct = new System.Windows.Forms.TabPage();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.chartProfit = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dateForReportDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.inComeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.outComeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,8 +79,12 @@
             this.reportItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabReports.SuspendLayout();
             this.tabReportCommom.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdReports)).BeginInit();
+            this.panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartProfit)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -90,10 +94,6 @@
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel9.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartProfit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -119,6 +119,30 @@
             this.tabReportCommom.TabIndex = 0;
             this.tabReportCommom.Text = "Xem Báo Cáo Doanh Thu";
             this.tabReportCommom.UseVisualStyleBackColor = true;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.tableLayoutPanel2);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(3, 70);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(748, 343);
+            this.panel9.TabIndex = 2;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.panel10, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(748, 343);
+            this.tableLayoutPanel2.TabIndex = 0;
             // 
             // panel2
             // 
@@ -150,6 +174,72 @@
             this.grdReports.ReadOnly = true;
             this.grdReports.Size = new System.Drawing.Size(742, 166);
             this.grdReports.TabIndex = 0;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "Name";
+            this.Column1.HeaderText = "Tên";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.chartProfit);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel10.Location = new System.Drawing.Point(3, 3);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(742, 165);
+            this.panel10.TabIndex = 2;
+            // 
+            // chartProfit
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chartProfit.ChartAreas.Add(chartArea1);
+            this.chartProfit.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chartProfit.Legends.Add(legend1);
+            this.chartProfit.Location = new System.Drawing.Point(0, 0);
+            this.chartProfit.Name = "chartProfit";
+            this.chartProfit.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
+            series1.ChartArea = "ChartArea1";
+            series1.IsValueShownAsLabel = true;
+            series1.LabelAngle = -90;
+            series1.LabelFormat = "N0";
+            series1.Legend = "Legend1";
+            series1.LegendText = "Tiền Bán Hàng";
+            series1.Name = "SeriesInCome";
+            series1.SmartLabelStyle.Enabled = false;
+            series2.ChartArea = "ChartArea1";
+            series2.IsValueShownAsLabel = true;
+            series2.LabelAngle = -90;
+            series2.LabelFormat = "N0";
+            series2.Legend = "Legend1";
+            series2.LegendText = "Tiền Nhập Hàng";
+            series2.Name = "SeriesOutCome";
+            series2.SmartLabelStyle.Enabled = false;
+            series3.ChartArea = "ChartArea1";
+            series3.IsValueShownAsLabel = true;
+            series3.LabelAngle = -90;
+            series3.LabelFormat = "N0";
+            series3.Legend = "Legend1";
+            series3.LegendText = "Chi Phí, Phí Vận Chuyển";
+            series3.Name = "SeriesFee";
+            series3.SmartLabelStyle.Enabled = false;
+            series4.ChartArea = "ChartArea1";
+            series4.IsValueShownAsLabel = true;
+            series4.LabelAngle = -90;
+            series4.LabelFormat = "N0";
+            series4.Legend = "Legend1";
+            series4.LegendText = "Lợi Nhận";
+            series4.Name = "SeriesProfit";
+            series4.SmartLabelStyle.Enabled = false;
+            this.chartProfit.Series.Add(series1);
+            this.chartProfit.Series.Add(series2);
+            this.chartProfit.Series.Add(series3);
+            this.chartProfit.Series.Add(series4);
+            this.chartProfit.Size = new System.Drawing.Size(742, 165);
+            this.chartProfit.TabIndex = 0;
+            this.chartProfit.Text = "chart1";
             // 
             // panel1
             // 
@@ -380,75 +470,6 @@
             this.tabReportForProduct.Text = "Báo Cáo Theo Sản Phẩm";
             this.tabReportForProduct.UseVisualStyleBackColor = true;
             // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "Name";
-            this.Column1.HeaderText = "Tên";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.tableLayoutPanel2);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(3, 70);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(748, 343);
-            this.panel9.TabIndex = 2;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.panel10, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(748, 343);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.chartProfit);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel10.Location = new System.Drawing.Point(3, 3);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(742, 165);
-            this.panel10.TabIndex = 2;
-            // 
-            // chartProfit
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chartProfit.ChartAreas.Add(chartArea1);
-            this.chartProfit.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chartProfit.Legends.Add(legend1);
-            this.chartProfit.Location = new System.Drawing.Point(0, 0);
-            this.chartProfit.Name = "chartProfit";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "SeriesInCome";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "SeriesOutCome";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "SeriesFee";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "SeriesProfit";
-            this.chartProfit.Series.Add(series1);
-            this.chartProfit.Series.Add(series2);
-            this.chartProfit.Series.Add(series3);
-            this.chartProfit.Series.Add(series4);
-            this.chartProfit.Size = new System.Drawing.Size(742, 165);
-            this.chartProfit.TabIndex = 0;
-            this.chartProfit.Text = "chart1";
-            // 
             // dateForReportDataGridViewTextBoxColumn
             // 
             this.dateForReportDataGridViewTextBoxColumn.DataPropertyName = "DateForReport";
@@ -525,8 +546,12 @@
             this.Load += new System.EventHandler(this.ReportsManagement_Load);
             this.tabReports.ResumeLayout(false);
             this.tabReportCommom.ResumeLayout(false);
+            this.panel9.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdReports)).EndInit();
+            this.panel10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartProfit)).EndInit();
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -541,10 +566,6 @@
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.panel9.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartProfit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource)).EndInit();
             this.ResumeLayout(false);
 

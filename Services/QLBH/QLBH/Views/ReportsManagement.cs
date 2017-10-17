@@ -135,6 +135,8 @@ namespace QLBH.Views
                 series.Points.Clear();
             }
 
+            chartProfit.ChartAreas[0].AxisY.LabelStyle.Format = "N0";
+
             foreach(var report in reports)
             {   
                 chartProfit.Series["SeriesInCome"].Points.AddXY(report.DateForReport, report.InCome);
