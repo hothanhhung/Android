@@ -35,7 +35,11 @@ namespace QLBH.Views
             cbbQuickSelection.SelectedIndex = 2;
             UpdateView();
             cbbGroupOn.SelectedIndex = 0;
+            cbbGroupProducts.SelectedIndex = 0;
             ViewReportOnGridView();
+            cbbQuickSelectionProducts.SelectedIndex = 2;
+            cbbQuickSelectionCustomer.SelectedIndex = 2;
+            UpdateViewReportCustomer();
         }
         private void cbbQuickSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -44,48 +48,19 @@ namespace QLBH.Views
 
         private void UpdateView()
         {
-            DateTime now = DateTime.Now;
-            switch (cbbQuickSelection.SelectedIndex + 1)
-            {
-                case 1:
-                    dtMinDate.Value = now;
-                    dtMaxDate.Value = now;
-                    break;
-                case 2:
-                    dtMinDate.Value = now.AddDays(-1);
-                    dtMaxDate.Value = now.AddDays(-1);
-                    break;
-                case 3:
-                    dtMinDate.Value = now.AddDays(-7);
-                    dtMaxDate.Value = now;
-                    break;
-                case 4:
-                    dtMinDate.Value = now.AddDays(-(int)now.DayOfWeek);
-                    dtMaxDate.Value = now;
-                    break;
-                case 5:
-                    dtMinDate.Value = now.AddDays(-(int)now.DayOfWeek - 6);
-                    dtMaxDate.Value = dtMinDate.Value.AddDays(6);
-                    break;
-                case 6:
-                    dtMinDate.Value = new DateTime(now.Year, now.Month, 1);
-                    dtMaxDate.Value = now;
-                    break;
-                case 7:
-                    dtMinDate.Value = new DateTime(now.Year, now.Month, 1);
-                    dtMaxDate.Value = (new DateTime(now.Year, now.Month + 1, 1)).AddDays(-1);
-                    break;
-                case 8:
-                    dtMinDate.Value = new DateTime(now.Year, 1, 1);
-                    dtMaxDate.Value = now;
-                    break;
-                case 9:
-                    dtMinDate.Value = new DateTime(now.Year - 1, 1, 1);
-                    dtMaxDate.Value = new DateTime(now.Year - 1, 12, 31);
-                    break;
-            }
+            MethodHelpers.UpdateDateFieldsBasedOnQuickSelection(dtMinDate, dtMaxDate, cbbQuickSelection.SelectedIndex);
         }
 
+        private void UpdateViewReportProducts()
+        {
+            MethodHelpers.UpdateDateFieldsBasedOnQuickSelection(dtMinDateProducts, dtMaxDateProducts, cbbQuickSelectionProducts.SelectedIndex);
+            
+        }
+        private void UpdateViewReportCustomer()
+        {
+            MethodHelpers.UpdateDateFieldsBasedOnQuickSelection(dtMinDateCustomer, dtMaxDateCustomer, cbbQuickSelectionCustomer.SelectedIndex);
+
+        }
         private void loadProducts(bool isReload = false)
         {
             if (Products == null || isReload)
@@ -97,12 +72,29 @@ namespace QLBH.Views
         private void loadcbbProducts(bool isReload = false)
         {
             loadProducts(isReload);
-            cbbProducts.DataSource = Products;
-            cbbProducts.DisplayMember = "ProductName";
-            cbbProducts.ValueMember = "ProductId";
-            cbbProducts.Text = string.Empty;
-            cbbProducts.SelectedIndex = -1;
+            //cbbProducts.DataSource = Products;
+            //cbbProducts.DisplayMember = "ProductName";
+            //cbbProducts.ValueMember = "ProductId";
+            //cbbProducts.Text = string.Empty;
+            //cbbProducts.SelectedIndex = -1;
+
+            clbProducts.Items.Clear();
+            //clbProducts.Items.Add(new Product() { ProductId = 0, ProductName = "Chọn Tất Cả" }, true);
+            foreach(var product in Products){
+                clbProducts.Items.Add(product, true);
+            }
+            clbProducts.DisplayMember = "ProductName";
+            clbProducts.ValueMember = "ProductId";
         }
+
+        private void loadlbProducts(bool isReload = false)
+        {
+            loadProducts(isReload);
+            clbProducts.DataSource = Products;
+            clbProducts.DisplayMember = "ProductName";
+            clbProducts.ValueMember = "ProductId";
+        }
+
         private void btViewReport_Click(object sender, EventArgs e)
         {
             ViewReportOnGridView();
@@ -110,14 +102,19 @@ namespace QLBH.Views
 
         private void ViewReportOnGridView()
         {
-            int? productId = null;
-            if (cbbProducts.SelectedIndex >= 0)
-            {
-                productId = (int)cbbProducts.SelectedValue;
-            }
             string from = MethodHelpers.ConvertDateToCorrectString(dtMinDate.Value);
             string to = MethodHelpers.ConvertDateToCorrectString(dtMaxDate.Value.AddDays(1));
-            var reports = ReportsProcesser.GenerateReportOfProfit(productId, from, to, cbbGroupOn.SelectedIndex);
+            var reports = ReportsProcesser.GenerateReportOfProfit(null, from, to, cbbGroupOn.SelectedIndex);
+            var reportItemInTotal = new ReportItem()
+            {
+                DateForReport = string.Empty,
+                Name = "TỔNG KẾT",
+                InCome = reports.Sum(r => r.InCome),
+                OutCome = reports.Sum(r => r.OutCome),
+                FeeForShip = reports.Sum(r => r.FeeForShip),
+                Fee = reports.Sum(r => r.Fee),
+            };
+            reports.Insert(0, reportItemInTotal);
             grdReports.DataSource = reports;
 
             reports = reports.GroupBy(r => r.DateForReport).Select(gp => new ReportItem()
@@ -144,6 +141,155 @@ namespace QLBH.Views
                 chartProfit.Series["SeriesFee"].Points.AddXY(report.DateForReport, report.Fee);
                 chartProfit.Series["SeriesProfit"].Points.AddXY(report.DateForReport, report.Profit);
             }
+        }
+
+        private void ViewReportForProductOnGridView()
+        {
+            if (clbProducts.CheckedItems == null || clbProducts.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một sản phẩm", "Tạo Báo Cáo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                clbProducts.Focus();
+                return;
+            }
+            List<Product> selectedProducts = new List<Product>();
+            List<int> productIds = new List<int>();
+
+            foreach (var item in clbProducts.CheckedItems)
+            {
+                var product = (Product)item;
+                if (product.ProductId > 0)
+                {
+                    productIds.Add(product.ProductId);
+                    selectedProducts.Add(product);
+                }
+            }
+            string from = MethodHelpers.ConvertDateToCorrectString(dtMinDateProducts.Value);
+            string to = MethodHelpers.ConvertDateToCorrectString(dtMaxDateProducts.Value.AddDays(1));
+            var reports = ReportsProcesser.GenerateReportOfProfitOnProducts(productIds, from, to, cbbGroupProducts.SelectedIndex);
+
+            var reportItem = new ReportItem()
+            {
+                ProductId = 0,
+                Name = "Tổng Kết",
+            };
+
+            loadProducts(false);
+            foreach(var report in reports)
+            {
+                var product = Products.FirstOrDefault(p=>p.ProductId == report.ProductId);
+                if(product!= null)
+                {
+                    report.Name = product.ProductName;
+                }
+
+                reportItem.OutCome += report.OutCome;
+                reportItem.InCome += report.InCome;
+            }
+
+
+            var reportsForChart = reports.GroupBy(r => r.ProductId).Select(gp => new ReportItem()
+            {
+                ProductId = gp.Key,
+                Name = gp.First().Name,
+                DateForReport = gp.First().DateForReport,
+                Fee = gp.Sum(g => g.Fee),
+                FeeForShip = gp.Sum(g => g.FeeForShip),
+                InCome = gp.Sum(g => g.InCome),
+                OutCome = gp.Sum(g => g.OutCome)
+            }).ToList();
+
+            chartForProducts.Series.Clear();
+            foreach (var product in selectedProducts)
+            {
+                Series series = new Series(product.ProductName);
+                series.IsValueShownAsLabel = true;
+                series.LabelAngle = -90;
+                series.LabelFormat = "N0";
+                chartForProducts.Series.Add(series);
+            }
+
+            chartForProducts.ChartAreas[0].AxisY.LabelStyle.Format = "N0";
+
+            foreach (var report in reportsForChart)
+            {
+                if (selectedProducts.Any(p => p.ProductName == report.Name))
+                {
+                    chartForProducts.Series[report.Name].Points.AddXY("Tiền Bán Hàng", report.InCome);
+                    chartForProducts.Series[report.Name].Points.AddXY("Tiền Nhập Hàng", report.OutCome);
+                    chartForProducts.Series[report.Name].Points.AddXY("Lợi Nhận", report.Profit);
+                }
+            }
+
+
+
+            reports.Insert(0, reportItem);
+            grdReportForProducts.DataSource = reports;
+
+            
+        }
+
+        private void ViewReportOnGridViewCustomer()
+        {
+           // List<Customer> customers = CustomerProcesser.GetCustomers();
+            string from = MethodHelpers.ConvertDateToCorrectString(dtMinDateCustomer.Value);
+            string to = MethodHelpers.ConvertDateToCorrectString(dtMaxDateCustomer.Value.AddDays(1));
+            var reports = ReportsProcesser.GenerateReportOfProfit(null, from, to, cbbGroupOnCustomer.SelectedIndex, false, txtCustomerPhone.Text.Trim());
+
+            reports = reports.GroupBy(r => new { Date = r.DateForReport, Phone = r.PhoneNumber }).Select(gp => new ReportItem()
+            {
+                Name = "Bán Hàng",
+                CustomerName = gp.Last().CustomerName,
+                PhoneNumber = gp.Key.Phone,
+                DateForReport = gp.Key.Date,
+                FeeForShip = gp.Sum(g => g.FeeForShip),
+                InCome = gp.Sum(g => g.InCome),
+                OutCome = gp.Sum(g => g.OutCome)
+            }).ToList();
+
+            grdReportCustomers.DataSource = reports;
+        }
+        private void tabReports_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (tabReports.SelectedIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    loadlbProducts(false);
+                    if (grdReportForProducts.DataSource == null)
+                    {
+                        ViewReportForProductOnGridView();
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    if (grdReportCustomers.DataSource == null)
+                    {
+                        ViewReportOnGridViewCustomer();
+                    }
+                    break;
+            }
+        }
+
+        private void cbbQuickSelectionProducts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateViewReportProducts();
+        }
+
+        private void btViewReportProducts_Click(object sender, EventArgs e)
+        {
+            ViewReportForProductOnGridView();
+        }
+
+        private void cbbQuickSelectionCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateViewReportCustomer();
+        }
+
+        private void btViewReportCustomer_Click(object sender, EventArgs e)
+        {
+            ViewReportOnGridViewCustomer();
         }
 
     }

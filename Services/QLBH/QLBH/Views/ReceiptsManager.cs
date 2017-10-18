@@ -192,7 +192,7 @@ namespace QLBH.Views
                     return;
                 }
             }
-            if (cbbProductForReceipt.SelectedItem == null && ((Product)cbbProductForReceipt.SelectedItem).ProductId <= 0)
+            if (cbbProductForReceipt.SelectedItem == null || ((Product)cbbProductForReceipt.SelectedItem).ProductId <= 0)
             {
                 MessageBox.Show("Chọn sản phẩm", "Nhập Hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 cbbProductForReceipt.Focus();
