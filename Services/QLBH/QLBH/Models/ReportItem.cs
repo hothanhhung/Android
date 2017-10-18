@@ -8,7 +8,10 @@ namespace QLBH.Models
 {
     public class ReportItem
     {
+        public int ProductId { get; set; }
         public string Name { get; set; }
+        public string CustomerName { get; set; }
+        public string PhoneNumber { get; set; }
         public int InCome { get; set; }
         public int OutCome { get; set; }
         public int Fee { get; set; }
