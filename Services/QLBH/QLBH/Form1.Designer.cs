@@ -148,7 +148,7 @@
             this.btReport.Name = "btReport";
             this.btReport.Size = new System.Drawing.Size(125, 44);
             this.btReport.TabIndex = 5;
-            this.btReport.Text = "Báo Cáo Doanh Thu";
+            this.btReport.Text = "Báo Cáo";
             this.btReport.UseVisualStyleBackColor = true;
             this.btReport.Click += new System.EventHandler(this.btReport_Click);
             // 
@@ -182,6 +182,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Quản Lý Bán Hàng";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

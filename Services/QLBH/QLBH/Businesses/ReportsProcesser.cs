@@ -246,5 +246,93 @@ namespace QLBH.Businesses
             reportItems = reportItems.OrderBy(r => r.DateForReport).ToList();
             return reportItems;
         }
+
+        public static List<ReportItem> GenerateReportOfReceipts(List<int> productIds, string from, string to, int group = 0, bool isRemain = true)
+        {
+            var reportItems = new List<ReportItem>();
+            using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
+            {
+                int lengthOfDate = 10;
+                List<Receipt> receipts = new List<Receipt>();
+                var query = context.Receipts.Where(r => productIds.Any(p=>p==r.ProductId));
+                if (!string.IsNullOrWhiteSpace(from))
+                {
+                    query = query.Where(p => p.DatedReceipt.CompareTo(from) >= 0);
+                }
+                if (!string.IsNullOrWhiteSpace(to))
+                {
+                    query = query.Where(p => p.DatedReceipt.CompareTo(to) <= 0);
+                }
+                if (isRemain)
+                {
+                    query = query.Where(p => p.RemainAfterDone > 0);
+                }
+                receipts = query.ToList();
+
+                foreach (var receipt in receipts)
+                {
+                    
+                        var reportItem = new ReportItem()
+                        {
+                            ProductId = receipt.ProductId,
+                            DateForReport = receipt.DatedReceipt.Substring(0, lengthOfDate),
+                            Fee = receipt.PriceOfAllForReceiptingAndAllQuantity,
+                            InCome = receipt.Quantity,
+                            OutCome = receipt.RemainAfterDone
+                        };
+
+                        
+                        reportItems.Add(reportItem);
+                }
+                if (reportItems.Count > 0)
+                {
+                    switch (group)
+                    {
+                        case 1: // month
+                            lengthOfDate = 7;
+                            reportItems = reportItems.GroupBy(r => new { ProductId = r.ProductId, Date = r.DateForReport.Substring(0, lengthOfDate) }).Select(gp => new ReportItem()
+                            {
+                                Name = "Bán Hàng",
+                                DateForReport = gp.Key.Date,
+                                ProductId = gp.Key.ProductId,
+                                Fee =  gp.Sum(g => g.Fee),
+                                FeeForShip = 0,// gp.Sum(g => g.FeeForShip),
+                                InCome = gp.Sum(g => g.InCome),
+                                OutCome = gp.Sum(g => g.OutCome)
+                            }).ToList();
+                            break;
+                        case 2: // year
+                            lengthOfDate = 4;
+                            reportItems = reportItems.GroupBy(r => new { ProductId = r.ProductId, Date = r.DateForReport.Substring(0, lengthOfDate) }).Select(gp => new ReportItem()
+                            {
+                                Name = "Bán Hàng",
+                                DateForReport = gp.Key.Date,
+                                ProductId = gp.Key.ProductId,
+                                Fee = gp.Sum(g => g.Fee),
+                                FeeForShip = 0,// gp.Sum(g => g.FeeForShip),
+                                InCome = gp.Sum(g => g.InCome),
+                                OutCome = gp.Sum(g => g.OutCome)
+                            }).ToList();
+                            break;
+                        default: // date
+                            reportItems = reportItems.GroupBy(r => new { ProductId = r.ProductId, Date = r.DateForReport }).Select(gp => new ReportItem()
+                            {
+                                Name = "Bán Hàng",
+                                DateForReport = gp.Key.Date,
+                                ProductId = gp.Key.ProductId,
+                                Fee = gp.Sum(g => g.Fee),
+                                FeeForShip = 0,// gp.Sum(g => g.FeeForShip),
+                                InCome = gp.Sum(g => g.InCome),
+                                OutCome = gp.Sum(g => g.OutCome)
+                            }).ToList();
+                            break;
+                    }
+
+                }
+
+            }
+            reportItems = reportItems.OrderBy(r => r.DateForReport).ToList();
+            return reportItems;
+        }
     }
 }
