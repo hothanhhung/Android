@@ -36,10 +36,14 @@ namespace QLBH.Views
             UpdateView();
             cbbGroupOn.SelectedIndex = 0;
             cbbGroupProducts.SelectedIndex = 0;
+            cbbGroupOnReceipts.SelectedIndex = 0;
+            cbbGroupOnCustomer.SelectedIndex = 0;
             ViewReportOnGridView();
             cbbQuickSelectionProducts.SelectedIndex = 2;
             cbbQuickSelectionCustomer.SelectedIndex = 2;
             UpdateViewReportCustomer();
+            cbbQuickSelectionReceipts.SelectedIndex = 2;
+            UpdateViewReportReceipt();
         }
         private void cbbQuickSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -61,6 +65,11 @@ namespace QLBH.Views
             MethodHelpers.UpdateDateFieldsBasedOnQuickSelection(dtMinDateCustomer, dtMaxDateCustomer, cbbQuickSelectionCustomer.SelectedIndex);
 
         }
+        private void UpdateViewReportReceipt()
+        {
+            MethodHelpers.UpdateDateFieldsBasedOnQuickSelection(dtMinDateReceipts, dtMaxDateReceipts, cbbQuickSelectionReceipts.SelectedIndex);
+
+        }
         private void loadProducts(bool isReload = false)
         {
             if (Products == null || isReload)
@@ -77,14 +86,17 @@ namespace QLBH.Views
             //cbbProducts.ValueMember = "ProductId";
             //cbbProducts.Text = string.Empty;
             //cbbProducts.SelectedIndex = -1;
-
+            clbReceiptsProducts.Items.Clear();
             clbProducts.Items.Clear();
             //clbProducts.Items.Add(new Product() { ProductId = 0, ProductName = "Chọn Tất Cả" }, true);
             foreach(var product in Products){
                 clbProducts.Items.Add(product, true);
+                clbReceiptsProducts.Items.Add(product, true);
             }
             clbProducts.DisplayMember = "ProductName";
             clbProducts.ValueMember = "ProductId";
+            clbReceiptsProducts.DisplayMember = "ProductName";
+            clbReceiptsProducts.ValueMember = "ProductId";
         }
 
         private void loadlbProducts(bool isReload = false)
@@ -135,11 +147,12 @@ namespace QLBH.Views
             chartProfit.ChartAreas[0].AxisY.LabelStyle.Format = "N0";
 
             foreach(var report in reports)
-            {   
-                chartProfit.Series["SeriesInCome"].Points.AddXY(report.DateForReport, report.InCome);
-                chartProfit.Series["SeriesOutCome"].Points.AddXY(report.DateForReport, report.OutCome);
-                chartProfit.Series["SeriesFee"].Points.AddXY(report.DateForReport, report.Fee);
-                chartProfit.Series["SeriesProfit"].Points.AddXY(report.DateForReport, report.Profit);
+            {
+                string name = string.IsNullOrWhiteSpace(report.DateForReport) ? "Tổng Kết" : report.DateForReport;
+                chartProfit.Series["SeriesInCome"].Points.AddXY(name, report.InCome);
+                chartProfit.Series["SeriesOutCome"].Points.AddXY(name, report.OutCome);
+                chartProfit.Series["SeriesFee"].Points.AddXY(name, report.Fee);
+                chartProfit.Series["SeriesProfit"].Points.AddXY(name, report.Profit);
             }
         }
 
@@ -248,6 +261,55 @@ namespace QLBH.Views
 
             grdReportCustomers.DataSource = reports;
         }
+
+        private void ViewReportOnGridViewReceipts()
+        {
+            if (clbReceiptsProducts.CheckedItems == null || clbReceiptsProducts.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một sản phẩm", "Tạo Báo Cáo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                clbProducts.Focus();
+                return;
+            }
+            List<Product> selectedProducts = new List<Product>();
+            List<int> productIds = new List<int>();
+
+            foreach (var item in clbReceiptsProducts.CheckedItems)
+            {
+                var product = (Product)item;
+                if (product.ProductId > 0)
+                {
+                    productIds.Add(product.ProductId);
+                    selectedProducts.Add(product);
+                }
+            }
+            string from = MethodHelpers.ConvertDateToCorrectString(dtMinDateReceipts.Value);
+            string to = MethodHelpers.ConvertDateToCorrectString(dtMaxDateReceipts.Value.AddDays(1));
+            var reports = ReportsProcesser.GenerateReportOfReceipts(productIds, from, to, cbbGroupOnReceipts.SelectedIndex, cbRemainReceipts.Checked);
+
+            var reportItem = new ReportItem()
+            {
+                ProductId = 0,
+                Name = "Tổng Kết",
+            };
+
+            loadProducts(false);
+            foreach (var report in reports)
+            {
+                var product = Products.FirstOrDefault(p => p.ProductId == report.ProductId);
+                if (product != null)
+                {
+                    report.Name = product.ProductName;
+                }
+
+                reportItem.OutCome += report.OutCome;
+                reportItem.InCome += report.InCome;
+                reportItem.Fee += report.Fee;
+            }
+            reports.Insert(0, reportItem);
+
+            grdReceipts.DataSource = reports;
+        }
+
         private void tabReports_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (tabReports.SelectedIndex)
@@ -262,6 +324,10 @@ namespace QLBH.Views
                     }
                     break;
                 case 2:
+                    if (grdReceipts.DataSource == null)
+                    {
+                        ViewReportOnGridViewReceipts();
+                    }
                     break;
                 case 3:
                     if (grdReportCustomers.DataSource == null)
@@ -290,6 +356,16 @@ namespace QLBH.Views
         private void btViewReportCustomer_Click(object sender, EventArgs e)
         {
             ViewReportOnGridViewCustomer();
+        }
+
+        private void cbbQuickSelectionReceipts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateViewReportReceipt();
+        }
+
+        private void btReportReceipts_Click(object sender, EventArgs e)
+        {
+            ViewReportOnGridViewReceipts();
         }
 
     }

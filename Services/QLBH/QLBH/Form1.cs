@@ -27,6 +27,7 @@ namespace QLBH
 
         private void btProduct_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (productManagement == null)
             {
                 productManagement = new QLBH.Views.ProductManagement();
@@ -34,10 +35,12 @@ namespace QLBH
             productManagement.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(productManagement);
+            Cursor = Cursors.Arrow;
         }
 
         private void btReceipt_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (receiptsManager == null)
             {
                 receiptsManager = new QLBH.Views.ReceiptsManager();
@@ -49,10 +52,12 @@ namespace QLBH
             receiptsManager.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(receiptsManager);
+            Cursor = Cursors.Arrow;
         }
 
         private void btCustomers_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (customersManagement == null)
             {
                 customersManagement = new QLBH.Views.CustomersManagement();
@@ -60,10 +65,12 @@ namespace QLBH
             customersManagement.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(customersManagement);
+            Cursor = Cursors.Arrow;
         }
 
         private void btOrder_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (issuesManagement == null)
             {
                 issuesManagement = new QLBH.Views.IssuesManagement();
@@ -71,11 +78,13 @@ namespace QLBH
             issuesManagement.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(issuesManagement);
+            Cursor = Cursors.Arrow;
             
         }
 
         private void btFeeToSell_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (operationFeesManagement == null)
             {
                 operationFeesManagement = new QLBH.Views.OperationFeesManagement();
@@ -83,10 +92,12 @@ namespace QLBH
             operationFeesManagement.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(operationFeesManagement);
+            Cursor = Cursors.Arrow;
         }
 
         private void btReport_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (reportsManagement == null)
             {
                 reportsManagement = new QLBH.Views.ReportsManagement();
@@ -98,6 +109,20 @@ namespace QLBH
             reportsManagement.Dock = DockStyle.Fill;
             pnlMain.Controls.Clear();
             pnlMain.Controls.Add(reportsManagement);
+            Cursor = Cursors.Arrow;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            if (issuesManagement == null)
+            {
+                issuesManagement = new QLBH.Views.IssuesManagement();
+            }
+            issuesManagement.Dock = DockStyle.Fill;
+            pnlMain.Controls.Clear();
+            pnlMain.Controls.Add(issuesManagement);
+            Cursor = Cursors.Arrow;
         }
     }
 }
