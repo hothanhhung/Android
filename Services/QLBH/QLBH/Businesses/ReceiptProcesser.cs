@@ -72,6 +72,7 @@ namespace QLBH.Businesses
                     obj.ProductId = receipt.ProductId;
                     obj.Quantity = receipt.Quantity;
                     obj.RemainAfterDone = receipt.RemainAfterDone;
+                    obj.PriceOfAllForReceipting = receipt.PriceOfAllForReceipting;
                     obj.DatedReceipt = receipt.DatedReceipt;
                     obj.Note = receipt.Note;
                 }

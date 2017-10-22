@@ -162,7 +162,7 @@ namespace QLBH.Businesses
                     query = query.Where(p => p.CreatedDate.CompareTo(to) <= 0);
                 }
                 orders = query.ToList();
-                var orderDetailsQuery = context.OrderDetails.Where(o => query.Any(order => o.OrderId == order.OrderId) && productIds.Any(p => o.ProductId == p));
+                var orderDetailsQuery = context.OrderDetails.Where(o => query.Any(order => o.OrderId == order.OrderId) && productIds.Contains(o.ProductId));
                 var orderDetailsList = orderDetailsQuery.ToList();
                 var issueProductsQuery = context.IssueProducts.Where(i => orderDetailsQuery.Any(o => o.OrderDetailId == i.OrderDetailId));
                 var issueProductsList = issueProductsQuery.ToList();
@@ -254,7 +254,8 @@ namespace QLBH.Businesses
             {
                 int lengthOfDate = 10;
                 List<Receipt> receipts = new List<Receipt>();
-                var query = context.Receipts.Where(r => productIds.Any(p=>p==r.ProductId));
+                var query = context.Receipts.Where(r => productIds.Contains(r.ProductId));
+                var sss = query.ToList();
                 if (!string.IsNullOrWhiteSpace(from))
                 {
                     query = query.Where(p => p.DatedReceipt.CompareTo(from) >= 0);
