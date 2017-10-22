@@ -47,7 +47,7 @@ namespace QLBH.Businesses
             {
                 using (var context = new QuanLyBanHangDataContext(new SQLiteConnection(ConstData.ConnectionString)))
                 {
-                    products = context.Products.Where(p => productIds.Any(id => id == p.ProductId)).ToList();
+                    products = context.Products.Where(p => productIds.Contains(p.ProductId)).ToList();
                     if (isIncludeQuantity)
                     {
                         foreach (var product in products)
