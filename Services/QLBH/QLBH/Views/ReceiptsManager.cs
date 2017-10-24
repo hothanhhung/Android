@@ -85,7 +85,7 @@ namespace QLBH.Views
                     }
                 }
             }
-            grdReceipts.DataSource = receipts;
+            grdReceipts.DataSource = new SortableBindingList<Receipt>(receipts);
             if (receipts != null)
             {
                 txtTotalPriceForAll.Value = receipts.Sum(r => r.PriceOfAllForReceipting * r.Quantity);

@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -43,30 +38,28 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabReports = new System.Windows.Forms.TabControl();
             this.tabReportCommom = new System.Windows.Forms.TabPage();
             this.panel9 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.grdReports = new System.Windows.Forms.DataGridView();
-            this.dateForReportDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.inComeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.outComeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.feeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.feeForShipDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.profitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.reportItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel10 = new System.Windows.Forms.Panel();
             this.chartProfit = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -91,18 +84,12 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.chartForProducts = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.grdReportForProducts = new System.Windows.Forms.DataGridView();
-            this.dateForReportDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.inComeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.outComeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.profitDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.reportItemBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.panel11 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel14 = new System.Windows.Forms.Panel();
             this.clbProducts = new System.Windows.Forms.CheckedListBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.cbbSelectKindForProducts = new System.Windows.Forms.ComboBox();
             this.panel15 = new System.Windows.Forms.Panel();
             this.dtMinDateProducts = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
@@ -118,16 +105,32 @@
             this.panel13 = new System.Windows.Forms.Panel();
             this.btViewReportProducts = new System.Windows.Forms.Button();
             this.tabReportForReceipts = new System.Windows.Forms.TabPage();
+            this.panel27 = new System.Windows.Forms.Panel();
+            this.grdReceipts = new System.Windows.Forms.DataGridView();
+            this.panel26 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel29 = new System.Windows.Forms.Panel();
+            this.clbReceiptsProducts = new System.Windows.Forms.CheckedListBox();
+            this.cbbSelectKindsForReceipts = new System.Windows.Forms.ComboBox();
+            this.panel30 = new System.Windows.Forms.Panel();
+            this.dtMinDateReceipts = new System.Windows.Forms.DateTimePicker();
+            this.label16 = new System.Windows.Forms.Label();
+            this.panel31 = new System.Windows.Forms.Panel();
+            this.dtMaxDateReceipts = new System.Windows.Forms.DateTimePicker();
+            this.label17 = new System.Windows.Forms.Label();
+            this.panel32 = new System.Windows.Forms.Panel();
+            this.cbbQuickSelectionReceipts = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.panel33 = new System.Windows.Forms.Panel();
+            this.cbbGroupOnReceipts = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.panel34 = new System.Windows.Forms.Panel();
+            this.cbRemainReceipts = new System.Windows.Forms.CheckBox();
+            this.panel28 = new System.Windows.Forms.Panel();
+            this.btReportReceipts = new System.Windows.Forms.Button();
             this.tabReportForCustomer = new System.Windows.Forms.TabPage();
             this.panel19 = new System.Windows.Forms.Panel();
             this.grdReportCustomers = new System.Windows.Forms.DataGridView();
-            this.dateForReportDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customerNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phoneNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.inComeDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.outComeDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.feeForShipDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.profitDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -148,41 +151,39 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel20 = new System.Windows.Forms.Panel();
             this.btViewReportCustomer = new System.Windows.Forms.Button();
-            this.panel26 = new System.Windows.Forms.Panel();
-            this.panel27 = new System.Windows.Forms.Panel();
-            this.panel28 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel29 = new System.Windows.Forms.Panel();
-            this.panel30 = new System.Windows.Forms.Panel();
-            this.panel31 = new System.Windows.Forms.Panel();
-            this.panel32 = new System.Windows.Forms.Panel();
-            this.panel33 = new System.Windows.Forms.Panel();
-            this.panel34 = new System.Windows.Forms.Panel();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.clbReceiptsProducts = new System.Windows.Forms.CheckedListBox();
-            this.dtMinDateReceipts = new System.Windows.Forms.DateTimePicker();
-            this.dtMaxDateReceipts = new System.Windows.Forms.DateTimePicker();
-            this.cbbQuickSelectionReceipts = new System.Windows.Forms.ComboBox();
-            this.cbbGroupOnReceipts = new System.Windows.Forms.ComboBox();
-            this.cbRemainReceipts = new System.Windows.Forms.CheckBox();
-            this.btReportReceipts = new System.Windows.Forms.Button();
-            this.grdReceipts = new System.Windows.Forms.DataGridView();
+            this.panel35 = new System.Windows.Forms.Panel();
+            this.cbIncludeFeeOperator = new System.Windows.Forms.CheckBox();
+            this.dateForReportDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inComeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.outComeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.feeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.feeForShipDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.profitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.reportItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dateForReportDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inComeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.outComeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.profitDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.reportItemBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.dateForReportDataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.inComeDataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.outComeDataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.feeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateForReportDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customerNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.phoneNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inComeDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.outComeDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.feeForShipDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.profitDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabReports.SuspendLayout();
             this.tabReportCommom.SuspendLayout();
             this.panel9.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdReports)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource)).BeginInit();
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartProfit)).BeginInit();
             this.panel1.SuspendLayout();
@@ -198,7 +199,6 @@
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartForProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdReportForProducts)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource1)).BeginInit();
             this.panel11.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -209,6 +209,17 @@
             this.panel18.SuspendLayout();
             this.panel13.SuspendLayout();
             this.tabReportForReceipts.SuspendLayout();
+            this.panel27.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdReceipts)).BeginInit();
+            this.panel26.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
+            this.panel29.SuspendLayout();
+            this.panel30.SuspendLayout();
+            this.panel31.SuspendLayout();
+            this.panel32.SuspendLayout();
+            this.panel33.SuspendLayout();
+            this.panel34.SuspendLayout();
+            this.panel28.SuspendLayout();
             this.tabReportForCustomer.SuspendLayout();
             this.panel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdReportCustomers)).BeginInit();
@@ -221,17 +232,9 @@
             this.panel24.SuspendLayout();
             this.panel25.SuspendLayout();
             this.panel20.SuspendLayout();
-            this.panel26.SuspendLayout();
-            this.panel27.SuspendLayout();
-            this.panel28.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
-            this.panel29.SuspendLayout();
-            this.panel30.SuspendLayout();
-            this.panel31.SuspendLayout();
-            this.panel32.SuspendLayout();
-            this.panel33.SuspendLayout();
-            this.panel34.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdReceipts)).BeginInit();
+            this.panel35.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabReports
@@ -315,78 +318,12 @@
             this.grdReports.Size = new System.Drawing.Size(742, 166);
             this.grdReports.TabIndex = 0;
             // 
-            // dateForReportDataGridViewTextBoxColumn
-            // 
-            this.dateForReportDataGridViewTextBoxColumn.DataPropertyName = "DateForReport";
-            this.dateForReportDataGridViewTextBoxColumn.HeaderText = "Thời Gian";
-            this.dateForReportDataGridViewTextBoxColumn.Name = "dateForReportDataGridViewTextBoxColumn";
-            this.dateForReportDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // Column1
             // 
             this.Column1.DataPropertyName = "Name";
             this.Column1.HeaderText = "Tên";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
-            // 
-            // inComeDataGridViewTextBoxColumn
-            // 
-            this.inComeDataGridViewTextBoxColumn.DataPropertyName = "InCome";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.inComeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.inComeDataGridViewTextBoxColumn.HeaderText = "Tiền Bán Hàng";
-            this.inComeDataGridViewTextBoxColumn.Name = "inComeDataGridViewTextBoxColumn";
-            this.inComeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // outComeDataGridViewTextBoxColumn
-            // 
-            this.outComeDataGridViewTextBoxColumn.DataPropertyName = "OutCome";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.outComeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.outComeDataGridViewTextBoxColumn.HeaderText = "Tiền Nhập Hàng";
-            this.outComeDataGridViewTextBoxColumn.Name = "outComeDataGridViewTextBoxColumn";
-            this.outComeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // feeDataGridViewTextBoxColumn
-            // 
-            this.feeDataGridViewTextBoxColumn.DataPropertyName = "Fee";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N0";
-            dataGridViewCellStyle3.NullValue = null;
-            this.feeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.feeDataGridViewTextBoxColumn.HeaderText = "Chi Phí";
-            this.feeDataGridViewTextBoxColumn.Name = "feeDataGridViewTextBoxColumn";
-            this.feeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // feeForShipDataGridViewTextBoxColumn
-            // 
-            this.feeForShipDataGridViewTextBoxColumn.DataPropertyName = "FeeForShip";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N0";
-            dataGridViewCellStyle4.NullValue = null;
-            this.feeForShipDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.feeForShipDataGridViewTextBoxColumn.HeaderText = "Tiền Vận Chuyển";
-            this.feeForShipDataGridViewTextBoxColumn.Name = "feeForShipDataGridViewTextBoxColumn";
-            this.feeForShipDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // profitDataGridViewTextBoxColumn
-            // 
-            this.profitDataGridViewTextBoxColumn.DataPropertyName = "Profit";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "N0";
-            dataGridViewCellStyle5.NullValue = null;
-            this.profitDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            this.profitDataGridViewTextBoxColumn.HeaderText = "Lợi Nhuận";
-            this.profitDataGridViewTextBoxColumn.Name = "profitDataGridViewTextBoxColumn";
-            this.profitDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // reportItemBindingSource
-            // 
-            this.reportItemBindingSource.DataSource = typeof(QLBH.Models.ReportItem);
             // 
             // panel10
             // 
@@ -470,16 +407,17 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.Controls.Add(this.panel5, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel6, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel7, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel8, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel35, 4, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -495,15 +433,17 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(3, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(137, 42);
+            this.panel5.Size = new System.Drawing.Size(108, 42);
             this.panel5.TabIndex = 1;
             // 
             // dtMinDate
             // 
+            this.dtMinDate.CustomFormat = "dd-MM-yyyy";
             this.dtMinDate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtMinDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtMinDate.Location = new System.Drawing.Point(0, 13);
             this.dtMinDate.Name = "dtMinDate";
-            this.dtMinDate.Size = new System.Drawing.Size(137, 20);
+            this.dtMinDate.Size = new System.Drawing.Size(108, 20);
             this.dtMinDate.TabIndex = 1;
             // 
             // label2
@@ -521,17 +461,19 @@
             this.panel6.Controls.Add(this.dtMaxDate);
             this.panel6.Controls.Add(this.label3);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(146, 3);
+            this.panel6.Location = new System.Drawing.Point(117, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(137, 42);
+            this.panel6.Size = new System.Drawing.Size(108, 42);
             this.panel6.TabIndex = 2;
             // 
             // dtMaxDate
             // 
+            this.dtMaxDate.CustomFormat = "dd-MM-yyyy";
             this.dtMaxDate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtMaxDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtMaxDate.Location = new System.Drawing.Point(0, 13);
             this.dtMaxDate.Name = "dtMaxDate";
-            this.dtMaxDate.Size = new System.Drawing.Size(137, 20);
+            this.dtMaxDate.Size = new System.Drawing.Size(108, 20);
             this.dtMaxDate.TabIndex = 1;
             // 
             // label3
@@ -549,9 +491,9 @@
             this.panel7.Controls.Add(this.cbbQuickSelection);
             this.panel7.Controls.Add(this.label4);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(289, 3);
+            this.panel7.Location = new System.Drawing.Point(231, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(137, 42);
+            this.panel7.Size = new System.Drawing.Size(108, 42);
             this.panel7.TabIndex = 3;
             // 
             // cbbQuickSelection
@@ -570,7 +512,7 @@
             "Năm Trước"});
             this.cbbQuickSelection.Location = new System.Drawing.Point(0, 13);
             this.cbbQuickSelection.Name = "cbbQuickSelection";
-            this.cbbQuickSelection.Size = new System.Drawing.Size(137, 21);
+            this.cbbQuickSelection.Size = new System.Drawing.Size(108, 21);
             this.cbbQuickSelection.TabIndex = 1;
             this.cbbQuickSelection.SelectedIndexChanged += new System.EventHandler(this.cbbQuickSelection_SelectedIndexChanged);
             // 
@@ -588,9 +530,10 @@
             // 
             this.panel8.Controls.Add(this.cbbGroupOn);
             this.panel8.Controls.Add(this.label5);
-            this.panel8.Location = new System.Drawing.Point(432, 3);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(345, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(110, 42);
+            this.panel8.Size = new System.Drawing.Size(108, 42);
             this.panel8.TabIndex = 4;
             // 
             // cbbGroupOn
@@ -603,7 +546,7 @@
             "Năm"});
             this.cbbGroupOn.Location = new System.Drawing.Point(0, 13);
             this.cbbGroupOn.Name = "cbbGroupOn";
-            this.cbbGroupOn.Size = new System.Drawing.Size(110, 21);
+            this.cbbGroupOn.Size = new System.Drawing.Size(108, 21);
             this.cbbGroupOn.TabIndex = 1;
             // 
             // label5
@@ -709,55 +652,6 @@
             this.grdReportForProducts.Size = new System.Drawing.Size(742, 149);
             this.grdReportForProducts.TabIndex = 1;
             // 
-            // dateForReportDataGridViewTextBoxColumn1
-            // 
-            this.dateForReportDataGridViewTextBoxColumn1.DataPropertyName = "DateForReport";
-            this.dateForReportDataGridViewTextBoxColumn1.HeaderText = "Ngày";
-            this.dateForReportDataGridViewTextBoxColumn1.Name = "dateForReportDataGridViewTextBoxColumn1";
-            this.dateForReportDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Tên";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // inComeDataGridViewTextBoxColumn1
-            // 
-            this.inComeDataGridViewTextBoxColumn1.DataPropertyName = "InCome";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N0";
-            this.inComeDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
-            this.inComeDataGridViewTextBoxColumn1.HeaderText = "Tiền Bán Hàng";
-            this.inComeDataGridViewTextBoxColumn1.Name = "inComeDataGridViewTextBoxColumn1";
-            this.inComeDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // outComeDataGridViewTextBoxColumn1
-            // 
-            this.outComeDataGridViewTextBoxColumn1.DataPropertyName = "OutCome";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "N0";
-            dataGridViewCellStyle7.NullValue = null;
-            this.outComeDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
-            this.outComeDataGridViewTextBoxColumn1.HeaderText = "Tiền Nhập Hàng";
-            this.outComeDataGridViewTextBoxColumn1.Name = "outComeDataGridViewTextBoxColumn1";
-            this.outComeDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // profitDataGridViewTextBoxColumn1
-            // 
-            this.profitDataGridViewTextBoxColumn1.DataPropertyName = "Profit";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "N0";
-            this.profitDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle8;
-            this.profitDataGridViewTextBoxColumn1.HeaderText = "Lợi Nhận";
-            this.profitDataGridViewTextBoxColumn1.Name = "profitDataGridViewTextBoxColumn1";
-            this.profitDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // reportItemBindingSource1
-            // 
-            this.reportItemBindingSource1.DataSource = typeof(QLBH.Models.ReportItem);
-            // 
             // panel11
             // 
             this.panel11.Controls.Add(this.groupBox2);
@@ -804,7 +698,7 @@
             // panel14
             // 
             this.panel14.Controls.Add(this.clbProducts);
-            this.panel14.Controls.Add(this.label6);
+            this.panel14.Controls.Add(this.cbbSelectKindForProducts);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel14.Location = new System.Drawing.Point(3, 3);
             this.panel14.Name = "panel14";
@@ -816,20 +710,23 @@
             this.clbProducts.CheckOnClick = true;
             this.clbProducts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.clbProducts.FormattingEnabled = true;
-            this.clbProducts.Location = new System.Drawing.Point(0, 13);
+            this.clbProducts.Location = new System.Drawing.Point(0, 21);
             this.clbProducts.Name = "clbProducts";
-            this.clbProducts.Size = new System.Drawing.Size(125, 62);
+            this.clbProducts.Size = new System.Drawing.Size(125, 54);
             this.clbProducts.TabIndex = 1;
             // 
-            // label6
+            // cbbSelectKindForProducts
             // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label6.Location = new System.Drawing.Point(0, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Sản Phẩm";
+            this.cbbSelectKindForProducts.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbbSelectKindForProducts.FormattingEnabled = true;
+            this.cbbSelectKindForProducts.Items.AddRange(new object[] {
+            "Sản Phẩm",
+            "Danh Mục"});
+            this.cbbSelectKindForProducts.Location = new System.Drawing.Point(0, 0);
+            this.cbbSelectKindForProducts.Name = "cbbSelectKindForProducts";
+            this.cbbSelectKindForProducts.Size = new System.Drawing.Size(125, 21);
+            this.cbbSelectKindForProducts.TabIndex = 2;
+            this.cbbSelectKindForProducts.SelectedIndexChanged += new System.EventHandler(this.cbbSelectKindForProducts_SelectedIndexChanged);
             // 
             // panel15
             // 
@@ -843,7 +740,9 @@
             // 
             // dtMinDateProducts
             // 
+            this.dtMinDateProducts.CustomFormat = "dd-MM-yyyy";
             this.dtMinDateProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtMinDateProducts.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtMinDateProducts.Location = new System.Drawing.Point(0, 13);
             this.dtMinDateProducts.Name = "dtMinDateProducts";
             this.dtMinDateProducts.Size = new System.Drawing.Size(125, 20);
@@ -871,7 +770,9 @@
             // 
             // dtMaxDateProducts
             // 
+            this.dtMaxDateProducts.CustomFormat = "dd-MM-yyyy";
             this.dtMaxDateProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtMaxDateProducts.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtMaxDateProducts.Location = new System.Drawing.Point(0, 13);
             this.dtMaxDateProducts.Name = "dtMaxDateProducts";
             this.dtMaxDateProducts.Size = new System.Drawing.Size(125, 20);
@@ -991,6 +892,274 @@
             this.tabReportForReceipts.Text = "Báo Cáo Nhập Hàng";
             this.tabReportForReceipts.UseVisualStyleBackColor = true;
             // 
+            // panel27
+            // 
+            this.panel27.Controls.Add(this.grdReceipts);
+            this.panel27.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel27.Location = new System.Drawing.Point(0, 100);
+            this.panel27.Name = "panel27";
+            this.panel27.Size = new System.Drawing.Size(754, 316);
+            this.panel27.TabIndex = 1;
+            // 
+            // grdReceipts
+            // 
+            this.grdReceipts.AllowUserToAddRows = false;
+            this.grdReceipts.AllowUserToDeleteRows = false;
+            this.grdReceipts.AllowUserToOrderColumns = true;
+            this.grdReceipts.AutoGenerateColumns = false;
+            this.grdReceipts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdReceipts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dateForReportDataGridViewTextBoxColumn3,
+            this.nameDataGridViewTextBoxColumn1,
+            this.inComeDataGridViewTextBoxColumn3,
+            this.outComeDataGridViewTextBoxColumn3,
+            this.feeDataGridViewTextBoxColumn1});
+            this.grdReceipts.DataSource = this.reportItemBindingSource;
+            this.grdReceipts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdReceipts.Location = new System.Drawing.Point(0, 0);
+            this.grdReceipts.Name = "grdReceipts";
+            this.grdReceipts.ReadOnly = true;
+            this.grdReceipts.Size = new System.Drawing.Size(754, 316);
+            this.grdReceipts.TabIndex = 0;
+            // 
+            // panel26
+            // 
+            this.panel26.Controls.Add(this.tableLayoutPanel6);
+            this.panel26.Controls.Add(this.panel28);
+            this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel26.Location = new System.Drawing.Point(0, 0);
+            this.panel26.Name = "panel26";
+            this.panel26.Size = new System.Drawing.Size(754, 100);
+            this.panel26.TabIndex = 0;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 6;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel6.Controls.Add(this.panel29, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.panel30, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.panel31, 2, 0);
+            this.tableLayoutPanel6.Controls.Add(this.panel32, 3, 0);
+            this.tableLayoutPanel6.Controls.Add(this.panel33, 4, 0);
+            this.tableLayoutPanel6.Controls.Add(this.panel34, 5, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(633, 100);
+            this.tableLayoutPanel6.TabIndex = 1;
+            // 
+            // panel29
+            // 
+            this.panel29.Controls.Add(this.clbReceiptsProducts);
+            this.panel29.Controls.Add(this.cbbSelectKindsForReceipts);
+            this.panel29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel29.Location = new System.Drawing.Point(3, 3);
+            this.panel29.Name = "panel29";
+            this.panel29.Size = new System.Drawing.Size(101, 94);
+            this.panel29.TabIndex = 0;
+            // 
+            // clbReceiptsProducts
+            // 
+            this.clbReceiptsProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.clbReceiptsProducts.FormattingEnabled = true;
+            this.clbReceiptsProducts.Location = new System.Drawing.Point(0, 21);
+            this.clbReceiptsProducts.Name = "clbReceiptsProducts";
+            this.clbReceiptsProducts.Size = new System.Drawing.Size(101, 73);
+            this.clbReceiptsProducts.TabIndex = 1;
+            // 
+            // cbbSelectKindsForReceipts
+            // 
+            this.cbbSelectKindsForReceipts.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbbSelectKindsForReceipts.FormattingEnabled = true;
+            this.cbbSelectKindsForReceipts.Items.AddRange(new object[] {
+            "Sản Phẩm",
+            "Danh Mục"});
+            this.cbbSelectKindsForReceipts.Location = new System.Drawing.Point(0, 0);
+            this.cbbSelectKindsForReceipts.Name = "cbbSelectKindsForReceipts";
+            this.cbbSelectKindsForReceipts.Size = new System.Drawing.Size(101, 21);
+            this.cbbSelectKindsForReceipts.TabIndex = 2;
+            this.cbbSelectKindsForReceipts.SelectedIndexChanged += new System.EventHandler(this.cbbSelectKindsForReceipts_SelectedIndexChanged);
+            // 
+            // panel30
+            // 
+            this.panel30.Controls.Add(this.dtMinDateReceipts);
+            this.panel30.Controls.Add(this.label16);
+            this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel30.Location = new System.Drawing.Point(110, 3);
+            this.panel30.Name = "panel30";
+            this.panel30.Size = new System.Drawing.Size(101, 94);
+            this.panel30.TabIndex = 1;
+            // 
+            // dtMinDateReceipts
+            // 
+            this.dtMinDateReceipts.CustomFormat = "dd-MM-yyyy";
+            this.dtMinDateReceipts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtMinDateReceipts.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtMinDateReceipts.Location = new System.Drawing.Point(0, 13);
+            this.dtMinDateReceipts.Name = "dtMinDateReceipts";
+            this.dtMinDateReceipts.Size = new System.Drawing.Size(101, 20);
+            this.dtMinDateReceipts.TabIndex = 1;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label16.Location = new System.Drawing.Point(0, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(48, 13);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Từ Ngày";
+            // 
+            // panel31
+            // 
+            this.panel31.Controls.Add(this.dtMaxDateReceipts);
+            this.panel31.Controls.Add(this.label17);
+            this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel31.Location = new System.Drawing.Point(217, 3);
+            this.panel31.Name = "panel31";
+            this.panel31.Size = new System.Drawing.Size(101, 94);
+            this.panel31.TabIndex = 2;
+            // 
+            // dtMaxDateReceipts
+            // 
+            this.dtMaxDateReceipts.CustomFormat = "dd-MM-yyyy";
+            this.dtMaxDateReceipts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtMaxDateReceipts.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtMaxDateReceipts.Location = new System.Drawing.Point(0, 13);
+            this.dtMaxDateReceipts.Name = "dtMaxDateReceipts";
+            this.dtMaxDateReceipts.Size = new System.Drawing.Size(101, 20);
+            this.dtMaxDateReceipts.TabIndex = 1;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label17.Location = new System.Drawing.Point(0, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(55, 13);
+            this.label17.TabIndex = 0;
+            this.label17.Text = "Đến Ngày";
+            // 
+            // panel32
+            // 
+            this.panel32.Controls.Add(this.cbbQuickSelectionReceipts);
+            this.panel32.Controls.Add(this.label18);
+            this.panel32.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel32.Location = new System.Drawing.Point(324, 3);
+            this.panel32.Name = "panel32";
+            this.panel32.Size = new System.Drawing.Size(101, 94);
+            this.panel32.TabIndex = 3;
+            // 
+            // cbbQuickSelectionReceipts
+            // 
+            this.cbbQuickSelectionReceipts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbbQuickSelectionReceipts.FormattingEnabled = true;
+            this.cbbQuickSelectionReceipts.Items.AddRange(new object[] {
+            "Hôm Nay",
+            "Hôm Qua",
+            "Trong 7 Ngày",
+            "Tuần Này",
+            "Tuần Trước",
+            "Tháng Này",
+            "Tháng Trước",
+            "Năm Này",
+            "Năm Trước"});
+            this.cbbQuickSelectionReceipts.Location = new System.Drawing.Point(0, 13);
+            this.cbbQuickSelectionReceipts.Name = "cbbQuickSelectionReceipts";
+            this.cbbQuickSelectionReceipts.Size = new System.Drawing.Size(101, 21);
+            this.cbbQuickSelectionReceipts.TabIndex = 1;
+            this.cbbQuickSelectionReceipts.SelectedIndexChanged += new System.EventHandler(this.cbbQuickSelectionReceipts_SelectedIndexChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label18.Location = new System.Drawing.Point(0, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(67, 13);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "Chọn Nhanh";
+            // 
+            // panel33
+            // 
+            this.panel33.Controls.Add(this.cbbGroupOnReceipts);
+            this.panel33.Controls.Add(this.label19);
+            this.panel33.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel33.Location = new System.Drawing.Point(431, 3);
+            this.panel33.Name = "panel33";
+            this.panel33.Size = new System.Drawing.Size(101, 94);
+            this.panel33.TabIndex = 4;
+            // 
+            // cbbGroupOnReceipts
+            // 
+            this.cbbGroupOnReceipts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbbGroupOnReceipts.FormattingEnabled = true;
+            this.cbbGroupOnReceipts.Items.AddRange(new object[] {
+            "Ngày",
+            "Tháng",
+            "Năm"});
+            this.cbbGroupOnReceipts.Location = new System.Drawing.Point(0, 13);
+            this.cbbGroupOnReceipts.Name = "cbbGroupOnReceipts";
+            this.cbbGroupOnReceipts.Size = new System.Drawing.Size(101, 21);
+            this.cbbGroupOnReceipts.TabIndex = 1;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label19.Location = new System.Drawing.Point(0, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(63, 13);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Nhóm Theo";
+            // 
+            // panel34
+            // 
+            this.panel34.Controls.Add(this.cbRemainReceipts);
+            this.panel34.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel34.Location = new System.Drawing.Point(538, 3);
+            this.panel34.Name = "panel34";
+            this.panel34.Size = new System.Drawing.Size(92, 94);
+            this.panel34.TabIndex = 5;
+            // 
+            // cbRemainReceipts
+            // 
+            this.cbRemainReceipts.AutoSize = true;
+            this.cbRemainReceipts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbRemainReceipts.Location = new System.Drawing.Point(0, 0);
+            this.cbRemainReceipts.Name = "cbRemainReceipts";
+            this.cbRemainReceipts.Size = new System.Drawing.Size(92, 94);
+            this.cbRemainReceipts.TabIndex = 0;
+            this.cbRemainReceipts.Text = "Chỉ Tồn Kho";
+            this.cbRemainReceipts.UseVisualStyleBackColor = true;
+            // 
+            // panel28
+            // 
+            this.panel28.Controls.Add(this.btReportReceipts);
+            this.panel28.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel28.Location = new System.Drawing.Point(633, 0);
+            this.panel28.Name = "panel28";
+            this.panel28.Size = new System.Drawing.Size(121, 100);
+            this.panel28.TabIndex = 0;
+            // 
+            // btReportReceipts
+            // 
+            this.btReportReceipts.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btReportReceipts.Location = new System.Drawing.Point(0, 0);
+            this.btReportReceipts.Name = "btReportReceipts";
+            this.btReportReceipts.Size = new System.Drawing.Size(75, 100);
+            this.btReportReceipts.TabIndex = 0;
+            this.btReportReceipts.Text = "Xem";
+            this.btReportReceipts.UseVisualStyleBackColor = true;
+            this.btReportReceipts.Click += new System.EventHandler(this.btReportReceipts_Click);
+            // 
             // tabReportForCustomer
             // 
             this.tabReportForCustomer.Controls.Add(this.panel19);
@@ -1032,67 +1201,6 @@
             this.grdReportCustomers.ReadOnly = true;
             this.grdReportCustomers.Size = new System.Drawing.Size(754, 316);
             this.grdReportCustomers.TabIndex = 0;
-            // 
-            // dateForReportDataGridViewTextBoxColumn2
-            // 
-            this.dateForReportDataGridViewTextBoxColumn2.DataPropertyName = "DateForReport";
-            this.dateForReportDataGridViewTextBoxColumn2.HeaderText = "Ngày Tháng";
-            this.dateForReportDataGridViewTextBoxColumn2.Name = "dateForReportDataGridViewTextBoxColumn2";
-            this.dateForReportDataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // customerNameDataGridViewTextBoxColumn
-            // 
-            this.customerNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerName";
-            this.customerNameDataGridViewTextBoxColumn.HeaderText = "Tên Khách Hàng";
-            this.customerNameDataGridViewTextBoxColumn.Name = "customerNameDataGridViewTextBoxColumn";
-            this.customerNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // phoneNumberDataGridViewTextBoxColumn
-            // 
-            this.phoneNumberDataGridViewTextBoxColumn.DataPropertyName = "PhoneNumber";
-            this.phoneNumberDataGridViewTextBoxColumn.HeaderText = "Số Điện Thoại";
-            this.phoneNumberDataGridViewTextBoxColumn.Name = "phoneNumberDataGridViewTextBoxColumn";
-            this.phoneNumberDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // inComeDataGridViewTextBoxColumn2
-            // 
-            this.inComeDataGridViewTextBoxColumn2.DataPropertyName = "InCome";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle12.Format = "N0";
-            this.inComeDataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle12;
-            this.inComeDataGridViewTextBoxColumn2.HeaderText = "Bán";
-            this.inComeDataGridViewTextBoxColumn2.Name = "inComeDataGridViewTextBoxColumn2";
-            this.inComeDataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // outComeDataGridViewTextBoxColumn2
-            // 
-            this.outComeDataGridViewTextBoxColumn2.DataPropertyName = "OutCome";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.Format = "N0";
-            this.outComeDataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle13;
-            this.outComeDataGridViewTextBoxColumn2.HeaderText = "Nhập";
-            this.outComeDataGridViewTextBoxColumn2.Name = "outComeDataGridViewTextBoxColumn2";
-            this.outComeDataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // feeForShipDataGridViewTextBoxColumn1
-            // 
-            this.feeForShipDataGridViewTextBoxColumn1.DataPropertyName = "FeeForShip";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle14.Format = "N0";
-            this.feeForShipDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle14;
-            this.feeForShipDataGridViewTextBoxColumn1.HeaderText = "Phí Vận Chuyển";
-            this.feeForShipDataGridViewTextBoxColumn1.Name = "feeForShipDataGridViewTextBoxColumn1";
-            this.feeForShipDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // profitDataGridViewTextBoxColumn2
-            // 
-            this.profitDataGridViewTextBoxColumn2.DataPropertyName = "Profit";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Format = "N0";
-            this.profitDataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle15;
-            this.profitDataGridViewTextBoxColumn2.HeaderText = "Lợi Nhuận";
-            this.profitDataGridViewTextBoxColumn2.Name = "profitDataGridViewTextBoxColumn2";
-            this.profitDataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // panel4
             // 
@@ -1176,7 +1284,9 @@
             // 
             // dtMinDateCustomer
             // 
+            this.dtMinDateCustomer.CustomFormat = "dd-MM-yyyy";
             this.dtMinDateCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtMinDateCustomer.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtMinDateCustomer.Location = new System.Drawing.Point(0, 13);
             this.dtMinDateCustomer.Name = "dtMinDateCustomer";
             this.dtMinDateCustomer.Size = new System.Drawing.Size(121, 20);
@@ -1204,7 +1314,9 @@
             // 
             // dtMaxDateCustomer
             // 
+            this.dtMaxDateCustomer.CustomFormat = "dd-MM-yyyy";
             this.dtMaxDateCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtMaxDateCustomer.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtMaxDateCustomer.Location = new System.Drawing.Point(0, 13);
             this.dtMaxDateCustomer.Name = "dtMaxDateCustomer";
             this.dtMaxDateCustomer.Size = new System.Drawing.Size(121, 20);
@@ -1313,267 +1425,142 @@
             this.btViewReportCustomer.UseVisualStyleBackColor = true;
             this.btViewReportCustomer.Click += new System.EventHandler(this.btViewReportCustomer_Click);
             // 
-            // panel26
+            // panel35
             // 
-            this.panel26.Controls.Add(this.tableLayoutPanel6);
-            this.panel26.Controls.Add(this.panel28);
-            this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel26.Location = new System.Drawing.Point(0, 0);
-            this.panel26.Name = "panel26";
-            this.panel26.Size = new System.Drawing.Size(754, 100);
-            this.panel26.TabIndex = 0;
+            this.panel35.Controls.Add(this.cbIncludeFeeOperator);
+            this.panel35.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel35.Location = new System.Drawing.Point(459, 3);
+            this.panel35.Name = "panel35";
+            this.panel35.Size = new System.Drawing.Size(110, 42);
+            this.panel35.TabIndex = 5;
             // 
-            // panel27
+            // cbIncludeFeeOperator
             // 
-            this.panel27.Controls.Add(this.grdReceipts);
-            this.panel27.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel27.Location = new System.Drawing.Point(0, 100);
-            this.panel27.Name = "panel27";
-            this.panel27.Size = new System.Drawing.Size(754, 316);
-            this.panel27.TabIndex = 1;
+            this.cbIncludeFeeOperator.AutoSize = true;
+            this.cbIncludeFeeOperator.Checked = true;
+            this.cbIncludeFeeOperator.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbIncludeFeeOperator.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbIncludeFeeOperator.Location = new System.Drawing.Point(0, 0);
+            this.cbIncludeFeeOperator.Name = "cbIncludeFeeOperator";
+            this.cbIncludeFeeOperator.Size = new System.Drawing.Size(110, 42);
+            this.cbIncludeFeeOperator.TabIndex = 0;
+            this.cbIncludeFeeOperator.Text = "Bao Gồm Chi Phí Bán Hàng";
+            this.cbIncludeFeeOperator.UseVisualStyleBackColor = true;
             // 
-            // panel28
+            // dateForReportDataGridViewTextBoxColumn
             // 
-            this.panel28.Controls.Add(this.btReportReceipts);
-            this.panel28.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel28.Location = new System.Drawing.Point(633, 0);
-            this.panel28.Name = "panel28";
-            this.panel28.Size = new System.Drawing.Size(121, 100);
-            this.panel28.TabIndex = 0;
+            this.dateForReportDataGridViewTextBoxColumn.DataPropertyName = "DateForReport";
+            this.dateForReportDataGridViewTextBoxColumn.HeaderText = "Thời Gian";
+            this.dateForReportDataGridViewTextBoxColumn.Name = "dateForReportDataGridViewTextBoxColumn";
+            this.dateForReportDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // tableLayoutPanel6
+            // inComeDataGridViewTextBoxColumn
             // 
-            this.tableLayoutPanel6.ColumnCount = 6;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel6.Controls.Add(this.panel29, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.panel30, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.panel31, 2, 0);
-            this.tableLayoutPanel6.Controls.Add(this.panel32, 3, 0);
-            this.tableLayoutPanel6.Controls.Add(this.panel33, 4, 0);
-            this.tableLayoutPanel6.Controls.Add(this.panel34, 5, 0);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(633, 100);
-            this.tableLayoutPanel6.TabIndex = 1;
+            this.inComeDataGridViewTextBoxColumn.DataPropertyName = "InCome";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.inComeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.inComeDataGridViewTextBoxColumn.HeaderText = "Tiền Bán Hàng";
+            this.inComeDataGridViewTextBoxColumn.Name = "inComeDataGridViewTextBoxColumn";
+            this.inComeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // panel29
+            // outComeDataGridViewTextBoxColumn
             // 
-            this.panel29.Controls.Add(this.clbReceiptsProducts);
-            this.panel29.Controls.Add(this.label15);
-            this.panel29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel29.Location = new System.Drawing.Point(3, 3);
-            this.panel29.Name = "panel29";
-            this.panel29.Size = new System.Drawing.Size(101, 94);
-            this.panel29.TabIndex = 0;
+            this.outComeDataGridViewTextBoxColumn.DataPropertyName = "OutCome";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.outComeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.outComeDataGridViewTextBoxColumn.HeaderText = "Tiền Nhập Hàng";
+            this.outComeDataGridViewTextBoxColumn.Name = "outComeDataGridViewTextBoxColumn";
+            this.outComeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // panel30
+            // feeDataGridViewTextBoxColumn
             // 
-            this.panel30.Controls.Add(this.dtMinDateReceipts);
-            this.panel30.Controls.Add(this.label16);
-            this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel30.Location = new System.Drawing.Point(110, 3);
-            this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(101, 94);
-            this.panel30.TabIndex = 1;
+            this.feeDataGridViewTextBoxColumn.DataPropertyName = "Fee";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.feeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.feeDataGridViewTextBoxColumn.HeaderText = "Chi Phí";
+            this.feeDataGridViewTextBoxColumn.Name = "feeDataGridViewTextBoxColumn";
+            this.feeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // panel31
+            // feeForShipDataGridViewTextBoxColumn
             // 
-            this.panel31.Controls.Add(this.dtMaxDateReceipts);
-            this.panel31.Controls.Add(this.label17);
-            this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel31.Location = new System.Drawing.Point(217, 3);
-            this.panel31.Name = "panel31";
-            this.panel31.Size = new System.Drawing.Size(101, 94);
-            this.panel31.TabIndex = 2;
+            this.feeForShipDataGridViewTextBoxColumn.DataPropertyName = "FeeForShip";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.feeForShipDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.feeForShipDataGridViewTextBoxColumn.HeaderText = "Tiền Vận Chuyển";
+            this.feeForShipDataGridViewTextBoxColumn.Name = "feeForShipDataGridViewTextBoxColumn";
+            this.feeForShipDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // panel32
+            // profitDataGridViewTextBoxColumn
             // 
-            this.panel32.Controls.Add(this.cbbQuickSelectionReceipts);
-            this.panel32.Controls.Add(this.label18);
-            this.panel32.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel32.Location = new System.Drawing.Point(324, 3);
-            this.panel32.Name = "panel32";
-            this.panel32.Size = new System.Drawing.Size(101, 94);
-            this.panel32.TabIndex = 3;
+            this.profitDataGridViewTextBoxColumn.DataPropertyName = "Profit";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.profitDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.profitDataGridViewTextBoxColumn.HeaderText = "Lợi Nhuận";
+            this.profitDataGridViewTextBoxColumn.Name = "profitDataGridViewTextBoxColumn";
+            this.profitDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // panel33
+            // reportItemBindingSource
             // 
-            this.panel33.Controls.Add(this.cbbGroupOnReceipts);
-            this.panel33.Controls.Add(this.label19);
-            this.panel33.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel33.Location = new System.Drawing.Point(431, 3);
-            this.panel33.Name = "panel33";
-            this.panel33.Size = new System.Drawing.Size(101, 94);
-            this.panel33.TabIndex = 4;
+            this.reportItemBindingSource.DataSource = typeof(QLBH.Models.ReportItem);
             // 
-            // panel34
+            // dateForReportDataGridViewTextBoxColumn1
             // 
-            this.panel34.Controls.Add(this.cbRemainReceipts);
-            this.panel34.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel34.Location = new System.Drawing.Point(538, 3);
-            this.panel34.Name = "panel34";
-            this.panel34.Size = new System.Drawing.Size(92, 94);
-            this.panel34.TabIndex = 5;
+            this.dateForReportDataGridViewTextBoxColumn1.DataPropertyName = "DateForReport";
+            this.dateForReportDataGridViewTextBoxColumn1.HeaderText = "Ngày";
+            this.dateForReportDataGridViewTextBoxColumn1.Name = "dateForReportDataGridViewTextBoxColumn1";
+            this.dateForReportDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // label15
+            // nameDataGridViewTextBoxColumn
             // 
-            this.label15.AutoSize = true;
-            this.label15.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label15.Location = new System.Drawing.Point(0, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(56, 13);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Sản Phẩm";
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Tên";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // label16
+            // inComeDataGridViewTextBoxColumn1
             // 
-            this.label16.AutoSize = true;
-            this.label16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label16.Location = new System.Drawing.Point(0, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(48, 13);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "Từ Ngày";
+            this.inComeDataGridViewTextBoxColumn1.DataPropertyName = "InCome";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N0";
+            this.inComeDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
+            this.inComeDataGridViewTextBoxColumn1.HeaderText = "Tiền Bán Hàng";
+            this.inComeDataGridViewTextBoxColumn1.Name = "inComeDataGridViewTextBoxColumn1";
+            this.inComeDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // label17
+            // outComeDataGridViewTextBoxColumn1
             // 
-            this.label17.AutoSize = true;
-            this.label17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label17.Location = new System.Drawing.Point(0, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(55, 13);
-            this.label17.TabIndex = 0;
-            this.label17.Text = "Đến Ngày";
+            this.outComeDataGridViewTextBoxColumn1.DataPropertyName = "OutCome";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "N0";
+            dataGridViewCellStyle7.NullValue = null;
+            this.outComeDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
+            this.outComeDataGridViewTextBoxColumn1.HeaderText = "Tiền Nhập Hàng";
+            this.outComeDataGridViewTextBoxColumn1.Name = "outComeDataGridViewTextBoxColumn1";
+            this.outComeDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // label18
+            // profitDataGridViewTextBoxColumn1
             // 
-            this.label18.AutoSize = true;
-            this.label18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label18.Location = new System.Drawing.Point(0, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(67, 13);
-            this.label18.TabIndex = 0;
-            this.label18.Text = "Chọn Nhanh";
+            this.profitDataGridViewTextBoxColumn1.DataPropertyName = "Profit";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N0";
+            this.profitDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle8;
+            this.profitDataGridViewTextBoxColumn1.HeaderText = "Lợi Nhận";
+            this.profitDataGridViewTextBoxColumn1.Name = "profitDataGridViewTextBoxColumn1";
+            this.profitDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // label19
+            // reportItemBindingSource1
             // 
-            this.label19.AutoSize = true;
-            this.label19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label19.Location = new System.Drawing.Point(0, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(63, 13);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "Nhóm Theo";
-            // 
-            // clbReceiptsProducts
-            // 
-            this.clbReceiptsProducts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.clbReceiptsProducts.FormattingEnabled = true;
-            this.clbReceiptsProducts.Location = new System.Drawing.Point(0, 13);
-            this.clbReceiptsProducts.Name = "clbReceiptsProducts";
-            this.clbReceiptsProducts.Size = new System.Drawing.Size(101, 79);
-            this.clbReceiptsProducts.TabIndex = 1;
-            // 
-            // dtMinDateReceipts
-            // 
-            this.dtMinDateReceipts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dtMinDateReceipts.Location = new System.Drawing.Point(0, 13);
-            this.dtMinDateReceipts.Name = "dtMinDateReceipts";
-            this.dtMinDateReceipts.Size = new System.Drawing.Size(101, 20);
-            this.dtMinDateReceipts.TabIndex = 1;
-            // 
-            // dtMaxDateReceipts
-            // 
-            this.dtMaxDateReceipts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dtMaxDateReceipts.Location = new System.Drawing.Point(0, 13);
-            this.dtMaxDateReceipts.Name = "dtMaxDateReceipts";
-            this.dtMaxDateReceipts.Size = new System.Drawing.Size(101, 20);
-            this.dtMaxDateReceipts.TabIndex = 1;
-            // 
-            // cbbQuickSelectionReceipts
-            // 
-            this.cbbQuickSelectionReceipts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cbbQuickSelectionReceipts.FormattingEnabled = true;
-            this.cbbQuickSelectionReceipts.Items.AddRange(new object[] {
-            "Hôm Nay",
-            "Hôm Qua",
-            "Trong 7 Ngày",
-            "Tuần Này",
-            "Tuần Trước",
-            "Tháng Này",
-            "Tháng Trước",
-            "Năm Này",
-            "Năm Trước"});
-            this.cbbQuickSelectionReceipts.Location = new System.Drawing.Point(0, 13);
-            this.cbbQuickSelectionReceipts.Name = "cbbQuickSelectionReceipts";
-            this.cbbQuickSelectionReceipts.Size = new System.Drawing.Size(101, 21);
-            this.cbbQuickSelectionReceipts.TabIndex = 1;
-            this.cbbQuickSelectionReceipts.SelectedIndexChanged += new System.EventHandler(this.cbbQuickSelectionReceipts_SelectedIndexChanged);
-            // 
-            // cbbGroupOnReceipts
-            // 
-            this.cbbGroupOnReceipts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cbbGroupOnReceipts.FormattingEnabled = true;
-            this.cbbGroupOnReceipts.Items.AddRange(new object[] {
-            "Ngày",
-            "Tháng",
-            "Năm"});
-            this.cbbGroupOnReceipts.Location = new System.Drawing.Point(0, 13);
-            this.cbbGroupOnReceipts.Name = "cbbGroupOnReceipts";
-            this.cbbGroupOnReceipts.Size = new System.Drawing.Size(101, 21);
-            this.cbbGroupOnReceipts.TabIndex = 1;
-            // 
-            // cbRemainReceipts
-            // 
-            this.cbRemainReceipts.AutoSize = true;
-            this.cbRemainReceipts.Checked = true;
-            this.cbRemainReceipts.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbRemainReceipts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cbRemainReceipts.Location = new System.Drawing.Point(0, 0);
-            this.cbRemainReceipts.Name = "cbRemainReceipts";
-            this.cbRemainReceipts.Size = new System.Drawing.Size(92, 17);
-            this.cbRemainReceipts.TabIndex = 0;
-            this.cbRemainReceipts.Text = "Chỉ Tồn Kho";
-            this.cbRemainReceipts.UseVisualStyleBackColor = true;
-            // 
-            // btReportReceipts
-            // 
-            this.btReportReceipts.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btReportReceipts.Location = new System.Drawing.Point(0, 0);
-            this.btReportReceipts.Name = "btReportReceipts";
-            this.btReportReceipts.Size = new System.Drawing.Size(75, 100);
-            this.btReportReceipts.TabIndex = 0;
-            this.btReportReceipts.Text = "Xem";
-            this.btReportReceipts.UseVisualStyleBackColor = true;
-            this.btReportReceipts.Click += new System.EventHandler(this.btReportReceipts_Click);
-            // 
-            // grdReceipts
-            // 
-            this.grdReceipts.AllowUserToAddRows = false;
-            this.grdReceipts.AllowUserToDeleteRows = false;
-            this.grdReceipts.AutoGenerateColumns = false;
-            this.grdReceipts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdReceipts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dateForReportDataGridViewTextBoxColumn3,
-            this.nameDataGridViewTextBoxColumn1,
-            this.inComeDataGridViewTextBoxColumn3,
-            this.outComeDataGridViewTextBoxColumn3,
-            this.feeDataGridViewTextBoxColumn1});
-            this.grdReceipts.DataSource = this.reportItemBindingSource;
-            this.grdReceipts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdReceipts.Location = new System.Drawing.Point(0, 0);
-            this.grdReceipts.Name = "grdReceipts";
-            this.grdReceipts.ReadOnly = true;
-            this.grdReceipts.Size = new System.Drawing.Size(754, 316);
-            this.grdReceipts.TabIndex = 0;
+            this.reportItemBindingSource1.DataSource = typeof(QLBH.Models.ReportItem);
             // 
             // dateForReportDataGridViewTextBoxColumn3
             // 
@@ -1619,6 +1606,67 @@
             this.feeDataGridViewTextBoxColumn1.Name = "feeDataGridViewTextBoxColumn1";
             this.feeDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
+            // dateForReportDataGridViewTextBoxColumn2
+            // 
+            this.dateForReportDataGridViewTextBoxColumn2.DataPropertyName = "DateForReport";
+            this.dateForReportDataGridViewTextBoxColumn2.HeaderText = "Ngày Tháng";
+            this.dateForReportDataGridViewTextBoxColumn2.Name = "dateForReportDataGridViewTextBoxColumn2";
+            this.dateForReportDataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // customerNameDataGridViewTextBoxColumn
+            // 
+            this.customerNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerName";
+            this.customerNameDataGridViewTextBoxColumn.HeaderText = "Tên Khách Hàng";
+            this.customerNameDataGridViewTextBoxColumn.Name = "customerNameDataGridViewTextBoxColumn";
+            this.customerNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // phoneNumberDataGridViewTextBoxColumn
+            // 
+            this.phoneNumberDataGridViewTextBoxColumn.DataPropertyName = "PhoneNumber";
+            this.phoneNumberDataGridViewTextBoxColumn.HeaderText = "Số Điện Thoại";
+            this.phoneNumberDataGridViewTextBoxColumn.Name = "phoneNumberDataGridViewTextBoxColumn";
+            this.phoneNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // inComeDataGridViewTextBoxColumn2
+            // 
+            this.inComeDataGridViewTextBoxColumn2.DataPropertyName = "InCome";
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle12.Format = "N0";
+            this.inComeDataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle12;
+            this.inComeDataGridViewTextBoxColumn2.HeaderText = "Bán";
+            this.inComeDataGridViewTextBoxColumn2.Name = "inComeDataGridViewTextBoxColumn2";
+            this.inComeDataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // outComeDataGridViewTextBoxColumn2
+            // 
+            this.outComeDataGridViewTextBoxColumn2.DataPropertyName = "OutCome";
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle13.Format = "N0";
+            this.outComeDataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle13;
+            this.outComeDataGridViewTextBoxColumn2.HeaderText = "Nhập";
+            this.outComeDataGridViewTextBoxColumn2.Name = "outComeDataGridViewTextBoxColumn2";
+            this.outComeDataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // feeForShipDataGridViewTextBoxColumn1
+            // 
+            this.feeForShipDataGridViewTextBoxColumn1.DataPropertyName = "FeeForShip";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle14.Format = "N0";
+            this.feeForShipDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle14;
+            this.feeForShipDataGridViewTextBoxColumn1.HeaderText = "Phí Vận Chuyển";
+            this.feeForShipDataGridViewTextBoxColumn1.Name = "feeForShipDataGridViewTextBoxColumn1";
+            this.feeForShipDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // profitDataGridViewTextBoxColumn2
+            // 
+            this.profitDataGridViewTextBoxColumn2.DataPropertyName = "Profit";
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle15.Format = "N0";
+            this.profitDataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle15;
+            this.profitDataGridViewTextBoxColumn2.HeaderText = "Lợi Nhuận";
+            this.profitDataGridViewTextBoxColumn2.Name = "profitDataGridViewTextBoxColumn2";
+            this.profitDataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
             // ReportsManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1633,7 +1681,6 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdReports)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource)).EndInit();
             this.panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartProfit)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -1653,12 +1700,10 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartForProducts)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdReportForProducts)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource1)).EndInit();
             this.panel11.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
-            this.panel14.PerformLayout();
             this.panel15.ResumeLayout(false);
             this.panel15.PerformLayout();
             this.panel16.ResumeLayout(false);
@@ -1669,6 +1714,22 @@
             this.panel18.PerformLayout();
             this.panel13.ResumeLayout(false);
             this.tabReportForReceipts.ResumeLayout(false);
+            this.panel27.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdReceipts)).EndInit();
+            this.panel26.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.panel29.ResumeLayout(false);
+            this.panel30.ResumeLayout(false);
+            this.panel30.PerformLayout();
+            this.panel31.ResumeLayout(false);
+            this.panel31.PerformLayout();
+            this.panel32.ResumeLayout(false);
+            this.panel32.PerformLayout();
+            this.panel33.ResumeLayout(false);
+            this.panel33.PerformLayout();
+            this.panel34.ResumeLayout(false);
+            this.panel34.PerformLayout();
+            this.panel28.ResumeLayout(false);
             this.tabReportForCustomer.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdReportCustomers)).EndInit();
@@ -1686,23 +1747,10 @@
             this.panel25.ResumeLayout(false);
             this.panel25.PerformLayout();
             this.panel20.ResumeLayout(false);
-            this.panel26.ResumeLayout(false);
-            this.panel27.ResumeLayout(false);
-            this.panel28.ResumeLayout(false);
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.panel29.ResumeLayout(false);
-            this.panel29.PerformLayout();
-            this.panel30.ResumeLayout(false);
-            this.panel30.PerformLayout();
-            this.panel31.ResumeLayout(false);
-            this.panel31.PerformLayout();
-            this.panel32.ResumeLayout(false);
-            this.panel32.PerformLayout();
-            this.panel33.ResumeLayout(false);
-            this.panel33.PerformLayout();
-            this.panel34.ResumeLayout(false);
-            this.panel34.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdReceipts)).EndInit();
+            this.panel35.ResumeLayout(false);
+            this.panel35.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.reportItemBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1749,7 +1797,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.DateTimePicker dtMinDateProducts;
         private System.Windows.Forms.Label label7;
@@ -1797,19 +1844,11 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btViewReportCustomer;
         private System.Windows.Forms.DataGridView grdReportCustomers;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateForReportDataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn customerNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phoneNumberDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn inComeDataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn outComeDataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn feeForShipDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn profitDataGridViewTextBoxColumn2;
         private System.Windows.Forms.Panel panel27;
         private System.Windows.Forms.Panel panel26;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Panel panel29;
         private System.Windows.Forms.CheckedListBox clbReceiptsProducts;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.DateTimePicker dtMinDateReceipts;
         private System.Windows.Forms.Label label16;
@@ -1832,5 +1871,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn inComeDataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn outComeDataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn feeDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.ComboBox cbbSelectKindForProducts;
+        private System.Windows.Forms.ComboBox cbbSelectKindsForReceipts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateForReportDataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn customerNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn phoneNumberDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inComeDataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn outComeDataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn feeForShipDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn profitDataGridViewTextBoxColumn2;
+        private System.Windows.Forms.Panel panel35;
+        private System.Windows.Forms.CheckBox cbIncludeFeeOperator;
     }
 }

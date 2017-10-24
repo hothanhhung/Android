@@ -42,7 +42,7 @@ namespace QLBH.Views
             {
                 query = query.Where(p => MethodHelpers.RemoveSign4VietnameseString(p.CustomerName.ToLower()).Contains(MethodHelpers.RemoveSign4VietnameseString(txtNameForSearch.Text.Trim())));
             }
-            grdCustomers.DataSource = query.ToList();
+            grdCustomers.DataSource = new SortableBindingList<Customer>(query.ToList());
         }
 
         private void btSaveCustomer_Click(object sender, EventArgs e)

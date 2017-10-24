@@ -15,7 +15,7 @@ namespace QLBH.Views
 {
     public partial class OperationFeesManagement : UserControl
     {
-        private List<OperationFee> OperationFees = null;
+        private SortableBindingList<OperationFee> OperationFees = null;
         public BindingSource OperationFeesBinding = new BindingSource();
         public OperationFee CurrentOperationFee = null;
 
@@ -81,10 +81,13 @@ namespace QLBH.Views
                 string to = MethodHelpers.ConvertDateToCorrectString(dtViewMax.Value.AddDays(1));
                 if (OperationFees == null)
                 {
-                    OperationFees = new List<OperationFee>();
+                    OperationFees = new SortableBindingList<OperationFee>();
                 }
                 OperationFees.Clear();
-                OperationFees.AddRange(OperationFeeProcesser.GetOperationFees(txtViewName.Text.Trim(), from, to));
+                foreach(var fee in OperationFeeProcesser.GetOperationFees(txtViewName.Text.Trim(), from, to)){
+                    OperationFees.Add(fee);
+                }
+                
             }
             OperationFeesBinding.ResetBindings(true);
 

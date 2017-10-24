@@ -30,14 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.grdOperationFees = new System.Windows.Forms.DataGridView();
-            this.operationFeeIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operationFeeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.feeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.createdDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operationFeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -74,6 +70,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btFeeSave = new System.Windows.Forms.Button();
+            this.operationFeeIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operationFeeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.feeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.createdDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdOperationFees)).BeginInit();
@@ -138,45 +139,6 @@
             this.grdOperationFees.Size = new System.Drawing.Size(697, 182);
             this.grdOperationFees.TabIndex = 1;
             this.grdOperationFees.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOperationFees_CellDoubleClick);
-            // 
-            // operationFeeIdDataGridViewTextBoxColumn
-            // 
-            this.operationFeeIdDataGridViewTextBoxColumn.DataPropertyName = "OperationFeeId";
-            this.operationFeeIdDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.operationFeeIdDataGridViewTextBoxColumn.Name = "operationFeeIdDataGridViewTextBoxColumn";
-            this.operationFeeIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // operationFeeNameDataGridViewTextBoxColumn
-            // 
-            this.operationFeeNameDataGridViewTextBoxColumn.DataPropertyName = "OperationFeeName";
-            this.operationFeeNameDataGridViewTextBoxColumn.HeaderText = "Tên Chi Phí";
-            this.operationFeeNameDataGridViewTextBoxColumn.Name = "operationFeeNameDataGridViewTextBoxColumn";
-            this.operationFeeNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // feeDataGridViewTextBoxColumn
-            // 
-            this.feeDataGridViewTextBoxColumn.DataPropertyName = "Fee";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.feeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.feeDataGridViewTextBoxColumn.HeaderText = "Chi Phí";
-            this.feeDataGridViewTextBoxColumn.Name = "feeDataGridViewTextBoxColumn";
-            this.feeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // noteDataGridViewTextBoxColumn
-            // 
-            this.noteDataGridViewTextBoxColumn.DataPropertyName = "Note";
-            this.noteDataGridViewTextBoxColumn.HeaderText = "Ghi Chú";
-            this.noteDataGridViewTextBoxColumn.Name = "noteDataGridViewTextBoxColumn";
-            this.noteDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // createdDateDataGridViewTextBoxColumn
-            // 
-            this.createdDateDataGridViewTextBoxColumn.DataPropertyName = "CreatedDate";
-            this.createdDateDataGridViewTextBoxColumn.HeaderText = "Ngày Chi";
-            this.createdDateDataGridViewTextBoxColumn.Name = "createdDateDataGridViewTextBoxColumn";
-            this.createdDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // operationFeeBindingSource
             // 
@@ -253,7 +215,9 @@
             // 
             // dtViewMin
             // 
+            this.dtViewMin.CustomFormat = "dd-MM-yyyy";
             this.dtViewMin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtViewMin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtViewMin.Location = new System.Drawing.Point(0, 13);
             this.dtViewMin.Name = "dtViewMin";
             this.dtViewMin.Size = new System.Drawing.Size(110, 20);
@@ -281,7 +245,9 @@
             // 
             // dtViewMax
             // 
+            this.dtViewMax.CustomFormat = "dd-MM-yyyy";
             this.dtViewMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtViewMax.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtViewMax.Location = new System.Drawing.Point(0, 13);
             this.dtViewMax.Name = "dtViewMax";
             this.dtViewMax.Size = new System.Drawing.Size(110, 20);
@@ -524,7 +490,9 @@
             // 
             // dtFeeDate
             // 
+            this.dtFeeDate.CustomFormat = "dd-MM-yyyy";
             this.dtFeeDate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtFeeDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtFeeDate.Location = new System.Drawing.Point(0, 13);
             this.dtFeeDate.Name = "dtFeeDate";
             this.dtFeeDate.Size = new System.Drawing.Size(144, 20);
@@ -559,6 +527,47 @@
             this.btFeeSave.Text = "Lưu Chi Phí";
             this.btFeeSave.UseVisualStyleBackColor = true;
             this.btFeeSave.Click += new System.EventHandler(this.btFeeSave_Click);
+            // 
+            // operationFeeIdDataGridViewTextBoxColumn
+            // 
+            this.operationFeeIdDataGridViewTextBoxColumn.DataPropertyName = "OperationFeeId";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.operationFeeIdDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.operationFeeIdDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.operationFeeIdDataGridViewTextBoxColumn.Name = "operationFeeIdDataGridViewTextBoxColumn";
+            this.operationFeeIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // operationFeeNameDataGridViewTextBoxColumn
+            // 
+            this.operationFeeNameDataGridViewTextBoxColumn.DataPropertyName = "OperationFeeName";
+            this.operationFeeNameDataGridViewTextBoxColumn.HeaderText = "Tên Chi Phí";
+            this.operationFeeNameDataGridViewTextBoxColumn.Name = "operationFeeNameDataGridViewTextBoxColumn";
+            this.operationFeeNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // feeDataGridViewTextBoxColumn
+            // 
+            this.feeDataGridViewTextBoxColumn.DataPropertyName = "Fee";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.feeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.feeDataGridViewTextBoxColumn.HeaderText = "Chi Phí";
+            this.feeDataGridViewTextBoxColumn.Name = "feeDataGridViewTextBoxColumn";
+            this.feeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // noteDataGridViewTextBoxColumn
+            // 
+            this.noteDataGridViewTextBoxColumn.DataPropertyName = "Note";
+            this.noteDataGridViewTextBoxColumn.HeaderText = "Ghi Chú";
+            this.noteDataGridViewTextBoxColumn.Name = "noteDataGridViewTextBoxColumn";
+            this.noteDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // createdDateDataGridViewTextBoxColumn
+            // 
+            this.createdDateDataGridViewTextBoxColumn.DataPropertyName = "CreatedDate";
+            this.createdDateDataGridViewTextBoxColumn.HeaderText = "Ngày Chi";
+            this.createdDateDataGridViewTextBoxColumn.Name = "createdDateDataGridViewTextBoxColumn";
+            this.createdDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // OperationFeesManagement
             // 
@@ -640,11 +649,11 @@
         private System.Windows.Forms.Button btCreateFee;
         private System.Windows.Forms.Button btView;
         private System.Windows.Forms.DataGridView grdOperationFees;
+        private System.Windows.Forms.BindingSource operationFeeBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn operationFeeIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn operationFeeNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn feeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn noteDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn createdDateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource operationFeeBindingSource;
     }
 }

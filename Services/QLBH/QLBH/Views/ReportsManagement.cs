@@ -17,6 +17,7 @@ namespace QLBH.Views
     public partial class ReportsManagement : UserControl
     {
         List<Product> Products = null;
+        List<Category> Categories = null;
 
         public ReportsManagement()
         {
@@ -31,6 +32,8 @@ namespace QLBH.Views
 
         private void ReportsManagement_Load(object sender, EventArgs e)
         {
+            cbbSelectKindForProducts.SelectedIndex = 0;
+            cbbSelectKindsForReceipts.SelectedIndex = 0;
             ReloadData();
             cbbQuickSelection.SelectedIndex = 2;
             UpdateView();
@@ -78,34 +81,62 @@ namespace QLBH.Views
             }
 
         }
+        private void loadCategories(bool isReload = false)
+        {
+            if (Products == null || isReload)
+            {
+                Categories = CategoryProcesser.GetCategories();
+            }
+
+        }
         private void loadcbbProducts(bool isReload = false)
         {
             loadProducts(isReload);
-            //cbbProducts.DataSource = Products;
-            //cbbProducts.DisplayMember = "ProductName";
-            //cbbProducts.ValueMember = "ProductId";
-            //cbbProducts.Text = string.Empty;
-            //cbbProducts.SelectedIndex = -1;
-            clbReceiptsProducts.Items.Clear();
-            clbProducts.Items.Clear();
-            //clbProducts.Items.Add(new Product() { ProductId = 0, ProductName = "Chọn Tất Cả" }, true);
-            foreach(var product in Products){
-                clbProducts.Items.Add(product, true);
-                clbReceiptsProducts.Items.Add(product, true);
+            loadCategories(isReload);
+            if(cbbSelectKindForProducts.SelectedIndex == 1)
+            {
+                clbProducts.Items.Clear();
+                foreach (var category in Categories)
+                {
+                    clbProducts.Items.Add(category, true);
+                }
+                clbProducts.DisplayMember = "CategoryName";
+                clbProducts.ValueMember = "CategoryId";
             }
-            clbProducts.DisplayMember = "ProductName";
-            clbProducts.ValueMember = "ProductId";
-            clbReceiptsProducts.DisplayMember = "ProductName";
-            clbReceiptsProducts.ValueMember = "ProductId";
+            else
+            {
+                clbProducts.Items.Clear();
+                foreach (var product in Products)
+                {
+                    clbProducts.Items.Add(product, true);
+                }
+                clbProducts.DisplayMember = "ProductName";
+                clbProducts.ValueMember = "ProductId";
+            }
+
+            if (cbbSelectKindsForReceipts.SelectedIndex == 1)
+            {
+                clbReceiptsProducts.Items.Clear();
+                foreach (var category in Categories)
+                {
+                    clbReceiptsProducts.Items.Add(category, true);
+                }
+                clbReceiptsProducts.DisplayMember = "CategoryName";
+                clbReceiptsProducts.ValueMember = "CategoryId";
+            }
+            else
+            {
+                clbReceiptsProducts.Items.Clear();
+                foreach (var product in Products)
+                {
+                    clbReceiptsProducts.Items.Add(product, true);
+                }
+                clbReceiptsProducts.DisplayMember = "ProductName";
+                clbReceiptsProducts.ValueMember = "ProductId";
+
+            }
         }
 
-        private void loadlbProducts(bool isReload = false)
-        {
-            loadProducts(isReload);
-            clbProducts.DataSource = Products;
-            clbProducts.DisplayMember = "ProductName";
-            clbProducts.ValueMember = "ProductId";
-        }
 
         private void btViewReport_Click(object sender, EventArgs e)
         {
@@ -116,7 +147,7 @@ namespace QLBH.Views
         {
             string from = MethodHelpers.ConvertDateToCorrectString(dtMinDate.Value);
             string to = MethodHelpers.ConvertDateToCorrectString(dtMaxDate.Value.AddDays(1));
-            var reports = ReportsProcesser.GenerateReportOfProfit(null, from, to, cbbGroupOn.SelectedIndex);
+            var reports = ReportsProcesser.GenerateReportOfProfit(null, from, to, cbbGroupOn.SelectedIndex, cbIncludeFeeOperator.Checked);
             var reportItemInTotal = new ReportItem()
             {
                 DateForReport = string.Empty,
@@ -127,7 +158,7 @@ namespace QLBH.Views
                 Fee = reports.Sum(r => r.Fee),
             };
             reports.Insert(0, reportItemInTotal);
-            grdReports.DataSource = reports;
+            grdReports.DataSource = new SortableBindingList<ReportItem>(reports, true);
 
             reports = reports.GroupBy(r => r.DateForReport).Select(gp => new ReportItem()
             {
@@ -169,13 +200,31 @@ namespace QLBH.Views
 
             foreach (var item in clbProducts.CheckedItems)
             {
-                var product = (Product)item;
-                if (product.ProductId > 0)
+                if (item is Product)
                 {
-                    productIds.Add(product.ProductId);
-                    selectedProducts.Add(product);
+                    var product = (Product)item;
+                    if (product.ProductId > 0)
+                    {
+                        productIds.Add(product.ProductId);
+                        selectedProducts.Add(product);
+                    }
+                }
+                else
+                {
+                    var category = (Category)item;
+                    if (category.CategoryId > 0)
+                    {
+                        var productlist = Products.Where(p=>p.CategoryId == category.CategoryId).ToList();
+                        if(productlist!=null && productlist.Count > 0){
+                            productIds.AddRange(productlist.Select(p => p.ProductId).ToArray());
+                            selectedProducts.AddRange(productlist);
+                        }
+                    }
                 }
             }
+            selectedProducts = selectedProducts.Distinct().ToList();
+            productIds = productIds.Distinct().ToList();
+
             string from = MethodHelpers.ConvertDateToCorrectString(dtMinDateProducts.Value);
             string to = MethodHelpers.ConvertDateToCorrectString(dtMaxDateProducts.Value.AddDays(1));
             var reports = ReportsProcesser.GenerateReportOfProfitOnProducts(productIds, from, to, cbbGroupProducts.SelectedIndex);
@@ -230,13 +279,14 @@ namespace QLBH.Views
                     chartForProducts.Series[report.Name].Points.AddXY("Tiền Bán Hàng", report.InCome);
                     chartForProducts.Series[report.Name].Points.AddXY("Tiền Nhập Hàng", report.OutCome);
                     chartForProducts.Series[report.Name].Points.AddXY("Lợi Nhận", report.Profit);
+                    chartForProducts.Series[report.Name].ToolTip = report.Name;
                 }
             }
 
 
 
             reports.Insert(0, reportItem);
-            grdReportForProducts.DataSource = reports;
+            grdReportForProducts.DataSource = new SortableBindingList<ReportItem>(reports, true);
 
             
         }
@@ -259,7 +309,7 @@ namespace QLBH.Views
                 OutCome = gp.Sum(g => g.OutCome)
             }).ToList();
 
-            grdReportCustomers.DataSource = reports;
+            grdReportCustomers.DataSource = new SortableBindingList<ReportItem>(reports);
         }
 
         private void ViewReportOnGridViewReceipts()
@@ -273,15 +323,34 @@ namespace QLBH.Views
             List<Product> selectedProducts = new List<Product>();
             List<int> productIds = new List<int>();
 
-            foreach (var item in clbReceiptsProducts.CheckedItems)
+            foreach (var item in clbProducts.CheckedItems)
             {
-                var product = (Product)item;
-                if (product.ProductId > 0)
+                if (item is Product)
                 {
-                    productIds.Add(product.ProductId);
-                    selectedProducts.Add(product);
+                    var product = (Product)item;
+                    if (product.ProductId > 0)
+                    {
+                        productIds.Add(product.ProductId);
+                        selectedProducts.Add(product);
+                    }
+                }
+                else
+                {
+                    var category = (Category)item;
+                    if (category.CategoryId > 0)
+                    {
+                        var productlist = Products.Where(p => p.CategoryId == category.CategoryId).ToList();
+                        if (productlist != null && productlist.Count > 0)
+                        {
+                            productIds.AddRange(productlist.Select(p => p.ProductId).ToArray());
+                            selectedProducts.AddRange(productlist);
+                        }
+                    }
                 }
             }
+            selectedProducts = selectedProducts.Distinct().ToList();
+            productIds = productIds.Distinct().ToList();
+
             string from = MethodHelpers.ConvertDateToCorrectString(dtMinDateReceipts.Value);
             string to = MethodHelpers.ConvertDateToCorrectString(dtMaxDateReceipts.Value.AddDays(1));
             var reports = ReportsProcesser.GenerateReportOfReceipts(productIds, from, to, cbbGroupOnReceipts.SelectedIndex, cbRemainReceipts.Checked);
@@ -307,7 +376,7 @@ namespace QLBH.Views
             }
             reports.Insert(0, reportItem);
 
-            grdReceipts.DataSource = reports;
+            grdReceipts.DataSource = new SortableBindingList<ReportItem>(reports, true);
         }
 
         private void tabReports_SelectedIndexChanged(object sender, EventArgs e)
@@ -317,7 +386,7 @@ namespace QLBH.Views
                 case 0:
                     break;
                 case 1:
-                    loadlbProducts(false);
+                    loadcbbProducts(false);
                     if (grdReportForProducts.DataSource == null)
                     {
                         ViewReportForProductOnGridView();
@@ -366,6 +435,16 @@ namespace QLBH.Views
         private void btReportReceipts_Click(object sender, EventArgs e)
         {
             ViewReportOnGridViewReceipts();
+        }
+
+        private void cbbSelectKindForProducts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadcbbProducts(false);
+        }
+
+        private void cbbSelectKindsForReceipts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadcbbProducts(false);
         }
 
     }
