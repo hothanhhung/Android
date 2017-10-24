@@ -81,7 +81,7 @@ namespace QLBH.Views
                 string from = MethodHelpers.ConvertDateToCorrectString(dtIssuesMinDateForSearch.Value);
                 string to = MethodHelpers.ConvertDateToCorrectString(dtIssuesMaxDateForSearch.Value.AddDays(1));
                 Orders = OrderProcesser.GetOrders(status, txtIssuesNameForSearch.Text.Trim(), txtIssuesPhoneForSearch.Text.Trim(), from, to);
-                grdOrders.DataSource = Orders;
+                grdOrders.DataSource = new SortableBindingList<Order>(Orders);
             }
 
 

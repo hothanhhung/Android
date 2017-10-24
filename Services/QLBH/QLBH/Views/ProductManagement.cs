@@ -184,11 +184,12 @@ namespace QLBH.Views
             }
             if (string.IsNullOrWhiteSpace(filter))
             {
-                grdProducts.DataSource = Products; }
+                grdProducts.DataSource = new SortableBindingList<Product>(Products);
+            }
             else
             {
                 filter = filter.Trim().ToLower();
-                grdProducts.DataSource = Products.Where(p => MethodHelpers.RemoveSign4VietnameseString(p.ProductName).ToLower().Contains(filter)).ToList();
+                grdProducts.DataSource = new SortableBindingList<Product>(Products.Where(p => MethodHelpers.RemoveSign4VietnameseString(p.ProductName).ToLower().Contains(filter)).ToList());
            
             }
 

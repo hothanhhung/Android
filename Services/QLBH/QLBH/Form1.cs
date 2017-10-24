@@ -114,6 +114,7 @@ namespace QLBH
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            btOrder.Select();
             Cursor = Cursors.WaitCursor;
             if (issuesManagement == null)
             {
