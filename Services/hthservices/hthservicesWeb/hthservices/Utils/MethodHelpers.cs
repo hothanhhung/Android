@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -147,5 +150,94 @@ namespace hthservices.Utils
         //    urlToEncode = UnicodeToNormal.ConvertToUnSign(urlToEncode);
         //    return urlToEncode.ToString();
         //}
+        public static void CopyTo(Stream src, Stream dest)
+        {
+            byte[] bytes = new byte[4096];
+
+            int cnt;
+
+            while ((cnt = src.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                dest.Write(bytes, 0, cnt);
+            }
+        }
+
+        public static byte[] Zip(string str)
+        {
+            var bytes = Encoding.UTF8.GetBytes(str);
+
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(mso, CompressionMode.Compress))
+                {
+                    //msi.CopyTo(gs);
+                    CopyTo(msi, gs);
+                }
+
+                return mso.ToArray();
+            }
+        }
+
+        public static string Unzip(byte[] bytes)
+        {
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+                {
+                    //gs.CopyTo(mso);
+                    CopyTo(gs, mso);
+                }
+
+                return Encoding.UTF8.GetString(mso.ToArray());
+            }
+        }
+
+        public static List<int> ConvertToListIntFromString(String str, char split = ',')
+        {
+            List<int> result = new List<int>();
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+
+                var items = str.Split(split);
+                foreach (var item in items)
+                {
+                    int value = 0;
+                    if (int.TryParse(item, out value))
+                    {
+                        result.Add(value);
+                    }
+                }
+            }
+            return result.Distinct().ToList();
+        }
+
+        public static string ConvertByteArrayToString(byte[] data)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (data != null)
+            {
+                foreach (var value in data)
+                {
+                    stringBuilder.Append(" ").Append(value);
+                }
+            }
+            return stringBuilder.ToString();
+        }
+
+        public static byte[] ConvertStringToByteArray(string str)
+        {
+            List<int> values = ConvertToListIntFromString(str, ' ');
+            byte[] data = new byte[values.Count];
+            if (values != null)
+            {
+                for (int i = 0; i < values.Count; i++ )
+                {
+                    data[i] = (byte) values[i];
+                }
+            }
+            return data;
+        }
     }
 }

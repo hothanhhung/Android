@@ -2,11 +2,13 @@
 using hthservices.DataBusiness;
 using hthservices.Models;
 using hthservices.Models.Website;
+using MethodHelpers = hthservices.Utils.MethodHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Text;
 
 namespace hthservices.Controllers
 {
@@ -136,6 +138,49 @@ namespace hthservices.Controllers
         #endregion
 
         #region Content
+
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("GetContentsInString")]
+        public ResponseJson GetContents(string contentIds)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+
+            List<int> contentIdList = MethodHelpers.ConvertToListIntFromString(contentIds);
+
+            var contents = DataProcess.GetProgrammingContents(contentIdList);
+            var dataInByte = MethodHelpers.Zip(contents);
+            string data = MethodHelpers.ConvertByteArrayToString(dataInByte);
+            return ResponseJson.GetResponseJson(data);
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("SaveContentsFromString")]
+        public ResponseJson SaveContents(string contents)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+            var dataInByte = MethodHelpers.ConvertStringToByteArray(contents);
+            var contentsInString = MethodHelpers.Unzip(dataInByte);
+
+            var count = DataProcess.UpdateProgrammingComments(contentsInString);
+            string data = string.Format("Updated for {0}", count);
+            return ResponseJson.GetResponseJson(data);
+        }
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("GetContents")]
         public ResponseJson GetContents(int? categoryId, int page = 0, int size = 10)
@@ -278,6 +323,47 @@ namespace hthservices.Controllers
                     CreatedDate = x.CreatedDate,
                     UpdatedDate = x.UpdatedDate,
                 }).ToList();
+            return ResponseJson.GetResponseJson(data);
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("GetCommentsInString")]
+        public ResponseJson GetComments(string commentIds)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+
+            List<int> contentIdList = MethodHelpers.ConvertToListIntFromString(commentIds);
+
+            var contents = DataProcess.GetProgrammingComments(contentIdList);
+            var dataInByte = MethodHelpers.Zip(contents);
+            string data = MethodHelpers.ConvertByteArrayToString(dataInByte);
+            return ResponseJson.GetResponseJson(data);
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("SaveCommentsFromString")]
+        public ResponseJson SaveComments(string comments)
+        {
+            if (needCheckLogin)
+            {
+                var token = Request.Headers.GetValues("token");
+                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                {
+                    return ResponseJson.GetResponseJson(string.Empty, false);
+                }
+            }
+            var dataInByte = MethodHelpers.ConvertStringToByteArray(comments);
+            var contents = MethodHelpers.Unzip(dataInByte);
+
+            var count = DataProcess.UpdateProgrammingComments(contents);
+            string data = string.Format("Updated for {0}", count);
             return ResponseJson.GetResponseJson(data);
         }
 
