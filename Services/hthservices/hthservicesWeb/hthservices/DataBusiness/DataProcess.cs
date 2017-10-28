@@ -1,5 +1,6 @@
 ﻿using hthservices.Models.Website;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,23 @@ namespace hthservices.DataBusiness
             return SQLiteProcess.GetProgrammingContent(contentId, false);
         }
 
+        public static string GetProgrammingContents(List<int> contentIds)
+        {
+            List<ProgrammingContent> programContents = SQLiteProcess.GetProgrammingContents(contentIds);
+            var str = JsonConvert.SerializeObject(programContents);
+            return str;
+        }
+
+        public static int UpdateProgrammingContent(string contentsJson)
+        {
+            if (string.IsNullOrWhiteSpace(contentsJson))
+            {
+                return 0;
+            }
+            List<ProgrammingContent> contents = JsonConvert.DeserializeObject<List<ProgrammingContent>>(contentsJson);
+            return SQLiteProcess.UpdateProgrammingContents(contents);
+        }
+
         public static bool SaveProgrammingContent(ProgrammingContent content)
         {
             return SQLiteProcess.SaveProgrammingContent(content);
@@ -72,6 +90,23 @@ namespace hthservices.DataBusiness
         public static ProgrammingComment GetProgrammingComment(int commentId)
         {
             return SQLiteProcess.GetProgrammingComment(commentId, false);
+        }
+
+        public static string GetProgrammingComments(List<int> commentIds)
+        {
+            List<ProgrammingComment> programComments = SQLiteProcess.GetProgrammingComments(commentIds);
+            var str = JsonConvert.SerializeObject(programComments);
+            return str;
+        }
+
+        public static int UpdateProgrammingComments(string commentsJson)
+        {
+            if(string.IsNullOrWhiteSpace(commentsJson))
+            {
+                return 0;
+            }
+            List<ProgrammingComment> comments = JsonConvert.DeserializeObject<List<ProgrammingComment>>(commentsJson);
+            return SQLiteProcess.UpdateProgrammingComments(comments);
         }
 
         public static bool SaveProgrammingComment(ProgrammingComment comment)

@@ -159,6 +159,20 @@ namespace hthservices.DataBusiness
             return programmingContents;
         }
 
+        public static List<ProgrammingContent> GetProgrammingContents(List<int> contentIds)
+        {
+            List<ProgrammingContent> programmingContents = new List<ProgrammingContent>();
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var contents = context.ProgrammingContents.AsQueryable();
+                if (contentIds != null && contentIds.Count > 0)
+                {
+                    contents = contents.Where(p => contentIds.Contains(p.Id));
+                }
+                programmingContents = contents.ToList();
+            }
+            return programmingContents;
+        }
         public static ProgrammingContent GetProgrammingContent(int id, bool isDisplay)
         {
             string today = MethodHelpers.GetCurrentVNDateTimeInCorrectString();
@@ -173,6 +187,40 @@ namespace hthservices.DataBusiness
             }
             return programmingContent;
         }
+
+        public static int UpdateProgrammingContents(List<ProgrammingContent> contents)
+        {
+            int count = 0;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                foreach (var content in contents)
+                {
+                    var programmingContent = context.ProgrammingContents.FirstOrDefault(p => p.Id == content.Id);
+                    if (programmingContent == null)
+                    {
+                        context.ProgrammingContents.Add(content);
+                    }
+                    else
+                    {
+                        programmingContent.Title = content.Title;
+                        programmingContent.CategoryId = content.CategoryId;
+                        programmingContent.IsDisplay = content.IsDisplay;
+                        programmingContent.ImageUrl = content.ImageUrl;
+                        programmingContent.ShortContent = content.ShortContent;
+                        programmingContent.Content = content.Content;
+                        programmingContent.NumberOfViews = content.NumberOfViews;
+                        programmingContent.PublishedDate = content.PublishedDate;
+                        programmingContent.Keywords = content.Keywords;
+                        programmingContent.Subject = content.Subject;
+                        programmingContent.UpdatedDate = content.UpdatedDate;
+
+                    }
+                }
+                count = context.SaveChanges();
+            }
+            return count;
+        }
+
         public static bool SaveProgrammingContent(ProgrammingContent content)
         {
             bool succ = false;
@@ -261,6 +309,51 @@ namespace hthservices.DataBusiness
             }
             return programmingComments;
         }
+        public static List<ProgrammingComment> GetProgrammingComments(List<int> commentIds)
+        {
+            List<ProgrammingComment> programmingComments = new List<ProgrammingComment>();
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                var contents = context.ProgrammingComments.AsQueryable();
+                if (commentIds != null && commentIds.Count > 0)
+                {
+                    contents = contents.Where(p=> commentIds.Contains(p.Id));
+                }
+                programmingComments = contents.ToList();
+            }
+            return programmingComments;
+        }
+
+        public static int UpdateProgrammingComments(List<ProgrammingComment> programmingComments)
+        {
+            int count = 0;
+            using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
+            {
+                foreach (var pc in programmingComments)
+                {
+                    var programmingComment = context.ProgrammingComments.FirstOrDefault(p => p.Id == pc.Id);
+                    if (programmingComment == null)
+                    {
+                        context.ProgrammingComments.Add(pc);
+                    }
+                    else
+                    {
+                        programmingComment.Name = pc.Name;
+                        programmingComment.ContentId = pc.ContentId;
+                        programmingComment.ReplyToCommentId = pc.ReplyToCommentId;
+                        programmingComment.Email = pc.Email;
+                        programmingComment.IsDisplay = pc.IsDisplay;
+                        programmingComment.Subject = pc.Subject;
+                        programmingComment.Message = pc.Message;
+                        programmingComment.UpdatedDate = pc.UpdatedDate;
+
+                    }
+                }
+                count = context.SaveChanges();
+            }
+            return count;
+        }
+
         public static ProgrammingComment GetProgrammingComment(int commentId, bool isDisplay)
         {
             ProgrammingComment programmingComment = null;
