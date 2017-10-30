@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace hthservices.Controllers
@@ -18,10 +19,8 @@ namespace hthservices.Controllers
             return View();
         }
 
-       
-        public ActionResult Content(int id)
+        public ActionResult SeeContent(string id)
         {
-
             var content = DataBusiness.DataProcess.GetProgrammingContentForUser(id);
             if (content != null)
             {

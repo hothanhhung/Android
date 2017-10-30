@@ -71,7 +71,7 @@ namespace hthservices.DataBusiness
             }
             return programmingCategories;
         }
-        public static ProgrammingCategory GetProgrammingCategory(int categorId, bool isDisplay)
+        public static ProgrammingCategory GetProgrammingCategory(string categorId, bool isDisplay)
         {
             ProgrammingCategory programmingCategory = null;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -93,6 +93,10 @@ namespace hthservices.DataBusiness
                 var programmingCategory = context.ProgrammingCategories.FirstOrDefault(p => p.Id == category.Id);
                 if (programmingCategory == null)
                 {
+                    if (string.IsNullOrWhiteSpace(category.Id))
+                    {
+                        category.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
+                    }
                     context.ProgrammingCategories.Add(category);
                 }
                 else
@@ -107,7 +111,7 @@ namespace hthservices.DataBusiness
             }
             return succ;
         }
-        public static bool DeleteProgrammingCategory(int categoryId)
+        public static bool DeleteProgrammingCategory(string categoryId)
         {
             bool succ = false;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -125,32 +129,32 @@ namespace hthservices.DataBusiness
 
         #region Content
 
-        public static int CountProgrammingContents(int? categoryId, bool isDisplay)
+        public static int CountProgrammingContents(string categoryId, bool isDisplay)
         {
             string today = MethodHelpers.GetCurrentVNDateTimeInCorrectString();
             int total = 0;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
                 var contents = context.ProgrammingContents.Where(p => isDisplay == false || ((p.IsDisplay ?? 0) > 0 && today.CompareTo(p.PublishedDate) > 0));
-                if (categoryId.HasValue)
+                if (!string.IsNullOrWhiteSpace(categoryId))
                 {
-                    contents = contents.Where(p => p.CategoryId == categoryId.Value);
+                    contents = contents.Where(p => p.CategoryId == categoryId);
                 }
                 total = contents.Count();
             }
             return total;
         }
 
-        public static List<ProgrammingContent> GetProgrammingContents(int? categoryId, bool isDisplay, int page=0, int size = 10)
+        public static List<ProgrammingContent> GetProgrammingContents(string categoryId, bool isDisplay, int page=0, int size = 10)
         {
             string today = MethodHelpers.GetCurrentVNDateTimeInCorrectString();
             List<ProgrammingContent> programmingContents = new List<ProgrammingContent>();
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
                 var contents = context.ProgrammingContents.Include("Comments").Include("Category").Where(p => isDisplay == false || ((p.IsDisplay ?? 0) > 0 && today.CompareTo(p.PublishedDate) > 0));
-                if (categoryId.HasValue)
+                if (!string.IsNullOrWhiteSpace(categoryId))
                 {
-                    contents = contents.Where(p => p.CategoryId == categoryId.Value);
+                    contents = contents.Where(p => p.CategoryId == categoryId);
                 }
                 contents = contents.OrderByDescending(p => p.PublishedDate);
                 contents = contents.Skip(page * size).Take(size);
@@ -159,7 +163,7 @@ namespace hthservices.DataBusiness
             return programmingContents;
         }
 
-        public static List<ProgrammingContent> GetProgrammingContents(List<int> contentIds)
+        public static List<ProgrammingContent> GetProgrammingContents(List<string> contentIds)
         {
             List<ProgrammingContent> programmingContents = new List<ProgrammingContent>();
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -169,11 +173,28 @@ namespace hthservices.DataBusiness
                 {
                     contents = contents.Where(p => contentIds.Contains(p.Id));
                 }
-                programmingContents = contents.ToList();
+                foreach (var item in contents)
+                {
+                    programmingContents.Add(new ProgrammingContent()
+                    {
+                        CategoryId = item.CategoryId,
+                        Content = item.Content,
+                        CreatedDate = item.CreatedDate,
+                        Id = item.Id,
+                        ImageUrl = item.ImageUrl,
+                        IsDisplay = item.IsDisplay,
+                        Keywords = item.Keywords,
+                        PublishedDate = item.PublishedDate,
+                        ShortContent = item.ShortContent,
+                        Subject = item.Subject,
+                        Title = item.Title,
+                        UpdatedDate = item.UpdatedDate
+                    });
+                }
             }
             return programmingContents;
         }
-        public static ProgrammingContent GetProgrammingContent(int id, bool isDisplay)
+        public static ProgrammingContent GetProgrammingContent(string id, bool isDisplay)
         {
             string today = MethodHelpers.GetCurrentVNDateTimeInCorrectString();
             ProgrammingContent programmingContent = null;
@@ -198,6 +219,19 @@ namespace hthservices.DataBusiness
                     var programmingContent = context.ProgrammingContents.FirstOrDefault(p => p.Id == content.Id);
                     if (programmingContent == null)
                     {
+                        if (string.IsNullOrWhiteSpace(content.Id))
+                        {
+                            content.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
+                        }
+                        if (string.IsNullOrWhiteSpace(content.CreatedDate))
+                        {
+                            content.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+                        }
+                        if (string.IsNullOrWhiteSpace(content.UpdatedDate))
+                        {
+                            content.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+
+                        }
                         context.ProgrammingContents.Add(content);
                     }
                     else
@@ -229,6 +263,11 @@ namespace hthservices.DataBusiness
                 var programmingContent = context.ProgrammingContents.FirstOrDefault(p => p.Id == content.Id);
                 if (programmingContent == null)
                 {
+
+                    if (string.IsNullOrWhiteSpace(content.Id))
+                    {
+                        content.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
+                    }
                     content.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
                     content.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
                     context.ProgrammingContents.Add(content);
@@ -252,7 +291,7 @@ namespace hthservices.DataBusiness
             }
             return succ;
         }
-        public static bool DeleteProgrammingContent(int contentId)
+        public static bool DeleteProgrammingContent(string contentId)
         {
             bool succ = false;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -271,30 +310,30 @@ namespace hthservices.DataBusiness
 
         #region Comment
 
-        public static int CountProgrammingComments(int? contentId, bool isDisplay)
+        public static int CountProgrammingComments(string contentId, bool isDisplay)
         {
             int total = 0;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
                 var contents = context.ProgrammingComments.Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
-                if (contentId.HasValue)
+                if (!string.IsNullOrWhiteSpace(contentId))
                 {
-                    contents = contents.Where(p => p.ContentId == contentId.Value);
+                    contents = contents.Where(p => p.ContentId == contentId);
                 }
                 total = contents.Count();
             }
             return total;
         }
 
-        public static List<ProgrammingComment> GetProgrammingComments(int? contentId, bool isDisplay, int page = 0, int size = 10, bool isDesc = false)
+        public static List<ProgrammingComment> GetProgrammingComments(string contentId, bool isDisplay, int page = 0, int size = 10, bool isDesc = false)
         {
             List<ProgrammingComment> programmingComments = new List<ProgrammingComment>();
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
                 var contents = context.ProgrammingComments.Include("ReplyTo").Include("Content").Include("Content.Category").Where(p => isDisplay == false || (p.IsDisplay ?? 0) > 0);
-                if (contentId.HasValue)
+                if (!string.IsNullOrWhiteSpace(contentId))
                 {
-                    contents = contents.Where(p => p.ContentId == contentId.Value);
+                    contents = contents.Where(p => p.ContentId == contentId);
                 }
                 if (isDesc)
                 {
@@ -309,7 +348,7 @@ namespace hthservices.DataBusiness
             }
             return programmingComments;
         }
-        public static List<ProgrammingComment> GetProgrammingComments(List<int> commentIds)
+        public static List<ProgrammingComment> GetProgrammingComments(List<string> commentIds)
         {
             List<ProgrammingComment> programmingComments = new List<ProgrammingComment>();
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -319,7 +358,22 @@ namespace hthservices.DataBusiness
                 {
                     contents = contents.Where(p=> commentIds.Contains(p.Id));
                 }
-                programmingComments = contents.ToList();
+                foreach (var item in contents)
+                {
+                    programmingComments.Add(new ProgrammingComment()
+                    {
+                        ContentId = item.ContentId,
+                        CreatedDate = item.CreatedDate,
+                        Email = item.Email,
+                        Id = item.Id,
+                        IsDisplay = item.IsDisplay,
+                        Message = item.Message,
+                        Name = item.Name,
+                        ReplyToCommentId = item.ReplyToCommentId,
+                        Subject = item.Subject,
+                        UpdatedDate = item.UpdatedDate
+                    });
+                }
             }
             return programmingComments;
         }
@@ -334,6 +388,19 @@ namespace hthservices.DataBusiness
                     var programmingComment = context.ProgrammingComments.FirstOrDefault(p => p.Id == pc.Id);
                     if (programmingComment == null)
                     {
+                        if (string.IsNullOrWhiteSpace(pc.Id))
+                        {
+                            pc.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
+                        }
+                        if (string.IsNullOrWhiteSpace(pc.CreatedDate))
+                        {
+                            pc.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+                        }
+                        if (string.IsNullOrWhiteSpace(pc.UpdatedDate))
+                        {
+                            pc.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+
+                        }
                         context.ProgrammingComments.Add(pc);
                     }
                     else
@@ -354,7 +421,7 @@ namespace hthservices.DataBusiness
             return count;
         }
 
-        public static ProgrammingComment GetProgrammingComment(int commentId, bool isDisplay)
+        public static ProgrammingComment GetProgrammingComment(string commentId, bool isDisplay)
         {
             ProgrammingComment programmingComment = null;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -372,6 +439,10 @@ namespace hthservices.DataBusiness
                 var programmingComment = context.ProgrammingComments.FirstOrDefault(p => p.Id == comment.Id);
                 if (programmingComment == null)
                 {
+                    if (string.IsNullOrWhiteSpace(comment.Id))
+                    {
+                        comment.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
+                    }
                     comment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
                     comment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
                     context.ProgrammingComments.Add(comment);
@@ -390,7 +461,7 @@ namespace hthservices.DataBusiness
             }
             return succ;
         }
-        public static bool DeleteProgrammingComment(int commentId)
+        public static bool DeleteProgrammingComment(string commentId)
         {
             bool succ = false;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -432,7 +503,7 @@ namespace hthservices.DataBusiness
             return projects;
         }
 
-        public static Project GetProject(int id, bool isDisplay)
+        public static Project GetProject(string id, bool isDisplay)
         {
             Project project = null;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -451,6 +522,10 @@ namespace hthservices.DataBusiness
                 var project = context.Projects.FirstOrDefault(p => p.Id == content.Id);
                 if (project == null)
                 {
+                    if (string.IsNullOrWhiteSpace(content.Id))
+                    {
+                        content.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
+                    }
                     content.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
                     content.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
                     context.Projects.Add(content);
@@ -470,7 +545,7 @@ namespace hthservices.DataBusiness
             }
             return succ;
         }
-        public static bool DeleteProject(int contentId)
+        public static bool DeleteProject(string contentId)
         {
             bool succ = false;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
@@ -492,49 +567,49 @@ namespace hthservices.DataBusiness
         private static List<ProgrammingContent> CreateProgrammingContents()
         {
             List<ProgrammingContent> programmingContents = new List<ProgrammingContent>();
-            var programmingContent = new ProgrammingContent();
-            programmingContent.Title = "Some Tittle Goes Here";
-            programmingContent.CategoryId = 1;
-            programmingContent.IsDisplay = 1;
-            programmingContent.ImageUrl = "/Web/images/1.jpg";
-            programmingContent.ShortContent = "Phasellus vel arcu vitae neque sagittis aliquet ac at purus. Vestibulum varius eros in dui sagittis non ultrices orci hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-            programmingContent.Content = "Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum. Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum.";
-            programmingContent.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingContents.Add(programmingContent);
+            //var programmingContent = new ProgrammingContent();
+            //programmingContent.Title = "Some Tittle Goes Here";
+            //programmingContent.CategoryId = 1;
+            //programmingContent.IsDisplay = 1;
+            //programmingContent.ImageUrl = "/Web/images/1.jpg";
+            //programmingContent.ShortContent = "Phasellus vel arcu vitae neque sagittis aliquet ac at purus. Vestibulum varius eros in dui sagittis non ultrices orci hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+            //programmingContent.Content = "Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum. Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum.";
+            //programmingContent.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingContents.Add(programmingContent);
 
-            programmingContent = new ProgrammingContent();
-            programmingContent.Title = "Some Tittle Goes Here2";
-            programmingContent.CategoryId = 1;
-            programmingContent.IsDisplay = 1;
-            programmingContent.ImageUrl = "/Web/images/2.jpg";
-            programmingContent.ShortContent = "Phasellus vel arcu vitae neque sagittis aliquet ac at purus. Vestibulum varius eros in dui sagittis non ultrices orci hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-            programmingContent.Content = "Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum. Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum.";
-            programmingContent.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingContents.Add(programmingContent);
+            //programmingContent = new ProgrammingContent();
+            //programmingContent.Title = "Some Tittle Goes Here2";
+            //programmingContent.CategoryId = 1;
+            //programmingContent.IsDisplay = 1;
+            //programmingContent.ImageUrl = "/Web/images/2.jpg";
+            //programmingContent.ShortContent = "Phasellus vel arcu vitae neque sagittis aliquet ac at purus. Vestibulum varius eros in dui sagittis non ultrices orci hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+            //programmingContent.Content = "Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum. Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum.";
+            //programmingContent.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingContents.Add(programmingContent);
 
-            programmingContent = new ProgrammingContent();
-            programmingContent.Title = "Some Tittle Goes Here3";
-            programmingContent.CategoryId = 2;
-            programmingContent.IsDisplay = 1;
-            programmingContent.ImageUrl = "/Web/images/2.jpg";
-            programmingContent.ShortContent = "Phasellus vel arcu vitae neque sagittis aliquet ac at purus. Vestibulum varius eros in dui sagittis non ultrices orci hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-            programmingContent.Content = "Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum. Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum.";
-            programmingContent.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingContents.Add(programmingContent);
+            //programmingContent = new ProgrammingContent();
+            //programmingContent.Title = "Some Tittle Goes Here3";
+            //programmingContent.CategoryId = 2;
+            //programmingContent.IsDisplay = 1;
+            //programmingContent.ImageUrl = "/Web/images/2.jpg";
+            //programmingContent.ShortContent = "Phasellus vel arcu vitae neque sagittis aliquet ac at purus. Vestibulum varius eros in dui sagittis non ultrices orci hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+            //programmingContent.Content = "Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum. Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum.";
+            //programmingContent.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingContents.Add(programmingContent);
 
-            programmingContent = new ProgrammingContent();
-            programmingContent.Title = "Some Tittle Goes Here4";
-            programmingContent.CategoryId = 2;
-            programmingContent.IsDisplay = 1;
-            programmingContent.ImageUrl = "/Web/images/1.jpg";
-            programmingContent.ShortContent = "Phasellus vel arcu vitae neque sagittis aliquet ac at purus. Vestibulum varius eros in dui sagittis non ultrices orci hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-            programmingContent.Content = "Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum. Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum.";
-            programmingContent.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingContents.Add(programmingContent);
+            //programmingContent = new ProgrammingContent();
+            //programmingContent.Title = "Some Tittle Goes Here4";
+            //programmingContent.CategoryId = 2;
+            //programmingContent.IsDisplay = 1;
+            //programmingContent.ImageUrl = "/Web/images/1.jpg";
+            //programmingContent.ShortContent = "Phasellus vel arcu vitae neque sagittis aliquet ac at purus. Vestibulum varius eros in dui sagittis non ultrices orci hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+            //programmingContent.Content = "Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum. Sed euismod feugiat sodales. Vivamus dui ipsum, laoreet vitae euismod sit amet, euismod ac est. Sed turpis massa, convallis vitae facilisis eget, malesuada ullamcorper nibh. Nunc pulvinar augue non felis dictum ultricies. Donec lacinia, enim sit amet volutpat sodales, lorem velit fringilla metus, et semper metus sapien non odio. Nulla facilisi.Praesent gravida suscipit leo, eget fermentum magna malesuada ac. Maecenas pulvinar malesuada elementum.";
+            //programmingContent.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingContent.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingContents.Add(programmingContent);
 
 
             return programmingContents;
@@ -543,68 +618,68 @@ namespace hthservices.DataBusiness
         private static List<ProgrammingComment> CreateProgrammingComments()
         {
             List<ProgrammingComment> programmingComments = new List<ProgrammingComment>();
-            var programmingComment = new ProgrammingComment();
-            programmingComment.Name = "Hung";
-            programmingComment.Email = "";
-            programmingComment.Subject = "";
-            programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-            programmingComment.ContentId = 1;
-            programmingComment.IsDisplay = 1;
-            programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.ReplyToCommentId = null;
-            programmingComments.Add(programmingComment);
+            //var programmingComment = new ProgrammingComment();
+            //programmingComment.Name = "Hung";
+            //programmingComment.Email = "";
+            //programmingComment.Subject = "";
+            //programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            //programmingComment.ContentId = 1;
+            //programmingComment.IsDisplay = 1;
+            //programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.ReplyToCommentId = null;
+            //programmingComments.Add(programmingComment);
 
-            programmingComment = new ProgrammingComment();
-            programmingComment.Name = "ABC";
-            programmingComment.Email = "";
-            programmingComment.Subject = "";
-            programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-            programmingComment.ContentId = 1;
-            programmingComment.IsDisplay = 1;
-            programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.ReplyToCommentId = null;
-            programmingComments.Add(programmingComment);
-
-
-            programmingComment = new ProgrammingComment();
-            programmingComment.Name = "Name";
-            programmingComment.Email = "";
-            programmingComment.Subject = "";
-            programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-            programmingComment.ContentId = 1;
-            programmingComment.IsDisplay = 1;
-            programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.ReplyToCommentId = null;
-            programmingComments.Add(programmingComment);
+            //programmingComment = new ProgrammingComment();
+            //programmingComment.Name = "ABC";
+            //programmingComment.Email = "";
+            //programmingComment.Subject = "";
+            //programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            //programmingComment.ContentId = 1;
+            //programmingComment.IsDisplay = 1;
+            //programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.ReplyToCommentId = null;
+            //programmingComments.Add(programmingComment);
 
 
-            programmingComment = new ProgrammingComment();
-            programmingComment.Name = "Hung";
-            programmingComment.Email = "";
-            programmingComment.Subject = "";
-            programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-            programmingComment.ContentId = 1;
-            programmingComment.IsDisplay = 1;
-            programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.ReplyToCommentId = 1;
-            programmingComments.Add(programmingComment);
+            //programmingComment = new ProgrammingComment();
+            //programmingComment.Name = "Name";
+            //programmingComment.Email = "";
+            //programmingComment.Subject = "";
+            //programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            //programmingComment.ContentId = 1;
+            //programmingComment.IsDisplay = 1;
+            //programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.ReplyToCommentId = null;
+            //programmingComments.Add(programmingComment);
 
 
-            programmingComment = new ProgrammingComment();
-            programmingComment.Name = "Hung";
-            programmingComment.Email = "";
-            programmingComment.Subject = "";
-            programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-            programmingComment.ContentId = 1;
-            programmingComment.IsDisplay = 1;
-            programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
-            programmingComment.ReplyToCommentId = null;
-            programmingComments.Add(programmingComment);
+            //programmingComment = new ProgrammingComment();
+            //programmingComment.Name = "Hung";
+            //programmingComment.Email = "";
+            //programmingComment.Subject = "";
+            //programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            //programmingComment.ContentId = 1;
+            //programmingComment.IsDisplay = 1;
+            //programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.ReplyToCommentId = 1;
+            //programmingComments.Add(programmingComment);
+
+
+            //programmingComment = new ProgrammingComment();
+            //programmingComment.Name = "Hung";
+            //programmingComment.Email = "";
+            //programmingComment.Subject = "";
+            //programmingComment.Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            //programmingComment.ContentId = 1;
+            //programmingComment.IsDisplay = 1;
+            //programmingComment.CreatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.UpdatedDate = hthservices.Utils.MethodHelpers.GetCurrentVNDateTimeInCorrectString();
+            //programmingComment.ReplyToCommentId = null;
+            //programmingComments.Add(programmingComment);
 
             return programmingComments;
         }

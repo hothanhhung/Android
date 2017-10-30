@@ -11,20 +11,19 @@ namespace hthservices.Models.Website
     public class ProgrammingComment
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
-        public int? ContentId { get; set; }
+        public string ContentId { get; set; }
         [IgnoreDataMemberAttribute]
         [ForeignKey("ContentId")]
         public ProgrammingContent Content { get; set; }
         public int? IsDisplay { get; set; }
         public string CreatedDate { get; set; }
         public string UpdatedDate { get; set; }
-        public int? ReplyToCommentId { get; set; }
+        public string ReplyToCommentId { get; set; }
         [IgnoreDataMemberAttribute]
         [ForeignKey("ReplyToCommentId")]
         public ProgrammingComment ReplyTo { get; set; }

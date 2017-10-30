@@ -11,7 +11,7 @@ namespace hthservices.Models.Website
     public class ProgrammingCategory
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public int? IsDisplay { get; set; }
         public int? Sort { get; set; }

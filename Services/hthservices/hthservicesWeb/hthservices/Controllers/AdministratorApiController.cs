@@ -45,7 +45,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("GetCategory")]
-        public ResponseJson GetCategory(int categoryId)
+        public ResponseJson GetCategory(string categoryId)
         {
             if (needCheckLogin)
             {
@@ -119,7 +119,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("DeleteCategory")]
-        public ResponseJson DeleteCategory(int categoryId)
+        public ResponseJson DeleteCategory(string categoryId)
         {
             if (needCheckLogin)
             {
@@ -153,17 +153,20 @@ namespace hthservices.Controllers
                 }
             }
 
-            List<int> contentIdList = MethodHelpers.ConvertToListIntFromString(contentIds);
+            var contentIdList = MethodHelpers.ConvertToListStringFromString(contentIds);
 
             var contents = DataProcess.GetProgrammingContents(contentIdList);
-            var dataInByte = MethodHelpers.Zip(contents);
+            var dataInByte = MethodHelpers.ZipStr(contents);
             string data = MethodHelpers.ConvertByteArrayToString(dataInByte);
             return ResponseJson.GetResponseJson(data);
         }
-
-        [System.Web.Http.HttpGet]
+        public class SaveModel
+        {
+            public string Contents { get; set; }
+        }
+        [System.Web.Http.HttpPost]
         [System.Web.Http.ActionName("SaveContentsFromString")]
-        public ResponseJson SaveContents(string contents)
+        public ResponseJson SaveContents([FromBody] SaveModel saveModel)
         {
             if (needCheckLogin)
             {
@@ -173,17 +176,17 @@ namespace hthservices.Controllers
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
             }
-            var dataInByte = MethodHelpers.ConvertStringToByteArray(contents);
-            var contentsInString = MethodHelpers.Unzip(dataInByte);
+            var dataInByte = MethodHelpers.ConvertStringToByteArray(saveModel.Contents);
+            var contentsInString = MethodHelpers.UnZipStr(dataInByte);
 
-            var count = DataProcess.UpdateProgrammingComments(contentsInString);
+            var count = DataProcess.UpdateProgrammingContents(contentsInString);
             string data = string.Format("Updated for {0}", count);
             return ResponseJson.GetResponseJson(data);
         }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("GetContents")]
-        public ResponseJson GetContents(int? categoryId, int page = 0, int size = 10)
+        public ResponseJson GetContents(string categoryId = null, int page = 0, int size = 10)
         {
             if (needCheckLogin)
             {
@@ -218,7 +221,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("GetContent")]
-        public ResponseJson GetContent(int contentId)
+        public ResponseJson GetContent(string contentId)
         {
             if (needCheckLogin)
             {
@@ -278,7 +281,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("DeleteContent")]
-        public ResponseJson DeleteContent(int contentId)
+        public ResponseJson DeleteContent(string contentId)
         {
             if (needCheckLogin)
             {
@@ -299,7 +302,7 @@ namespace hthservices.Controllers
         #region Comment
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("GetComments")]
-        public ResponseJson GetComments(int? contentId, int page = 0, int size = 10)
+        public ResponseJson GetComments(string contentId = null, int page = 0, int size = 10)
         {
             if (needCheckLogin)
             {
@@ -339,10 +342,10 @@ namespace hthservices.Controllers
                 }
             }
 
-            List<int> contentIdList = MethodHelpers.ConvertToListIntFromString(commentIds);
+            var contentIdList = MethodHelpers.ConvertToListStringFromString(commentIds);
 
             var contents = DataProcess.GetProgrammingComments(contentIdList);
-            var dataInByte = MethodHelpers.Zip(contents);
+            var dataInByte = MethodHelpers.ZipStr(contents);
             string data = MethodHelpers.ConvertByteArrayToString(dataInByte);
             return ResponseJson.GetResponseJson(data);
         }
@@ -360,7 +363,7 @@ namespace hthservices.Controllers
                 }
             }
             var dataInByte = MethodHelpers.ConvertStringToByteArray(comments);
-            var contents = MethodHelpers.Unzip(dataInByte);
+            var contents = MethodHelpers.UnZipStr(dataInByte);
 
             var count = DataProcess.UpdateProgrammingComments(contents);
             string data = string.Format("Updated for {0}", count);
@@ -369,7 +372,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("GetComment")]
-        public ResponseJson GetComment(int commentId)
+        public ResponseJson GetComment(string commentId)
         {
             if (needCheckLogin)
             {
@@ -423,7 +426,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("DeleteComment")]
-        public ResponseJson DeleteComment(int commentId)
+        public ResponseJson DeleteComment(string commentId)
         {
             if (needCheckLogin)
             {
@@ -473,7 +476,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("GetProject")]
-        public ResponseJson GetProject(int contentId)
+        public ResponseJson GetProject(string contentId)
         {
             if (needCheckLogin)
             {
@@ -527,7 +530,7 @@ namespace hthservices.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("DeleteContent")]
-        public ResponseJson DeleteProject(int contentId)
+        public ResponseJson DeleteProject(string contentId)
         {
             if (needCheckLogin)
             {

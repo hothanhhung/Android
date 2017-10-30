@@ -22,8 +22,10 @@ hthWebsiteApp.controller('CommentController',
           $scope.SelectedComment = { Id: 0 };
           
           $scope.GetComments = function () {
-              var url = URL_SERVICE + '/api/AdministratorApi/GetComments/?contentId=' + $scope.ContentId;
-
+              var url = URL_SERVICE + '/api/AdministratorApi/GetComments/?';
+              if ($scope.ContentId) {
+                  url += 'contentId=' + $scope.ContentId;
+              }
               $scope.IsLoading = true;
               $http.get(url).then(
                   function (response) {
