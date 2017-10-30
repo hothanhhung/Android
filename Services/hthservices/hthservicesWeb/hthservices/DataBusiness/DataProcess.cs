@@ -22,7 +22,7 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.GetProgrammingCategories(false, false);
         }
-        public static ProgrammingCategory GetProgrammingCategory(int categoryId)
+        public static ProgrammingCategory GetProgrammingCategory(string categoryId)
         {
             return SQLiteProcess.GetProgrammingCategory(categoryId, false);
         }
@@ -31,34 +31,34 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.SaveProgrammingCategory(category);
         }
-        public static bool DeleteProgrammingCategory(int categoryId)
+        public static bool DeleteProgrammingCategory(string categoryId)
         {
             return SQLiteProcess.DeleteProgrammingCategory(categoryId);
         }
         #endregion
 
         #region Content
-        public static int CountProgrammingContents(int? categoryId)
+        public static int CountProgrammingContents(string categoryId)
         {
             return SQLiteProcess.CountProgrammingContents(categoryId, false);
         }
-        public static List<ProgrammingContent> GetProgrammingContents(int? categoryId, int page = 0, int size = 10)
+        public static List<ProgrammingContent> GetProgrammingContents(string categoryId, int page = 0, int size = 10)
         {
             return SQLiteProcess.GetProgrammingContents(categoryId, false, page, size);
         }
-        public static ProgrammingContent GetProgrammingContent(int contentId)
+        public static ProgrammingContent GetProgrammingContent(string contentId)
         {
             return SQLiteProcess.GetProgrammingContent(contentId, false);
         }
 
-        public static string GetProgrammingContents(List<int> contentIds)
+        public static string GetProgrammingContents(List<string> contentIds)
         {
             List<ProgrammingContent> programContents = SQLiteProcess.GetProgrammingContents(contentIds);
             var str = JsonConvert.SerializeObject(programContents);
             return str;
         }
 
-        public static int UpdateProgrammingContent(string contentsJson)
+        public static int UpdateProgrammingContents(string contentsJson)
         {
             if (string.IsNullOrWhiteSpace(contentsJson))
             {
@@ -72,27 +72,27 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.SaveProgrammingContent(content);
         }
-        public static bool DeleteProgrammingContent(int contentId)
+        public static bool DeleteProgrammingContent(string contentId)
         {
             return SQLiteProcess.DeleteProgrammingContent(contentId);
         }
         #endregion
 
         #region Comment
-        public static int CountProgrammingComments(int? contentId)
+        public static int CountProgrammingComments(string contentId)
         {
             return SQLiteProcess.CountProgrammingComments(contentId, false);
         }
-        public static List<ProgrammingComment> GetProgrammingComments(int? contentId, int page = 0, int size = 10, bool isDesc = false)
+        public static List<ProgrammingComment> GetProgrammingComments(string contentId, int page = 0, int size = 10, bool isDesc = false)
         {
             return SQLiteProcess.GetProgrammingComments(contentId, false, page, size, isDesc);
         }
-        public static ProgrammingComment GetProgrammingComment(int commentId)
+        public static ProgrammingComment GetProgrammingComment(string commentId)
         {
             return SQLiteProcess.GetProgrammingComment(commentId, false);
         }
 
-        public static string GetProgrammingComments(List<int> commentIds)
+        public static string GetProgrammingComments(List<string> commentIds)
         {
             List<ProgrammingComment> programComments = SQLiteProcess.GetProgrammingComments(commentIds);
             var str = JsonConvert.SerializeObject(programComments);
@@ -113,7 +113,7 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.SaveProgrammingComment(comment);
         }
-        public static bool DeleteProgrammingComment(int commentId)
+        public static bool DeleteProgrammingComment(string commentId)
         {
             return SQLiteProcess.DeleteProgrammingComment(commentId);
         }
@@ -128,7 +128,7 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.GetProjects(false, page, size);
         }
-        public static Project GetProject(int contentId)
+        public static Project GetProject(string contentId)
         {
             return SQLiteProcess.GetProject(contentId, false);
         }
@@ -137,7 +137,7 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.SaveProject(content);
         }
-        public static bool DeleteProject(int contentId)
+        public static bool DeleteProject(string contentId)
         {
             return SQLiteProcess.DeleteProject(contentId);
         }
@@ -151,15 +151,15 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.GetProgrammingCategories(true, true);
         }
-        public static int CountProgrammingContentsForUser(int? categoryId)
+        public static int CountProgrammingContentsForUser(string categoryId)
         {
             return SQLiteProcess.CountProgrammingContents(categoryId, true);
         }
-        public static List<ProgrammingContent> GetProgrammingContentsForUser(int? categoryId, int page = 0, int size = 10)
+        public static List<ProgrammingContent> GetProgrammingContentsForUser(string categoryId, int page = 0, int size = 10)
         {
             return SQLiteProcess.GetProgrammingContents(categoryId, true, page, size);
         }
-        public static ProgrammingContent GetProgrammingContentForUser(int id)
+        public static ProgrammingContent GetProgrammingContentForUser(string id)
         {
             return SQLiteProcess.GetProgrammingContent(id, true);
         }
@@ -175,7 +175,7 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.GetProjects(true, page, size);
         }
-        public static Project GetProjectForUser(int id)
+        public static Project GetProjectForUser(string id)
         {
             return SQLiteProcess.GetProject(id, true);
         }

@@ -23,7 +23,7 @@ namespace hthservices
                     defaults: new
                     {
                         controller = "Programming",
-                        action = "Content",
+                        action = "SeeContent",
                         category_name = UrlParameter.Optional,
                         content_name = UrlParameter.Optional,
                         id = UrlParameter.Optional
@@ -46,7 +46,7 @@ namespace hthservices
                     defaults: new
                     {
                         controller = "Project",
-                        action = "Content",
+                        action = "SeeContent",
                         content_name = UrlParameter.Optional,
                         id = UrlParameter.Optional
                     }

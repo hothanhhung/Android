@@ -11,8 +11,7 @@ namespace hthservices.Models.Website
     public class ProgrammingContent
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Title { get; set; }
         public string ShortContent { get; set; }
         public string Content { get; set; }
@@ -25,7 +24,7 @@ namespace hthservices.Models.Website
         [NotMapped]
         public int NumberOfComments { get; set; }
 
-        public int? CategoryId { get; set; }
+        public string CategoryId { get; set; }
         public string Keywords { get; set; }
         public string Subject { get; set; }
         [NotMapped]

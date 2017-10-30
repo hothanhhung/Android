@@ -15,7 +15,7 @@ hthWebsiteApp.controller('ContentController',
                   return;
               }
           };
-
+          $scope.selectedIds = [];
           $scope.IsLoading = false;
           $scope.CategoryId = $routeParams["categoryId"];
           $scope.Categories = [{Id:null, Name:'None'}];
@@ -42,8 +42,11 @@ hthWebsiteApp.controller('ContentController',
                   });
           };
           $scope.GetContents = function () {
-              var url = URL_SERVICE + '/api/AdministratorApi/GetContents/?categoryId=' + $scope.CategoryId;
-
+              var url = URL_SERVICE + '/api/AdministratorApi/GetContents/?';
+              if ($scope.CategoryId)
+              {
+                  url += 'categoryId=' + $scope.CategoryId;
+              }
               $scope.IsLoading = true;
               $http.get(url).then(
                   function (response) {
@@ -104,6 +107,65 @@ hthWebsiteApp.controller('ContentController',
               }
               $('#CreateAndEditContentModal').modal('show');
           }
+
+          $scope.UpdateSelections = function (checked, id) {
+              if (checked) {
+                  $scope.selectedIds.push(id);
+              } else {
+                  for (var i = $scope.selectedIds.length - 1; i >= 0; i--) {
+                      if ($scope.selectedIds[i] === number) {
+                          $scope.selectedIds.splice(i, 1);
+                          break;
+                      }
+                  }
+              }
+          }
+
+          $scope.GenarateZipContent = function (items) {
+              if (items && items != null && confirm("Do you want to update?") == true) {
+                  var url = URL_SERVICE + '/api/AdministratorApi/GetContentsInString/?contentIds=' + items.join(',');
+
+                  $scope.IsLoading = true;
+                  $http.get(url).then(
+                      function (response) {
+                          $scope.IsLoading = false;
+                          var responseData = response.data;
+                          if (responseData.IsSuccess) {
+                              alert(responseData.Data);
+                          } else {
+                              $location.path('/login');
+                          }
+                      },
+                      function (error) {
+                          $scope.IsLoading = false;
+                          alert(error);
+                      });
+              }
+          }
+
+          $scope.UpdateFromZipContent = function (data) {
+              if (data && data != null) {
+                  var url = URL_SERVICE + '/api/AdministratorApi/SaveContentsFromString/';
+
+                  $scope.IsLoading = true;
+                  $http.post(url, { contents: data }).then(
+                      function (response) {
+                          $scope.IsLoading = false;
+                          var responseData = response.data;
+                          if (responseData.IsSuccess) {
+                              alert(responseData.Data);
+                              $scope.GetContents();
+                          } else {
+                              $location.path('/login');
+                          }
+                      },
+                      function (error) {
+                          $scope.IsLoading = false;
+                          alert(error);
+                      });
+              }
+          }
+          
           $scope.NewContent = function () {
               var date = new Date();
               $scope.SelectedCategory = $scope.Categories[0];

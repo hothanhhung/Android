@@ -110,11 +110,14 @@
     </div>
     <div class="row">
         <button type="button" class="btn btn-default" ng-click="NewContent()">New</button>
+        <button type="button" class="btn btn-default" ng-click="GenarateZipContent(selectedIds)">Genarate Zip</button>
+        <span >{{selectedIds.join(',')}}</span>
     </div>    
     <div class="row">
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Id</th>
                     <th>Title</th>
                     <th>Category</th>
@@ -132,6 +135,9 @@
             <tbody>
                 <tr ng-repeat="item in Contents">
 
+                    <td>
+                        <input type="checkbox" ng-model="ids[$index]" ng-click="UpdateSelections(ids[$index], item.Id)">
+                    </td>
                     <td>{{item.Id}}</td>
                     <td class="container"><div>{{item.Title}}</div></td>
                     <td>{{item.CategoryName}}</td>
@@ -159,6 +165,11 @@
             </tbody>
         </table>
     </div>
+
+    <div class="row">
+        <button type="button" class="btn btn-default" ng-click="UpdateFromZipContent(ZipContents)">Update From Zip</button>
+        <textarea type="text" ng-model="ZipContents" class="form-control" rows="4" cols="50"> </textarea>
+    </div> 
 </div>
 <script>
     function openCustomRoxy2() {

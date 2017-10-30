@@ -194,7 +194,7 @@ namespace hthservices.Utils
             }
         }
 
-        public static List<int> ConvertToListIntFromString(String str, char split = ',')
+        public static List<int> ConvertToListIntFromString(String str, char split = ',', bool needDistinct = true)
         {
             List<int> result = new List<int>();
             if (!string.IsNullOrWhiteSpace(str))
@@ -207,6 +207,28 @@ namespace hthservices.Utils
                     if (int.TryParse(item, out value))
                     {
                         result.Add(value);
+                    }
+                }
+            }
+            if (needDistinct)
+            {
+                return result.Distinct().ToList();
+            }
+            return result.ToList();
+        }
+
+        public static List<string> ConvertToListStringFromString(String str, char split = ',')
+        {
+            List<string> result = new List<string>();
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+
+                var items = str.Split(split);
+                foreach (var item in items)
+                {
+                    if (!string.IsNullOrWhiteSpace(item))
+                    {
+                        result.Add(item.Trim());
                     }
                 }
             }
@@ -228,7 +250,7 @@ namespace hthservices.Utils
 
         public static byte[] ConvertStringToByteArray(string str)
         {
-            List<int> values = ConvertToListIntFromString(str, ' ');
+            List<int> values = ConvertToListIntFromString(str, ' ', false);
             byte[] data = new byte[values.Count];
             if (values != null)
             {
@@ -238,6 +260,47 @@ namespace hthservices.Utils
                 }
             }
             return data;
+        }
+
+        public static string IdFromDateTimeUTCGenarator()
+        {
+            string rs = string.Empty;
+            rs = DateTime.UtcNow.Ticks.ToString();
+            return rs;
+        }
+
+        public static byte[] ZipStr(String str)
+        {
+            using (MemoryStream output = new MemoryStream())
+            {
+                using (DeflateStream gzip =
+                  new DeflateStream(output, CompressionMode.Compress))
+                {
+                    using (StreamWriter writer =
+                      new StreamWriter(gzip, System.Text.Encoding.UTF8))
+                    {
+                        writer.Write(str);
+                    }
+                }
+
+                return output.ToArray();
+            }
+        }
+
+        public static string UnZipStr(byte[] input)
+        {
+            using (MemoryStream inputStream = new MemoryStream(input))
+            {
+                using (DeflateStream gzip =
+                  new DeflateStream(inputStream, CompressionMode.Decompress))
+                {
+                    using (StreamReader reader =
+                      new StreamReader(gzip, System.Text.Encoding.UTF8))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
+            }
         }
     }
 }

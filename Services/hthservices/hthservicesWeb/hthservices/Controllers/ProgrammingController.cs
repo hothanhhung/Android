@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace hthservices.Controllers
@@ -18,20 +19,20 @@ namespace hthservices.Controllers
             return View();
         }
 
-        public ActionResult Category(int? id, int page = 1, int size = 5)
+        public ActionResult Category(string id, int page = 1, int size = 5)
         {
             ViewBag.Contents = DataBusiness.DataProcess.GetProgrammingContentsForUser(id, page - 1, size);
             ViewBag.TotalPage = Math.Ceiling(1.0*DataBusiness.DataProcess.CountProgrammingContentsForUser(id) / size);
-            if (id.HasValue)
+            if (!string.IsNullOrWhiteSpace(id))
             {
-                ViewBag.Category = DataBusiness.DataProcess.GetProgrammingCategory(id.Value);
+                ViewBag.Category = DataBusiness.DataProcess.GetProgrammingCategory(id);
             }
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = size;
             return View();
         }
 
-        public ActionResult Content(int id)
+        public ActionResult SeeContent(string id)
         {
 
             var content = DataBusiness.DataProcess.GetProgrammingContentForUser(id);

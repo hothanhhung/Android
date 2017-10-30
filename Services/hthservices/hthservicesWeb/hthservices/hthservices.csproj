@@ -2344,9 +2344,9 @@
     <Content Include="Views\Shared\_RightProgrammingPartial.cshtml" />
     <Content Include="Views\Programming\Index.cshtml" />
     <Content Include="Views\Programming\Category.cshtml" />
-    <Content Include="Views\Programming\Content.cshtml" />
+    <Content Include="Views\Programming\SeeContent.cshtml" />
     <Content Include="Views\Programming\RightProgrammingPartial.cshtml" />
-    <Content Include="Views\Project\Content.cshtml" />
+    <Content Include="Views\Project\SeeContent.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
