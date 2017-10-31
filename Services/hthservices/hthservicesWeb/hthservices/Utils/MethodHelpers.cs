@@ -242,15 +242,42 @@ namespace hthservices.Utils
             {
                 foreach (var value in data)
                 {
-                    stringBuilder.Append(" ").Append(value);
+                    stringBuilder.Append(string.Format("{0:x2}",value));
                 }
             }
             return stringBuilder.ToString();
         }
 
+        private static List<int> ConvertListIntFromStringHexa(string str)
+        {
+            List<int> result = new List<int>();
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                string hexa, remain = str;
+                int value;
+                while(!string.IsNullOrWhiteSpace(remain))
+                {
+                    if(remain.Length < 3)
+                    {
+                        hexa = remain;
+                        remain = string.Empty;
+                    }
+                    else{
+                        hexa = remain.Substring(0, 2);
+                        remain = remain.Substring(2);
+                    }
+                    if (int.TryParse(hexa, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out value))
+                    {
+                        result.Add(value);
+                    }
+                }
+            }
+            return result.ToList();
+        }
+
         public static byte[] ConvertStringToByteArray(string str)
         {
-            List<int> values = ConvertToListIntFromString(str, ' ', false);
+            List<int> values = ConvertListIntFromStringHexa(str);
             byte[] data = new byte[values.Count];
             if (values != null)
             {

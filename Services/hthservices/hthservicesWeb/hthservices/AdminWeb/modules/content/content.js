@@ -122,7 +122,7 @@ hthWebsiteApp.controller('ContentController',
           }
 
           $scope.GenarateZipContent = function (items) {
-              if (items && items != null && confirm("Do you want to update?") == true) {
+              if (items && items != null) {
                   var url = URL_SERVICE + '/api/AdministratorApi/GetContentsInString/?contentIds=' + items.join(',');
 
                   $scope.IsLoading = true;
@@ -131,7 +131,7 @@ hthWebsiteApp.controller('ContentController',
                           $scope.IsLoading = false;
                           var responseData = response.data;
                           if (responseData.IsSuccess) {
-                              alert(responseData.Data);
+                              $scope.GenaratedZipContents = responseData.Data;
                           } else {
                               $location.path('/login');
                           }
@@ -144,7 +144,7 @@ hthWebsiteApp.controller('ContentController',
           }
 
           $scope.UpdateFromZipContent = function (data) {
-              if (data && data != null) {
+              if (data && data != null && confirm("Do you want to update?") == true) {
                   var url = URL_SERVICE + '/api/AdministratorApi/SaveContentsFromString/';
 
                   $scope.IsLoading = true;
