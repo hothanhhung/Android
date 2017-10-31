@@ -112,7 +112,10 @@
         <button type="button" class="btn btn-default" ng-click="NewContent()">New</button>
         <button type="button" class="btn btn-default" ng-click="GenarateZipContent(selectedIds)">Genarate Zip</button>
         <span >{{selectedIds.join(',')}}</span>
-    </div>    
+    </div> 
+    <div class="row">
+        <textarea type="text" ng-model="GenaratedZipContents" ng-if="GenaratedZipContents" class="form-control" rows="2" cols="50"> </textarea>
+    </div>   
     <div class="row">
         <table class="table table-bordered table-hover">
             <thead>
