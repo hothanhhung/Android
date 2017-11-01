@@ -191,6 +191,7 @@
     <Compile Include="Utils\MethodHelpers.cs" />
     <Compile Include="Utils\ScheduleRequestLog.cs" />
     <Compile Include="Utils\SearchItem.cs" />
+    <Compile Include="Utils\SendEmailHelpers.cs" />
     <Compile Include="Utils\SQLiteProcess.cs" />
   </ItemGroup>
   <ItemGroup>
