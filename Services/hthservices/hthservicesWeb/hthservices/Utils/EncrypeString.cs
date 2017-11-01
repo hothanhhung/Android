@@ -78,5 +78,22 @@ namespace hthservices.Utils
 
             return rs.ToString();
         }
+
+        static public string CorrectString(string str)
+        {
+            if(string.IsNullOrWhiteSpace(str))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                var value = new StringBuilder();
+                for(int i = str.Length; i> 0; i--)
+                {
+                    value.Append(str[i-1]);
+                }
+                return value.ToString();
+            }
+        }
     }
 }
