@@ -122,7 +122,7 @@ header{
 /*-- //header --*/
 /*-- content --*/
 .content{
-	background: url(https://i.imgur.com/mAASHH0.jpg) no-repeat -14em 0px;
+	background: url(https://i.imgur.com/mAASHH0.jpg) repeat -14em 0px;
 	/*min-height: 1100px;*/
 	position: relative;
 	background-size: cover !important;
