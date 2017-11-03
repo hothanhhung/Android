@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -328,6 +329,41 @@ namespace hthservices.Utils
                     }
                 }
             }
+        }
+
+        public static Bitmap ConvertTextToImage(string txt, string fontname, int fontsize, Color bgcolor, Color fcolor, int width, int Height)
+        {
+            Bitmap bmp = new Bitmap(width, Height);
+            using (System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(bmp))
+            {
+                using (Font font1 = new Font(fontname, fontsize, FontStyle.Bold, GraphicsUnit.Pixel))
+                {
+                    Rectangle rect1 = new Rectangle(0, 0, width, Height);
+
+                    StringFormat stringFormat = new StringFormat();
+                    stringFormat.Alignment = StringAlignment.Center;
+                    stringFormat.LineAlignment = StringAlignment.Center;
+                    graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+
+                    Font goodFont = FindFont(graphics, txt, rect1.Size, font1);
+                    graphics.FillRectangle(new SolidBrush(bgcolor), rect1);
+                    graphics.DrawString(txt, goodFont, new SolidBrush(fcolor), rect1, stringFormat);
+                }
+                graphics.Flush();
+                graphics.Dispose();
+            }
+            return bmp;
+        }
+
+        private static Font FindFont(System.Drawing.Graphics g, string longString, Size Room, Font PreferedFont)
+        {
+            //you should perform some scale functions!!!
+            SizeF RealSize = g.MeasureString(longString, PreferedFont);
+           // float HeightScaleRatio = Room.Height / RealSize.Height;
+            float WidthScaleRatio = Room.Width / RealSize.Width;
+            //float ScaleRatio = (HeightScaleRatio < WidthScaleRatio) ? ScaleRatio = HeightScaleRatio : ScaleRatio = WidthScaleRatio;
+            float ScaleFontSize = PreferedFont.Size * WidthScaleRatio; // ScaleRatio;
+            return new Font(PreferedFont.FontFamily, ScaleFontSize);
         }
     }
 }

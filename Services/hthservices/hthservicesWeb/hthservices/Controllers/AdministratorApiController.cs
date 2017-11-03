@@ -529,7 +529,7 @@ namespace hthservices.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        [System.Web.Http.ActionName("DeleteContent")]
+        [System.Web.Http.ActionName("DeleteProject")]
         public ResponseJson DeleteProject(string contentId)
         {
             if (needCheckLogin)
