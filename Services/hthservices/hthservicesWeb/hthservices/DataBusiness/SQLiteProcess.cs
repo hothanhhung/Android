@@ -93,7 +93,7 @@ namespace hthservices.DataBusiness
                 var programmingCategory = context.ProgrammingCategories.FirstOrDefault(p => p.Id == category.Id);
                 if (programmingCategory == null)
                 {
-                    if (string.IsNullOrWhiteSpace(category.Id))
+                    if (string.IsNullOrWhiteSpace(category.Id) || category.Id == "0")
                     {
                         category.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
                     }
@@ -219,7 +219,7 @@ namespace hthservices.DataBusiness
                     var programmingContent = context.ProgrammingContents.FirstOrDefault(p => p.Id == content.Id);
                     if (programmingContent == null)
                     {
-                        if (string.IsNullOrWhiteSpace(content.Id))
+                        if (string.IsNullOrWhiteSpace(content.Id) || content.Id == "0")
                         {
                             content.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
                         }
@@ -261,10 +261,10 @@ namespace hthservices.DataBusiness
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
                 var programmingContent = context.ProgrammingContents.FirstOrDefault(p => p.Id == content.Id);
+                
                 if (programmingContent == null)
                 {
-
-                    if (string.IsNullOrWhiteSpace(content.Id))
+                    if (string.IsNullOrWhiteSpace(content.Id) || content.Id == "0")
                     {
                         content.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
                     }
@@ -388,7 +388,7 @@ namespace hthservices.DataBusiness
                     var programmingComment = context.ProgrammingComments.FirstOrDefault(p => p.Id == pc.Id);
                     if (programmingComment == null)
                     {
-                        if (string.IsNullOrWhiteSpace(pc.Id))
+                        if (string.IsNullOrWhiteSpace(pc.Id) || pc.Id == "0")
                         {
                             pc.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
                         }
@@ -439,7 +439,7 @@ namespace hthservices.DataBusiness
                 var programmingComment = context.ProgrammingComments.FirstOrDefault(p => p.Id == comment.Id);
                 if (programmingComment == null)
                 {
-                    if (string.IsNullOrWhiteSpace(comment.Id))
+                    if (string.IsNullOrWhiteSpace(comment.Id) || comment.Id == "0")
                     {
                         comment.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
                     }
@@ -522,7 +522,7 @@ namespace hthservices.DataBusiness
                 var project = context.Projects.FirstOrDefault(p => p.Id == content.Id);
                 if (project == null)
                 {
-                    if (string.IsNullOrWhiteSpace(content.Id))
+                    if (string.IsNullOrWhiteSpace(content.Id) || content.Id == "0")
                     {
                         content.Id = MethodHelpers.IdFromDateTimeUTCGenarator();
                     }

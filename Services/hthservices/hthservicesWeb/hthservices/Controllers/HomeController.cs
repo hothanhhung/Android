@@ -1,6 +1,8 @@
 ﻿using hthservices.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -45,5 +47,16 @@ namespace hthservices.Controllers
             return View();
         }
 
+        [System.Web.Http.Route("Common/GetImage")]
+        public FileResult GenerateImage(string text)
+        {
+            var image = MethodHelpers.ConvertTextToImage(text, "Bookman Old Style", 10, Color.White, Color.Black, 250, 250);
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+
+                return File(ms.ToArray(), "image/png");
+            }
+        }
     }
 }
