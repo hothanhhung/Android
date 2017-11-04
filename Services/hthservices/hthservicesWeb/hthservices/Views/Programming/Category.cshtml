@@ -25,7 +25,7 @@
                         <div class="tilte-grid">
                             <div class="row">
                                 <div class="pull-left cell_img">
-                                    <img class="img" src="@content.ImageUrl" alt="@content.Title" title="@content.Title"  />
+                                    <img class="img" src="@(string.IsNullOrWhiteSpace(content.ImageUrl) ? string.Format("/home/GenerateImage/?text={0}", content.TextAvatar) : content.ImageUrl)" alt="@content.Title" title="@content.Title" />
                                 </div>
                                 <div class="cell_content">
                                     <p class="vel">

@@ -113,7 +113,7 @@ hthWebsiteApp.controller('ContentController',
                   $scope.selectedIds.push(id);
               } else {
                   for (var i = $scope.selectedIds.length - 1; i >= 0; i--) {
-                      if ($scope.selectedIds[i] === number) {
+                      if ($scope.selectedIds[i] === id) {
                           $scope.selectedIds.splice(i, 1);
                           break;
                       }

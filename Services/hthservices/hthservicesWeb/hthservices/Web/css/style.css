@@ -1427,9 +1427,6 @@ p.lom{
 	.cat h3 {
 		font-size: 25px;
 	}
-	.read {
-	  padding-left: 51em;
-	}
 	.number {
 		margin-left: 8em;
 	}
@@ -1522,9 +1519,6 @@ p.lom{
 	.article {
 		top: -25%;
 	}
-	.read {
-		margin: 2em 0 2em;
-	}
 	.border {
 	  margin-bottom: 3.5em;
 	}
@@ -1546,9 +1540,6 @@ p.lom{
 	}
 	.cat h3 {
 		padding: 2em 0em .5em;
-	}
-	.read {
-	  padding-left: 39em;
 	}
 	.cat h3 {
 	  font-size: 23px;
@@ -1712,9 +1703,6 @@ p.lom{
 	}
 	.recent-com h2 {
 		font-size: 19px;
-	}
-	.read {
-	  padding-left: 27em;
 	}
 	.read {
 		margin: 0em 0 2em;
@@ -2077,9 +2065,6 @@ p.lom{
 	  width: 100%;
 	  float:none;
 	}
-	.read {
-	  padding-left: 34em;
-	}
 	.number {
 	  margin-left: 5em;
 	}
@@ -2397,9 +2382,6 @@ p.lom{
 		display:none;
 		background:#1E8B99;
 		}
-	.read {
-	  padding-left: 24em;
-	}
 	.some-title h2 a {
 	  font-size: 20px;
 	}
@@ -2604,9 +2586,6 @@ p.lom{
 }
 @media (max-width: 384px)
 {
-	.read {
-	  padding-left: 17em;
-	}
 }
 @media (max-width: 320px)
 {
@@ -2640,9 +2619,6 @@ p.lom{
 	}
 	.tilte-grid p span {
 	  margin: 0.3em 0 0;
-	}
-	.read {
-	  padding-left: 13em;
 	}
 	.pre {
 	  width: 17%;
@@ -2970,9 +2946,6 @@ p.lom{
 }
 @media (max-width: 240px)
 {
-	.read {
-	  padding-left: 7em;
-	}
 	.logo-right {
 	  width: 15%;
 	}
