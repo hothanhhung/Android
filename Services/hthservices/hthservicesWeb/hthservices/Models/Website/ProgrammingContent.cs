@@ -29,6 +29,25 @@ namespace hthservices.Models.Website
         public string Subject { get; set; }
         [NotMapped]
         public string CategoryName { get; set; }
+        [NotMapped]
+        public string TextAvatar { get {
+            if (!string.IsNullOrWhiteSpace(Keywords))
+            {
+                return Keywords.Split(',')[0].Trim();
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(Title))
+                {
+                    return Title.Substring(0,1);
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+        }
         [IgnoreDataMemberAttribute]
         [ForeignKey("CategoryId")]
         public virtual ProgrammingCategory Category { get; set; }
@@ -59,7 +78,7 @@ namespace hthservices.Models.Website
             }
             if (date.HasValue)
             {
-                return date.Value.ToString("HH:mm:ss MMM dd, yyyy");
+                return date.Value.ToString("HH:mm 'ngày' dd-MM-yyyy");
             }
             return string.Empty;
         }
