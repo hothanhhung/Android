@@ -1,6 +1,19 @@
-﻿hthWebsiteApp.config(['$routeProvider', '$httpProvider', function ($stateProvider, $httpProvider) {
+﻿hthWebsiteApp.factory('httpRequestInterceptor', function () {
+    return {
+        request: function (config) {
 
-    $httpProvider.defaults.headers.common['token'] = window.localStorage.getItem("AuthInfo.Token");
+            config.headers['token'] = window.localStorage.getItem("AuthInfo.Token");
+
+            return config;
+        }
+    };
+});
+
+hthWebsiteApp.config(['$routeProvider', '$httpProvider', function ($stateProvider, $httpProvider) {
+
+    //$httpProvider.defaults.headers.common['token'] = window.localStorage.getItem("AuthInfo.Token");
+
+    $httpProvider.interceptors.push('httpRequestInterceptor');
 
     $stateProvider
       .when('/login', {
