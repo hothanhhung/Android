@@ -48,7 +48,7 @@
                                         @:<div class="related-posts-grids">
                                     }
                                         <div class="related-posts-grid">
-                                            <a href="@Url.RouteUrl("programmingcontent", new { category_name=Url.ToFriendlyUrl(relatedContent.Category.Name), content_name=Url.ToFriendlyUrl(relatedContent.Title), id=relatedContent.Id })"><img class="img" src="@relatedContent.ImageUrl"  alt="@relatedContent.Title" title="@relatedContent.Title"  /></a>
+                                            <a href="@Url.RouteUrl("programmingcontent", new { category_name=Url.ToFriendlyUrl(relatedContent.Category.Name), content_name=Url.ToFriendlyUrl(relatedContent.Title), id=relatedContent.Id })"><img class="img" src="@(string.IsNullOrWhiteSpace(relatedContent.ImageUrl) ? string.Format("/home/GenerateImage/?text={0}", relatedContent.TextAvatar) : relatedContent.ImageUrl)" alt="@relatedContent.Title" title="@relatedContent.Title" /></a>
                                             <h4><a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(relatedContent.Category.Name), content_name = Url.ToFriendlyUrl(relatedContent.Title), id = relatedContent.Id })">@relatedContent.Title</a></h4>
                                             <p>
                                                 @relatedContent.ShortContent

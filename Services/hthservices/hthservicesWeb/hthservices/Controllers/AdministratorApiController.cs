@@ -14,7 +14,7 @@ namespace hthservices.Controllers
 {
     public class AdministratorApiController : ApiController
     {
-        bool needCheckLogin = false;
+        bool needCheckLogin = true;
 
         #region Category
         [System.Web.Http.HttpGet]
@@ -24,7 +24,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -50,7 +50,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -80,7 +80,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -102,7 +102,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -124,7 +124,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -147,7 +147,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -171,7 +171,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -191,7 +191,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -226,7 +226,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -264,7 +264,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -286,7 +286,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -307,7 +307,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -336,7 +336,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -357,7 +357,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -377,7 +377,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -409,7 +409,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -431,7 +431,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -452,7 +452,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -481,7 +481,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -513,7 +513,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
@@ -535,7 +535,7 @@ namespace hthservices.Controllers
             if (needCheckLogin)
             {
                 var token = Request.Headers.GetValues("token");
-                if (token == null || AuthData.GetRole(token.ToString()) == Role.NoLogin)
+                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
                 {
                     return ResponseJson.GetResponseJson(string.Empty, false);
                 }
