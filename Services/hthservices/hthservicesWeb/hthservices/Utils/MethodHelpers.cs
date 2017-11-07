@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -331,7 +332,7 @@ namespace hthservices.Utils
             }
         }
 
-        public static Bitmap ConvertTextToImage(string txt, string fontname,  Color bgcolor, Color fcolor, int width, int Height)
+        public static Bitmap ConvertTextToImage(string txt, Color bgcolor, Color fcolor, int width, int Height)
         {
             Bitmap bmp = new Bitmap(width, Height);
             using (System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(bmp))
@@ -341,7 +342,9 @@ namespace hthservices.Utils
                 {
                     fontsize = 100;
                 }
-                using (Font font1 = new Font(fontname, fontsize, FontStyle.Bold, GraphicsUnit.Pixel))
+                PrivateFontCollection pfc = new PrivateFontCollection();
+                pfc.AddFontFile(HttpContext.Current.Server.MapPath("~/fonts/grease__.ttf"));
+                using (Font font1 = new Font(pfc.Families[0], fontsize, FontStyle.Bold, GraphicsUnit.Pixel))
                 {
                     Rectangle rect1 = new Rectangle(10, 10, width - 20, Height - 20);
 

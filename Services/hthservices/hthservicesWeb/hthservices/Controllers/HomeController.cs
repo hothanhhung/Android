@@ -50,7 +50,7 @@ namespace hthservices.Controllers
         [System.Web.Http.Route("Common/GetImage")]
         public FileResult GenerateImage(string text)
         {
-            var image = MethodHelpers.ConvertTextToImage(text, "Bookman Old Style", Color.WhiteSmoke, Color.Black, 250, 250);
+            var image = MethodHelpers.ConvertTextToImage(text, Color.WhiteSmoke, Color.DarkCyan, 250, 250);
             using (var ms = new MemoryStream())
             {
                 image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
