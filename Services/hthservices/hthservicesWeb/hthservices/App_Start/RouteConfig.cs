@@ -11,6 +11,7 @@ namespace hthservices
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("google3665108b80288f2c.html");
             routes.IgnoreRoute("Web/*");
             routes.IgnoreRoute("FileMan/*");
             routes.IgnoreRoute("Admin/*");
