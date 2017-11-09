@@ -39,7 +39,7 @@ namespace hthservices.Controllers
             if (content != null)
             {
                 ViewBag.Content = content;
-                ViewBag.RelatedContents = DataBusiness.DataProcess.GetProgrammingContentsForUser(content.CategoryId).Where(p => p.Id != content.Id).Take(8).ToList();
+                ViewBag.RelatedContents = DataBusiness.DataProcess.GetProgrammingContentsForUser(content.CategoryId).Where(p => p.Id != content.Id).Take(4).ToList();
             }
             return View();
         }
@@ -47,6 +47,7 @@ namespace hthservices.Controllers
         public ActionResult RightProgrammingPartial()
         {
             ViewBag.Categories = DataBusiness.DataProcess.GetProgrammingCategoriesForUser();
+            ViewBag.TopNews10ProgrammingContents = DataBusiness.DataProcess.GetTopNews10ProgrammingContentsForUser();
             ViewBag.CurrentComments = DataBusiness.DataProcess.GetProgrammingCurrentCommentsForUser();
             return PartialView();
         }
