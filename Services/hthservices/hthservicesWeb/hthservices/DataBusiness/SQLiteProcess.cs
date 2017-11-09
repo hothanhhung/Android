@@ -76,11 +76,14 @@ namespace hthservices.DataBusiness
             ProgrammingCategory programmingCategory = null;
             using (var context = new WebsiteDataContext(new SQLiteConnection(ConnectString)))
             {
-                var categories = context.ProgrammingCategories.Where(p => p.Id == categorId &&(isDisplay == false || (p.IsDisplay ?? 0) > 0));
+                var categories = context.ProgrammingCategories.Where(p => p.Id == categorId && (isDisplay == false || (p.IsDisplay ?? 0) > 0));
 
                 programmingCategory = categories.FirstOrDefault();
-                //context.Entry(programmingCategory).Collection(p => p.Contents).Load();
-                programmingCategory.NumberOfContents = context.ProgrammingContents.Where(p => p.CategoryId == programmingCategory.Id && (isDisplay == false || (p.IsDisplay ?? 0) > 0)).Count();
+                if (programmingCategory != null)
+                {
+                    //context.Entry(programmingCategory).Collection(p => p.Contents).Load();
+                    programmingCategory.NumberOfContents = context.ProgrammingContents.Where(p => p.CategoryId == programmingCategory.Id && (isDisplay == false || (p.IsDisplay ?? 0) > 0)).Count();
+                }
             }
             return programmingCategory;
         }
@@ -202,9 +205,11 @@ namespace hthservices.DataBusiness
             {
                 var contents = context.ProgrammingContents.Where(p => p.Id == id && (isDisplay == false || ((p.IsDisplay ?? 0) > 0 && today.CompareTo(p.PublishedDate) > 0)));
                 programmingContent = contents.FirstOrDefault();
-
-                context.Entry(programmingContent).Reference(p => p.Category).Load();
-                context.Entry(programmingContent).Collection(p => p.Comments).Load();
+                if (programmingContent != null)
+                {
+                    context.Entry(programmingContent).Reference(p => p.Category).Load();
+                    context.Entry(programmingContent).Collection(p => p.Comments).Load();
+                }
             }
             return programmingContent;
         }

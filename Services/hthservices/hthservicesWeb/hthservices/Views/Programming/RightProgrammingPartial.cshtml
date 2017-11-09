@@ -15,6 +15,17 @@
                 }
             </ul>
         </div>
+        <div class="cat">
+            <h3>Bài Viết Mới</h3>
+            <ul>
+                @foreach (ProgrammingContent content in ViewBag.TopNews10ProgrammingContents)
+                {
+                    <li>
+                        <a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(content.Category.Name), content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.Title</a>
+                    </li>
+                }
+            </ul>
+        </div>
         <div class="recent-com">
             <h3>Phản Hồi Mới</h3>
             <ul>

@@ -159,6 +159,12 @@ namespace hthservices.DataBusiness
         {
             return SQLiteProcess.GetProgrammingContents(categoryId, true, page, size);
         }
+
+        public static List<ProgrammingContent> GetTopNews10ProgrammingContentsForUser()
+        {
+            return SQLiteProcess.GetProgrammingContents(string.Empty, true, 0, 10);
+        }
+
         public static ProgrammingContent GetProgrammingContentForUser(string id)
         {
             return SQLiteProcess.GetProgrammingContent(id, true);
