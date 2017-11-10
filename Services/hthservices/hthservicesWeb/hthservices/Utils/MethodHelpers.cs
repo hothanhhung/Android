@@ -239,6 +239,8 @@ namespace hthservices.Utils
 
         public static string ConvertByteArrayToString(byte[] data)
         {
+            return ConvertByteArrayToStringBase64(data);
+            /*
             StringBuilder stringBuilder = new StringBuilder();
             if (data != null)
             {
@@ -248,6 +250,25 @@ namespace hthservices.Utils
                 }
             }
             return stringBuilder.ToString();
+             * */
+        }
+
+        private static string ConvertByteArrayToStringBase64(byte[] data)
+        {
+            if (data != null)
+            {
+                return Convert.ToBase64String(data);
+            }
+            return string.Empty;
+        }
+
+        private static byte[] ConvertStringBase64ToByteArray(string str)
+        {
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                return Convert.FromBase64String(str);
+            }
+            return null;
         }
 
         private static List<int> ConvertListIntFromStringHexa(string str)
@@ -279,6 +300,8 @@ namespace hthservices.Utils
 
         public static byte[] ConvertStringToByteArray(string str)
         {
+            return ConvertStringBase64ToByteArray(str);
+            /*
             List<int> values = ConvertListIntFromStringHexa(str);
             byte[] data = new byte[values.Count];
             if (values != null)
@@ -289,6 +312,7 @@ namespace hthservices.Utils
                 }
             }
             return data;
+             * */
         }
 
         public static string IdFromDateTimeUTCGenarator()

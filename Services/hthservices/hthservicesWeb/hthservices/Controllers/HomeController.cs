@@ -13,7 +13,7 @@ namespace hthservices.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return Redirect("Programming");
         }
 
         public ActionResult About()

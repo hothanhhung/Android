@@ -406,14 +406,14 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("SaveComment")]
         public ResponseJson SaveComment([FromBody] ProgrammingComment comment)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
+            //if (needCheckLogin)
+            //{
+            //    var token = Request.Headers.GetValues("token");
+            //    if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
+            //    {
+            //        return ResponseJson.GetResponseJson(string.Empty, false);
+            //    }
+            //}
 
             bool success = false;
             if (comment != null)

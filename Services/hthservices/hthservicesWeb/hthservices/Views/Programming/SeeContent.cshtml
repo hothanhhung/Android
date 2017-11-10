@@ -141,7 +141,7 @@
                 {
                     alert('Tất cả các trường phải được nhập');
                 }else{
-                    $.post("/api/AdministratorApi/SaveComment/", { Name: name, Email: email, Message:message, ContentId: @programmingContent.Id, IsDisplay: 1})
+                    $.post("/api/AdministratorApi/SaveComment/", { Name: name, Email: email, Message:message, ContentId: '@programmingContent.Id', IsDisplay: 1})
                           .done(function (data) {
                               var htmlVal = '<div class="comments-info"><div class="cmnt-icon-left"><img src="/Web/images/icon3.png" alt="" /></div>';
                               htmlVal += '<div class="cmnt-icon-right"> <p>Just Now</p>';
