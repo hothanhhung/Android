@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -47,16 +49,58 @@ namespace hthservices.Controllers
             return View();
         }
 
-        [System.Web.Http.Route("Common/GetImage")]
+        [System.Web.Http.Route("Common/GetImage/{text:string}")]
         public FileResult GenerateImage(string text)
         {
-            var image = MethodHelpers.ConvertTextToImage(text, Color.WhiteSmoke, Color.DarkCyan, 250, 250);
+            var image = GenerateImage(text, 0);
             using (var ms = new MemoryStream())
             {
                 image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
 
                 return File(ms.ToArray(), "image/png");
             }
+        }
+
+        public FileResult Capcha()
+        {
+            var ran = new Random();
+            var strBuilder = new StringBuilder();
+            for(int i =0; i< 5; i++)
+            {
+                strBuilder.Append((char)ran.Next('A', 'Z'));
+            }
+            Session["Capcha"] = strBuilder.ToString();
+            var image = GenerateImage(Session["Capcha"].ToString(), 1);
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+
+                return File(ms.ToArray(), "image/png");
+            }
+        }
+
+        private Bitmap GenerateImage(string text, int kind = 0)
+        {
+            int height = 250, width = 250;
+            FontFamily fontFamily = new FontFamily("Arial");
+            switch (kind)
+            {
+                case 0:
+                    PrivateFontCollection pfc = new PrivateFontCollection();
+                    pfc.AddFontFile(Server.MapPath("~/fonts/grease__.ttf"));
+                    fontFamily = pfc.Families[0];
+                    height = 250;
+                    width = 250;
+                    break;
+                case 1:
+                    height = 35;
+                    width = 100;
+                    break;
+            }
+
+
+            var image = MethodHelpers.ConvertTextToImage(text, fontFamily, Color.WhiteSmoke, Color.DarkCyan, width, height);
+            return image;
         }
     }
 }

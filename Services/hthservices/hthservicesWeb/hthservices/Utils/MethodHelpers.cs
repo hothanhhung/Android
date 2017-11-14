@@ -356,7 +356,7 @@ namespace hthservices.Utils
             }
         }
 
-        public static Bitmap ConvertTextToImage(string txt, Color bgcolor, Color fcolor, int width, int Height)
+        public static Bitmap ConvertTextToImage(string txt, FontFamily fontFamily, Color bgcolor, Color fcolor, int width, int Height)
         {
             Bitmap bmp = new Bitmap(width, Height);
             using (System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(bmp))
@@ -366,9 +366,7 @@ namespace hthservices.Utils
                 {
                     fontsize = 100;
                 }
-                PrivateFontCollection pfc = new PrivateFontCollection();
-                pfc.AddFontFile(HttpContext.Current.Server.MapPath("~/fonts/grease__.ttf"));
-                using (Font font1 = new Font(pfc.Families[0], fontsize, FontStyle.Bold, GraphicsUnit.Pixel))
+                using (Font font1 = new Font(fontFamily, fontsize, FontStyle.Bold, GraphicsUnit.Pixel))
                 {
                     Rectangle rect1 = new Rectangle(10, 10, width - 20, Height - 20);
 

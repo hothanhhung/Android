@@ -1,6 +1,9 @@
-﻿using hthservices.Utils;
+﻿using hthservices.Models;
+using hthservices.Models.Website;
+using hthservices.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -50,6 +53,60 @@ namespace hthservices.Controllers
             ViewBag.TopNews10ProgrammingContents = DataBusiness.DataProcess.GetTopNews10ProgrammingContentsForUser();
             ViewBag.CurrentComments = DataBusiness.DataProcess.GetProgrammingCurrentCommentsForUser();
             return PartialView();
+        }
+        [NotMapped]
+        public class ProgrammingCommentModel : ProgrammingComment
+        {
+            public string Capcha { get; set; }
+        }
+
+        [System.Web.Http.HttpPost, ValidateInput(false)]
+        [System.Web.Http.ActionName("SaveComment")]
+        public JsonResult SaveComment([FromBody] ProgrammingCommentModel comment)
+        {
+           
+            var token = comment.Capcha;
+            if (token == null || token.Count() == 0 || !token.Equals(Session["Capcha"]))
+            {
+                return Json(ResponseJson.GetResponseJson("Capcha Không Đúng", false));
+            }
+
+            if (string.IsNullOrWhiteSpace(comment.Name))
+            {
+                return Json(ResponseJson.GetResponseJson("Chưa nhập tên", false));
+            }
+
+            if (string.IsNullOrWhiteSpace(comment.Email))
+            {
+                return Json(ResponseJson.GetResponseJson("Chưa nhập email", false));
+            }
+
+            var emailFormat = new System.ComponentModel.DataAnnotations.EmailAddressAttribute();
+            if (!emailFormat.IsValid(comment.Email))
+            {
+                return Json(ResponseJson.GetResponseJson("Email không đúng định dạng", false));
+            }
+            if (string.IsNullOrWhiteSpace(comment.Message))
+            {
+                return Json(ResponseJson.GetResponseJson("Chưa nhập nội dung", false));
+            }
+
+            bool success = false;
+            if (comment != null)
+            {
+                var com = new ProgrammingComment()
+                {
+                    ContentId = comment.ContentId,
+                    Email = comment.Email,
+                    IsDisplay = 1,
+                    Name = comment.Name,
+                    Subject = comment.Subject,
+                    Message = comment.Message
+                };
+                success = DataBusiness.DataProcess.SaveProgrammingComment(com);
+            }
+            var resultObject = new { IsSuccess = true, Message = "SaveComment" };
+            return Json(ResponseJson.GetResponseJson(resultObject));
         }
     }
 }
