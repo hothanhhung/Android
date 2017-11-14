@@ -100,11 +100,39 @@
                         </div>
                     </div>
                     <div class="consequat">
+                        <style>
+                            ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+                                color: #d1caca !important;
+                            }
+
+                            :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+                                color: #d1caca !important;
+                                opacity: 1;
+                            }
+
+                            ::-moz-placeholder { /* Mozilla Firefox 19+ */
+                                color: #d1caca !important;
+                                opacity: 1;
+                            }
+
+                            :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                                color: #d1caca !important;
+                            }
+
+                            ::-ms-input-placeholder { /* Microsoft Edge */
+                                color: #d1caca !important;
+                            }
+                        </style>
                         <h2>Viết Phản Hồi</h2>
-                        <input type="text" value="Name" id="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="">
-                        <input type="email" value="Email" id="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+                        <input type="text" placeholder="Họ Tên" id="Name" />
+                        <input type="email" placeholder="Email" id="Email" />
                         <textarea name="commenteditor" id="Message" type="text" required=""></textarea>
-                        <input type="button" value="Phản Hồi" onclick="saveComment()">
+                        <div class="form-group">
+                            <a href="javascript:void(0)" onclick="$('#capcha').attr('src', '/home/capcha/?timestamp=' + new Date().getTime());">Reload</a>
+                            <img id="capcha" src="/home/capcha" height="100%" />
+                            <input type="text" placeholder="Capcha" value="" id="Capcha" required=""/>
+                            <input type="button" value="Phản Hồi" onclick="saveComment()"/>
+                        </div>
                     </div>
                 }
             </div>
@@ -131,27 +159,52 @@
 
                 ],
             });
-
+            function validateEmail(email) {
+                var re = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                return re.test(email);
+            }
             saveComment = function()
             {
                 var name = $("#Name").val();
                 var email = $("#Email").val();
+                var capcha = $("#Capcha").val();
                 var message = CKEDITOR.instances.Message.getData();
-                if(typeof(name)=="undefined" || name=="" || typeof(email)=="undefined" || email=="" || typeof(message)=="undefined" || message=="")
+
+                if (!validateEmail(email))
                 {
-                    alert('Tất cả các trường phải được nhập');
+                    alert('Email không đúng định dạng');
+                }
+                else if (typeof (name) == "undefined" || name == "") {
+                    alert('Vui lòng nhập tên bạn');
+                }
+                else if (typeof (message) == "undefined" || message == "") {
+                    alert('Vui lòng nhập nội dung phản hồi');
+                }
+                else if (typeof (capcha) == "undefined" || capcha == "")
+                {
+                    alert('Vui lòng nhập Capcha');
                 }else{
-                    $.post("/api/AdministratorApi/SaveComment/", { Name: name, Email: email, Message:message, ContentId: '@programmingContent.Id', IsDisplay: 1})
-                          .done(function (data) {
-                              var htmlVal = '<div class="comments-info"><div class="cmnt-icon-left"><img src="/Web/images/icon3.png" alt="" /></div>';
-                              htmlVal += '<div class="cmnt-icon-right"> <p>Just Now</p>';
-                              htmlVal += '<p><a href="#">'+name+'</a></p>';
-                              htmlVal += '<p class="cmmnt">'+message+' </p>';
-                              htmlVal += '</div>';
-                              htmlVal += '<div class="clearfix"> </div><div class="aliqua"><a href="#">Reply</a></div>';
-                              htmlVal += '</div>';
-                              $("#comments").append(htmlVal);
-                          });
+                    $.post("/Programming/SaveComment/", { Name: name, Email: email, Message: message, ContentId: '@programmingContent.Id', IsDisplay: 1, Capcha: capcha })
+                        .done(function (data) {
+                            if (data.IsSuccess) {
+                                var htmlVal = '<div class="comments-info"><div class="cmnt-icon-left"><img src="/Web/images/icon3.png" alt="" /></div>';
+                                htmlVal += '<div class="cmnt-icon-right"> <p>Just Now</p>';
+                                htmlVal += '<p><a href="#">' + name + '</a></p>';
+                                htmlVal += '<p class="cmmnt">' + message + ' </p>';
+                                htmlVal += '</div>';
+                                htmlVal += '<div class="clearfix"> </div><div class="aliqua"></div>';
+                                htmlVal += '</div>';
+                                $("#comments").append(htmlVal);
+
+                                $("#Name").val("");
+                                $("#Email").val("");
+                                $("#Capcha").val("");
+                                CKEDITOR.instances.Message.getData("");
+
+                            } else {
+                                alert(data.Data)
+                            }
+                        });
                 }
             }
 
