@@ -3,15 +3,38 @@ using hthservices.DataBusiness;
 using hthservices.Models;
 using hthservices.Models.Website;
 using MethodHelpers = hthservices.Utils.MethodHelpers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
-using System.Text;
+using System.Net.Http;
+using System.Web.Http.Filters;
 
 namespace hthservices.Controllers
 {
+    public class AuthFilterAttribute : ActionFilterAttribute
+    {
+        bool needCheckLogin = true;
+        public override void OnActionExecuting(System.Web.Http.Controllers.HttpActionContext httpContext)
+        {
+            if (needCheckLogin)
+            {
+                if (!"localhost".Equals(httpContext.Request.RequestUri.Host, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    var token = httpContext.Request.Headers.GetValues("token");
+                    if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
+                    {
+                        httpContext.Response = httpContext.Request.CreateResponse(
+                                                    System.Net.HttpStatusCode.OK,
+                                                     ResponseJson.GetResponseJsonForError("Chưa Login"),
+                                                    httpContext.ControllerContext.Configuration.Formatters.JsonFormatter
+                                                );
+                    }
+                }
+            }
+        }
+    }
+
+
+    [AuthFilter]
     public class AdministratorApiController : ApiController
     {
         bool needCheckLogin = true;
@@ -21,15 +44,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetCategories")]
         public ResponseJson GetCategories()
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             var data = DataProcess.GetProgrammingCategories()
                 .Select(x=> new ProgrammingCategory {
                     Id=x.Id,
@@ -47,15 +61,7 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetCategory")]
         public ResponseJson GetCategory(string categoryId)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
+            
             var data = DataProcess.GetProgrammingCategory(categoryId);
             if(data != null)
             {
@@ -77,15 +83,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("SaveCategory")]
         public ResponseJson SaveCategory([FromBody] ProgrammingCategory category)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             bool success = false;
             if (category != null)
             {
@@ -99,15 +96,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("SaveCategory")]
         public ResponseJson SaveCategory1([FromBody] ProgrammingCategory category)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             bool success = false;
             if (category != null)
             {
@@ -121,15 +109,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("DeleteCategory")]
         public ResponseJson DeleteCategory(string categoryId)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             bool success = DataProcess.DeleteProgrammingCategory(categoryId);
 
             var resultObject = new { IsSuccess = true, Message = "SaveCategory" };
@@ -139,20 +118,10 @@ namespace hthservices.Controllers
 
         #region Content
 
-
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("GetContentsInString")]
         public ResponseJson GetContents(string contentIds)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             var contentIdList = MethodHelpers.ConvertToListStringFromString(contentIds);
 
             var contents = DataProcess.GetProgrammingContents(contentIdList);
@@ -168,14 +137,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("SaveContentsFromString")]
         public ResponseJson SaveContents([FromBody] SaveModel saveModel)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
             var dataInByte = MethodHelpers.ConvertStringToByteArray(saveModel.Contents);
             var contentsInString = MethodHelpers.UnZipStr(dataInByte);
 
@@ -188,15 +149,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetContents")]
         public ResponseJson GetContents(string categoryId = null, int page = 0, int size = 10)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             var data = DataProcess.GetProgrammingContents(categoryId, page, size)
                 .Select(x => new ProgrammingContent
                 {
@@ -223,15 +175,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetContent")]
         public ResponseJson GetContent(string contentId)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             var data = DataProcess.GetProgrammingContent(contentId);
             if (data != null)
             {
@@ -261,15 +204,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("SaveContent")]
         public ResponseJson SaveContent([FromBody] ProgrammingContent content)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             bool success = false;
             if (content != null)
             {
@@ -283,15 +217,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("DeleteContent")]
         public ResponseJson DeleteContent(string contentId)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             bool success = DataProcess.DeleteProgrammingContent(contentId);
 
             var resultObject = new { IsSuccess = true, Message = "DeleteContent" };
@@ -304,14 +229,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetComments")]
         public ResponseJson GetComments(string contentId = null, int page = 0, int size = 10)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
 
             var data = DataProcess.GetProgrammingComments(contentId, page, size)
                 .Select(x => new ProgrammingComment
@@ -333,15 +250,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetCommentsInString")]
         public ResponseJson GetComments(string commentIds)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             var contentIdList = MethodHelpers.ConvertToListStringFromString(commentIds);
 
             var contents = DataProcess.GetProgrammingComments(contentIdList);
@@ -354,14 +262,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("SaveCommentsFromString")]
         public ResponseJson SaveComments(string comments)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
             var dataInByte = MethodHelpers.ConvertStringToByteArray(comments);
             var contents = MethodHelpers.UnZipStr(dataInByte);
 
@@ -374,15 +274,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetComment")]
         public ResponseJson GetComment(string commentId)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             var data = DataProcess.GetProgrammingComment(commentId);
             if (data != null)
             {
@@ -406,14 +297,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("SaveComment")]
         public ResponseJson SaveComment([FromBody] ProgrammingComment comment)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
 
             bool success = false;
             if (comment != null)
@@ -428,15 +311,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("DeleteComment")]
         public ResponseJson DeleteComment(string commentId)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             bool success = DataProcess.DeleteProgrammingComment(commentId);
 
             var resultObject = new { IsSuccess = true, Message = "DeleteComment" };
@@ -449,15 +323,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetProjects")]
         public ResponseJson GetProjects(int page = 0, int size = 10)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             var data = DataProcess.GetProjects(page, size)
                 .Select(x => new Project
                 {
@@ -478,14 +343,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetProject")]
         public ResponseJson GetProject(string contentId)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
 
             var data = DataProcess.GetProject(contentId);
             if (data != null)
@@ -510,14 +367,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("SaveProject")]
         public ResponseJson SaveProject([FromBody] Project content)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
 
             bool success = false;
             if (content != null)
@@ -532,15 +381,6 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("DeleteProject")]
         public ResponseJson DeleteProject(string contentId)
         {
-            if (needCheckLogin)
-            {
-                var token = Request.Headers.GetValues("token");
-                if (token == null || token.Count() == 0 || AuthData.GetRole(token.ElementAt(0)) == Role.NoLogin)
-                {
-                    return ResponseJson.GetResponseJson(string.Empty, false);
-                }
-            }
-
             bool success = DataProcess.DeleteProject(contentId);
 
             var resultObject = new { IsSuccess = true, Message = "DeleteProject" };

@@ -83,14 +83,19 @@ namespace hthservices.Controllers
         {
             int height = 250, width = 250;
             FontFamily fontFamily = new FontFamily("Arial");
+            Color textColor = Color.DarkCyan;
             switch (kind)
             {
                 case 0:
+                    //Color.DarkCyan, Color.Brown, Color.DarkBlue, Color.DarkGreen, Color.Purple, Color.Navy, Color.DarkViolet, Color.DeepSkyBlue
+                    var colors = new Color[] { Color.DarkCyan, Color.Brown, Color.DarkBlue, Color.DarkGreen, Color.Purple, Color.Navy, Color.DarkViolet, Color.DeepSkyBlue };
                     PrivateFontCollection pfc = new PrivateFontCollection();
                     pfc.AddFontFile(Server.MapPath("~/fonts/grease__.ttf"));
                     fontFamily = pfc.Families[0];
                     height = 250;
                     width = 250;
+                    var ran = new Random();
+                    textColor = colors[ran.Next(colors.Length)];
                     break;
                 case 1:
                     height = 35;
@@ -99,7 +104,7 @@ namespace hthservices.Controllers
             }
 
 
-            var image = MethodHelpers.ConvertTextToImage(text, fontFamily, Color.WhiteSmoke, Color.DarkCyan, width, height);
+            var image = MethodHelpers.ConvertTextToImage(text, fontFamily, Color.WhiteSmoke, textColor, width, height);
             return image;
         }
     }
