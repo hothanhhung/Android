@@ -13,7 +13,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-    <link href="/Scripts/bower_components/ckeditor-4.5.11/plugins/codesnippet/lib/highlight/styles/default.css" rel="stylesheet">
+    <link href="~/Scripts/bower_components/ckeditor-4.5.11/plugins/codesnippet/lib/highlight/styles/vs.css" rel="stylesheet">
     <script src="/Scripts/bower_components/ckeditor-4.5.11/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <!-- js -->
     <script src="/Web/js/jquery.min.js"></script>
@@ -23,6 +23,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="@ViewBag.Keywords" />
 	<meta name="description" content="@ViewBag.Description" />
+    <style>
+        pre {
+            padding: 0px;
+        }
+    </style>
     <script type="application/x-javascript">
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
                function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -146,7 +151,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
         });
     </script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+    @*<script type="text/javascript">
+        var adfly_id = 18303405;
+        var adfly_advert = 'banner';
+        var frequency_cap = 5;
+        var frequency_delay = 5;
+        var init_delay = 3;
+        var popunder = true;
+    </script>
+    <script src="https://cdn.ay.gy/js/entry.js">
+    </script> *@
 	 <!-- <script src="https://api.adflex.link/v1/fK0GFz0CllSk7gJoM_wqzgI0Ws-K2NbRJx8g_25SGLA/ads.js?b=1&aff_sub5=auto-ads&type=cpo"></script> -->
     <!-- //here ends scrolling icon -->
 </body>

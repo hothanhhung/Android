@@ -10,6 +10,7 @@ using hthservices.Models.Website;
 namespace hthservices.Models
 {
     [Serializable]
+    [KnownType(typeof(string))]
     [KnownType(typeof(List<RequestInfo>))]
     [KnownType(typeof(List<GuideItem>))]
     [KnownType(typeof(List<SearchItem>))]
@@ -36,6 +37,17 @@ namespace hthservices.Models
                 Data = data
             };
             return responseJson; 
+        }
+
+        public static ResponseJson GetResponseJsonForError(string errorString)
+        {
+            var responseJson = new ResponseJson()
+            {
+                IsSuccess = false,
+                NeedChangeDomain = false,
+                Data = errorString
+            };
+            return responseJson;
         }
     }
 }
