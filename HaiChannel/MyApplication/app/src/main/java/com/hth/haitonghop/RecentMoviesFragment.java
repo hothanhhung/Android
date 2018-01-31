@@ -25,8 +25,9 @@ public class RecentMoviesFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		View rootView = inflater.inflate(R.layout.fragment_recentmovies, container, false);
-		lstRecentPublishYouTubeVideo = YouTubeService.getRecentPublishVideo().getYouTubeVideos();
-		
+		if(lstRecentPublishYouTubeVideo==null || lstRecentPublishYouTubeVideo.isEmpty()) {
+			lstRecentPublishYouTubeVideo = YouTubeService.getRecentPublishVideo().getYouTubeVideos();
+		}
 		ListView listView = (ListView)rootView.findViewById(R.id.lvMovies);
 		MovieYoutubeItemAdapter adapter = new MovieYoutubeItemAdapter(getActivity(), lstRecentPublishYouTubeVideo, getResources());
 

@@ -71,7 +71,7 @@ public class YouTubeService {
 	
 	public static YouTubeParserJSObject getOlderPublishYouTubeVideo(String publishedBefore)
 	{
-		return searchPublishedVideos("", "", publishedBefore, "date", "", "10", false);
+		return searchPublishedVideos("", "", publishedBefore, "date", "", "25", false);
 	}
 	
 	public static YouTubeParserJSObject searchPublishedVideos(String query, String publishedAfter, String publishedBefore, String order, String pageToken)

@@ -10,6 +10,7 @@ import com.hth.data.YouTubeService;
 import com.hth.haitonghop.R;
 import com.hth.utils.UIUtils;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,15 +26,17 @@ public class HomeActivity extends Activity {
 
 	private AdView mAdView = null;
 	private static ArrayList<ObjectChannel> _lstChannels = null;
+	private ProgressDialog progressDialog = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		ActionBar actionBar = getActionBar();
-		actionBar.hide();
-		actionBar.setDisplayShowHomeEnabled(false);
-	    actionBar.setDisplayShowTitleEnabled(false);
-	    
+		if(actionBar!=null) {
+			actionBar.hide();
+			actionBar.setDisplayShowHomeEnabled(false);
+			actionBar.setDisplayShowTitleEnabled(false);
+		}
 		LinearLayout layoutEnglishChannels =(LinearLayout)findViewById(R.id.layoutEnglishChannels);
 		_lstChannels = Data.getChannels();
 		for(int i =0 ; i<_lstChannels.size(); i++)
@@ -59,7 +62,12 @@ public class HomeActivity extends Activity {
 						UIUtils.showAlertErrorNoInternet(HomeActivity.this, false);
 						return;
 					}
-
+					if(progressDialog == null)
+					{
+						progressDialog = UIUtils.showPopUpLoading(HomeActivity.this);
+					}else{
+						progressDialog.show();
+					}
 					ObjectChannel channel = (ObjectChannel) v.getTag();
 					YouTubeService.setCurrentChannel(channel);
 					Intent channelIntent = new Intent(HomeActivity.this, MainActivity.class);
@@ -113,6 +121,10 @@ public class HomeActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+		if(progressDialog != null && progressDialog.isShowing())
+		{
+			progressDialog.dismiss();
+		}
         if(mAdView!=null) mAdView.resume();
     }
 
