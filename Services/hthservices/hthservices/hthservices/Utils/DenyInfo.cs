@@ -28,6 +28,7 @@ namespace hthservices.Utils
             
             public bool IsToMuchConnectedClient(string ip)
             {
+                return false;
                 ip = ip.Trim();
                 var client = ConnectedClients.FirstOrDefault(p => p.IP.Equals(ip, StringComparison.OrdinalIgnoreCase));
                 if(client != null)
