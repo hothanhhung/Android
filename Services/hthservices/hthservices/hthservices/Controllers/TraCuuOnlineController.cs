@@ -13,7 +13,7 @@ namespace hthservices.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect("/adsweb");
+            return Redirect("/htmlpage/LookupOnline/index.html");
         }
 
         public ActionResult VietlottMega645(string strDate="")

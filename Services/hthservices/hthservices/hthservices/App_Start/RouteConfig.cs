@@ -14,7 +14,11 @@ namespace hthservices
             routes.IgnoreRoute("htmlpage/*");
             routes.IgnoreRoute("Admin/*");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+                name: "TraCuuOnline",
+                url: "tcol",
+                defaults: new { controller = "TraCuuOnline", action = "Index", id = UrlParameter.Optional }
+            );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
