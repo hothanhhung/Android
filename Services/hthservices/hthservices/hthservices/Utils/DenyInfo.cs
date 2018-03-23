@@ -23,17 +23,19 @@ namespace hthservices.Utils
             public List<string> DeniedDeviceIds { get; set; }
             public List<string> AcceptedAppVersions { get; set; }
             public List<string> AffectedLinks { get; set; }
-            public int MaxConnectedClient { get; set; }
+            public const int MaxConnectedClient = 30;
             public bool UseMessage { get; set; }
             
-            public bool IsToMuchConnectedClient(string ip)
+            public bool IsTooMuchConnectedClient(string ip)
             {
-                return false;
+                var now = DateTime.Now;
+                ConnectedClients.RemoveAll(i => (now - i.Start).TotalHours > 24);
+
                 ip = ip.Trim();
                 var client = ConnectedClients.FirstOrDefault(p => p.IP.Equals(ip, StringComparison.OrdinalIgnoreCase));
                 if(client != null)
                 {
-                    if((DateTime.Now - client.Start).Hours > 24)
+                    if((DateTime.Now - client.Start).TotalHours > 24)
                     {
                         client.Count = 1;
                         client.Start = DateTime.Now;
@@ -143,7 +145,7 @@ namespace hthservices.Utils
                 string deviceId = HttpUtility.ParseQueryString(request.RequestUri.Query).Get("device");
                 string appVersion = HttpUtility.ParseQueryString(request.RequestUri.Query).Get("version");
                 UseMessage = deniedConfig.UseMessage;
-                return deniedConfig.IsToMuchConnectedClient(ip) || deniedConfig.IsDeniedIp(ip) || deniedConfig.IsDeniedDeviceId(deviceId) || deniedConfig.IsDeniedAppVersion(appVersion);
+                return deniedConfig.IsTooMuchConnectedClient(ip) || deniedConfig.IsDeniedIp(ip) || deniedConfig.IsDeniedDeviceId(deviceId) || deniedConfig.IsDeniedAppVersion(appVersion);
             }
             return false;
         }
