@@ -13,20 +13,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.utils.DateTools;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Date selectedDate;
+    DateItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        selectedDate = new Date();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -45,17 +52,61 @@ public class MainActivity extends AppCompatActivity
         ArrayList<DateItemForGridview> lstDateItemForGridview = DateTools.GetDateItemsForGridviewFromDate();
 
         GridView grvDates = (GridView) findViewById(R.id.grvDates);
-        DateItemAdapter adapter = new DateItemAdapter(this, lstDateItemForGridview, getResources());
+        adapter = new DateItemAdapter(this, lstDateItemForGridview, getResources());
         grvDates.setAdapter(adapter);
         grvDates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                DateItemForGridview item = (DateItemForGridview)view.getTag();
+                Date date = item.getDate();
+                if(date!=null)
+                {
+                    if(date.getMonth()!=selectedDate.getMonth() || date.getYear()!=selectedDate.getYear())
+                    {
+                        selectedDate = date;
+                        adapter.updateSelectedDate(selectedDate, DateTools.GetDateItemsForGridviewFromDate(selectedDate));
+                    }else {
+                        selectedDate = date;
+                        adapter.updateSelectedDate(selectedDate);
+                    }
+                    updateMonthYear();
 
-
+                }
             }
         });
+        updateMonthYear();
+    }
+
+    private void updateMonthYear()
+    {
+        Button btMonth = (Button)findViewById(R.id.btMonth);
+        Button btYear = (Button)findViewById(R.id.btYear);
+
+        btMonth.setText("Tháng " + (selectedDate.getMonth() + 1));
+        btYear.setText("" + (selectedDate.getYear() + 1900));
+    }
+
+    public void btClick(View view)
+    {
+        Calendar c = Calendar.getInstance();
+        c.setTime(selectedDate);
+        switch (view.getId())
+        {
+            case R.id.btBackMonth:
+                c.add(Calendar.MONTH, -1);
+                selectedDate = c.getTime();
+                adapter.updateSelectedDate(selectedDate, DateTools.GetDateItemsForGridviewFromDate(selectedDate));
+                updateMonthYear();
+                break;
+            case R.id.btNextMonth:
+                c.add(Calendar.MONTH, 1);
+                selectedDate = c.getTime();
+                adapter.updateSelectedDate(selectedDate, DateTools.GetDateItemsForGridviewFromDate(selectedDate));
+                updateMonthYear();
+                break;
+        }
     }
 
     @Override
