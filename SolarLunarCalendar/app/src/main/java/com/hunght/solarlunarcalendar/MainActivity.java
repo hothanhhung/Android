@@ -7,33 +7,33 @@ import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.utils.DateTools;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Date selectedDate;
+    DateItemForGridview selectedDate;
     DateItemAdapter adapter;
+    Button btMonth, btYear;
+    TextView tvSolarMonthInfo, tvSolarInfoDate, tvSolarInfoDayInWeek, tvLunarInfoDayInWeek, tvLunarInfoDayInWeek1, tvSolarInfoToday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        selectedDate = new Date();
+        selectedDate = new DateItemForGridview("", new Date(), false);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +43,16 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+
+
+        btMonth = (Button)findViewById(R.id.btMonth);
+        btYear = (Button)findViewById(R.id.btYear);
+        tvSolarMonthInfo = (TextView)findViewById(R.id.tvSolarMonthInfo);
+        tvSolarInfoDate = (TextView)findViewById(R.id.tvSolarInfoDate);
+        tvSolarInfoDayInWeek = (TextView)findViewById(R.id.tvSolarInfoDayInWeek);
+        tvLunarInfoDayInWeek = (TextView)findViewById(R.id.tvLunarInfoDayInWeek);
+        tvLunarInfoDayInWeek1 = (TextView)findViewById(R.id.tvLunarInfoDayInWeek1);
+        tvSolarInfoToday = (TextView)findViewById(R.id.tvSolarInfoToday);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -60,16 +70,15 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 DateItemForGridview item = (DateItemForGridview)view.getTag();
-                Date date = item.getDate();
-                if(date!=null)
+                if(item!=null)
                 {
-                    if(date.getMonth()!=selectedDate.getMonth() || date.getYear()!=selectedDate.getYear())
+                    if(item.getMonth()!=selectedDate.getMonth() || item.getYear()!=selectedDate.getYear())
                     {
-                        selectedDate = date;
-                        adapter.updateSelectedDate(selectedDate, DateTools.GetDateItemsForGridviewFromDate(selectedDate));
+                        selectedDate = item;
+                        adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
                     }else {
-                        selectedDate = date;
-                        adapter.updateSelectedDate(selectedDate);
+                        selectedDate = item;
+                        adapter.updateSelectedDate(selectedDate.getDate());
                     }
                     updateMonthYear();
 
@@ -81,29 +90,30 @@ public class MainActivity extends AppCompatActivity
 
     private void updateMonthYear()
     {
-        Button btMonth = (Button)findViewById(R.id.btMonth);
-        Button btYear = (Button)findViewById(R.id.btYear);
+        btMonth.setText("Tháng " + selectedDate.getMonth());
+        btYear.setText("" + selectedDate.getYear());
 
-        btMonth.setText("Tháng " + (selectedDate.getMonth() + 1));
-        btYear.setText("" + (selectedDate.getYear() + 1900));
+        tvSolarMonthInfo.setText("Tháng " + selectedDate.getMonth() + " năm " + selectedDate.getYear());
+        tvSolarInfoDate.setText(""+selectedDate.getDayOfMonth());
+        tvSolarInfoDayInWeek.setText(selectedDate.getDayOfWeekInString());
+        tvLunarInfoDayInWeek.setText(selectedDate.getLunarInfo());
+        tvLunarInfoDayInWeek1.setText(selectedDate.getLunarInfo1());
+        tvSolarInfoToday.setText(selectedDate.getLunarGoodTime());
+
     }
 
     public void btClick(View view)
     {
-        Calendar c = Calendar.getInstance();
-        c.setTime(selectedDate);
         switch (view.getId())
         {
             case R.id.btBackMonth:
-                c.add(Calendar.MONTH, -1);
-                selectedDate = c.getTime();
-                adapter.updateSelectedDate(selectedDate, DateTools.GetDateItemsForGridviewFromDate(selectedDate));
+                selectedDate.addMonth(-1);
+                adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
                 updateMonthYear();
                 break;
             case R.id.btNextMonth:
-                c.add(Calendar.MONTH, 1);
-                selectedDate = c.getTime();
-                adapter.updateSelectedDate(selectedDate, DateTools.GetDateItemsForGridviewFromDate(selectedDate));
+                selectedDate.addMonth(1);
+                adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
                 updateMonthYear();
                 break;
         }
