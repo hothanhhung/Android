@@ -1,8 +1,11 @@
 package com.hunght.solarlunarcalendar;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,10 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.utils.DateTools;
@@ -116,7 +122,17 @@ public class MainActivity extends AppCompatActivity
                 adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
                 updateMonthYear();
                 break;
+            case R.id.btMonth:
+                callPopupWindowGetMonth();
+                break;
         }
+    }
+
+    private void setMonthAndYear(int month, int year)
+    {
+        selectedDate.setMonthYear(month, year);
+        adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
+        updateMonthYear();
     }
 
     @Override
@@ -174,5 +190,87 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    PopupWindow popupWindowGetMonth;
+    private void callPopupWindowGetMonth() {
+
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View popupView = layoutInflater.inflate(R.layout.get_month_layout, null);
+
+        popupWindowGetMonth = new PopupWindow(popupView,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+                true);
+        popupWindowGetMonth.setTouchable(true);
+        popupWindowGetMonth.setFocusable(true);
+
+        popupWindowGetMonth.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+
+        Button [] btGetMonths = {(Button) popupView.findViewById(R.id.btGetMonth01),
+                                (Button) popupView.findViewById(R.id.btGetMonth02),
+                                (Button) popupView.findViewById(R.id.btGetMonth03),
+                                (Button) popupView.findViewById(R.id.btGetMonth04),
+                                (Button) popupView.findViewById(R.id.btGetMonth05),
+                                (Button) popupView.findViewById(R.id.btGetMonth06),
+                                (Button) popupView.findViewById(R.id.btGetMonth07),
+                                (Button) popupView.findViewById(R.id.btGetMonth08),
+                                (Button) popupView.findViewById(R.id.btGetMonth09),
+                                (Button) popupView.findViewById(R.id.btGetMonth10),
+                                (Button) popupView.findViewById(R.id.btGetMonth11),
+                                (Button) popupView.findViewById(R.id.btGetMonth12)};
+
+        btGetMonths[selectedDate.getMonth() - 1].setTextColor(Color.GREEN);
+        for (Button button:btGetMonths) {
+            button.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View arg0) {
+
+                    switch (arg0.getId())
+                    {
+                        case R.id.btGetMonth01:
+                            setMonthAndYear(0, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth02:
+                            setMonthAndYear(1, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth03:
+                            setMonthAndYear(2, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth04:
+                            setMonthAndYear(3, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth05:
+                            setMonthAndYear(4, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth06:
+                            setMonthAndYear(5, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth07:
+                            setMonthAndYear(6, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth08:
+                            setMonthAndYear(7, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth09:
+                            setMonthAndYear(8, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth10:
+                            setMonthAndYear(9, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth11:
+                            setMonthAndYear(10, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth12:
+                            setMonthAndYear(11, selectedDate.getYear());
+                            break;
+                    }
+                    popupWindowGetMonth.dismiss();
+
+                }
+
+            });
+        }
     }
 }
