@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -125,6 +126,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.btMonth:
                 callPopupWindowGetMonth();
                 break;
+            case R.id.btYear:
+                callPopupWindowGetYear();
+                break;
+
         }
     }
 
@@ -272,5 +277,61 @@ public class MainActivity extends AppCompatActivity
 
             });
         }
+    }
+
+    PopupWindow popupWindowGetYear;
+    private void callPopupWindowGetYear() {
+
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View popupView = layoutInflater.inflate(R.layout.get_year_layout, null);
+
+        final NumberPicker npGetYear1 = (NumberPicker) popupView.findViewById(R.id.npGetYear1);
+        final NumberPicker npGetYear2 = (NumberPicker) popupView.findViewById(R.id.npGetYear2);
+        final NumberPicker npGetYear3 = (NumberPicker) popupView.findViewById(R.id.npGetYear3);
+        final NumberPicker npGetYear4 = (NumberPicker) popupView.findViewById(R.id.npGetYear4);
+        npGetYear1.setMinValue(0);
+        npGetYear2.setMinValue(0);
+        npGetYear3.setMinValue(0);
+        npGetYear4.setMinValue(0);
+        npGetYear1.setMaxValue(9);
+        npGetYear2.setMaxValue(9);
+        npGetYear3.setMaxValue(9);
+        npGetYear4.setMaxValue(9);
+
+        if(selectedDate != null){
+            int num = selectedDate.getYear();
+            npGetYear4.setValue(num%10);
+            num = (num/10);
+            npGetYear3.setValue(num%10);
+            num = (num/10);
+            npGetYear2.setValue(num%10);
+            num = num/10;
+            npGetYear1.setValue(num);
+        }
+        popupWindowGetYear = new PopupWindow(popupView,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+                true);
+        popupWindowGetYear.setTouchable(true);
+        popupWindowGetYear.setFocusable(true);
+
+        popupWindowGetYear.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+        ((Button) popupView.findViewById(R.id.btGetYearUpdate)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int year = npGetYear1.getValue() * 1000 + npGetYear2.getValue() * 100 + npGetYear3.getValue() * 10 + npGetYear4.getValue();
+                setMonthAndYear(selectedDate.getMonth() - 1, year);
+                popupWindowGetYear.dismiss();
+            }
+        });
+
+        ((Button) popupView.findViewById(R.id.btGetYearCancel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindowGetYear.dismiss();
+            }
+        });
+
     }
 }
