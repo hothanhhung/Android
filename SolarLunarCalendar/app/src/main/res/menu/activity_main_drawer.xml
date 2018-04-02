@@ -3,17 +3,21 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/navSolarLunarCalendar"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Xem Lịch" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/navExchangeTool"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Chuyển đổi lịch" />
+        <item
+            android:id="@+id/navPositionOfTheSun"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Tọa độ mặt trời" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/navNotes"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Bộ Ghi Chú" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

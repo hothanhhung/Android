@@ -141,7 +141,6 @@ public class DateItemForGridview {
         Date orginalDate = new Date(2013 - 1900, 8 - 1, 2); //Canh Tý
         int day = new Long(((date.getTime() -orginalDate.getTime())/(1000*24*3600)) % 60).intValue();
         if(day<0) day+=60;
-        day = day%12;
         return day;
     }
 
@@ -149,7 +148,7 @@ public class DateItemForGridview {
         String str = "Giờ hoàng đạo: ";
         if (date != null) {
 
-            int day = getDateInLunar();
+            int day = getDateInLunar() % 12;
             switch (day) {
                 case LunarDate.DAN:
                 case LunarDate.THAN:
@@ -215,7 +214,7 @@ public class DateItemForGridview {
 
     public boolean isGoodDay() {
         if (date != null) {
-            int day = getDateInLunar();
+            int day = getDateInLunar() % 12;
             int month = lunarDate.getMonth();
             switch (month) {
                 case 1:
@@ -261,7 +260,7 @@ public class DateItemForGridview {
 
     public boolean isBadDay() {
         if (date != null) {
-            int day = getDateInLunar();
+            int day = getDateInLunar() % 12;
             int month = lunarDate.getMonth();
             switch (month) {
                 case 1:

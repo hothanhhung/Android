@@ -13,32 +13,39 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:orientation="horizontal">
 
             <NumberPicker
                 android:id="@+id/npGetYear1"
+                android:theme="@android:style/Theme.Dialog"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:descendantFocusability="blocksDescendants"
+                android:layout_weight="1" />
 
             <NumberPicker
                 android:id="@+id/npGetYear2"
+                android:theme="@android:style/Theme.Dialog"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
                 android:layout_weight="1" />
 
             <NumberPicker
                 android:id="@+id/npGetYear3"
+                android:theme="@android:style/Theme.Dialog"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
                 android:layout_weight="1" />
 
             <NumberPicker
                 android:id="@+id/npGetYear4"
+                android:theme="@android:style/Theme.Dialog"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
                 android:layout_weight="1" />
         </LinearLayout>
 
