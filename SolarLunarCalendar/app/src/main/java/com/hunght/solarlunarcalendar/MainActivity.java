@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.view.menu.ExpandedMenuView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -36,11 +38,13 @@ public class MainActivity extends AppCompatActivity
     Button btMonth, btYear;
     TextView tvSolarMonthInfo, tvSolarInfoDate, tvSolarInfoDayInWeek, tvLunarInfoDayInWeek, tvLunarInfoDayInWeek1, tvSolarInfoToday;
 
+    LinearLayout llMainContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        selectedDate = new DateItemForGridview("", new Date(), false);
+        setContentView(R.layout.activity_main);/*
+        selectedDate = new DateItemForGridview("", new Date(), false);*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -51,93 +55,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-        btMonth = (Button)findViewById(R.id.btMonth);
-        btYear = (Button)findViewById(R.id.btYear);
-        tvSolarMonthInfo = (TextView)findViewById(R.id.tvSolarMonthInfo);
-        tvSolarInfoDate = (TextView)findViewById(R.id.tvSolarInfoDate);
-        tvSolarInfoDayInWeek = (TextView)findViewById(R.id.tvSolarInfoDayInWeek);
-        tvLunarInfoDayInWeek = (TextView)findViewById(R.id.tvLunarInfoDayInWeek);
-        tvLunarInfoDayInWeek1 = (TextView)findViewById(R.id.tvLunarInfoDayInWeek1);
-        tvSolarInfoToday = (TextView)findViewById(R.id.tvSolarInfoToday);
+        llMainContent = (LinearLayout)findViewById(R.id.llMainContent);
+        llMainContent.removeAllViews();
+        llMainContent.addView(new SolarLunarCalendarView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ArrayList<DateItemForGridview> lstDateItemForGridview = DateTools.GetDateItemsForGridviewFromDate();
-
-        GridView grvDates = (GridView) findViewById(R.id.grvDates);
-        adapter = new DateItemAdapter(this, lstDateItemForGridview, getResources());
-        grvDates.setAdapter(adapter);
-        grvDates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                DateItemForGridview item = (DateItemForGridview)view.getTag();
-                if(item!=null)
-                {
-                    if(item.getMonth()!=selectedDate.getMonth() || item.getYear()!=selectedDate.getYear())
-                    {
-                        selectedDate = item;
-                        adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
-                    }else {
-                        selectedDate = item;
-                        adapter.updateSelectedDate(selectedDate.getDate());
-                    }
-                    updateMonthYear();
-
-                }
-            }
-        });
-        updateMonthYear();
-    }
-
-    private void updateMonthYear()
-    {
-        btMonth.setText("Tháng " + selectedDate.getMonth());
-        btYear.setText("" + selectedDate.getYear());
-
-        tvSolarMonthInfo.setText("Tháng " + selectedDate.getMonth() + " năm " + selectedDate.getYear());
-        tvSolarInfoDate.setText(""+selectedDate.getDayOfMonth());
-        tvSolarInfoDayInWeek.setText(selectedDate.getDayOfWeekInString());
-        tvLunarInfoDayInWeek.setText(selectedDate.getLunarInfo());
-        tvLunarInfoDayInWeek1.setText(selectedDate.getLunarInfo1());
-        tvSolarInfoToday.setText(selectedDate.getLunarGoodTime());
-
-    }
-
-    public void btClick(View view)
-    {
-        switch (view.getId())
-        {
-            case R.id.btBackMonth:
-                selectedDate.addMonth(-1);
-                adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
-                updateMonthYear();
-                break;
-            case R.id.btNextMonth:
-                selectedDate.addMonth(1);
-                adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
-                updateMonthYear();
-                break;
-            case R.id.btMonth:
-                callPopupWindowGetMonth();
-                break;
-            case R.id.btYear:
-                callPopupWindowGetYear();
-                break;
-
-        }
-    }
-
-    private void setMonthAndYear(int month, int year)
-    {
-        selectedDate.setMonthYear(month, year);
-        adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
-        updateMonthYear();
     }
 
     @Override
@@ -178,18 +104,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        llMainContent.removeAllViews();
+        switch (id)
+        {
+            case R.id.navSolarLunarCalendar:
+                llMainContent.addView(new SolarLunarCalendarView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            break;
+            case R.id.navExchangeTool:
+                llMainContent.addView(new ExchangeToolView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+                break;
+            case R.id.navPositionOfTheSun:
+                break;
+            case R.id.navNotes:
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -197,141 +125,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    PopupWindow popupWindowGetMonth;
-    private void callPopupWindowGetMonth() {
-
-        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
-                .getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        View popupView = layoutInflater.inflate(R.layout.get_month_layout, null);
-
-        popupWindowGetMonth = new PopupWindow(popupView,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
-                true);
-        popupWindowGetMonth.setTouchable(true);
-        popupWindowGetMonth.setFocusable(true);
-
-        popupWindowGetMonth.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-
-        Button [] btGetMonths = {(Button) popupView.findViewById(R.id.btGetMonth01),
-                                (Button) popupView.findViewById(R.id.btGetMonth02),
-                                (Button) popupView.findViewById(R.id.btGetMonth03),
-                                (Button) popupView.findViewById(R.id.btGetMonth04),
-                                (Button) popupView.findViewById(R.id.btGetMonth05),
-                                (Button) popupView.findViewById(R.id.btGetMonth06),
-                                (Button) popupView.findViewById(R.id.btGetMonth07),
-                                (Button) popupView.findViewById(R.id.btGetMonth08),
-                                (Button) popupView.findViewById(R.id.btGetMonth09),
-                                (Button) popupView.findViewById(R.id.btGetMonth10),
-                                (Button) popupView.findViewById(R.id.btGetMonth11),
-                                (Button) popupView.findViewById(R.id.btGetMonth12)};
-
-        btGetMonths[selectedDate.getMonth() - 1].setTextColor(Color.GREEN);
-        for (Button button:btGetMonths) {
-            button.setOnClickListener(new View.OnClickListener() {
-
-                public void onClick(View arg0) {
-
-                    switch (arg0.getId())
-                    {
-                        case R.id.btGetMonth01:
-                            setMonthAndYear(0, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth02:
-                            setMonthAndYear(1, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth03:
-                            setMonthAndYear(2, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth04:
-                            setMonthAndYear(3, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth05:
-                            setMonthAndYear(4, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth06:
-                            setMonthAndYear(5, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth07:
-                            setMonthAndYear(6, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth08:
-                            setMonthAndYear(7, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth09:
-                            setMonthAndYear(8, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth10:
-                            setMonthAndYear(9, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth11:
-                            setMonthAndYear(10, selectedDate.getYear());
-                            break;
-                        case R.id.btGetMonth12:
-                            setMonthAndYear(11, selectedDate.getYear());
-                            break;
-                    }
-                    popupWindowGetMonth.dismiss();
-
-                }
-
-            });
-        }
-    }
-
-    PopupWindow popupWindowGetYear;
-    private void callPopupWindowGetYear() {
-
-        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
-                .getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        View popupView = layoutInflater.inflate(R.layout.get_year_layout, null);
-
-        final NumberPicker npGetYear1 = (NumberPicker) popupView.findViewById(R.id.npGetYear1);
-        final NumberPicker npGetYear2 = (NumberPicker) popupView.findViewById(R.id.npGetYear2);
-        final NumberPicker npGetYear3 = (NumberPicker) popupView.findViewById(R.id.npGetYear3);
-        final NumberPicker npGetYear4 = (NumberPicker) popupView.findViewById(R.id.npGetYear4);
-        npGetYear1.setMinValue(0);
-        npGetYear2.setMinValue(0);
-        npGetYear3.setMinValue(0);
-        npGetYear4.setMinValue(0);
-        npGetYear1.setMaxValue(9);
-        npGetYear2.setMaxValue(9);
-        npGetYear3.setMaxValue(9);
-        npGetYear4.setMaxValue(9);
-
-        if(selectedDate != null){
-            int num = selectedDate.getYear();
-            npGetYear4.setValue(num%10);
-            num = (num/10);
-            npGetYear3.setValue(num%10);
-            num = (num/10);
-            npGetYear2.setValue(num%10);
-            num = num/10;
-            npGetYear1.setValue(num);
-        }
-        popupWindowGetYear = new PopupWindow(popupView,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
-                true);
-        popupWindowGetYear.setTouchable(true);
-        popupWindowGetYear.setFocusable(true);
-
-        popupWindowGetYear.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-        ((Button) popupView.findViewById(R.id.btGetYearUpdate)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int year = npGetYear1.getValue() * 1000 + npGetYear2.getValue() * 100 + npGetYear3.getValue() * 10 + npGetYear4.getValue();
-                setMonthAndYear(selectedDate.getMonth() - 1, year);
-                popupWindowGetYear.dismiss();
-            }
-        });
-
-        ((Button) popupView.findViewById(R.id.btGetYearCancel)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindowGetYear.dismiss();
-            }
-        });
-
-    }
 }

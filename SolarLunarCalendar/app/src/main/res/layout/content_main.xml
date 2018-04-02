@@ -17,18 +17,21 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="5dp"
+        android:background="@drawable/custom_rectangle"
         android:layout_margin="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="#fff"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:background="#fff"
                 android:orientation="vertical">
 
                 <TextView
@@ -83,7 +86,8 @@
                     </LinearLayout>
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
+                        android:src="@drawable/amduong"
                         android:gravity="center"
                         android:layout_weight="2" />
                     <LinearLayout
@@ -117,6 +121,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:orientation="vertical">
 
             <GridView

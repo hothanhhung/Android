@@ -1,6 +1,7 @@
 package com.hunght.solarlunarcalendar;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -23,10 +24,10 @@ public class DateItemAdapter extends ArrayAdapter<DateItemForGridview> {
     private ArrayList<DateItemForGridview> data;
     private static LayoutInflater inflater=null;
     public Resources res;
-    Activity context;
+    Context context;
     Date selectedDate;
 
-    public DateItemAdapter(Activity a, ArrayList<DateItemForGridview> d, Resources resLocal ) {
+    public DateItemAdapter(Context a, ArrayList<DateItemForGridview> d, Resources resLocal ) {
         super( a, R.layout.detail_info_date_item, R.id.title, d );
         context = a;
         data=d;

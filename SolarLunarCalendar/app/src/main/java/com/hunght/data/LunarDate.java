@@ -36,7 +36,7 @@ public class LunarDate {
     }
     public String getMonthInString()
     {
-        return CAN[((thang-1)+((nam%10)*2)+8)%10]+" "+ CHI[(thang+1)%12];
+        return CAN[((nam*12+thang+3)%10 + 4)%10]+" "+ CHI[(thang+1)%12];
     }
     public int getYear()
     {

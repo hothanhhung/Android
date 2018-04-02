@@ -6,8 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.hunght.solarlunarcalendar.MainActivity">
 
-
-    <include layout="@layout/content_main" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/llMainContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:textSize="16dp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:lineSpacingMultiplier="1.5"
+                android:text="Xin Chao"/>
+        </LinearLayout>
+    </LinearLayout>
+    <!--<include layout="@layout/content_main" />-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
