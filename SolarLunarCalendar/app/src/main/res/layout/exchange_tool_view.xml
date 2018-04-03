@@ -55,20 +55,35 @@
             android:layout_height="wrap_content" >
 
             <RadioButton
-                android:id="@+id/rbLunarToSolar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="Lịch Âm Sang Lịch Dương" />
-
-            <RadioButton
                 android:id="@+id/rbSolarToLunar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:checked="true"
                 android:text="Lịch Dương Sang Lịch Âm" />
 
+            <RadioButton
+                android:id="@+id/rbLunarToSolar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="Lịch Âm Sang Lịch Dương" />
+
         </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvExchangeToolInfoDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="" />
     </LinearLayout>
 </LinearLayout>

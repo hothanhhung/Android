@@ -124,8 +124,8 @@ public class SolarLunarCalendarView extends LinearLayout {
         tvSolarMonthInfo.setText("Tháng " + selectedDate.getMonth() + " năm " + selectedDate.getYear());
         tvSolarInfoDate.setText(""+selectedDate.getDayOfMonth());
         tvSolarInfoDayInWeek.setText(selectedDate.getDayOfWeekInString());
-        tvLunarInfoDayInWeek.setText(selectedDate.getLunarInfo());
-        tvLunarInfoDayInWeek1.setText(selectedDate.getLunarInfo1());
+        tvLunarInfoDayInWeek.setText(selectedDate.getLunarInfo(true));
+        tvLunarInfoDayInWeek1.setText(selectedDate.getLunarInfo1(true));
         tvSolarInfoToday.setText(selectedDate.getLunarGoodTime());
 
     }

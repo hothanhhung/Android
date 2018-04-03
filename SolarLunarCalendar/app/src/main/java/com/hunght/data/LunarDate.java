@@ -7,7 +7,7 @@ package com.hunght.data;
 public class LunarDate {
     public static final int TY = 0, SUU = 1, DAN =2, MAO = 3, THIN = 4, TI = 5, NGO=6, MUI=7, THAN=8, DAU = 9, TUAT = 10, HOI = 11;
     public static final String[] GIO = {"23-1","1-3", "3-5", "5-7", "7-9", "9-11", "11-13", "13-15", "15-17", "17-19", "19-21", "21-23"};
-    public static final String[] CHI = {"Tý","Sữu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"};
+    public static final String[] CHI = {"Tý","Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"};
     public static final String[] CAN = {"Canh", "Tân", "Nhâm", "Quý", "Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ"};
     int ngay, thang, nam;
     boolean nhuan;
