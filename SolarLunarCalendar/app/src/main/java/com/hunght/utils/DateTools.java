@@ -51,4 +51,37 @@ public class DateTools {
         return new LunarDate(date[0], date[1], date[2], date[3] != 0);
     }
 
+    public static DateItemForGridview convertLunar2DateItemForGridview(int intNgay, int intThang, int intNam, boolean isLeap) {
+        int[] solarDate = VietCalendar.convertLunar2Solar(intNgay, intThang, intNam, isLeap?1:0, 7.0);
+        int[] l = VietCalendar.convertSolar2Lunar(solarDate[0], solarDate[1], solarDate[2], 7.0);
+        int[] solarDate2 = VietCalendar.convertLunar2Solar(l[0], l[1], l[2], l[3], 7.0);
+        if (solarDate[0] == solarDate2[0] && solarDate[1] == solarDate2[1] && solarDate[2] == solarDate2[2]) {
+            return new DateItemForGridview(null, new Date(solarDate2[2] - 1900, solarDate2[1] - 1, solarDate2[0]), false);
+        } else {
+            return null;
+        }
+    }
+
+    public static DateItemForGridview convertSolar2DateItemForGridview(int intNgay, int intThang, int intNam) {
+        int[] l = VietCalendar.convertSolar2Lunar(intNgay, intThang, intNam, 7.0);
+        int[] solarDate2 = VietCalendar.convertLunar2Solar(l[0], l[1], l[2], l[3], 7.0);
+        if (intNgay == solarDate2[0] && intThang == solarDate2[1] && intNam == solarDate2[2]) {
+            return new DateItemForGridview(null, new Date(solarDate2[2] - 1900, solarDate2[1] - 1, solarDate2[0]), false);
+        } else {
+            return null;
+        }
+    }
+
+    public static int numberOfDayInLunarMonth(int thang, int nam)
+    {
+        int[] solarDate = VietCalendar.convertLunar2Solar(30, thang, nam, 0, 7.0);
+        int[] l = VietCalendar.convertSolar2Lunar(solarDate[0], solarDate[1], solarDate[2], 7.0);
+        if(l[0]==30 && l[1] == thang && l[2] == nam)
+        {
+            return 30;
+        }else
+        {
+            return 29;
+        }
+    }
 }

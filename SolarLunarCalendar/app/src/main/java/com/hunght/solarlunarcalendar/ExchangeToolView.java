@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.hunght.data.DateItemForGridview;
@@ -31,6 +33,11 @@ import java.util.Date;
 public class ExchangeToolView extends LinearLayout {
     int date, month, year;
     NumberPicker npExchangeToolDate, npExchangeToolMonth, npExchangeToolYear;
+    RadioButton rbLunarToSolar, rbSolarToLunar;
+    TextView tvExchangeToolInfoDate;
+
+
+
     public ExchangeToolView(Context context) {
         super(context);
         initView();
@@ -59,6 +66,11 @@ public class ExchangeToolView extends LinearLayout {
         date = today.getDate();
         month = today.getMonth();
         year = today.getYear() + 1900;
+        rbLunarToSolar = (RadioButton) view.findViewById(R.id.rbLunarToSolar);
+        rbSolarToLunar = (RadioButton) view.findViewById(R.id.rbSolarToLunar);
+
+        tvExchangeToolInfoDate = (TextView) view.findViewById(R.id.tvExchangeToolInfoDate);
+
         npExchangeToolDate = (NumberPicker) view.findViewById(R.id.npExchangeToolDate);
         npExchangeToolMonth = (NumberPicker) view.findViewById(R.id.npExchangeToolMonth);
         npExchangeToolYear = (NumberPicker) view.findViewById(R.id.npExchangeToolYear);
@@ -83,11 +95,98 @@ public class ExchangeToolView extends LinearLayout {
             }
         });
         btExchangeToolOk.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View arg0) {
+                date = npExchangeToolDate.getValue();
+                month = npExchangeToolMonth.getValue();
+                year = npExchangeToolYear.getValue();
+
+                if(rbLunarToSolar.isChecked())
+                {
+                    showDetailDate(DateItemForGridview.createDateItemForGridview(date, month + 1, year, false, true));
+                }else if(rbSolarToLunar.isChecked())
+                {
+                    showDetailDate(DateItemForGridview.createDateItemForGridview(date, month + 1, year, false, false));
+                }
             }
         });
 
+        npExchangeToolMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                validateDate();
+            }
+        });
+        npExchangeToolYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                validateDate();
+            }
+        });
+
+        rbSolarToLunar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                validateDate();
+            }
+        });
+
+        rbLunarToSolar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                validateDate();
+            }
+        });
+        showDetailDate(new DateItemForGridview(null, today, false));
+    }
+
+    private void validateDate()
+    {
+        int m = npExchangeToolMonth.getValue() + 1;
+        int y = npExchangeToolYear.getValue();
+        if(rbLunarToSolar.isChecked())
+        {
+            int d = npExchangeToolDate.getValue();
+            int dayInMonth = DateTools.numberOfDayInLunarMonth(m, y);
+            npExchangeToolDate.setMaxValue(dayInMonth);
+            if(d>dayInMonth) npExchangeToolDate.setValue(dayInMonth);
+        }else if(rbSolarToLunar.isChecked())
+        {
+
+            if(m == 2){
+                if((y%400 == 0) || (y % 4==0 && y%100 == 0)) {
+                    int d = npExchangeToolDate.getValue();
+                    npExchangeToolDate.setMaxValue(29);
+                    if(d>29) npExchangeToolDate.setValue(29);
+                }else{
+                    int d = npExchangeToolDate.getValue();
+                    npExchangeToolDate.setMaxValue(28);
+                    if(d>28) npExchangeToolDate.setValue(28);
+                }
+            }
+            else if(m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m  == 10 || m == 12)
+            {
+                npExchangeToolDate.setMaxValue(31);
+            }else{
+                int d = npExchangeToolDate.getValue();
+                npExchangeToolDate.setMaxValue(30);
+                if(d>30) npExchangeToolDate.setValue(30);
+            }
+        }
+    }
+
+    private void showDetailDate(DateItemForGridview exchangedDate)
+    {
+        if(exchangedDate!=null && !exchangedDate.isTitle())
+        {
+            String str = "";
+            str += "Ngày dương: "+exchangedDate.getSolarInfo(false);
+            str += "\nNgày âm: "+exchangedDate.getLunarInfo(false) + " - " + exchangedDate.getLunarInfo1(false);
+            str += exchangedDate.isGoodDay()?"\nLà ngày hoàng đạo":( exchangedDate.isBadDay()?"\nLà ngày hắc đạo":"");
+            str += "\n"+exchangedDate.getLunarGoodTime();
+            tvExchangeToolInfoDate.setText(str);
+        }else{
+            tvExchangeToolInfoDate.setText("Ngày không hợp lệ");
+        }
     }
 
     PopupWindow popupWindowGetYear;

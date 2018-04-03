@@ -25,6 +25,15 @@ public class DateItemForGridview {
 
     }
 
+    static public DateItemForGridview createDateItemForGridview(int d, int m, int y, boolean isLeap, boolean isLunar)
+    {
+        if(isLunar){
+            return DateTools.convertLunar2DateItemForGridview(d, m, y, isLeap);
+        }else{
+            return DateTools.convertSolar2DateItemForGridview(d, m, y);
+        }
+    }
+
     public DateItemForGridview(String title, Date date, boolean isOutOfMonth)
     {
         this.title = title;
@@ -115,23 +124,34 @@ public class DateItemForGridview {
         }
         return str;
     }
-
-    public String getLunarInfo()
+    public String getSolarInfo(boolean isNewLine)
     {
+        String space = isNewLine?"\n":" ";
         String str = "";
         if(date!=null)
         {
-            str += "Ngày "+lunarDate.getDate()+"\nTháng "+lunarDate.getMonth() + (lunarDate.isLeap()?" (N)":"") +"\nNăm Âm Lịch";
+            str += "Ngày "+getSolarDate()+ space +"Tháng "+getMonth()+space+"Năm " + getYear();
+        }
+        return str;
+    }
+    public String getLunarInfo(boolean isNewLine)
+    {
+        String space = isNewLine?"\n":" ";
+        String str = "";
+        if(date!=null)
+        {
+            str += "Ngày "+lunarDate.getDate()+ space +"Tháng "+lunarDate.getMonth() + (lunarDate.isLeap()?" (N)":"") + space +"Năm Âm Lịch";
         }
         return str;
     }
 
-    public String getLunarInfo1()
+    public String getLunarInfo1(boolean isNewLine)
     {
+        String space = isNewLine?"\n":" ";
         String str = "";
         if(date!=null)
         {
-            str += "Ngày "+getLunarDateInString()+"\nTháng "+lunarDate.getMonthInString()+"\nNăm "+lunarDate.getYearInString();
+            str += "Ngày "+getLunarDateInString()+ space +"Tháng "+lunarDate.getMonthInString()+ space +"Năm "+lunarDate.getYearInString();
         }
         return str;
     }
