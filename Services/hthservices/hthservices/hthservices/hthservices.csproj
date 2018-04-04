@@ -21,6 +21,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <NuGetPackageImportStamp>30c218ca</NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -150,6 +152,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\LichTiviController.cs" />
     <Compile Include="Controllers\RetrieveDataController.cs" />
+    <Compile Include="Controllers\SolarLunarController.cs" />
     <Compile Include="Controllers\TraCuuOnlineController.cs" />
     <Compile Include="Data\AuthData.cs" />
     <Compile Include="Global.asax.cs">
@@ -167,6 +170,7 @@
     <Compile Include="Sudoku\SQLiteProcess.cs" />
     <Compile Include="Sudoku\Sudoku.cs" />
     <Compile Include="Sudoku\SudokuItem.cs" />
+    <Compile Include="Utils\ChamNgonInfo.cs" />
     <Compile Include="Utils\Channel.cs" />
     <Compile Include="Utils\DataProcess.cs" />
     <Compile Include="Utils\DataStatic.cs" />
@@ -179,6 +183,7 @@
     <Compile Include="Utils\ScheduleRequestLog.cs" />
     <Compile Include="Utils\SearchItem.cs" />
     <Compile Include="Utils\SQLiteProcess.cs" />
+    <Compile Include="Utils\ThapNhiBatTuInfo.cs" />
     <Compile Include="Utils\TraCuuOnlineHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +195,8 @@
     <Content Include="AdsWeb\app.module.js" />
     <Content Include="AdsWeb\Index.html" />
     <Content Include="AdsWeb\style.css" />
+    <None Include="Data\ThapNhiBatTu.json" />
+    <None Include="Data\ChamNgon.json" />
     <Content Include="htmlpage\LookupOnline\bongda.html" />
     <Content Include="htmlpage\LookupOnline\DauSoDienThoai.html" />
     <Content Include="htmlpage\LookupOnline\MaBienSo.html" />
