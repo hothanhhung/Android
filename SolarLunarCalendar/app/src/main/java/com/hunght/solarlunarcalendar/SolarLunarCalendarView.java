@@ -12,15 +12,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hunght.data.DateItemForGridview;
+import com.hunght.data.LunarDate;
 import com.hunght.utils.DateTools;
 
 import java.util.ArrayList;
@@ -34,7 +37,9 @@ public class SolarLunarCalendarView extends LinearLayout {
     DateItemForGridview selectedDate;
     DateItemAdapter adapter;
     Button btMonth, btYear;
-    TextView tvSolarMonthInfo, tvSolarInfoDate, tvSolarInfoDayInWeek, tvLunarInfoDayInWeek, tvLunarInfoDayInWeek1, tvSolarInfoToday;
+    TextView tvSpecialDate, tvSolarMonthInfo, tvSolarInfoDate, tvSolarInfoDayInWeek, tvLunarInfoDayInWeek, tvLunarInfoDayInWeek1, tvSolarInfoToday;
+    WebView wvSpecialDate;
+    ImageView imConGiap;
 
     public SolarLunarCalendarView(Context context) {
         super(context);
@@ -69,6 +74,9 @@ public class SolarLunarCalendarView extends LinearLayout {
         tvLunarInfoDayInWeek = (TextView)view.findViewById(R.id.tvLunarInfoDayInWeek);
         tvLunarInfoDayInWeek1 = (TextView)view.findViewById(R.id.tvLunarInfoDayInWeek1);
         tvSolarInfoToday = (TextView)view.findViewById(R.id.tvSolarInfoToday);
+        tvSpecialDate = (TextView)view.findViewById(R.id.tvSpecialDate);
+        wvSpecialDate = (WebView) view.findViewById(R.id.wvSpecialDate);
+        imConGiap = (ImageView) view.findViewById(R.id.imConGiap);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -118,6 +126,22 @@ public class SolarLunarCalendarView extends LinearLayout {
 
     private void updateMonthYear()
     {
+        if(selectedDate.isHoliday())
+        {
+            tvSolarMonthInfo.setTextColor(Color.parseColor("#cc393e"));
+            tvSolarInfoDate.setTextColor(Color.parseColor("#cc393e"));
+            tvSolarInfoDayInWeek.setTextColor(Color.parseColor("#cc393e"));
+            tvLunarInfoDayInWeek.setTextColor(Color.parseColor("#cc393e"));
+            tvLunarInfoDayInWeek1.setTextColor(Color.parseColor("#cc393e"));
+            tvSpecialDate.setTextColor(Color.parseColor("#cc393e"));
+        }else {
+            tvSolarMonthInfo.setTextColor(Color.DKGRAY);
+            tvSolarInfoDate.setTextColor(Color.DKGRAY);
+            tvSolarInfoDayInWeek.setTextColor(Color.DKGRAY);
+            tvLunarInfoDayInWeek.setTextColor(Color.DKGRAY);
+            tvLunarInfoDayInWeek1.setTextColor(Color.DKGRAY);
+            tvSpecialDate.setTextColor(Color.DKGRAY);
+        }
         btMonth.setText("Tháng " + selectedDate.getMonth());
         btYear.setText("" + selectedDate.getYear());
 
@@ -127,6 +151,33 @@ public class SolarLunarCalendarView extends LinearLayout {
         tvLunarInfoDayInWeek.setText(selectedDate.getLunarInfo(true));
         tvLunarInfoDayInWeek1.setText(selectedDate.getLunarInfo1(true));
         tvSolarInfoToday.setText(selectedDate.getLunarGoodTime());
+
+        String specialDate = selectedDate.specialDate();
+        if(specialDate!=null && specialDate != "")
+        {
+            tvSpecialDate.setVisibility(VISIBLE);
+            tvSpecialDate.setText(specialDate);
+        }else{
+            tvSpecialDate.setVisibility(GONE);
+        }
+        //wvSpecialDate.
+
+        int lunarDate = selectedDate.getDateInLunar() % 12;
+        switch (lunarDate)
+        {
+            case LunarDate.TY: imConGiap.setImageResource(R.drawable.ty); break;
+            case LunarDate.SUU: imConGiap.setImageResource(R.drawable.suu); break;
+            case LunarDate.DAN: imConGiap.setImageResource(R.drawable.dan); break;
+            case LunarDate.MAO: imConGiap.setImageResource(R.drawable.meo); break;
+            case LunarDate.THIN: imConGiap.setImageResource(R.drawable.thin); break;
+            case LunarDate.TI: imConGiap.setImageResource(R.drawable.ti); break;
+            case LunarDate.NGO: imConGiap.setImageResource(R.drawable.ngo); break;
+            case LunarDate.MUI: imConGiap.setImageResource(R.drawable.mui); break;
+            case LunarDate.THAN: imConGiap.setImageResource(R.drawable.than); break;
+            case LunarDate.DAU: imConGiap.setImageResource(R.drawable.dau); break;
+            case LunarDate.TUAT: imConGiap.setImageResource(R.drawable.tuat); break;
+            case LunarDate.HOI: imConGiap.setImageResource(R.drawable.hoi); break;
+        }
 
     }
 

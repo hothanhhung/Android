@@ -156,7 +156,7 @@ public class DateItemForGridview {
         return str;
     }
 
-    private int getDateInLunar()
+    public int getDateInLunar()
     {
         Date orginalDate = new Date(2013 - 1900, 8 - 1, 2); //Canh Tý
         int day = new Long(((date.getTime() -orginalDate.getTime())/(1000*24*3600)) % 60).intValue();
@@ -340,12 +340,114 @@ public class DateItemForGridview {
         return "13";
     }
 
-    public boolean isHoliday(){
+    public boolean isWeekend(){
         if(date!=null)
         {
             return date.getDay() == 0;
         }
         return title == "CN";
+    }
+
+    public boolean isHoliday(){
+        if(date!=null)
+        {
+            return (date.getDate() == 1 && date.getMonth() == 0)
+                    || (date.getDate() == 30 && date.getMonth() == 3)
+                    || (date.getDate() == 1 && date.getMonth() == 4)
+                    || (date.getDate() == 2 && date.getMonth() == 8)
+                    || lunarDate.isGioTo() || lunarDate.isTet();
+        }
+        return false;
+    }
+
+    public String specialDate()
+    {
+        if(date!=null) {
+            String str = lunarDate.specialDate();
+            if (str != null && str != "") return str;
+            str = "" + date.getDate() + "/" + (date.getMonth() + 1);
+            switch (str) {
+                case "9/1":
+                    return "Ngày Học sinh - Sinh viên Việt Nam";
+                case "27/1":
+                    return "Ngày ký hiệp định Pari";
+                case "3/2":
+                    return "Ngày Thành lập Đảng Cộng sản Việt Nam";
+                case "14/2":
+                    return "Ngày lễ tình yêu";
+                case "27/2":
+                    return "Ngày Thầy thuốc Việt Nam";
+                case "8/3":
+                    return "Ngày Quốc tế Phụ nữ";
+                case "19/3":
+                    return "Ngày Toàn quốc chống Mỹ";
+                case "26/3":
+                    return "Ngày thành lập Đoàn Thanh niên Cộng sản Hồ Chí Minh";
+                case "1/4":
+                    return "Ngày cá Tháng Tư";
+                case "30/4":
+                    return "Ngày giải phóng miền Nam";
+                case "1/5":
+                    return "Ngày Quốc tế lao động";
+                case "7/5":
+                    return "Ngày Chiến thắng Điện Biên Phủ";
+                case "15/5":
+                    return "Ngày Thành lập đội thiếu niên tiền phong Hồ Chí Minh";
+                case "19/5":
+                    return "Ngày sinh chủ tịch Hồ Chí Minh";
+                case "28/5":
+                    return "Ngày Tưởng niệm";
+                case "1/6":
+                    return "Ngày Quốc tế Thiếu nhi";
+                case "21/6":
+                    return "Ngày báo chí Việt Nam";
+                case "28/6":
+                    return "Ngày Gia đình Việt Nam";
+                case "15/7":
+                    return "Ngày Truyền thống thanh niên xung phong";
+                case "27/7":
+                    return "Ngày Thương binh Liệt sĩ";
+                case "28/7":
+                    return "Ngày Thành lập tổng liên đoàn lao động Việt Nam";
+                case "19/8":
+                    return "Ngày Cách mạng tháng Tám thành công";
+                case "2/9":
+                    return "Ngày Quốc khánh Việt Nam";
+                case "10/9":
+                    return "Ngày Thành lập Mặt trận tổ quốc Việt Nam";
+                case "20/9":
+                    return "Ngày Gia nhập Liên Hiệp Quốc";
+                case "23/9":
+                    return "Ngày Nam Bộ kháng chiến";
+                case "1/10":
+                    return "Ngày Quốc tế người cao tuổi";
+                case "10/10":
+                    return "Ngày Giải phóng Thủ đô (Hà Nội)";
+                case "14/10":
+                    return "Ngày thành lập hội nông dân Việt Nam";
+                case "15/10":
+                    return "Ngày thành lập Hội liên hiệp thanh niên Việt Nam";
+                case "20/10":
+                    return "Ngày thành lập Hội Phụ nữ Việt Nam";
+                case "31/10":
+                    return "Lễ hội Halloween";
+                case "7/11":
+                    return "Ngày Việt Nam gia nhập WTO";
+                case "20/11":
+                    return "Ngày Nhà giáo Việt Nam";
+                case "23/11":
+                    return "Ngày Khởi nghĩa Nam Kỳ";
+                case "1/12":
+                    return "Ngày thế giới phòng chống AIDS";
+                case "19/12":
+                    return "Ngày toàn quốc kháng chiến";
+                case "22/12":
+                    return "Ngày thành lập Quân đội Nhân dân Việt Nam";
+                case "25/12":
+                    return "Lễ Giáng Sinh";
+            }
+        }
+        return "";
     }
 
     public Date getDate(){
