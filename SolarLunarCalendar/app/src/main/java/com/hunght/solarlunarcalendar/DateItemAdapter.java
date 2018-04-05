@@ -86,12 +86,16 @@ public class DateItemAdapter extends ArrayAdapter<DateItemForGridview> {
             tvTitle.setText(item.getTitle());
             tvSolarDate.setText(item.getSolarDate());
             tvLunarDate.setText(item.getLunarDateToDisplay());
-            if(item.isHoliday()){
+            if(item.isWeekend() || item.isHoliday()){
                 tvTitle.setTextColor(Color.RED);
                 tvSolarDate.setTextColor(Color.RED);
                 tvLunarDate.setTextColor(Color.RED);
             }
-
+            else{
+                tvTitle.setTextColor(Color.DKGRAY);
+                tvSolarDate.setTextColor(Color.DKGRAY);
+                tvLunarDate.setTextColor(Color.DKGRAY);
+            }
             if(item.isGoodDay())
             {
                 tvInfoDate.setTextColor(Color.RED);

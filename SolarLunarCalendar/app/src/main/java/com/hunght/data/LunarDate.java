@@ -57,4 +57,25 @@ public class LunarDate {
     {
         return LunarDate.CHI[chi] + " (" + LunarDate.GIO[chi]+")";
     }
+
+    public boolean isTet()
+    {
+        return ((thang == 1) &&(ngay == 1||ngay == 2||ngay == 3));
+    }
+
+    public boolean isGioTo()
+    {
+        return (thang == 3 && ngay == 10 && !nhuan);
+    }
+
+    public String specialDate() {
+        String str = "" + ngay + "/" + thang;
+        switch (str) {
+            case "1/1": return "Mùng 1 tết";
+            case "2/1": return "Mùng 2 tết";
+            case "3/1": return "Mùng 3 tết";
+            case "10/3": return "Giỗ Tổ Hùng Vương";
+        }
+        return "";
+    }
 }
