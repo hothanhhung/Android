@@ -179,6 +179,7 @@
     <Compile Include="Utils\GuideItem.cs" />
     <Compile Include="Utils\HtmlHelper.cs" />
     <Compile Include="Utils\MethodHelpers.cs" />
+    <Compile Include="Utils\OverrideFilterAttributes.cs" />
     <Compile Include="Utils\RequestFilterHandler.cs" />
     <Compile Include="Utils\ScheduleRequestLog.cs" />
     <Compile Include="Utils\SearchItem.cs" />

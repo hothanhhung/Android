@@ -11,6 +11,16 @@ namespace hthservices.Controllers
 {
     public class SolarLunarController : ApiController
     {
+        [GZipOrDeflate]
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetInfoDate1(string date, int index)
+        {
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(ThapNhiBatTuInfo.GetThapNhiBatTu(index), Encoding.UTF8, "text/html")
+            };
+        }
+
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetInfoDate(string date, int index)
         {
