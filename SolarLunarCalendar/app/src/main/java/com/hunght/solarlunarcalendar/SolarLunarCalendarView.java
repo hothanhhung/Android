@@ -2,12 +2,14 @@ package com.hunght.solarlunarcalendar;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.data.LunarDate;
 import com.hunght.utils.DateTools;
+import com.hunght.utils.ServiceProcessor;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +44,7 @@ public class SolarLunarCalendarView extends LinearLayout {
     TextView tvSpecialDate, tvSolarMonthInfo, tvSolarInfoDate, tvSolarInfoDayInWeek, tvLunarInfoDayInWeek, tvLunarInfoDayInWeek1, tvSolarInfoToday;
     WebView wvSpecialDate;
     ImageView imConGiap;
+    PerformServiceProcessBackgroundTask currentPerformServiceProcessBackgroundTask;
 
     public SolarLunarCalendarView(Context context) {
         super(context);
@@ -126,6 +131,15 @@ public class SolarLunarCalendarView extends LinearLayout {
 
     private void updateMonthYear()
     {
+        wvSpecialDate.loadDataWithBaseURL("", "", "text/html", "UTF-8", "");
+        if(currentPerformServiceProcessBackgroundTask!=null)
+        {
+            currentPerformServiceProcessBackgroundTask.cancel(true);
+            currentPerformServiceProcessBackgroundTask = null;
+        }
+        currentPerformServiceProcessBackgroundTask = new PerformServiceProcessBackgroundTask();
+        currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
+
         if(selectedDate.isHoliday())
         {
             tvSolarMonthInfo.setTextColor(Color.parseColor("#cc393e"));
@@ -349,4 +363,47 @@ public class SolarLunarCalendarView extends LinearLayout {
         });
 
     }
+
+    class PerformServiceProcessBackgroundTask extends AsyncTask< Object, Object, Object >
+    {
+        private int type;
+
+        protected void onPreExecute()
+        {
+        }
+
+        protected Object doInBackground(Object... params)
+        {
+            type = Integer.parseInt(params[0].toString());
+            switch (type){
+                case ServiceProcessor.SERVICE_GET_CHAM_NGON:
+                    return ServiceProcessor.getChamNgon(params[1].toString(),Integer.parseInt(params[2].toString()));
+
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object object)
+        {
+            switch (type){
+                case ServiceProcessor.SERVICE_GET_CHAM_NGON:
+                    if(object != null) {
+                        String str = String.valueOf(object);
+                        Log.d("onPostExecute",str);
+                        if(str!=null) {
+                            wvSpecialDate.loadDataWithBaseURL("", str, "text/html", "UTF-8", "");
+                        }else{
+                            Toast.makeText(getContext(),"Error to connect to server", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(getContext(),"Error to connect to server", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+
+        }
+
+    }
+
 }
