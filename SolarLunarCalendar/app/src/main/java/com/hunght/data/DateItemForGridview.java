@@ -491,4 +491,13 @@ public class DateItemForGridview {
         }
         return 0;
     }
+
+    public String getDisplaySolarDate()
+    {
+        if(date!=null)
+        {
+            return String.format("%1$02d-%2$02d-%2$02d", getDayOfMonth(), getMonth(), getYear());
+        }
+        return "";
+    }
 }
