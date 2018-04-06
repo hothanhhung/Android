@@ -4,22 +4,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace hthservices.Controllers
 {
     public class SolarLunarController : ApiController
     {
-        public string GetInfoDate(string date, int index)
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetInfoDate(string date, int index)
         {
-            return ThapNhiBatTuInfo.GetThapNhiBatTu(index);
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(ThapNhiBatTuInfo.GetThapNhiBatTu(index), Encoding.UTF8, "text/html")
+            };
         }
 
-        public string GetInfoChamNgon(string date, int index)
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetInfoChamNgon(string date, int index)
         {
-            return ChamNgonInfo.GetThapNhiBatTuHTML(index);
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(ChamNgonInfo.GetThapNhiBatTuHTML(index), Encoding.UTF8, "text/html")
+            };
+         
         }
 
+        [System.Web.Http.HttpGet]
         public string Reset()
         {
             ThapNhiBatTuInfo.Reset();

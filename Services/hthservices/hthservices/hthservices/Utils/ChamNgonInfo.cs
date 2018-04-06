@@ -42,11 +42,11 @@ namespace hthservices.Utils
         public static string GetThapNhiBatTuHTML(int index)
         {
             string str = string.Empty;
-            if (ChamNgons.Count > 0)
+            if (ChamNgons.Count > 1)
             {
-                index = index % ChamNgons.Count;
+                index = (index % (ChamNgons.Count - 1)) + 1;
                 var chamngon = ChamNgons[index];
-                str = String.Format("{0}<br>{1}", chamngon.Content.Replace(". ",".<br>"), chamngon.Author);
+                str = String.Format(ChamNgons[0].Content, chamngon.Content.Replace(". ", ".<br>"), chamngon.Author);
             }
             return str;
         }
@@ -54,9 +54,9 @@ namespace hthservices.Utils
         public static string GetThapNhiBatTuText(int index)
         {
             string str = string.Empty;
-            if (ChamNgons.Count > 0)
+            if (ChamNgons.Count > 1)
             {
-                index = index % ChamNgons.Count;
+                index = (index % (ChamNgons.Count - 1)) + 1;
                 var chamngon = ChamNgons[index];
                 str = String.Format("{0}\n{1}", chamngon.Content.Replace(". ", ".\n"), chamngon.Author);
             }

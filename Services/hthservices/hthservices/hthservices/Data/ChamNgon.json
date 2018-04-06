@@ -1,14 +1,22 @@
 ﻿[
-{"Author":"Bill Gates",
-"Content":"Cuộc sống vốn không công bằng. Hãy tập quen dần với điều đó."
-},
-{"Author":"Ca dao - Tục ngữ",
-"Content":"Có công mài sắt có ngày nên kim."
-},
-{"Author":"Ca dao - Tục ngữ",
-"Content":"Sông có khúc, người có lúc."
-},
-{"Author":"Ca dao - Tục ngữ",
-"Content":"Chiều chiều ra đứng ngõ sau. Ngó về quê mẹ ruột đau chín chiều."
-}
+  {
+    "Author": "",
+    "Content": "<div style='font-size:12px'><div style='width:100%;text-align:center;'>{0}</div><div style='float:right'>{1}</div></div>"
+  },
+  {
+    "Author": "Bill Gates",
+    "Content": "Cuộc sống vốn không công bằng. Hãy tập quen dần với điều đó."
+  },
+  {
+    "Author": "Ca dao - Tục ngữ",
+    "Content": "Có công mài sắt có ngày nên kim."
+  },
+  {
+    "Author": "Ca dao - Tục ngữ",
+    "Content": "Sông có khúc, người có lúc."
+  },
+  {
+    "Author": "Ca dao - Tục ngữ",
+    "Content": "Chiều chiều ra đứng ngõ sau. Ngó về quê mẹ ruột đau chín chiều."
+  }
 ]
