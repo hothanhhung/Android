@@ -46,7 +46,7 @@ namespace hthservices.Utils
             {
                 index = (index % (ChamNgons.Count - 1)) + 1;
                 var chamngon = ChamNgons[index];
-                str = String.Format(ChamNgons[0].Content, chamngon.Content.Replace(". ", ".<br>"), chamngon.Author);
+                str = String.Format(ChamNgons[0].Content, chamngon.Content.Replace("\n", "<br>"), chamngon.Author);
             }
             return str;
         }
@@ -58,7 +58,7 @@ namespace hthservices.Utils
             {
                 index = (index % (ChamNgons.Count - 1)) + 1;
                 var chamngon = ChamNgons[index];
-                str = String.Format("{0}\n{1}", chamngon.Content.Replace(". ", ".\n"), chamngon.Author);
+                str = String.Format("{0}\n{1}", chamngon.Content, chamngon.Author);
             }
             return str;
         }
