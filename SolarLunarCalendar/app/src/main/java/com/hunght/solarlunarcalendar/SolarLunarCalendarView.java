@@ -140,22 +140,21 @@ public class SolarLunarCalendarView extends LinearLayout {
         currentPerformServiceProcessBackgroundTask = new PerformServiceProcessBackgroundTask();
         currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
 
+        int color;// = getColorForDayOfWeek(selectedDate.getDayOfWeek());
         if(selectedDate.isHoliday())
         {
-            tvSolarMonthInfo.setTextColor(Color.parseColor("#cc393e"));
-            tvSolarInfoDate.setTextColor(Color.parseColor("#cc393e"));
-            tvSolarInfoDayInWeek.setTextColor(Color.parseColor("#cc393e"));
-            tvLunarInfoDayInWeek.setTextColor(Color.parseColor("#cc393e"));
-            tvLunarInfoDayInWeek1.setTextColor(Color.parseColor("#cc393e"));
-            tvSpecialDate.setTextColor(Color.parseColor("#cc393e"));
+            color = Color.parseColor("#cc393e");
         }else {
-            tvSolarMonthInfo.setTextColor(Color.DKGRAY);
-            tvSolarInfoDate.setTextColor(Color.DKGRAY);
-            tvSolarInfoDayInWeek.setTextColor(Color.DKGRAY);
-            tvLunarInfoDayInWeek.setTextColor(Color.DKGRAY);
-            tvLunarInfoDayInWeek1.setTextColor(Color.DKGRAY);
-            tvSpecialDate.setTextColor(Color.DKGRAY);
+            color = getColorForDayOfWeek(selectedDate.getDayOfWeek());
         }
+
+        tvSolarMonthInfo.setTextColor(color);
+        tvSolarInfoDate.setTextColor(color);
+        tvSolarInfoDayInWeek.setTextColor(color);
+        tvLunarInfoDayInWeek.setTextColor(color);
+        tvLunarInfoDayInWeek1.setTextColor(color);
+        tvSpecialDate.setTextColor(color);
+
         btMonth.setText("Tháng " + selectedDate.getMonth());
         btYear.setText("" + selectedDate.getYear());
 
@@ -193,6 +192,27 @@ public class SolarLunarCalendarView extends LinearLayout {
             case LunarDate.HOI: imConGiap.setImageResource(R.drawable.hoi); break;
         }
 
+    }
+
+    private int getColorForDayOfWeek(int dayOfWeek){
+        dayOfWeek = dayOfWeek%7;
+        switch (dayOfWeek)
+        {
+            case 0:
+                return Color.parseColor("#ba3703");
+            case 1:
+                return Color.parseColor("#294675");
+            case 2:
+                return Color.parseColor("#29755f");
+            case 3:
+                return Color.parseColor("#2e7529");
+            case 4:
+                return Color.parseColor("#757129");
+            case 5:
+                return Color.parseColor("#754c29");
+            default:
+                return Color.DKGRAY;
+        }
     }
 
     public void btClick(View view)

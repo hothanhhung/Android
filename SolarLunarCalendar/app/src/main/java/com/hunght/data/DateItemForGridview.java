@@ -473,7 +473,14 @@ public class DateItemForGridview {
         }
         return 0;
     }
-
+    public int getDayOfWeek()
+    {
+        if(date!=null)
+        {
+            return date.getDay();
+        }
+        return 0;
+    }
     public int getMonth()
     {
         if(date!=null)
