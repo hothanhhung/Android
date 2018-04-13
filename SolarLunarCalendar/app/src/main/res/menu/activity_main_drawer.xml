@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Chuyển đổi lịch" />
         <item
+            android:id="@+id/navGoodDayBadDay"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Xem ngày tốt xấu" />
+        <item
             android:id="@+id/navPositionOfTheSun"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Tọa độ mặt trời" />
