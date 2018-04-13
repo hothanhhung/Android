@@ -30,7 +30,7 @@
                 android:background="@drawable/custom_circle"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:src="@drawable/amduong"
+                android:src="@drawable/meo"
                 android:gravity="center" />
         </LinearLayout>
         <TextView

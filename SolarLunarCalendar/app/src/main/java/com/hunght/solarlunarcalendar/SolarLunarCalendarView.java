@@ -1,5 +1,5 @@
 package com.hunght.solarlunarcalendar;
-
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -83,8 +83,6 @@ public class SolarLunarCalendarView extends LinearLayout {
         wvSpecialDate = (WebView) view.findViewById(R.id.wvSpecialDate);
         imConGiap = (ImageView) view.findViewById(R.id.imConGiap);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         ArrayList<DateItemForGridview> lstDateItemForGridview = DateTools.GetDateItemsForGridviewFromDate();
 
         GridView grvDates = (GridView) findViewById(R.id.grvDates);
@@ -122,6 +120,19 @@ public class SolarLunarCalendarView extends LinearLayout {
 
                 public void onClick(View arg0) {
                     btClick(arg0);
+                }
+            });
+        }
+
+        ImageView [] imgViews = {
+                (ImageView) view.findViewById(R.id.imgResetDate),
+                (ImageView) view.findViewById(R.id.imgOpenMenu)
+        };
+        for (ImageView img:imgViews) {
+            img.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btClick(v);
                 }
             });
         }
@@ -234,6 +245,15 @@ public class SolarLunarCalendarView extends LinearLayout {
                 break;
             case R.id.btYear:
                 callPopupWindowGetYear();
+                break;
+            case R.id.imgResetDate:
+                selectedDate = new DateItemForGridview("", new Date(), false);
+                adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
+                updateMonthYear();
+                break;
+            case R.id.imgOpenMenu:
+                DrawerLayout drawer = (DrawerLayout) ((Activity) view.getContext()).findViewById(R.id.drawer_layout);
+                drawer.openDrawer(Gravity.START);
                 break;
 
         }
