@@ -10,6 +10,8 @@ namespace hthservices.Utils
     public class ThapNhiBatTu
     {
         public string Name;
+        public int Level;
+        public string Summary;
         public string Detail;
         public string ShouldDo;
         public string ShouldNotDo;
@@ -48,7 +50,17 @@ namespace hthservices.Utils
             {
                 index = index % ThapNhiBatTus.Count;
                 var thapNhiBatTu = ThapNhiBatTus[index];
-                str = String.Format(ThapNhiBatTus[0].Name, thapNhiBatTu.Name, thapNhiBatTu.ShouldDo, thapNhiBatTu.ShouldNotDo, thapNhiBatTu.Exception);
+                string color = "Red";
+                switch(thapNhiBatTu.Level)
+                {
+                    case 0: color = "#3f5f6f"; break;
+                    case 1: color = "#607d8b"; break;
+                    case 2: color = "#acbcc3"; break;
+                    case 3: color = "#ce245e"; break;
+                    case 4: color = "#e91e63"; break;
+                    case 5: color = "#c50b0b"; break;
+                }
+                str = String.Format(ThapNhiBatTus[0].Name, thapNhiBatTu.Name, thapNhiBatTu.Summary, thapNhiBatTu.ShouldDo, thapNhiBatTu.ShouldNotDo, thapNhiBatTu.Exception, color);
             }
             return str;
         }
