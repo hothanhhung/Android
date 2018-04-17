@@ -179,8 +179,8 @@ public class ExchangeToolView extends LinearLayout {
         if(exchangedDate!=null && !exchangedDate.isTitle())
         {
             String str = "";
-            str += "Ngày dương: "+exchangedDate.getSolarInfo(false);
-            str += "\nNgày âm: "+exchangedDate.getLunarInfo(false) + " - " + exchangedDate.getLunarInfo1(false);
+            str += exchangedDate.getDayOfWeekInString()+", "+exchangedDate.getSolarInfo(false) + " dương lịch";
+            str += "\nNhằm "+exchangedDate.getLunarInfo(false) + "\n" + exchangedDate.getLunarInfo1(false);
             str += exchangedDate.isGoodDay()?"\nLà ngày hoàng đạo":( exchangedDate.isBadDay()?"\nLà ngày hắc đạo":"");
             str += "\n"+exchangedDate.getLunarGoodTime();
             tvExchangeToolInfoDate.setText(str);

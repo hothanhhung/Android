@@ -3,7 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#fff">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#fff">
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
@@ -11,7 +21,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="Bộ Chuyển Đổi Lịch ÂM DƯƠNG" />
+        android:text="Ngày Tốt Ngày Xấu" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,21 +29,21 @@
         android:orientation="horizontal"
         android:background="#fff">
         <NumberPicker
-            android:id="@+id/npExchangeToolDate"
+            android:id="@+id/npGoodDateBadDateDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
             android:layout_weight="1" />
 
         <NumberPicker
-            android:id="@+id/npExchangeToolMonth"
+            android:id="@+id/npGoodDateBadDateMonth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
             android:layout_weight="1" />
 
         <NumberPicker
-            android:id="@+id/npExchangeToolYear"
+            android:id="@+id/npGoodDateBadDateYear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
@@ -44,53 +54,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#fff"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:background="#fff">
 
         <Button
-            android:id="@+id/btExchangeToolOk"
+            android:id="@+id/btGoodDateBadDateOk"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Đổi" />
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <RadioButton
-                android:id="@+id/rbSolarToLunar"
+            android:text="Xem" />
+    </LinearLayout>
+            <TextView
+                android:id="@+id/tvGoodDateBadDateInfoDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="Lịch Dương Sang Lịch Âm" />
-
-            <RadioButton
-                android:id="@+id/rbLunarToSolar"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="#ce245e"
+                android:textStyle="bold"
+                android:background="#fff"
+                android:text="" />
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:checked="false"
-                android:text="Lịch Âm Sang Lịch Dương" />
+                android:orientation="vertical">
 
-        </RadioGroup>
-    </LinearLayout>
+                <WebView
+                    android:id="@+id/wvGoodDateBadDateInfoDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="" />
+            </LinearLayout>
+            </LinearLayout>
+    </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:background="#fff">
-
-        <TextView
-            android:id="@+id/tvExchangeToolInfoDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:lineSpacingMultiplier="1.2"
-            android:textColor="#ce245e"
-            android:textStyle="bold"
-            android:text="" />
-    </LinearLayout>
 </LinearLayout>
