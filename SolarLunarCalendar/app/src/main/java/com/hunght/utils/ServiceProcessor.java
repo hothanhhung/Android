@@ -16,6 +16,7 @@ import java.net.URLConnection;
 
 public class ServiceProcessor {
     static public final int SERVICE_GET_CHAM_NGON = 0;
+    static public final int SERVICE_GET_INFO_OF_DATE = SERVICE_GET_CHAM_NGON + 1;
     static public String getChamNgon(String date, int index) {
         String link = "http://hunght.com/api/solarlunar/GetInfoChamNgon/?date="+date+"&index="+index;
         HttpURLConnection urlConnection = null;
@@ -71,7 +72,7 @@ public class ServiceProcessor {
     }
 
     static public String getInfoDate(String date, int index) {
-        String link = "http://hunght.com/api/solarlunar/GetInfoDate/?date="+date+"&index="+index;
+        String link = "http://hunght.com/api/solarlunar/GetGoodDateBadDate/?date="+date+"&index="+index;
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String jsonStr = null;
@@ -123,5 +124,6 @@ public class ServiceProcessor {
         }
         return null;
     }
+
 
 }

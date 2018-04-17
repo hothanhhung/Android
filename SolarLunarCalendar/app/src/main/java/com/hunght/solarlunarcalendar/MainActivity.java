@@ -114,6 +114,10 @@ public class MainActivity extends AppCompatActivity
                 llMainContent.addView(new ExchangeToolView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
                 break;
+            case R.id.navGoodDayBadDay:
+                llMainContent.addView(new GoodDateBabDateView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+                break;
             case R.id.navPositionOfTheSun:
                 break;
             case R.id.navNotes:

@@ -4,28 +4,24 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navSolarLunarCalendar"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@android:drawable/ic_menu_my_calendar"
             android:title="Xem Lịch" />
         <item
             android:id="@+id/navExchangeTool"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@android:drawable/stat_notify_sync_noanim"
             android:title="Chuyển đổi lịch" />
         <item
             android:id="@+id/navGoodDayBadDay"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@android:drawable/ic_menu_view"
             android:title="Xem ngày tốt xấu" />
         <item
             android:id="@+id/navPositionOfTheSun"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/sun"
             android:title="Tọa độ mặt trời" />
         <item
             android:id="@+id/navNotes"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@android:drawable/ic_menu_agenda"
             android:title="Bộ Ghi Chú" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
     </group>
 
     <item android:title="Communicate">
@@ -36,8 +32,8 @@
                 android:title="Share" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:icon="@android:drawable/ic_menu_info_details"
+                android:title="About" />
         </menu>
     </item>
 

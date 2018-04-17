@@ -503,8 +503,19 @@ public class DateItemForGridview {
     {
         if(date!=null)
         {
-            return String.format("%1$02d-%2$02d-%2$02d", getDayOfMonth(), getMonth(), getYear());
+            return String.format("%1$02d-%2$02d-%3$04d", getDayOfMonth(), getMonth(), getYear());
         }
         return "";
+    }
+
+    public int getThapNhiBatTu()
+    {
+        if(date!=null) {
+            Date orginalDate = new Date(1994 - 1900, 12 - 1, 22); //sao Giác (số 1) ứng với sô 0
+            int index = new Long(((date.getTime() - orginalDate.getTime()) / (1000 * 24 * 3600)) % 28).intValue();
+            if (index < 0) index += 28;
+            return index;
+        }
+        return -1;
     }
 }
