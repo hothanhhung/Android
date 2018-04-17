@@ -31,6 +31,16 @@ namespace hthservices.Controllers
         }
 
         [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetGoodDateBadDate(string date, int index)
+        {
+
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(ThapNhiBatTuInfo.GetThapNhiBatTu(index), Encoding.UTF8, "text/html")
+            };
+        }
+
+        [System.Web.Http.HttpGet]
         public HttpResponseMessage GetInfoChamNgon(string date, int index)
         {
             return new HttpResponseMessage()
