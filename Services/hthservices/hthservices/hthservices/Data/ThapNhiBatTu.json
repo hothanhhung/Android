@@ -136,7 +136,7 @@
     "Name": "Sao Khuê",
     "Detail": "KHUÊ MỘC LANG: (Bình Tú) Tướng tinh con chó sói, chủ trị ngày thứ 5.",
     "Summary": "Xấu, riêng xây đựng thì tốt.",
-    "Level": 2,
+    "Level": 3,
     "ShouldDo": "Tạo dựng nhà phòng, nhập học, ra đi cầu công danh, cắt áo.",
     "ShouldNotDo": "Chôn cất, khai trương, trổ cửa dựng cửa, khai thông đường nước, đào ao móc giếng, thưa kiện, đóng giường lót giường.",
     "Exception": " Sao Khuê là một trong Thất Sát Tinh, nếu đẻ con nhằm ngày này thì nên lấy tên Sao Khuê hay lấy tên Sao của năm tháng mà đặt cho trẻ dễ nuôi. Sao Khuê Hãm Địa tại Thân: Văn Khoa thất bại. Tại Ngọ là chỗ Tuyệt gặp Sanh, mưu sự đắc lợi, thứ nhất gặp Canh Ngọ. Tại Thìn tốt vừa vừa. Ngày Thân Sao Khuê Đăng Viên: Tiến thân danh."
@@ -163,7 +163,7 @@
     "Name": "Sao Mão",
     "Detail": "MÃO NHẬT KÊ: (Hung Tú) Tướng tinh con gà, chủ trị ngày chủ nhật.",
     "Summary": "Xấu hầu hết mọi việc.",
-    "Level": 2,
+    "Level": 3,
     "ShouldDo": "Xây dựng, tạo tác.",
     "ShouldNotDo": "Chôn Cất (ĐẠI KỴ), cưới gã, trổ cửa dựng cửa, khai ngòi phóng thủy, khai trương, xuất hành, đóng giường lót giường. Các việc khác cũng không hay.",
     "Exception": "Tại Mùi mất chí khí. Tại Ất Mẹo và Đinh Mẹo tốt, Ngày Mẹo Đăng Viên cưới gã tốt, nhưng ngày Quý Mẹo tạo tác mất tiền của. Hạp với 8 ngày: Ất Mẹo, Đinh Mẹo, Tân Mẹo, Ất Mùi, Đinh Mùi, Tân Mùi, Ất Hợi, Tân Hợi."
@@ -235,7 +235,7 @@
     "Name": "Sao Trương",
     "Detail": "TRƯƠNG NGUYỆT LỘC: (Kiết Tú) Tướng tinh con nai, chủ trị ngày thứ 2.",
     "Summary": "Tốt hầu hết mọi việc.",
-    "Level": 3,
+    "Level": 4,
     "ShouldDo": "Khởi công tạo tác trăm việc tốt, tốt nhất là xây cất nhà, che mái dựng hiên, trổ cửa dựng cửa, cưới gã, chôn cất, làm ruộng, nuôi tằm, đặt táng kê gác, chặt cỏ phá đất, cắt áo, làm thuỷ lợi.",
     "ShouldNotDo": "Sửa hoặc làm thuyền chèo, đẩy thuyền mới xuống nước",
     "Exception": "Tại Hợi, Mẹo, Mùi đều tốt. Tại Mùi Đăng viên rất tốt nhưng phạm Phục Đoạn (xem kiêng cữ như các mục trên)."
