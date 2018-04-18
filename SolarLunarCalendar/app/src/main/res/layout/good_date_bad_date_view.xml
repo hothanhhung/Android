@@ -14,56 +14,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#fff">
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:text="Ngày Tốt Ngày Xấu" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:background="#fff">
-        <NumberPicker
-            android:id="@+id/npGoodDateBadDateDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants"
-            android:layout_weight="1" />
-
-        <NumberPicker
-            android:id="@+id/npGoodDateBadDateMonth"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants"
-            android:layout_weight="1" />
-
-        <NumberPicker
-            android:id="@+id/npGoodDateBadDateYear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:background="#fff">
-
-        <Button
-            android:id="@+id/btGoodDateBadDateOk"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Xem" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Ngày Tốt Ngày Xấu" />
             <TextView
                 android:id="@+id/tvGoodDateBadDateInfoDate"
                 android:layout_width="match_parent"
@@ -77,7 +35,7 @@
                 android:text="" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -88,7 +46,62 @@
                     android:layout_margin="10dp"
                     android:text="" />
             </LinearLayout>
-            </LinearLayout>
+
+        </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/grvDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#e5e5e5"
+            android:horizontalSpacing="1dp"
+            android:numColumns="7"
+            android:scrollbars="none"
+            android:verticalSpacing="1dp"></GridView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btBackMonth"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="btClick"
+                android:text="&lt;&lt;" />
+
+            <Button
+                android:id="@+id/btMonth"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="btClick"
+                android:text="Tháng 03" />
+
+            <Button
+                android:id="@+id/btYear"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="btClick"
+                android:text="2018" />
+
+            <Button
+                android:id="@+id/btNextMonth"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="btClick"
+                android:text="&gt;&gt;" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

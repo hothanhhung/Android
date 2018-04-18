@@ -27,11 +27,11 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/navShare"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/navAbout"
                 android:icon="@android:drawable/ic_menu_info_details"
                 android:title="About" />
         </menu>

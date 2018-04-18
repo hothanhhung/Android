@@ -86,7 +86,7 @@ public class SolarLunarCalendarView extends LinearLayout {
         ArrayList<DateItemForGridview> lstDateItemForGridview = DateTools.GetDateItemsForGridviewFromDate();
 
         GridView grvDates = (GridView) findViewById(R.id.grvDates);
-        adapter = new DateItemAdapter(getContext(), lstDateItemForGridview, getResources());
+        adapter = new DateItemAdapter(getContext(), lstDateItemForGridview, getResources(), false);
         grvDates.setAdapter(adapter);
         grvDates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

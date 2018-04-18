@@ -1,10 +1,13 @@
 package com.hunght.solarlunarcalendar;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,7 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
@@ -20,8 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hunght.data.DateItemForGridview;
+import com.hunght.utils.DateTools;
 import com.hunght.utils.ServiceProcessor;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -31,10 +39,13 @@ import java.util.Date;
 public class GoodDateBabDateView extends LinearLayout {
 
     int date, month, year;
-    NumberPicker npGoodDateBadDateDate, npGoodDateBadDateMonth, npGoodDateBadDateYear;
     WebView wvGoodDateBadDateInfoDate;
     TextView tvGoodDateBadDateInfoDate;
     PerformServiceProcessBackgroundTask currentPerformServiceProcessBackgroundTask;
+
+    DateItemForGridview selectedDate;
+    DateItemAdapter adapter;
+    Button btMonth, btYear;
 
     public GoodDateBabDateView(Context context) {
         super(context);
@@ -67,99 +78,165 @@ public class GoodDateBabDateView extends LinearLayout {
 
         wvGoodDateBadDateInfoDate = (WebView) view.findViewById(R.id.wvGoodDateBadDateInfoDate);
         tvGoodDateBadDateInfoDate = (TextView) view.findViewById(R.id.tvGoodDateBadDateInfoDate);
-        npGoodDateBadDateDate = (NumberPicker) view.findViewById(R.id.npGoodDateBadDateDate);
-        npGoodDateBadDateMonth = (NumberPicker) view.findViewById(R.id.npGoodDateBadDateMonth);
-        npGoodDateBadDateYear = (NumberPicker) view.findViewById(R.id.npGoodDateBadDateYear);
-        Button btGoodDateBadDateOk = (Button) view.findViewById(R.id.btGoodDateBadDateOk);
 
-        npGoodDateBadDateMonth.setDisplayedValues( new String[] { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4",
-                "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12",} );
+        btMonth = (Button)view.findViewById(R.id.btMonth);
+        btYear = (Button)view.findViewById(R.id.btYear);
+        selectedDate = new DateItemForGridview("", new Date(), false);
 
-        npGoodDateBadDateDate.setMinValue(1);
-        npGoodDateBadDateDate.setMaxValue(31);
-        npGoodDateBadDateMonth.setMinValue(0);
-        npGoodDateBadDateMonth.setMaxValue(11);
-        npGoodDateBadDateYear.setMinValue(1);
-        npGoodDateBadDateYear.setMaxValue(Integer.MAX_VALUE);
-        npGoodDateBadDateDate.setValue(date);
-        npGoodDateBadDateMonth.setValue(month);
-        npGoodDateBadDateYear.setValue(year);
-        npGoodDateBadDateYear.setOnClickListener(new View.OnClickListener() {
+        ArrayList<DateItemForGridview> lstDateItemForGridview = DateTools.GetDateItemsForGridviewFromDate();
 
-            public void onClick(View arg0) {
-                callPopupWindowGetYear();
-            }
-        });
-        btGoodDateBadDateOk.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                date = npGoodDateBadDateDate.getValue();
-                month = npGoodDateBadDateMonth.getValue();
-                year = npGoodDateBadDateYear.getValue();
+        GridView grvDates = (GridView) findViewById(R.id.grvDates);
+        adapter = new DateItemAdapter(getContext(), lstDateItemForGridview, getResources(), true);
+        grvDates.setAdapter(adapter);
+        grvDates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                showDetailDate(DateItemForGridview.createDateItemForGridview(date, month + 1, year, false, true));
-
-            }
-        });
-
-        npGoodDateBadDateMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                validateDate();
-            }
-        });
-        npGoodDateBadDateYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                validateDate();
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                DateItemForGridview item = (DateItemForGridview)view.getTag();
+                if(item!=null)
+                {
+                    if(item.getMonth()!=selectedDate.getMonth() || item.getYear()!=selectedDate.getYear())
+                    {
+                        selectedDate = item;
+                        adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
+                    }else {
+                        selectedDate = item;
+                        adapter.updateSelectedDate(selectedDate.getDate());
+                    }
+                    showDetailDate();
+
+                }
             }
         });
 
-        showDetailDate(new DateItemForGridview(null, today, false));
+        Button [] btButtons = {(Button) view.findViewById(R.id.btMonth),
+                (Button) view.findViewById(R.id.btYear),
+                (Button) view.findViewById(R.id.btNextMonth),
+                (Button) view.findViewById(R.id.btBackMonth)};
+
+        for (Button button:btButtons) {
+            button.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View arg0) {
+                    btClick(arg0);
+                }
+            });
+        }
+
+        showDetailDate();
     }
 
-    private void showDetailDate(DateItemForGridview exchangedDate)
+    public void btClick(View view)
     {
-        if(exchangedDate!=null && !exchangedDate.isTitle())
+        switch (view.getId())
         {
-            if(currentPerformServiceProcessBackgroundTask!=null)
-            {
-                currentPerformServiceProcessBackgroundTask.cancel(true);
-                currentPerformServiceProcessBackgroundTask = null;
-            }
-            currentPerformServiceProcessBackgroundTask = new PerformServiceProcessBackgroundTask();
-            currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE, exchangedDate.getDisplaySolarDate(), exchangedDate.getThapNhiBatTu());
+            case R.id.btBackMonth:
+                selectedDate.addMonth(-1);
+                adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
+                showDetailDate();
+                break;
+            case R.id.btNextMonth:
+                selectedDate.addMonth(1);
+                adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
+                showDetailDate();
+                break;
+            case R.id.btMonth:
+                callPopupWindowGetMonth();
+                break;
+            case R.id.btYear:
+                callPopupWindowGetYear();
+                break;
 
-            String str = "";
-            str += exchangedDate.getDayOfWeekInString()+", "+exchangedDate.getSolarInfo(false) + " dương lịch";
-            str += "\nNhằm "+exchangedDate.getLunarInfo(false) + "\n" + exchangedDate.getLunarInfo1(false);
-            str += exchangedDate.isGoodDay()?"\nLà ngày hoàng đạo":( exchangedDate.isBadDay()?"\nLà ngày hắc đạo":"");
-            str += "\n"+exchangedDate.getLunarGoodTime();
-            tvGoodDateBadDateInfoDate.setText(str);
-        }else{
-            wvGoodDateBadDateInfoDate.loadDataWithBaseURL("", "<div style='text-align: center;'>Ngày không hợp lệ</div>", "text/html", "UTF-8", "");
         }
     }
 
-    private void validateDate() {
-        int m = npGoodDateBadDateMonth.getValue() + 1;
-        int y = npGoodDateBadDateYear.getValue();
+    private void setMonthAndYear(int month, int year)
+    {
+        selectedDate.setMonthYear(month, year);
+        adapter.updateSelectedDate(selectedDate.getDate(), DateTools.GetDateItemsForGridviewFromDate(selectedDate.getDate()));
+        showDetailDate();
+    }
 
-        if (m == 2) {
-            if ((y % 400 == 0) || (y % 4 == 0 && y % 100 == 0)) {
-                int d = npGoodDateBadDateDate.getValue();
-                npGoodDateBadDateDate.setMaxValue(29);
-                if (d > 29) npGoodDateBadDateDate.setValue(29);
-            } else {
-                int d = npGoodDateBadDateDate.getValue();
-                npGoodDateBadDateDate.setMaxValue(28);
-                if (d > 28) npGoodDateBadDateDate.setValue(28);
-            }
-        } else if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
-            npGoodDateBadDateDate.setMaxValue(31);
-        } else {
-            int d = npGoodDateBadDateDate.getValue();
-            npGoodDateBadDateDate.setMaxValue(30);
-            if (d > 30) npGoodDateBadDateDate.setValue(30);
+    PopupWindow popupWindowGetMonth;
+    private void callPopupWindowGetMonth() {
+
+        LayoutInflater layoutInflater = (LayoutInflater) getContext()
+                .getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
+
+        View popupView = layoutInflater.inflate(R.layout.get_month_layout, null);
+
+        popupWindowGetMonth = new PopupWindow(popupView,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+                true);
+        popupWindowGetMonth.setTouchable(true);
+        popupWindowGetMonth.setFocusable(true);
+
+        popupWindowGetMonth.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+
+        Button [] btGetMonths = {(Button) popupView.findViewById(R.id.btGetMonth01),
+                (Button) popupView.findViewById(R.id.btGetMonth02),
+                (Button) popupView.findViewById(R.id.btGetMonth03),
+                (Button) popupView.findViewById(R.id.btGetMonth04),
+                (Button) popupView.findViewById(R.id.btGetMonth05),
+                (Button) popupView.findViewById(R.id.btGetMonth06),
+                (Button) popupView.findViewById(R.id.btGetMonth07),
+                (Button) popupView.findViewById(R.id.btGetMonth08),
+                (Button) popupView.findViewById(R.id.btGetMonth09),
+                (Button) popupView.findViewById(R.id.btGetMonth10),
+                (Button) popupView.findViewById(R.id.btGetMonth11),
+                (Button) popupView.findViewById(R.id.btGetMonth12)};
+
+        btGetMonths[selectedDate.getMonth() - 1].setTextColor(Color.GREEN);
+        for (Button button:btGetMonths) {
+            button.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View arg0) {
+
+                    switch (arg0.getId())
+                    {
+                        case R.id.btGetMonth01:
+                            setMonthAndYear(0, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth02:
+                            setMonthAndYear(1, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth03:
+                            setMonthAndYear(2, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth04:
+                            setMonthAndYear(3, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth05:
+                            setMonthAndYear(4, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth06:
+                            setMonthAndYear(5, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth07:
+                            setMonthAndYear(6, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth08:
+                            setMonthAndYear(7, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth09:
+                            setMonthAndYear(8, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth10:
+                            setMonthAndYear(9, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth11:
+                            setMonthAndYear(10, selectedDate.getYear());
+                            break;
+                        case R.id.btGetMonth12:
+                            setMonthAndYear(11, selectedDate.getYear());
+                            break;
+                    }
+                    popupWindowGetMonth.dismiss();
+
+                }
+
+            });
         }
     }
 
@@ -184,15 +261,16 @@ public class GoodDateBabDateView extends LinearLayout {
         npGetYear3.setMaxValue(9);
         npGetYear4.setMaxValue(9);
 
-        int num = year;
-        npGetYear4.setValue(num%10);
-        num = (num/10);
-        npGetYear3.setValue(num%10);
-        num = (num/10);
-        npGetYear2.setValue(num%10);
-        num = num/10;
-        npGetYear1.setValue(num);
-
+        if(selectedDate != null){
+            int num = selectedDate.getYear();
+            npGetYear4.setValue(num%10);
+            num = (num/10);
+            npGetYear3.setValue(num%10);
+            num = (num/10);
+            npGetYear2.setValue(num%10);
+            num = num/10;
+            npGetYear1.setValue(num);
+        }
         popupWindowGetYear = new PopupWindow(popupView,
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
                 true);
@@ -203,8 +281,8 @@ public class GoodDateBabDateView extends LinearLayout {
         ((Button) popupView.findViewById(R.id.btGetYearUpdate)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                year = npGetYear1.getValue() * 1000 + npGetYear2.getValue() * 100 + npGetYear3.getValue() * 10 + npGetYear4.getValue();
-                npGoodDateBadDateYear.setValue(year);
+                int year = npGetYear1.getValue() * 1000 + npGetYear2.getValue() * 100 + npGetYear3.getValue() * 10 + npGetYear4.getValue();
+                setMonthAndYear(selectedDate.getMonth() - 1, year);
                 popupWindowGetYear.dismiss();
             }
         });
@@ -216,6 +294,31 @@ public class GoodDateBabDateView extends LinearLayout {
             }
         });
 
+    }
+
+    private void showDetailDate()
+    {
+        if(selectedDate!=null && !selectedDate.isTitle())
+        {
+            if(currentPerformServiceProcessBackgroundTask!=null)
+            {
+                currentPerformServiceProcessBackgroundTask.cancel(true);
+                currentPerformServiceProcessBackgroundTask = null;
+            }
+            currentPerformServiceProcessBackgroundTask = new PerformServiceProcessBackgroundTask();
+            currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
+
+            String str = "";
+            str += selectedDate.getDayOfWeekInString()+", "+selectedDate.getSolarInfo(false) + " dương lịch";
+            str += "\nNhằm "+selectedDate.getLunarInfo(false) + "\n" + selectedDate.getLunarInfo1(false);
+            str += selectedDate.isGoodDay()?"\nLà ngày hoàng đạo":( selectedDate.isBadDay()?"\nLà ngày hắc đạo":"");
+            str += "\n"+selectedDate.getLunarGoodTime();
+            tvGoodDateBadDateInfoDate.setText(str);
+            btMonth.setText("Tháng " + selectedDate.getMonth());
+            btYear.setText("" + selectedDate.getYear());
+        }else{
+            wvGoodDateBadDateInfoDate.loadDataWithBaseURL("", "<div style='text-align: center;'>Ngày không hợp lệ</div>", "text/html", "UTF-8", "");
+        }
     }
 
     class PerformServiceProcessBackgroundTask extends AsyncTask< Object, Object, Object >

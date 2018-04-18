@@ -1,14 +1,9 @@
 package com.hunght.data;
 
-import android.util.Log;
-
-import com.hunght.solarlunarcalendar.R;
 import com.hunght.utils.DateTools;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by Lenovo on 3/26/2018.
@@ -514,8 +509,53 @@ public class DateItemForGridview {
             Date orginalDate = new Date(1994 - 1900, 12 - 1, 22); //sao Giác (số 1) ứng với sô 0
             int index = new Long(((date.getTime() - orginalDate.getTime()) / (1000 * 24 * 3600)) % 28).intValue();
             if (index < 0) index += 28;
-            return index;
+            return index + 1; //start from 1
         }
         return -1;
     }
+
+    public int getGoodDateLevel()
+    {
+        int index = getThapNhiBatTu();
+        switch (index)
+        {
+            case ThapNhiBatTu.SaoDe:
+            case ThapNhiBatTu.SaoTaam:
+            case ThapNhiBatTu.SaoHu:
+            case ThapNhiBatTu.SaoChuy:
+            case ThapNhiBatTu.SaoLieu:
+                return 0;
+            case ThapNhiBatTu.SaoCang:
+            case ThapNhiBatTu.SaoNguu:
+            case ThapNhiBatTu.SaoNu:
+            case ThapNhiBatTu.SaoNguy:
+            case ThapNhiBatTu.SaoDuc:
+                return 1;
+            case ThapNhiBatTu.SaoQuy:
+                return 2;
+            case ThapNhiBatTu.SaoKhue:
+            case ThapNhiBatTu.SaoMao:
+            case ThapNhiBatTu.SaoTinh:
+            case ThapNhiBatTu.SaoSam:
+                return 3;
+            case ThapNhiBatTu.SaoGiac:
+            case ThapNhiBatTu.SaoVix:
+            case ThapNhiBatTu.SaoCo:
+            case ThapNhiBatTu.SaoDau:
+            case ThapNhiBatTu.SaoLau:
+            case ThapNhiBatTu.SaoVij:
+            case ThapNhiBatTu.SaoTat:
+            case ThapNhiBatTu.SaoTirnh:
+            case ThapNhiBatTu.SaoTruong:
+            case ThapNhiBatTu.SaoChuan:
+                return 4;
+            case ThapNhiBatTu.SaoPhong:
+            case ThapNhiBatTu.SaoThat:
+            case ThapNhiBatTu.SaoBich:
+                return 5;
+        }
+        return -1;
+    }
+
+
 }
