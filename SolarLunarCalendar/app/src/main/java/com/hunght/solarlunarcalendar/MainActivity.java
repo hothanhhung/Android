@@ -122,6 +122,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.navNotes:
                 break;
+            case R.id.navShare:
+                break;
+            case R.id.navAbout:
+                llMainContent.addView(new AboutView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
