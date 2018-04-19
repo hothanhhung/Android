@@ -147,10 +147,10 @@ public class DateItemAdapter extends ArrayAdapter<DateItemForGridview> {
                     tblDetailDate.setBackgroundColor(getGoodDateLevelColor(item.getGoodDateLevel()));
                     if(item.isToday())
                     {
-                        imSelectedDate.setBackgroundResource(R.drawable.circle);
+                        imSelectedDate.setImageResource(R.drawable.rectangle);
                         imSelectedDate.setVisibility(View.VISIBLE);
                     }else if (item.isTheSame(selectedDate)){
-                        imSelectedDate.setBackgroundResource(R.drawable.circle);
+                        imSelectedDate.setImageResource(R.drawable.circle);
                         imSelectedDate.setVisibility(View.VISIBLE);
                     }else
                     {
