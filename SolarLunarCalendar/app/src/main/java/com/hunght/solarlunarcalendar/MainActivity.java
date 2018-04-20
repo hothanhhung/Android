@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.navPositionOfTheSun:
                 break;
             case R.id.navNotes:
+                llMainContent.addView(new NotesView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
             case R.id.navShare:
                 break;
