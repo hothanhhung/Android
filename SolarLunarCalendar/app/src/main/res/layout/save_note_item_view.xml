@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="Ghi Chú" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:background="#fff">
+        <NumberPicker
+            android:id="@+id/npSaveNoteItemDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_weight="1" />
+
+        <NumberPicker
+            android:id="@+id/npSaveNoteItemMonth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_weight="1" />
+
+        <NumberPicker
+            android:id="@+id/npSaveNoteItemYear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="#fff">
+
+        <TextView
+            android:id="@+id/tvSaveNoteItemInfoDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:lineSpacingMultiplier="1"
+            android:textColor="#ce245e"
+            android:textStyle="bold"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chủ Đề" />
+
+        <EditText
+            android:id="@+id/etSaveNoteItemSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nội Dung" />
+
+        <EditText
+            android:id="@+id/etSaveNoteItemContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="top"
+            android:inputType="text"
+            android:text="abx" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:layout_margin="10dp">
+        <NumberPicker
+            android:id="@+id/npSaveNoteItemRemindType"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_weight="2" />
+
+        <Button
+            android:id="@+id/btSaveNoteItemUpdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_weight="1"
+            android:text="Lưu"/>
+        <Button
+            android:id="@+id/btSaveNoteItemCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_weight="1"
+            android:text="Bỏ Qua"/>
+
+    </LinearLayout>
+</LinearLayout>

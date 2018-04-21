@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tvNoteItemSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tết Nguyên Đán"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNotesItemDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ngày 10 tháng 01 năm 2018"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNoteItemContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chuẩn bị năm mới, mua nhiều đồ ăn" />
+
+        <ImageView
+            android:id="@+id/imgNoteItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
+
+        <TextView
+            android:id="@+id/tvNoteItemNextDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ngày 10 tháng 01 năm 2019" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imgNoteItemImageDelete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@android:drawable/ic_menu_delete"/>
+</LinearLayout>
