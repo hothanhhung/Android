@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.data.NoteItem;
@@ -28,7 +29,7 @@ import java.util.Date;
 public class NotesView extends LinearLayout {
 
     FloatingActionButton fbtNotesViewAdd;
-    LinearLayout loNotesViewNoItem;
+    TextView tvNotesViewNoItem;
     ListView lvNotesViewItems;
     ArrayList<NoteItem> noteItems;
 
@@ -57,17 +58,17 @@ public class NotesView extends LinearLayout {
         View view = inflate(getContext(), R.layout.notes_view, this);
 
         fbtNotesViewAdd = (FloatingActionButton) view.findViewById(R.id.fbtNotesViewAdd);
-        loNotesViewNoItem = (LinearLayout) view.findViewById(R.id.loNotesViewNoItem);
+        tvNotesViewNoItem = (TextView) view.findViewById(R.id.tvNotesViewNoItem);
         lvNotesViewItems =  (ListView) view.findViewById(R.id.lvNotesViewItems);
 
         noteItems = SharedPreferencesUtils.getNoteItems(getContext());
 
         if(noteItems == null || noteItems.size() == 0)
         {
-            loNotesViewNoItem.setVisibility(VISIBLE);
+            tvNotesViewNoItem.setVisibility(VISIBLE);
             lvNotesViewItems.setVisibility(GONE);
         }else {
-            loNotesViewNoItem.setVisibility(GONE);
+            tvNotesViewNoItem.setVisibility(GONE);
             lvNotesViewItems.setVisibility(VISIBLE);
 
             NoteItemAdapter adapter = new NoteItemAdapter(getContext(), noteItems, getResources());

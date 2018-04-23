@@ -105,13 +105,48 @@ public class NoteItem {
         return RemindType;
     }
 
-    public DateItemForGridview getRemindDate()
-    {
-        if(RemindType == 0)
+    public DateItemForGridview getRemindDate() {
+
+        DateItemForGridview now = new DateItemForGridview(null, new Date(), true);
+        DateItemForGridview setupTime = getDateItem();
+        DateItemForGridview returnTime = null;
+        if(setupTime.compare(now)>=0)
         {
-            return getDateItem();
+            return setupTime;
+        }else {
+            int offset = 0;
+            switch (RemindType) {
+                case 1:
+                    returnTime = DateItemForGridview.createDateItemForGridview(setupTime.getDayOfMonth(), now.getMonth(),  now.getYear(), false, false);
+                    if(returnTime.getDayOfMonth() < now.getDayOfMonth() )
+                    {
+                        returnTime.addMonth(1);
+                    }
+                    return returnTime;
+                case 2:
+                    returnTime = DateItemForGridview.createDateItemForGridview( setupTime.getLunarDate().getDate(), now.getLunarDate().getMonth(), now.getLunarDate().getYear(), false, true);
+                    if(returnTime.getLunarDate().getDate() < now.getLunarDate().getDate())
+                    {
+                        returnTime = DateItemForGridview.createDateItemForGridview( setupTime.getLunarDate().getDate(), now.getLunarDate().getMonth() + 1, now.getLunarDate().getYear(), false, true);
+                    }
+                    return returnTime;
+                case 3:
+                    returnTime = DateItemForGridview.createDateItemForGridview( setupTime.getDayOfMonth(), setupTime.getMonth(), now.getYear(), false, false);
+                    if(returnTime.getMonth()< now.getMonth() || (returnTime.getMonth() == now.getMonth() && returnTime.getDayOfMonth()< now.getDayOfMonth()))
+                    {
+                        returnTime.addYear(1);
+                    }
+                    return returnTime;
+                case 4:
+                    returnTime = DateItemForGridview.createDateItemForGridview( setupTime.getLunarDate().getDate(), setupTime.getLunarDate().getMonth(), now.getLunarDate().getYear(), false, true);
+                    if(returnTime.getLunarDate().getMonth()< now.getLunarDate().getMonth() || (returnTime.getLunarDate().getMonth() == now.getLunarDate().getMonth() && returnTime.getLunarDate().getDate()< now.getLunarDate().getDate()))
+                    {
+                        returnTime = DateItemForGridview.createDateItemForGridview( setupTime.getLunarDate().getDate(), setupTime.getLunarDate().getMonth(), now.getLunarDate().getYear() + 1, false, true);
+                    }
+                    return returnTime;
+            }
+            return null;
         }
-        return getDateItem();
     }
 
     public boolean haveDate()

@@ -22,7 +22,6 @@
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <LinearLayout
-        android:id="@+id/loNotesViewNoItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -37,17 +36,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Chưa có ghi chú nào. Hãy tạo mới" />
-    </LinearLayout>
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Danh Sách Sự Kiện"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp" />
 
+        <TextView
+            android:id="@+id/tvNotesViewNoItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="Chưa có sự kiện nào. Hãy tạo mới" />
         <ListView
             android:id="@+id/lvNotesViewItems"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

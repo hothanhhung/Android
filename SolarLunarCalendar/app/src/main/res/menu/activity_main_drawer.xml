@@ -21,7 +21,7 @@
         <item
             android:id="@+id/navNotes"
             android:icon="@android:drawable/ic_menu_agenda"
-            android:title="Bộ Ghi Chú" />
+            android:title="Các Sự Kiện" />
     </group>
 
     <item android:title="Communicate">
