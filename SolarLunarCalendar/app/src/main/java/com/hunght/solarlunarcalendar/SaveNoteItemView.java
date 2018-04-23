@@ -83,6 +83,8 @@ public class SaveNoteItemView  extends LinearLayout {
                 "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12",} );
 
 
+        npSaveNoteItemRemindType.setMinValue(0);
+        npSaveNoteItemRemindType.setMaxValue(4);
 
         if(noteItem == null)
         {
@@ -100,6 +102,7 @@ public class SaveNoteItemView  extends LinearLayout {
             etSaveNoteItemSubject.setText(noteItem.getSubject());
             npSaveNoteItemRemindType.setValue(noteItem.getRemindType());
         }
+
 
         npSaveNoteItemDate.setMinValue(1);
         npSaveNoteItemDate.setMaxValue(31);

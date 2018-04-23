@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hunght.data.DateItemForGridview;
 import com.hunght.data.NoteItem;
 import com.hunght.utils.SharedPreferencesUtils;
 
@@ -82,8 +83,8 @@ public class NoteItemAdapter extends ArrayAdapter<NoteItem> {
                 final NoteItem deletingItem = (NoteItem) v.getTag();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                builder.setTitle("Xóa Ghi Chú");
-                builder.setMessage("Bạn muốn xóa ghi chú: "+ deletingItem.getSubject());
+                builder.setTitle("Xóa Sự Kiện");
+                builder.setMessage("Bạn muốn xóa sự kiện: "+ deletingItem.getSubject());
 
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
 
@@ -113,10 +114,16 @@ public class NoteItemAdapter extends ArrayAdapter<NoteItem> {
 
         if (item != null) {
             tvNoteItemSubject.setText(item.getSubject());
-            tvNotesItemDate.setText(item.getDateItem().getSolarDate()+"\nNhằm "+item.getDateItem().getLunarInfo(false));
+            tvNotesItemDate.setText(item.getDateItem().getSolarInfo(false)+"\nNhằm "+item.getDateItem().getLunarInfo(false));
             tvNoteItemContent.setText(item.getContentInSomeText());
-            tvNoteItemNextDate.setText(item.getRemindDate().getSolarDate()+"\nNhằm "+item.getRemindDate().getLunarInfo(false));
-          //  imgNoteItemImage;
+            DateItemForGridview nextRemind = item.getRemindDate();
+            if(nextRemind == null)
+            {
+                tvNoteItemNextDate.setText("Không lặp lại");
+            }else {
+                tvNoteItemNextDate.setText(nextRemind.getSolarInfo(false) + "\nNhằm " + nextRemind.getLunarInfo(false));
+                //  imgNoteItemImage;
+            }
         }
         convertView.setTag(item);
         return convertView;

@@ -92,7 +92,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:background="#fff"
         android:layout_margin="10dp">
@@ -106,14 +106,14 @@
         <Button
             android:id="@+id/btSaveNoteItemUpdate"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
             android:layout_weight="1"
             android:text="Lưu"/>
         <Button
             android:id="@+id/btSaveNoteItemCancel"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
             android:layout_weight="1"
             android:text="Bỏ Qua"/>

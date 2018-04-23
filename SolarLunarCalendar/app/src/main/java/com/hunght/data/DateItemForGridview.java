@@ -39,12 +39,54 @@ public class DateItemForGridview {
         }
     }
 
+    public LunarDate getLunarDate()
+    {
+        return lunarDate;
+    }
+
+    public int compare(DateItemForGridview obj) {
+        if (date == null) {
+            if (obj.getDate() == null) {
+                return 0;
+            } else {
+                return -1;
+            }
+        } else if (obj.getDate() == null) {
+            return 1;
+        } else {
+
+            return date.compareTo(obj.getDate());
+        }
+    }
+
+    public void addDate(int number)
+    {
+        if(date!=null) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.add(Calendar.DATE, number);
+            date = c.getTime();
+            lunarDate = DateTools.convertSolar2Lunar(getDayOfMonth(), getMonth(), getYear());
+        }
+    }
+
     public void addMonth(int number)
     {
         if(date!=null) {
             Calendar c = Calendar.getInstance();
             c.setTime(date);
             c.add(Calendar.MONTH, number);
+            date = c.getTime();
+            lunarDate = DateTools.convertSolar2Lunar(getDayOfMonth(), getMonth(), getYear());
+        }
+    }
+
+    public void addYear(int number)
+    {
+        if(date!=null) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.add(Calendar.YEAR, number);
             date = c.getTime();
             lunarDate = DateTools.convertSolar2Lunar(getDayOfMonth(), getMonth(), getYear());
         }
@@ -328,11 +370,6 @@ public class DateItemForGridview {
             return LunarDate.CAN[d%10]+" "+ LunarDate.CHI[d%12];
         }
         return "";
-    }
-
-    public String getLunarDate()
-    {
-        return "13";
     }
 
     public boolean isWeekend(){
