@@ -27,8 +27,10 @@ import android.widget.Toast;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.data.LunarDate;
+import com.hunght.data.NoteItem;
 import com.hunght.utils.DateTools;
 import com.hunght.utils.ServiceProcessor;
+import com.hunght.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -110,6 +112,22 @@ public class SolarLunarCalendarView extends LinearLayout {
             }
         });
 
+        grvDates.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                DateItemForGridview item = (DateItemForGridview)view.getTag();
+                if(item!=null)
+                {
+                    NoteItem noteItem = new NoteItem("", item.getDayOfMonth(), item.getMonth(), item.getYear(),"", "", 0);
+                    ViewGroup parentView = (ViewGroup) SolarLunarCalendarView.this.getParent();
+                    SaveNoteItemView.setNoteItem(noteItem);
+                    parentView.addView(new SaveNoteItemView(getContext()), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+                }
+                return false;
+            }
+        });
+
         Button [] btButtons = {(Button) view.findViewById(R.id.btMonth),
                 (Button) view.findViewById(R.id.btYear),
                 (Button) view.findViewById(R.id.btNextMonth),
@@ -143,14 +161,14 @@ public class SolarLunarCalendarView extends LinearLayout {
     private void updateMonthYear()
     {
         wvSpecialDate.loadDataWithBaseURL("", "", "text/html", "UTF-8", "");
-        if(currentPerformServiceProcessBackgroundTask!=null)
-        {
-            currentPerformServiceProcessBackgroundTask.cancel(true);
-            currentPerformServiceProcessBackgroundTask = null;
+        if(SharedPreferencesUtils.getShowChamNgon(getContext())) {
+            if (currentPerformServiceProcessBackgroundTask != null) {
+                currentPerformServiceProcessBackgroundTask.cancel(true);
+                currentPerformServiceProcessBackgroundTask = null;
+            }
+            currentPerformServiceProcessBackgroundTask = new PerformServiceProcessBackgroundTask();
+            currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
         }
-        currentPerformServiceProcessBackgroundTask = new PerformServiceProcessBackgroundTask();
-        currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
-
         int color;// = getColorForDayOfWeek(selectedDate.getDayOfWeek());
         if(selectedDate.isHoliday())
         {
@@ -174,7 +192,14 @@ public class SolarLunarCalendarView extends LinearLayout {
         tvSolarInfoDayInWeek.setText(selectedDate.getDayOfWeekInString());
         tvLunarInfoDayInWeek.setText(selectedDate.getLunarInfo(true));
         tvLunarInfoDayInWeek1.setText(selectedDate.getLunarInfo1(true));
-        tvSolarInfoToday.setText(selectedDate.getLunarGoodTime());
+
+        if(SharedPreferencesUtils.getShowGoodDayBadDate(getContext()))
+        {
+            tvSolarInfoToday.setVisibility(VISIBLE);
+            tvSolarInfoToday.setText(selectedDate.getLunarGoodTime());
+        }else{
+            tvSolarInfoToday.setVisibility(GONE);
+        }
 
         String specialDate = selectedDate.specialDate();
         if(specialDate!=null && specialDate != "")
@@ -212,15 +237,15 @@ public class SolarLunarCalendarView extends LinearLayout {
             case 0:
                 return Color.parseColor("#ba3703");
             case 1:
-                return Color.parseColor("#294675");
-            case 2:
                 return Color.parseColor("#29755f");
+            case 2:
+                return Color.parseColor("#294675");
             case 3:
-                return Color.parseColor("#2e7529");
+                return Color.parseColor("#6c1b68");
             case 4:
-                return Color.parseColor("#757129");
+                return Color.parseColor("#7a8111");
             case 5:
-                return Color.parseColor("#754c29");
+                return Color.parseColor("#89350e");
             default:
                 return Color.DKGRAY;
         }

@@ -2,5 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="#fff">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="#0f455e"
+            android:textStyle="bold"
+            android:text="Chương trình được phát triển bởi tài liệu tham khảo trên mạng.\nNgày tốt xấu chỉ mang tính chất tham khảo và giải trí, tác giả không chịu bất kỳ trách nhiệm nào về sự đúng đắn của nội dung. Người dùng không nên đặt niềm tin vào ứng dụng hay sử dụng cho mục đính mê tín dị đoan.\nMọi thắc mắc vui lòng liên hệ với tác giả." />
+    </LinearLayout>
 </LinearLayout>
