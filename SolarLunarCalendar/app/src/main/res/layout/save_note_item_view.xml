@@ -86,7 +86,7 @@
             android:ems="10"
             android:gravity="top"
             android:inputType="text"
-            android:text="abx" />
+            android:text="" />
 
     </LinearLayout>
 

@@ -13,6 +13,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.hunght.data.DateItemForGridview;
+import com.hunght.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,14 +110,20 @@ public class DateItemAdapter extends ArrayAdapter<DateItemForGridview> {
                     tvSolarDate.setTextColor(Color.DKGRAY);
                     tvLunarDate.setTextColor(Color.DKGRAY);
                 }
-                if(item.isGoodDay())
+
+                if(SharedPreferencesUtils.getShowGoodDayBadDate(getContext()))
                 {
-                    tvInfoDate.setTextColor(Color.RED);
-                    tvInfoDate.setVisibility(View.VISIBLE);
-                }else  if(item.isBadDay())
-                {
-                    tvInfoDate.setTextColor(Color.BLACK);
-                    tvInfoDate.setVisibility(View.VISIBLE);
+                    if(item.isGoodDay())
+                    {
+                        tvInfoDate.setTextColor(Color.RED);
+                        tvInfoDate.setVisibility(View.VISIBLE);
+                    }else  if(item.isBadDay())
+                    {
+                        tvInfoDate.setTextColor(Color.BLACK);
+                        tvInfoDate.setVisibility(View.VISIBLE);
+                    }else{
+                        tvInfoDate.setVisibility(GONE);
+                    }
                 }else{
                     tvInfoDate.setVisibility(GONE);
                 }

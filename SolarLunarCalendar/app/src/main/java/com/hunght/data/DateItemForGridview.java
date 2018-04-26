@@ -181,7 +181,16 @@ public class DateItemForGridview {
         }
         return str;
     }
-
+    public String getLunarInfoWidget(boolean isNewLine)
+    {
+        String space = isNewLine?"\n":" ";
+        String str = "";
+        if(date!=null)
+        {
+            str += "Ngày "+lunarDate.getDate()+ space +"Tháng "+lunarDate.getMonth() + (lunarDate.isLeap()?" (N)":"") + space +"Năm " + lunarDate.getYear() + space +"Âm Lịch";
+        }
+        return str;
+    }
     public String getLunarInfo1(boolean isNewLine)
     {
         String space = isNewLine?"\n":" ";

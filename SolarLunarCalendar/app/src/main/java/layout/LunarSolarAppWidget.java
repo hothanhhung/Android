@@ -26,8 +26,8 @@ public class LunarSolarAppWidget extends AppWidgetProvider {
         DateItemForGridview today = new DateItemForGridview(null, new Date(), false);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.lunar_solar_app_widget);
-        views.setTextViewText(R.id.appwidget_text_solar, today.getSolarInfo(true));
-        views.setTextViewText(R.id.appwidget_text_lunar, today.getLunarInfo(true));
+        views.setTextViewText(R.id.appwidget_text_solar, today.getDayOfWeekInString() +"\n" + today.getSolarInfo(true));
+        views.setTextViewText(R.id.appwidget_text_lunar, today.getLunarInfoWidget(true));
         int lunarDate = today.getDateInLunar() % 12;
         int resId = R.drawable.ty;
         switch (lunarDate)
