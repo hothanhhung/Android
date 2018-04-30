@@ -64,6 +64,19 @@ namespace hthservices.Utils
             }
             return str;
         }
+
+        public static string GetThapNhiBatTuShort(int index)
+        {
+            string str = string.Empty;
+            if (ThapNhiBatTus.Count > 1)
+            {
+                index = index % ThapNhiBatTus.Count;
+                var thapNhiBatTu = ThapNhiBatTus[index];
+                str = thapNhiBatTu.Summary;
+            }
+            return str;
+        }
+
         public static void Reset()
         {
             _thapNhiBatTus = null;
