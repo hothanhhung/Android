@@ -33,6 +33,22 @@
                 android:resource="@xml/lunar_solar_app_widget_info" />
         </receiver>
 
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON" >
+                </action>
+                <action android:name="android.net.wifi.STATE_CHANGE" >
+                </action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
