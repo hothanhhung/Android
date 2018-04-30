@@ -17,8 +17,13 @@ import java.net.URLConnection;
 public class ServiceProcessor {
     static public final int SERVICE_GET_CHAM_NGON = 0;
     static public final int SERVICE_GET_INFO_OF_DATE = SERVICE_GET_CHAM_NGON + 1;
-    static public String getChamNgon(String date, int index) {
-        String link = "http://hunght.com/api/solarlunar/GetInfoChamNgon/?date="+date+"&index="+index;
+    static public final int SERVICE_GET_INFO_OF_DATE_SHORT = SERVICE_GET_INFO_OF_DATE + 1;
+    static public String getChamNgon(String date, int index)
+    {
+        return getChamNgon(date, index, 0);
+    }
+    static public String getChamNgon(String date, int index, int type){
+        String link = "http://hunght.com/api/solarlunar/GetInfoChamNgon/?date="+date+"&index="+index+"&type="+type;
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String jsonStr = null;
@@ -55,7 +60,7 @@ public class ServiceProcessor {
             jsonStr = buffer.toString();
             return jsonStr;
         } catch (Exception e) {
-            Log.e("getChamNgon", "Error ", e);
+            Log.e("getChamNgon", "Error " +  e.toString());
         } finally{
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -125,5 +130,58 @@ public class ServiceProcessor {
         return null;
     }
 
+    static public String getInfoDateShort(String date, int index) {
+        String link = "http://hunght.com/api/solarlunar/GetGoodDateBadDateShort/?date="+date+"&index="+index;
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        String jsonStr = null;
+
+        try {
+            URL url = new URL(link);
+
+            // Create the request to OpenWeatherMap, and open the connection
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            // Read the input stream into a String
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+            if (inputStream == null) {
+                // Nothing to do.
+                return null;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                // But it does make debugging a *lot* easier if you print out the completed
+                // buffer for debugging.
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                // Stream was empty.  No point in parsing.
+                return null;
+            }
+            jsonStr = buffer.toString();
+            return jsonStr;
+        } catch (Exception e) {
+            Log.e("getChamNgon", "Error ", e);
+        } finally{
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final Exception e) {
+                    Log.e("getChamNgon", "Error closing stream", e);
+                }
+            }
+        }
+        return null;
+    }
 
 }
