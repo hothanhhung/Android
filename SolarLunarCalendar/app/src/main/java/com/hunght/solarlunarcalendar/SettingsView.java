@@ -56,9 +56,11 @@ public class SettingsView  extends LinearLayout {
 
 
         Switch[] btSwitchs = {(Switch) view.findViewById(R.id.swSettingsNgayHoangDao),
-                (Switch) view.findViewById(R.id.swSettingsChamNgon)};
+                (Switch) view.findViewById(R.id.swSettingsChamNgon),
+                (Switch) view.findViewById(R.id.swSettingsDailyNotifyChamNgon),
+                (Switch) view.findViewById(R.id.swSettingsDailyNotifyGoodDateBadDate)};
 
-        for (Switch switchItem:btSwitchs) {
+        for (Switch switchItem : btSwitchs) {
             swithInitialData(switchItem);
 
             switchItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -80,6 +82,12 @@ public class SettingsView  extends LinearLayout {
             case R.id.swSettingsChamNgon:
                 SharedPreferencesUtils.setShowChamNgon(getContext(), isChecked);
                 break;
+            case R.id.swSettingsDailyNotifyChamNgon:
+                SharedPreferencesUtils.setShowNotifyChamNgon(getContext(), isChecked);
+                break;
+            case R.id.swSettingsDailyNotifyGoodDateBadDate:
+                SharedPreferencesUtils.setShowDailyNotifyGoodDateBadDate(getContext(), isChecked);
+                break;
         }
     }
 
@@ -92,6 +100,12 @@ public class SettingsView  extends LinearLayout {
                 break;
             case R.id.swSettingsChamNgon:
                 buttonView.setChecked(SharedPreferencesUtils.getShowChamNgon(getContext()));
+                break;
+            case R.id.swSettingsDailyNotifyChamNgon:
+                buttonView.setChecked(SharedPreferencesUtils.getShowNotifyChamNgon(getContext()));
+                break;
+            case R.id.swSettingsDailyNotifyGoodDateBadDate:
+                buttonView.setChecked(SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDate(getContext()));
                 break;
         }
     }

@@ -1,9 +1,12 @@
 package com.hunght.solarlunarcalendar;
 
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -35,6 +38,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static int ViewId = 0;
 
     DateItemForGridview selectedDate;
     DateItemAdapter adapter;
@@ -60,19 +64,30 @@ public class MainActivity extends AppCompatActivity
 
         llMainContent = (LinearLayout)findViewById(R.id.llMainContent);
         llMainContent.removeAllViews();
-        llMainContent.addView(new SolarLunarCalendarView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-
+        if(ViewId == 0 || ViewId == R.id.navSolarLunarCalendar){
+            llMainContent.addView(new SolarLunarCalendarView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        }else{
+            llMainContent.addView(new GoodDateBabDateView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        }
+        ViewId = 0;
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /*MyService mSensorService = new MyService();
+        MyService mSensorService = new MyService();
         Intent mServiceIntent = new Intent(this, mSensorService.getClass());
         if (!isMyServiceRunning(mSensorService.getClass())) {
             startService(mServiceIntent);
-        }*/
+        }
+        /*IntentFilter filter = new     IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        BroadcastReceiver mReceiver = new MyReceiver();
+        registerReceiver(mReceiver, filter);*/
+    }
 
+    public static void setViewId(int id){
+        ViewId = id;
     }
 
     @Override

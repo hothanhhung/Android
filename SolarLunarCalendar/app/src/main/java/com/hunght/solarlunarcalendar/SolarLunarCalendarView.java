@@ -31,6 +31,7 @@ import com.hunght.data.NoteItem;
 import com.hunght.utils.DateTools;
 import com.hunght.utils.ServiceProcessor;
 import com.hunght.utils.SharedPreferencesUtils;
+import com.hunght.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -210,24 +211,7 @@ public class SolarLunarCalendarView extends LinearLayout {
             tvSpecialDate.setVisibility(GONE);
         }
         //wvSpecialDate.
-
-        int lunarDate = selectedDate.getDateInLunar() % 12;
-        switch (lunarDate)
-        {
-            case LunarDate.TY: imConGiap.setImageResource(R.drawable.ty); break;
-            case LunarDate.SUU: imConGiap.setImageResource(R.drawable.suu); break;
-            case LunarDate.DAN: imConGiap.setImageResource(R.drawable.dan); break;
-            case LunarDate.MAO: imConGiap.setImageResource(R.drawable.meo); break;
-            case LunarDate.THIN: imConGiap.setImageResource(R.drawable.thin); break;
-            case LunarDate.TI: imConGiap.setImageResource(R.drawable.ti); break;
-            case LunarDate.NGO: imConGiap.setImageResource(R.drawable.ngo); break;
-            case LunarDate.MUI: imConGiap.setImageResource(R.drawable.mui); break;
-            case LunarDate.THAN: imConGiap.setImageResource(R.drawable.than); break;
-            case LunarDate.DAU: imConGiap.setImageResource(R.drawable.dau); break;
-            case LunarDate.TUAT: imConGiap.setImageResource(R.drawable.tuat); break;
-            case LunarDate.HOI: imConGiap.setImageResource(R.drawable.hoi); break;
-        }
-
+        imConGiap.setImageResource(Utils.getIconConGiap(selectedDate.getDateInLunar()));
     }
 
     private int getColorForDayOfWeek(int dayOfWeek){
