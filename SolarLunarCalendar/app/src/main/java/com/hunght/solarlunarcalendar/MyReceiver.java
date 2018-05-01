@@ -1,6 +1,7 @@
 package com.hunght.solarlunarcalendar;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,28 +9,29 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.utils.ServiceProcessor;
+import com.hunght.utils.SharedPreferencesUtils;
+import com.hunght.utils.Utils;
 
 import java.util.Date;
 
 public class MyReceiver extends BroadcastReceiver {
-    static Date lastOn = null;
     DateItemForGridview selectedDate;
-    PerformServiceProcessBackgroundTask currentPerformServiceProcessBackgroundTask;
+    PerformServiceProcessBackgroundTask currentPerformServiceProcessBackgroundTaskGoodDate, currentPerformServiceProcessBackgroundTaskChamNgon;
     Context context;
-    boolean isThapNhiBatTu = true;
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
-        Log.d("AmDuong", "onReceive 1: "+intent.getAction());
+        Log.d("AmDuong", "onReceive 1: " + intent.getAction());
         boolean isOn = false;
         switch (intent.getAction()) {
-           // case PowerManager.PARTIAL_WAKE_LOCK:
+            // case PowerManager.PARTIAL_WAKE_LOCK:
             case Intent.ACTION_SCREEN_ON:
                 Log.d("AmDuong", "onReceive ACTION_SCREEN_ON: checking");
                 isOn = isOnline(context);
@@ -38,27 +40,33 @@ public class MyReceiver extends BroadcastReceiver {
                 Log.d("AmDuong", "onReceive NETWORK_STATE_CHANGED_ACTION: checking");
                 isOn = isOnline(context);
                 break;
-           /* case WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION:
-                Log.d("AmDuong", "onReceive SUPPLICANT_CONNECTION_CHANGE_ACTION: checking");
-                isOn = intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, false);
-                break;*/
 
         }
         Log.d("AmDuong", "onReceive 1: on off" + isOn);
         Date now = new Date();
-        if (isOn && (lastOn == null || (now.getTime() - lastOn.getTime()) > 60000 )) {
-            lastOn = now;
+        if (isOn && now.getHours() > 6 && (MyService.lastOn == null || (now.getTime() - MyService.lastOn.getTime()) > 60000)) {
             Log.d("AmDuong", "onReceive 1: on");
+            MyService.lastOn = now;
             selectedDate = new DateItemForGridview("", new Date(), false);
-            if (currentPerformServiceProcessBackgroundTask == null) {
-                currentPerformServiceProcessBackgroundTask = new PerformServiceProcessBackgroundTask();
+            if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDate(context) && (MyService.lastGoodBadOn == null || (now.getDate() != MyService.lastGoodBadOn.getDate()))) {
+
+                if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
+                    currentPerformServiceProcessBackgroundTaskGoodDate.cancel(true);
+                    currentPerformServiceProcessBackgroundTaskGoodDate = null;
+                }
+                Log.d("AmDuong", "onReceive 1: good date");
+                currentPerformServiceProcessBackgroundTaskGoodDate = new PerformServiceProcessBackgroundTask();
+                currentPerformServiceProcessBackgroundTaskGoodDate.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
             }
-            if(isThapNhiBatTu){
-                currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
-            }
-            else
-            {
-                currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
+
+            if (SharedPreferencesUtils.getShowNotifyChamNgon(context) && (MyService.lastChamNgonOn == null || (now.getDate() != MyService.lastChamNgonOn.getDate()))) {
+                if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
+                    currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
+                    currentPerformServiceProcessBackgroundTaskChamNgon = null;
+                }
+                currentPerformServiceProcessBackgroundTaskChamNgon = new PerformServiceProcessBackgroundTask();
+                Log.d("AmDuong", "onReceive 1: cham ngon");
+                currentPerformServiceProcessBackgroundTaskChamNgon.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
             }
         }
     }
@@ -95,19 +103,55 @@ public class MyReceiver extends BroadcastReceiver {
             Log.d("AmDuong", "onPostExecute 1: " + type);
             switch (type) {
                 case ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT:
-                case ServiceProcessor.SERVICE_GET_CHAM_NGON:
-                    Log.d("AmDuong", "onPostExecute 2: " + ServiceProcessor.SERVICE_GET_CHAM_NGON);
+                    Log.d("AmDuong", "onPostExecute 2: " + ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT);
                     if (object != null) {
-                        String str = String.valueOf(object);
-                        Log.d("onPostExecute", str);
+                        MyService.lastGoodBadOn = new Date();
+                        String str =  "Là ngày " + String.valueOf(object);
+                        Log.d("AmDuong", "onPostExecute" +  str);
+
+
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        MainActivity.setViewId(R.id.navGoodDayBadDay);
+                        PendingIntent activity = PendingIntent.getActivity(context, 0, intent, 0);
+
                         NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
-                                        .setSmallIcon(R.drawable.amduong)
-                                        .setContentTitle("Lịch Âm Dương")
+                                        .setContentIntent(activity)
+                                        .setSmallIcon(Utils.getIconConGiap(selectedDate.getDateInLunar()))
+                                        .setContentTitle("Hôm nay " + selectedDate.getSolarInfo(false))
+                                        .setAutoCancel(true)
                                         .setContentText(str);
 
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                        mNotificationManager.notify(1, mBuilder.build());
+                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());
+
+                    } else {
+                        //Toast.makeText(getContext(),"Error to connect to server", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case ServiceProcessor.SERVICE_GET_CHAM_NGON:
+                    Log.d("AmDuong", "onPostExecute 2: " + ServiceProcessor.SERVICE_GET_CHAM_NGON);
+                    if (object != null) {
+                        MyService.lastChamNgonOn = new Date();
+                        String str = String.valueOf(object);
+                        Log.d("AmDuong", "onPostExecute" +  str);
+
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        MainActivity.setViewId(R.id.navSolarLunarCalendar);
+                        PendingIntent activity = PendingIntent.getActivity(context, 0, intent, 0);
+
+                        NotificationCompat.Builder mBuilder =
+                                new NotificationCompat.Builder(context)
+                                        .setContentIntent(activity)
+                                        .setSmallIcon(Utils.getIconConGiap(selectedDate.getDateInLunar()))
+                                        .setContentTitle("Hôm nay " + selectedDate.getSolarInfo(false))
+                                        .setAutoCancel(true)
+                                        .setContentText(str);
+
+                        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_CHAM_NGON, mBuilder.build());
 
                     } else {
                         //Toast.makeText(getContext(),"Error to connect to server", Toast.LENGTH_SHORT).show();

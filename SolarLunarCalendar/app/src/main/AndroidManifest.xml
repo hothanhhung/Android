@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:launchMode="singleInstance"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -43,7 +44,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.SCREEN_ON" >
+                <action android:name="android.os.action.DEVICE_IDLE_MODE_CHANGED" >
                 </action>
                 <action android:name="android.net.wifi.STATE_CHANGE" >
                 </action>

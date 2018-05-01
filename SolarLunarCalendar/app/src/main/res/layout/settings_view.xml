@@ -59,14 +59,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hiện Ca dao, tục ngữ và châm ngôn"
+                android:text="Hiểnn thị Ca dao, tục ngữ và châm ngôn"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ẩn hiện ca dao, tục ngữ và châm ngôn tron mục xem lịch" />
+                android:text="Hiển thị ca dao, tục ngữ và châm ngôn trong mục xem lịch" />
         </LinearLayout>
 
         <Switch
@@ -92,18 +92,51 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thông báo ngày tốt xấu"
+                android:text="Hàng ngày thông báo ngày tốt xấu"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thông báo ngày tốt xấu mỗi ngày" />
+                android:text="Thông báo ngày tốt xấu mỗi ngày trên thanh thông báo" />
         </LinearLayout>
 
         <Switch
-            android:id="@+id/swSettingsDailyGoodDateBadDate"
+            android:id="@+id/swSettingsDailyNotifyGoodDateBadDate"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hàng ngày hiển thị một ca dao, tục ngữ"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mỗi ngày hiện thị một câu ca dao, tục ngữ trên thanh thông báo" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swSettingsDailyNotifyChamNgon"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="" />
