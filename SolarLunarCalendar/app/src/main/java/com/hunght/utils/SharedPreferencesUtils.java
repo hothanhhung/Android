@@ -23,6 +23,57 @@ public class SharedPreferencesUtils {
     public static final String ShowDailyNotifyGoodDateBadDate = "ShowDailyNotifyGoodDateBadDate";
     public static final String ShowChamNgon = "ShowChamNgon";
     public static final String ShowDailyGoodDateBadDate = "ShowDailyGoodDateBadDate";
+    public static final String ShowNotifyChamNgonTime = "ShowNotifyChamNgonTime";
+    public static final String ShowDailyNotifyGoodDateBadDateTime = "ShowDailyNotifyGoodDateBadDateTime";
+
+    static public int getShowDailyNotifyGoodDateBadDateTime(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getInt(ShowDailyNotifyGoodDateBadDateTime, 0);
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
+    static public void setShowDailyNotifyGoodDateBadDateTime(Context var1, int value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putInt(ShowDailyNotifyGoodDateBadDateTime, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
+
+    static public int getShowNotifyChamNgonTime(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getInt(ShowNotifyChamNgonTime, 0);
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
+    static public void setShowNotifyChamNgonTime(Context var1, int value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putInt(ShowNotifyChamNgonTime, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
+
 
     static public boolean getShowDailyNotifyGoodDateBadDate(Context var1)
     {
