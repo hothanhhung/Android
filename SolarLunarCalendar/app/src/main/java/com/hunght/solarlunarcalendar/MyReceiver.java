@@ -48,7 +48,7 @@ public class MyReceiver extends BroadcastReceiver {
             Log.d("AmDuong", "onReceive 1: on");
             MyService.lastOn = now;
             selectedDate = new DateItemForGridview("", new Date(), false);
-            if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDate(context) && (MyService.lastGoodBadOn == null || (now.getDate() != MyService.lastGoodBadOn.getDate()))) {
+            if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDate(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context)))) {
 
                 if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
                     currentPerformServiceProcessBackgroundTaskGoodDate.cancel(true);
@@ -59,7 +59,7 @@ public class MyReceiver extends BroadcastReceiver {
                 currentPerformServiceProcessBackgroundTaskGoodDate.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
             }
 
-            if (SharedPreferencesUtils.getShowNotifyChamNgon(context) && (MyService.lastChamNgonOn == null || (now.getDate() != MyService.lastChamNgonOn.getDate()))) {
+            if (SharedPreferencesUtils.getShowNotifyChamNgon(context) && ((now.getDate() != SharedPreferencesUtils.getShowNotifyChamNgonTime(context)))) {
                 if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
                     currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
                     currentPerformServiceProcessBackgroundTaskChamNgon = null;
@@ -105,7 +105,7 @@ public class MyReceiver extends BroadcastReceiver {
                 case ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT:
                     Log.d("AmDuong", "onPostExecute 2: " + ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT);
                     if (object != null) {
-                        MyService.lastGoodBadOn = new Date();
+                        SharedPreferencesUtils.setShowDailyNotifyGoodDateBadDateTime(context, (new Date()).getDate());
                         String str =  "Là ngày " + String.valueOf(object);
                         Log.d("AmDuong", "onPostExecute" +  str);
 
@@ -133,7 +133,7 @@ public class MyReceiver extends BroadcastReceiver {
                 case ServiceProcessor.SERVICE_GET_CHAM_NGON:
                     Log.d("AmDuong", "onPostExecute 2: " + ServiceProcessor.SERVICE_GET_CHAM_NGON);
                     if (object != null) {
-                        MyService.lastChamNgonOn = new Date();
+                        SharedPreferencesUtils.setShowNotifyChamNgonTime(context, (new Date()).getDate());
                         String str = String.valueOf(object);
                         Log.d("AmDuong", "onPostExecute" +  str);
 

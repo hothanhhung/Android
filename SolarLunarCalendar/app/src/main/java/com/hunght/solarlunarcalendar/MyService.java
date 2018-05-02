@@ -22,7 +22,7 @@ import java.util.Date;
 public class MyService extends Service {
     BroadcastReceiver mReceiver;
 
-    public static Date lastOn = null, lastGoodBadOn = null, lastChamNgonOn = null;
+    public static Date lastOn = null;
     public MyService() {
     }
 
