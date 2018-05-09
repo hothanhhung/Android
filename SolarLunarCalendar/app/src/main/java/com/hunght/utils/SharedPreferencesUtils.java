@@ -21,6 +21,7 @@ public class SharedPreferencesUtils {
     public static final String ShowGoodDayBadDate = "ShowGoodDayBadDate";
     public static final String ShowNotifyChamNgon = "ShowNotifyChamNgon";
     public static final String ShowDailyNotifyGoodDateBadDate = "ShowDailyNotifyGoodDateBadDate";
+    public static final String ShowDailyNotifyEvent = "ShowDailyNotifyEvent";
     public static final String ShowChamNgon = "ShowChamNgon";
     public static final String ShowDailyGoodDateBadDate = "ShowDailyGoodDateBadDate";
     public static final String ShowNotifyChamNgonTime = "ShowNotifyChamNgonTime";
@@ -74,6 +75,29 @@ public class SharedPreferencesUtils {
         }
     }
 
+    static public boolean getShowDailyNotifyEvent(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getBoolean(ShowDailyNotifyEvent, true);
+        }catch (Exception ex){
+            return true;
+        }
+    }
+
+    static public void setShowDailyNotifyEvent(Context var1, boolean value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putBoolean(ShowDailyNotifyEvent, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
 
     static public boolean getShowDailyNotifyGoodDateBadDate(Context var1)
     {

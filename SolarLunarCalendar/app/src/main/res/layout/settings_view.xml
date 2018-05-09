@@ -3,7 +3,39 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="10dp">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nhắc sự kiện"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nhắc khi sắp tới sự kiện" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swSettingsNotifyEvent"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,7 +91,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hiểnn thị Ca dao, tục ngữ và châm ngôn"
+                android:text="Hiển thị Ca dao, tục ngữ và châm ngôn"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
