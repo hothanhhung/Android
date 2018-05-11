@@ -30,11 +30,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DateItemForGridview;
 import com.hunght.utils.DateTools;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity
 
     LinearLayout llMainContent;
 
+    private AdView mAdView = null;
+    private InterstitialAd interstitial = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +69,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+        mAdView = (AdView) this.findViewById(R.id.adView);
         llMainContent = (LinearLayout)findViewById(R.id.llMainContent);
         llMainContent.removeAllViews();
-        if(ViewId == 0 || ViewId == R.id.navSolarLunarCalendar){
-            llMainContent.addView(new SolarLunarCalendarView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        }else{
-            llMainContent.addView(new GoodDateBabDateView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        }
+        updateUI(ViewId);
         ViewId = 0;
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -84,6 +89,13 @@ public class MainActivity extends AppCompatActivity
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         BroadcastReceiver mReceiver = new MyReceiver();
         registerReceiver(mReceiver, filter);*/
+
+        Random random = new Random();
+        if(random.nextInt(4) == 2)
+        {
+            showInterstitial();
+        }
+        lastShowAds = (new Date()).getTime();
     }
 
     public static void setViewId(int id){
@@ -128,12 +140,29 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        updateUI(id);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        showAdsAfterLongTime();
+
+    }
+
+    public void updateUI(int id) {
+        showAdsAfterLongTime();
+        boolean shownAds = true;
         llMainContent.removeAllViews();
-        switch (id)
-        {
+        switch (id) {
             case R.id.navSolarLunarCalendar:
+                shownAds = false;
                 llMainContent.addView(new SolarLunarCalendarView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            break;
+                break;
             case R.id.navExchangeTool:
                 llMainContent.addView(new ExchangeToolView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
@@ -155,13 +184,25 @@ public class MainActivity extends AppCompatActivity
             case R.id.navSettings:
                 llMainContent.addView(new SettingsView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
+            case R.layout.notes_view_item:
+                llMainContent.addView(new SaveNoteItemView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            default:
+                shownAds = false;
+                llMainContent.addView(new SolarLunarCalendarView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        if (shownAds) {
+            if (mAdView.getVisibility() != View.VISIBLE) {
+                mAdView.setVisibility(View.VISIBLE);
+                mAdView.loadAd(new AdRequest.Builder().build());
+            }
+        } else {
+            if (mAdView.getVisibility() != View.GONE) {
+                mAdView.setVisibility(View.GONE);
+            }
+        }
     }
-
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -171,5 +212,43 @@ public class MainActivity extends AppCompatActivity
             }
         }
         return false;
+    }
+
+    private void showAdsAfterLongTime()
+    {
+        if(lastShowAds != 0 && ((new Date()).getTime() - lastShowAds == 300000))
+        {
+            showInterstitial();
+        }
+    }
+
+    long lastShowAds = 0;
+    private void showInterstitial() {
+        if (interstitial == null) {
+            interstitial = new InterstitialAd(this);
+            interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
+            interstitial.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    if (interstitial.isLoaded()) {
+                        interstitial.show();
+                        lastShowAds = (new Date()).getTime();
+                    }
+                }
+
+                @Override
+                public void onAdClosed() {
+                }
+
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                }
+            });
+        }
+
+        AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+
+        interstitial.loadAd(adRequest_interstitial);
     }
 }
