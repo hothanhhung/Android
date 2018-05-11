@@ -120,9 +120,11 @@ public class SolarLunarCalendarView extends LinearLayout {
                 if(item!=null)
                 {
                     NoteItem noteItem = new NoteItem("", item.getDayOfMonth(), item.getMonth(), item.getYear(),"", "", 0);
-                    ViewGroup parentView = (ViewGroup) SolarLunarCalendarView.this.getParent();
+                    //ViewGroup parentView = (ViewGroup) SolarLunarCalendarView.this.getParent();
                     SaveNoteItemView.setNoteItem(noteItem);
-                    parentView.addView(new SaveNoteItemView(getContext()), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    MainActivity mainActivity = (MainActivity) getContext();
+                    mainActivity.updateUI(R.layout.notes_view_item);
+                   // parentView.addView(new SaveNoteItemView(getContext()), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
                 }
                 return false;
