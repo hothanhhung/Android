@@ -15,6 +15,7 @@ Services/hthservices/hthservices/hthservices/bin
 Services/hthservices/hthservices/hthservices/obj
 /DoVui
 /MemoryGame
+/Services/hthservices/hthservicesWeb/.vs
 /Services/hthservices/hthservicesWeb/packages
 /Services/hthservices/hthservicesWeb/hthservices/bin
 /Services/hthservices/hthservicesWeb/hthservices/obj
@@ -22,3 +23,4 @@ Services/hthservices/hthservices/hthservices/obj
 /Services/hthservices/hthservicesWeb/hthservices.Tests/obj
 /Services/hthservices/hthservicesWeb/TestResults
 /FruitMemory
+/Services/WebApplication1
