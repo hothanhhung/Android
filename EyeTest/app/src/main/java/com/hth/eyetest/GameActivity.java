@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -21,6 +20,7 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
+    DialogIngameMenu dialogIngameMenu;
     private AdView mAdView = null;
     private InterstitialAd interstitial = null;
 
@@ -33,12 +33,14 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         grvGameContent = (GridView) findViewById(R.id.grvGameContent);
         tvQuestionContent = (TextView) findViewById(R.id.tvQuestionContent);
+        dialogIngameMenu = new DialogIngameMenu();
         mAdView = (AdView) this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         //mAdView.loadAd(adRequest);
         timePlay= System.currentTimeMillis();
         rand = new Random();
         loadQuestionContent();
+        dialogIngameMenu.show(getFragmentManager(), "DialogIngameMenu", gameInPlay);
     }
     Random rand;
     private void loadQuestionContent()
@@ -47,9 +49,9 @@ public class GameActivity extends AppCompatActivity {
         QuestionItem questionItem = Data.getRandomGameData();
         tvQuestionContent.setText(questionItem.getContentTitle());
         if(gameContentGridViewAdapter == null){
-            gameContentGridViewAdapter = new GameContentGridViewAdapter(GameActivity.this, questionItem.createItem(18 * 15), getResources());
+            gameContentGridViewAdapter = new GameContentGridViewAdapter(GameActivity.this, questionItem.createItem(13 * 13), getResources());
         }else{
-            gameContentGridViewAdapter.updateData(questionItem.createItem(18 * 15));
+            gameContentGridViewAdapter.updateData(questionItem.createItem(13 * 13));
         }
         grvGameContent.setAdapter(gameContentGridViewAdapter);
         grvGameContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,6 +76,11 @@ public class GameActivity extends AppCompatActivity {
         switch (view.getId())
         {
             case R.id.btMenuInGame:
+                if(dialogIngameMenu == null){
+                    dialogIngameMenu = new DialogIngameMenu();
+                }
+                pauseGame();
+                dialogIngameMenu.show(getFragmentManager(), "DialogIngameMenu", gameInPlay);
                 break;
             case R.id.btSpeaker:
                 break;
@@ -108,6 +115,42 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void onIngameMenuClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.btResume:
+                break;
+            case R.id.btPlay:
+                break;
+            case R.id.btHighScore:
+                break;
+            case R.id.btMoreApps:
+                break;
+            case R.id.btExit:
+                finish();
+                break;
+        }
+    }
+
+    boolean gameInPlay = false;
+    boolean gameIsPlaying = false;
+
+    private void pauseGame()
+    {
+        gameIsPlaying = false;
+    }
+    private void ResumeGame()
+    {
+        gameInPlay = true;
+        gameIsPlaying = true;
+    }
+    private void ReplayGame()
+    {
+        gameInPlay = true;
+        gameIsPlaying = true;
     }
 
     private long timePlay = 0;

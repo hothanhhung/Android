@@ -21,7 +21,7 @@ public class StaticData {
             menuLookUpItems.add(new MenuLookUpItem("Mã Ngân Hàng (Swift Code)",R.drawable.swiftcode,"com.hth.tracuuonline.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.SwiftCode));
             menuLookUpItems.add(new MenuLookUpItem("Lãi Suất Ngân Hàng",R.drawable.rate_bank,"com.hth.tracuuonline.LookUpForViewWithWebView","", MenuLookUpItemKind.LaiSuatNganHang));
             menuLookUpItems.add(new MenuLookUpItem("Tỷ Giá Ngoại Tệ",R.drawable.money_exchange,"com.hth.tracuuonline.LookUpForViewWithWebView","", MenuLookUpItemKind.TyGiaNgoaiTe));
-            menuLookUpItems.add(new MenuLookUpItem("Giá Vàng",R.drawable.gold,"com.hth.tracuuonline.LookUpForViewWithWebView","", MenuLookUpItemKind.BangGiaVang));
+            menuLookUpItems.add(new MenuLookUpItem("Giá Vàng",R.drawable.gold,"com.hth.tracuuonline.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.BangGiaVang));
             menuLookUpItems.add(new MenuLookUpItem("Giá Xăng",R.drawable.oil,"com.hth.tracuuonline.LookUpForViewWithWebView","", MenuLookUpItemKind.GiaXang));
             menuLookUpItems.add(new MenuLookUpItem("Kết Quả Xổ Số",R.drawable.lottery,"com.hth.tracuuonline.LookUpKetQuaXoSo",""));
             menuLookUpItems.add(new MenuLookUpItem("Thông Tin Thời Tiết",R.drawable.weather,"com.hth.tracuuonline.LookUpForViewWithWebView","", MenuLookUpItemKind.DuBaoThoiTiet));
