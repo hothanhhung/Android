@@ -104,7 +104,7 @@ public class GameItem implements Serializable {
     }
     public int getMaxValue()
     {
-        return gameColumn * gameColumn;
+        return gameColumn * gameRow;
     }
     public int[][] getGameTarget() {
         return gameTarget;
