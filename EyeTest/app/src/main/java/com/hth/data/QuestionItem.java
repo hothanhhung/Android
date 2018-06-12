@@ -1,5 +1,6 @@
 package com.hth.data;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -32,14 +33,26 @@ public class QuestionItem {
         this.contentTitle = contentTitle;
     }
 
+    private static int getColorBands(int color, int index, int bands) {
+        return darken(color, ((double) index) / ((double) bands));
+    }
+
+    private static int darken(int color, double fraction) {
+        if (fraction < 0.05d) {
+            fraction = 0.05000000074505806d;
+        }
+        return Color.argb(Color.alpha(color), (int) Math.round(Math.min(255.0d, ((double) Color.red(color)) + (255.0d * fraction))), (int) Math.round(Math.min(255.0d, ((double) Color.green(color)) + (255.0d * fraction))), (int) Math.round(Math.min(255.0d, ((double) Color.blue(color)) + (255.0d * fraction))));
+    }
+
     public ArrayList<Item> createItem(int size)
     {
         Random rand = new Random();
         int showColorGoal = colorGoal, showColor = color;
+        int shadeDenum = 11 + rand.nextInt(10);
         if(isColor && showColor == 0 && showColorGoal == 0)
         {
-            showColorGoal = rand.nextInt(0x00FFFF00) + 0xAA000000;
-            showColor = showColorGoal + 0x10000000;// - 0x100000;// + rand.nextInt(0xF);
+            showColor = rand.nextInt(0x00FFFF00) + 0xAA000000;
+            showColorGoal = getColorBands(showColor, 1, shadeDenum);//showColorGoal - 0x10000000;// - 0x100000;// + rand.nextInt(0xF);
 
             Log.d("createItem", Integer.toString(showColorGoal, 16) + "" + Integer.toString(showColor, 16));
         }

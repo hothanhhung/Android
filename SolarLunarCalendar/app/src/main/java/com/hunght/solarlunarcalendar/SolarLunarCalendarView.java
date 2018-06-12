@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hunght.data.DateItemForGridview;
-import com.hunght.data.LunarDate;
 import com.hunght.data.NoteItem;
 import com.hunght.utils.DateTools;
 import com.hunght.utils.ServiceProcessor;
@@ -164,7 +162,7 @@ public class SolarLunarCalendarView extends LinearLayout {
     private void updateMonthYear()
     {
         wvSpecialDate.loadDataWithBaseURL("", "", "text/html", "UTF-8", "");
-        if(SharedPreferencesUtils.getShowChamNgon(getContext())) {
+        if(SharedPreferencesUtils.getShowChamNgonSetting(getContext())) {
             if (currentPerformServiceProcessBackgroundTask != null) {
                 currentPerformServiceProcessBackgroundTask.cancel(true);
                 currentPerformServiceProcessBackgroundTask = null;
@@ -196,7 +194,7 @@ public class SolarLunarCalendarView extends LinearLayout {
         tvLunarInfoDayInWeek.setText(selectedDate.getLunarInfo(true));
         tvLunarInfoDayInWeek1.setText(selectedDate.getLunarInfo1(true));
 
-        if(SharedPreferencesUtils.getShowGoodDayBadDate(getContext()))
+        if(SharedPreferencesUtils.getShowGoodDayBadDateSetting(getContext()))
         {
             tvSolarInfoToday.setVisibility(VISIBLE);
             tvSolarInfoToday.setText(selectedDate.getLunarGoodTime());

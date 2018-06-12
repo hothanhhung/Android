@@ -1,6 +1,5 @@
 package com.hunght.solarlunarcalendar;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -111,7 +110,7 @@ public class DateItemAdapter extends ArrayAdapter<DateItemForGridview> {
                     tvLunarDate.setTextColor(Color.DKGRAY);
                 }
 
-                if(SharedPreferencesUtils.getShowGoodDayBadDate(getContext()))
+                if(SharedPreferencesUtils.getShowGoodDayBadDateSetting(getContext()))
                 {
                     if(item.isGoodDay())
                     {

@@ -7,7 +7,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -78,19 +77,19 @@ public class SettingsView  extends LinearLayout {
         switch (buttonView.getId())
         {
             case R.id.swSettingsNgayHoangDao:
-                SharedPreferencesUtils.setShowGoodDayBadDate(getContext(), isChecked);
+                SharedPreferencesUtils.setShowGoodDayBadDateSetting(getContext(), isChecked);
                 break;
             case R.id.swSettingsChamNgon:
-                SharedPreferencesUtils.setShowChamNgon(getContext(), isChecked);
+                SharedPreferencesUtils.setShowChamNgonSetting(getContext(), isChecked);
                 break;
             case R.id.swSettingsDailyNotifyChamNgon:
-                SharedPreferencesUtils.setShowNotifyChamNgon(getContext(), isChecked);
+                SharedPreferencesUtils.setShowNotifyChamNgonSetting(getContext(), isChecked);
                 break;
             case R.id.swSettingsDailyNotifyGoodDateBadDate:
-                SharedPreferencesUtils.setShowDailyNotifyGoodDateBadDate(getContext(), isChecked);
+                SharedPreferencesUtils.setShowDailyNotifyGoodDateBadDateSetting(getContext(), isChecked);
                 break;
             case R.id.swSettingsNotifyEvent:
-                SharedPreferencesUtils.setShowDailyNotifyEvent(getContext(), isChecked);
+                SharedPreferencesUtils.setShowDailyNotifyEventSetting(getContext(), isChecked);
                 break;
         }
     }
@@ -100,19 +99,19 @@ public class SettingsView  extends LinearLayout {
         switch (buttonView.getId())
         {
             case R.id.swSettingsNgayHoangDao:
-                buttonView.setChecked(SharedPreferencesUtils.getShowGoodDayBadDate(getContext()));
+                buttonView.setChecked(SharedPreferencesUtils.getShowGoodDayBadDateSetting(getContext()));
                 break;
             case R.id.swSettingsChamNgon:
-                buttonView.setChecked(SharedPreferencesUtils.getShowChamNgon(getContext()));
+                buttonView.setChecked(SharedPreferencesUtils.getShowChamNgonSetting(getContext()));
                 break;
             case R.id.swSettingsDailyNotifyChamNgon:
-                buttonView.setChecked(SharedPreferencesUtils.getShowNotifyChamNgon(getContext()));
+                buttonView.setChecked(SharedPreferencesUtils.getShowNotifyChamNgonSetting(getContext()));
                 break;
             case R.id.swSettingsDailyNotifyGoodDateBadDate:
-                buttonView.setChecked(SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDate(getContext()));
+                buttonView.setChecked(SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(getContext()));
                 break;
             case R.id.swSettingsNotifyEvent:
-                SharedPreferencesUtils.getShowDailyNotifyEvent(getContext());
+                buttonView.setChecked(SharedPreferencesUtils.getShowDailyNotifyEventSetting(getContext()));
                 break;
         }
     }

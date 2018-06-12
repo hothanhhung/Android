@@ -23,9 +23,9 @@ public class Data {
         if(gameData == null)
         {
             gameData = new ArrayList<>();
-           /* gameData.add(new QuestionItem("b", "p",false, 0, 0, "Find p"));
+            gameData.add(new QuestionItem("b", "p",false, 0, 0, "Find p"));
             gameData.add(new QuestionItem("Q", "O",false, 0, 0, "Find O"));
-            gameData.add(new QuestionItem("X", "V",false, 0, 0, "Find v"));
+            gameData.add(new QuestionItem("X", "V",false, 0, 0, "Find V"));
             gameData.add(new QuestionItem("B", "R",false, 0, 0, "Find R"));
             gameData.add(new QuestionItem("O", "C",false, 0, 0, "Find C"));
             gameData.add(new QuestionItem("C", "G",false, 0, 0, "Find C"));
@@ -34,19 +34,22 @@ public class Data {
             gameData.add(new QuestionItem("8", "6",false, 0, 0, "Find 6"));
             gameData.add(new QuestionItem("6", "9",false, 0, 0, "Find 9"));
             gameData.add(new QuestionItem("9", "0",false, 0, 0, "Find 0"));
-            gameData.add(new QuestionItem("", "",true, 0xFF97CCDE, 0xFFA1D2E3, "Find different color"));
+            gameData.add(new QuestionItem("<", ">",false, 0, 0, "Find >"));
+            gameData.add(new QuestionItem("\"", "'",false, 0, 0, "Find '"));
+            gameData.add(new QuestionItem("|", "!",false, 0, 0, "Find !"));
+            /* gameData.add(new QuestionItem("", "",true, 0xFF97CCDE, 0xFFA1D2E3, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0xFFCD90D4, 0xFFCA8AD1, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0xFFD18ABF, 0xFFD48EC2, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0xFF8ED2D4, 0xFF8AD0D1, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0xFF8AD19D, 0xFF8ED4A0, "Find different color"));
-            gameData.add(new QuestionItem("", "",true, 0xFFE6E65E, 0xFFE8E864, "Find different color"));*/
+            gameData.add(new QuestionItem("", "",true, 0xFFE6E65E, 0xFFE8E864, "Find different color"));
+           gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
-            gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
-            gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
+            gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));*/
             gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));
             gameData.add(new QuestionItem("", "",true, 0, 0, "Find different color"));

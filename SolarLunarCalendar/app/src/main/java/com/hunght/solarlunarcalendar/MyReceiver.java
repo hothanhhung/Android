@@ -6,11 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -48,7 +45,7 @@ public class MyReceiver extends BroadcastReceiver {
             Log.d("AmDuong", "onReceive 1: on");
             MyService.lastOn = now;
             selectedDate = new DateItemForGridview("", new Date(), false);
-            if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDate(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context)))) {
+            if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context)))) {
 
                 if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
                     currentPerformServiceProcessBackgroundTaskGoodDate.cancel(true);
@@ -59,7 +56,7 @@ public class MyReceiver extends BroadcastReceiver {
                 currentPerformServiceProcessBackgroundTaskGoodDate.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
             }
 
-            if (SharedPreferencesUtils.getShowNotifyChamNgon(context) && ((now.getDate() != SharedPreferencesUtils.getShowNotifyChamNgonTime(context)))) {
+            if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowNotifyChamNgonTime(context)))) {
                 if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
                     currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
                     currentPerformServiceProcessBackgroundTaskChamNgon = null;
