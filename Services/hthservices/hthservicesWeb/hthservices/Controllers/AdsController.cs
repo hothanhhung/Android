@@ -1,4 +1,5 @@
 ﻿using hthservices.Models;
+using hthservices.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace hthservices.Controllers
             if (string.IsNullOrWhiteSpace(country)) country = "VN";
             if (string.IsNullOrWhiteSpace(os)) os = "android";
 
-            var adItems = Ads.AdData.GetAds(country, os, Request.RequestUri.ToString(), device, open, version, package);
+            var adItems = Ads.AdData.GetAds(country, os, MethodHelpers.GetUrlToLog(Request), device, open, version, package);
             return ResponseJson.GetResponseJson(adItems);
         }
 
@@ -25,7 +26,7 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("UserClickAd")]
         public ResponseJson UserClickAd(string country, string os, string info, string device = "", string open = "", string version = "", string package = "")
         {
-            Ads.AdData.UserClickAd(country, os, Request.RequestUri.ToString(), info, device, open, version, package);
+            Ads.AdData.UserClickAd(country, os, MethodHelpers.GetUrlToLog(Request), info, device, open, version, package);
             return ResponseJson.GetResponseJson(null);
         }
     }

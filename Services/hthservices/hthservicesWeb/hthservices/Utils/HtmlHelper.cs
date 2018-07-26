@@ -196,18 +196,49 @@ namespace hthservices.Utils
             List<GuideItem> guideItems = new List<GuideItem>();
             try
             {
-                using (var http = new HttpClient())
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 {
-                    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                    var stringContent = "channelId=" + channelToServer.Value + "&dateSchedule=" + date.ToString("dd/MM/yyyy");
+                    byte[] buffer = Encoding.UTF8.GetBytes(stringContent);
+                    req.Host = "www.mytv.com.vn";
+                    req.Referer = "https://www.mytv.com.vn/lich-phat-song";
+                    req.Method = "POST";
+                    req.ContentType = "application/x-www-form-urlencoded";
+                    req.ContentLength = buffer.Length;
+                    req.KeepAlive = true;
+                    req.Timeout = System.Threading.Timeout.Infinite;
+                    req.ProtocolVersion = HttpVersion.Version10;
+                    req.AllowWriteStreamBuffering = false;
+                    req.Accept = "application/json, text/javascript, */*; q=0.01";
+                    req.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0";
+
+                    WebHeaderCollection myWebHeaderCollection = req.Headers;
+                    myWebHeaderCollection.Add("Accept-Encoding: gzip, deflate, br");
+                    myWebHeaderCollection.Add("Accept-Language: en-US,en;q=0.5");
+                    myWebHeaderCollection.Add("X-Requested-With: XMLHttpRequest");
                     
-                    var stringContent = "channelId="+channelToServer.Value+"&dateSchedule="+date.ToString("dd/MM/yyyy");
-                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
-                    var response = http.PostAsync(url, httpContent).Result;
-                    
-                    if (response.IsSuccessStatusCode)
+                    //req.CookieContainer = new CookieContainer();
+                    ////req.CookieContainer.Add(new Uri(url), new Cookie("__utma", "1.268565172.1470799796.1474424801.1474426720.10"));
+                    ////req.CookieContainer.Add(new Uri(url), new Cookie("__utmz", "1.1470803901.2.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("PHPSESSID", "kphgfqvsajuipgooosthakvl35"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utma", "216719242.2069266193.1495166431.1495166431.1495166431.1"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utmb", "216719242.1.10.1495166431"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utmc", "216719242"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utmz", "216719242.1495166431.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)"));
+                    //req.CookieContainer.Add(new Uri("https://www.mytv.com.vn/lich-phat-song"), new Cookie("__utmt", "1"));
+
+
+                    Stream stream = req.GetRequestStream();
+                    stream.Write(buffer, 0, buffer.Length);
+                    stream.Close();
+                    WebResponse response = req.GetResponse();
+
+                    if (((HttpWebResponse)response).StatusDescription.Equals("OK", StringComparison.OrdinalIgnoreCase))
                     {
-                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
-                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        stream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(stream);
+                        string source = reader.ReadToEnd();
+                        response.Close();
                         source = System.Text.RegularExpressions.Regex.Unescape(source);
                         source = WebUtility.HtmlDecode(source.Replace("\"", ""));
                         HtmlDocument resultat = new HtmlDocument();
@@ -238,7 +269,59 @@ namespace hthservices.Utils
                             }
                         }
                     }
-                }          
+                }
+                //using (var http = new HttpClient())
+                //{
+                //    //http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                //    http.DefaultRequestHeaders.Add("Host", "www.mytv.com.vn");
+                //    http.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0");
+                //    http.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript, */*; q=0.01");
+                //    http.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.5");
+                //    http.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+                //    http.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                //    http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                //    http.DefaultRequestHeaders.Add("Referer", "https://www.mytv.com.vn/lich-phat-song");
+                //    http.DefaultRequestHeaders.Add("Cookie", "; ; ; =; =216719242.1495166431.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)");
+
+                //    var stringContent = "channelId=" + channelToServer.Value + "&dateSchedule=" + date.ToString("dd/MM/yyyy");
+                //    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                //    var response = http.PostAsync(url, httpContent).Result;
+
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                //        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                //        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                //        source = WebUtility.HtmlDecode(source.Replace("\"", ""));
+                //        HtmlDocument resultat = new HtmlDocument();
+                //        resultat.LoadHtml(source);
+
+                //        var items = resultat.DocumentNode.SelectNodes("//p");
+
+                //        if (items != null)
+                //        {
+                //            foreach (var item in items)
+                //            {
+                //                string startOn = "", programName = "";
+                //                // get start time
+                //                var timeTV = item.SelectNodes("strong");
+                //                if (timeTV != null && timeTV.Count > 0)
+                //                {
+                //                    startOn = timeTV.FirstOrDefault().InnerText.Trim();
+                //                }
+                //                var tDetail = item.ChildNodes;
+
+                //                // get program name
+                //                if (tDetail != null && tDetail.Count > 1)
+                //                {
+                //                    programName = item.ChildNodes[1].InnerText.Trim();
+                //                }
+                //                var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                //                guideItems.Add(guideItem);
+                //            }
+                //        }
+                //    }
+                //}
 
             }
             catch (Exception ex)
@@ -601,9 +684,9 @@ namespace hthservices.Utils
 
             return guideItems;
         }
-        static public List<GuideItem> GetDataFromHTVONLINEUrl(ChannelToServer channelToServer, DateTime date)
+        static public List<GuideItem> GetDataFromHTVPLUSUrl(ChannelToServer channelToServer, int index, DateTime date)
         {
-            string url = String.Format(channelToServer.Server);
+            string url = channelToServer.Server;
 
             List<GuideItem> guideItems = new List<GuideItem>();
             try
@@ -611,15 +694,10 @@ namespace hthservices.Utils
                 using (HttpClient http = new HttpClient())
                 {
                     http.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-                    var obj = new
-                    {
-                        //must
-                        id_live = channelToServer.Value,
-                        date = date.ToString("yyyy-MM-dd")
-                    };
-
-                    var stringContent = JsonConvert.SerializeObject(obj).ToString();
-                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/json");
+                   // http.DefaultRequestHeaders.Add("Referer", "http://hplus.com.vn/xem-kenh-htv1-2631.html");
+                   
+                    var stringContent = string.Format("id={0}&num={1}", channelToServer.Value, index);
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
                     var response = http.PostAsync(url, httpContent).Result;
                    // http.BaseAddress = new Uri(url);
                     
@@ -633,22 +711,24 @@ namespace hthservices.Utils
                         HtmlDocument resultat = new HtmlDocument();
                         resultat.LoadHtml(source);
 
-                        var items = resultat.DocumentNode.SelectNodes("//p");
+                        var items = resultat.DocumentNode.SelectNodes("/div/div");
                         if (items != null)
                         {
                             foreach (var item in items)
                             {
+                                if (item.ChildNodes.Count != 5) continue;
+
                                 string startOn = "", programName = "";
                                 // get start time
-                                var times = item.SelectNodes("b");
-                                if (times != null && times.Count > 0)
+                                var times = item.ChildNodes[1].InnerText.Trim();
+                                if (times != null && times.Length > 5)
                                 {
-                                    startOn = times.ElementAt(0).InnerText.Trim();                                    
+                                    startOn = times.Substring(0, 5);                                    
                                 }
-                                var details = item.SelectNodes("span");
-                                if (details != null && details.Count > 0)
+                                var details = item.ChildNodes[2].InnerText.Trim();
+                                if (details != null && details.Length > 0)
                                 {
-                                    programName = details.ElementAt(0).InnerText.Trim();
+                                    programName = details.Trim(':').Trim();
                                 }
                                 if (!string.IsNullOrWhiteSpace(startOn))
                                 {
@@ -1339,36 +1419,46 @@ namespace hthservices.Utils
             {
                 using (HttpClient http = new HttpClient())
                 {
-                    var response = http.GetByteArrayAsync(url).Result;
-                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
-                    //     source = System.Text.RegularExpressions.Regex.Unescape(source);
-                    source = WebUtility.HtmlDecode(source);
-                    HtmlDocument resultat = new HtmlDocument();
-                    resultat.LoadHtml(source);
+                    var stringContent = string.Format("id={0}&num={1}&height=380", channelToServer.Value, date.ToString("yyyy-MM-dd"));
+                    var httpContent = new StringContent(stringContent, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    var response = http.PostAsync(url, httpContent).Result;
 
-                    var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@id='schedule-table']");
-                    if (schedulerMain != null && schedulerMain.Count > 0)
+                    if (response.IsSuccessStatusCode)
                     {
-                        var timeItems = schedulerMain.FirstOrDefault().SelectNodes("div[@class='col1']");
-                        var detailItems = schedulerMain.FirstOrDefault().SelectNodes("div[@class='col2']");
-                        var moreDetailItems = schedulerMain.FirstOrDefault().SelectNodes("div[@class='col3']");
-                        if (timeItems != null && detailItems != null && moreDetailItems != null && timeItems.Count == detailItems.Count && moreDetailItems.Count == detailItems.Count)
+                        var bytes = response.Content.ReadAsByteArrayAsync().Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(bytes, 0, bytes.Length - 1);
+                        source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        source = WebUtility.HtmlDecode(source);
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var moreDetailItems = resultat.DocumentNode.SelectNodes("//tr");
+                        if (moreDetailItems != null && moreDetailItems.Count > 0)
                         {
-                            for (int i = 0; i < timeItems.Count; i++)
+                            foreach (var moreDetailItem in moreDetailItems)
                             {
-                                string startOn = "", programName = "", more="";
-                                // get start time
-                                startOn = timeItems.ElementAt(i).InnerText.Trim();
-                                programName = detailItems.ElementAt(i).InnerText.Trim();
-                                more = moreDetailItems.ElementAt(i).InnerText.Trim();
-                                if (!String.IsNullOrWhiteSpace(more))
+                                var tds = moreDetailItem.SelectNodes("td");
+                                if (tds != null && tds.Count == 3)
                                 {
-                                    programName +=" - " + more;
-                                }
-                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
-                                {
-                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
-                                    guideItems.Add(guideItem);
+                                    string startOn = "", programName = "", more = "";
+                                    // get start time
+                                    startOn = tds[0].InnerText.Trim();
+                                    programName = tds[1].InnerText.Trim();
+                                    more = tds[2].InnerText.Trim();
+                                    if (!String.IsNullOrWhiteSpace(more))
+                                    {
+                                        programName += " - " + more;
+                                    }
+
+                                    if (startOn.Length == 4)
+                                    {
+                                        startOn = "0" + startOn;
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length == 5)
+                                    {
+                                        var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                        guideItems.Add(guideItem);
+                                    }
                                 }
                             }
                         }
@@ -1385,7 +1475,7 @@ namespace hthservices.Utils
 
         static public List<GuideItem> GetDataFromLA34Url(ChannelToServer channelToServer, DateTime date)
         {
-            string url = String.Format(channelToServer.Server, date.ToString("dd-MM-yyyy"));
+            string url = String.Format(channelToServer.Server, date.ToString("yyyy-MM-dd"));
 
             List<GuideItem> guideItems = new List<GuideItem>();
             try
@@ -1399,27 +1489,27 @@ namespace hthservices.Utils
                     HtmlDocument resultat = new HtmlDocument();
                     resultat.LoadHtml(source);
 
-                    var schedulerMain = resultat.DocumentNode.SelectNodes("//div[@class='sch-content']");
-                    if (schedulerMain != null && schedulerMain.Count > 0)
+                    var items = resultat.DocumentNode.SelectNodes("li");
+                    if (items != null)
                     {
-                        var items = schedulerMain.FirstOrDefault().SelectNodes("table//tr");
-                        if (items != null)
+                        foreach (var item in items)
                         {
-                            foreach (var item in items)
+                            string startOn = "", programName = "";
+                            // get start time
+                            var tdTags = item.SelectNodes("span");
+                            if (tdTags != null && tdTags.Count == 2)
                             {
-                                string startOn = "", programName = "";
-                                // get start time
-                                var tdTags = item.SelectNodes("td");
-                                if (tdTags != null && tdTags.Count > 3)
+                                startOn = tdTags.ElementAt(1).InnerText.Trim();
+                                programName = tdTags.ElementAt(0).InnerText.Trim();
+                                if (startOn.Length == 4)
                                 {
-                                    startOn = tdTags.ElementAt(1).InnerText.Trim();
-                                    programName = tdTags.ElementAt(3).InnerText.Trim();
+                                    startOn = "0" + startOn;
                                 }
-                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
-                                {
-                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
-                                    guideItems.Add(guideItem);
-                                }
+                            }
+                            if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
+                            {
+                                var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                guideItems.Add(guideItem);
                             }
                         }
                     }
@@ -1463,6 +1553,10 @@ namespace hthservices.Utils
                             if (tdTags != null && tdTags.Count > 1)
                             {
                                 startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                if (startOn.Length == 4)
+                                {
+                                    startOn = "0" + startOn;
+                                }
                                 programName = MethodHelpers.ToTitleCase(tdTags.ElementAt(1).InnerText.Trim());
                             }
                             if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
@@ -2250,7 +2344,7 @@ namespace hthservices.Utils
 
         static public List<GuideItem> GetDataFromSCTVUrl(ChannelToServer channelToServer, DateTime date)
         {
-            string postdata = "ctl00%24RadScriptManager1=ctl00%24RadScriptManager1%7Cctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel&ctl00_RadScriptManager1_TSM=%3B%3BSystem.Web.Extensions%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D31bf3856ad364e35%3Aen-US%3A50b12c66-1dd3-4ebf-87e6-55014086ad94%3Aea597d4b%3Ab25378d2%3BTelerik.Web.UI%2C%20Version%3D2012.1.411.35%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D121fae78165ba3d4%3Aen-US%3A4cad056e-160b-4b85-8751-cc8693e9bcd0%3A16e4e7cd%3Aed16cbdc%3Af7645509%3A7c926187%3A8674cba1%3Ab7778d6c%3Ac08e9f8a%3Aa51ee93e%3A59462f1&ctl00%24txtMasterSearch=&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel={0}&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24sDate={1}&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24sDate%24dateInput={1}-00-00-00&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_dateInput_ClientState=%7B%22enabled%22%3Atrue%2C%22emptyMessage%22%3A%22%22%2C%22minDateStr%22%3A%221%2F1%2F1900%200%3A0%3A0%22%2C%22maxDateStr%22%3A%2212%2F31%2F2099%200%3A0%3A0%22%2C%22enteredText%22%3A%22%22%7D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_calendar_SD=%5B%5D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_calendar_AD=%5B%5B1900%2C1%2C1%5D%2C%5B2099%2C12%2C30%5D%2C%5B2016%2C8%2C15%5D%5D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_ClientState=%7B%22minDateStr%22%3A%221%2F1%2F1900%200%3A0%3A0%22%2C%22maxDateStr%22%3A%2212%2F31%2F2099%200%3A0%3A0%22%7D&__EVENTTARGET=ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=%2FwEPDwUKMTA3MTA2NDk2OA9kFgJmD2QWBAIBD2QWAgIDDxYCHgdjb250ZW50ZGQCAw8WAh4GYWN0aW9uBRQvbGljaC1waGF0LXNvbmcuaHRtbBYCAgMPZBYCAgEPZBYCAgEPZBYGZg9kFgICAQ9kFgJmDxYCHgtfIUl0ZW1Db3VudGZkAgEPZBYCAgEPZBYIAgMPDxYCHhdFbmFibGVBamF4U2tpblJlbmRlcmluZ2hkZAIFDxAPFgYeDURhdGFUZXh0RmllbGQFB0NoYW5uZWweDkRhdGFWYWx1ZUZpZWxkBQxDaGFubmVsTWFwSUQeC18hRGF0YUJvdW5kZ2QQFSoSLS0gQ2jhu41uIGvDqm5oIC0tBVNDVFYxBlNDVFYgMg5TQ1RWIDMgLSBTRUVUVgZTQ1RWIDQGU0NUViA1BlNDVFYgNgZTQ1RWIDcGU0NUViA4BlNDVFYgOQdTQ1RWIDEwEVNDVFYgMTEgLSBUViBTVEFSB1NDVFYgMTIHU0NUViAxMwdTQ1RWIDE0B1NDVFYgMTUHU0NUViAxNhZTQ1RWIFBoaW0gVOG7lW5nIEjhu6NwElNDVFYgSEQgVGjhu4MgVGhhbwVWVEMxNAVWVEMxNgRWVEMyBFZUQzMLVlRDNS1Tb2ZhVFYEVlRDOARUSEJUBFRISEcHVEhEVGhhcARWVEMxCFRvZGF5IFRWDFRIIE5JTkggQklOSAdRUFZOIEhED1ZUQzktTEVUJ1MgVklFVAdWVFYgSFVFA0hCTwdDaW5lbWF4CUZveCBTcG9ydApTVEFSTU9WSUVTClNUQVJTUE9SVFMJU1RBUldPUkxEA0FYTgJEVxUqATABMgEzAjI0ATUBNgE3ATgBOQIxNgI3NwI2MQI2MgMxMDUCMzYCMTADMTAzATEDMTA5AzE1NwMxNTkBMAEwAzE3MQEwAjQ5ATACMzgCNjMCNTkCOTgDMTI4Ajg5AjQwAjcwAjc2AjU3AjcxAjU4AjgyAjgxAjkxFCsDKmdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZxYBAglkAgcPDxYGHgdNaW5EYXRlBgBAVyBTBVEIHgxTZWxlY3RlZERhdGUGAKhdbWTE04geB01heERhdGUGAEBxb7E%2BMQlkFgRmDxQrAAgPFhIeBFNraW4FB0RlZmF1bHQeBFRleHQFEzIwMTYtMDgtMTUtMDAtMDAtMDAeEUVuYWJsZUFyaWFTdXBwb3J0aB4NTGFiZWxDc3NDbGFzcwUHcmlMYWJlbB8DaB8JBgBAcW%2BxPjEJHgxFbXB0eU1lc3NhZ2VlHwcGAEBXIFMFUQgeEV9za2lwTU1WYWxpZGF0aW9uaGQWBh4FV2lkdGgbAAAAAAAAWUAHAAAAHghDc3NDbGFzcwURcmlUZXh0Qm94IHJpSG92ZXIeBF8hU0ICggIWBh8QGwAAAAAAAFlABwAAAB8RBRFyaVRleHRCb3ggcmlFcnJvch8SAoICFgYfEBsAAAAAAABZQAcAAAAfEQUTcmlUZXh0Qm94IHJpRm9jdXNlZB8SAoICFgYfEBsAAAAAAABZQAcAAAAfEQUTcmlUZXh0Qm94IHJpRW5hYmxlZB8SAoICFgYfEBsAAAAAAABZQAcAAAAfEQUUcmlUZXh0Qm94IHJpRGlzYWJsZWQfEgKCAhYGHxAbAAAAAAAAWUAHAAAAHxEFEXJpVGV4dEJveCByaUVtcHR5HxICggIWBh8QGwAAAAAAAFlABwAAAB8RBRByaVRleHRCb3ggcmlSZWFkHxICggJkAgIPFCsADQ8WFgUERm9jRAYAgLwZn8TTCAUPUmVuZGVySW52aXNpYmxlZwUNU2VsZWN0ZWREYXRlcw8FjwFUZWxlcmlrLldlYi5VSS5DYWxlbmRhci5Db2xsZWN0aW9ucy5EYXRlVGltZUNvbGxlY3Rpb24sIFRlbGVyaWsuV2ViLlVJLCBWZXJzaW9uPTIwMTIuMS40MTEuMzUsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49MTIxZmFlNzgxNjViYTNkNBQrAAAFEUVuYWJsZU11bHRpU2VsZWN0aAUNQ3VsdHVyZU5hbWVJRAUFdmktVk4FC1NwZWNpYWxEYXlzDwWSAVRlbGVyaWsuV2ViLlVJLkNhbGVuZGFyLkNvbGxlY3Rpb25zLkNhbGVuZGFyRGF5Q29sbGVjdGlvbiwgVGVsZXJpay5XZWIuVUksIFZlcnNpb249MjAxMi4xLjQxMS4zNSwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj0xMjFmYWU3ODE2NWJhM2Q0FCsAAAUETWF4RAYAgAdF6D0xCQUETWluRAYAQFcgUwVRCAUNQ3VsdHVyZUluZm9JRCgpbVN5c3RlbS5HbG9iYWxpemF0aW9uLkN1bHR1cmVJbmZvLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFdmktVk4FCUN1bHR1cmVJRAKqCAUQVmlld1NlbGVjdG9yVGV4dAUBeA8WBh8MaB8KBQdEZWZhdWx0HwNoZGQWBB8RBQtyY01haW5UYWJsZR8SAgIWBB8RBQxyY090aGVyTW9udGgfEgICZBYEHxEFCnJjU2VsZWN0ZWQfEgICZBYEHxEFCnJjRGlzYWJsZWQfEgICFgQfEQUMcmNPdXRPZlJhbmdlHxICAhYEHxEFCXJjV2Vla2VuZB8SAgIWBB8RBQdyY0hvdmVyHxICAhYEHxEFMVJhZENhbGVuZGFyTW9udGhWaWV3IFJhZENhbGVuZGFyTW9udGhWaWV3X0RlZmF1bHQfEgICFgQfEQUJcmNWaWV3U2VsHxICAmQCCQ9kFggCAw8WAh8CAhcWLgIBD2QWAmYPFQIFMDE6MDAcTOG6pFkgQ0jhu5JORyBHScOAVSBTQU5HIFQzOGQCAg9kFgJmDxUCBTAyOjAwF1TDglkgRFUgS8OdIFQzMCAoSOG6vlQpZAIDD2QWAmYPFQIFMDM6MDAdUEjDmkMgVsWoIFbDgCBQSEnDik4gVsOCTiBUMzJkAgQPZBYCZg8VAgUwNDowMBtBTkggSMOZTkcgVEjDgE5IIFRS4bqgSSBUMTJkAgUPZBYCZg8VAgUwNTowMCBUUlVZ4buATiBUSFVZ4bq%2BVCBMScOKVSBUUkFJIFQxNWQCBg9kFgJmDxUCBTA2OjAwHVBIw5pDIFbFqCBWw4AgUEhJw4pOIFbDgk4gVDMzZAIHD2QWAmYPFQIFMDc6MDAmR0lBIMSQw4xOSCBWVUkgVuG6uiBISeG7hk4gxJDhuqBJIFQxNDlkAggPZBYCZg8VAgUwODowMBNUw4JZIERVIEvDnSBQMiAtIFQxZAIJD2QWAmYPFQIFMDk6MDAgVFJVWeG7gE4gVEhVWeG6vlQgTEnDilUgVFJBSSBUMTZkAgoPZBYCZg8VAgUxMDowMBxM4bqkWSBDSOG7kk5HIEdJw4BVIFNBTkcgVDM5ZAILD2QWAmYPFQIFMTE6MDAbQU5IIEjDmU5HIFRIw4BOSCBUUuG6oEkgVDEzZAIMD2QWAmYPFQIFMTI6MDATVMOCWSBEVSBLw50gUDIgLSBUMmQCDQ9kFgJmDxUCBTEzOjAwHEzhuqRZIENI4buSTkcgR0nDgFUgU0FORyBUNDBkAg4PZBYCZg8VAgUxNDowMCZHSUEgxJDDjE5IIFZVSSBW4bq6IEhJ4buGTiDEkOG6oEkgVDE1MGQCDw9kFgJmDxUCBTE1OjAwG0FOSCBIw5lORyBUSMOATkggVFLhuqBJIFQxNGQCEA9kFgJmDxUCBTE2OjAwHVBIw5pDIFbFqCBWw4AgUEhJw4pOIFbDgk4gVDM0ZAIRD2QWAmYPFQIFMTc6MDAmR0lBIMSQw4xOSCBWVUkgVuG6uiBISeG7hk4gxJDhuqBJIFQxNTFkAhIPZBYCZg8VAgUxODowMBNUw4JZIERVIEvDnSBQMiAtIFQzZAITD2QWAmYPFQIFMTk6MDAcTkfGr%2BG7nEkgQuG7kCBUSMOCTiBZw4pVIFQxMWQCFA9kFgJmDxUCBTIwOjAwG0FOSCBIw5lORyBUSMOATkggVFLhuqBJIFQxNWQCFQ9kFgJmDxUCBTIxOjAwHEzhuqRZIENI4buSTkcgR0nDgFUgU0FORyBUNDFkAhYPZBYCZg8VAgUyMjowMB1QSMOaQyBWxaggVsOAIFBIScOKTiBWw4JOIFQzNWQCFw9kFgJmDxUCBTIzOjAwJkdJQSDEkMOMTkggVlVJIFbhurogSEnhu4ZOIMSQ4bqgSSBUMTQ5ZAIHDw8WAh4LTmF2aWdhdGVVcmwFPC9ob20tbmF5LXhlbS1naS9ob20tbmF5LXhlbS1naS84MzM3L2FuaC1odW5nLXRoYW5oLXRyYWkuaHRtbGQWAmYPDxYEHghJbWFnZVVybAU7L01lZGlhL0FydGljbGVzLzIwMTYvNy8zODg3YTFlZWEwNWY0MmY0OTQzMDU1Mjc1YTFhMTI1Ni5qcGceDUFsdGVybmF0ZVRleHQFE2FuaCBodW5nIHRoYW5oIHRyYWlkZAIJDw8WBB8LBRdBbmggaMO5bmcgdGjDoG5oIHRy4bqhaR8TBTwvaG9tLW5heS14ZW0tZ2kvaG9tLW5heS14ZW0tZ2kvODMzNy9hbmgtaHVuZy10aGFuaC10cmFpLmh0bWxkZAINDxYCHwICAxYGZg9kFgZmDxUBOi9ob20tbmF5LXhlbS1naS9ob20tbmF5LXhlbS1naS84MjcwL25ndW9pLWJvLXRoYW4teWV1Lmh0bWxkAgEPDxYEHxQFPH4vTWVkaWEvQXJ0aWNsZXMvMjAxNi83LzAwMGE2NWFhMTNmMTRhNDRiMGZkY2UwODJhOGY2NGUyLmpwZx8VBRFuZ3VvaSBibyB0aGFuIHlldWRkAgIPFQI6L2hvbS1uYXkteGVtLWdpL2hvbS1uYXkteGVtLWdpLzgyNzAvbmd1b2ktYm8tdGhhbi15ZXUuaHRtbBhOZ8aw4budaSBi4buRIHRow6JuIHnDqnVkAgEPZBYGZg8VAU8vaG9tLW5heS14ZW0tZ2kvaG9tLW5heS14ZW0tZ2kvNzYwMS8tdGF5LWR1LWt5LS10dmItdGFpLW5nby1raGFuLWdpYS1zY3R2OS5odG1sZAIBDw8WBB8UBTx%2BL01lZGlhL0FydGljbGVzLzIwMTYvNy9jOTljYzc3YmJmOTY0ZDhkYTI1YTFjNmYxNmU0MTQwMy5qcGcfFQUmIHRheSBkdSBreSAgdHZiIHRhaSBuZ28ga2hhbiBnaWEgc2N0djlkZAICDxUCTy9ob20tbmF5LXhlbS1naS9ob20tbmF5LXhlbS1naS83NjAxLy10YXktZHUta3ktLXR2Yi10YWktbmdvLWtoYW4tZ2lhLXNjdHY5Lmh0bWwuIlTDonkgZHUga8O9IiBUVkIgdMOhaSBuZ%2BG7mSBraMOhbiBnaeG6oyBTQ1RWOWQCAg9kFgZmDxUBOy9ob20tbmF5LXhlbS1naS9waGltLWRhLWNoaWV1LzczNDYvbGF5LWNob25nLWdpYXUtc2FuZy5odG1sZAIBDw8WBB8UBTx%2BL01lZGlhL0FydGljbGVzLzIwMTYvNy81NTVkNGJmNDg1OTY0YTBmOTY5NTExOWUwMzZjM2YxYS5qcGcfFQUTbGF5IGNob25nIGdpYXUgc2FuZ2RkAgIPFQI7L2hvbS1uYXkteGVtLWdpL3BoaW0tZGEtY2hpZXUvNzM0Ni9sYXktY2hvbmctZ2lhdS1zYW5nLmh0bWwYTOG6pXkgY2jhu5NuZyBnacOgdSBzYW5nZAICD2QWAgIBD2QWAgIBDxYCHwICGRYyZg9kFgRmDxUBAGQCAQ8WAh4Dc3JjBSJ%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djEucG5nZAIBD2QWBGYPFQEAZAIBDxYCHxYFIn4vTWVkaWEvU2hvcnRDdXQvY2hhbm5lbC9zY3R2Mi5wbmdkAgIPZBYEZg8VAQBkAgEPFgIfFgUifi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHYzLnBuZ2QCAw9kFgRmDxUBAGQCAQ8WAh8WBSJ%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djQucG5nZAIED2QWBGYPFQEAZAIBDxYCHxYFIn4vTWVkaWEvU2hvcnRDdXQvY2hhbm5lbC9zY3R2NS5wbmdkAgUPZBYEZg8VAQBkAgEPFgIfFgUifi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHY2LnBuZ2QCBg9kFgRmDxUBAGQCAQ8WAh8WBSJ%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djcucG5nZAIHD2QWBGYPFQEAZAIBDxYCHxYFIn4vTWVkaWEvU2hvcnRDdXQvY2hhbm5lbC9zY3R2OC5wbmdkAggPZBYEZg8VAQBkAgEPFgIfFgUifi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHY5LnBuZ2QCCQ9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djEwLnBuZ2QCCg9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djExLnBuZ2QCCw9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djEyLnBuZ2QCDA9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djEzLnBuZ2QCDQ9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djE0LnBuZ2QCDg9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djE1LnBuZ2QCDw9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0djE2LnBuZ2QCEA9kFgRmDxUBAGQCAQ8WAh8WBSR%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0dnB0aC5wbmdkAhEPZBYEZg8VAQBkAgEPFgIfFgUjfi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHZ0dC5wbmdkAhIPZBYEZg8VAQBkAgEPFgIfFgUlfi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL3NjdHZwbmdkLnBuZ2QCEw9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0dnRuLnBuZ2QCFA9kFgRmDxUBAGQCAQ8WAh8WBSN%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0dnB2LmpwZ2QCFQ9kFgRmDxUBAGQCAQ8WAh8WBSV%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvc2N0dmd0dGgucG5nZAIWD2QWBGYPFQEAZAIBDxYCHxYFJH4vTWVkaWEvU2hvcnRDdXQvY2hhbm5lbC9zY3R2aGFpLnBuZ2QCFw9kFgRmDxUBAGQCAQ8WAh8WBSF%2BL01lZGlhL1Nob3J0Q3V0L2NoYW5uZWwvYnR2My5qcGdkAhgPZBYEZg8VAQBkAgEPFgIfFgUhfi9NZWRpYS9TaG9ydEN1dC9jaGFubmVsL2J0djUucG5nZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAwUrY3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRjdGwwMCRjdGwwMSRzRGF0ZQU0Y3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRjdGwwMCRjdGwwMSRzRGF0ZSRjYWxlbmRhcgU0Y3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRjdGwwMCRjdGwwMSRzRGF0ZSRjYWxlbmRhcn8FEEA1gjRQVuuPnaI8HA%2BA9ngqVOLxxMYWvN3e9kTU&__VIEWSTATEGENERATOR=CA0B0334&__EVENTVALIDATION=%2FwEWLgLLwZTvAQLcktymCQLEs6DQDQK8j%2BfPBwKs4M2hCwKy4M2hCwKx4M2hCwKy4L2iCwK34M2hCwK24M2hCwK14M2hCwKk4M2hCwKr4M2hCwKz4LWiCwK14KmiCwK24IGiCwK24IWiCwKMs8XrCQKx4LWiCwKz4I2iCwLG5oG2DgKz4M2hCwLQwtvqAwLaga2BBQLQws%2FqAwKs4M2hCwKs4M2hCwL4mOiAAgKs4M2hCwKw4OGhCwKs4M2hCwKx4O2hCwK24LmiCwK34OGhCwKr4O2hCwLt6%2FHfDQKk4OGhCwKw4I2iCwK14I2iCwK14LWiCwK34KmiCwK14IGiCwK34O2hCwKk4IWiCwKk4IGiCwKr4IGiCyZp08t0uTG3CNFnMh5pfTLTkxfioivjV0%2BqIIw4VzVm&__ASYNCPOST=false&";//2016-08-15
+            string postdata = "ctl00%24RadScriptManager1=ctl00%24RadScriptManager1%7Cctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel&ctl00_RadScriptManager1_TSM=%3B%3BSystem.Web.Extensions%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D31bf3856ad364e35%3Aen-US%3Afa6755fd-da1a-49d3-9eb4-1e473e780ecd%3Aea597d4b%3Ab25378d2%3BTelerik.Web.UI%2C%20Version%3D2012.1.411.35%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D121fae78165ba3d4%3Aen-US%3A4cad056e-160b-4b85-8751-cc8693e9bcd0%3A16e4e7cd%3Aed16cbdc%3Af7645509%3A7c926187%3A8674cba1%3Ab7778d6c%3Ac08e9f8a%3Aa51ee93e%3A59462f1&ctl00%24txtMasterSearch=&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel={0}&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24sDate={1}&ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24sDate%24dateInput={1}-00-00-00&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_dateInput_ClientState=%7B%22enabled%22%3Atrue%2C%22emptyMessage%22%3A%22%22%2C%22minDateStr%22%3A%221%2F1%2F1900%200%3A0%3A0%22%2C%22maxDateStr%22%3A%2212%2F31%2F2099%200%3A0%3A0%22%2C%22enteredText%22%3A%22%22%7D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_calendar_SD=%5B%5D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_calendar_AD=%5B%5B1900%2C1%2C1%5D%2C%5B2099%2C12%2C30%5D%2C%5B2016%2C11%2C8%5D%5D&ctl00_ContentPlaceHolder1_ctl00_ctl01_sDate_ClientState=%7B%22minDateStr%22%3A%221%2F1%2F1900%200%3A0%3A0%22%2C%22maxDateStr%22%3A%2212%2F31%2F2099%200%3A0%3A0%22%7D&__EVENTTARGET=ctl00%24ContentPlaceHolder1%24ctl00%24ctl01%24ddlChannel&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=fRepT7VnRi1tR5gB%2B37gBTI5KGSf3sG4dVKw3AA3FHxSrdhEUY9VU7lbnWOcjoIqSR37oGCbFpl0Mk4CblHGf6DyfQh2Z9XpAbzyCXb5NBwggZNEBiecEaJYQp0bPSQKsevWRjlgDkEtJ0CTTJD5DLzv5rPfrbf8L8MfGEmcuQvMoYBmMQS1frQudH6Uuod8oOUM%2FV5UFSzDbhYCFGOU6a527bjQMsBsuk3Uf3RQzqOm65DPquteyBQDYjwB%2BtruMGa6pUOwU%2BjpInvMEkS%2BGfFXf7QdjFfzYX1RVsIFsgY%2B%2F4k6ly6Ak%2Fwj9J%2FBiPzK1Ws1Il%2B7g3cyzjT6A0apkNnl%2FR5XNuptpEA9fm15JAnBqNgA8ObZATIKCPsfWYTFqOUHyZPKEZ4w%2FLwavVzUnc2J57%2FXB4a9RmOwDI7C%2BmhkPrxDgxOfjb7wKhFa8rHAtMX0LgMhJ3QkVcKFxqvt%2FSdH6a88do%2BXUG1G25yOYgviBaNRHv2EyGVSNqqllp1RZWTSqHLUcFRh9l3q3PqQgGbyXuj8w%2B8DziEuO2kqJEIk658WmjFEWhtiItDyC1xGHxvk5hOWUP2Ke3JfO4IuIOii6OUqp38n28ilHRLZ7e4URi6fnJ%2BQDCGqJA8xnOzNySOJ1v7t4gRg1Q%2F1cn9S2jDIupGwQv8MKMMcXpwvvWzF3%2BT%2BmBqsTUObWUdD3FjkNAlHadlfpylU7%2BzIE1WU2CjGpu7QQvtgrvWT5vwKNQTVKd56Zq27ZDT3ATT1ny321%2BTS9iin%2FTNxlIH7mppNW%2FnLdKUJGSgTVs9i2Hl7wuPf2JPGS8b6e%2F5VUeML10Dc1uAO%2FMHdZglXM3dHgnmmHrGb7DfKTVrJO9AzmB4tzK93gZBDSW40HZMm8UHAyQoAqeylu0SpSRMUs3PwQnD%2BndPlWdhQZDcrbjwm8JEzZMeO3kmSFoBE1QQSSUvqtItEza1DX34ASASEwPhaUNhjQcSNEZGOo9QUJsilPrOReuLYxk3xdCn9MooTb8F4kOqDED9DJCQqQNz3iWCGimFUlmsXE1wLZjVqRADQke%2BpzOOkMXhs43UCQfeRd41iSz7oOPTSuSM%2Fz9L3Swl02HWskGjwPWNrfXjEfuNTMVOq9Hnr9vZYE%2FAdFFljOcQ90CehS8y0%2BUxZNyjqSZ80YHwmUC%2BallfYkK3KwOEL1q1ChK4STEb%2BvrhQFhjQxEzwlxg2m2ghXB2BoCykwSeRNmGBQoENzbQ87t33%2Bnjq%2Faaa9AkzqEuLxdUEYN6r1hIaahta0muBtniFZGhGtSHaRg0UMacztKFfcpo3zG%2BauYHCfNwy3xJHHc%2FheKpAsEOAEqBpGN2AZiO4Lz44p7OjlSKIClmW%2BMA5mFE24V7nIB8pEKYmgBoQYOZYLoYOOXW8nKcVsedcSTW9n0R8qNPKn7RqKYwwOJWbXp%2FBp7DAhfhyQAVqND0T3jf3U1ii9ef%2Ba5Edes0ciru4Zzygvfirxz2OQ9QG0fcGDZwQhk1qoIzKObehqHcxzdOxLlypXPVZTalvMazz1rWMC8JrRmRFA8VNHlfdfhdlBR9SlPXRr6I21%2FUhDiDAPggStnBQMt3MRec0iiVXR6qRNOgAywUzNJJqAYGtbhDfTVKZ%2BDaiEqoKFDHnYSRAAiuine%2BgJ8Dz6TxOJL5ICFXKBartGbCwewYiItmCpdRzVKr7r%2BQ4VPEob%2BTQjtE1pWIEo08ozEznoSBKQ4O%2F2ROE9rzt8GRHfZEQxBy1SEoL9Eni111%2FQXsoXG4yTYINyYYJdSLxAT9OORWnmx1SNs%2Fn44CKAYQcSwDgtB%2BtswvpSv6hgdN2%2BHB1ztu7ewzXCSVq7YrgKk3%2FWD3pzzQVt%2FTLX5GyV3%2FAH68YB5rP1zY17ma%2FUgE2qVQtBnpOvp9AQ6V36JtlkMu9z4VqYQl0dTG0BrPyJftzhHvsurpS19C31FpS27TV2KEyxm4MFDH3vOdXEch1%2F3e38Di9S%2B6GPT7bFf1J6aBICwjkLXty2pVHxp9khNWJiPxu7MgbdO0DVx%2FyvdWg9f4SlhjOtKia3gxlbUtC0pVVnLzKsAD8iToG7ZX0FHwU5LrGWjWpe4sH7AugjP0qPan%2FKHr1I1VfMGp%2F2z2%2BPqWkUKNmlz29mNMA5NB5VHfSomenTTrd%2FbHDiKuiDaRW7XMddn%2FXlnzSNHfaqAmeDPZYRxuKaIBEUYpRnTKQcLgSdRI7zSm7pnGXzVf6vXIDWmKXTkhdL4xdTQMb6lZ7icZJmwJ1hDDOJloxA0QoolhUVDe4FA%2Fk5iWjJA1jbvu26wZph4O60QcISdmg%2FlewYWNJbz3FIvI5oYmw07M6lpGGLPGNCQVPkMtNMK5FbymvpPxTQxAeFn0ytuDdPZ8TAv50DTzHEj8V6cvak2WA1MH5Y0fZFdmhB2kxaKa%2Fo8O137hC%2B77X0zOh4dIZwGmaH2iRKJtFQ4nG%2B1RcmNxeA7VkATWpQc6yxz2V%2FFBMmmOZrN2fSdjq6eR2rvLp2HH7XpjYtGxBFWYwLTr0vQPJ8i2MWyGs5g6nRmayvGu7phs2rzc7Z%2FUvxT2buPBDCZrvsAwyMs1EgX2r3q0wgzwqAxcCRIE1EZFSpxZ3atb1BwUFfX7OAqbelfpvdWnvvqMmYCt%2Bqz5y%2Botudv7jZYmoigDo%2BL1l0X1RgTY7lTfBtmE7U6rXx%2BsSEmYpL%2FKL1gi5OWd7FL36EN%2FHDGI7edPAbrhtnNl5ZW%2F4E3Z7Kymd1hjSt3NrHaN7erJw9K2SD1KBqELZiwAUhfYUK0x5Ypfw%2FHCcK7yH3TdPPFOlwmIc4LHGs%2Fw61bZf0QuRyZBuPt9R6rXxIzc96ODZhGLNx2SIBC1Q9oEtsz1NQTArmBDtzwMjlgpZxYcBc5fC8D0jw6afrvVeNydhC3n6Cs1XxbRBbxQPm5j%2FK6%2FOSu%2FIF4QlsQCjNnNUGrostjDyFBCfBbeB0rCXbNIzysrY9PasXqum73svRwH2yA2wG%2Buwynfp16J3vPBjbOfMAOfEETyiUNQYYri8Y1pOjHzTyd6igl0qTJSke2rw1GWqPRA%2FCm04TRkgnLLd9uqkVfb4SxP8r6N%2B8oZp4MV898YhWrO5rrRKSDpqWdKNhc8J%2FS2uBRd9F3ZHhAIB8GQ6rKcdCLhbw3gizDD2idxEwlIr9hDiY3itQqqP9mkFI6lGIAmtRdsDskHrX710BSYgbK9Q2QTb7EHlzpy0v%2F9YgZotxI5Y4eQk1Txa%2BFCe9zQNsmUpSsdC9ppUHEPEhfCgLB37ENHYepZqum5nniZxWocbVZQmTZcqimePEanU19kYUsSYI73Jf4KnWlENIrYJftRvUOhurajoYguordn8VyGU81VFrs4JMcqyXPrfzuC%2F49AKeMoBr2YnyqSG31kcTvibT%2B9jBMhY3lMNhS2D25t7DzmlkMdSyq3yopRWSWnLvaonoglfOXbx2Q8GLVmswK3ukhJEb6pUJ78wGSTXJiuCP5nsvmmP%2F1ZxnpGTN%2F68EIOidNmGgs6ytioRsLpeyHgIuh9DqQ%2B25dzL7Z4Tdp%2FGn45Xz7%2B2WNg6cFBBshsdPITqSNbX8bkwEZ7rfHymioJbXFqmALylRmC%2ByouQY0bBjJaYjk5H67y7nBuoxf0FnV7OqJPoneixxjne3qQQlDOrZByb%2B3qjguArVsdbTUuhkLxPXnyjGjx0iNJ5wL7ZZ1a%2BhUbtgXnWVW%2BNfNgo%2FTECnkM9gVH55N7ibMnShPkO%2BnGCpPdI0NWKRXHwXSzAB%2FKJVSLluhQjklmGuD6cJGP78luhBPeX%2F8PH1xNJgNo6XenMRInkLZ%2Ba%2BLG5z78%2BVgJxb3lqfK3QXgKgtGbdrjwFILNH40mmMQ8mxR9JdrSJrbBa91%2FkldcWfJRgn3BmAVBhHU55SRDtUfQc2876AlStEw5%2BzZ%2FEbxKff7fs5i2VNm3a48kZYQjcPFJY9RkWY3197QBa6Lq%2F28hzgMMlrQ%2F3jDLmkoV%2FUij5pkHz7%2FCaa%2BXyfEAXk2Ib%2BD5KSSm79A2L11HumiqijOrmcA5fX2FUzlooa4Irk0RZeJg74pka77fJQG%2Bm45d1LTIy%2FLtPdXb5L03e8EEMrhalyohDDIMjmdEoTCUYyvx9FSQT%2BF5iCHaqkWQcTmfLQLgo9Ntl95LMe2ngqYoIYa9OJp9p43TQOT0DuKTSuawWo3XYaPvS8xonVw9AEL6%2BeTIJIdLOoMr8d76c15sxl2D8moZI%2B0VYtaapiyBMrj0d43e9GpATs%2FJBYIZROBM6QS5JSSwhWN9gHsLBxgwEBul4m3V9%2BLxO4nSm%2FWMdIrMMtiOlo6kA95TABJW9bu6XkBIfm2FFDFz5QHJvIVqr8c3PPrGcInnHwb%2Fvlu3638JigTGK0eoyI7%2FOrbcDS1FWEWUV6zkKSAdzKyNiPIQwlIVeTHmSZu727RLjXXXy3Mg58qXCmleBeMemYELysLjCegw6a9GbRiQiAHesnpOrz9PcGoH7JmWA6N2GWoTWMuUxH7n8O08v9vYt1OuWyUOVCgZqvH7GC32rKwMclfejFoPHhxaPKLCdSOWQNqCeTBVF9EhLLxFjh5J0SvSX%2FkLLf4BMRBlwZRQlq21uFuui2ObCTdLQdquxgE1xoxs8QK1I3kz3Ywfk6zEJy9HDnBbCg5SxQ8%2BuQJGBGs22tP%2FEtjzRZo5PA%2BWu0FAOFwMSB8Qy%2F8Wps5ZMD8cWcmddLBYg%2F%2B%2BFXDqs87bjSAGXOSx7L%2FsLTYXEiw%2FWJGsV75sQJgzOVmhzKuADi5XcUBvAxCKg3dnLIAo3ZTOo2pEuBCJ57TskFCSVouVrAMLGNr20c3i97z5wWXTTJRIyYoi5zMe69PlhCqRpEIn61fvQBsCQvNINNeNvJfB%2FCQH0fm3f8XXmb5%2F%2FROLfiICfdFZbbEFXfaSmXUIuLHp%2FFc2hJQGmSGzSuNcqGg1Cd6BKezZcepgjqQkaUChGNcEh4pxoEWT%2FdrQ%2Bra47uXquwSzKxiD2mkEolVdl7tAMM20PeWjOef6zReYtA19yXP%2BovlYv7U4z%2F3rjVvHG9Gggg3lfrVoP%2FKYsNBUfXJbbvAp%2Bd4txvLWmFM7T2a9JPvu0wpusjoFy7k8XzQLKVUgMAxAbNznAF1s%2BKm%2BNo216Qk%2F3cfaLZihystI6ripXNpMfzE0D%2FLoud%2BVeW808Eg8pP0VWg0V8%2FinUecm1K5mDpukRb2RqOQ%2FsAqjAtV6TCtTgJe447C5jtA1JjWPE4Vaz%2FyFCsqRJKvnSwFFiG7nZIwIJ%2FeW2JmB6uL0piQ2WQZ0751IewXt%2BpqA21RE4rBUppO0%2FvCdXb2v0efXLjGmfGoyRROpdmPD7X0zxrxnGpuqhXyHZfQRno1qK6tX86mGevNb1omuhkMi2rL%2FZ3cgCzjyykpQVCU%2F7pB6ORYAs%2BEVgsVI6BEVNQSRnWb5ms4AEjJH4NTqnR6gXBN3x0w0pOi0ZzMVHkLksPj6b6YG7Xp2164JaVaXxAKKT%2BfkrgvxISkfCM2UKuAb6S2RNje%2BhzgQ%2Bd16nnh9qEK3K5XACAXCzkVzYN32ESFEqJfdD3bt9yEv8nXUKYu9t%2B3BPM0XPYdpHHro%2BjL1Z9U8RDyz7w79hnI%2BQ4S011%2FYDQrs6e%2BKBYPz2f1q83mK1BrR0uLaONN9n6szvKPkvDtUw7oOEHPpucFJjtVNWx6%2BGZGBR4W15xpG5lbebdZa6lBkfJ2cETEK07h5y2K8n9seyMmbA%2BgKk8%2FSG5mrzKwjUpnOD7MD%2FxCcmTcmStNFACY%2B0btO7LGexGJUTVQ%2FVr2bq6TlmlSXSF3vB9bxtX0CUi09JeyMtiZLNjHIqJTTnmW0aiTOmEr77ELU0hzVRFnujMlo4T72qIbarXuIph8DIE1Mnzcf9sis%2FPbNxtfkso%2BIPm205LLSilQ9A48w379qYlziOUQtW2JpTxFOCcpHKOKYQSf7s9XmWAWTnSfcI0qZG8BYXjSs%2FLPxJLlZbpcWpSQzUWDpZ7N1q56gTshxT%2BySWzJ5ExdYNHdvNviOAUlE607x950tpCaIjnWfvwz7Kje8bNgsGrD7lHj5WHkmhxq8F%2BuTOeHpH4oPYWT8yjsqhdIxD091Q7pdumeEDgBS1ob%2FOuU5c6mJjk2GEVJiQKlDrF0YwItbdBGaEhp4%2BaxUYHIIYNYnf%2F6Qyh6ENbZxaZLK%2F6s9qGP6fb3EwPRujiT%2FpsMmb8LuB3wLdzw8qlYUKB80XLjR8rRfHGpMSU5naH8qEO5R7uTqnlJ1HosYLbYQLO9myJ3SPdApKRS0ii0K6lU5sm4asW%2BwU8wxpyEX%2FOoHBRHKL0CmvLAml8w8JHYQ6CazJutswAlfgjvNV%2FJELVF1KsjrovHZ2O1P8wMXJ7DHgEG1hlMAfWJcxyIpjWocacHwDoUvDzyOAFTe8VSEpoT2JuhaIOgQHzTpz9ogeSCvaBchkVSlvHjOtBop8xjaG2jLtfPri%2FPiSNwTsV3zAFdS08gi6XItAwEPick%2F3AN5ZWuVvhj%2FqMP4T6GKd%2Bda8ssRCABV1wS94qSUAGMGlwCwvqtdg2vhNvALqdCgF4843C4vri2zX%2FTirur1hFRBkcAn7NcG7Jl3qOZ1kAWswDpZDdYBqXwCX6H27Kr%2FSJyNcO9dqZUn8jJJE4JKCjbZI5PTsSeIuiy8fRZFjBgawpUpFs6EPBep8KjwCp8tMnbJ%2BrPhOZy1QVqJvefVflbvWjdAcB9LwADhdO605WCG09mQpo8U9slAOe%2BGzOFO5DoTkZBMMY3Ly8oUSj5STa6wPJVJBr3N6o4KbFTQf1JjPPiiMDMt3c%2F98Oyp6cdHq1kkkqeP%2FcVPgwYvF%2BcouVnyXfKigMLUTX7zh4cORTI6msk6cfPtkWfB4MSHj51BrQgLIfv8r7ZalUcbXPfcuKtG%2FSmk7yW3wxKOtaFGok3XHgp0GKvigkiPUBnODobePs%2F0JtwSYo9UJ4hMjs9m9pt3JQw%2FuLv8VBTm4jrpEyJSP0fIWWnq9G36%2BINvC4w04mfHZyG2E6VtLEIXnukdwNPi7noTxSg%2BQiJX2n5rRDlJPzMmrxFZnNImgXhaWhoxS4BUobQOOMHPriBlaYG52SekTM%2F%2BrQkuiI8hit66QwP2HhT4D6FMmZABHJtC1VesCa4kszDGsU1MdGUzV7p5JXllGpQtbTkCwF6HGKEo7Ri%2Fy4vBtXB%2F4CP4zSOEvfhknB3HMVh%2FIoj564N6JhNMu71nIaY2a1nZ9Qqs2oNo07w8og01mJN%2F1y8%2FRBdkYMjJRVBbETVPb7SrWZsj9oZRSpDoa9TAt1pTZP4lUmOS5f6RlIAekr6JOpUnxUvVOqBoOai9cX4JgdWwspZQj4q7T%2B4NCkSmd5x%2BG8DHFx0x0Ut0Wjz3aL9Msv26hmHUDzlwTQMOgRNGj4B9ovDA8dnrlJgOIPjM7oaGErSlDY6pr%2FXUH3QHVGPK5o0NevvbKCXyLFCRzVV6m5kRfSA29PoGVzdzWlS8g44oP1aTbnQzI0XLp5TUYPPYxX7PkQVP5%2By%2FbJsyik612D%2FgSPiwwCnJaP4o9rHo2ncn9rcrHZBJfBQgdEbQen0Y%2Be9PJDCx8&__EVENTVALIDATION=s2OfNtxJIZ5NZ7wRujyuK7NK%2FGT5blDyro3hGIWV91ZSX2MVPNce11oY2aruFAGHgY6KrdxAwn9dwwCt3ZH3sAhAPS2eGRxFxIYmC5vz%2Bs1iHefb%2BhejowY%2FnSXLAr4LQoC7ud0X92QF8bhtPoroUW1rFILASWuLrf9C6RBzQeZXMLOBWirvoKSlSlPVpahodKO8kSi8KlIGaTfRzazBmNbVx2S7RV8Uy%2FQHebP4c%2FvsuKml19N9biZytosMTl09NnZ5sQwhlSlQuHBjLBwR6pp%2F0ve%2FfHvV9LthDmYlzwtSM%2FIOpGrA0lJLmJ1AyvCYx%2FX4lzBXVXIYQq%2B%2FkhvB8f1vHxW4AZc9hpqNuuibj5i2tauPKGqhOZwN6688O0HUT%2B%2B4meg8lmxd3eD6fXFFn0gY%2BUPuERjR7w4AtgBmp0z%2BXhICOyj0%2FCAfmzTEvjr0mdrs4Z3Ka7pwJY5VThv97W%2FfbT0w9nYlHsOpiEtkoEjDoFUv6gUoE%2FDTDDTLIXLrqR3tP0PwXDMvHFJxY67cAjRCl8d7NOGpt7jDIa59vW%2BTc1vQCsHtkeS6LnfmauMii2DdFrW6r8sWVa%2FnYt03uNR6TxpMR5N5Vm3W3ocNN4g6HWhdw6OlQFQBCGDfbFcmSNrcTZZsXzJ4Z20okhypYv%2FDg1uIhdIO4V%2FbMPfJtZ1R%2FUhMrn02rnOc0O6ViP7k7DlTUtvr5sMx3anbUJVn48Do1uSoFz4twUL3LCHYYmKDePqYL9V8ph2RPtd3YSrn%2Fh080g62VKpM1PZjwovKNbBNh5y23RA3VJe0rW7QqRqMMC%2FJl6DVSvrgtVvQkhSBh%2FCrP5Ni9OQbEhnL%2FACqoq4BGWp%2FGLxxJtY%2BEA%3D%3D&__ASYNCPOST=false&";//2016-08-15
             string url = String.Format(channelToServer.Server);
 
             List<GuideItem> guideItems = new List<GuideItem>();
@@ -2619,6 +2713,158 @@ namespace hthservices.Utils
 
             guideItems.AddRange(GetDataFromMOBITVUrl(channelToServer.Server, channelToServer, date));
             guideItems.AddRange(GetDataFromMOBITVUrl(channelToServer.Server + "page-2/", channelToServer, date));
+
+            return guideItems;
+        }
+
+        static public List<GuideItem> GetDataFromTODAYTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            long orignalTime = 1504717200L;
+            DateTime origanalDate = new DateTime(2017, 9, 7);
+            long time = orignalTime + 86400 * (date - origanalDate).Days;
+            List<GuideItem> guideItems = new List<GuideItem>();
+
+            string url = string.Format(channelToServer.Server + "/{0}/{1}", time,date.ToString("dd-MM-yyyy")) ;
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    //     source = System.Text.RegularExpressions.Regex.Unescape(source);
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
+
+                    var items = resultat.DocumentNode.SelectNodes("//div[@id='content']/div/div/div/div/div");
+                    if (items != null && items.Count > 0)
+                    {
+                        for (int i = 0; i < items.Count; i++)
+                        {
+                            string startOn = "", programName = "";
+                            var divs = items[i].SelectNodes("div");
+                            if (divs != null && divs.Count == 5)
+                            {
+                                startOn = divs[1].InnerText.Trim();
+                                var first = divs[2].InnerText.Trim();
+                                var last = divs[3].InnerText.Trim();
+                                if (string.IsNullOrWhiteSpace(first))
+                                {
+                                    programName = last;
+                                }
+                                else if (string.IsNullOrWhiteSpace(last))
+                                {
+                                    programName = first;
+                                }
+                                else
+                                {
+                                    programName = first + " : " + last;
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length < 6)
+                                {
+                                    var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                    guideItems.Add(guideItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return guideItems;
+        }
+        static public List<GuideItem> GetDataFromDNRTVUrl(ChannelToServer channelToServer, DateTime date)
+        {
+            string url = channelToServer.Server;
+            string idForRequest = string.Empty;
+
+            List<GuideItem> guideItems = new List<GuideItem>();
+            try
+            {
+                using (HttpClient http = new HttpClient())
+                {
+                    var response = http.GetByteArrayAsync(url).Result;
+                    String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                    //     source = System.Text.RegularExpressions.Regex.Unescape(source);
+                    source = source.Replace("<option", "<bugoptionbug").Replace("option>", "bugoptionbug>");
+                    source = WebUtility.HtmlDecode(source);
+                    HtmlDocument resultat = new HtmlDocument();
+                    resultat.LoadHtml(source);
+
+                    var options = resultat.DocumentNode.SelectNodes("//select[@class='select-channel']/bugoptionbug");
+                    if (options != null)
+                    {
+                        var keyvalue = string.Format("{0} ({1})", channelToServer.Value, date.ToString("dd-MM-yyyy"));
+                        foreach (var option in options)
+                        {
+                            var optionText = option.InnerText;
+                            if (!string.IsNullOrWhiteSpace(optionText) && optionText.Trim().Equals(keyvalue, StringComparison.OrdinalIgnoreCase))
+                            {
+                                idForRequest = option.Attributes["value"] == null ? string.Empty : option.Attributes["value"].Value;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(idForRequest))
+                {
+                    using (HttpClient http = new HttpClient())
+                    {
+                        var urlSchedule = string.Format("{0}module/schedule.php?schedule_id={1}", url, idForRequest);
+                        var response = http.GetByteArrayAsync(urlSchedule).Result;
+                        String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                        //     source = System.Text.RegularExpressions.Regex.Unescape(source);
+                        source = WebUtility.HtmlDecode(source);
+                        HtmlDocument resultat = new HtmlDocument();
+                        resultat.LoadHtml(source);
+
+                        var items = resultat.DocumentNode.SelectNodes("//tr");
+                        if (items != null)
+                        {
+                            foreach (var item in items)
+                            {
+                                string startOn = "", programName = "";
+                                // get start time
+                                var tdTags = item.SelectNodes("td");
+                                if (tdTags != null && tdTags.Count > 1)
+                                {
+                                    startOn = tdTags.ElementAt(0).InnerText.Trim();
+                                    startOn = startOn.Replace('g', ':');
+                                    if (startOn.Length == 4)
+                                    {
+                                        startOn = "0" + startOn;
+                                    }
+                                    programName = MethodHelpers.ToTitleCase(tdTags.ElementAt(1).InnerText.Trim());
+                                }
+                                if (!string.IsNullOrWhiteSpace(startOn) && startOn.Length == 5)
+                                {
+                                    if (guideItems.LastOrDefault() == null || startOn.CompareTo(guideItems.LastOrDefault().StartOn) >= 0)
+                                    {
+                                        var guideItem = new GuideItem() { ChannelKey = channelToServer.ChannelKey, DateOn = MethodHelpers.ConvertDateToCorrectString(date), StartOn = startOn, ProgramName = programName, Note = "" };
+                                        guideItems.Add(guideItem);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                else if (guideItems.LastOrDefault() != null && !string.IsNullOrWhiteSpace(programName))
+                                {
+                                    guideItems.Last().ProgramName += " - " + programName;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return guideItems;
         }

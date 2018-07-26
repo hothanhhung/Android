@@ -21,6 +21,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <NuGetPackageImportStamp>30c218ca</NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -143,6 +145,7 @@
   <ItemGroup>
     <Compile Include="Ads\AdData.cs" />
     <Compile Include="Ads\AdItem.cs" />
+    <Compile Include="Ads\AdsItemReport.cs" />
     <Compile Include="Ads\OwnerAds.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -159,6 +162,8 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\LichTiviController.cs" />
     <Compile Include="Controllers\RetrieveDataController.cs" />
+    <Compile Include="Controllers\SolarLunarController.cs" />
+    <Compile Include="Controllers\TraCuuOnlineController.cs" />
     <Compile Include="DataBusiness\DataProcess.cs" />
     <Compile Include="DataBusiness\SQLiteProcess.cs" />
     <Compile Include="DataBusiness\WebsiteDataContext.cs" />
@@ -182,17 +187,23 @@
     <Compile Include="Sudoku\SQLiteProcess.cs" />
     <Compile Include="Sudoku\Sudoku.cs" />
     <Compile Include="Sudoku\SudokuItem.cs" />
+    <Compile Include="Utils\ChamNgonInfo.cs" />
     <Compile Include="Utils\Channel.cs" />
     <Compile Include="Utils\DataProcess.cs" />
     <Compile Include="Utils\DataStatic.cs" />
+    <Compile Include="Utils\DenyInfo.cs" />
     <Compile Include="Utils\EncrypeString.cs" />
     <Compile Include="Utils\GuideItem.cs" />
     <Compile Include="Utils\HtmlHelper.cs" />
     <Compile Include="Utils\MethodHelpers.cs" />
+    <Compile Include="Utils\OverrideFilterAttributes.cs" />
+    <Compile Include="Utils\RequestFilterHandler.cs" />
     <Compile Include="Utils\ScheduleRequestLog.cs" />
     <Compile Include="Utils\SearchItem.cs" />
     <Compile Include="Utils\SendEmailHelpers.cs" />
     <Compile Include="Utils\SQLiteProcess.cs" />
+    <Compile Include="Utils\ThapNhiBatTuInfo.cs" />
+    <Compile Include="Utils\TraCuuOnlineHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ads\AdFlexData.cs" />
@@ -219,6 +230,16 @@
     <Content Include="AdsWeb\app.module.js" />
     <Content Include="AdsWeb\Index.html" />
     <Content Include="AdsWeb\style.css" />
+    <None Include="Data\ThapNhiBatTu.json" />
+    <None Include="Data\ChamNgon.json" />
+    <Content Include="htmlpage\Donate.html" />
+    <Content Include="htmlpage\images\Donate.png" />
+    <Content Include="htmlpage\images\thanks.jpg" />
+    <Content Include="htmlpage\images\thanks1.jpg" />
+    <Content Include="htmlpage\LookupOnline\bongda.html" />
+    <Content Include="htmlpage\LookupOnline\DauSoDienThoai.html" />
+    <Content Include="htmlpage\LookupOnline\index.html" />
+    <Content Include="htmlpage\LookupOnline\MaBienSo.html" />
     <Content Include="fileman\css\images\animated-overlay.gif" />
     <Content Include="fileman\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="fileman\css\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -496,6 +517,31 @@
     <Content Include="fileman\Uploads\LICENSE.txt" />
     <Content Include="fileman\Uploads\roxy-fileman-logo.gif" />
     <Content Include="google3665108b80288f2c.html" />
+    <Content Include="htmlpage\LookupOnline\MaBuuDien.html" />
+    <Content Include="htmlpage\LookupOnline\SwiftCode.html" />
+    <Content Include="htmlpage\LookupOnline\TraCuuKhac.html" />
+    <Content Include="htmlpage\LookupOnline\Vietlott.html" />
+    <Content Include="htmlpage\privacy.html" />
+    <Content Include="ImagesUpload\89c54b55-3307-4881-b257-d60fb1113a25.png" />
+    <Content Include="ImagesUpload\angulartree.PNG" />
+    <Content Include="ImagesUpload\chromeDebug.png" />
+    <Content Include="ImagesUpload\ConnectSqliteExample.png" />
+    <Content Include="ImagesUpload\ConnectSqliteExample_InstallSqliteForEF.PNG" />
+    <Content Include="ImagesUpload\ConnectSqliteExample_Result.PNG" />
+    <Content Include="ImagesUpload\DataGridViewAndSQLExample.PNG" />
+    <Content Include="ImagesUpload\DinhLyCuaDaiSoLogic.png" />
+    <Content Include="ImagesUpload\html5-web-workers.png" />
+    <Content Include="ImagesUpload\HTML5LocalStorage.jpg" />
+    <Content Include="ImagesUpload\HTML5LocalStorage.png" />
+    <Content Include="ImagesUpload\logoangulartree.PNG" />
+    <Content Include="ImagesUpload\LogoDinhLyCuaDaiSoLogic.png" />
+    <Content Include="ImagesUpload\MachineKey.PNG" />
+    <Content Include="ImagesUpload\MachineKeyForIIS.PNG" />
+    <Content Include="ImagesUpload\mau-vach-ngan-phong-khach-hai-hoa-va-tinh-te-5.jpg" />
+    <Content Include="ImagesUpload\OutputCacheInRequestProccess.png" />
+    <Content Include="ImagesUpload\SQLResultOfIndexAndUnIndex.PNG" />
+    <Content Include="ImagesUpload\SQLServerIncludeActualExcutePlan.PNG" />
+    <Content Include="ImagesUpload\SQLUseIndex.PNG" />
     <Content Include="Images\loading.gif" />
     <Content Include="Scripts\bower_components\angular-1.5.8\angular-animate.js" />
     <Content Include="Scripts\bower_components\angular-1.5.8\angular-animate.min.js" />
@@ -2181,6 +2227,8 @@
     <Content Include="Scripts\bower_components\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Scripts\bower_components\jQuery-3.1.0\jquery-3.1.0.min.map" />
     <Content Include="Data\Reports.db3" />
+    <Content Include="Data\OwnerAdsData.json" />
+    <Content Include="Data\DeniedConfig.json" />
     <Content Include="Web\about.html" />
     <Content Include="Web\articles.html" />
     <Content Include="Web\contact.html" />
@@ -2344,6 +2392,7 @@
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Report\Group.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\TraCuuOnline\VietlottMega645.cshtml" />
     <Content Include="Web\images\Thumbs.db" />
     <Content Include="Views\Shared\_RightProgrammingPartial.cshtml" />
     <Content Include="Views\Programming\Index.cshtml" />
@@ -2352,6 +2401,8 @@
     <Content Include="Views\Programming\RightProgrammingPartial.cshtml" />
     <Content Include="Views\Project\SeeContent.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="SourcesDownload\ConnectSqliteExample.rar" />
+    <Content Include="SourcesDownload\DataGridViewAndSQLExample.rar" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2360,7 +2411,6 @@
     <Folder Include="fileman\tmp\" />
     <Folder Include="fileman\Uploads\Documents\" />
     <Folder Include="fileman\Uploads\FLV\" />
-    <Folder Include="ImagesUpload\" />
     <Folder Include="Scripts\bower_components\angular-1.5.8\i18n\ngLocale\" />
   </ItemGroup>
   <ItemGroup>

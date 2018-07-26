@@ -21,17 +21,10 @@
     background-color: grey;
 }
 
-td.container > div {
-    width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-._md-select-menu-container {
-  z-index: 999999 !important;
-}
-
-@media (max-width: @screen-xs-min) {
-  .modal-xs { width: @modal-sm; }
+.condition{
+    background: beige;
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
 }

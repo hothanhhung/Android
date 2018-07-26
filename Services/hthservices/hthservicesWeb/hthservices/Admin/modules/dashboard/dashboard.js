@@ -21,6 +21,7 @@ hthServiceApp.controller('DashboardController',
     $scope.ScheduleRequestLogs.TopFailedRequests = [];
     $scope.ScheduleRequestLogs.IsShowChart = false;
 
+    $scope.RequestInfo = [];
     if (typeof ($rootScope.FromDate) != 'undefined') {
         $scope.ScheduleRequestLogs.FromDate = $rootScope.FromDate;
     } 
@@ -60,6 +61,8 @@ hthServiceApp.controller('DashboardController',
             });
         GetTop();
         GetTop(true);
+        GetRequestInfoStatistic("GetAds");
+        GetRequestInfoStatistic("UserClickAd");
     };
         
     var areaDashboard = Morris.Line({
@@ -117,6 +120,18 @@ hthServiceApp.controller('DashboardController',
         window.open(URL_SERVICE + "/api/ReportApi/RequestInfo/?token=" + $rootScope.AuthInfo.Token + "&type="+type+"&order=Id&desc=true&date=" + GetStringOfDate(new Date()), "_blank");
     };
 
+    $scope.getTotalOfUserClickAds = function (index) {
+        var total = 0;
+        if (typeof ($scope.RequestInfo['UserClickAd']) == 'undefined' || $scope.RequestInfo['UserClickAd'] == null)
+        {
+            return total;
+        }
+        for (var i = 0; i < $scope.RequestInfo['UserClickAd'].length; i++) {
+            total += $scope.RequestInfo['UserClickAd'][i].TotalClickOnItems[index];
+        }
+        return total;
+    }
+
     function GetStringOfDate(date)
     {
         if (typeof (date) != 'object')
@@ -171,5 +186,26 @@ hthServiceApp.controller('DashboardController',
                 alert(error);
             });
     }
+
+    function GetRequestInfoStatistic(type) {
+        var getReportUrl = URL_SERVICE + '/api/ReportApi/GetRequestInfoStatistic/?token=' + $rootScope.AuthInfo.Token + "&type=" + type + "&fromDate=" + GetStringOfDate($scope.ScheduleRequestLogs.FromDate) + "&toDate=" + GetStringOfDate($scope.ScheduleRequestLogs.ToDate);
+
+        $scope.ScheduleRequestLogs.IsLoading = true;
+        $http.get(getReportUrl).then(
+            function (response) {
+                $scope.ScheduleRequestLogs.IsLoading = false;
+                var responseData = response.data;
+                if (responseData.IsSuccess) {
+                    $scope.RequestInfo[type] = responseData.Data;
+                } else {
+                    $location.path('/login');
+                }
+            },
+            function (error) {
+                $scope.ScheduleRequestLogs.IsLoading = false;
+                alert(error);
+            });
+    }
+
 
 }]);

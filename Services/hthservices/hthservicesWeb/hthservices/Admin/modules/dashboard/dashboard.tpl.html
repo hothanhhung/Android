@@ -147,5 +147,75 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Top Open Ads</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <div class="list-group-item" ng-repeat="item in RequestInfo['GetAds'] | orderBy:'-Total'">
+                                <span class="badge">{{item.Total}}</span>
+                                <i class="fa fa-fw fa-calendar">{{item.Name}}</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Top Click Ads</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <div class="list-group-item" ng-repeat="item in RequestInfo['UserClickAd'] | orderBy:'-Total'">
+                                <span class="badge">{{item.Total}}</span>
+                                <i class="fa fa-fw fa-calendar">{{item.Name}}</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> User Click Ads Detail</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th ng-repeat="item in RequestInfo['UserClickAd'] ">
+                                        <img style="width:100%" ng-src="{{item.UrlImage}}"/>
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in RequestInfo['UserClickAd']">
+                                    <td>{{item.Name}}</td>
+                                    <td style="text-align:center" ng-repeat="subItem in item.TotalClickOnItems track by $index">
+                                        <span ng-if="subItem > 0" class="badge" style="background-color: green;">{{subItem}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td style="text-align:center" ng-repeat="item in RequestInfo['UserClickAd']">
+                                        <span ng-if="getTotalOfUserClickAds($index) > 0" class="badge" style="background-color: brown;">{{getTotalOfUserClickAds($index)}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>

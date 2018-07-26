@@ -19,6 +19,8 @@ namespace hthservices.Models
     [KnownType(typeof(ScheduleReport))]
     [KnownType(typeof(ReportForCurrentDate))]
     [KnownType(typeof(List<ReportForCurrentDate>))]
+    [KnownType(typeof(AdsItemReport))]
+    [KnownType(typeof(List<AdsItemReport>))] 
     [KnownType(typeof(List<ProgrammingCategory>))]
     [KnownType(typeof(List<ProgrammingContent>))] 
     public class ResponseJson

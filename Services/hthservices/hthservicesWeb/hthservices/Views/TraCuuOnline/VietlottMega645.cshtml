@@ -1,0 +1,139 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="vi" xml:lang="vi">
+<head>
+    <title>Kết quả xổ số vietlott</title>
+    <link rel="shortcut icon" hsef="http://iketqua.com/asset/images/logo.png " type="image/x-icon" />
+    <link href="http://iketqua.com/asset/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://iketqua.com/asset/css/font-awesome.css">
+    <link href="http://iketqua.com/asset/css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://iketqua.com/asset/css/style.css">
+    <style>
+        body {
+            padding-top: 5px;
+        }
+        .text-banner{
+            display:none
+        }
+        .fade {
+            opacity:100
+        }
+        .title-mega645 {
+            font-size: 25px;
+        }
+        .back-button{
+            background-color: #cee0f7 !important;
+            line-height: 35px;
+            vertical-align: middle;
+            margin-bottom: 5px;
+            font-weight: 900;
+        }
+    </style>
+    <script type="text/javascript">
+         var isTimeLiveMega645 = false;
+		 var isTimeLiveMax = false;
+		 var siteUrl = '/TraCuuOnline/';
+    </script>
+</head>
+<body>
+    <div id="content">
+        <div class="container">
+            <div class="row" id="backbutton">
+                <div class="col-md-12 back-button" id="main" onclick="document.location.replace('/htmlpage/LookupOnline/TraCuuKhac.html')">
+                    Quay Lại
+                </div>
+            </div>
+            <!-- Marketing Icons Section -->
+            <div class="row">
+                <div class="col-md-12" id="main">
+                   @Html.Raw(ViewBag.Content)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="main">
+                    Nguồn: iketqua.com
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="http://iketqua.com/asset/js/jquery.js"></script>
+    <script type="text/javascript" src="http://iketqua.com/asset/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://iketqua.com/asset/js/datepicker-vi.js"></script>
+    <script type="text/javascript" src="http://iketqua.com/asset/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function str_pad(number) {
+            if (number < 10) {
+                return '0' + number;
+            }
+            return number;
+        }
+
+        function showDay(date) {
+            var day = date.getDay();
+            return [jQuery.inArray(day + 1, [4, 6, 1]) !== -1, '']
+        };
+
+        function getSuccessOutput(day) {
+
+        }
+         $( function() {
+             $("#mega645").datepicker({
+                 beforeShowDay: showDay,
+                 // showOtherMonths: true,
+                 showOn: "button",
+                 selectOtherMonths: true,
+                 changeMonth: true,
+                 changeYear: true,
+                 showButtonPanel: true,
+                 buttonImage: "http://iketqua.com/asset/css/images/calendar.png",
+                 buttonImageOnly: true,
+                 maxDate: +0,
+                 dateFormat: 'dd-mm-yy',
+                 onSelect:  function(date) {
+                     document.location = siteUrl + 'VietlottMega645/?strDate=' + date;
+                 },
+             });
+
+             $('.start_date').datepicker({
+                 dateFormat: 'dd/mm/yy',
+                 selectOtherMonths: true,
+                 changeMonth: true,
+                 changeYear: true,
+                 showButtonPanel: true,
+             });
+             $('.end_date').datepicker({
+                 dateFormat: 'dd/mm/yy',
+                 selectOtherMonths: true,
+                 changeMonth: true,
+                 changeYear: true,
+                 showButtonPanel: true,
+             });
+             $("#max4d").datepicker({
+                 beforeShowDay: noSunday,
+                 showOn: "button",
+                 buttonImage: "http://iketqua.com/asset/css/images/calendar.png",
+                 buttonImageOnly: true,
+                 changeYear: true,
+                 showButtonPanel: true,
+                 regional: 'vn',
+                 dateFormat: 'dd-mm-yy',
+                 onSelect:  function(date) {
+                     document.location = siteUrl + 'VietlottMax4D/?strDate=' + date;
+                 },
+                 maxDate: +0,
+                 changeMonth: true
+             });
+
+             function noSunday(date){
+               var day = date.getDay();
+               return [jQuery.inArray(day+1, [3,5,7]) !== -1,'']
+                           //return [(day == 3 || day == 5 || day == 0), ''];
+           };
+         });
+    </script>  
+</body>
+
+</html>
