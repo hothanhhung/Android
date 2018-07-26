@@ -1,0 +1,699 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>    
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+	<style>
+	.giai {
+    background: none repeat scroll 0% 0% #888C95;
+    color: #FFF;
+}
+
+.giai img {
+    float: left;
+    padding-right: 2px;
+}
+
+.giai h3 {
+    float: left;
+}
+.time_f {
+    color: #209EBB;
+    font-weight: 700;
+    text-align: center;
+}
+.text_right {
+    text-align: right;
+    width: 40%;
+}
+.guess {
+    color: #209EBB;
+    font-weight: 700;
+    text-align: center;
+}
+.lich {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.date {
+    background: none repeat scroll 0% 0% #D4D4D4;
+    color: #404040;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+td{
+	padding-left: 5px;
+}
+
+.grey_row {
+    background-color: #F3F3F3;
+}
+.table {
+    border-collapse: collapse;
+    width: 100% !important;
+	margin-left: auto;
+    margin-right: auto;
+}
+.width90{
+    width: 99% !important;
+}
+.text_center{
+    text-align: center;
+}
+
+.rowRp{	
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.even_text{
+	color: #d04040;
+    font-size: 13px;
+    font-weight: 700;
+    padding-right: 5px;
+	float: left;
+}
+
+.odd_text{
+	color: #6c40ef;
+    font-size: 13px;
+    font-weight: 700;
+    padding-right: 5px;
+	float: left;
+}
+
+.searched {
+	background-color: #E05C2B;
+	color: #FFFFFF;
+}
+.col-md-6{
+	padding-right: 3px !important;
+	padding-left: 3px !important;
+}
+.centerf{	
+    display: table-cell;
+    align-items: center;
+    vertical-align: middle;
+}
+.text_left {
+    text-align: left;
+    color: #209EBB;
+}
+.item{
+	display: table;
+    padding: 5px;
+    margin: 5px;
+    width: 130px;
+    height: 130px;
+    align-items: center;
+    text-align: center;
+    background-color: #d4cdcd;
+	border: 3px solid #ccc;	
+    box-shadow: 2px -5px 10px #716c6c;;
+}
+
+
+</style>
+  </head>
+  <body>
+	<div ng-app="starter" ng-controller="mainController">
+		<div class="container-fluid" style="margin: 10px 0px 10px 0px">    
+			<div class="row" style="margin: 10px -10px 10px -10px;">
+			<div class="col-xs-6 col-md-6">
+			  <div class="dropdown width90">
+				  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					{{selectedKindsOfView.name}}
+					<span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+					<li ng-repeat="kind in kindsOfView"><a href="javascript:void(0)" ng-click="changeKindsOfView(kind)"> {{kind.name}}</a></li>
+				  </ul>
+				</div>
+			</div>
+			<div class="col-xs-6 col-md-6">
+			  <div class="form-group width90" ng-if="selectedKindsOfView.id != 3">
+				<input type="text" class="form-control width90" ng-model="querySearch" id="searchText" placeholder="Thông tin cần tìm" ng-change="search(querySearch)"/>
+			  </div>
+			</div>
+		  </div>
+		  <div class="row" style="margin: 10px -10px 10px -10px;">
+			<div ng-if="selectedKindsOfView.id == 1" style="margin-left: 20px;">
+				<div class="row" ng-if="selectedItem!=null">
+					<a href="javascript:void(0)" ng-click="onClickItem()">Back</a>
+					<span><b>{{htmlDecode(selectedItem.name)}}</b></span> có đầu số là <b><span>{{htmlDecode(selectedItem.numbers)}}</span></b>
+				</div>
+				<div class="row" ng-if="message!=''">
+					<span>{{message}}</span>
+				</div>
+				<div class="row">
+					<div class="row text_center rowRp pull-left" style="margin: 0px" ng-repeat="maSo in items"  ng-click="onClickItem(maSo)">
+						<div class="item time_f ">
+							<span class="centerf" ng-bind-html = "getTrustAsHtml('<font color=\'black\'>'+maSo.numbers + '</font><br/>' + maSo.name)"> </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-if="selectedKindsOfView.id == 2">
+				<div class="row date text_center rowRp" style="margin: 0px">
+					<div class="col-xs-9 col-md-9">Cơ quan</div>
+					<div class="col-xs-3 col-md-3">Mã Biển Số</div>
+				</div>
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in maSoQuanSu" ng-class-even="'grey_row'">
+					<div class="col-xs-9 col-md-9 text_left" ng-bind-html = "getTrustAsHtml(mang.name)"></div>
+					<div class="col-xs-3 col-md-3">
+						<b><span ng-bind-html = "getTrustAsHtml(mang.numbers)"></span></b>
+					</div>
+				</div>
+			</div>
+			<div ng-if="selectedKindsOfView.id == 3">
+				<div class="row date text_center rowRp" style="margin: 0px">
+					<div class="col-xs-12 col-md-12">Nội Dung</div>
+				</div>
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in otherInfoOriginal" ng-class-even="'grey_row'">
+					<div class="col-xs-12 col-md-12 text_left " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
+				</div>
+			</div>
+		  </div> 
+		  <div class="row">
+		  </div>      
+		</div>
+	</div>
+  <script>
+	angular.module('starter', [])
+	.controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
+
+	  $scope.kindsOfView = [
+			{ id: 1, name: 'Biển Xe Dân Sự' },
+			{ id: 2, name: 'Xe Bộ Quốc Phòng' },
+			{ id: 3, name: 'Thông Tin Khác' },
+		  ];
+		$scope.selectedKindsOfView = { id: 1, name: 'Biển Xe Dân Sự' };
+		$scope.maSoDanSuOriginal = [
+			{numbers:"11", name:"Cao Bằng", details:[{name:"Thành phố Cao Bằng", numbers:"11-X1 11-B1"},{name:"Huyện Trùng Khánh", numbers:"11-K1"},{name:"Huyện Thông Nông", numbers:"11-T1"},{name:"Huyện Trà Lĩnh", numbers:"11-Y1"},{name:"Huyện Quảng Uyên", numbers:"11-U1"},
+													{name:"Huyện Hà Quảng", numbers:"11-S1"},{name:"Huyện Phục Hòa", numbers:"11-P1"},{name:"Huyện Thạch An", numbers:"11-V1"},{name:"Huyện Bảo Lạc", numbers:"11-M1"},{name:"Huyện Bảo Lâm", numbers:"11-L1"},
+													{name:"Huyện Hạ Lang", numbers:"11-R1"},{name:"Huyện Nguyên Bình", numbers:"11-N1"},{name:"Huyện Hòa An", numbers:"11-H1"},
+													]},
+			{numbers:"12", name:"Lạng Sơn", details:[{name:"Thành phố Lạng Sơn", numbers:"12-P1"},{name:"Huyện Tràng Định", numbers:"12-T1"},{name:"Huyện Lộc Bình", numbers:"12-L1"},{name:"Huyện Chi Lăng", numbers:"12-X1"},{name:"Huyện Hữu Lũng", numbers:"12-H1"},{name:"Huyện Đình Lập", numbers:"12-Z1"},
+													{name:"Huyện Văn Lãng", numbers:"12-V1"},{name:"Huyện Bình Gia", numbers:"12-B1"},{name:"Huyện Văn Quan", numbers:"12-U1"},{name:"Huyện Cao Lộc", numbers:"12-D1"},{name:"Huyện Bắc Sơn", numbers:"12-S1"},
+													]},
+			{numbers:"14", name:"Quảng Ninh", details:[{name:"Thành phố Hạ Long", numbers:"14-B1"},{name:"Thành phố Móng Cái", numbers:"14-K1"},{name:"Thành phố Uông Bí", numbers:"14-B4 14-Y1"},{name:"Thành phố Cẩm Phả", numbers:"14-U1"},
+													{name:"Thị xã Quảng Yên", numbers:"14-X1"},{name:"Thị xã Đông Triều", numbers:"14-Z1"},{name:"Huyện Ba Chẽ", numbers:"14-D1"},{name:"Huyện Bình Liêu", numbers:"14-P1"},{name:"Huyện Cô Tô", numbers:"14-B9"},
+													{name:"Huyện Đầm Hà", numbers:"14-M1"},{name:"Huyện Hải Hà", numbers:"14-L1"},{name:"Huyện Hoành Bồ", numbers:"14-V1"},{name:"Huyện Tiên Yên", numbers:"14-N1"},{name:"Huyện Vân Đồn", numbers:"14-S1"},
+													]},
+			{numbers:"15 | 16", name:"Hải Phòng", details:[{name:"Quận Hồng Bàng", numbers:"15-B1, 15-B2"},{name:"Quận Ngô Quyền", numbers:"15-B1, 15-B2"},{name:"Quận Lê Chân", numbers:"15-B1, 15-B2"},{name:"Quận Hải An", numbers:"15-B1, 15-B2"},
+															{name:"Huyện An Dương", numbers:"15-C1"},{name:"Huyện An Lão", numbers:"15-D1"},{name:"Huyện Cát Hải", numbers:"15-E1"},{name:"Huyện Kiến Thuỵ", numbers:"15-F1"},{name:"Huyện Thuỷ Nguyên", numbers:"15-G1"},
+															{name:"Huyện Tiên Lãng", numbers:"15-H1"},{name:"Huyện Vĩnh Bảo", numbers:"15-K1"},{name:"Quận Dương Kinh", numbers:"15-L1"},{name:"Quận Đồ Sơn", numbers:"15-M1"},{name:"Quận Kiến An", numbers:"15-N1"},
+															]},
+			{numbers:"17", name:"Thái Bình", details:[{name:"Thành phố Thái Bình", numbers:"17-M1 17-N1 17-B9 17-B1-0xxxx 17-B1-1xxxx 17-B1-9xxxx"},{name:"Huyện Đông Hưng", numbers:"17-M3 17-B3 17-N3-xxxx 17-B1-3xxxx"},{name:"Huyện Hưng Hà", numbers:"17-M4 17-B4 17-N4-xxxx 17-B1-4xxxx"},{name:"Huyện Kiến Xương", numbers:"17-M7 17-B7 17-N7-xxxx 17-B1-7xxxx"},
+														{name:"Huyện Quỳnh Phụ", numbers:"17-M5 17-B5 17-N5-xxxx 17-B1-5xxxx"},{name:"Huyện Thái Thụy", numbers:"17-M6 17-B6 17-N6-xxxx 17-B1-6xxxx"},{name:"Huyện Tiền Hải", numbers:"17-M8 17-B8 17-N8-xxxx 17-B1-8xxxx"},{name:"Huyện Vũ Thư", numbers:"17-M2 17-N2 17-B2 17-B1-2xxxx"},
+														]},
+			{numbers:"18", name:"Nam Định", details:[{name:"Thành phố Nam Định", numbers:"18-B1"},{name:"Huyện Mỹ Lộc", numbers:"18-B1"},{name:"Huyện Vụ Bản", numbers:"18-C1"},{name:"Huyện Ý Yên", numbers:"18-D1"},{name:"Huyện Trực Ninh", numbers:"18-E1"},
+													{name:"Huyện Xuân Trường", numbers:"18-F1"},{name:"Huyện Giao Thủy", numbers:"18-G1"},{name:"Huyện Hải Hậu", numbers:"18-H1"},{name:"Huyện Nam Trực", numbers:"18-K1"},{name:"Huyện Nghĩa Hưng", numbers:"18-L1"},
+													]},
+			{numbers:"19", name:"Phú Thọ", details:[]},
+			{numbers:"20", name:"Thái Nguyên", details:[{name:"Thành phố Thái Nguyên", numbers:"20-B1"},{name:"TP Sông Công", numbers:"20-B1"},{name:"Huyện Đồng Hỷ", numbers:"20-B1"},{name:"Huyện Định Hoá", numbers:"20-C1"},{name:"Huyện Võ Nhai", numbers:"20-D1"},
+													{name:"Huyện Phú Lương", numbers:"20-E1"},{name:"Huyện Đại Từ", numbers:"20-F1"},{name:"Huyên Phú Bình 20-G1"},{name:"TX Phổ Yên", numbers:"20-H1"},
+													]},
+			{numbers:"21", name:"Yên Bái", details:[{name:"Thành phố Yên Bái", numbers:"21-B1"},{name:"Huyện Lục Yên", numbers:"21-C1"},{name:"Huyện Yên Bình", numbers:"21-D1"},{name:"Huyện Trấn Yên", numbers:"21-F1"},{name:"TX Nghĩa Lộ", numbers:"21-K1"},{name:"Huyện Văn Chấn", numbers:"21-L1"},]},
+			{numbers:"22", name:"Tuyên Quang", details:[{name:"Thành phố Tuyên Quang", numbers:"22-B1"},{name:"Huyện Chiêm Hóa", numbers:"22-F1 22-F1"},{name:"Huyện Sơn Dương", numbers:"22-S1 22-S1 22-S2"},
+															{name:"Huyện Hàm Yên", numbers:"22-Y1 22-Y1"},{name:"Huyện Na Hang", numbers:"22-N1 22-N1"},{name:"Huyện Yên Sơn", numbers:"22-B1"},{name:"Huyện Lâm Bình", numbers:"22-L1"},
+															]},
+			{numbers:"23", name:"Hà Giang", details:[{name:"Thành phố Hà Giang", numbers:"23-B1"},{name:"Huyện Bắc Quang", numbers:"23-D1"},{name:"Huyện Quang Bình", numbers:"23-E1"},{name:"Huyện Hoàng Su Phì", numbers:"23-F1"},{name:"Huyện Xín Mần", numbers:"23-G1"},
+														{name:"Huyện Vị Xuyên", numbers:"23-H1"},{name:"Huyện Bắc Mê", numbers:"23-K1"},{name:"Huyện Đồng Văn", numbers:"23-N1"},{name:"Huyện Mèo Vạc", numbers:"23-P1"},{name:"Huyện Yên Minh", numbers:"23-M1"},{name:"Huyện Quản Bạ", numbers:"23-L1"},
+														]},
+			{numbers:"24", name:"Lào Cai", details:[{name:"Thành phố Lào Cai", numbers:"24-B1 24-K 24-P1-7"},{name:"Huyện Bảo Thắng", numbers:"24-T0"},{name:"Huyện Văn Bàn", numbers:"24-V1"},{name:"Huyện Bắc Hà", numbers:"24-Z1, 24-R1"},
+													{name:"Huyện Bát Xát", numbers:"24-X1"},{name:"Huyện Sa Pa", numbers:"24-S1"},{name:"Huyện Mường Khương", numbers:"24-M1"},{name:"Huyện Simacai", numbers:"24-U1"},{name:"Huyện Bảo Yên", numbers:"24-Y1"},
+													]},
+			{numbers:"25", name:"Lai Châu", details:[]},
+			{numbers:"26", name:"Sơn La", details:[{name:"Thành phố Sơn La", numbers:"26-B"},
+													{name:"Huyện Sông Mã", numbers:"26-C"},
+													{name:"Huyện Phù Yên", numbers:"26-D"},
+													{name:"Huyện Bắc Yên", numbers:"26-E"},
+													{name:"Huyện Sốp Cộp", numbers:"26-F"},
+													{name:"Huyện Mộc Châu", numbers:"26-G"},
+													{name:"Huyện Quỳnh Nhai", numbers:"26-H"},
+													{name:"Huyện Mai Sơn", numbers:"26-K"},
+													{name:"Huyện Mường La", numbers:"26-L"},
+													{name:"Huyện Thuận Châu", numbers:"26-M"},
+													{name:"Huyện Yên Châu", numbers:"26-N"},
+													{name:"Huyện Vân Hồ", numbers:"26-P"},
+													]},
+			{numbers:"27", name:"Điện Biên", details:[{name:"Thành phố Điện Biên Phủ", numbers:"27-P1"},{name:"Huyện Điện Biên", numbers:"27-N1"},{name:"Thị xã Mường Lay", numbers:"27-X1"},{name:"Huyện Tuần Giáo", numbers:"27-Z1"},
+														{name:"Huyện Điện Biên Đông", numbers:"27-U1"},{name:"Huyện Mường Nhé", numbers:"27-S1"},{name:"tỉnh Điện Biên", numbers:"27-?"},{name:"Huyện Mường Ẳng", numbers:"27-Y1"},
+														{name:"Huyện Mường Chà", numbers:"27-V1"},{name:"Huyện Tủa Chùa", numbers:"27-L1"},
+														]},
+			{numbers:"28", name:"Hòa Bình", details:[{name:"Thành phố Hòa Bình", numbers:"28-H1"},{name:"Huyện Lương Sơn", numbers:"28-G1"},{name:"Huyện Kỳ Sơn", numbers:"28-K1"},{name:"Huyện Kim Bôi", numbers:"28-B1"},{name:"Huyện Lạc Thủy", numbers:"28-L1"},
+													{name:"Huyện Yên Thủy", numbers:"28-F1"}, {name:"Huyện Cao Phong", numbers:"28-C1"},{name:"Huyện Đà Bắc", numbers:"28-D1"},{name:"Huyện Mai Châu", numbers:"28-M1"},{name:"Huyện Tân Lạc", numbers:"28-E1"},{name:"Huyện Lạc Sơn", numbers:"28-N1"},
+													]},
+			{numbers:"29-33 | 40", name:"Hà Nội", details:[{name:"Quận Ba Đình", numbers:"29-B1"},
+															{name:"Quận Hoàn Kiếm", numbers:"29-C1"},
+															{name:"Quận Hai Bà Trưng", numbers:"29-D1"},
+															{name:"Quận Đống Đa", numbers:"29-E1-E2"},
+															{name:"Quận Tây Hồ", numbers:"29-F1"},
+															{name:"Quận Thanh Xuân", numbers:"29-G1"},
+															{name:"Quận Hoàng Mai", numbers:"29-H1"},
+															{name:"Quận Long Biên", numbers:"29-K1"},
+															{name:"Quận Cầu Giấy", numbers:"29-P1"},
+															{name:"Quận Hà Đông", numbers:"29-T1"},
+															{name:"Quận Nam Từ Liêm", numbers:"29-L1"},
+															{name:"Quận Bắc Từ Liêm", numbers:"29-L5"},
+															{name:"Huyện Thanh Trì", numbers:"29-M1"},
+															{name:"Huyện Gia Lâm", numbers:"29-N1"},
+															{name:"Huyện Đông Anh", numbers:"29-S1"},
+															{name:"Huyện Sóc Sơn", numbers:"29-S6"},
+															{name:"Huyện Ba Vì", numbers:"29-V1"},
+															{name:"Huyện Phúc Thọ", numbers:"29-V3"},
+															{name:"Huyện Thạch Thất", numbers:"29-V5"},
+															{name:"Huyện Quốc Oai", numbers:"29-V7"},
+															{name:"Huyện Chương Mỹ", numbers:"29-X1"},
+															{name:"Huyện Đan Phượng", numbers:"29-X3"},
+															{name:"Huyện Hoài Đức", numbers:"29-X5"},
+															{name:"Huyện Thanh Oai", numbers:"29-X7"},
+															{name:"Huyện Mỹ Đức", numbers:"29-Y1"},
+															{name:"Huyện Ứng Hòa", numbers:"29-Y3"},
+															{name:"Huyện Thường Tín", numbers:"29-Y5"},
+															{name:"Huyện Phú Xuyên", numbers:"29-Y7"},
+															{name:"Huyện Mê Linh", numbers:"29-Z1"},
+															{name:"Thị xã Sơn Tây", numbers:"29-U1"}]},
+			{numbers:"34", name:"Hải Dương", details:[{name:"thành phố Hải Dương", numbers:"34-B"},{name:"thị xã Chí Linh", numbers:"34-C"},{name:"huyện Kinh Môn", numbers:"34-D"},{name:"huyện Ninh Giang", numbers:"34-E"},{name:"huyện Thanh Miện", numbers:"34-F"},
+														{name:"huyện Gia Lộc", numbers:"34-P"},{name:"huyện Nam Sách", numbers:"34-M"},{name:"huyện Thanh Hà", numbers:"34-M"},{name:"huyện Tứ Kỳ", numbers:"34-N"},
+														{name:"huyện Bình Giang", numbers:"34-P"},{name:"huyện Cẩm Giàng", numbers:"34-K"},{name:"huyện Kim Thành", numbers:"34-?"},
+														]},
+			{numbers:"35", name:"Ninh Bình", details:[{name:"Thành phố Ninh Bình", numbers:"35-B1"},{name:"Thành phố Tam Điệp", numbers:"35-T1"},{name:"Huyện Gia Viễn", numbers:"35-G1"},{name:"Huyện Hoa Lư", numbers:"35-H1"},
+														{name:"Huyện Kim Sơn", numbers:"35-K1"},{name:"Huyện Nho Quan", numbers:"35-N1"},{name:"Huyện Yên Khánh", numbers:"35-Y1"},{name:"Huyện Yên Mô", numbers:"35-M1"},
+														]},
+			{numbers:"36", name:"Thanh Hóa", details:[{name:"Thành phố Thanh Hóa", numbers:"36-B4 36-B5"},{name:"Huyện Quảng Xương", numbers:"36-B1"},{name:"Huyện Thọ Xuân", numbers:"36-D1"},{name:"Huyện Thạch Thành", numbers:"36-E1"},
+														{name:"Huyện Hậu Lộc", numbers:"36-F1"},{name:"Huyện Nga Sơn", numbers:"36-G1"},{name:"Huyện Quan Hóa", numbers:"36-H5"},{name:"Huyện Cẩm Thủy", numbers:"36-L1"},{name:"Huyện Ngọc Lặc", numbers:"36-K5"},
+														{name:"Huyện Thường Xuân", numbers:"36-M1"},{name:"Huyện Hà Trung", numbers:"36-B3"},{name:"Thị xã Bỉm Sơn", numbers:"36-F5"},{name:"Huyện Nông Cống", numbers:"36-?"},
+														]},
+			{numbers:"37", name:"Nghệ An", details:[{name:"Thành phố Vinh", numbers:"37-B1 37-B9"},{name:"Huyện Con Cuông", numbers:"37-C1"},{name:"Huyện Tương Dương", numbers:"37-D1"},{name:"Huyện Đô Lương", numbers:"37-B1 37D1"},
+														{name:"Huyện Thanh Chương", numbers:"37E1"},{name:"Huyện Diễn Châu", numbers:"37-B1 37-B2 37F1"},{name:"Huyện Quỳ Châu", numbers:"37G1"},{name:"Huyện Nghĩa Đàn", numbers:"37-Bx 37G1"},
+														{name:"Thị xã Thái Hòa", numbers:"37B1 37B2 37H1"},{name:"Huyện Quỳ Hợp", numbers:"37H1"},{name:"Huyện Kỳ Sơn", numbers:"37K1"},{name:"Huyện Nghi Lộc", numbers:"37-K1"},
+														{name:"Huyện Quỳnh Lưu", numbers:"37L1 37-L2"},{name:"Thị xã Hoàng Mai", numbers:"37L1"},{name:"Huyện Anh Sơn", numbers:"37-M1"},{name:"Huyện Nam Đàn", numbers:"37-Bx 37-M1"},
+														{name:"Huyện Tân Kỳ", numbers:"37N1"},{name:"Huyện Hưng Nguyên", numbers:"37-Bx 37N1"},{name:"Huyện Yên Thành", numbers:"37P1"},{name:"Huyện Quế Phong", numbers:"37F1"},{name:"Thị xã Cửa Lò", numbers:"37-Bx 37S1"},
+														]},
+			{numbers:"38", name:"Hà Tĩnh", details:[{name:"Huyện Vũ Quang", numbers:"38-E1"},{name:"Huyện Đức Thọ", numbers:"38-D1"},{name:"Huyện Hương Sơn", numbers:"38-H1"},{name:"Huyện Hương Khê", numbers:"38-B1"},{name:"Huyện Nghi Xuân", numbers:"38-N1"},
+														{name:"Thành phố Hà Tĩnh", numbers:"38-P1"},{name:"Huyện Can Lộc", numbers:"38-C1"},{name:"Huyện Kỳ Anh", numbers:"38-K1"},{name:"Thị xã Hồng Lĩnh", numbers:"38-F1"},
+														{name:"Huyện Cẩm Xuyên", numbers:"38-X1"},{name:"Huyện Lộc Hà", numbers:"38-L1"},{name:"Huyện Thạch Hà", numbers:"38-M1"},
+														]},
+			{numbers:"39 | 60", name:"Đồng Nai", details:[{name:"Thành phố Biên Hòa", numbers:"60-B1, 60-F1, 60-F2, [60-AA dưới 50cc] [39F, 39T 4 số]"}, {name:"Thị xã Long Khánh", numbers:"60-B2"}, {name:"Huyện Tân Phú", numbers:"60-B3"},
+														{name:"Huyện Định Quán", numbers:"60-B4"}, {name:"Huyện Xuân Lộc", numbers:"60-B5"}, {name:"Huyện Cẩm Mỹ", numbers:"60-B6"}, {name:"Huyện Thống Nhất", numbers:"60-B7"}, 
+														{name:"Huyện Trảng Bom", numbers:"60-B8"},{name:"Huyện Vĩnh Cửu", numbers:"60-B9"}, {name:"Huyện Long Thành", numbers:"60-C1"},{name:"Huyện Nhơn Trạch", numbers:"60-C2"},
+														]},
+			{numbers:"43", name:"Đà Nẵng", details:[{name:"Quận Hải Châu", numbers:"43-C1 43-B1"},{name:"Quận Thanh Khê", numbers:"43-D1"},{name:"Quận Sơn Trà", numbers:"43-E1"},{name:"Quận Liên Chiểu", numbers:"43-F1"},
+													{name:"Quận Cẩm Lệ", numbers:"43-G1"},{name:"Quận Ngũ Hành Sơn", numbers:"43-H1"},{name:"Huyện Hòa Vang", numbers:"43-K1"},
+													]},
+			{numbers:"47", name:"Đắk Lắk", details:[{name:"TP. Buôn Ma Thuột", numbers:"47-B1 47-B2"},{name:"Thị xã Buôn Hồ", numbers:"47-C1"},{name:"Huyện Ea H'leo", numbers:"47-D1"},{name:"Huyện Krông Năng", numbers:"47-E1"},{name:"Huyện EaKar", numbers:"47-F1"},
+													{name:"Huyện M'Drăk", numbers:"47-G1"},{name:"Huyện Cưmgar", numbers:"47-H1"},{name:"Huyện Krông Bông", numbers:"47-K1"},{name:"Huyện Krông Ana", numbers:"47-L1"},{name:"Huyện Lăk", numbers:"47-N1"},
+													{name:"Huyện Krông Pắc", numbers:"47-M1"},{name:"Huyện Ea Sup", numbers:"47-P1"},{name:"Huyện Buôn Đôn", numbers:"47-S1"},{name:"Huyện Cư Kuin", numbers:"47-T1"},{name:"Huyện Krông Búk", numbers:"47-U1"},{name:"Dưới 50cc", numbers:"47-AB"},
+													]},
+			{numbers:"48", name:"Đắk Nông", details:[{name:"Thị xã Gia Nghĩa", numbers:"48-B1"},{name:"Huyện Đắk R'Lấp", numbers:"48-H1"},{name:"Huyện Tuy Đức", numbers:"48-K1"},{name:"Huyện Đắk Glong", numbers:"48-G1"},
+													{name:"Huyện Đắk Song", numbers:"48-F1"},{name:"Huyện Đắk Mil", numbers:"48-E1"},{name:"Huyện Cư Jút", numbers:"48-D1"},{name:"Huyện Krông Nô", numbers:"48-C1"},
+													]},
+			{numbers:"49", name:"Lâm Đồng", details:[{name:"Thành phố Đà Lạt", numbers:"49-B1"},{name:"Huyện Đam Rông", numbers:"49-C1"},{name:"Huyện Lâm Hà", numbers:"49-D1"},{name:"Huyện Đức Trọng", numbers:"49-E1"},{name:"Huyện Đơn Dương", numbers:"49-F1"},
+														{name:"Huyện Di Linh", numbers:"49-G1"},{name:"Huyện Bảo Lâm", numbers:"49-H1"},{name:"Thành phố Bảo Lộc", numbers:"49-K1 49-S1"},{name:"Huyện Đạ Huoai", numbers:"49-L1"},
+														{name:"Huyện Đạ Tẻh", numbers:"49-M1"},{name:"Huyện Cát Tiên", numbers:"49-N1"},{name:"Huyện Lạc Dương", numbers:"49-P1"},
+														]},
+			{numbers:"41 | 50–59", name:"Thành phố Hồ Chí Minh", details:[{name:"Quận 1", numbers:"59-T1 59-TA"},
+																			{name:"Quận 2", numbers:"59-B1 59-BA"},
+																			{name:"Quận 3", numbers:"59-F1 59-FA"},
+																			{name:"Quận 4", numbers:"59-C1 59-CA"},
+																			{name:"Quận 5", numbers:"59-H1 59-HA"},
+																			{name:"Quận 6", numbers:"59-K1 59-K2 59-KA"},
+																			{name:"Quận 7", numbers:"59-C2 59-CB"},
+																			{name:"Quận 8", numbers:"59-L1 59-L2 59-LA"},
+																			{name:"Quận 9", numbers:"59-X1 59-XA"},
+																			{name:"Quận 10", numbers:"59-U1 59-UA"},
+																			{name:"Quận 11", numbers:"59-M1 59-M2; 59-MA"},
+																			{name:"Quận 12", numbers:"59-G1 59-G2 59-GA"},
+																			{name:"Quận Tân Bình", numbers:"59-P1 59-P2 59-PA"},
+																			{name:"Quận Tân Phú", numbers:"59-D1 59-D2 59-DB"},
+																			{name:"Quận Bình Thạnh", numbers:"59-S1 59-S2 59-SA"},
+																			{name:"Quận Gò Vấp", numbers:"59-V1 59-V2 59-VA"},
+																			{name:"Quận Phú Nhuận", numbers:"59-E1 59-EA"},
+																			{name:"Quận Thủ Đức", numbers:"59-X2 59-X3 59-XB"},
+																			{name:"Quận Bình Tân", numbers:"59-N1 50-N1 59-NA"},
+																			{name:"Huyện Bình Chánh", numbers:"59-N2 59-NB"},
+																			{name:"Huyện Nhà Bè", numbers:"59-Z1 59-ZA"},
+																			{name:"Huyện Cần Giờ", numbers:"59-Z2 59-ZB"},
+																			{name:"Huyện Hóc Môn", numbers:"59-Y1 59-YA"},
+																			{name:"Huyện Củ Chi", numbers:"59-Y2 59-YB"},
+																			{name:"Xe môtô phân khối trên 175cc", numbers:"59-A3"},
+																	]},
+			{numbers:"61", name:"Bình Dương", details:[{name:"Thành phố Thủ Dầu Một", numbers:"61-B1"},{name:"Thị xã Thuận An", numbers:"61-C1"},{name:"Thị xã Dĩ An", numbers:"61-D1"},{name:"Thị xã Tân Uyên", numbers:"61-E1"},{name:"Huyện Phú Giáo", numbers:"61-F1"},
+														{name:"Thị xã Bến Cát", numbers:"61-G1"},{name:"Huyện Dầu Tiếng", numbers:"61-H1"},{name:"Huyện Bàu Bàng", numbers:"61-K1"},{name:"Huyện Bắc Tân Uyên", numbers:"61-N1"},
+														]},
+			{numbers:"62", name:"Long An", details:[]},
+			{numbers:"63", name:"Tiền Giang", details:[{name:"Huyện Cái Bè", numbers:"63-B1"},{name:"Thị Xã Cai Lậy", numbers:"63-B2"},{name:"Huyện Châu Thành", numbers:"63-B3"},{name:"Huyện Chợ Gạo", numbers:"63-B4"},{name:"Huyện Gò Công Tây", numbers:"63-B5"},{name:"Thị xã Gò Công", numbers:"63-B6"},
+														{name:"Huyện Gò Công Đông", numbers:"63-B7"},{name:"Huyện Tân Phú Đông", numbers:"63-B8"},{name:"Huyện Tân Phước", numbers:"63-B8"},{name:"Thành phố Mỹ Tho", numbers:"63-B9"},{name:"Huyện Cai Lậy", numbers:"63-P1"},
+														]},
+			{numbers:"64", name:"Vĩnh Long", details:[{name:"Xe hai bánh trên 150cc", numbers:"64-A1 64-A2 64-A3"},{name:"Xe máy điện", numbers:"64-MĐ1"},{name:"Thành phố Vĩnh Long", numbers:"64-C1 64-CA"},{name:"Thị xã Bình Minh", numbers:"64-H1 64-HA"},
+														{name:"Huyện Bình Tân", numbers:"64-K1 64-KA"},{name:"Huyện Long Hồ", numbers:"64-B1 64-BA"},{name:"Huyện Mang Thít", numbers:"64-G1 64-GA"},{name:"Huyện Tam Bình", numbers:"64-E1 64-EA"},
+														{name:"Huyện Trà Ôn", numbers:"64-F1 64-FA"},{name:"Huyện Vũng Liêm", numbers:"64-D1 64-DA"},
+														]},
+			{numbers:"65", name:"Cần Thơ", details:[{name:"Quận Ninh Kiều", numbers:"65-B1, 65-X1-4 4 số, 65-AA"},
+													{name:"Quận Cái Răng", numbers:"65-C1, 65V1-2 4 số, 65-BA"},
+													{name:"Quận Bình Thủy", numbers:"65-D1, 65-U1-2 4 số, 65-CA"},
+													{name:"Quận Ô Môn", numbers:"65-E1, 65-T1-2 4 số, 65-DB"},
+													{name:"Quận Thốt Nốt", numbers:"65-F1, 65-R1-2 4 số, 65-EA"},
+													{name:"Huyện Phong Điền", numbers:"65-G1, 65-L1 4 số, 65-FA"},
+													{name:"Huyện Thới Lai", numbers:"65-H1, 65-K2, 65-M1-2 4 số, 65-GA"},
+													{name:"Huyện Cờ Đỏ", numbers:"65-K1, 65-Y1 4 số, 65-HA"},
+													{name:"Huyện Vĩnh Thạnh", numbers:"65-L1, 65-S1-2 4 số, KA"},
+													{name:"Toàn Thành Phố", numbers:"65-F1-9, 65-H1-9, 65-P1-9, 65-Z1, 65-N1-2, 65-K1, 65-D1 (4 số)"},
+]},
+			{numbers:"66", name:"Đồng Tháp", details:[{name:"Thành phố Cao Lãnh", numbers:"66-P1"},{name:"Thành phố Sa Đéc", numbers:"66-S1"},{name:"Thị xã Hồng Ngự", numbers:"66-H1"},{name:"Huyện Cao Lãnh", numbers:"66-F1"},
+													{name:"Châu Thành", numbers:"66-C1"},{name:"Hồng Ngự", numbers:"66-G1"},{name:"Lai Vung", numbers:"66-L1"},{name:"Lấp Vò", numbers:"66-V1"},{name:"Tam Nông", numbers:"66-N1"},
+													{name:"Tân Hồng", numbers:"66-K1"},{name:"Thanh Bình", numbers:"66-B1"},{name:"Tháp Mười", numbers:"66-M1"},
+													]},
+			{numbers:"67", name:"An Giang", details:[{name:"Thành phố Long Xuyên", numbers:"67-B1"},{name:"Huyện Châu Phú", numbers:"67-D1"},{name:"Huyện Châu Thành", numbers:"67-C1"},{name:"Thành phố Châu Đốc", numbers:"67-E1"},
+													{name:"Huyện Tịnh Biên", numbers:"67-F1"},{name:"Huyện An Phú", numbers:"67-G1"},{name:"Thị xã Tân Châu", numbers:"67-H1"},{name:"Huyện Phú Tân", numbers:"67-K1"},
+													{name:"Huyện Chợ Mới", numbers:"67-L1"},{name:"Huyện Thoại Sơn", numbers:"67-M1"},{name:"Huyện Tri Tôn", numbers:"67-N1"},
+													]},
+			{numbers:"68", name:"Kiên Giang", details:[{name:"Thành phố Rạch Giá", numbers:"68-X1 68-AB"},{name:"Thị xã Hà Tiên", numbers:"68-H1"},{name:"Huyện An Biên", numbers:"68-B1 68-CA"},{name:"Huyện An Minh", numbers:"68-M1"},
+														{name:"Huyện Châu Thành", numbers:"68-C1 68-BA"},{name:"Huyện Giồng Riềng", numbers:"68-G1 68-KA"},{name:"Huyện Gò Quao", numbers:"68-E1 68-HA"},{name:"Huyện Hòn Đất", numbers:"68-D1"},
+														{name:"Huyện Kiên Hải", numbers:"68-S1"},{name:"Huyện Kiên Lương", numbers:"68-K1"},{name:"Thành phố Phú Quốc", numbers:"68-P1"},{name:"Huyện Tân Hiệp", numbers:"68-T1 68-LA"},
+														{name:"Huyện Vĩnh Thuận", numbers:"68-N1"},{name:"Huyện U Minh Thượng", numbers:"68-L1"},{name:"Huyện Giang Thành", numbers:"68-F1"},
+														]},
+			{numbers:"69", name:"Cà Mau", details:[{name:"Thành phố Cà Mau", numbers:"69-C1 xxx.xx, 69-B1 xxx.xx"},{name:"Huyện Đầm Dơi", numbers:"69-F1 xxx.xx, 69-R1 xxxx"},{name:"Huyện Ngọc Hiển", numbers:"69-L1 xxx.xx, 69-N1 xxxx"},{name:"Huyện Cái Nước", numbers:"69-E1 xxx.xx, 69-L1 xxxx"},
+													{name:"Huyện Trần Văn Thời", numbers:"69-N1 xxx.xx, 69-S1 xxxx"},{name:"Huyện U Minh", numbers:"69-T xxxx, 69-H1 xxx.xx"},{name:"Huyện Thới Bình", numbers:"69-D1 xxx.xx, 69-U1 xxxx"},{name:"Huyện Năm Căn", numbers:"69-M1 xxxx, 69-M1 xxx.xx"},
+													{name:"Huyện Phú Tân", numbers:"69-K1 xxx.xx, 69-P1 xxxx"},{name:"Toàn tỉnh",numbers:"BSX 69F1-F9, 69K1-K7 xxxx"},
+													]},
+			{numbers:"70", name:"Tây Ninh", details:[{name:"Thành phố Tây Ninh", numbers:"70-B1 xxx.xx"},{name:"Huyện Tân Biên", numbers:"70-H1 xxx.xx, 70-T1 xxxx, 70-T2 xxxx, 70-Q xxxx, 70 xxx-Q"},{name:"Huyện Tân Châu", numbers:"70-K1 xxx.xx, 70-S1 xxxx, 70-S2 xxxx"},
+														{name:"Huyện Dương Minh Châu", numbers:"70-E1 xxx.xx, 70-R1 xxxx"},{name:"Huyện Hòa Thành", numbers:"70-G1 xxx.xx"},{name:"Huyện Bến Cầu", numbers:"70-C1 xxx.xx"},
+														{name:"Huyện Gò Dầu", numbers:"70-F1 xxx.xx"},{name:"Huyện Trảng Bàng", numbers:"70-L1 xxx.xx"},{name:"Huyện Châu Thành", numbers:"70-D1 xxx.xx"},
+														]},
+			{numbers:"71", name:"Bến Tre", details:[{name:"Thành phố Bến Tre", numbers:"71-B1 71-B2 71-B3"},{name:"Huyện Châu Thành", numbers:"71-B1 71-B2 71-B3"},{name:"Huyện Giồng Trôm", numbers:"71-B1 71-B2 71-B3"},{name:"Huyện Mỏ Cày Bắc", numbers:"71-B1 71-B2 71-B3"},
+														{name:"Huyện Mỏ Cày Nam", numbers:"71-B1 71-B2 71-B3"},{name:"Huyện Bình Đại", numbers:"71-C1"},{name:"Huyện Ba Tri", numbers:"71-C2"},{name:"Huyện Thạnh Phú", numbers:"71-C3"},{name:"Huyện Chợ Lách", numbers:"71-C4"},
+														{name:"Xe mô tô trên 175cc", numbers:"71-A1"},{name:"Xe mô tô dưới 100cc", numbers:"71-AA"},{name:"Xe mô tô biển đặc biệt", numbers:"71-xxx-NN-xxx"},{name:"Xe máy điện", numbers:"71-MĐ1"},
+														]},
+			{numbers:"72", name:"Bà Rịa–Vũng Tàu", details:[{name:"Thành phố Vũng Tàu", numbers:"72-C1"},{name:"Thành phố Bà Rịa", numbers:"72-D1"},{name:"Huyện Tân Thành", numbers:"72-E1 72-T1"},{name:"Huyện Châu Đức", numbers:"72-F1"},{name:"Huyện Xuyên Mộc", numbers:"72-G1"},{name:"Huyện Đất Đỏ", numbers:"72-H1"},{name:"Huyện Long Điền", numbers:"72-K1"},]},
+			{numbers:"73", name:"Quảng Bình", details:[{name:"Thành phố Đồng Hới", numbers:"73-B1"},{name:"Huyện Minh Hóa", numbers:"73-C1"},{name:"Huyện Tuyên Hóa", numbers:"73-D1"},{name:"Huyện Quảng Trạch", numbers:"73-E1"},
+														{name:"Huyện Bố Trạch", numbers:"73F1"},{name:"Huyện Quảng Ninh", numbers:"73-G1"},{name:"Huyện Lệ Thủy", numbers:"73-H1"},
+														]},
+			{numbers:"74", name:"Quảng Trị", details:[{name:"Thành phố Đông Hà", numbers:"74-C1"},{name:"Huyện Gio Linh", numbers:"74-B1"},{name:"Huyện Triệu Phong", numbers:"74-D1"},{name:"Huyện Hải Lăng", numbers:"74-F1"},
+														{name:"Huyện Vĩnh Linh", numbers:"74-L1"},{name:"Huyện Cam Lộ", numbers:"74-G1"},{name:"Huyện Hướng Hóa", numbers:"74-?"},
+														]},
+			{numbers:"75", name:"Thừa Thiên–Huế", details:[{name:"Hạn chế phạm vi", numbers:"75-HC"},{name:"Xe xích lô", numbers:"75-XL"},{name:"Xe máy điện", numbers:"75-MĐ1"},{name:"Xe mô tô trên 175cc", numbers:"75-A1"},{name:"Thành phố Huế", numbers:"75-B1 75-F1"},
+														{name:"Thị xã Hương Thủy", numbers:"75-S1 75-G1"},{name:"Thị xã Hương Trà", numbers:"75-D1"},{name:"Huyện A Lưới", numbers:"75-L1"},{name:"Huyện Nam Đông", numbers:"75-Y1 75-M1"},
+														{name:"Huyện Phong Điền", numbers:"75-C1"},{name:"Huyện Phú Lộc", numbers:"75-K1"},{name:"Huyện Phú Vang", numbers:"75-H1"},{name:"Huyện Quảng Điền", numbers:"75-E1"},
+														]},
+			{numbers:"76", name:"Quảng Ngãi", details:[{name:"Thành phố Quảng Ngãi", numbers:"76-B1, 76-U1, 76-V1"},{name:"Huyện Bình Sơn", numbers:"76-C1"},{name:"Huyện Sơn Tịnh", numbers:"76-D1"},{name:"Huyện Tư Nghĩa", numbers:"76-E1"},
+														{name:"Huyện Nghĩa Hành", numbers:"76-F1"},{name:"Huyện Mộ Đức", numbers:"76-G1, 76-X1"},{name:"Huyện Đức Phổ", numbers:"76-H1"},{name:"Huyện Trà Bồng", numbers:"76-P1"},{name:"Huyện Tây Trà", numbers:"76-S1"},
+														{name:"Huyện Sơn Hà", numbers:"76-M1"},{name:"Huyện Sơn Tây", numbers:"76-N1"},{name:"Huyện Minh Long", numbers:"76-L1"},{name:"Huyện Ba Tơ", numbers:"76-K1"},{name:"Huyện Lý Sơn", numbers:"76-T1"},
+														]},
+			{numbers:"77", name:"Bình Định", details:[{name:"Thành phố Quy Nhơn", numbers:"77-L1"},{name:"Thị xã An Nhơn", numbers:"77-F1"},{name:"Huyện An Lão", numbers:"77-M1"},{name:"Huyện Hoài Ân", numbers:"77-K2"},{name:"Huyện Hoài Nhơn", numbers:"77-C1 77-T9"},{name:"Huyện Phù Cát", numbers:"77-E1"},
+														{name:"Huyện Phù Mỹ", numbers:"77-D1"},{name:"Huyện Tuy Phước", numbers:"77-G1"},{name:"Huyện Tây Sơn", numbers:"77-H1"},{name:"Huyện Vân Canh", numbers:"77-B1"},{name:"Huyện Vĩnh Thạnh", numbers:"77-N1"},
+														]},
+			{numbers:"78", name:"Phú Yên", details:[]},
+			{numbers:"79", name:"Khánh Hòa", details:[{name:"Thành phố Nha Trang", numbers:"79-N1 79-N2 79-U2"},{name:"Thành phố Cam Ranh", numbers:"79-C1"},{name:"Thị xã Ninh Hòa", numbers:"79-H1"},{name:"Huyện Diên Khánh", numbers:"79-D1"},
+														{name:"Huyện Vạn Ninh", numbers:"79-V1"},{name:"Huyện Khánh Vĩnh", numbers:"79-X1"},{name:"Huyện Khánh Sơn", numbers:"79-K1"},{name:"Huyện Cam Lâm", numbers:"79-Z1"},
+														]},
+			{numbers:"80", name:"Cơ quan Trung ương", details:[]},
+			{numbers:"81", name:"Gia Lai", details:[{name:"Thành phố Pleiku", numbers:"81-B1"},{name:"Thị xã An Khê", numbers:"81-G1"},{name:"Thị xã Ayun Pa", numbers:"81-M1"},{name:"Huyện Chư Păh", numbers:"81-X1"},
+														{name:"Huyện Chư Prông", numbers:"81-T1"},{name:"Huyện Chư Sê", numbers:"81-P1"},{name:"Huyện Đắk Đoa", numbers:"81-C1"},{name:"Huyện Đak Pơ", numbers:"81-F1"},
+														{name:"Huyện Đức Cơ", numbers:"81-U1"},{name:"Huyện Ia Grai", numbers:"81-V1"},{name:"Huyện Ia Pa", numbers:"81-L1"},{name:"Huyện K'Bang", numbers:"81-H1"},{name:"Huyện Kông Chro", numbers:"81-K1"},
+														{name:"Huyện Krông Pa", numbers:"81-N1"},{name:"Huyện Mang Yang", numbers:"81-E1"},{name:"Huyện Phú Thiện", numbers:"81-D1"},{name:"Huyện Chư Pưh", numbers:"81-S1"},{name:"Dưới 50cc", numbers:"81-AA"},
+														]},
+			{numbers:"82", name:"Kon Tum", details:[{name:"Thành phố Kon Tum", numbers:"82-B1"},{name:"Huyện Đắk Glei 82-N1"},{name:"Huyện Đắk Hà", numbers:"82-H1"},{name:"Huyện Đắk Tô", numbers:"82-F1"},{name:"Huyện Ia H'Drai", numbers:"82-?"},
+													{name:"Huyện Kon Plông", numbers:"82-?"},{name:"Huyện Kon Rẫy", numbers:"82-K1"},{name:"Huyện Ngọc Hồi", numbers:"82-E1"},{name:"Huyện Sa Thầy", numbers:"82-M1"},{name:"Huyện Tu Mơ Rông", numbers:"82-?"},
+													]},
+			{numbers:"83", name:"Sóc Trăng", details:[{name:"Thành phố Sóc Trăng", numbers:"83-P1 83-P2"},{name:"Thị xã Vĩnh Châu", numbers:"83-P1 83-P2"},{name:"Huyện Mỹ Xuyên", numbers:"83-P1 83-P2"},{name:"Huyện Trần Đề", numbers:"83-P1 83-P2"},
+														{name:"Huyện Long Phú", numbers:"83-P1 83-P2"},{name:"Huyện Mỹ Tú", numbers:"83-P1 83-P2"},{name:"Huyện Kế Sách", numbers:"83-C1"},{name:"Huyện Châu Thành", numbers:"83-C1"},
+														{name:"Thị xã Ngã Năm", numbers:"83-E1"},{name:"Huyện Cù Lao Dung", numbers:"83-D1"},
+														]},
+			{numbers:"84", name:"Trà Vinh", details:[{name:"Xe hai bánh trên 150cc", numbers:"84-A1"},{name:"Xe hai bánh dưới 100cc", numbers:"84-AA "},{name:"Xe máy điện", numbers:"84-MĐ1"},{name:"Thành phố Trà Vinh", numbers:"84-B1 84-C1 84-BA 84CA"},
+														{name:"Huyện Càng Long", numbers:"84-L1 84-LA"},{name:"Huyện Châu Thành", numbers:"84-D1 84-DA"},{name:"Huyện Cầu Kè", numbers:"84-K1 84-KA"},{name:"Huyện Tiểu Cần", numbers:"84-H1 84-HA"},
+														{name:"Huyện Cầu Ngang", numbers:"84-E1 84-EA"},{name:"Huyện Trà Cú", numbers:"84-G1 84-GA"},{name:"Thị xã Duyên Hải", numbers:"84-F1 84-FA"},{name:"Huyện Duyên Hải", numbers:"84-M1 84-MA"},
+														]},
+			{numbers:"85", name:"Ninh Thuận", details:[{name:"Thành phố Phan Rang", numbers:"85-B1"},{name:"Huyện Bác Ái", numbers:"85-G1"},{name:"Huyện Ninh Hải", numbers:"85-C1"},{name:"Huyện Ninh Phước", numbers:"85-D1"},
+														{name:"Huyện Ninh Sơn", numbers:"85-F1"},{name:"Huyện Thuận Bắc", numbers:"85-H1"},{name:"Huyện Thuận Nam", numbers:"85-E1"},
+														]},
+			{numbers:"86", name:"Bình Thuận", details:[{name:"Thành phố Phan Thiết", numbers:"86-C1"},{name:"Huyện Tuy Phong", numbers:"86-B1"},{name:"Huyện Bắc Bình", numbers:"86-B2"},{name:"Huyện Hàm Thuận Bắc", numbers:"86-B3"},{name:"Huyện Hàm Thuận Nam", numbers:"86-B4"},
+														{name:"Huyện Hàm Tân", numbers:"86-B5"},{name:"Thị xã La Gi", numbers:"86-B6"},{name:"Huyện Tánh Linh", numbers:"86-B7"},{name:"Huyện Đức Linh", numbers:"86-B8"},{name:"Huyện Phú Quý", numbers:"86-B9"},
+														]},
+			{numbers:"88", name:"Vĩnh Phúc", details:[{name:"Thành phố Vĩnh Yên", numbers:"88-B1"},{name:"Huyện Sông Lô", numbers:"88-C1"},{name:"Huyện Lập Thạch", numbers:"88-D1"},{name:"Huyện Tam Đảo", numbers:"88-E1"},{name:"Huyện Yên Lạc", numbers:"88-F1"},
+														{name:"Huyện Bình Xuyên", numbers:"88-G1"},{name:"Thị xã Phúc Yên", numbers:"88-H1"},{name:"Huyện Tam Dương", numbers:"88-K1"},{name:"Huyện Vĩnh Tường", numbers:"88-L1"},
+														]},
+			{numbers:"89", name:"Hưng Yên", details:[{name:"Thành phố Hưng Yên", numbers:"89-B1"},{name:"Huyện Ân Thi", numbers:"89-C1"},{name:"Huyện Kim Động", numbers:"89-D1"},{name:"Huyện Phù Cừ", numbers:"89-G1"},{name:"Huyện Tiên Lữ", numbers:"89-H1"},
+														{name:"Huyện Khoái Châu", numbers:"89-E1"},{name:"Huyện Văn Giang", numbers:"89-K1"},{name:"Huyện Mỹ Hào", numbers:"89-F1"},{name:"Huyện Yên Mỹ", numbers:"89-M1"},{name:"Huyện Văn Lâm", numbers:"89-L1"},
+														]},
+			{numbers:"90", name:"Hà Nam", details:[{name:"Thành phố Phủ Lý", numbers:"90-B1"},{name:"Huyện Duy Tiên", numbers:"90-D1"},{name:"Huyện Kim Bảng", numbers:"90-K1 90-A1"},
+														{name:"Huyện Bình Lục", numbers:"90-E1"},{name:"Huyện Thanh Liêm", numbers:"90-B2"},{name:"Huyện Lý Nhân", numbers:"90-L1"},
+														]},
+			{numbers:"92", name:"Quảng Nam", details:[{name:"Thành phố Tam Kỳ", numbers:"92-B1"},{name:"Thành phố Hội An", numbers:"92-C1"},{name:"Thị xã Điện Bàn", numbers:"92-D1"},{name:"Huyện Thăng Bình", numbers:"92-H1"},{name:"Huyện Bắc Trà My", numbers:"92-V1"},
+														{name:"Huyện Nam Trà My", numbers:"92-X1"},{name:"Huyện Núi Thành", numbers:"92-N1"},{name:"Huyện Phước Sơn", numbers:"92-P1"},{name:"Huyện Tiên Phước", numbers:"92-M1"},{name:"Huyện Hiệp Đức", numbers:"92-K1"},
+														{name:"Huyện Nông Sơn", numbers:"92-Y1"},{name:"Huyện Đông Giang", numbers:"92-T1"},{name:"Huyện Nam Giang", numbers:"92-S1"},{name:"Huyện Đại Lộc", numbers:"92-E1"},{name:"Huyện Phú Ninh", numbers:"92-L1"},
+														{name:"Huyện Tây Giang", numbers:"92-U1"},{name:"Huyện Duy Xuyên", numbers:"92-F1"},{name:"Huyện Quế Sơn", numbers:"92-G1"},
+														]},
+			{numbers:"93", name:"Bình Phước", details:[{name:"Thị xã Đồng Xoài", numbers:"93-P1"},{name:"Thị xã Bình Long", numbers:"93-E1"},{name:"Thị xã Phước Long", numbers:"93-K1"},{name:"Huyện Bù Đăng", numbers:"93-L1"},{name:"Huyện Bù Đốp", numbers:"93-G1"},
+														{name:"Huyện Bù Gia Mập", numbers:"93-H1"},{name:"Huyện Chơn Thành", numbers:"93-B1"},{name:"Huyện Đồng Phú", numbers:"93-M1"},{name:"Huyện Hớn Quản", numbers:"93-C1"},{name:"Huyện Lộc Ninh", numbers:"93-N1 93-F1"},
+														]},
+			{numbers:"94", name:"Bạc Liêu", details:[{name:"Thành phố Bạc Liêu", numbers:"94-K1"},{name:"Thị xã Giá Rai", numbers:"94-D1"},{name:"Huyện Phước Long", numbers:"94-E1"},{name:"Huyện Hồng Dân", numbers:"94-F1"},{name:"Huyện Vĩnh Lợi", numbers:"94-C1"},{name:"Huyện Đông Hải", numbers:"94-B1"},{name:"Huyện Hòa Bình", numbers:"94-M1"},]},
+			{numbers:"95", name:"Hậu Giang", details:[{name:"Xe máy điện", numbers:"95-MĐ1"},{name:"Thành phố Vị Thanh", numbers:"95-B1 95-AA"},{name:"Thị xã Ngã Bảy", numbers:"95-F1 95-FA"},{name:"Huyện Châu Thành", numbers:"95-G1 95-GA"},
+														{name:"Huyện Châu Thành A", numbers:"95-H1 95-HA"},{name:"Huyện Long Mỹ", numbers:"95-D1 95-B1 95-DB 95-AA"},{name:"Huyện Phụng Hiệp", numbers:"95-E1 95-EA"},{name:"Huyện Vị Thủy", numbers:"95-C1 95-B1 95-CA 95-AA"},
+														]},
+			{numbers:"97", name:"Bắc Kạn", details:[{name:"Thành phố Bắc Kạn", numbers:"97-?"},{name:"Huyện Ba Bể", numbers:"97-?"},{name:"Huyện Bạch Thông", numbers:"97-?"},{name:"Huyện Chợ Đồn", numbers:"97-?"},
+														{name:"Huyện Chợ Mới", numbers:"97-?"},{name:"Huyện Na Rì", numbers:"97-?"},{name:"Huyện Pắc Nặm", numbers:"97-?"},{name:"Huyện Ngân Sơn", numbers:"97-?"},
+														]},
+			{numbers:"13 | 98", name:"Bắc Giang", details:[{name:"Thành phố Bắc Giang", numbers:"98-B1"},{name:"Huyện Hiệp Hòa", numbers:"98-D1"},{name:"Huyện Việt Yên", numbers:"98-K1"},{name:"Huyện Lạng Giang", numbers:"98-M1"},{name:"Huyện Lục Nam", numbers:"98-F1"},
+															{name:"Huyện Tân Yên", numbers:"98-H1"},{name:"Huyện Yên Thế", numbers:"98-C1"},{name:"Huyện Yên Dũng", numbers:"98-G1"},{name:"Huyện Sơn Động", numbers:"98-L1"},{name:"Huyện Lục Ngạn", numbers:"98-E1"},
+															]},
+			{numbers:"99", name:"Bắc Ninh", details:[{name:"Thành phố Bắc Ninh", numbers:"99-G1"},{name:"Thị xã Từ Sơn", numbers:"99-B1"},{name:"Huyện Tiên Du", numbers:"99-C1"},{name:"Huyện Yên Phong", numbers:"99-D1"},
+														{name:"Huyện Quế Võ", numbers:"99-E1"},{name:"Huyện Thuận Thành", numbers:"99-F1"},{name:"Huyên Gia Bình", numbers:"99-H1"},{name:"Huyện Lương Tài", numbers:"99-K1"},
+														]}
+			];
+		$scope.itemsOriginal = $scope.maSoDanSuOriginal;
+		$scope.items = $scope.itemsOriginal;
+		$scope.selectItem = null;
+		$scope.maSoQuanSuOriginal =[
+			{numbers:"AA", name:"Quân đoàn 1 - Binh đoàn Quyết Thắng"},
+			{numbers:"AB", name:"Quân đoàn 2- Binh đoàn Hương Giang"},
+			{numbers:"AC", name:"Quân đoàn 3 - Binh đoàn Tây Nguyên"},
+			{numbers:"AD", name:"Quân đoàn 4 - Binh đoàn Cửu Long"},
+			{numbers:"AV", name:"Binh đoàn 11 - Tổng Công ty Xây dựng Thành An"},
+			{numbers:"AT", name:"Binh đoàn 12 - Tổng Công ty Xây dựng Trường Sơn"},
+			{numbers:"AN", name:"Binh đoàn 15 (AX - Binh đoàn 16)"},
+			{numbers:"AP", name:"Lữ đoàn M44"},
+			{numbers:"BBB", name:"Bộ binh - Binh chủng tăng thiết giáp"},
+			{numbers:"BC", name:"Binh chủng Công binh"},
+			{numbers:"BH", name:"Binh chủng Hóa học"},
+			{numbers:"BK", name:"Binh chủng Đặc công"},
+			{numbers:"BL", name:"Bộ tư lệnh bảo vệ lăng"},
+			{numbers:"BT", name:"Bộ tư lệnh Thông tin liên lạc"},
+			{numbers:"BP", name:"Bộ tư lệnh Pháo binh"},
+			{numbers:"BS", name:"Lực lượng cảnh sát biển VN"},
+			{numbers:"BV", name:"Tổng Cty Dịch vụ bay"},
+			{numbers:"HA", name:"Học viện Quốc phòng"},
+			{numbers:"HB", name:"Học viện Lục quân"},
+			{numbers:"HC", name:"Học viện Chính trị quân sự"},
+			{numbers:"HD", name:"Học viện Kỹ thuật Quân sự"},
+			{numbers:"HE", name:"Học viện Hậu cần"},
+			{numbers:"HT", name:"Trường Sĩ quan lục quân I"},
+			{numbers:"HQ", name:"Trường Sĩ quan lục quân II"},
+			{numbers:"HN", name:"Học viện chính trị Quân sự Bắc Ninh"},
+			{numbers:"HH", name:"Học viện quân y"},
+			{numbers:"KA", name:"Quân khu 1"},
+			{numbers:"KB", name:"Quân khu 2"},
+			{numbers:"KC", name:"Quân khu 3"},
+			{numbers:"KD", name:"Quân khu 4"},
+			{numbers:"KV", name:"Quân khu 5"},
+			{numbers:"KP", name:"Quân khu 7"},
+			{numbers:"KK", name:"Quân khu 9"},
+			{numbers:"KT", name:"Quân khu Thủ đô"},
+			{numbers:"KN", name:"Đặc khu Quảng Ninh (Biển cũ còn lại)"},
+			{numbers:"PA", name:"Cục đối ngoại BQP"},
+			{numbers:"PP", name:"Bộ Quốc phòng - Bệnh viện 108 cũng sử dụng biển này"},
+			{numbers:"PM", name:"Viện thiết kế - Bộ Quốc phòng"},
+			{numbers:"PK", name:"Ban Cơ yếu - BQP"},
+			{numbers:"PT", name:"Cục tài chính - BQP"},
+			{numbers:"PY", name:"Cục Quân y - Bộ Quốc phòng"},
+			{numbers:"PQ", name:"Trung tâm khoa học và kỹ thuật QS (viện kỹ thuật Quân sự)"},
+			{numbers:"PX", name:"Trung tâm nhiệt đới Việt - Nga"},
+			{numbers:"PC HL", name:"Trước là Tổng cục II - Hiện nay là TN: Tổng cục tình báo"},
+			{numbers:"QA", name:"Quân chủng Phòng không không quân (Trước là QK, QP: Quân chủng phòng không và Quân chủng không quân)"},
+			{numbers:"QB", name:"Bộ tư lệnh Bộ đội biên phòng"},
+			{numbers:"QH", name:"Quân chủng Hải quân"},
+			{numbers:"TC", name:"Tổng cục Chính trị"},
+			{numbers:"TH", name:"Tổng cục Hậu cần - (TH 90/91 - Tổng Cty Thành An BQP - Binh đoàn 11)"},
+			{numbers:"TK", name:"Tổng cục Công nghiệp quốc phòng"},
+			{numbers:"TT", name:"Tổng cục kỹ thuật"},
+			{numbers:"TM", name:"Bộ Tổng tham mưu"},
+			{numbers:"TN", name:"Tổng cục tình báo quân đội"},
+			{numbers:"DB", name:"Tổng công ty Đông Bắc - BQP"},
+			{numbers:"ND", name:"Tổng công ty Đầu tư Phát triển nhà - BQP"},
+			{numbers:"CH", name:"Bộ phận chính trị của Khối văn phòng - BQP"},
+			{numbers:"VB", name:"Khối văn phòng Binh chủng - BQP"},
+			{numbers:"VK", name:"Ủy ban tìm kiếm cứu nạn - BQP"},
+			{numbers:"CV", name:"Tổng công ty xây dựng Lũng Lô - BQP"},
+			{numbers:"CA", name:"Tổng công ty 36 - BQP"},
+			{numbers:"CP", name:"Tổng Công ty 319 - Bộ Quốc phòng"},
+			{numbers:"CM", name:"Tổng công ty Thái Sơn - BQP"},
+			{numbers:"CC", name:"Tổng Công ty Xăng dầu Quân đội (Việt Nam)"},
+			{numbers:"VT", name:"Tập đoàn Viễn thông Quân đội"},
+			{numbers:"MB", name:"Ngân hàng thương mại cổ phần Quân đội"},
+		];
+		$scope.maSoQuanSu = $scope.maSoQuanSuOriginal;
+		
+		$scope.otherInfoOriginal =[
+			{name:"Nền biển màu trắng, chữ và số màu đen là xe thuộc sở hữu cá nhân và xe của các doanh nghiệp."},
+			{name:"Nền biển màu xanh dương, chữ và số màu trắng là biển xe của các cơ quan hành chính sự nghiệp (dân sự)"},
+			{name:"Nền biển màu đỏ, chữ và số màu trắng là xe quân đội, xe của các doanh nghiệp quân đội"},
+			{name:"Nền biển màu vàng, chữ và số màu trắng là xe thuộc Bộ tư lệnh Biên phòng"},
+			{name:"Nền biển màu vàng, chữ và số đen là xe cơ giới chuyên dụng làm công trình"},
+			{name:"Biển xe có mã số đầu theo địa phương (tỉnh, thành) đăng ký và 2 ký tự NN (nước ngoài), NG (ngoại giao) hoặc QT (quốc tế) cùng dãy số, do Cục Cảnh sát Giao thông đường bộ, đường sắt (C67) thuộc Bộ Công an, cấp cho các cá nhân, tổ chức có yếu tố nước ngoài, trên cơ sở sự đề xuất của Đại sứ quán nước đó và sự đồng ý của Bộ Ngoại giao. Biển xe có nền màu trắng, chữ và số màu đen, (riêng kí tự NG và QT màu đỏ),"},
+			
+		];
+		
+		$scope.changeKindsOfView = function(kind)
+		{
+			$scope.selectedKindsOfView = kind;
+			if(document.getElementById("searchText")!=null){
+				document.getElementById("searchText").value  = "";	
+			}
+			$scope.search();
+			$scope.updateInformation();
+		}
+		$scope.onClickItem = function(item)
+		{
+			if(typeof(item) =="undefined" || item==null)
+			{
+				if($scope.selectedKindsOfView.id == 1){
+					$scope.itemsOriginal = $scope.maSoDanSuOriginal;
+					$scope.items = $scope.itemsOriginal;
+					$scope.selectedItem = null;
+					if(document.getElementById("searchText")!=null){
+						document.getElementById("searchText").value  = "";	
+					}
+					$scope.message="";
+				}
+			}else{
+				if(typeof(item.details) !="undefined" && item.details!=null)
+				{
+					if(item.details.length == 0){
+						alert("Chưa có dữ liệu");
+					}
+					else{
+						$scope.itemsOriginal = item.details;
+						$scope.items = $scope.itemsOriginal;
+						$scope.selectedItem = item;
+						if(document.getElementById("searchText")!=null){
+							document.getElementById("searchText").value  = "";	
+						}
+						$scope.message="Thông tin chưa đầy đủ, sẽ tiếp tục cập nhật";
+					}
+				}
+			}
+		}
+		
+		
+		$scope.updateInformation = function()
+		{
+		}
+		$scope.search = function(query)
+		{
+			if($scope.selectedKindsOfView.id == 1){
+				if(typeof(query) == "undefined" || query == null || query == "")
+				{
+					$scope.items = $scope.itemsOriginal;
+				}else{
+					var newArray = new Array();
+					for(var i =0; i< $scope.itemsOriginal.length; i++)
+					{
+						var firstIndexSecond = removeTone($scope.itemsOriginal[i].name).toLowerCase().indexOf(removeTone(query).toLowerCase());
+						if( firstIndexSecond > -1)
+						{
+							var nameOfSearch = $scope.itemsOriginal[i].name.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.itemsOriginal[i].name.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+							nameOfSearch +=  $scope.itemsOriginal[i].name.substring(firstIndexSecond + query.length);
+							newArray.push({name: nameOfSearch, numbers: $scope.itemsOriginal[i].numbers, details: $scope.itemsOriginal[i].details});						
+						}else
+							{			 
+								var indexSecond = $scope.itemsOriginal[i].numbers.toLowerCase().indexOf(query.toLowerCase());
+								if( indexSecond > -1)
+								{
+									var numberOfSearch = $scope.itemsOriginal[i].numbers.substring(0, indexSecond)+ "<span class='searched'>" +$scope.itemsOriginal[i].numbers.substring(indexSecond, indexSecond + query.length) + "</span>"
+									numberOfSearch +=  $scope.itemsOriginal[i].numbers.substring(indexSecond + query.length);
+									newArray.push({name: $scope.itemsOriginal[i].name, numbers: numberOfSearch, details: $scope.itemsOriginal[i].details});	
+								}
+							}
+					}
+					$scope.items = newArray;
+				}
+			}
+			else if($scope.selectedKindsOfView.id == 2){
+				if(typeof(query) == "undefined" || query == null || query == "")
+				{
+					$scope.maSoQuanSu = $scope.maSoQuanSuOriginal;
+				}else{
+					query = removeTone(query);
+					var newArray = new Array();
+					for(var i =0; i< $scope.maSoQuanSuOriginal.length; i++)
+					{
+						var firstIndexSecond = removeTone($scope.maSoQuanSuOriginal[i].name).toLowerCase().indexOf(query.toLowerCase());
+						if( firstIndexSecond > -1)
+						{
+							var nameOfSearch = $scope.maSoQuanSuOriginal[i].name.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.maSoQuanSuOriginal[i].name.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+							nameOfSearch +=  $scope.maSoQuanSuOriginal[i].name.substring(firstIndexSecond + query.length);
+							newArray.push({name:nameOfSearch, numbers:$scope.maSoQuanSuOriginal[i].numbers});						
+						}else
+							{ 
+								
+								firstIndexSecond = $scope.maSoQuanSuOriginal[i].numbers.toLowerCase().indexOf(query.toLowerCase());
+								if( firstIndexSecond > -1)
+								{
+									var nameOfSearch = $scope.maSoQuanSuOriginal[i].numbers.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.maSoQuanSuOriginal[i].numbers.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+									nameOfSearch +=  $scope.maSoQuanSuOriginal[i].numbers.substring(firstIndexSecond + query.length);
+									newArray.push({name:$scope.maSoQuanSuOriginal[i].name, numbers:nameOfSearch});				
+								}
+							}
+					}
+					$scope.maSoQuanSu = newArray;
+				}
+			}
+		}
+		
+		$scope.getTrustAsHtml= function(str)
+		{
+			return $sce.trustAsHtml(str)
+		}
+		$scope.htmlEncode= function(value){
+		  return $('<div/>').text(value).html();
+		}
+
+		$scope.htmlDecode= function(value){
+		  return $('<div/>').html(value).text();
+		}
+		function removeTone(str){
+			//code by Minit - www.canthoit.info - 13-05-2009
+			str= str.toLowerCase();
+			str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+			str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+			str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+			str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+			str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+			str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+			str= str.replace(/đ/g,"d");
+			return str;
+		}
+	}])
+  </script>
+  </body>
+</html>
+

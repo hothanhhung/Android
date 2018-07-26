@@ -130,7 +130,7 @@ namespace hthservices.Utils
         public static Channel GetChannel(string channelKey)
         {
             Channel channel = new Channel();
-            string sqlSaveChannel = "SELECT ChannelId, ChannelKey, ChannelGroupName, ChannelName, VietBaoLink FROM Channels WHERE ChannelKey = @ChannelKey ";
+            string sqlSaveChannel = "SELECT ChannelId, ChannelKey, ChannelGroupName, ChannelName, VietBaoLink FROM Channels WHERE ChannelKey like @ChannelKey ";
             using (var sql_con = new SQLiteConnection(ConnectString))
             {
                 sql_con.Open();
@@ -279,6 +279,80 @@ namespace hthservices.Utils
                 }
             }
             catch (Exception ex) { }
+        }
+
+        public static List<RequestInfo> GetRequestInfoStatistic(string type, string fromDate, string toDate)
+        {
+            String where = "";
+            
+            if (!string.IsNullOrWhiteSpace(type))
+            {
+                where += "WHERE Type=@Type ";
+            }
+            if (!string.IsNullOrWhiteSpace(fromDate))
+            {
+                if (!string.IsNullOrWhiteSpace(where))
+                {
+                    where += " AND CurrentDate>=@FromDate ";
+                }
+                else
+                {
+                    where += "WHERE CurrentDate>=@FromDate ";
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(toDate))
+            {
+                if (!string.IsNullOrWhiteSpace(where))
+                {
+                    where += " AND CurrentDate<=@ToDate ";
+                }
+                else
+                {
+                    where += "WHERE CurrentDate<=@ToDate ";
+                }
+            }
+
+            List<RequestInfo> requestInfos = new List<RequestInfo>();
+            string sqlSaveChannel = "SELECT * FROM RequestInfo " + where;
+            using (var sql_con = new SQLiteConnection(ReportConnectString))
+            {
+                sql_con.Open();
+                using (var sql_cmd = sql_con.CreateCommand())
+                {
+                    sql_cmd.CommandText = sqlSaveChannel;
+                    var myParameters = sql_cmd.Parameters;
+                    if (!string.IsNullOrWhiteSpace(type))
+                    {
+                        myParameters.AddWithValue("@Type", type);
+                    }
+                    if (!string.IsNullOrWhiteSpace(fromDate))
+                    {
+                        myParameters.AddWithValue("@FromDate", fromDate);
+                    }  
+                    if (!string.IsNullOrWhiteSpace(toDate))
+                    {
+                        myParameters.AddWithValue("@ToDate", toDate);
+                    }                   
+                    
+
+                    using (var reader = sql_cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var requestInfo = new RequestInfo();
+                            requestInfo.Id = Int32.Parse((reader["Id"] ?? "").ToString());
+                            requestInfo.CurrentDate = (reader["CurrentDate"] ?? "").ToString();
+                            requestInfo.Type = (reader["Type"] ?? "").ToString();
+                            requestInfo.IsFailed = (reader["IsFailed"] ?? "").ToString();
+                            requestInfo.RequestLink = (reader["RequestLink"] ?? "").ToString();
+                            requestInfos.Add(requestInfo);
+                        }
+                    }
+                }
+                sql_con.Close();
+            }
+
+            return requestInfos;
         }
 
         public static List<RequestInfo> GetRequestInfo(string type, string date, string order = "", bool desc = true, int page = 1, int size = 30)

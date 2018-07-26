@@ -82,8 +82,13 @@ namespace hthservices.Utils
                 case DataStatic.FROM_QPVN_PAGE:
                     guideItems = HtmlHelper.GetFromQPVNUrl(channelToServer, date);
                     break;
-                case DataStatic.FROM_HTVONLINE_PAGE:
-                    guideItems = HtmlHelper.GetDataFromHTVONLINEUrl(channelToServer, date);
+                case DataStatic.FROM_HTVPLUS_PAGE:
+                    VN_Now = DateTime.UtcNow.AddHours(7);
+                    int index = (date - VN_Now).Days;
+                    if (index >= 0 && index < 5)
+                    {
+                        guideItems = HtmlHelper.GetDataFromHTVPLUSUrl(channelToServer, index, date);
+                    }
                     break;
                 case DataStatic.FROM_FBNC_PAGE:
                     guideItems = HtmlHelper.GetDataFromFBNCUrl(channelToServer, date);
@@ -133,8 +138,8 @@ namespace hthservices.Utils
                     }
                     break;
                 case DataStatic.FROM_BTV_PAGE:
-                    VN_Now = DateTime.UtcNow.AddHours(7);
-                    if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
+                   // VN_Now = DateTime.UtcNow.AddHours(7);
+                 //   if (VN_Now.Day == date.Day && VN_Now.Month == date.Month && VN_Now.Year == date.Year)
                     {
                         guideItems = HtmlHelper.GetDataFromBTVUrl(channelToServer, date);
                     }
@@ -222,6 +227,12 @@ namespace hthservices.Utils
                         guideItems = HtmlHelper.GetDataFromKPlusUrl(channelToServer, date);
                     }
                     break;
+                case DataStatic.FROM_TODAYTV_PAGE:                    
+                        guideItems = HtmlHelper.GetDataFromTODAYTVUrl(channelToServer, date);
+                    break;
+                case DataStatic.FROM_DNRTV_PAGE:
+                        guideItems = HtmlHelper.GetDataFromDNRTVUrl(channelToServer, date);
+                    break;                    
                 case DataStatic.FROM_VIETBAO_PAGE:
                 default:
                     var channel = SQLiteProcess.GetChannel(channelKey);
@@ -243,18 +254,24 @@ namespace hthservices.Utils
             guideItems = SQLiteProcess.GetSchedulesOfChannel(channelKey, date);
             if (guideItems == null || guideItems.Count == 0)
             {
-                var channelToServer = DataStatic.GetChannelToServer(channelKey);
-
-                guideItems = GetScheduleFromServer(channelKey, date, channelToServer);
-                if (guideItems == null || guideItems.Count == 0)
+                var channelToServers = DataStatic.GetListChannelToServer(channelKey);
+                foreach (var channelToServer in channelToServers)
                 {
-                    var channelToServer2 = DataStatic.GetChannelToServer2(channelKey, channelToServer);
-                    if (channelToServer2 != null)
+                    guideItems = GetScheduleFromServer(channelKey, date, channelToServer);
+                    if (guideItems == null || guideItems.Count == 0)
                     {
-                        guideItems = GetScheduleFromServer(channelKey, date, channelToServer2);
+                        var channelToServer2 = DataStatic.GetChannelToServer2(channelKey, channelToServer);
+                        if (channelToServer2 != null)
+                        {
+                            guideItems = GetScheduleFromServer(channelKey, date, channelToServer2);
+                        }
+                    }
+
+                    if (guideItems != null && guideItems.Count > 0)
+                    {
+                        break;
                     }
                 }
-                
                 if (guideItems != null && guideItems.Count > 0)
                 {
                     try
@@ -313,6 +330,10 @@ namespace hthservices.Utils
         }
 
         #region Logger
+        public static List<RequestInfo> GetRequestInfoStatistic(string type, string fromDate, string toDate)
+        {
+            return SQLiteProcess.GetRequestInfoStatistic(type, fromDate, toDate);
+        }
         public static List<RequestInfo> GetRequestInfo(string type, string date, string order = "", bool desc = true, int page = 1, int size = 30)
         {
             return SQLiteProcess.GetRequestInfo(type, date, order, desc, page, size);

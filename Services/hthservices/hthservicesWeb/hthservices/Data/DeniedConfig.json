@@ -1,0 +1,8 @@
+﻿{
+    DeniedIps: [ "115.77.10.154", "116.107.147.229", "115.74.6.207", "115.73.52.164", "1.53.10.246"],
+    DeniedDeviceIds: [ ],
+    AcceptedAppVersions: [ null, "4.0.0", "4.0.1", "4.0.2" ],
+    AffectedLinks: [ "api/lichtivi" ],
+    MaxConnectedClient: 200,
+    UseMessage: false
+}

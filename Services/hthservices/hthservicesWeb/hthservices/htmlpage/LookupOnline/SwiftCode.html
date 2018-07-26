@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>    
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+	<style>
+	.giai {
+    background: none repeat scroll 0% 0% #888C95;
+    color: #FFF;
+}
+
+.giai img {
+    float: left;
+    padding-right: 2px;
+}
+
+.giai h3 {
+    float: left;
+}
+.time_f {
+    color: #209EBB;
+    font-weight: 700;
+    text-align: center;
+	word-wrap: break-word;
+}
+.text_right {
+    text-align: right;
+    width: 40%;
+}
+.guess {
+    color: #209EBB;
+    font-weight: 700;
+    text-align: center;
+}
+.lich {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.date {
+    background: none repeat scroll 0% 0% #D4D4D4;
+    color: #404040;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+td{
+	padding-left: 5px;
+}
+
+.grey_row {
+    background-color: #F3F3F3;
+}
+.table {
+    border-collapse: collapse;
+    width: 100% !important;
+	margin-left: auto;
+    margin-right: auto;
+}
+.width90{
+    width: 99% !important;
+}
+.text_center{
+    text-align: center;
+}
+
+.rowRp{	
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.even_text{
+	color: #d04040;
+    font-size: 13px;
+    font-weight: 700;
+    padding-right: 5px;
+	float: left;
+}
+
+.odd_text{
+	color: #6c40ef;
+    font-size: 13px;
+    font-weight: 700;
+    padding-right: 5px;
+	float: left;
+}
+
+.searched {
+	background-color: #E05C2B;
+	color: #FFFFFF;
+}
+.col-md-6{
+	padding-right: 3px !important;
+	padding-left: 3px !important;
+}
+.centerf{	
+    display: table-cell;
+    align-items: center;
+    vertical-align: middle;
+}
+.text_left {
+    text-align: left;
+    color: black;//#209EBB;
+	word-wrap: break-word;
+}
+.item{
+	display: table;
+    padding: 5px;
+    margin: 5px;
+    align-items: center;
+    text-align: center;
+    background-color: #d4cdcd;
+	border: 3px solid #ccc;	
+    box-shadow: 2px -5px 10px #716c6c;;
+}
+
+.grid-header{
+font-weight: bold;
+}
+</style>
+  </head>
+  <body>
+	<div ng-app="starter" ng-controller="mainController">
+		<div class="container-fluid" style="margin: 10px 0px 10px 0px">    
+			<div class="row" style="margin: 10px -10px 10px -10px;">
+			<div class="col-xs-6 col-md-6">
+			  <div class="dropdown width90">
+				  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					{{selectedKindsOfView.name}}
+					<span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+					<li ng-repeat="kind in kindsOfView"><a href="javascript:void(0)" ng-click="changeKindsOfView(kind)"> {{kind.name}}</a></li>
+				  </ul>
+				</div>
+			</div>
+			<div class="col-xs-6 col-md-6">
+			  <div class="form-group width90" ng-if="selectedKindsOfView.id != 2">
+				<input type="text" class="form-control width90" ng-model="querySearch" id="searchText" placeholder="Thông tin cần tìm" ng-change="search(querySearch)"/>
+			  </div>
+			</div>
+		  </div>
+		  <div class="row" style="margin: 10px -10px 10px -10px;">
+			<div ng-if="selectedKindsOfView.id == 1" style="margin-left: 20px;">
+				<div class="row" ng-if="selectedItem!=null">
+					<a href="javascript:void(0)" ng-click="onClickItem()">Back</a>
+					<span><b>{{htmlDecode(selectedItem.name)}}</b></span> có đầu số là <b><span>{{htmlDecode(selectedItem.code)}}</span></b>
+				</div>
+				<div class="row" ng-if="message!=''">
+					<span>{{message}}</span>
+				</div>
+				<div class="row">
+					<div class="row text_center rowRp grey_row" style="margin: 0px">
+						<div class="col-xs-4 grid-header">
+							Ngân Hàng
+						</div>
+						<div class="col-xs-4 grid-header">
+							Swift Code
+						</div>
+						<div class="col-xs-4 grid-header">
+							Website
+						</div>
+					</div>
+					<div class="row text_center rowRp" style="margin: 0px" ng-class-even="'grey_row'" ng-repeat="maSo in items"  ng-click="onClickItem(maSo)">
+						<div class="col-xs-4 text_left">
+							<span class="" ng-bind-html = "getTrustAsHtml(maSo.name)"> </span>
+						</div>
+						<div class="time_f col-xs-4">
+							<span class="centerf"ng-bind-html = "getTrustAsHtml(maSo.code)"> </span>
+						</div>
+						<div class="col-xs-4 text_left">
+							<a target="_blank" href="http://{{maSo.link}}"><span class="" ng-bind-html = "getTrustAsHtml(maSo.link)"> </span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-if="selectedKindsOfView.id == 2">
+				<div class="row date text_center rowRp" style="margin: 0px">
+					<div class="col-xs-12 col-md-12">Nội Dung</div>
+				</div>
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in otherInfoOriginal" ng-class-even="'grey_row'">
+					<div class="col-xs-12 col-md-12 text_left " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
+				</div>
+			</div>
+		  </div> 
+		  <div class="row">
+			Thông tin cập nhập 10-04-2017
+		  </div>      
+		</div>
+	</div>
+  <script>
+	angular.module('starter', [])
+	.controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
+
+	  $scope.kindsOfView = [
+			{ id: 1, name: 'Mã SWIFT' },
+			{ id: 2, name: 'Thông Tin' },
+		  ];
+		$scope.selectedKindsOfView = { id: 1, name: 'Mã SWIFT' };
+		$scope.maSoBuuDienOriginal = [
+				{name:"Ngân hàng TMCP Á Châu - Asia Commercial Bank - ACB", code:"ASCBVNVX", link:"acb.com.vn"},
+				{name:"Ngân hàng Tiên Phong - Tien Phong Bank - TP Bank", code:"TPBVVNVX", link:"tpb.vn"},
+				{name:"Ngân hàng Đông Á - DongA Bank - DAF", code:"EACBVNVX", link:"dongabank.com.vn"},
+				{name:"Ngân hàng Đông Nam Á - SeABank", code:"SEAVVNVX", link:"seabank.com.vn"},
+				{name:"Ngân hàng An Bình - ABBank", code:"ABBKVNVX", link:"abbank.vn"},
+				{name:"Ngân hàng Bắc Á - BacABank - NASB", code:"NASCVNX", link:"baca-bank.vn"},
+				{name:"Ngân hàng Bản Việt - VIET CAPITAL BANK - VCCB", code:"VCBCVNVX", link:"vietcapitalbank.com.vn"},
+				{name:"Ngân hàng Hàng Hải Việt Nam - Maritime Bank - MSB", code:"MCOBVNVX", link:"msb.com.vn"},
+				{name:"Ngân hàng Kỹ Thương Việt Nam - Techcombank", code:"VTCBVNVX", link:"techcombank.com.vn"},
+				{name:"Ngân hàng Kiên Long - KienLongBank", code:"KLBKVNVX", link:"kienlongbank.com"},
+				{name:"Ngân hàng Quốc Dân - National Citizen Bank", code:"CITIVNVX", link:"ncb-bank.vn"},
+				{name:"Ngân hàng Việt Nam Thịnh Vượng - VPBank", code:"VPBKVNVX", link:"vpb.com.vn"},
+				{name:"Ngân hàng Phát triển Thành phố Hồ Chí Minh - HDBank", code:"HDBCVNVX", link:"hdbank.com.vn"},
+				{name:"Ngân hàng Phương Đông - Orient Commercial Bank - OCB", code:"ORCOVNVX", link:"ocb.com.vn"},
+				{name:"Ngân hàng Quân Đội - Military Bank - MBB", code:"MSCBVNVX", link:"mbbank.com.vn"},
+				{name:"Ngân hàng Đại chúng - PVcom Bank", code:"WBVNVNVX", link:"pvcombank.com.vn"},
+				{name:"Ngân hàng Quốc tế - VIBBank", code:"VNIBVNVX", link:"vib.com.vn"},
+				{name:"Ngân hàng Sài Gòn - SCB", code:"SACLVNVX", link:"scb.com.vn"},
+				{name:"Ngân hàng Sài Gòn Công Thương - Saigonbank - SGB", code:"SBITVNVX", link:"saigonbank.com.vn"},
+				{name:"Ngân hàng Sài Gòn Thương Tín - Sacombank - STB", code:"SGTTVNVX", link:"sacombank.com.vn"},
+				{name:"Ngân hàng Việt Á - VietABank - VAB", code:"VNACVNVX", link:"vietabank.com.vn"},
+				{name:"Ngân hàng Bảo Việt - BaoVietBank - BVB", code:"BVBVVNVX", link:"baovietbank.vn"},
+				{name:"Ngân hàng Việt Nam Thương Tín - VietBank", code:"VNTTVNVX", link:"vietbank.com.vn"},
+				{name:"Ngân hàng Xăng dầu Petrolimex - Petrolimex Group Bank", code:"PGBLVNVX", link:"pgbank.com.vn"},
+				{name:"Ngân hàng Xuất Nhập Khẩu Việt Nam - Eximbank - EIB", code:"EBVIVNVX", link:"eximbank.com.vn"},
+				{name:"Ngân hàng Bưu Điện Liên Việt - LienVietPostBank - LPB", code:"LVBKVNVX", link:"lienvietpostbank.com.vn"},
+				{name:"Ngân hàng Ngoại thương Việt Nam - Vietcombank - VCB", code:"BFTVVNVX", link:"vietcombank.com.vn"},
+				{name:"Ngân hàng Công Thương Việt Nam - Vietinbank - CTG", code:"ICBVVNVX", link:"vietinbank.vn"},
+				{name:"Ngân hàng Đầu tư và Phát triển Việt Nam - BIDV - BID", code:"BIDVVNVX", link:"bidv.com.vn"},
+				{name:"Ngân hàng Nông nghiệp và Phát triển Nông thôn Agribank", code:"VBAAVNVX", link:"agribank.com.vn"},
+				{name:"Ngân hàng Dầu Khí Toàn Cầu - GPBank", code:"GBNKVNVX", link:"gpbank.com.vn"},
+				{name:"Ngân hàng Đại Dương - Oceanbank", code:"OJBAVNVX", link:"oceanbank.vn"},
+				{name:"Ngân hàng TNHH Indovina", code:"IABBVNVX", link:"indovinabank.com.vn"},
+				{name:"Ngân hàng Việt - Nga", code:"VRBAVNVX", link:"vrbank.com.vn"},
+				{name:"Ngân hàng Việt - Thái", code:"VNBKVNVX", link:"vsb.com.vn"},
+				{name:"Ngân hàng TNHH một thành viên ANZ (Việt Nam)", code:"ANZBVNVX", link:"anz.com/vietnam/vn"},
+				{name:"Deutsche Bank Việt Nam", code:"DEUTVNVX", link:"db.com/vietnam"},
+				{name:"Ngân hàng Citibank Việt Nam", code:"CITIVNVX", link:"citibank.com.vn"},
+				{name:"Ngân hàng TNHH một thành viên HSBC (Việt Nam)", code:"HSBCVNVX", link:"hsbc.com.vn"}
+		];
+		$scope.itemsOriginal = $scope.maSoBuuDienOriginal;
+		$scope.items = $scope.itemsOriginal;
+		$scope.selectItem = null;
+		
+		$scope.otherInfoOriginal =[
+			{name:'Mã Swift được quản lý bởi tổ chức SWIFT. Cụ thể là mã này được quản lý bởi một bộ phận là SWIFT Standards (Tiêu chuẩn mã SWIFT) . SWIFT là tên viết tắt của cụm từ “Society for Worldwide Interbank Financial Telecommunication” (tạm dịch là Hiệp hội Liên ngân hàng và tài chính toàn cầu). Mã Swift cũng hay gọi là BIC, viết tắt của chữ Business Identifier Codes. Cả 2 mã swift hãy mã BIC đều cùng ý nghĩa. Nó dùng để xác minh tổ chức tài chính hoặc chi nhánh của nó khi tham gia chuyển tiền toàn cầu.'},
+			{name:'SWIFT code thường có từ 8 – 11 ký tự được quy định như sau AAAA BB CC DDD:<br/>* 4 ký tự đầu nhận diện ngân hàng<br/>* 2 ký tự kế nhận diện quốc gia<br/>* 2 ký tự nhận diện địa phương<br/>* 3 ký tự chót, nếu có, thì dùng để nhận diện chi nhánh. Nếu là chi nhánh chính thì 3 ký tự chót là "XXX"'}
+		];
+		
+		$scope.changeKindsOfView = function(kind)
+		{
+			$scope.selectedKindsOfView = kind;
+			if(document.getElementById("searchText")!=null){
+				document.getElementById("searchText").value  = "";	
+			}
+			$scope.search();
+			$scope.updateInformation();
+		}
+		$scope.onClickItem = function(item)
+		{
+			if(typeof(item) =="undefined" || item==null)
+			{
+				if($scope.selectedKindsOfView.id == 1){
+					$scope.itemsOriginal = $scope.maSoBuuDienOriginal;
+					$scope.items = $scope.itemsOriginal;
+					$scope.selectedItem = null;
+					if(document.getElementById("searchText")!=null){
+						document.getElementById("searchText").value  = "";	
+					}
+					$scope.message="";
+				}
+			}
+		}
+		
+		
+		$scope.updateInformation = function()
+		{
+		}
+		$scope.search = function(query)
+		{
+			if($scope.selectedKindsOfView.id == 1){
+				if(typeof(query) == "undefined" || query == null || query == "")
+				{
+					$scope.items = $scope.itemsOriginal;
+				}else{
+					var newArray = new Array();
+					for(var i =0; i< $scope.itemsOriginal.length; i++)
+					{
+						var firstIndexSecond = removeTone($scope.itemsOriginal[i].name).toLowerCase().indexOf(removeTone(query).toLowerCase());
+						if( firstIndexSecond > -1)
+						{
+							var nameOfSearch = $scope.itemsOriginal[i].name.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.itemsOriginal[i].name.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+							nameOfSearch +=  $scope.itemsOriginal[i].name.substring(firstIndexSecond + query.length);
+							newArray.push({name: nameOfSearch, code: $scope.itemsOriginal[i].code, link: $scope.itemsOriginal[i].link});						
+						}else
+							{			 
+								var indexSecond = $scope.itemsOriginal[i].code.toLowerCase().indexOf(query.toLowerCase());
+								if( indexSecond > -1)
+								{
+									var numberOfSearch = $scope.itemsOriginal[i].code.substring(0, indexSecond)+ "<span class='searched'>" +$scope.itemsOriginal[i].code.substring(indexSecond, indexSecond + query.length) + "</span>"
+									numberOfSearch +=  $scope.itemsOriginal[i].code.substring(indexSecond + query.length);
+									newArray.push({name: $scope.itemsOriginal[i].name, code: numberOfSearch, link: $scope.itemsOriginal[i].link});	
+								}
+							}
+					}
+					$scope.items = newArray;
+				}		
+			}
+			
+		}
+		
+		$scope.getTrustAsHtml= function(str)
+		{
+			return $sce.trustAsHtml(str)
+		}
+		$scope.htmlEncode= function(value){
+		  return $('<div/>').text(value).html();
+		}
+
+		$scope.htmlDecode= function(value){
+		  return $('<div/>').html(value).text();
+		}
+		function removeTone(str){
+			//code by Minit - www.canthoit.info - 13-05-2009
+			str= str.toLowerCase();
+			str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+			str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+			str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+			str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+			str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+			str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+			str= str.replace(/đ/g,"d");
+			return str;
+		}
+	}])
+  </script>
+  </body>
+</html>
+

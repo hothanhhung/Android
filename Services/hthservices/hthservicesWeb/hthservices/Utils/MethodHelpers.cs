@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -117,6 +117,55 @@ namespace hthservices.Utils
         {
             return DateTime.UtcNow.AddHours(7);
         }
+
+        private static string absolutePathToDataFolder;
+        public static string GetAbsolutePathToDataFolder()
+        {
+            if (string.IsNullOrWhiteSpace(absolutePathToDataFolder))
+            {
+                if (HttpContext.Current == null)
+                {
+                    if (HttpRuntime.AppDomainAppPath.EndsWith("\\"))
+                    {
+                        absolutePathToDataFolder = HttpRuntime.AppDomainAppPath + "Data";
+                    }
+                    else
+                    {
+                        absolutePathToDataFolder = HttpRuntime.AppDomainAppPath + "\\Data";
+                    }
+                }
+                else
+                {
+                    absolutePathToDataFolder = HttpContext.Current.Server.MapPath("~/Data");
+                }
+            }
+            return absolutePathToDataFolder;
+
+        }
+
+        public static string GetClientIp(HttpRequestMessage request)
+        {
+            if (request.Properties.ContainsKey("MS_HttpContext"))
+            {
+                var ip = ((HttpContextWrapper)request.Properties["MS_HttpContext"]).Request.UserHostAddress;
+                try
+                {
+                    if (ip != null)
+                    {
+                        return ip.Trim();
+                    }
+                }
+                catch { }
+            }
+            
+            return string.Empty;
+        }
+
+        public static string GetUrlToLog(HttpRequestMessage request)
+        {
+            return request.RequestUri.ToString() + "&ipUser=" + MethodHelpers.GetClientIp(request);
+        }
+		
         public static string ToFriendlyUrl(this UrlHelper url, string urlToEncode)
         {
             urlToEncode = (urlToEncode ?? "").Trim().ToLower();

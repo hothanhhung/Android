@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>    
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+	<style>
+	.giai {
+    background: none repeat scroll 0% 0% #888C95;
+    color: #FFF;
+}
+
+.giai img {
+    float: left;
+    padding-right: 2px;
+}
+
+.giai h3 {
+    float: left;
+}
+.time_f {
+    color: #209EBB;
+    font-weight: 700;
+    text-align: center;
+}
+.text_right {
+    text-align: right;
+    width: 40%;
+}
+.guess {
+    color: #209EBB;
+    font-weight: 700;
+    text-align: center;
+}
+.lich {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.date {
+    background: none repeat scroll 0% 0% #D4D4D4;
+    color: #404040;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+td{
+	padding-left: 5px;
+}
+
+.grey_row {
+    background-color: #F3F3F3;
+}
+.table {
+    border-collapse: collapse;
+    width: 100% !important;
+	margin-left: auto;
+    margin-right: auto;
+}
+.width90{
+    width: 99% !important;
+}
+.text_center{
+    text-align: center;
+}
+
+.rowRp{	
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.even_text{
+	color: #d04040;
+    font-size: 13px;
+    font-weight: 700;
+    padding-right: 5px;
+	float: left;
+}
+
+.odd_text{
+	color: #6c40ef;
+    font-size: 13px;
+    font-weight: 700;
+    padding-right: 5px;
+	float: left;
+}
+
+.searched {
+	background-color: #E05C2B;
+	color: #FFFFFF;
+}
+.col-md-6{
+	padding-right: 3px !important;
+	padding-left: 3px !important;
+}
+.centerf{	
+    display: table-cell;
+    align-items: center;
+    vertical-align: middle;
+}
+.text_left {
+    text-align: left;
+    color: #209EBB;
+}
+.item{
+	display: table;
+    padding: 5px;
+    margin: 5px;
+    width: 130px;
+    height: 130px;
+    align-items: center;
+    text-align: center;
+    background-color: #d4cdcd;
+	border: 3px solid #ccc;	
+    box-shadow: 2px -5px 10px #716c6c;;
+}
+
+
+</style>
+  </head>
+  <body>
+	<div ng-app="starter" ng-controller="mainController">
+		<div class="container-fluid" style="margin: 10px 0px 10px 0px">    
+			<div class="row" style="margin: 10px -10px 10px -10px;">
+			<div class="col-xs-6 col-md-6">
+			  <div class="dropdown width90">
+				  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					{{selectedKindsOfView.name}}
+					<span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+					<li ng-repeat="kind in kindsOfView"><a href="javascript:void(0)" ng-click="changeKindsOfView(kind)"> {{kind.name}}</a></li>
+				  </ul>
+				</div>
+			</div>
+			<div class="col-xs-6 col-md-6">
+			  <div class="form-group width90" ng-if="selectedKindsOfView.id != 2">
+				<input type="text" class="form-control width90" ng-model="querySearch" id="searchText" placeholder="Thông tin cần tìm" ng-change="search(querySearch)"/>
+			  </div>
+			</div>
+		  </div>
+		  <div class="row" style="margin: 10px -10px 10px -10px;">
+			<div ng-if="selectedKindsOfView.id == 1" style="margin-left: 20px;">
+				<div class="row" ng-if="selectedItem!=null">
+					<a href="javascript:void(0)" ng-click="onClickItem()">Back</a>
+					<span><b>{{htmlDecode(selectedItem.name)}}</b></span> có đầu số là <b><span>{{htmlDecode(selectedItem.code)}}</span></b>
+				</div>
+				<div class="row" ng-if="message!=''">
+					<span>{{message}}</span>
+				</div>
+				<div class="row">
+					<div class="row text_center rowRp pull-left" style="margin: 0px" ng-repeat="maSo in items"  ng-click="onClickItem(maSo)">
+						<div class="item time_f ">
+							<span class="centerf" ng-bind-html = "getTrustAsHtml('<font color=\'black\'>'+maSo.code + '</font><br/>' + maSo.name)"> </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-if="selectedKindsOfView.id == 2">
+				<div class="row date text_center rowRp" style="margin: 0px">
+					<div class="col-xs-12 col-md-12">Nội Dung</div>
+				</div>
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in otherInfoOriginal" ng-class-even="'grey_row'">
+					<div class="col-xs-12 col-md-12 text_left " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
+				</div>
+			</div>
+		  </div> 
+		  <div class="row">
+			Thông tin cập nhập 10-03-2017
+		  </div>      
+		</div>
+	</div>
+  <script>
+	angular.module('starter', [])
+	.controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
+
+	  $scope.kindsOfView = [
+			{ id: 1, name: 'Mã Bưu Điện' },
+			{ id: 2, name: 'Thông Tin Khác' },
+		  ];
+		$scope.selectedKindsOfView = { id: 1, name: 'Mã Bưu Điện' };
+		$scope.maSoBuuDienOriginal = [
+			{name:"An Giang", code:"88xxxx"},
+			{name:"Bà Rịa-Vũng Tàu", code:"79xxxx"},
+			{name:"Bạc Liêu", code:"96xxxx"},
+			{name:"Bắc Kạn", code:"26xxxx"},
+			{name:"Bắc Giang", code:"23xxxx"},
+			{name:"Bắc Ninh", code:"22xxxx"},
+			{name:"Bến Tre", code:"93xxxx"},
+			{name:"Bình Dương", code:"82xxxx"},
+			{name:"Bình Định", code:"59xxxx"},
+			{name:"Bình Phước", code:"83xxxx"},
+			{name:"Bình Thuận", code:"80xxxx"},
+			{name:"Cà Mau", code:"97xxxx"},
+			{name:"Cao Bằng", code:"27xxxx"},
+			{name:"Cần Thơ", code:"90xxxx"},
+			{name:"Đà Nẵng", code:"55xxxx"},
+			{name:"Đắk Lắk", code:"63xxxx"},
+			{name:"Đắk Nông", code:"64xxxx"},
+			{name:"Điện Biên", code:"38xxxx"},
+			{name:"Đồng Nai", code:"81xxxx"},
+			{name:"Đồng Tháp", code:"87xxxx"},
+			{name:"Gia Lai", code:"60xxxx"},
+			{name:"Hà Giang", code:"31xxxx"},
+			{name:"Hà Nam", code:"40xxxx"},
+			{name:"Hà Nội", code:"10xxxx đến 15xxxx"},
+			{name:"Hà Tĩnh", code:"48xxxx"},
+			{name:"Hải Dương", code:"17xxxx"},
+			{name:"Hải Phòng", code:"18xxxx"},
+			{name:"Hậu Giang", code:"91xxxx"},
+			{name:"Hòa Bình", code:"35xxxx "},
+			{name:"Thành phố Hồ Chí Minh", code:"70xxxx đến 76xxxx"},
+			{name:"	Hưng Yên", code:"16xxxx"},
+			{name:"Khánh Hoà", code:"65xxxx"},
+			{name:"Kiên Giang", code:"92xxxx"},
+			{name:"Kon Tum", code:"58xxxx"},
+			{name:"Lai Châu", code:"39xxxx"},
+			{name:"Lạng Sơn", code:"24xxxx"},
+			{name:"Lào Cai", code:"33xxxx"},
+			{name:"Lâm Đồng", code:"67xxxx"},
+			{name:"Long An", code:"85xxxx"},
+			{name:"Nam Định", code:"42xxxx"},
+			{name:"Nghệ An", code:"46xxxx đến 47xxxx"},
+			{name:"Ninh Bình", code:"43xxxx"},
+			{name:"Ninh Thuận", code:"66xxxx"},
+			{name:"Phú Thọ", code:"29xxxx"},
+			{name:"Phú Yên", code:"62xxxx"},
+			{name:"Quảng Bình", code:"51xxxx"},
+			{name:"Quảng Nam", code:"56xxxx"},
+			{name:"Quảng Ngãi", code:"57xxxx"},
+			{name:"Quảng Ninh", code:"20xxxx"},
+			{name:"Quảng Trị", code:"52xxxx"},
+			{name:"Sóc Trăng", code:"95xxxx"},
+			{name:"Sơn La", code:"36xxxx"},
+			{name:"Tây Ninh", code:"84xxxx"},
+			{name:"Thái Bình", code:"41xxxx"},
+			{name:"Thái Nguyên", code:"25xxxx"},
+			{name:"Thanh Hoá", code:"44xxxx đến 45xxxx"},
+			{name:"Thừa Thiên-Huế", code:"53xxxx"},
+			{name:"Tiền Giang", code:"86xxxx"},
+			{name:"Trà Vinh", code:"94xxxx"},
+			{name:"Tuyên Quang", code:"30xxxx"},
+			{name:"Vĩnh Long", code:"89xxxx"},
+			{name:"Vĩnh Phúc", code:"28xxxx"},
+			{name:"Yên Bái", code:"32xxxx"}
+			];
+		$scope.itemsOriginal = $scope.maSoBuuDienOriginal;
+		$scope.items = $scope.itemsOriginal;
+		$scope.selectItem = null;
+		
+		$scope.otherInfoOriginal =[
+			{name:"Mã bưu chính ở Việt Nam gồm sáu chữ số, trong đó hai chữ số đầu tiên xác định tên tỉnh, thành phố trực thuộc trung ương; hai chữ số tiếp theo xác định mã quận, huyện, thị xã, thành phố trực thuộc tỉnh; số tiếp theo xác định phường, xã, thị trấn và số cuối cùng xác định thôn, ấp, phố hoặc đối tượng cụ thể."},
+			{name:"Các mã bưu chính còn quy định các bưu cục (bưu điện trung tâm). Mã dành cho bưu cục cũng gồm 6 chữ số. Hai chữ số đầu xác định tên tỉnh, thành phố. Các chữ số sau thường là 0."},
+			{name:"Ví du: 718544 cho biết: Đường Trường Sa, Phường 15, Quận Bình Thạnh, Thành phố Hồ Chí Minh."},
+		];
+		
+		$scope.changeKindsOfView = function(kind)
+		{
+			$scope.selectedKindsOfView = kind;
+			if(document.getElementById("searchText")!=null){
+				document.getElementById("searchText").value  = "";	
+			}
+			$scope.search();
+			$scope.updateInformation();
+		}
+		$scope.onClickItem = function(item)
+		{
+			if(typeof(item) =="undefined" || item==null)
+			{
+				if($scope.selectedKindsOfView.id == 1){
+					$scope.itemsOriginal = $scope.maSoBuuDienOriginal;
+					$scope.items = $scope.itemsOriginal;
+					$scope.selectedItem = null;
+					if(document.getElementById("searchText")!=null){
+						document.getElementById("searchText").value  = "";	
+					}
+					$scope.message="";
+				}
+			}
+		}
+		
+		
+		$scope.updateInformation = function()
+		{
+		}
+		$scope.search = function(query)
+		{
+			if($scope.selectedKindsOfView.id == 1){
+				if(typeof(query) == "undefined" || query == null || query == "")
+				{
+					$scope.items = $scope.itemsOriginal;
+				}else{
+					var newArray = new Array();
+					for(var i =0; i< $scope.itemsOriginal.length; i++)
+					{
+						var firstIndexSecond = removeTone($scope.itemsOriginal[i].name).toLowerCase().indexOf(removeTone(query).toLowerCase());
+						if( firstIndexSecond > -1)
+						{
+							var nameOfSearch = $scope.itemsOriginal[i].name.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.itemsOriginal[i].name.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+							nameOfSearch +=  $scope.itemsOriginal[i].name.substring(firstIndexSecond + query.length);
+							newArray.push({name: nameOfSearch, code: $scope.itemsOriginal[i].code});						
+						}else
+							{			 
+								var indexSecond = $scope.itemsOriginal[i].code.toLowerCase().indexOf(query.toLowerCase());
+								if( indexSecond > -1)
+								{
+									var numberOfSearch = $scope.itemsOriginal[i].code.substring(0, indexSecond)+ "<span class='searched'>" +$scope.itemsOriginal[i].code.substring(indexSecond, indexSecond + query.length) + "</span>"
+									numberOfSearch +=  $scope.itemsOriginal[i].code.substring(indexSecond + query.length);
+									newArray.push({name: $scope.itemsOriginal[i].name, code: numberOfSearch});	
+								}
+							}
+					}
+					$scope.items = newArray;
+				}		
+			}
+			
+		}
+		
+		$scope.getTrustAsHtml= function(str)
+		{
+			return $sce.trustAsHtml(str)
+		}
+		$scope.htmlEncode= function(value){
+		  return $('<div/>').text(value).html();
+		}
+
+		$scope.htmlDecode= function(value){
+		  return $('<div/>').html(value).text();
+		}
+		function removeTone(str){
+			//code by Minit - www.canthoit.info - 13-05-2009
+			str= str.toLowerCase();
+			str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+			str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+			str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+			str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+			str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+			str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+			str= str.replace(/đ/g,"d");
+			return str;
+		}
+	}])
+  </script>
+  </body>
+</html>
+

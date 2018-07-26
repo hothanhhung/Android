@@ -14,10 +14,18 @@ namespace hthservices
             routes.IgnoreRoute("google3665108b80288f2c.html");
             routes.IgnoreRoute("Web/*");
             routes.IgnoreRoute("FileMan/*");
+			routes.IgnoreRoute("htmlpage/*");
             routes.IgnoreRoute("Admin/*");
             routes.IgnoreRoute("AdminWeb/*");
             routes.IgnoreRoute("CKEditorUpload.ashx");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+			
+			routes.MapRoute(
+                name: "TraCuuOnline",
+                url: "tcol",
+                defaults: new { controller = "TraCuuOnline", action = "Index", id = UrlParameter.Optional }
+            );
+			
             routes.MapRoute(
                     name: "ProgrammingContent",
                     url: "chi-tiet/{category_name}/{content_name}/{id}",

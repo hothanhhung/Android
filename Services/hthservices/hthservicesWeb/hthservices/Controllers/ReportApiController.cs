@@ -1,4 +1,5 @@
-﻿using hthservices.Data;
+﻿using hthservices.Ads;
+using hthservices.Data;
 using hthservices.Models;
 using hthservices.Utils;
 using System;
@@ -99,6 +100,42 @@ namespace hthservices.Controllers
             var requestInfos = DataProcess.GetRequestInfo(type, date, order, desc, page, size);
 
             return ResponseJson.GetResponseJson(requestInfos);
+        }
+
+        [System.Web.Http.HttpGet]
+        public ResponseJson GetRequestInfoStatistic(string token, string type, string fromDate, string toDate = "")
+        {
+            if (AuthData.GetRole(token) == Role.NoLogin)
+            {
+                return ResponseJson.GetResponseJson(string.Empty, false);
+            }
+            var requestInfo = DataProcess.GetRequestInfoStatistic(type, fromDate, toDate);
+            var ownerAds = OwnerAds.OWNER_ADITEMS;
+            List<AdsItemReport> adsItemReports = new List<AdsItemReport>();
+            foreach(var ad in ownerAds)
+            {
+                if (!string.IsNullOrWhiteSpace(ad.PackageName))
+                {
+                    var adsItemReport = new AdsItemReport();
+                    adsItemReport.Name = ad.Name;
+                    adsItemReport.NameVN = ad.NameVN;
+                    adsItemReport.UrlImage = ad.UrlImage;
+                    adsItemReport.TotalClickOnItems = new List<int>();
+                    var requestInfoPackage = requestInfo.Where(p => p.PackageRequest.Equals(ad.PackageName, StringComparison.OrdinalIgnoreCase));
+                    adsItemReport.Total = requestInfoPackage.Count();
+                    foreach (var adItem in ownerAds)
+                    {
+                        if (!string.IsNullOrWhiteSpace(adItem.PackageName))
+                        {
+                            var requestInfoItem = requestInfoPackage.Where(p => !String.IsNullOrWhiteSpace(p.InfoRequest) && p.InfoRequest.EndsWith(adItem.PackageName, StringComparison.OrdinalIgnoreCase));
+                            adsItemReport.TotalClickOnItems.Add(requestInfoItem.Count());
+                        }
+
+                    }
+                    adsItemReports.Add(adsItemReport);
+                }
+            }
+            return ResponseJson.GetResponseJson(adsItemReports);
         }
 
         [System.Web.Http.HttpGet]

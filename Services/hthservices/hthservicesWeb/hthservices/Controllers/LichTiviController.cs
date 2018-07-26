@@ -13,6 +13,12 @@ namespace hthservices.Controllers
         [System.Web.Http.ActionName("GetSchedules")]
         public ResponseJson GetSchedules(string channel, string date, string device = "", string open = "", string version = "")
         {
+            var ip = MethodHelpers.GetClientIp(Request);
+            if (DenyInfo.IsDenyUserRequest(Request))
+            {
+                return ResponseJson.GetResponseJson(DenyInfo.DenyMessage);
+            }
+
             string channelKey = "VTV1";
             DateTime dateOn = DateTime.Now;
             if (!String.IsNullOrWhiteSpace(channel))
@@ -33,7 +39,7 @@ namespace hthservices.Controllers
             }
             else if(channelKey.Equals("HTVC ", StringComparison.OrdinalIgnoreCase))channelKey = "HTVC+";
 
-            var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn, Request.RequestUri.ToString(),  device, open, version);
+            var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn, Request.RequestUri.ToString(), device, ip, version);
 
             Random rand = new Random();
             channels.ForEach(p => p.ProgramName = EncrypeString.EncodeRandomly(p.ProgramName, rand.NextDouble()>0.5));

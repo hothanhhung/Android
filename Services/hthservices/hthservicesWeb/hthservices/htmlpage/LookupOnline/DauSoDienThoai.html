@@ -1,0 +1,403 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>    
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+	<style>
+	.giai {
+    background: none repeat scroll 0% 0% #888C95;
+    color: #FFF;
+}
+
+.giai img {
+    float: left;
+    padding-right: 2px;
+}
+
+.giai h3 {
+    float: left;
+}
+.time_f {
+    color: #209EBB;
+    font-weight: 700;
+    text-align: center;
+}
+.text_right {
+    text-align: right;
+    width: 40%;
+}
+.guess {
+    color: #209EBB;
+    font-weight: 700;
+    text-align: center;
+}
+.lich {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.date {
+    background: none repeat scroll 0% 0% #D4D4D4;
+    color: #404040;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+td{
+	padding-left: 5px;
+}
+
+.grey_row {
+    background-color: #F3F3F3;
+}
+.table {
+    border-collapse: collapse;
+    width: 100% !important;
+	margin-left: auto;
+    margin-right: auto;
+}
+.width90{
+    width: 99% !important;
+}
+.text_center{
+    text-align: center;
+}
+
+.rowRp{	
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.even_text{
+	color: #d04040;
+    font-size: 13px;
+    font-weight: 700;
+    padding-right: 5px;
+	float: left;
+}
+
+.odd_text{
+	color: #6c40ef;
+    font-size: 13px;
+    font-weight: 700;
+    padding-right: 5px;
+	float: left;
+}
+
+.searched {
+	background-color: #E05C2B;
+	color: #FFFFFF;
+}
+.col-md-6{
+	padding-right: 3px !important;
+	padding-left: 3px !important;
+}
+.centerf{	
+    display: inline-block;
+    align-items: center;
+}
+</style>
+  </head>
+  <body>
+	<div ng-app="starter" ng-controller="mainController">
+		<div class="container-fluid" style="margin: 10px 0px 10px 0px">    
+			<div class="row" style="margin: 10px -10px 10px -10px;">
+			<div class="col-xs-6 col-md-6">
+			  <div class="dropdown width90">
+				  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					{{selectedKindsOfView.name}}
+					<span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+					<li ng-repeat="kind in kindsOfView"><a href="javascript:void(0)" ng-click="changeKindsOfView(kind)"> {{kind.name}}</a></li>
+				  </ul>
+				</div>
+			</div>
+			<div class="col-xs-6 col-md-6">
+			  <div class="form-group width90" ng-if="selectedKindsOfView.id != 3">
+				<input type="text" class="form-control width90" ng-model="query" id="searchText" placeholder="Thông tin cần tìm" ng-change="search(query)">
+			  </div>
+			</div>
+		  </div>
+		  <div class="row" style="margin: 10px -10px 10px -10px;">
+			<div ng-if="selectedKindsOfView.id == 1">
+				<div class="row date text_center rowRp" style="margin: 0px">
+					<div class="col-xs-4 col-md-3">Tên Nhà Mạng</div>
+					<div class="col-xs-8 col-md-9">
+						Đầu Số
+					</div>
+				</div>
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in maSoDiDong" ng-class-even="'grey_row'">
+					<div class="col-xs-4 col-md-3 time_f " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
+					<div class="col-xs-8 col-md-9">
+						<div class="centerf">
+							<span ng-repeat="number in mang.numbers" ng-class-odd="'odd_text'" ng-class-even="'even_text'" ng-bind-html = "getTrustAsHtml(number.number + number.note)"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-if="selectedKindsOfView.id == 2">
+				<div class="row" style="padding: 10px; margin: 0px">Mã mới có hiệu lực từ 01-03-2015</div>
+				<div class="row date text_center rowRp" style="margin: 0px">
+					<div class="col-xs-6 col-md-6">Tỉnh / Thành</div>
+					<div class="col-xs-3 col-md-3">Số Cũ</div>
+					<div class="col-xs-3 col-md-3">Số Mới</div>
+				</div>
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in maSoCoDinh" ng-class-even="'grey_row'">
+					<div class="col-xs-6 col-md-6 time_f " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
+					<div class="col-xs-3 col-md-3">
+						<span ng-bind-html = "getTrustAsHtml(mang.oldNumber)"></span>
+					</div>
+					<div class="col-xs-3 col-md-3">
+						<span ng-bind-html = "getTrustAsHtml(mang.newNumber)"></span>
+					</div>
+				</div>
+			</div>
+			<div ng-if="selectedKindsOfView.id == 3">
+				<div class="row date text_center rowRp" style="margin: 0px">
+					<div class="col-xs-6 col-md-6">Nội Dung</div>
+					<div class="col-xs-6 col-md-6">Đầu Số</div>
+				</div>
+				<div class="row text_center rowRp" style="margin: 0px" ng-repeat="mang in otherInfoOriginal" ng-class-even="'grey_row'">
+					<div class="col-xs-6 col-md-6 time_f " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
+					<div class="col-xs-6 col-md-6">
+						<span ng-bind-html = "getTrustAsHtml(mang.number)"></span>
+					</div>
+				</div>
+			</div>
+		  </div> 
+		  <div class="row">
+		  </div>      
+		</div>
+	</div>
+  <script>
+	angular.module('starter', [])
+	.controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
+
+	  $scope.kindsOfView = [
+			{ id: 1, name: 'Di Động' },
+			{ id: 2, name: 'Cố Định' },
+			{ id: 3, name: 'Thông Tin Khác' },
+		  ];
+		$scope.selectedKindsOfView = { id: 1, name: 'Di Động' };
+		$scope.maSoDiDongOriginal = [
+			{ name: 'MobiFone', numbers:[{number:"0120", note:""}, {number:"0121", note:""},{number:"0122", note:""},{number:"0126", note:""},{number:"0128", note:""},{number:"089", note:""},{number:"090", note:""},{number:"093", note:""}] },
+			{ name: 'Vinaphone', numbers:[{number:"0123", note:""}, {number:"0124", note:""},{number:"0125", note:""},{number:"0127", note:""},{number:"0129", note:""},{number:"088", note:""},{number:"091", note:""},{number:"094", note:""}] },
+			{ name: 'Viettel', numbers:[{number:"0162", note:""}, {number:"0163", note:""},{number:"0164", note:""},{number:"0165", note:""},{number:"0166", note:""},{number:"0167", note:""},{number:"0168", note:""},{number:"0169", note:""},{number:"0868", note:""},{number:"096", note:"(EVN Telecom Cũ)"},{number:"097", note:""},{number:"098", note:""}] },
+			{ name: 'Vietnamobile', numbers:[{number:"0186", note:""}, {number:"0188", note:""},{number:"092", note:"(HT Mobile Cũ)"}] },
+			{ name: 'S-Fone', numbers:[{number:"095", note:"(Ngừng cung cấp dịch vụ)"}] },
+			{ name: 'VSAT', numbers:[{number:"0992", note:""}] },
+			{ name: 'Gmobile (thương hiệu Beeline)', numbers:[{number:"0993", note:""}, {number:"0994", note:""}, {number:"0995", note:""}, {number:"0996", note:""}, {number:"0997", note:""}] },
+			{ name: 'Indochina Telecom', numbers:[{number:"0998", note:""}, {number:"0999", note:""}] },
+			];
+		$scope.maSoDiDong = $scope.maSoDiDongOriginal;
+		$scope.maSoCoDinhOriginal =[
+			{name:"An Giang"	, oldNumber:"76"	, newNumber:"296"},
+			{name:"Bà Rịa - Vũng Tàu"	, oldNumber:"64"	, newNumber:"254"},
+			{name:"Bắc Giang"	, oldNumber:"240"	, newNumber:"204"},
+			{name:"Bắc Kạn"	, oldNumber:"281"	, newNumber:"209"},
+			{name:"Bạc Liêu"	, oldNumber:"781"	, newNumber:"291"},
+			{name:"Bắc Ninh"	, oldNumber:"241"	, newNumber:"222"},
+			{name:"Bến Tre"	, oldNumber:"75"	, newNumber:"275"},
+			{name:"Bình Định"	, oldNumber:"56"	, newNumber:"256"},
+			{name:"Bình Dương"	, oldNumber:"650"	, newNumber:"274"},
+			{name:"Bình Phước"	, oldNumber:"651"	, newNumber:"271"},
+			{name:"Bình Thuận"	, oldNumber:"62"	, newNumber:"252"},
+			{name:"Cà Mau"	, oldNumber:"780"	, newNumber:"290"},
+			{name:"Cần Thơ"	, oldNumber:"710"	, newNumber:"292"},
+			{name:"Cao Bằng"	, oldNumber:"26"	, newNumber:"206"},
+			{name:"Đà Nẵng"	, oldNumber:"511"	, newNumber:"236"},
+			{name:"Đắk Lắk"	, oldNumber:"500"	, newNumber:"262"},
+			{name:"Đắk Nông"	, oldNumber:"501"	, newNumber:"261"},
+			{name:"Điện Biên"	, oldNumber:"230"	, newNumber:"215"},
+			{name:"Đồng Nai"	, oldNumber:"61"	, newNumber:"251"},
+			{name:"Đồng Tháp"	, oldNumber:"67"	, newNumber:"277"},
+			{name:"Gia Lai"	, oldNumber:"59"	, newNumber:"269"},
+			{name:"Hà Giang"	, oldNumber:"219"	, newNumber:"219"},
+			{name:"Hà Nam"	, oldNumber:"351"	, newNumber:"226"},
+			{name:"Hà Nội"	, oldNumber:"4"	, newNumber:"24"},
+			{name:"Hà Tĩnh"	, oldNumber:"39"	, newNumber:"239"},
+			{name:"Hải Dương"	, oldNumber:"320"	, newNumber:"220"},
+			{name:"Hải Phỏng"	, oldNumber:"31"	, newNumber:"225"},
+			{name:"Hậu Giang"	, oldNumber:"711"	, newNumber:"293"},
+			{name:"Ha Bnh"	, oldNumber:"218"	, newNumber:"218"},
+			{name:"Hồ Chí Minh"	, oldNumber:"8"	, newNumber:"28"},
+			{name:"Hưng Yên"	, oldNumber:"321"	, newNumber:"221"},
+			{name:"Khánh Hòa"	, oldNumber:"58"	, newNumber:"258"},
+			{name:"Kiên Giang"	, oldNumber:"77"	, newNumber:"297"},
+			{name:"Kon Tum"	, oldNumber:"60"	, newNumber:"260"},
+			{name:"Lai Châu"	, oldNumber:"231"	, newNumber:"213"},
+			{name:"Lâm Đồng"	, oldNumber:"63"	, newNumber:"263"},
+			{name:"Lạng Sơn"	, oldNumber:"25"	, newNumber:"205"},
+			{name:"Lào Cai"	, oldNumber:"20"	, newNumber:"214"},
+			{name:"Long An"	, oldNumber:"72"	, newNumber:"272"},
+			{name:"Nam Định"	, oldNumber:"350"	, newNumber:"228"},
+			{name:"Nghệ An"	, oldNumber:"38"	, newNumber:"238"},
+			{name:"Ninh Bình"	, oldNumber:"30"	, newNumber:"229"},
+			{name:"Ninh Thuận"	, oldNumber:"68"	, newNumber:"259"},
+			{name:"Phú Thọ"	, oldNumber:"210"	, newNumber:"210"},
+			{name:"Phú Yên"	, oldNumber:"57"	, newNumber:"257"},
+			{name:"Quảng Bình"	, oldNumber:"52"	, newNumber:"232"},
+			{name:"Quảng Nam"	, oldNumber:"510"	, newNumber:"235"},
+			{name:"Quảng Ngãi"	, oldNumber:"55"	, newNumber:"255"},
+			{name:"Quảng Ninh"	, oldNumber:"33"	, newNumber:"203"},
+			{name:"Quảng Trị"	, oldNumber:"53"	, newNumber:"233"},
+			{name:"Sóc Trăng"	, oldNumber:"79"	, newNumber:"299"},
+			{name:"Sơn La"	, oldNumber:"22"	, newNumber:"212"},
+			{name:"Tây Ninh"	, oldNumber:"66"	, newNumber:"276"},
+			{name:"Thái Bình"	, oldNumber:"36"	, newNumber:"227"},
+			{name:"Thái Nguyên"	, oldNumber:"280"	, newNumber:"208"},
+			{name:"Thanh Hoá"	, oldNumber:"37"	, newNumber:"237"},
+			{name:"Thừa Thiên - Huế"	, oldNumber:"54"	, newNumber:"234"},
+			{name:"Tiền Giang"	, oldNumber:"73"	, newNumber:"273"},
+			{name:"Trà Vinh"	, oldNumber:"74"	, newNumber:"294"},
+			{name:"Tuyên Quang"	, oldNumber:"27"	, newNumber:"207"},
+			{name:"Vĩnh Long"	, oldNumber:"70"	, newNumber:"270"},
+			{name:"Vĩnh Phúc"	, oldNumber:"211"	, newNumber:"211"},
+			{name:"Yên Bái"	, oldNumber:"29"	, newNumber:"216"}
+		];
+		$scope.maSoCoDinh = $scope.maSoCoDinhOriginal;
+		
+		$scope.otherInfoOriginal =[
+			{name:"Lực lượng tìm kiếm, cứu nạn"	, number:"112"},
+			{name:"Công an"	, number:"113"},
+			{name:"Cứu hỏa"	, number:"114"},
+			{name:"Cứu thương"	, number:"115"},
+			{name:"Mạng viễn thông Công an tại miền Bắc"	, number:"69 2 xxxx"},
+			{name:"Mạng viễn thông Công an tại miền Nam"	, number:"69 3 xxxx"},
+			{name:"Mạng viễn thông Công an tại miền Trung"	, number:"69 4 xxxx"},
+			{name:"Mạng viễn thông Quân đội"	, number:"69 5 xxxxx -> 69 9 xxxxx "},
+			
+
+			{name:"Chăm sóc khách hàng không tính cước", number:"1800xxxx"},
+			{name:"Chăm sóc khách hàng có tính cước", number:"1900xxxx"},
+		];
+		
+		$scope.changeKindsOfView = function(kind)
+		{
+			$scope.selectedKindsOfView = kind;
+			if(document.getElementById("searchText")!=null){
+				document.getElementById("searchText").value  = "";	
+			}
+			$scope.search();
+			$scope.updateInformation();
+		}
+		
+		$scope.updateInformation = function()
+		{
+		}
+		$scope.search = function(query)
+		{
+			if($scope.selectedKindsOfView.id == 1){
+				if(typeof(query) == "undefined" || query == null || query == "")
+				{
+					$scope.maSoDiDong = $scope.maSoDiDongOriginal;
+				}else{
+					var newArray = new Array();
+					for(var i =0; i< $scope.maSoDiDongOriginal.length; i++)
+					{
+						var firstIndexSecond = $scope.maSoDiDongOriginal[i].name.toLowerCase().indexOf(query.toLowerCase());
+						if( firstIndexSecond > -1)
+						{
+							var nameOfSearch = $scope.maSoDiDongOriginal[i].name.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.maSoDiDongOriginal[i].name.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+							nameOfSearch +=  $scope.maSoDiDongOriginal[i].name.substring(firstIndexSecond + query.length);
+							newArray.push({name: nameOfSearch, numbers: $scope.maSoDiDongOriginal[i].numbers});						
+						}else
+							{			 
+								var newArraySub = new Array();
+								for(var j =0; j< $scope.maSoDiDongOriginal[i].numbers.length; j++)
+								{
+									var indexSecond = $scope.maSoDiDongOriginal[i].numbers[j].number.toLowerCase().indexOf(query.toLowerCase());
+									if( indexSecond > -1)
+									{
+									var numberOfSearch = $scope.maSoDiDongOriginal[i].numbers[j].number.substring(0, indexSecond)+ "<span class='searched'>" +$scope.maSoDiDongOriginal[i].numbers[j].number.substring(indexSecond, indexSecond + query.length) + "</span>"
+									numberOfSearch +=  $scope.maSoDiDongOriginal[i].numbers[j].number.substring(indexSecond + query.length);
+										newArraySub.push({number:numberOfSearch, note:""});						
+									}
+								}
+								
+								if(newArraySub.length > 0)
+								{
+									newArray.push({name:$scope.maSoDiDongOriginal[i].name, numbers: newArraySub});
+								}
+							}
+					}
+					$scope.maSoDiDong = newArray;
+				}
+			}
+			else if($scope.selectedKindsOfView.id == 2){
+				if(typeof(query) == "undefined" || query == null || query == "")
+				{
+					$scope.maSoCoDinh = $scope.maSoCoDinhOriginal;
+				}else{
+					query = removeTone(query);
+					var newArray = new Array();
+					for(var i =0; i< $scope.maSoCoDinhOriginal.length; i++)
+					{
+						var firstIndexSecond = removeTone($scope.maSoCoDinhOriginal[i].name).toLowerCase().indexOf(query.toLowerCase());
+						if( firstIndexSecond > -1)
+						{
+							var nameOfSearch = $scope.maSoCoDinhOriginal[i].name.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.maSoCoDinhOriginal[i].name.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+							nameOfSearch +=  $scope.maSoCoDinhOriginal[i].name.substring(firstIndexSecond + query.length);
+							newArray.push({name:nameOfSearch, oldNumber:$scope.maSoCoDinhOriginal[i].oldNumber	, newNumber:$scope.maSoCoDinhOriginal[i].newNumber});						
+						}else
+							{			 
+								firstIndexSecond = $scope.maSoCoDinhOriginal[i].oldNumber.toLowerCase().indexOf(query.toLowerCase());
+								if( firstIndexSecond > -1)
+								{
+									var nameOfSearch = $scope.maSoCoDinhOriginal[i].oldNumber.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.maSoCoDinhOriginal[i].oldNumber.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+									nameOfSearch +=  $scope.maSoCoDinhOriginal[i].oldNumber.substring(firstIndexSecond + query.length);
+									newArray.push({name:$scope.maSoCoDinhOriginal[i].name, oldNumber:nameOfSearch, newNumber:$scope.maSoCoDinhOriginal[i].newNumber});						
+								}else{
+									firstIndexSecond = $scope.maSoCoDinhOriginal[i].newNumber.toLowerCase().indexOf(query.toLowerCase());
+									if( firstIndexSecond > -1)
+									{
+										var nameOfSearch = $scope.maSoCoDinhOriginal[i].newNumber.substring(0, firstIndexSecond)+ "<span class='searched'>" + $scope.maSoCoDinhOriginal[i].newNumber.substring(firstIndexSecond, firstIndexSecond + query.length) + "</span>"
+										nameOfSearch +=  $scope.maSoCoDinhOriginal[i].newNumber.substring(firstIndexSecond + query.length);
+										newArray.push({name:$scope.maSoCoDinhOriginal[i].name, oldNumber:$scope.maSoCoDinhOriginal[i].oldNumber	, newNumber:nameOfSearch});						
+									}
+								}
+							}
+					}
+					$scope.maSoCoDinh = newArray;
+				}
+			}
+		}
+		
+		$scope.getTrustAsHtml= function(str)
+		{
+			return $sce.trustAsHtml(str)
+		}
+		
+		function removeTone(str){
+			//code by Minit - www.canthoit.info - 13-05-2009
+			str= str.toLowerCase();
+			str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+			str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+			str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+			str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+			str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+			str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+			str= str.replace(/đ/g,"d");
+			return str;
+		}
+	}])
+  </script>
+  </body>
+</html>
+
