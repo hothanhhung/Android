@@ -120,8 +120,8 @@ td{
 	display: table;
     padding: 5px;
     margin: 5px;
-    width: 130px;
-    height: 130px;
+	width: 95%;
+    /* height: 130px;*/
     align-items: center;
     text-align: center;
     background-color: #d4cdcd;
@@ -129,6 +129,14 @@ td{
     box-shadow: 2px -5px 10px #716c6c;;
 }
 
+.rItem{
+width:50%;
+}
+
+.rowContainer{
+display:flex;
+flex-wrap:wrap;
+}
 
 </style>
   </head>
@@ -154,7 +162,7 @@ td{
 			</div>
 		  </div>
 		  <div class="row" style="margin: 10px -10px 10px -10px;">
-			<div ng-if="selectedKindsOfView.id == 1" style="margin-left: 20px;">
+			<div ng-if="selectedKindsOfView.id == 1" style="margin-left: 0px;">
 				<div class="row" ng-if="selectedItem!=null">
 					<a href="javascript:void(0)" ng-click="onClickItem()">Back</a>
 					<span><b>{{htmlDecode(selectedItem.name)}}</b></span> có đầu số là <b><span>{{htmlDecode(selectedItem.numbers)}}</span></b>
@@ -162,8 +170,8 @@ td{
 				<div class="row" ng-if="message!=''">
 					<span>{{message}}</span>
 				</div>
-				<div class="row">
-					<div class="row text_center rowRp pull-left" style="margin: 0px" ng-repeat="maSo in items"  ng-click="onClickItem(maSo)">
+				<div class="row rowContainer" style="margin-left: 0px; margin-right:0px ">
+					<div style="margin: 0px" ng-repeat="maSo in items"  ng-click="onClickItem(maSo)" class='rItem'>
 						<div class="item time_f ">
 							<span class="centerf" ng-bind-html = "getTrustAsHtml('<font color=\'black\'>'+maSo.numbers + '</font><br/>' + maSo.name)"> </span>
 						</div>
