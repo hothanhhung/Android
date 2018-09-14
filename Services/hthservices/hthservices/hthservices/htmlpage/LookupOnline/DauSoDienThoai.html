@@ -146,8 +146,58 @@ td{
 					<div class="col-xs-4 col-md-3 time_f " ng-bind-html = "getTrustAsHtml(mang.name)"></div>
 					<div class="col-xs-8 col-md-9">
 						<div class="centerf">
-							<span ng-repeat="number in mang.numbers" ng-class-odd="'odd_text'" ng-class-even="'even_text'" ng-bind-html = "getTrustAsHtml(number.number + number.note)"></span>
+							<span ng-repeat="number in mang.numbers" ng-class-odd="'odd_text'" ng-class-even="'even_text'" ng-bind-html = "getTrustAsHtml(number.number + ' ' + number.note)"></span>
 						</div>
+					</div>
+				</div>
+				<br/>
+				<div>
+					<div>Kể từ 23h59 ngày 14/11/2018, thuê bao di động 11 số chuyển về 10 số, chỉ thay đổi 4 chữ số đầu thành 3 chữ số số. Toàn bộ 7 chữ số cuối cùng trong số thuê bao di động sẽ được giữ nguyên.</div>
+					<div>
+						<b>MobiFone</b><br/>
+
+						Đầu số <b>0120</b> chuyển đổi thành <b>070</b><br/>
+						Đầu số <b>0121</b> chuyển đổi thành <b>079</b><br/>
+						Đầu số <b>0122</b> chuyển đổi thành <b>077</b><br/>
+						Đầu số <b>0126</b> chuyển đổi thành <b>076</b><br/>
+						Đầu số <b>0128</b> chuyển đổi thành <b>078</b><br/><br/>
+
+						Ví dụ thuê bao: <b>01281888888</b> sẽ chuyển thành <b>0781888888</b><br/><br/>
+
+						<b>VinaPhone</b><br/>
+
+						Đầu số <b>0123</b> chuyển đổi thành <b>083</b><br/>
+						Đầu số <b>0124</b> chuyển đổi thành <b>084</b><br/>
+						Đầu số <b>0125</b> chuyển đổi thành <b>085</b><br/>
+						Đầu số <b>0127</b> chuyển đổi thành <b>081</b><br/>
+						Đầu số <b>0129</b> chuyển đổi thành <b>082</b><br/><br/>
+
+						Ví dụ thuê bao: <b>01291888888</b> chuyển thành <b>0821888888</b><br/><br/>
+
+						<b>Viettel</b><br/>
+						Đầu số <b>0162</b> chuyển đổi thành <b>032</b><br/>
+						Đầu số <b>0163</b> chuyển đổi thành <b>033</b><br/>
+						Đầu số <b>0164</b> chuyển đổi thành <b>034</b><br/>
+						Đầu số <b>0165</b> chuyển đổi thành <b>035</b><br/>
+						Đầu số <b>0166</b> chuyển đổi thành <b>036</b><br/>
+						Đầu số <b>0167</b> chuyển đổi thành <b>037</b><br/>
+						Đầu số <b>0168</b> chuyển đổi thành <b>038</b><br/>
+						Đầu số <b>0169</b> chuyển đổi thành <b>039</b><br/><br/>
+
+						Ví dụ thuê bao: <b>01691888888</b> chuyển thành <b>0391888888</b><br/><br/>
+
+						<b>Vietnamobile</b><br/>
+
+						Đầu số <b>0186</b> chuyển đổi thành <b>056</b><br/>
+						Đầu số <b>0188</b> chuyển đổi thành <b>058</b><br/><br/>
+
+						Ví dụ thuê bao: <b>01861888888</b> chuyển thành <b>0561888888</b><br/><br/>
+
+						<b>Gmobile</b><br/>
+
+						Đầu số <b>0199</b> chuyển đổi thành <b>059</b><br/><br/>
+
+						Ví dụ thuê bao: <b>01991888888</b> chuyển thành: <b>0591888888</b><br/>
 					</div>
 				</div>
 			</div>
@@ -196,13 +246,13 @@ td{
 		  ];
 		$scope.selectedKindsOfView = { id: 1, name: 'Di Động' };
 		$scope.maSoDiDongOriginal = [
-			{ name: 'MobiFone', numbers:[{number:"0120", note:""}, {number:"0121", note:""},{number:"0122", note:""},{number:"0126", note:""},{number:"0128", note:""},{number:"089", note:""},{number:"090", note:""},{number:"093", note:""}] },
-			{ name: 'Vinaphone', numbers:[{number:"0123", note:""}, {number:"0124", note:""},{number:"0125", note:""},{number:"0127", note:""},{number:"0129", note:""},{number:"088", note:""},{number:"091", note:""},{number:"094", note:""}] },
-			{ name: 'Viettel', numbers:[{number:"0162", note:""}, {number:"0163", note:""},{number:"0164", note:""},{number:"0165", note:""},{number:"0166", note:""},{number:"0167", note:""},{number:"0168", note:""},{number:"0169", note:""},{number:"0868", note:""},{number:"096", note:"(EVN Telecom Cũ)"},{number:"097", note:""},{number:"098", note:""}] },
-			{ name: 'Vietnamobile', numbers:[{number:"0186", note:""}, {number:"0188", note:""},{number:"092", note:"(HT Mobile Cũ)"}] },
+			{ name: 'MobiFone', numbers:[{number:"070", note:""}, {number:"079", note:""},{number:"077", note:""},{number:"076", note:""},{number:"078", note:""},{number:"089", note:""},{number:"090", note:""},{number:"093", note:""}] },
+			{ name: 'Vinaphone', numbers:[{number:"083", note:""}, {number:"084", note:""},{number:"085", note:""},{number:"081", note:""},{number:"082", note:""},{number:"088", note:""},{number:"091", note:""},{number:"094", note:""}] },
+			{ name: 'Viettel', numbers:[{number:"032", note:""}, {number:"033", note:""},{number:"034", note:""},{number:"035", note:""},{number:"036", note:""},{number:"037", note:""},{number:"038", note:""},{number:"039", note:""},{number:"0868", note:""},{number:"096", note:"(EVN Telecom Cũ)"},{number:"097", note:""},{number:"098", note:""}] },
+			{ name: 'Vietnamobile', numbers:[{number:"056", note:""}, {number:"058", note:""},{number:"092", note:"(HT Mobile Cũ)"}] },
 			{ name: 'S-Fone', numbers:[{number:"095", note:"(Ngừng cung cấp dịch vụ)"}] },
 			{ name: 'VSAT', numbers:[{number:"0992", note:""}] },
-			{ name: 'Gmobile (thương hiệu Beeline)', numbers:[{number:"0993", note:""}, {number:"0994", note:""}, {number:"0995", note:""}, {number:"0996", note:""}, {number:"0997", note:""}] },
+			{ name: 'Gmobile (thương hiệu Beeline)', numbers:[{number:"059", note:""}, {number:"0993", note:""}, {number:"0994", note:""}, {number:"0995", note:""}, {number:"0996", note:""}, {number:"0997", note:""}] },
 			{ name: 'Indochina Telecom', numbers:[{number:"0998", note:""}, {number:"0999", note:""}] },
 			];
 		$scope.maSoDiDong = $scope.maSoDiDongOriginal;
