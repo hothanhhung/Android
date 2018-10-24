@@ -70,9 +70,9 @@ public class Data {
 		if (_lstChannels == null) {
 			_lstChannels = new ArrayList<ObjectChannel>();
 			_lstChannels.add(new ObjectChannel("UCWxOpOr_KomHHPXmzD-YB-Q","podEnglish","https://i.ytimg.com/i/WxOpOr_KomHHPXmzD-YB-Q/1.jpg"));
-			_lstChannels.add(new ObjectChannel("UCgzuT-fpJiyThTUlMiFRCKQ","Learn English with Valen - Basic English lessons by ValenESL","https://lh6.googleusercontent.com/-SIX58xn3J08/AAAAAAAAAAI/AAAAAAAAAAA/bxM73aayfos/photo.jpg"));
+			_lstChannels.add(new ObjectChannel("UCeTVoczn9NOZA9blls3YgUg","Learn English with EnglishClass101.com","https://yt3.ggpht.com/-IQvNSV3k_0A/AAAAAAAAAAI/AAAAAAAAAAA/nvf9vp5xB10/s88-c-k-no-mo-rj-c0xffffff/photo.jpg"));
 			_lstChannels.add(new ObjectChannel("UC8pPDhxSn1nee70LRKJ0p3g","Speak English With Misterduncan","https://lh6.googleusercontent.com/-JtRMyAgEXXI/AAAAAAAAAAI/AAAAAAAAAAA/aaN-IV31DOQ/photo.jpg"));
-			_lstChannels.add(new ObjectChannel("UCdTzWalWGkOSyGfywvaj8JA","EnglishcafeDotCom","https://i.ytimg.com/i/dTzWalWGkOSyGfywvaj8JA/1.jpg"));
+			//_lstChannels.add(new ObjectChannel("UCdTzWalWGkOSyGfywvaj8JA","EnglishcafeDotCom","https://i.ytimg.com/i/dTzWalWGkOSyGfywvaj8JA/1.jpg"));
 			_lstChannels.add(new ObjectChannel("UCEKXieT70wByfvZwP1CxdPQ","JenniferESL","https://lh5.googleusercontent.com/-V9g3h7_1Y4g/AAAAAAAAAAI/AAAAAAAAAAA/1OE_Z8cKyJk/photo.jpg"));
 			_lstChannels.add(new ObjectChannel("UCKyTokYo0nK2OA-az-sDijA","VOA Learning English","https://lh3.googleusercontent.com/-kUj64nvpiek/AAAAAAAAAAI/AAAAAAAAAAA/YJl93chwato/photo.jpg"));
 			_lstChannels.add(new ObjectChannel("UCHaHD477h-FeBbVh9Sh7syA","BBC Learning English","https://lh5.googleusercontent.com/-RjBlhjWy7Nc/AAAAAAAAAAI/AAAAAAAAAAA/L6TjhoxhuGU/photo.jpg"));

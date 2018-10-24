@@ -43,7 +43,7 @@ public class HomeActivity extends Activity {
 		_lstChannels = Data.getChannels();
 		for(int i =0 ; i<_lstChannels.size(); i++)
 		{
-			if( i == 4){
+			if( i == 5){
 				addMoreGameButton(layoutEnglishChannels);
 				addDonateButton(layoutEnglishChannels);
 			}
