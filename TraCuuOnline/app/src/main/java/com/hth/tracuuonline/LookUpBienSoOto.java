@@ -96,7 +96,7 @@ public class LookUpBienSoOto extends LinearLayout {
 
     private void injectCSS() {
         try {
-            String encoded = " img {display:none !important} #Image1 {display:block !important} #Label2{font-size: 14px !important; width: 95% !important;color: green !important;} span {width:100% !important} input {display:block !important; width: 95% !important; height:30px !important} #Button1{margin-top: 15px;margin-bottom: 15px;}";
+            String encoded = " table {display:none !important} font {display: flex;flex-direction: column;} #Image1 {display:block !important} #Label2{font-size: 14px !important; width: 95% !important;color: green !important;} span {width:100% !important} input {display:block !important; width: 95% !important; height:30px !important} #ImaRefresh{display:block !important; width: 30px !important; height:30px !important}  #Button1{margin-top: 15px;margin-bottom: 15px;}";
             webView.loadUrl("javascript:(function() {" +
                     "var parent = document.getElementsByTagName('head').item(0);" +
                     "var style = document.createElement('style');" +
