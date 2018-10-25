@@ -100,7 +100,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_rectangle"
-                    android:drawableLeft="@drawable/date_picker"
                     android:textSize="14sp"
                     android:onClick="setDate"
                     android:text="Ngày"
