@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@drawable/button_pressed" android:state_pressed="true"></item>
-    <item android:drawable="@drawable/button"></item>
-
-</selector><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/drawable/custom_button.xml -->

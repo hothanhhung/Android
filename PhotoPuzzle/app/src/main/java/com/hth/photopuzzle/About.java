@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
+//import com.google.analytics.tracking.android.EasyTracker;
 
 public class About extends Activity {
 
@@ -25,13 +25,13 @@ public class About extends Activity {
 
 	@Override
 	protected void onStart() {
-		EasyTracker.getInstance(this).activityStart(this);
+		//EasyTracker.getInstance(this).activityStart(this);
 		super.onStart();
 	}
 
 	@Override
 	protected void onStop() {
-		EasyTracker.getInstance(this).activityStop(this);
+		//EasyTracker.getInstance(this).activityStop(this);
 		super.onStop();
 	}
 

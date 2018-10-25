@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval" >
-
-    <solid android:color="@color/brown" />
-
-</shape><!-- From: file:/D:/hung/github/android/Android/PhotoPuzzle/app/src/main/res/drawable/on_position_theme_3.xml -->
