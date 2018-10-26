@@ -74,7 +74,7 @@
                 android:contentDescription="@string/empty_string"
                 android:onClick="navigationClick"
                 android:scaleType="fitCenter"
-                android:src="@drawable/hotapps" />
+                android:src="@drawable/moreapps" />
             
             <ImageButton
                 android:id="@+id/button_more_apps"
@@ -86,7 +86,7 @@
                 android:contentDescription="@string/empty_string"
                 android:onClick="navigationClick"
                 android:scaleType="fitCenter"
-                android:src="@drawable/moreapps" />
+                android:src="@drawable/settings" />
         </LinearLayout>
     </RelativeLayout>
 

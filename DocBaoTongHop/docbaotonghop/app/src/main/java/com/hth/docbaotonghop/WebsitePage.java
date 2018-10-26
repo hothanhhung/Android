@@ -33,7 +33,7 @@ public enum WebsitePage {
 	TheThao247DotVN(27, "TheThao247DotVN.css", "thethao247.vn", "http://thethao247.vn/", "http://m.thethao247.vn/", R.drawable.icon_thethao247),
 	BongDaDotComDotVN(28, "BongDaDotComDotVN.css", "bongda.com.vn", "http://www.bongda.com.vn/", "http://www.bongda.com.vn/", R.drawable.icon_bongda),
 	TheThaoVanHoaDotVN(29, "TheThaoVanHoaDotVN.css", "thethaovanhoa.vn", "http://thethaovanhoa.vn/", "http://thethaovanhoa.vn/", R.drawable.icon_thethaovanhoa),
-	ICTNewsDotVN(30, "ICTNewsDotVN.css", "ictnews.vn", "http://ictnews.vn/", "http://m.ictnews.vn/", R.drawable.icon_ictnews),
+	ICTNewsDotVN(30, "ICTNewsDotVN.css", "ictnews.vn", "http://ictnews.vn/", "http://ictnews.vn/", R.drawable.icon_ictnews),
 	VNReviewDotVN(31, "VNReviewDotVN.css", "vnreview.vn", "http://vnreview.vn/", "http://m.vnreview.vn/", R.drawable.icon_vnreview),
 	GenkDotVN(32, "GenkDotVN.css", "genk.vn", "http://genk.vn/", "http://m.genk.vn/", R.drawable.icon_genk),
 	TinhTeDotVN(33, "TinhTeDotVN.css", "tinhte.vn", "https://www.tinhte.vn/", "https://www.tinhte.vn/", R.drawable.icon_tinhte),
@@ -51,9 +51,12 @@ public enum WebsitePage {
     private String cssContent;
     
     private final String resourceUrl = "";
+    public static boolean isHideAds = true;
     
     public String GetReformatCssContent()
     {
+    	if(!isHideAds) return "";
+
     	if(this.cssContent == null || this.cssContent.isEmpty())
     	{
     		this.cssContent = FileProcess.readTextFileFromAssets(GetCssUrl(), MainActivity.getAppContext().getAssets());

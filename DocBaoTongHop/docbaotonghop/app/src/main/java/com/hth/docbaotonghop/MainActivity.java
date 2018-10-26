@@ -11,7 +11,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,6 +71,7 @@ public class MainActivity extends Activity {
         context = getApplicationContext();
 
         setContentView(R.layout.activity_main_website);
+        WebsitePage.isHideAds = getHideAds();
         StartAppSDK.init(this, "207910015", true);
         if(PageApp.IsDisableSplash) StartAppAd.disableSplash();
 
@@ -217,23 +220,79 @@ public class MainActivity extends Activity {
 
         switch (view.getId()) {
             case R.id.button_home:
-                    WebView viewArticleDetail = (WebView) findViewById(R.id.viewArticleDetail);
+                WebView viewArticleDetail = (WebView) findViewById(R.id.viewArticleDetail);
                     viewArticleDetail.loadUrl(current_Website_Page.getHomePageMobile());
                     viewArticleDetail.clearHistory();
                 break;
             case R.id.button_more_apps:
+                showAlertAdsInform();
+                /*
             	String url = getResources().getString(R.string.menu_moreApps_url);
             	Intent i = new Intent(Intent.ACTION_VIEW);
             	i.setData(Uri.parse(url));
-            	startActivity(i);
+            	startActivity(i);*/
                 break;
             case R.id.button_home_app:
                 finish();
                 break;
             case R.id.button_hot_apps:
                 UIUtils.showAlertGetMoreAppsServer(this);
-
+                //
                 break;
+
+        }
+    }
+
+    public void showAlertAdsInform()
+    {
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("Lọc Quảng Cáo Trong Báo")
+                .setMessage("Ứng dụng sẽ cố lọc quảng cáo từ trang báo. Hiện tại tính năng đang "+(WebsitePage.isHideAds?"BẬT":"TẮT"))
+                .setNegativeButton((!WebsitePage.isHideAds?"BẬT":"TẮT"),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                WebsitePage.isHideAds = !WebsitePage.isHideAds;
+                                setHideAds(WebsitePage.isHideAds);
+                                WebView viewArticleDetail = (WebView) MainActivity.this.findViewById(R.id.viewArticleDetail);
+                                viewArticleDetail.reload();
+                                dialog.cancel();
+                            }
+                        })
+                .setPositiveButton("Bỏ Qua",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        })
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
+    }
+
+    public boolean getHideAds()
+    {
+        {
+            try {
+                SharedPreferences sharedPref =this.getPreferences(Context.MODE_PRIVATE);
+                return sharedPref.getBoolean("HIDE_ADS_KEY_NAME", true);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public void setHideAds(boolean isHide)
+    {
+        try {
+            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("HIDE_ADS_KEY_NAME", isHide);
+            editor.commit();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
 
         }
     }
