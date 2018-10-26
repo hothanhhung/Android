@@ -105,6 +105,13 @@ public class NoteItem {
         return RemindType;
     }
 
+    public boolean isToday()
+    {
+        DateItemForGridview data = getRemindDate();
+        if(data!=null) return data.isToday();
+        return false;
+    }
+
     public DateItemForGridview getRemindDate() {
 
         DateItemForGridview now = new DateItemForGridview(null, new Date(), true);

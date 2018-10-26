@@ -27,6 +27,31 @@ public class SharedPreferencesUtils {
     public static final String ShowDailyGoodDateBadDate = "ShowDailyGoodDateBadDate";
     public static final String ShowNotifyChamNgonTime = "ShowNotifyChamNgonTime";
     public static final String ShowDailyNotifyGoodDateBadDateTime = "ShowDailyNotifyGoodDateBadDateTime";
+    public static final String ShowDailyNotifyReminding = "ShowDailyNotifyReminding";
+
+    static public int getShowDailyNotifyReminding(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getInt(ShowDailyNotifyReminding, 0);
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
+    static public void setShowDailyNotifyReminding(Context var1, int value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putInt(ShowDailyNotifyReminding, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
 
     static public int getShowDailyNotifyGoodDateBadDateTime(Context var1)
     {
