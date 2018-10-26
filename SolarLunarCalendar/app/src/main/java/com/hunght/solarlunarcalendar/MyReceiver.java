@@ -12,10 +12,12 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.hunght.data.DateItemForGridview;
+import com.hunght.data.NoteItem;
 import com.hunght.utils.ServiceProcessor;
 import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MyReceiver extends BroadcastReceiver {
@@ -64,6 +66,34 @@ public class MyReceiver extends BroadcastReceiver {
                 currentPerformServiceProcessBackgroundTaskChamNgon = new PerformServiceProcessBackgroundTask();
                 Log.d("AmDuong", "onReceive 1: cham ngon");
                 currentPerformServiceProcessBackgroundTaskChamNgon.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
+            }
+
+            if (SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyReminding(context)))) {
+                ArrayList<NoteItem> noteItems = SharedPreferencesUtils.getNoteItems(context);
+
+                for (NoteItem noteItem: noteItems) {
+                    if(noteItem != null && noteItem.haveDate && noteItem.isToday())
+                    {
+                        Intent intent1 = new Intent(context, MainActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        MainActivity.setViewId(R.layout.notes_view_item);
+                        SaveNoteItemView.setNoteItem(noteItem);
+                        PendingIntent activity = PendingIntent.getActivity(context, 0, intent1, 0);
+
+                        NotificationCompat.Builder mBuilder =
+                                new NotificationCompat.Builder(context)
+                                        .setContentIntent(activity)
+                                        .setSmallIcon(Utils.getIconConGiap(selectedDate.getDateInLunar()))
+                                        .setContentTitle(noteItem.Subject)
+                                        .setAutoCancel(true)
+                                        .setContentText(noteItem.Content);
+
+                        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());
+                    }
+                }
+
+                SharedPreferencesUtils.setShowDailyNotifyReminding(context, (new Date()).getDate());
             }
         }
     }
