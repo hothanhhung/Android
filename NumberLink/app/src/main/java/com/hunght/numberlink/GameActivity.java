@@ -504,4 +504,8 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
         Toast.makeText(this,"Failed to load video",Toast.LENGTH_LONG).show();
         //timeStart();
     }
+
+    @Override
+    public void onRewardedVideoCompleted(){}
+
 }
