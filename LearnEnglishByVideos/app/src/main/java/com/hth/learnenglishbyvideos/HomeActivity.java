@@ -45,7 +45,7 @@ public class HomeActivity extends Activity {
 		{
 			if( i == 5){
 				addMoreGameButton(layoutEnglishChannels);
-				addDonateButton(layoutEnglishChannels);
+				//addDonateButton(layoutEnglishChannels);
 			}
 			ObjectChannel channel = _lstChannels.get(i); 
 			Button button = new Button(this);
