@@ -14,7 +14,7 @@ import android.graphics.RadialGradient;
 public class Ball {
 
 	final int LARG_RADIUS_CONST = 20, SMALL_RADIUS_CONST = 10;
-	int locX;
+	int locX, X, Y;
 	int locY, MAX, MIN, N = 0;
 	int Larg_radius = 20, small_radius = 10;
 	int color = 0, sizeRect=53, midRect=26, offsetY = 0;
@@ -50,17 +50,22 @@ public class Ball {
 	private ArrayList<Point> arr = null;
 
 	public Ball(int locX, int locY, int color, int sizeRect, int offsetY) {
-		this.sizeRect = sizeRect;
-		this.midRect = sizeRect/2;
+		X= locX; Y = locY;
 		this.offsetY = offsetY;
-		this.locX = locX * sizeRect + midRect;
-		this.locY = locY * sizeRect + midRect + offsetY;
-		MAX = this.locY + 4;
-		MIN = this.locY - 10;
 		this.color = color;
 		p.setColor(color);
 		p.setAntiAlias(true);
+		updateSizeRect(sizeRect);
 	}
+
+	private void updateSizeRect(int sizeRect){
+        this.sizeRect = sizeRect;
+        this.midRect = sizeRect/2;
+        this.locX = this.X * sizeRect + midRect;
+        this.locY = this.Y * sizeRect + midRect + offsetY;
+        MAX = this.locY + 4;
+        MIN = this.locY - 10;
+    }
 
 	public boolean isRunBall() {
 		return isRunBall;
@@ -100,8 +105,11 @@ public class Ball {
 	}
 
 	// Ve bong o toa do locX, locY
-	public void drawBall(Canvas canvas) {
-		
+	public void drawBall(Canvas canvas, int sizeRect) {
+		if(this.sizeRect == 1)
+		{
+			updateSizeRect(sizeRect);
+		}
 		if (sizeBall) {// bong lon
 			RadialGradient gradient = new RadialGradient(this.locX - 6,
 					this.locY - 6, 8, Color.rgb(255, 240, 243), this.color,
@@ -117,6 +125,7 @@ public class Ball {
 			p.setShader(gradient);
 			canvas.drawCircle(this.locX, this.locY, small_radius, p);
 		}
+		//canvas.drawText(""+this.X +"-"+this.Y + "-"+this.isJumpBall, this.locX + 20 , this.locY + 20, p);
 	}
 
 	// Bong chay

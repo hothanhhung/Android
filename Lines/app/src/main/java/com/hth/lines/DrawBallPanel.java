@@ -114,6 +114,8 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 
 	private void startGame(int kind)
 	{
+		sizeRectangle = getWidth() / XNUM;
+		if(sizeRectangle == 0) sizeRectangle = 1;
 		drawUndoButton = false;
 		drawRedoButton = false;
 		undoIndex = 0;
@@ -193,7 +195,7 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 			for (int i = 0; i < XNUM; i++) {
 				for (int j = 0; j < YNUM; j++) {
 					if (ball[i][j] != null) {
-						ball[i][j].drawBall(canvas);
+						ball[i][j].drawBall(canvas, sizeRectangle);
 					}
 				}
 			}
@@ -325,8 +327,8 @@ public class DrawBallPanel extends SurfaceView implements ISurfaceBall,
 				return false;
 			}
 			synchronized (matrix) {
-				int i = (int) (event.getX() / 53);
-				int j = (int) ((event.getY() - YOFFSET_BOARD) / 53);
+				int i = (int) (event.getX() / sizeRectangle);
+				int j = (int) ((event.getY() - YOFFSET_BOARD) / sizeRectangle);
 				if (i < XNUM && j < YNUM && i >= 0 && j >= 0) {
 					if (matrix[i][j] < 0) {
 						dau_x = i;
