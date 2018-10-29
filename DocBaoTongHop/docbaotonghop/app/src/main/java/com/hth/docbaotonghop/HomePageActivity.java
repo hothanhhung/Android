@@ -1,6 +1,7 @@
 package com.hth.docbaotonghop;
 
 import com.hth.docbaotonghop.R;
+import com.hth.utils.SaveData;
 import com.hth.utils.UIUtils;
 import com.startapp.android.publish.adsCommon.StartAppAd;
 import com.startapp.android.publish.adsCommon.StartAppSDK;
@@ -39,7 +40,12 @@ public class HomePageActivity extends Activity {
         if(PageApp.IsDisableSplash) StartAppAd.disableSplash();
 
         timeForRun = Calendar.getInstance().getTime().getTime();
+        WebsitePage.isHideAds = SaveData.getHideAds(this);
 
+        if(WebsitePage.isHideAds)
+        {
+            synchronized(new Object()){WebsitePage.reloadConfigAds(this);}
+        }
 	}
 
     private static Context context;

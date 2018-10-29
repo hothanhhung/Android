@@ -1,5 +1,7 @@
 package com.hth.utils;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -9,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.hth.docbaotonghop.MainActivity;
+import com.hth.docbaotonghop.WebsitePage;
 
 public class MyHomeWebViewClient extends WebViewClient {
     private Activity context;
@@ -17,6 +20,7 @@ public class MyHomeWebViewClient extends WebViewClient {
     ArrayList<String> listViewedContents = new ArrayList<String>();
     int index = -1;
 
+    InputStream emptyData = new ByteArrayInputStream("".getBytes());
     public ArrayList<String>  getListViewedContents(){return this.listViewedContents;}
 
     public int getIndexListViewedContents(){return this.index;}
@@ -95,8 +99,10 @@ public class MyHomeWebViewClient extends WebViewClient {
 	@Override
     public WebResourceResponse shouldInterceptRequest (final WebView view, String url) {
     	if (url!=null && url.contains(".css")) {
-            return ParserData.getCSSDetail(url);
-        } else 
+            return ParserData.getCSSDetail(context, url);
+        } else if(WebsitePage.isDenied(url)){
+            return new WebResourceResponse("text/html", "UTF-8", emptyData);
+        }else
         {
             return super.shouldInterceptRequest(view, url);
         }

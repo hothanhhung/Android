@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
         context = getApplicationContext();
 
         setContentView(R.layout.activity_main_website);
-        WebsitePage.isHideAds = getHideAds();
+        WebsitePage.isHideAds = SaveData.getHideAds(this);
         StartAppSDK.init(this, "207910015", true);
         if(PageApp.IsDisableSplash) StartAppAd.disableSplash();
 
@@ -252,7 +252,11 @@ public class MainActivity extends Activity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 WebsitePage.isHideAds = !WebsitePage.isHideAds;
-                                setHideAds(WebsitePage.isHideAds);
+                                if(WebsitePage.isHideAds)
+                                {
+                                    synchronized(new Object()){WebsitePage.reloadConfigAds(MainActivity.this);}
+                                }
+                                SaveData.setHideAds(MainActivity.this, WebsitePage.isHideAds);
                                 WebView viewArticleDetail = (WebView) MainActivity.this.findViewById(R.id.viewArticleDetail);
                                 viewArticleDetail.reload();
                                 dialog.cancel();
@@ -266,35 +270,6 @@ public class MainActivity extends Activity {
                         })
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .show();
-    }
-
-    public boolean getHideAds()
-    {
-        {
-            try {
-                SharedPreferences sharedPref =this.getPreferences(Context.MODE_PRIVATE);
-                return sharedPref.getBoolean("HIDE_ADS_KEY_NAME", true);
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        return true;
-    }
-
-    public void setHideAds(boolean isHide)
-    {
-        try {
-            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("HIDE_ADS_KEY_NAME", isHide);
-            editor.commit();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
     }
 
     public void backToHistory(View view) {
