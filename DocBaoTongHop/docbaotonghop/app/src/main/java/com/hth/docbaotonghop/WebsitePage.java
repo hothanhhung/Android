@@ -1,6 +1,9 @@
 package com.hth.docbaotonghop;
 
+import android.app.Activity;
+
 import com.hth.utils.FileProcess;
+import com.hth.utils.SaveData;
 
 public enum WebsitePage {
 
@@ -52,21 +55,42 @@ public enum WebsitePage {
     
     private final String resourceUrl = "";
     public static boolean isHideAds = true;
-    
-    public String GetReformatCssContent()
-    {
-    	if(!isHideAds) return "";
+    public static com.hth.utils.ConfigAds configAds= null;
 
-    	if(this.cssContent == null || this.cssContent.isEmpty())
-    	{
-    		this.cssContent = FileProcess.readTextFileFromAssets(GetCssUrl(), MainActivity.getAppContext().getAssets());
-    	}
-    	
-    	if(this.cssContent == null || this.cssContent.isEmpty())
-    	{
-    		this.cssContent =  ".adsbygoogle {display:none !important;}";
-    	}
-    	return this.cssContent;
+    public static void reloadConfigAds(Activity activity){
+        configAds = com.hth.utils.ParserData.getConfigAds();
+        if(configAds!=null && configAds.Version > 0){
+            SaveData.setConfigAds(activity, configAds);
+        }else{
+            configAds = SaveData.getConfigAds(activity);
+        }
+    }
+
+    public static boolean isDenied(String url){
+        if (configAds != null && configAds.Version != 0) {
+            return configAds.isDenied(url);
+        }
+        return false;
+    }
+
+
+    public String GetReformatCssContent(Activity activity) {
+        if (!isHideAds) return "";
+
+        if (configAds == null) {
+            reloadConfigAds(activity);
+        }
+        if (configAds != null && configAds.Version != 0) {
+            this.cssContent = configAds.getCSSWeb(toString());
+        }
+        if (this.cssContent == null || this.cssContent.isEmpty()) {
+            this.cssContent = FileProcess.readTextFileFromAssets(GetCssUrl(), MainActivity.getAppContext().getAssets());
+        }
+
+        if (this.cssContent == null || this.cssContent.isEmpty()) {
+            this.cssContent = ".adsbygoogle {display:none !important;}";
+        }
+        return this.cssContent;
     }
     
     public String GetReformatCss()

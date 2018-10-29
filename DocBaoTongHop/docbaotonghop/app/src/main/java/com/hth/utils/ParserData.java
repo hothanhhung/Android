@@ -2,18 +2,45 @@ package com.hth.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
 import com.hth.docbaotonghop.MainActivity;
 
+import android.app.Activity;
 import android.os.StrictMode;
 import android.util.Log;
 import android.webkit.WebResourceResponse;
 
 public class ParserData {
-    
+
+    public static ConfigAds getConfigAds() {
+        String link = "https://hothanhhung.github.io/RandomWin/DocBaoTongHop.json";
+		StringBuilder contentResult = new StringBuilder();
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            java.io.BufferedReader input = new java.io.BufferedReader(new java.io.InputStreamReader(new java.net.URL(link).openStream(), "UTF-8"));
+
+    		String inputLine;
+            while ((inputLine = input.readLine()) != null)
+            {
+            	contentResult.append(inputLine);
+            }
+            input.close();
+	    	String json = contentResult.toString();
+            Log.w("getConfigAds", json);
+            com.google.gson.Gson gSon = new com.google.gson.Gson();
+	    	return gSon.fromJson(json, ConfigAds.class);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ConfigAds();
+    }
+
 	public static String getArticleDetail(String urlpage) {
 		StringBuilder contentResult = new StringBuilder();
 
@@ -37,7 +64,7 @@ public class ParserData {
         return contentResult.toString();
     }
 	
-	public static WebResourceResponse getCSSDetail(String urlpage) {
+	public static WebResourceResponse getCSSDetail(Activity context, String urlpage) {
 		StringBuilder contentResult = new StringBuilder();
 
         try {
@@ -51,7 +78,7 @@ public class ParserData {
                     .get();
 
             contentResult.append(doc.text());
-            String joinContent =  MainActivity.getCurrent_Website_Page().GetReformatCssContent();
+            String joinContent =  MainActivity.getCurrent_Website_Page().GetReformatCssContent(context);
             Log.w("getCSSDetail", joinContent);
             contentResult.append(" ").append(joinContent);
             
