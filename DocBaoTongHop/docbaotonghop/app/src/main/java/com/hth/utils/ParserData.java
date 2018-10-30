@@ -14,7 +14,7 @@ import android.webkit.WebResourceResponse;
 public class ParserData {
 
     public static ConfigAds getConfigAds() {
-        String link = "https://hothanhhung.github.io/RandomWin/DocBaoTongHop.json";
+        String link = "https://hunghtpage.github.io/DocBaoTongHop.json";
 		StringBuilder contentResult = new StringBuilder();
 
         try {
