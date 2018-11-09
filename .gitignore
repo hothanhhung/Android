@@ -1,12 +1,12 @@
 /CallTimeLimit
 /BanCa
-FruitLink/Library/
+FruitLink/Library
 FruitLink/Pikachu_Data
 FruitLink/ProjectSettings
-Pikachu/Library/
-Pikachu/Pikachu_Data
-Pikachu/ProjectSettings
-puzzle/Library/
+/Pikachu/Library
+/Pikachu/Pikachu_Data
+/Pikachu/ProjectSettings
+puzzle/Library
 puzzle/Pikachu_Data
 puzzle/ProjectSettings
 Services/hthservices/hthservices/packages

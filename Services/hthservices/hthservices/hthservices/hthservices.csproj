@@ -147,6 +147,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdsController.cs" />
+    <Compile Include="Controllers\DocBaoTongHopController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportApiController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -196,6 +197,7 @@
     <Content Include="AdsWeb\app.module.js" />
     <Content Include="AdsWeb\Index.html" />
     <Content Include="AdsWeb\style.css" />
+    <Content Include="Data\DocBaoTongHop.json" />
     <None Include="Data\ThapNhiBatTu.json" />
     <None Include="Data\ChamNgon.json" />
     <Content Include="htmlpage\LookupOnline\bongda.html" />
