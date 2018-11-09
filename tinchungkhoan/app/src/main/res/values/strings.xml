@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Tin Chứng Khoán</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_about">\tCảm ơn sự ủng hộ của các bạn !\n\tỨng dụng Tra Cứu Online tổng hợp dữ liệu từ nguồn Internet. Tất cả thông tin chỉ mang tính chất tham khảo.\n\tNếu dữ liệu không chính xác hoặc bạn muốn đóng góp ý kiến, xin vui lòng liên hệ với tác giả theo thông tin trên Play Store.</string>
+    <string name="ad_unit_id">ca-app-pub-4576847792571626/7367913593</string>
+    <string name="interstitial_unit_id">ca-app-pub-4576847792571626/1061647191</string>
+</resources>

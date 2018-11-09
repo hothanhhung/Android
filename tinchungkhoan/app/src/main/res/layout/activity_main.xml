@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent" android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@android:color/holo_blue_light"
+        android:layout_height="50dp"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:gravity="center">
+        <ImageButton
+            android:id="@+id/btMenuLookUpItems"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/menu"
+            android:onClick="menuClick"/>
+        <TextView
+            android:id="@+id/tvSelectedMenuLookUpItem"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:text="Tra Cứu Online"/>
+        <ImageButton
+            android:id="@+id/btMoreApp"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/side_nav_bar"
+            android:onClick="menuClick"/>
+    </LinearLayout>
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:focusableInTouchMode="true">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/llMainContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:lineSpacingMultiplier="1.5"
+                    android:text="@string/app_about"/>
+                </LinearLayout>
+        </LinearLayout>
+
+        <!-- The navigation drawer -->
+        <LinearLayout
+            android:id="@+id/leftNavdrawer"
+            android:layout_width="260dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_rectangle"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/white"
+            android:layout_gravity="start"
+            android:dividerHeight="0dp"
+            android:drawSelectorOnTop="false"
+            android:baselineAligned="false"
+            android:paddingRight="5px"
+            >
+
+            <ListView
+                android:id="@+id/lvMenuLookUpItems"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:paddingBottom="30dp"
+                android:clipToPadding="false" />
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_unit_id"
+        android:visibility="visible" />
+
+</LinearLayout>
+
