@@ -49,7 +49,7 @@ public class MenuLookUpItem {
     public View getView(Context context)
     {
         try {
-            Class<?> clazz = Class.forName(viewClassName);
+            Class<?> clazz = Class.forName(getViewClassName());
             if(kind == MenuLookUpItemKind.None)
             {
                 Constructor<?> constructor = clazz.getConstructor(Context.class);
@@ -85,7 +85,7 @@ public class MenuLookUpItem {
 
     public boolean hasAction()
     {
-        if(viewClassName == null || viewClassName.isEmpty())
+        if(getViewClassName() == null || getViewClassName().isEmpty())
         {
             return false;
         }
