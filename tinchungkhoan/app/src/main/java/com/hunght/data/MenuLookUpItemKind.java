@@ -5,5 +5,5 @@ package com.hunght.data;
  */
 
 public enum MenuLookUpItemKind {
-    None, DuLieu, Cafef
+    None, DuLieuMuaBan, ThucHienQuyen, Cafef
 }

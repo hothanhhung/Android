@@ -84,6 +84,8 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
 
         switch (kind)
         {
+            case DuLieuMuaBan:
+                return "http://liveboard.cafef.vn/";
             case Cafef:
                 return "http://cafef.vn";
         }
