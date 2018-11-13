@@ -1,5 +1,6 @@
 package com.hunght.tinchungkhoan;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -49,6 +50,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        View decorView = getWindow().getDecorView();
+        if(decorView!=null) {
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+        ActionBar actionBar = getActionBar();
+        if(actionBar!=null)
+        {
+            actionBar.hide();
+        }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftDrawerList = (LinearLayout) findViewById(R.id.leftNavdrawer);
@@ -188,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected  void onResume()
     {
         super.onResume();
-        checkForShowInterstital();
+      //  checkForShowInterstital();
     }
 
     private void checkForShowInterstital()

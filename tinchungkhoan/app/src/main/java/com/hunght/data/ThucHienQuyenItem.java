@@ -8,10 +8,11 @@ public class ThucHienQuyenItem {
     private String loaiCK;
     private String thiTruong;
     private String chiNhanh;
+    private String url;
 
     public ThucHienQuyenItem(){};
 
-    public ThucHienQuyenItem(String date, String maCK, String tieuDe, String maISIN, String loaiCK, String thiTruong, String chiNhanh) {
+    public ThucHienQuyenItem(String date, String maCK, String tieuDe, String maISIN, String loaiCK, String thiTruong, String chiNhanh, String url) {
         this.date = date;
         this.maCK = maCK;
         this.tieuDe = tieuDe;
@@ -19,6 +20,7 @@ public class ThucHienQuyenItem {
         this.loaiCK = loaiCK;
         this.thiTruong = thiTruong;
         this.chiNhanh = chiNhanh;
+        this.url = url;
     }
 
     public String getDate() {
@@ -47,6 +49,9 @@ public class ThucHienQuyenItem {
 
     public String getChiNhanh() {
         return chiNhanh;
+    }
+    public String getFullUrl() {
+        return url;
     }
 
     public String getExtraInfo() {

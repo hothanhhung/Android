@@ -15,6 +15,7 @@ public class StaticData {
         if(menuLookUpItems == null)
         {
             menuLookUpItems = new ArrayList<>();
+            menuLookUpItems.add(new MenuLookUpItem("Danh Mục Yêu Thích", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.FavoritesView",""));
             menuLookUpItems.add(new MenuLookUpItem("Dữ Liêu Mua Bán", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DuLieuMuaBan));
             menuLookUpItems.add(new MenuLookUpItem("Thực Hiện Quyền", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThucHienQuyenView",""));
             menuLookUpItems.add(new MenuLookUpItem("Cafef",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.Cafef));
@@ -37,6 +38,13 @@ public class StaticData {
         return loaiCK;
     }
 
+    public static String GetValueFromLoaiChungKhoan(String loai)
+    {
+        int index = GetLoaiChungKhoan().indexOf(loai);
+        if(index == 0) return "";
+        else return "" + index;
+    }
+
     public static ArrayList<String> GetThiTruong(){
         if(thiTruong == null)
         {
@@ -54,4 +62,9 @@ public class StaticData {
         return thiTruong;
     }
 
+    public static String GetValueFromThiTruong(String thiTruong)
+    {
+        if(thiTruong == null || GetThiTruong().indexOf(thiTruong) == 0) return "";
+        return thiTruong.replace(' ', '+');
+    }
 }

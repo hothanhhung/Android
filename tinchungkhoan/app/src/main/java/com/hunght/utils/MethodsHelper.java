@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -109,5 +110,12 @@ public class MethodsHelper {
         }
         return packageName;
 
+    }
+
+    public static String getDDMMYYY(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return (day < 10 ? "0" : "") + day + "-" + (month < 10 ? "0" : "") + month + "-" + year;
     }
 }
