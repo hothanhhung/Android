@@ -59,6 +59,12 @@ public class ExpandableProfileListAdapter extends BaseExpandableListAdapter {
 
         tvTitle.setText(thucHienQuyenItem.getTieuDe());
         tvMoreInfo.setText(thucHienQuyenItem.getExtraInfo());
+        if(childPosition % 2 == 0) {
+            convertView.setBackgroundColor(_context.getResources().getColor(R.color.item_odd_color));
+        }else {
+            convertView.setBackgroundColor(_context.getResources().getColor(R.color.item_even_color));
+        }
+        convertView.setTag(thucHienQuyenItem);
         return convertView;
     }
 

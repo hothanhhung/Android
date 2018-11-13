@@ -3,15 +3,21 @@ package com.hunght.tinchungkhoan;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ExpandableListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.UiThread;
 import android.support.v4.app.DialogFragment;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,11 +28,14 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hunght.data.StaticData;
 import com.hunght.data.ThucHienQuyenItem;
 import com.hunght.utils.ParserData;
+import com.hunght.utils.SavedValues;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,6 +47,7 @@ import java.util.List;
 public class ThucHienQuyenView extends LinearLayout {
     ExpandableListView lvThucHienQuyen;
     TextView tvProcessInfo;
+    private static SavedValues savedValues;
 
     public ThucHienQuyenView(Context context) {
         super(context);
@@ -64,8 +74,22 @@ public class ThucHienQuyenView extends LinearLayout {
         final Button btTraCuu = (Button) view.findViewById(R.id.btTraCuu);
         lvThucHienQuyen = (ExpandableListView) view.findViewById(R.id.lvThucHienQuyen);
         tvProcessInfo = (TextView) view.findViewById(R.id.tvProcessInfo);
+        TextView tvGetFromFavorite = view.findViewById(R.id.tvGetFromFavorite);
+
+        savedValues = new SavedValues(getContext());
+
+        tvGetFromFavorite.setPaintFlags(tvGetFromFavorite.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tvGetFromFavorite.setTextColor(Color.BLUE);
+        tvGetFromFavorite.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> items = savedValues.getFavorites();
+                etMaCK.setText(TextUtils.join(", ", items));
+            }
+        });
 
         final Calendar myCalendarFromDate = Calendar.getInstance();
+        myCalendarFromDate.set(myCalendarFromDate.get(Calendar.YEAR), myCalendarFromDate.get(Calendar.MONTH), myCalendarFromDate.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
         myCalendarFromDate.add(Calendar.DAY_OF_MONTH, -1);
         final DatePickerDialog.OnDateSetListener fromDate = new DatePickerDialog.OnDateSetListener() {
 
@@ -81,8 +105,8 @@ public class ThucHienQuyenView extends LinearLayout {
 
         };
 
-        final Calendar myCalendarToDate = Calendar.getInstance();
-        myCalendarToDate.add(Calendar.DAY_OF_MONTH, 6);
+        final Calendar myCalendarToDate = (Calendar)myCalendarFromDate.clone();
+        myCalendarToDate.add(Calendar.DAY_OF_MONTH, 7);
         final DatePickerDialog.OnDateSetListener toDate = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -142,7 +166,33 @@ public class ThucHienQuyenView extends LinearLayout {
         btTraCuu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateListThucHienQuyen(ParserData.getThucHienQuyenItems("", "", "", "", ""));
+                ((Activity)getContext()).runOnUiThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                tvProcessInfo.setText("Đang nhận dữ liệu....");
+                            }
+                        });
+
+                Calendar calendar = (Calendar) myCalendarFromDate.clone();
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                boolean isMoreDay = myCalendarToDate.compareTo(calendar) > 0;
+                updateListThucHienQuyen(ParserData.getThucHienQuyenItems(etMaCK.getText().toString(), StaticData.GetValueFromThiTruong(spThiTruong.getSelectedItem().toString()), StaticData.GetValueFromLoaiChungKhoan(spLoaiChungKhoan.getSelectedItem().toString()), getDateInString(myCalendarFromDate), getDateInString(myCalendarToDate), isMoreDay));
+            }
+        });
+
+        lvThucHienQuyen.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                ThucHienQuyenItem thucHienQuyenItem = (ThucHienQuyenItem) v.getTag();
+                Uri webpage = Uri.parse(thucHienQuyenItem.getFullUrl());
+                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+                    getContext().startActivity(intent);
+                }else{
+                    Toast.makeText(getContext(), "Không tìm thấy trình duyệt", Toast.LENGTH_LONG).show();
+                }
+                return false;
             }
         });
     }
@@ -153,19 +203,30 @@ public class ThucHienQuyenView extends LinearLayout {
         editText.setText(calendar.get(Calendar.DAY_OF_MONTH) + " - " + (calendar.get(Calendar.MONTH) +1 ) + " - " + calendar.get(Calendar.YEAR));
     }
 
-    ArrayList<String> listDataHeader = new ArrayList<String>();
-    HashMap<String, List<ThucHienQuyenItem>> listDataChild = new HashMap<String, List<ThucHienQuyenItem>>();
+    private String getDateInString(Calendar calendar)
+    {
+        return calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) +1 ) + "/" + calendar.get(Calendar.YEAR);
+    }
+
+    ArrayList<String> listDataHeader;
+    HashMap<String, List<ThucHienQuyenItem>> listDataChild;
     private void updateListThucHienQuyen(ArrayList<ThucHienQuyenItem> data)
     {
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap();
         if(data.isEmpty())
         {
             if(tvProcessInfo!=null)
             {
-                tvProcessInfo.setVisibility(View.VISIBLE);
                 tvProcessInfo.setText("Không có dữ liệu");
             }
+            if(lvThucHienQuyen!=null){
+                lvThucHienQuyen.setVisibility(GONE);
+            }
         }else{
-            tvProcessInfo.setVisibility(View.GONE);
+            if(tvProcessInfo!=null) {
+                tvProcessInfo.setText("Vui lòng thực hiện tra cứu");
+            }
             for (ThucHienQuyenItem thucHienQuyenItem:data) {
                 if(listDataHeader.contains(thucHienQuyenItem.getDate()))
                 {
@@ -182,7 +243,12 @@ public class ThucHienQuyenView extends LinearLayout {
             // setting list adapter
             if(lvThucHienQuyen!=null)
             {
+                lvThucHienQuyen.setVisibility(VISIBLE);
                 lvThucHienQuyen.setAdapter(listAdapter);
+                if(listDataHeader.size() > 0)
+                {
+                    lvThucHienQuyen.expandGroup(0, true);
+                }
             }
         }
 
