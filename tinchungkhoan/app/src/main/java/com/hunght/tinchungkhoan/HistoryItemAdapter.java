@@ -67,7 +67,7 @@ public class HistoryItemAdapter extends ArrayAdapter<HistoryPrice> {
                 switch (price.getOffSet())
                 {
                     case -1 : cloned.setTextColor(Color.RED); break;
-                    case 0: cloned.setTextColor(Color.rgb(255, 102, 0)); break;
+                    case 0: cloned.setTextColor(Color.rgb(204, 204, 0)); break;
                     case 1: cloned.setTextColor(Color.GREEN); break;
                     default: cloned.setTextColor(Color.BLACK); break;
                 }

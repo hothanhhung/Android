@@ -1,17 +1,24 @@
 package com.hunght.tinchungkhoan;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hunght.data.HistoryPrice;
@@ -68,6 +75,18 @@ public class FavoritesView extends LinearLayout {
             }
         });
 
+        lvHistoryFavoriteItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    final HistoryPrice historyPrice = (HistoryPrice) view.getTag();
+                    if (historyPrice != null) {
+                        showHistoryPopup(historyPrice);
+                    }
+                }
+            }
+        });
+
         lvHistoryFavoriteItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -99,6 +118,46 @@ public class FavoritesView extends LinearLayout {
 
 
         getHistoryData(favoriteItems);
+    }
+
+    PopupWindow popupWindow;
+    private void showHistoryPopup(HistoryPrice historyPrice) {
+        if(historyPrice!=null) {
+            /*Dialog dialog = new Dialog(getContext());
+            dialog.setContentView(R.layout.favorites_history_popup);
+            dialog.setTitle(historyPrice.getMaCK());
+            ListView lvHistoryItems = dialog.findViewById(R.id.lvHistoryItems);
+            FavoritesHistoryItemAdapter adapter = new FavoritesHistoryItemAdapter(getContext(), historyPrice.getPrices());
+            lvHistoryItems.setAdapter(adapter);
+            dialog.show();*/
+            View header= ((Activity)getContext()).getLayoutInflater().inflate(R.layout.favorites_history_item,null,false);
+            View view= ((Activity)getContext()).getLayoutInflater().inflate(R.layout.favorites_history_popup,null,false);
+            ListView lvHistoryItems = view.findViewById(R.id.lvHistoryItems);
+            lvHistoryItems.addHeaderView(header);
+            FavoritesHistoryItemAdapter adapter = new FavoritesHistoryItemAdapter(getContext(), historyPrice.getPrices());
+            lvHistoryItems.setAdapter(adapter);
+
+
+            popupWindow=new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+            popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
+            popupWindow.setFocusable(false);
+            popupWindow.setOutsideTouchable(false);
+            View container = (View) popupWindow.getContentView().getParent();
+            WindowManager wm = (WindowManager) ((Activity)getContext()).getSystemService(Context.WINDOW_SERVICE);
+            WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+            p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            p.dimAmount = 0.3f;
+            wm.updateViewLayout(container, p);
+
+            ((TextView)view.findViewById(R.id.tvMoreInfo)).setText(historyPrice.getMaCK());
+            (view.findViewById(R.id.btClosePopup)).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(popupWindow!=null) popupWindow.dismiss();
+                }
+            });
+
+        }
     }
 
     private void removeMaCKFromFavorite(String mack){
