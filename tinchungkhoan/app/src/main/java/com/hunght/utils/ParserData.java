@@ -147,7 +147,7 @@ public class ParserData {
                     if (tdTags.size() > 12) {
                         date = tdTags.get(0).text().trim().replace('/', '-');
                         price = tdTags.get(2).text().trim();
-                        change = tdTags.get(3).text().trim();
+                        change = tdTags.get(3).text().trim().replace(" %","%");
                         khoiLuong = tdTags.get(5).text().trim();
                         priceAtOpen = tdTags.get(9).text().trim();
                         high = tdTags.get(10).text().trim();

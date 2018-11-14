@@ -46,8 +46,28 @@ public class PriceItem {
         else if(change!=null)
         {
             if(change.contains("-")) return -1;
-            if(change.contains("(0.00 %)")) return 0;
+            if(change.contains("(0.00%)")) return 0;
         }
         return 1;
+    }
+
+    public String getChange() {
+        return change;
+    }
+
+    public String getKhoiLuong() {
+        return khoiLuong;
+    }
+
+    public String getPriceAtOpen() {
+        return priceAtOpen;
+    }
+
+    public String getLowestPrice() {
+        return lowestPrice;
+    }
+
+    public String getHighestPrice() {
+        return highestPrice;
     }
 }
