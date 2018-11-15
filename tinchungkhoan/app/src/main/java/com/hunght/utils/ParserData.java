@@ -8,8 +8,8 @@ import com.google.gson.reflect.TypeToken;
 import com.hunght.data.HistoryPrice;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
+import com.hunght.data.DoanhNghiepItem;
 import com.hunght.data.ThucHienQuyenItem;
-import com.hunght.tinchungkhoan.ThucHienQuyenView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +23,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ParserData {
     
@@ -162,6 +161,39 @@ public class ParserData {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ArrayList<DoanhNghiepItem> getThongTinDoanhNghieps()
+    {
+        String link = "http://cafefcdn.com/frontend/scripts/kby_v1.js";
+        Log.d("getThongTinDoanhNghieps", link);
+
+        Gson gSon = new Gson();
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
+
+            String inputLine;
+            while ((inputLine = input.readLine()) != null)
+            {
+                jsonStringBuilder.append(inputLine);
+            }
+            input.close();
+            String json = jsonStringBuilder.substring(jsonStringBuilder.indexOf("[")).replace(';',' ');
+            Log.d("getThongTinDoanhNghieps",json);
+            Type collectionType = new TypeToken<ArrayList<DoanhNghiepItem>>(){}.getType();
+            return gSon.fromJson(json, collectionType);
+        }catch(Exception ex)
+        {
+            ex.printStackTrace();
         }
         return null;
     }

@@ -1,6 +1,7 @@
 package com.hunght.tinchungkhoan;
 
 import android.app.ActionBar;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.MenuLookUpItem;
 import com.hunght.data.StaticData;
+import com.hunght.data.DoanhNghiepItem;
+import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
 import com.hunght.utils.UIUtils;
 
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAdView.loadAd(adRequest);
 
         mDrawerLayout.openDrawer(mLeftDrawerList);
+        (new DownloadContentTask()).execute();
     }
 
 	public void menuClick(View view) {
@@ -254,5 +258,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AdRequest adRequest_interstitial = new AdRequest.Builder().build();
 
         interstitial.loadAd(adRequest_interstitial);
+    }
+
+    static ArrayList<DoanhNghiepItem> thongTinDoanhNghieps;
+
+    private void sethongTinDoanhNghieps(ArrayList<DoanhNghiepItem> data)
+    {
+        if(data != null && data.size() > 10)
+        {
+            if(savedValues != null) {
+                savedValues.setThongTinDoanhNghieps(data);
+            }
+            thongTinDoanhNghieps = data;
+        }
+    }
+
+    static ArrayList<DoanhNghiepItem> gethongTinDoanhNghieps()
+    {
+        if(thongTinDoanhNghieps == null && savedValues != null)
+        {
+            thongTinDoanhNghieps = savedValues.getThongTinDoanhNghieps();
+        }
+        return thongTinDoanhNghieps;
+    }
+
+    private class DownloadContentTask extends AsyncTask<String, Integer, ArrayList<DoanhNghiepItem>> {
+        protected ArrayList<DoanhNghiepItem> doInBackground(String... maCK) {
+            return ParserData.getThongTinDoanhNghieps();
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(ArrayList<DoanhNghiepItem> data) {
+            sethongTinDoanhNghieps(data);
+        }
     }
 }
