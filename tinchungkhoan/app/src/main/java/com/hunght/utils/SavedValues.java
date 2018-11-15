@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.hunght.data.DoanhNghiepItem;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +19,7 @@ public class SavedValues {
 	private static final String APP_SHARED_PREFS = "com.hth.tracuuonline";
 	private static final String RECORD_FIRST_RUN = "RECORD_FIRST_RUN";
 	private static final String RECORD_FAVORITES = "RECORD_FAVORITES";
+	private static final String RECORD_THONG_TIN_DOANH_NGHIEP = "RECORD_THONG_TIN_DOANH_NGHIEP";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -50,5 +56,42 @@ public class SavedValues {
 	public void setRecordFirstRun(long var1) {
 		prefsEditor.putLong(RECORD_FIRST_RUN, var1);
 		prefsEditor.commit();
+	}
+
+	public ArrayList<DoanhNghiepItem> getThongTinDoanhNghieps()
+	{
+		ArrayList<DoanhNghiepItem> list = new ArrayList<>();
+		{
+			try {
+				String favoritesStr = appSharedPrefs.getString(RECORD_THONG_TIN_DOANH_NGHIEP, "");
+				if(!favoritesStr.isEmpty())
+				{
+					Gson gSon = new Gson();
+					Type collectionType = new TypeToken<ArrayList<DoanhNghiepItem>>(){}.getType();
+					list = gSon.fromJson(favoritesStr, collectionType);
+				}
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return list;
+	}
+
+
+	public void setThongTinDoanhNghieps(ArrayList<DoanhNghiepItem> lstObject)
+	{
+		try {
+
+			Gson gSon = new Gson();
+			String dataInString = gSon.toJson(lstObject);
+			prefsEditor.putString(RECORD_THONG_TIN_DOANH_NGHIEP, dataInString);
+			prefsEditor.commit();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
 	}
 }

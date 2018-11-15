@@ -24,6 +24,19 @@ public class HistoryPrice {
         return maCK;
     }
 
+    public String getFullName(ArrayList<DoanhNghiepItem> thongTinDoanhNghieps) {
+        if(maCK == null) maCK = "";
+        if(thongTinDoanhNghieps!=null){
+            for (DoanhNghiepItem thongtindoanhnghiep: thongTinDoanhNghieps) {
+                if(thongtindoanhnghiep.c.equalsIgnoreCase(maCK)){
+                    return thongtindoanhnghiep.c + " - " + thongtindoanhnghiep.m;
+                }
+            }
+        }
+
+        return maCK;
+    }
+
     public ArrayList<PriceItem> getPrices() {
         return prices;
     }

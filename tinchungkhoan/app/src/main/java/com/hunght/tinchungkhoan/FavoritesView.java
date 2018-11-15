@@ -149,7 +149,7 @@ public class FavoritesView extends LinearLayout {
             p.dimAmount = 0.3f;
             wm.updateViewLayout(container, p);
 
-            ((TextView)view.findViewById(R.id.tvMoreInfo)).setText(historyPrice.getMaCK());
+            ((TextView)view.findViewById(R.id.tvMoreInfo)).setText(historyPrice.getFullName(MainActivity.gethongTinDoanhNghieps()));
             (view.findViewById(R.id.btClosePopup)).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
