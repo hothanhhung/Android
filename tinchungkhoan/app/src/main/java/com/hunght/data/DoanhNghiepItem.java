@@ -11,6 +11,19 @@ public class DoanhNghiepItem {
 
     public String getCafeFURL()
     {
-        return c+"-"+o.substring(0, o.indexOf('[')).trim().replace(' ','-');
+
+        String sanStr="hose";
+        if(san==2) sanStr="hastc";
+        if(san==8) sanStr="otc";
+        if(san==9) sanStr="upcom";
+
+        String linkName = o;
+        int index = linkName.indexOf('(');
+        if(index > 0){
+            linkName = linkName.substring(0, index);
+        }
+        linkName = linkName.trim().replace(' ','-');
+        return "http://s.cafef.vn//"+sanStr+"/"+c+"-"+linkName+".chn";
     }
+
 }

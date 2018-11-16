@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 numberOfSelectItem++;
-                checkForShowInterstital();
+                //checkForShowInterstital();
                 MenuLookUpItem menuLookUpItem = (MenuLookUpItem) view.getTag();
                 if(menuLookUpItem.hasAction())
                 {

@@ -89,7 +89,7 @@ public class FlexibleRowAdapter extends ArrayAdapter<AdItem> {
         if(adFlex.getUrlImage().trim()!="")
         {
             ivImageArticle.setVisibility(View.VISIBLE);
-            Picasso.with(activity).load(adFlex.getUrlImage()).into(ivImageArticle);;
+            Picasso.with(activity).load(adFlex.getUrlImage()).into(ivImageArticle);
         }else
         {
             ivImageArticle.setVisibility(View.GONE);
