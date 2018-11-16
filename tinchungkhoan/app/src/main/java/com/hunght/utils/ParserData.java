@@ -9,6 +9,7 @@ import com.hunght.data.HistoryPrice;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
 import com.hunght.data.DoanhNghiepItem;
+import com.hunght.data.ThongTinDoanhNghiep;
 import com.hunght.data.ThucHienQuyenItem;
 
 import org.jsoup.Jsoup;
@@ -194,6 +195,75 @@ public class ParserData {
         }catch(Exception ex)
         {
             ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ThongTinDoanhNghiep getThongTinDoanhNghiep(String link) {
+        if(link == null || link.isEmpty()) return null;
+
+        try {
+            Log.d("getThongTinDoanhNghiep", link);
+
+            String name = "", code = "", logoURL = "", information = "", currentPrice = "", thongSoKT = "", doThi = "", traCoTuc = "";
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            Document doc = Jsoup.connect(link).get();
+            Element divContent = doc.select("div[id='content']").first();
+            if(divContent!=null)
+            {
+                Element symbolbox = divContent.select("div[id='symbolbox']").first();
+                if(symbolbox!=null){
+                    code = symbolbox.text().trim();
+                }
+                Element namebox = divContent.select("div[id='namebox']").first();
+                if(namebox!=null){
+                    name = namebox.text().trim();
+                }
+                Element avartar = divContent.select("div[class='avartar']").first();
+                if(avartar!=null){
+                    Element img = avartar.select("img").first();
+                    if(img!=null)
+                    {
+                        logoURL = img.attr("src").trim();
+                    }
+                }
+                Element companyIntro = divContent.select("div[class='companyIntro']").first();
+                if(companyIntro!=null){
+                    information = companyIntro.text().trim();
+                }
+
+                Element dlt_left = divContent.select("div[class='dlt-left']").first();
+                if(dlt_left!=null){
+                    Element dltl_other = dlt_left.select("div[class='dltl-other']").first();
+                    if(dltl_other!=null){
+                        Element ul = dlt_left.select("ul").first();
+                        if(ul!=null)
+                        {
+                            thongSoKT = ul.outerHtml();//.replace("class=\"l\"","style='float: left'").replace("class=\"r\"","style='float: right'");
+                        }
+                    }
+                }
+
+                Element dlt_right = divContent.select("div[class='dlt-right']").first();
+                if(dlt_right!=null){
+                    Element tooltip = dlt_right.select("div[class='tooltip']").first();
+                    if(tooltip!=null){
+                        traCoTuc = tooltip.html();
+                    }
+                }
+
+                if(!code.isEmpty())
+                {
+                    return new ThongTinDoanhNghiep(name, code, logoURL, information, "0", thongSoKT, traCoTuc);
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

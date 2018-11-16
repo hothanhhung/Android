@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
@@ -37,10 +38,120 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Ấn để xem chi tiết. Ấn và giữ để xóa" />
-    <ListView
-        android:id="@+id/lvHistoryFavoriteItems"
+        android:text="nhập Mã Chứng Khoán để tra cứu" />
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:padding="5dp">
+        <LinearLayout
+            android:id="@+id/llInformation"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/ivLogo"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/image" />
+
+                <TextView
+                    android:id="@+id/tvTenCongTy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvThongTin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+            <Button
+                android:id="@+id/btXemThongSoKT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Xem Thông Tin Chứng Khoán" />
+
+            <TextView
+                android:id="@+id/tvThongSoKT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btXemTraCoTuc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lịch Sử Trả Cổ Tức Và Tăng Vốn" />
+
+            <TextView
+                android:id="@+id/tvTraCoTuc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btXemBieuDo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Xem Biểu Đồ Biến Động Giá" />
+
+            <ImageView
+                android:id="@+id/ivBieuDo"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btXemBieuDoTuan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_rectangle"
+                    android:layout_weight="1"
+                    android:text="1 Tuần" />
+                <Button
+                    android:id="@+id/btXemBieuDoOneThang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_rectangle"
+                    android:layout_weight="1"
+                    android:text="1 Tháng" />
+                <Button
+                    android:id="@+id/btXemBieuDoOneYear"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1 Năm" />
+                <Button
+                    android:id="@+id/btXemBieuDoAll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tất Cả" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btXemBaoCaoTaiChinh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Xem Báo Cáo Tài Chính" />
+
+            <WebView
+                android:id="@+id/wvBaoCaoTaiChinh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
