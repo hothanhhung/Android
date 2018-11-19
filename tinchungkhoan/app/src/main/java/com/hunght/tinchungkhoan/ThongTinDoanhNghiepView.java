@@ -111,7 +111,14 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
                 }
             }
         });
-
+        view.findViewById(R.id.btXemBieuDoToDay).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiSevenDays().isEmpty()) {
+                    Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiSevenToDay()).into(ivBieuDo);
+                }
+            }
+        });
         view.findViewById(R.id.btXemBieuDoTuan).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +135,24 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
                 }
             }
         });
+
+        view.findViewById(R.id.btXemBieuDoThreeThang).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiOneMonth().isEmpty()) {
+                    Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiThreeMonth()).into(ivBieuDo);
+                }
+            }
+        });
+
+        view.findViewById(R.id.btXemBieuDoSixThang).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiOneMonth().isEmpty()) {
+                    Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiSixMonth()).into(ivBieuDo);
+                }
+            }
+        });
         view.findViewById(R.id.btXemBieuDoOneYear).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +166,71 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
             public void onClick(View v) {
                 if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiAll().isEmpty()) {
                     Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiAll()).into(ivBieuDo);
+                }
+            }
+        });
+
+        view.findViewById(R.id.btXemThongSoKT).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvThongSoKT != null) {
+                    if(tvThongSoKT.getVisibility() != GONE)
+                    {
+                        tvThongSoKT.setVisibility(GONE);
+                    }else{
+                        tvThongSoKT.setVisibility(VISIBLE);
+                    }
+                }
+            }
+        });
+
+        view.findViewById(R.id.btXemTraCoTuc).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvTraCoTuc != null) {
+                    if(tvTraCoTuc.getVisibility() != GONE)
+                    {
+                        tvTraCoTuc.setVisibility(GONE);
+                    }else{
+                        tvTraCoTuc.setVisibility(VISIBLE);
+                    }
+                }
+            }
+        });
+
+        view.findViewById(R.id.btXemBieuDo).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ivBieuDo != null) {
+                    if(ivBieuDo.getVisibility() != GONE)
+                    {
+                        ivBieuDo.setVisibility(GONE);
+                    }else{
+                        ivBieuDo.setVisibility(VISIBLE);
+                    }
+                }
+                LinearLayout lbButtonImage = view.findViewById(R.id.lbButtonImage);
+                if (lbButtonImage != null) {
+                    if(lbButtonImage.getVisibility() != GONE)
+                    {
+                        lbButtonImage.setVisibility(GONE);
+                    }else{
+                        lbButtonImage.setVisibility(VISIBLE);
+                    }
+                }
+            }
+        });
+
+        view.findViewById(R.id.btXemBaoCaoTaiChinh).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (wvBaoCaoTaiChinh != null) {
+                    if(wvBaoCaoTaiChinh.getVisibility() != GONE)
+                    {
+                        wvBaoCaoTaiChinh.setVisibility(GONE);
+                    }else{
+                        wvBaoCaoTaiChinh.setVisibility(VISIBLE);
+                    }
                 }
             }
         });
@@ -168,16 +258,16 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
                 if(ivLogo!=null && !thongTinDoanhNghiep.getLogoURL().isEmpty()){
                     Picasso.with(getContext()).load(thongTinDoanhNghiep.getLogoURL()).into(ivLogo);
                 }
-                if(ivBieuDo!=null && !thongTinDoanhNghiep.getDoThiSevenDays().isEmpty()){
-                    Log.d("getThongTinDoanhNghiep",thongTinDoanhNghiep.getDoThiSevenDays() );
-                    Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiSevenDays()).into(ivBieuDo);
+                if(ivBieuDo!=null && !thongTinDoanhNghiep.getDoThiSevenToDay().isEmpty()){
+                    Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiSevenToDay()).into(ivBieuDo);
                 }
                 if(tvThongSoKT!=null){
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         tvThongSoKT.setText(Html.fromHtml(thongTinDoanhNghiep.getThongSoKT(), Html.FROM_HTML_MODE_COMPACT));
                     } else {
                         tvThongSoKT.setText(Html.fromHtml(thongTinDoanhNghiep.getThongSoKT()));
-                    }
+                    }*/
+                    tvThongSoKT.setText(thongTinDoanhNghiep.getThongSoKT());
                 }
                 if(tvTraCoTuc!=null){
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -186,7 +276,7 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
                         tvTraCoTuc.setText(Html.fromHtml(thongTinDoanhNghiep.getTraCoTuc()));
                     }
                 }
-                if(wvBaoCaoTaiChinh!=null) wvBaoCaoTaiChinh.loadUrl(thongTinDoanhNghiep.getBaoCaoTaiChinhURL());
+                if(wvBaoCaoTaiChinh!=null) wvBaoCaoTaiChinh.loadData(ParserData.getBaoCaoTaiChinh(thongTinDoanhNghiep.getBaoCaoTaiChinhURL()), "text/html", "UTF-8");
             }
         }
     }
