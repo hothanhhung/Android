@@ -85,7 +85,8 @@
             <TextView
                 android:id="@+id/tvThongSoKT"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btXemTraCoTuc"
@@ -97,7 +98,8 @@
             <TextView
                 android:id="@+id/tvTraCoTuc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btXemBieuDo"
@@ -108,36 +110,69 @@
             <ImageView
                 android:id="@+id/ivBieuDo"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="300dp"
+                android:visibility="gone"/>
             <LinearLayout
+                android:id="@+id/lbButtonImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <Button
+                    android:id="@+id/btXemBieuDoToDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_rectangle"
+                    android:layout_weight="1"
+                    android:textSize="11dp"
+                    android:text="Hôm Nay" />
                 <Button
                     android:id="@+id/btXemBieuDoTuan"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_rectangle"
+                    android:background="@drawable/button_rectangle"
                     android:layout_weight="1"
+                    android:textSize="11dp"
                     android:text="1 Tuần" />
                 <Button
                     android:id="@+id/btXemBieuDoOneThang"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_rectangle"
+                    android:background="@drawable/button_rectangle"
                     android:layout_weight="1"
+                    android:textSize="11dp"
                     android:text="1 Tháng" />
+                <Button
+                    android:id="@+id/btXemBieuDoThreeThang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_rectangle"
+                    android:layout_weight="1"
+                    android:textSize="11dp"
+                    android:text="3 Tháng" />
+                <Button
+                    android:id="@+id/btXemBieuDoSixThang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_rectangle"
+                    android:layout_weight="1"
+                    android:textSize="11dp"
+                    android:text="6 Tháng" />
                 <Button
                     android:id="@+id/btXemBieuDoOneYear"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_rectangle"
                     android:layout_weight="1"
+                    android:textSize="11dp"
                     android:text="1 Năm" />
                 <Button
                     android:id="@+id/btXemBieuDoAll"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_rectangle"
                     android:layout_weight="1"
+                    android:textSize="11dp"
                     android:text="Tất Cả" />
             </LinearLayout>
             <Button
@@ -151,7 +186,7 @@
                 android:id="@+id/wvBaoCaoTaiChinh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

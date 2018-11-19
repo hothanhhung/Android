@@ -52,19 +52,30 @@ public class ThongTinDoanhNghiep {
     }
 
     public String getDoThiAll() {
-        return "http://cafef4.vcmedia.vn/"+getCurrentDate()+"/"+code+"/all.png";
+        return "http://cafef4.vcmedia.vn/"+ getLastWorkingDate()+"/"+code+"/all.png";
     }
 
     public String getDoThiOneMonth() {
-        return "http://cafef4.vcmedia.vn/"+getCurrentDate()+"/"+code+"/1month.png";
+        return "http://cafef4.vcmedia.vn/"+ getLastWorkingDate()+"/"+code+"/1month.png";
+    }
+    public String getDoThiThreeMonth() {
+        return "http://cafef4.vcmedia.vn/"+ getLastWorkingDate()+"/"+code+"/3months.png";
+    }
+
+    public String getDoThiSixMonth() {
+        return "http://cafef4.vcmedia.vn/"+ getLastWorkingDate()+"/"+code+"/6months.png";
     }
 
     public String getDoThiOneYear() {
-        return "http://cafef4.vcmedia.vn/"+getCurrentDate()+"/"+code+"/1year.png";
+        return "http://cafef4.vcmedia.vn/"+ getLastWorkingDate()+"/"+code+"/1year.png";
+    }
+
+    public String getDoThiSevenToDay() {
+        return "http://s.cafef.vn/chartindex/pricechart.ashx?symbol="+code+"&type=price&date="+getCurrentDate1()+"&width=380&height=250&rd=102830";
     }
 
     public String getDoThiSevenDays() {
-        return "http://cafef4.vcmedia.vn/"+getCurrentDate()+"/"+code+"/7days.png";
+        return "http://cafef4.vcmedia.vn/"+ getLastWorkingDate()+"/"+code+"/7days.png";
     }
     public String getTraCoTuc() {
         return traCoTuc;
@@ -75,15 +86,40 @@ public class ThongTinDoanhNghiep {
     }
 
     private Calendar calendar;
-    private String getCurrentDate(){
+    private String getLastWorkingDate(){
         if(calendar == null){
             calendar = Calendar.getInstance();
             calendar.add(Calendar.DAY_OF_MONTH, -1);
+            if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+            {
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
+            }
+            else if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+            {
+                calendar.add(Calendar.DAY_OF_MONTH, -2);
+            }
         }
 
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
         return ""+year + (month<10?"0":"") + month+ (day<10?"0":"") + day;
+    }
+
+    private String getCurrentDate1(){
+        Calendar calendar = Calendar.getInstance();
+        if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+        {
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        else if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+        {
+            calendar.add(Calendar.DAY_OF_MONTH, -2);
+        }
+
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return (day<10?"0":"") + day + (month<10?"/0":"/") + month+ "/"+year ;
     }
 }

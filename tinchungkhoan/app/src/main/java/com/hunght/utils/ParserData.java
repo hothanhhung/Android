@@ -235,21 +235,54 @@ public class ParserData {
                     information = companyIntro.text().trim();
                 }
 
-                Element dlt_left = divContent.select("div[class='dlt-left']").first();
+                Element dl_thongtin = divContent.select("div[class='dl-thongtin clearfix']").first();
+                if(dl_thongtin!=null)
+                {
+                    Elements ultags = dl_thongtin.select("ul");
+                    for (Element ul:ultags) {
+                        for(Element item: ul.select("li"))
+                        {
+                            String text = item.text().replaceAll("(^\\h*)|(\\h*$)","");
+                            text = text.replace("    ", "").replace("(*)","").replace("(**)","").trim();
+                            /*String [] str = text.split(" ");
+                            text = "";
+                            for (String s:str) {
+                                if(s!=null && !s.trim().isEmpty()){
+                                    text +=" " + s.trim();
+                                }
+                            }*/
+                            if(!text.isEmpty())
+                            {
+                                thongSoKT+=text+"\n";
+                            }
+                        }
+                        thongSoKT+="\n";
+                    }
+                    //thongSoKT = "<b>"+thongSoKT+"</b>";
+                    Log.d("",thongSoKT);
+                }
+                /*Element dlt_left = divContent.select("div[class='dlt-left']").first();
                 if(dlt_left!=null){
                     Element dltl_other = dlt_left.select("div[class='dltl-other']").first();
                     if(dltl_other!=null){
                         Element ul = dlt_left.select("ul").first();
                         if(ul!=null)
                         {
-                            thongSoKT = ul.outerHtml();//.replace("class=\"l\"","style='float: left'").replace("class=\"r\"","style='float: right'");
+                            Elements litags = ul.select("li");
+                            for (Element li:litags) {
+                                Elements divtags = li.select("div");
+                                if(divtags.size() > 1){
+                                    thongSoKT+=divtags.first().text().trim()+ " &nbsp;" + divtags.last().text().trim() + "<br/>";
+                                }
+                            }
+                            thongSoKT = "<b>"+thongSoKT+"</b>";
                         }
                     }
-                }
+                }*/
 
-                Element dlt_right = divContent.select("div[class='dlt-right']").first();
+                Element dlt_right = divContent.select("a[class='dangky']").first();
                 if(dlt_right!=null){
-                    Element tooltip = dlt_right.select("div[class='tooltip']").first();
+                    Element tooltip = dlt_right.parent().select("div[class='tooltip']").first();
                     if(tooltip!=null){
                         traCoTuc = tooltip.html();
                     }
@@ -266,5 +299,30 @@ public class ParserData {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getBaoCaoTaiChinh(String link)
+    {
+        Log.d("getThongTinDoanhNghieps", link);
+
+        Gson gSon = new Gson();
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            Document doc = Jsoup.connect(link).get();
+            Element divContent = doc.select("div[class='treeview']").first();
+            if(divContent!=null)
+            {
+                return divContent.outerHtml();
+            }
+        }catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return "";
     }
 }
