@@ -88,27 +88,7 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
                     InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
-
-                String mack = etMaCK.getText().toString();
-                if(mack!=null && !mack.trim().isEmpty())
-                {
-                    mack = mack.trim();
-                    DoanhNghiepItem doanhNghiepItem = null;
-                    for(DoanhNghiepItem item : MainActivity.gethongTinDoanhNghieps())
-                    {
-                        if(item.c.equalsIgnoreCase(mack))
-                        {
-                            doanhNghiepItem = item;
-                        }
-                    }
-                    if(llInformation!=null) llInformation.setVisibility(GONE);
-                    if(doanhNghiepItem == null && tvProcessInfo != null){
-                        tvProcessInfo.setText("Không tìm thấy thông tin");
-                    }else{
-                        (new DownloadContentTask()).execute(doanhNghiepItem.getCafeFURL());
-                        tvProcessInfo.setText("Đang yêu cầu dữ liệu");
-                    }
-                }
+                traCuu();
             }
         });
         view.findViewById(R.id.btXemBieuDoToDay).setOnClickListener(new OnClickListener() {
@@ -234,8 +214,43 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
                 }
             }
         });
+
+        if(requestMaCK != null && !requestMaCK.isEmpty()){
+            etMaCK.setText(requestMaCK);
+            requestMaCK = null;
+            traCuu();
+        }
     }
 
+    static public String requestMaCK;
+    static public void requestCongTy(String mack){
+        requestMaCK = mack;
+    }
+
+
+    private void traCuu()
+    {
+        String mack = etMaCK.getText().toString();
+        if(mack!=null && !mack.trim().isEmpty())
+        {
+            mack = mack.trim();
+            DoanhNghiepItem doanhNghiepItem = null;
+            for(DoanhNghiepItem item : MainActivity.gethongTinDoanhNghieps())
+            {
+                if(item.c.equalsIgnoreCase(mack))
+                {
+                    doanhNghiepItem = item;
+                }
+            }
+            if(llInformation!=null) llInformation.setVisibility(GONE);
+            if(doanhNghiepItem == null && tvProcessInfo != null){
+                tvProcessInfo.setText("Không tìm thấy thông tin");
+            }else{
+                (new DownloadContentTask()).execute(doanhNghiepItem.getCafeFURL());
+                tvProcessInfo.setText("Đang yêu cầu dữ liệu");
+            }
+        }
+    }
 
     private ThongTinDoanhNghiep thongTinDoanhNghiep;
     private class DownloadContentTask extends AsyncTask<String, Integer, ThongTinDoanhNghiep> {

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.hunght.data.HistoryPrice;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
+import com.hunght.data.StaticData;
 import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
@@ -81,43 +82,60 @@ public class FavoritesView extends LinearLayout {
                 if (position != 0) {
                     final HistoryPrice historyPrice = (HistoryPrice) view.getTag();
                     if (historyPrice != null) {
-                        showHistoryPopup(historyPrice);
+                        showInMenu(historyPrice);
                     }
                 }
             }
         });
-
-        lvHistoryFavoriteItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position!=0){
-                    final HistoryPrice historyPrice = (HistoryPrice)view.getTag();
-                    if(historyPrice != null) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                                .setTitle("Xóa Dữ Liệu")
-                                .setMessage("Bạn muốn xóa mã " + historyPrice.getMaCK())
-                                .setNeutralButton(android.R.string.ok,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                dialog.cancel();
-                                                removeMaCKFromFavorite(historyPrice.getMaCK());
-                                            }
-                                        })
-                                .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_info)
-                                .show();
-                    }
-                }
-                return false;
-            }
-        });
-
 
         getHistoryData(favoriteItems);
+    }
+
+    private void deleteFavorite(final HistoryPrice historyPrice)
+    {
+        if(historyPrice != null) {
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                    .setTitle("Xóa Dữ Liệu")
+                    .setMessage("Bạn muốn xóa mã " + historyPrice.getMaCK())
+                    .setNeutralButton(android.R.string.ok,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    removeMaCKFromFavorite(historyPrice.getMaCK());
+                                }
+                            })
+                    .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+        }
+    }
+
+    private void showInMenu(final HistoryPrice historyPrice){
+        if (historyPrice == null) return;
+        String[] colors = {"Xem Thông Tin Công Ty", "Xem Lịch Sử Giá", "Xóa"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(historyPrice.getFullName());
+        builder.setItems(colors, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which)
+                {
+                    case 0:
+                        ThongTinDoanhNghiepView.requestCongTy(historyPrice.getMaCK());
+                        ((MainActivity) getContext()).changeLayout(StaticData.geMenuItemBasedOnViewClassName("com.hunght.tinchungkhoan.ThongTinDoanhNghiepView"));
+                        break;
+                    case 1: showHistoryPopup(historyPrice); break;
+                    case 2: deleteFavorite(historyPrice); break;
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     PopupWindow popupWindow;
@@ -149,7 +167,7 @@ public class FavoritesView extends LinearLayout {
             p.dimAmount = 0.3f;
             wm.updateViewLayout(container, p);
 
-            ((TextView)view.findViewById(R.id.tvMoreInfo)).setText(historyPrice.getFullName(MainActivity.gethongTinDoanhNghieps()));
+            ((TextView)view.findViewById(R.id.tvMoreInfo)).setText(historyPrice.getFullName());
             (view.findViewById(R.id.btClosePopup)).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

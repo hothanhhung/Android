@@ -24,16 +24,14 @@ public class HistoryPrice {
         return maCK;
     }
 
-    public String getFullName(ArrayList<DoanhNghiepItem> thongTinDoanhNghieps) {
+    public String getFullName() {
         if(maCK == null) maCK = "";
-        if(thongTinDoanhNghieps!=null){
-            for (DoanhNghiepItem thongtindoanhnghiep: thongTinDoanhNghieps) {
-                if(thongtindoanhnghiep.c.equalsIgnoreCase(maCK)){
-                    return thongtindoanhnghiep.c + " - " + thongtindoanhnghiep.m;
-                }
+        if(!maCK.isEmpty()) {
+            String name = StaticData.getNameCongTy(maCK);
+            if (!name.isEmpty()) {
+                return maCK + " - " + name;
             }
         }
-
         return maCK;
     }
 
