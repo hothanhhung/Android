@@ -8,6 +8,29 @@ import java.util.ArrayList;
  * Created by Lenovo on 10/28/2016.
  */
 public class StaticData {
+    static private ArrayList<DoanhNghiepItem> thongTinDoanhNghieps;
+
+    public static ArrayList<DoanhNghiepItem> getThongTinDoanhNghieps() {
+        return thongTinDoanhNghieps;
+    }
+
+    public static void setThongTinDoanhNghieps(ArrayList<DoanhNghiepItem> thongTinDoanhNghieps) {
+        StaticData.thongTinDoanhNghieps = thongTinDoanhNghieps;
+    }
+
+    public static String getNameCongTy(String maCK) {
+        if(maCK == null) maCK = "";
+        if(thongTinDoanhNghieps!=null){
+            for (DoanhNghiepItem thongtindoanhnghiep: thongTinDoanhNghieps) {
+                if(thongtindoanhnghiep.c.equalsIgnoreCase(maCK)){
+                    return thongtindoanhnghiep.m;
+                }
+            }
+        }
+
+        return "";
+    }
+
     private static ArrayList<String> loaiCK;
     private static ArrayList<String> thiTruong;
     private static ArrayList<MenuLookUpItem> menuLookUpItems;
@@ -15,6 +38,7 @@ public class StaticData {
         if(menuLookUpItems == null)
         {
             menuLookUpItems = new ArrayList<>();
+            menuLookUpItems.add(new MenuLookUpItem("Danh Mục Đầu Tư", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.DanhMucDauTuView",""));
             menuLookUpItems.add(new MenuLookUpItem("Danh Mục Yêu Thích", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.FavoritesView",""));
             menuLookUpItems.add(new MenuLookUpItem("Dữ Liêu Mua Bán", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DuLieuMuaBan));
             menuLookUpItems.add(new MenuLookUpItem("Thực Hiện Quyền", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThucHienQuyenView",""));
@@ -23,6 +47,16 @@ public class StaticData {
 
         }
         return menuLookUpItems;
+    }
+
+    public static MenuLookUpItem geMenuItemBasedOnViewClassName(String className){
+        for(MenuLookUpItem menuLookUpItem : GetMenuLookUpItems())
+        {
+            if(menuLookUpItem.getViewClassName().equalsIgnoreCase(className)){
+                return menuLookUpItem;
+            }
+        }
+        return null;
     }
 
     public static ArrayList<String> GetLoaiChungKhoan(){

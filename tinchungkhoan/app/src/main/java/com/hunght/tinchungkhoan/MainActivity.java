@@ -81,16 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 numberOfSelectItem++;
                 //checkForShowInterstital();
                 MenuLookUpItem menuLookUpItem = (MenuLookUpItem) view.getTag();
-                if(menuLookUpItem.hasAction())
-                {
-                    tvSelectedMenuLookUpItem.setText(menuLookUpItem.getName());
-                   // vwMainContent.ad
-                    llMainContent.removeAllViews();
-                    mDrawerLayout.closeDrawer(mLeftDrawerList);
-                    llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                }else{
-                    Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_LONG).show();
-                }
+                changeLayout(menuLookUpItem);
             }
         });
         numberOfSelectItem = 1;
@@ -112,6 +103,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         (new DownloadContentTask()).execute();
     }
 
+    public void changeLayout(MenuLookUpItem menuLookUpItem)
+    {
+        if(menuLookUpItem.hasAction())
+        {
+            tvSelectedMenuLookUpItem.setText(menuLookUpItem.getName());
+            llMainContent.removeAllViews();
+            mDrawerLayout.closeDrawer(mLeftDrawerList);
+            llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        }else{
+            Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_LONG).show();
+        }
+    }
 	public void menuClick(View view) {
         switch (view.getId()) {
             case R.id.btMenuLookUpItems:
@@ -260,26 +263,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         interstitial.loadAd(adRequest_interstitial);
     }
 
-    static ArrayList<DoanhNghiepItem> thongTinDoanhNghieps;
-
-    private void sethongTinDoanhNghieps(ArrayList<DoanhNghiepItem> data)
+    private void setThongTinDoanhNghieps(ArrayList<DoanhNghiepItem> data)
     {
         if(data != null && data.size() > 10)
         {
             if(savedValues != null) {
                 savedValues.setThongTinDoanhNghieps(data);
             }
-            thongTinDoanhNghieps = data;
+            StaticData.setThongTinDoanhNghieps(data);
         }
     }
 
     static ArrayList<DoanhNghiepItem> gethongTinDoanhNghieps()
     {
-        if(thongTinDoanhNghieps == null && savedValues != null)
+        if(StaticData.getThongTinDoanhNghieps() == null && savedValues != null)
         {
-            thongTinDoanhNghieps = savedValues.getThongTinDoanhNghieps();
+            StaticData.setThongTinDoanhNghieps(savedValues.getThongTinDoanhNghieps());
         }
-        return thongTinDoanhNghieps;
+        return StaticData.getThongTinDoanhNghieps();
     }
 
     private class DownloadContentTask extends AsyncTask<String, Integer, ArrayList<DoanhNghiepItem>> {
@@ -291,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         protected void onPostExecute(ArrayList<DoanhNghiepItem> data) {
-            sethongTinDoanhNghieps(data);
+            setThongTinDoanhNghieps(data);
         }
     }
 }
