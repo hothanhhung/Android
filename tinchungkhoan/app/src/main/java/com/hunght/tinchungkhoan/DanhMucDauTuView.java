@@ -1,29 +1,27 @@
 package com.hunght.tinchungkhoan;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.net.Uri;
-import android.text.TextUtils;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hunght.data.DanhMucDauTuItem;
 import com.hunght.data.StaticData;
-import com.hunght.data.ThucHienQuyenItem;
+import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
 
@@ -67,7 +65,7 @@ public class DanhMucDauTuView extends LinearLayout {
         tvProcessInfo = view.findViewById(R.id.tvProcessInfo);
 
         savedValues = new SavedValues(getContext());
-        danhMucDauTuItems = new ArrayList<>();
+        danhMucDauTuItems = savedValues.getDanhMucDauTus();
 
         final Calendar myCalendar = Calendar.getInstance();
         myCalendar.set(myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
@@ -127,6 +125,9 @@ public class DanhMucDauTuView extends LinearLayout {
                     }else {
                         DanhMucDauTuItem danhMucDauTuItem = new DanhMucDauTuItem(ngayMua, maCK, name, giaMua, soLuong);
                         updateDanhMucDauTu(danhMucDauTuItem);
+                        etMaCK.setText("");
+                        etSoLuong.setText("");
+                        etGiaMua.setText("");
                     }
                 }
             }
@@ -136,12 +137,174 @@ public class DanhMucDauTuView extends LinearLayout {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
+                DanhMucDauTuItem danhMucDauTuItem = (DanhMucDauTuItem) v.getTag();
+                if(danhMucDauTuItem != null){
+                    showInMenu(danhMucDauTuItem);
+                }
                 return false;
             }
         });
 
-        updateListDanhMucDauTu();
+        updateListDanhMucDauTu(null);
+        refeshGiaThiTruong();
     }
+
+    private void deleteDanhMucDauTu(final DanhMucDauTuItem danhMucDauTuItem)
+    {
+        if(danhMucDauTuItem != null) {
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                    .setTitle("Xóa Dữ Liệu")
+                    .setMessage("Bạn muốn xóa mục này")
+                    .setNeutralButton(android.R.string.ok,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    for(DanhMucDauTuItem item: danhMucDauTuItems){
+                                        if(item.isTheSame(danhMucDauTuItem)){
+                                            danhMucDauTuItems.remove(item);
+                                            updateListDanhMucDauTu(null);
+                                            break;
+                                        }
+                                    }
+                                }
+                            })
+                    .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+        }
+    }
+
+    private void chinhSuaDanhMucDauTu(final DanhMucDauTuItem danhMucDauTuItem)
+    {
+        if(danhMucDauTuItem != null) {
+            LayoutInflater inflater = ((Activity)getContext()).getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.danh_muc_dau_tu_chinh_sua_popup, null);
+
+            ((EditText)dialogView.findViewById(R.id.etMaCK)).setText(danhMucDauTuItem.getMaCK());
+            ((EditText)dialogView.findViewById(R.id.etNgayMua)).setText(danhMucDauTuItem.getNgayMua());
+            ((EditText)dialogView.findViewById(R.id.etSoLuong)).setText(MethodsHelper.getStringFromInt(danhMucDauTuItem.getSoLuong()));
+            ((EditText)dialogView.findViewById(R.id.etGiaMua)).setText(MethodsHelper.getStringFromFloat(danhMucDauTuItem.getGiaMua()));
+
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                    .setTitle("Chỉnh Sửa")
+                    .setView(dialogView).setCancelable(false)
+                    .setNeutralButton("Lưu",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    View view = ((Activity)getContext()).getCurrentFocus();
+                                    if (view != null) {
+                                        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                    }
+
+                                    int soLuong = convertStringToInt(((EditText)dialogView.findViewById(R.id.etSoLuong)).getText().toString());
+                                    float giaMua = convertStringToFloat(((EditText)dialogView.findViewById(R.id.etGiaMua)).getText().toString());
+                                    if(giaMua > 0 && soLuong > 0)
+                                    {
+                                        danhMucDauTuItem.setSoLuong(soLuong);
+                                        danhMucDauTuItem.setGiaMua(giaMua);
+                                        updateListDanhMucDauTu(null);
+                                        dialog.dismiss();
+                                    }else{
+                                        Toast.makeText(getContext(), "Dữ liệu không hợp lệ", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            })
+                    .setPositiveButton("Bỏ Qua", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+        }
+    }
+
+    private void banDanhMucDauTu(final DanhMucDauTuItem danhMucDauTuItem)
+    {
+        if(danhMucDauTuItem != null) {
+            LayoutInflater inflater = ((Activity)getContext()).getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.danh_muc_dau_tu_ban_popup, null);
+
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+            .setTitle("Bán "+ danhMucDauTuItem.getAllInfo())
+            .setView(dialogView).setCancelable(false)
+            .setNeutralButton("Lưu",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            View view = ((Activity)getContext()).getCurrentFocus();
+                            if (view != null) {
+                                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                            }
+
+                            int soLuong = convertStringToInt(((EditText)dialogView.findViewById(R.id.etSoLuong)).getText().toString());
+                            float giaBan = convertStringToFloat(((EditText)dialogView.findViewById(R.id.etGiaBan)).getText().toString());
+                            if(giaBan > 0 && soLuong > 0 && danhMucDauTuItem.getSoLuong() >= soLuong)
+                            {
+                                if(danhMucDauTuItem.getSoLuong() == soLuong)
+                                {
+                                    danhMucDauTuItem.setGiaBan(giaBan);
+                                    updateListDanhMucDauTu(null);
+                                }else{
+                                    DanhMucDauTuItem banItem = new DanhMucDauTuItem(danhMucDauTuItem.getNgayMua(), danhMucDauTuItem.getMaCK(), danhMucDauTuItem.getTenCongTy(), danhMucDauTuItem.getGiaMua(), soLuong, 0,giaBan) ;
+                                    danhMucDauTuItem.setSoLuong(danhMucDauTuItem.getSoLuong() - soLuong);
+                                    updateDanhMucDauTu(banItem);
+                                }
+                                dialog.dismiss();
+                            }else{
+                                Toast.makeText(getContext(), "Dữ liệu không hợp lệ", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                    .setPositiveButton("Bỏ Qua", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+        }
+    }
+
+
+    private void showInMenu(final DanhMucDauTuItem danhMucDauTuItem){
+        if (danhMucDauTuItem == null) return;
+        String[] colors = {"Bán", "Chỉnh Sửa", "Xóa"};
+        if(danhMucDauTuItem.daBan()){
+            colors = new String[] {"Xóa"};
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(danhMucDauTuItem.getAllInfo());
+        builder.setItems(colors, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(danhMucDauTuItem.daBan()){
+                    deleteDanhMucDauTu(danhMucDauTuItem);
+                }else {
+                    switch (which) {
+                        case 0:
+                            banDanhMucDauTu(danhMucDauTuItem);
+                            break;
+                        case 1:
+                            chinhSuaDanhMucDauTu(danhMucDauTuItem);
+                            break;
+                        case 2:
+                            deleteDanhMucDauTu(danhMucDauTuItem);
+                            break;
+                    }
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+
 
     private int convertStringToInt(String number)
     {
@@ -172,7 +335,24 @@ public class DanhMucDauTuView extends LinearLayout {
             }
             danhMucDauTuItems.add(item);
         }
-        updateListDanhMucDauTu();
+        updateListDanhMucDauTu(null);
+        refeshGiaThiTruong();
+    }
+
+    private void refeshGiaThiTruong()
+    {
+        ArrayList<String> maCKs = new ArrayList<>();
+        for(DanhMucDauTuItem danhMucDauTuItem : danhMucDauTuItems){
+            if(!danhMucDauTuItem.daBan() && !maCKs.contains(danhMucDauTuItem.getMaCK())){
+                maCKs.add(danhMucDauTuItem.getMaCK());
+            }
+        }
+
+        if(!maCKs.isEmpty()){
+            for(String maCK: maCKs){
+                (new DownloadContentTask()).execute(maCK);
+            }
+        }
     }
 
     private void updateDateForEditText(EditText editText, Calendar calendar) {
@@ -185,7 +365,7 @@ public class DanhMucDauTuView extends LinearLayout {
 
     ArrayList<String> listDataHeader;
     HashMap<String, List<DanhMucDauTuItem>> listDataChild;
-    private void updateListDanhMucDauTu()
+    private void updateListDanhMucDauTu(DanhMucDauTuItem newPrice)
     {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap();
@@ -202,6 +382,16 @@ public class DanhMucDauTuView extends LinearLayout {
             if(tvProcessInfo!=null) {
                 tvProcessInfo.setText("");
             }
+            if(newPrice!=null){
+                for(DanhMucDauTuItem danhMucDauTuItem: danhMucDauTuItems){
+                    if(!danhMucDauTuItem.daBan() && danhMucDauTuItem.getMaCK().equalsIgnoreCase(newPrice.getMaCK()))
+                    {
+                        danhMucDauTuItem.setGiaThiTruong(newPrice.getGiaThiTruong());
+                    }
+                }
+            }
+
+            savedValues.setDanhMucDauTus(danhMucDauTuItems);
             for (DanhMucDauTuItem danhMucDauTuItem:danhMucDauTuItems) {
                 if(listDataHeader.contains(danhMucDauTuItem.getMaCK()))
                 {
@@ -229,4 +419,19 @@ public class DanhMucDauTuView extends LinearLayout {
 
     }
 
+    private class DownloadContentTask extends AsyncTask<String, Integer, DanhMucDauTuItem> {
+        protected DanhMucDauTuItem doInBackground(String... maCK) {
+            return ParserData.getCurrentPrice(maCK[0]);
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(DanhMucDauTuItem danhMucDauTuItem) {
+            if(danhMucDauTuItem!=null)
+            {
+                updateListDanhMucDauTu(danhMucDauTuItem);
+            }
+        }
+    }
 }

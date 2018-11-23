@@ -1,6 +1,11 @@
 package com.hunght.data;
 
+import com.hunght.utils.MethodsHelper;
+
+import java.util.Calendar;
+
 public class DanhMucDauTuItem {
+    private long id;
     private String dateMua;
     private String maCK;
     private String tenCongTy;
@@ -9,10 +14,12 @@ public class DanhMucDauTuItem {
     private float giaThiTruong;
     private float giaBan;
 
-    public DanhMucDauTuItem(){}
+    public DanhMucDauTuItem(){
+        this.id = Calendar.getInstance().getTimeInMillis();
+    }
 
     public DanhMucDauTuItem(String dateMua, String maCK, String tenCongTy, float giaMua, int soLuong) {
-
+        this.id = Calendar.getInstance().getTimeInMillis();
         this.dateMua = dateMua;
         this.maCK = maCK;
         this.tenCongTy = tenCongTy;
@@ -23,7 +30,7 @@ public class DanhMucDauTuItem {
     }
 
     public DanhMucDauTuItem(String dateMua, String maCK, String tenCongTy, float giaMua, int soLuong, float giaThiTruong, float giaBan) {
-
+        this.id = Calendar.getInstance().getTimeInMillis();
         this.dateMua = dateMua;
         this.maCK = maCK;
         this.tenCongTy = tenCongTy;
@@ -39,6 +46,21 @@ public class DanhMucDauTuItem {
                 giaMua == item.getGiaMua() && dateMua.equalsIgnoreCase(item.getNgayMua()));
     }
 
+    public int compareDate(DanhMucDauTuItem item)
+    {
+        int index = getDateMuaInYYYYmmDD().compareTo(item.getDateMuaInYYYYmmDD());
+        if(index == 0) return Long.compare(id, item.id);
+        return index;
+    }
+
+    private String getDateMuaInYYYYmmDD(){
+        String[] items = dateMua.split("-");
+        if(items.length == 3)
+        {
+            return items[2] + items[1] + items[0];
+        }
+        return "";
+    }
     public String getNgayMua() {
         return dateMua;
     }
@@ -49,6 +71,14 @@ public class DanhMucDauTuItem {
 
     public String getMaCK() {
         return maCK;
+    }
+
+    public String getAllInfo() {
+        return "Mã " + getMaCK() + " - Số Lượng " + MethodsHelper.getStringFromInt(getSoLuong()) + " - Giá Mua " + MethodsHelper.getStringFromFloat(getGiaMua());
+    }
+
+    public boolean daBan() {
+        return giaBan > 0;
     }
 
     public void setMaCK(String maCK) {
@@ -80,7 +110,7 @@ public class DanhMucDauTuItem {
     }
 
     public String getSoLuongInString() {
-        return String.format("%f", soLuong);
+        return String.format("%.2f", soLuong);
     }
 
     public void setSoLuong(int soLuong) {
@@ -89,6 +119,10 @@ public class DanhMucDauTuItem {
 
     public float getGiaThiTruong() {
         return giaThiTruong;
+    }
+
+    public float getGiaBanHoacThiTruong() {
+        return giaBan > 0 ? giaBan : giaThiTruong;
     }
 
     public String getGiaThiTruongInString() {
@@ -112,7 +146,7 @@ public class DanhMucDauTuItem {
     }
 
     public float getLoiNhan() {
-        return (giaThiTruong - giaMua)*soLuong;
+        return ((giaBan > 0? giaBan : giaThiTruong) - giaMua)*soLuong;
     }
 
     public String getLoiNhanInString() {

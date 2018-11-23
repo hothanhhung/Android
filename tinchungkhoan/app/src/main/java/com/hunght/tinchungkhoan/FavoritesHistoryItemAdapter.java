@@ -91,16 +91,16 @@ public class FavoritesHistoryItemAdapter extends ArrayAdapter<PriceItem> {
 
             switch (priceItem.getOffSet()) {
                 case -1:
-                    tvPrice.setTextColor(Color.RED);
-                    tvChange.setTextColor(Color.RED);
+                    tvPrice.setTextColor(context.getResources().getColor(R.color.giaAm));
+                    tvChange.setTextColor(context.getResources().getColor(R.color.giaAm));
                     break;
                 case 0:
-                    tvPrice.setTextColor(Color.rgb(204, 204, 0));
-                    tvChange.setTextColor(Color.rgb(204, 204, 0));
+                    tvPrice.setTextColor(context.getResources().getColor(R.color.giaZero));
+                    tvChange.setTextColor(context.getResources().getColor(R.color.giaZero));
                     break;
                 case 1:
-                    tvPrice.setTextColor(Color.GREEN);
-                    tvChange.setTextColor(Color.GREEN);
+                    tvPrice.setTextColor(context.getResources().getColor(R.color.giaDuong));
+                    tvChange.setTextColor(context.getResources().getColor(R.color.giaDuong));
                     break;
                 default:
                     tvPrice.setTextColor(Color.BLACK);

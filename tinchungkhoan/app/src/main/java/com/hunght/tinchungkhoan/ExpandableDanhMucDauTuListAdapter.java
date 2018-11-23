@@ -28,6 +28,18 @@ public class ExpandableDanhMucDauTuListAdapter extends BaseExpandableListAdapter
         this._context = context;
         this._listDataGroup = listDataGroup;
         this._profileItems = items;
+        java.util.Collections.sort(this._listDataGroup);
+        for(String str:this._listDataGroup){
+            List<DanhMucDauTuItem> list = items.get(str);
+            if (list.size() > 0) {
+                java.util.Collections.sort(list, new java.util.Comparator<DanhMucDauTuItem>() {
+                    @Override
+                    public int compare(final DanhMucDauTuItem object1, final DanhMucDauTuItem object2) {
+                        return -1 * object1.compareDate(object2);
+                    }
+                });
+            }
+        }
     }
 
     @Override
@@ -65,22 +77,40 @@ public class ExpandableDanhMucDauTuListAdapter extends BaseExpandableListAdapter
         tvTen.setText(danhMucDauTuItem.getMaCK());
         tvSoLuong.setText(getStringFromInt(danhMucDauTuItem.getSoLuong()));
         tvGiaMua.setText(getStringFromFloat(danhMucDauTuItem.getGiaMua()));
-        tvGiaThiTruong.setText(getStringFromFloat(danhMucDauTuItem.getGiaThiTruong()));
+        tvGiaThiTruong.setText(getStringFromFloat(danhMucDauTuItem.getGiaBanHoacThiTruong()));
         tvLoiNhuan.setText(getStringFromFloat(loiNhuan));
 
         if(loiNhuan == 0)
         {
-            tvLoiNhuan.setTextColor(Color.rgb(204, 204, 0));
+            tvLoiNhuan.setTextColor(_context.getResources().getColor(R.color.giaZero));
+            tvGiaThiTruong.setTextColor(_context.getResources().getColor(R.color.giaZero));
         }else if(loiNhuan > 0)
         {
-            tvLoiNhuan.setTextColor(Color.GREEN);
+            tvLoiNhuan.setTextColor(_context.getResources().getColor(R.color.giaDuong));
+            tvGiaThiTruong.setTextColor(_context.getResources().getColor(R.color.giaDuong));
         }else{
-            tvLoiNhuan.setTextColor(Color.RED);
+            tvLoiNhuan.setTextColor(_context.getResources().getColor(R.color.giaAm));
+            tvGiaThiTruong.setTextColor(_context.getResources().getColor(R.color.giaAm));
         }
         if(childPosition % 2 == 0) {
             convertView.setBackgroundColor(_context.getResources().getColor(R.color.item_odd_color));
         }else {
             convertView.setBackgroundColor(_context.getResources().getColor(R.color.item_even_color));
+        }
+        if(danhMucDauTuItem.daBan()){
+            tvNgay.setTypeface(Typeface.DEFAULT_BOLD);
+            tvTen.setTypeface(Typeface.DEFAULT_BOLD);
+            tvSoLuong.setTypeface(Typeface.DEFAULT_BOLD);
+            tvGiaThiTruong.setTypeface(Typeface.DEFAULT_BOLD);
+            tvGiaMua.setTypeface(Typeface.DEFAULT_BOLD);
+            tvLoiNhuan.setTypeface(Typeface.DEFAULT_BOLD);
+        }else{
+            tvNgay.setTypeface(Typeface.DEFAULT);
+            tvTen.setTypeface(Typeface.DEFAULT);
+            tvSoLuong.setTypeface(Typeface.DEFAULT);
+            tvGiaThiTruong.setTypeface(Typeface.DEFAULT);
+            tvGiaMua.setTypeface(Typeface.DEFAULT);
+            tvLoiNhuan.setTypeface(Typeface.DEFAULT);
         }
         convertView.setTag(danhMucDauTuItem);
         return convertView;
@@ -145,12 +175,12 @@ public class ExpandableDanhMucDauTuListAdapter extends BaseExpandableListAdapter
 
         if(loiNhuan == 0)
         {
-            tvTongLoiNhuan.setTextColor(Color.rgb(204, 204, 0));
+            tvTongLoiNhuan.setTextColor(_context.getResources().getColor(R.color.giaZero));
         }else if(loiNhuan > 0)
         {
-            tvTongLoiNhuan.setTextColor(Color.GREEN);
+            tvTongLoiNhuan.setTextColor(_context.getResources().getColor(R.color.giaDuong));
         }else{
-            tvTongLoiNhuan.setTextColor(Color.RED);
+            tvTongLoiNhuan.setTextColor(_context.getResources().getColor(R.color.giaAm));
         }
 
         return convertView;
