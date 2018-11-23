@@ -100,6 +100,14 @@ public class MethodsHelper {
 
     }
 
+    public static String getStringFromFloat(float number) {
+        return String.format("%.2f", number);
+    }
+
+    public static String getStringFromInt(int number) {
+        return String.format("%d", number);
+    }
+
     public static String getPackageName(Context context)
     {
         String packageName = "";

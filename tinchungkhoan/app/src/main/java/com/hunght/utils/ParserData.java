@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hunght.data.DanhMucDauTuItem;
 import com.hunght.data.HistoryPrice;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
@@ -324,5 +325,35 @@ public class ParserData {
             ex.printStackTrace();
         }
         return "";
+    }
+
+    public static DanhMucDauTuItem getCurrentPrice(String maCK) {
+        if(maCK == null || maCK.isEmpty()) return null;
+        maCK = maCK.toUpperCase();
+        String link = "http://vcbs.com.vn/DataGen/StockInfo/"+maCK+".xml?_="+ Calendar.getInstance().getTimeInMillis();
+
+        try {
+            Log.d("getCurrentPrice", link);
+
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            Document doc = Jsoup.connect(link).get();
+            Element stock  = doc.select("Stock").first();
+            if(stock != null){
+                String current_price = stock.attr("current_price");
+                if(current_price!=null && !current_price.isEmpty()){
+                    current_price = current_price.replace(',', '.');
+                    DanhMucDauTuItem danhMucDauTuItem = new DanhMucDauTuItem();
+                    danhMucDauTuItem.setMaCK(maCK);
+                    danhMucDauTuItem.setGiaThiTruong(Float.valueOf(current_price));
+                    return danhMucDauTuItem;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

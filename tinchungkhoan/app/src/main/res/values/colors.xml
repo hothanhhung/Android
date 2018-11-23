@@ -6,4 +6,7 @@
     <color name="item_even_color">#f4f4f4</color>
     <color name="item_odd_color">#e7e7e7</color>
     <color name="backgroundColorBlue">#6081be</color>
+    <color name="giaDuong">#009933</color>
+    <color name="giaAm">#cc0000</color>
+    <color name="giaZero">#ff9900</color>
 </resources>
