@@ -25,8 +25,6 @@ public class DanhMucDauTuItem {
         this.tenCongTy = tenCongTy;
         this.giaMua = giaMua;
         this.soLuong = soLuong;
-        this.giaThiTruong = giaThiTruong;
-        this.giaBan = giaBan;
     }
 
     public DanhMucDauTuItem(String dateMua, String maCK, String tenCongTy, float giaMua, int soLuong, float giaThiTruong, float giaBan) {
