@@ -72,7 +72,16 @@
         </LinearLayout>
 
         <!-- The navigation drawer -->
-        <LinearLayout
+        <android.support.design.widget.NavigationView
+            android:id="@+id/leftNavdrawer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            ads:headerLayout="@layout/nav_header_main"
+            ads:itemTextColor="#07a3b6"
+            ads:menu="@menu/activity_main_drawer" />
+        <!--<LinearLayout
             android:id="@+id/leftNavdrawer"
             android:layout_width="260dp"
             android:orientation="vertical"
@@ -93,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:paddingBottom="30dp"
                 android:clipToPadding="false" />
-        </LinearLayout>
+        </LinearLayout>-->
     </android.support.v4.widget.DrawerLayout>
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

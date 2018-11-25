@@ -46,6 +46,10 @@ public class MenuLookUpItem {
         return viewClassName;
     }
 
+    public MenuLookUpItemKind getKind() {
+        return kind;
+    }
+
     public View getView(Context context)
     {
         try {
