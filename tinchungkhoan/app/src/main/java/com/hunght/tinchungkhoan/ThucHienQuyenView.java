@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
 import com.hunght.data.ThucHienQuyenItem;
 import com.hunght.utils.ParserData;
@@ -52,6 +53,10 @@ public class ThucHienQuyenView extends LinearLayout {
     public ThucHienQuyenView(Context context) {
         super(context);
         init(null, 0);
+    }
+
+    public ThucHienQuyenView(Context context, MenuLookUpItemKind kind) {
+        this(context);
     }
 
     public ThucHienQuyenView(Context context, AttributeSet attrs) {

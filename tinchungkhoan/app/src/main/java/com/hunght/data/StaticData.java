@@ -38,21 +38,31 @@ public class StaticData {
         if(menuLookUpItems == null)
         {
             menuLookUpItems = new ArrayList<>();
-            menuLookUpItems.add(new MenuLookUpItem("Danh Mục Đầu Tư", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.DanhMucDauTuView",""));
-            menuLookUpItems.add(new MenuLookUpItem("Danh Mục Yêu Thích", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.FavoritesView",""));
+            menuLookUpItems.add(new MenuLookUpItem("Danh Mục Đầu Tư", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.DanhMucDauTuView","", MenuLookUpItemKind.DanhMucDauTu));
+            menuLookUpItems.add(new MenuLookUpItem("Danh Mục Yêu Thích", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.FavoritesView","", MenuLookUpItemKind.DanhMucYeuThich));
             menuLookUpItems.add(new MenuLookUpItem("Dữ Liêu Mua Bán", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DuLieuMuaBan));
-            menuLookUpItems.add(new MenuLookUpItem("Thực Hiện Quyền", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThucHienQuyenView",""));
-            menuLookUpItems.add(new MenuLookUpItem("Thông Tin Doanh Nghiệp", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThongTinDoanhNghiepView",""));
+            menuLookUpItems.add(new MenuLookUpItem("Thực Hiện Quyền", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThucHienQuyenView","", MenuLookUpItemKind.ThucHienQuyen));
+            menuLookUpItems.add(new MenuLookUpItem("Thông Tin Doanh Nghiệp", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThongTinDoanhNghiepView","", MenuLookUpItemKind.ThongTinDoanhNghiep));
             menuLookUpItems.add(new MenuLookUpItem("Cafef",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.Cafef));
 
         }
         return menuLookUpItems;
     }
 
+    public static MenuLookUpItem geMenuItemBasedOnKind(MenuLookUpItemKind kind){
+        for(MenuLookUpItem menuLookUpItem : GetMenuLookUpItems())
+        {
+            if(menuLookUpItem.getKind() == kind){
+                return menuLookUpItem;
+            }
+        }
+        return null;
+    }
+
     public static MenuLookUpItem geMenuItemBasedOnViewClassName(String className){
         for(MenuLookUpItem menuLookUpItem : GetMenuLookUpItems())
         {
-            if(menuLookUpItem.getViewClassName().equalsIgnoreCase(className)){
+            if(menuLookUpItem.getViewClassName().endsWith(className)){
                 return menuLookUpItem;
             }
         }

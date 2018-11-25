@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hunght.data.DanhMucDauTuItem;
+import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
 import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.ParserData;
@@ -42,6 +43,10 @@ public class DanhMucDauTuView extends LinearLayout {
     public DanhMucDauTuView(Context context) {
         super(context);
         init(null, 0);
+    }
+
+    public DanhMucDauTuView(Context context, MenuLookUpItemKind kind) {
+        this(context);
     }
 
     public DanhMucDauTuView(Context context, AttributeSet attrs) {

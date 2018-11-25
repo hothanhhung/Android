@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.hunght.data.DoanhNghiepItem;
 import com.hunght.data.HistoryPrice;
+import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
 import com.hunght.data.ThongTinDoanhNghiep;
 import com.hunght.utils.MethodsHelper;
@@ -51,6 +52,10 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
     public ThongTinDoanhNghiepView(Context context) {
         super(context);
         init(null, 0);
+    }
+
+    public ThongTinDoanhNghiepView(Context context, MenuLookUpItemKind kind) {
+        this(context);
     }
 
     public ThongTinDoanhNghiepView(Context context, AttributeSet attrs) {

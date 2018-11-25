@@ -5,27 +5,35 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_DanhMucDauTu"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Dữ Liệu" />
+            android:title="Danh Mục Đầu Tư" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_DanhMucYeuThich"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Lịch Thực Hiện Quyền" />
+            android:title="Danh Mục Yêu Thích" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_ToanCanhThiTruong"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Toàn Cảnh Thị Trường" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_DuLieuMuBan"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Dữ Liêu Mua Bán" />
+        <item
+            android:id="@+id/nav_ThucHienQuyen"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Thực Hiện Quyền" />
+        <item
+            android:id="@+id/nav_ThongTinDoanhNghiep"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Thông Tin Doanh Nghiệp" />
     </group>
 
     <item android:title="Báo Chứng Khoán">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_Cafef"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Cafef" />
             <item

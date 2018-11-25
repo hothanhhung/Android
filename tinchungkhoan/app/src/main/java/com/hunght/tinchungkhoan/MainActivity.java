@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +23,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.MenuLookUpItem;
+import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
 import com.hunght.data.DoanhNghiepItem;
 import com.hunght.utils.ParserData;
@@ -32,14 +34,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 	TextView tvSelectedMenuLookUpItem;
-    ListView lvMenuLookUpItems;
+    //ListView lvMenuLookUpItems;
     MenuLookUpItemAdapter menuLookUpItemAdapter;
     LinearLayout llMainContent;
 
     private DrawerLayout mDrawerLayout;
-    private LinearLayout mLeftDrawerList;
+    private NavigationView mLeftDrawerList;
 
     private AdView mAdView = null;
     private InterstitialAd interstitial = null;
@@ -66,11 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mLeftDrawerList = (LinearLayout) findViewById(R.id.leftNavdrawer);
+        mLeftDrawerList = findViewById(R.id.leftNavdrawer);
 
         llMainContent = (LinearLayout) findViewById(R.id.llMainContent);
         tvSelectedMenuLookUpItem = (TextView) findViewById(R.id.tvSelectedMenuLookUpItem);
-        lvMenuLookUpItems = (ListView) findViewById(R.id.lvMenuLookUpItems);
+        /*lvMenuLookUpItems = findViewById(R.id.lvMenuLookUpItems);
         ArrayList<MenuLookUpItem> menuLookUpItems = StaticData.GetMenuLookUpItems();
         menuLookUpItemAdapter = new MenuLookUpItemAdapter(MainActivity.this, menuLookUpItems);
 
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 MenuLookUpItem menuLookUpItem = (MenuLookUpItem) view.getTag();
                 changeLayout(menuLookUpItem);
             }
-        });
+        });*/
         numberOfSelectItem = 1;
         timeForRun = 0;
         savedValues = new SavedValues(this);
@@ -101,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mDrawerLayout.openDrawer(mLeftDrawerList);
         (new DownloadContentTask()).execute();
+        mLeftDrawerList.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                return navigationItemSelected(menuItem);
+            }
+        });
     }
 
     public void changeLayout(MenuLookUpItem menuLookUpItem)
@@ -178,25 +186,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+
+    public boolean navigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        switch (id)
+        {
+            case R.id.nav_DanhMucDauTu:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.DanhMucDauTu));
+                break;
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            case R.id.nav_DanhMucYeuThich:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.DanhMucYeuThich));
+                break;
 
-        } else if (id == R.id.nav_slideshow) {
+            case R.id.nav_ToanCanhThiTruong:
+                break;
 
-        } else if (id == R.id.nav_manage) {
+            case R.id.nav_DuLieuMuBan:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.DuLieuMuaBan));
+                break;
 
-        } else if (id == R.id.nav_share) {
+            case R.id.nav_ThucHienQuyen:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.ThucHienQuyen));
+                break;
 
-        } else if (id == R.id.nav_send) {
+            case R.id.nav_ThongTinDoanhNghiep:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.ThongTinDoanhNghiep));
+                break;
 
+            case R.id.nav_Cafef:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.Cafef));
+                break;
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

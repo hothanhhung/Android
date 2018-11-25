@@ -46,6 +46,10 @@ public class FavoritesView extends LinearLayout {
         init(null, 0);
     }
 
+    public FavoritesView(Context context, MenuLookUpItemKind kind) {
+        this(context);
+    }
+
     public FavoritesView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
