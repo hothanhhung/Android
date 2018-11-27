@@ -37,9 +37,17 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="Cafef" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_Vietstock"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Vietstock" />
+            <item
+                android:id="@+id/nav_TinNhanhChungKhoan"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Tin Nhanh Chứng Khoán" />
+            <item
+                android:id="@+id/nav_BaoDauTu"
+                android:icon="@drawable/ic_menu_send"
+                android:title="BaoDauTu" />
         </menu>
     </item>
 

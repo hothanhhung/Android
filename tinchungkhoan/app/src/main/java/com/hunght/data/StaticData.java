@@ -44,6 +44,9 @@ public class StaticData {
             menuLookUpItems.add(new MenuLookUpItem("Thực Hiện Quyền", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThucHienQuyenView","", MenuLookUpItemKind.ThucHienQuyen));
             menuLookUpItems.add(new MenuLookUpItem("Thông Tin Doanh Nghiệp", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThongTinDoanhNghiepView","", MenuLookUpItemKind.ThongTinDoanhNghiep));
             menuLookUpItems.add(new MenuLookUpItem("Cafef",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.Cafef));
+            menuLookUpItems.add(new MenuLookUpItem("Vietstock",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.Vietstock));
+            menuLookUpItems.add(new MenuLookUpItem("Tin Nhanh Chứng Khoán",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.TinNhanhChungKhoan));
+            menuLookUpItems.add(new MenuLookUpItem("Báo Đầu Tư",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DauTuOnline));
 
         }
         return menuLookUpItems;
