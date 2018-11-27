@@ -88,6 +88,8 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
                 return "http://liveboard.cafef.vn/";
             case Cafef:
                 return "http://cafef.vn";
+            case Vietstock:
+                return "https://vietstock.vn/";
         }
         return "";
     }

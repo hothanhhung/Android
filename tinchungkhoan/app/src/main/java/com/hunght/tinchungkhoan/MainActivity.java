@@ -218,6 +218,15 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_Cafef:
                 changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.Cafef));
                 break;
+            case R.id.nav_Vietstock:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.Vietstock));
+                break;
+            case R.id.nav_BaoDauTu:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.DauTuOnline));
+                break;
+            case R.id.nav_TinNhanhChungKhoan:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.TinNhanhChungKhoan));
+                break;
         }
 
 
