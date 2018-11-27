@@ -6,27 +6,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_DanhMucDauTu"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_attach_money_black"
             android:title="Danh Mục Đầu Tư" />
         <item
             android:id="@+id/nav_DanhMucYeuThich"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_featured_play_list_black"
             android:title="Danh Mục Yêu Thích" />
         <item
             android:id="@+id/nav_ToanCanhThiTruong"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_equalizer_black"
             android:title="Toàn Cảnh Thị Trường" />
         <item
             android:id="@+id/nav_DuLieuMuBan"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_show_chart_black"
             android:title="Dữ Liêu Mua Bán" />
         <item
             android:id="@+id/nav_ThucHienQuyen"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_assignment_black"
             android:title="Thực Hiện Quyền" />
         <item
             android:id="@+id/nav_ThongTinDoanhNghiep"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_business_center_black"
             android:title="Thông Tin Doanh Nghiệp" />
     </group>
 
