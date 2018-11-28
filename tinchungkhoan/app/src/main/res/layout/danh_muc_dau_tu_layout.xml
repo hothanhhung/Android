@@ -70,12 +70,25 @@
             android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btLưu"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lưu" />
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:layout_weight="1"
+            android:textSize="11dp"
+            android:gravity="center"
+            android:text="Giá Mua tính theo đơn vị 1000 khi nhập" />
+        <Button
+            android:id="@+id/btLưu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lưu" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -147,6 +147,14 @@ public class DanhMucDauTuItem {
         return ((giaBan > 0? giaBan : giaThiTruong) - giaMua)*soLuong;
     }
 
+    public float getTongThiTruongHoacBan() {
+        return (giaBan > 0? giaBan : giaThiTruong)*soLuong;
+    }
+
+    public float getTongDauTu() {
+        return giaMua*soLuong;
+    }
+
     public String getLoiNhanInString() {
         return String.format("%f", getLoiNhan());
     }

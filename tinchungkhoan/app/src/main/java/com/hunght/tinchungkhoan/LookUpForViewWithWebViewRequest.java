@@ -17,7 +17,7 @@ import com.hunght.data.MenuLookUpItemKind;
  * Created by Lenovo on 10/28/2016.
  */
 public class LookUpForViewWithWebViewRequest extends LinearLayout {
-    WebView webView;
+    static WebView webView;
     TextView textView;
     RelativeLayout llWebView;
     MenuLookUpItemKind kind;
@@ -72,6 +72,22 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
         firstLoadWeb();
     }
 
+    public static boolean canGoBack()
+    {
+        if(webView!=null)
+        {
+            return webView.canGoBack();
+        }
+        return false;
+    }
+
+    public static void goBack()
+    {
+        if(webView!=null)
+        {
+            webView.goBack();
+        }
+    }
 
     private void firstLoadWeb()
     {
@@ -87,11 +103,20 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
             case DuLieuMuaBan:
                 return "http://liveboard.cafef.vn/";
             case Cafef:
-                return "http://cafef.vn";
+                return "http://cafef.vn/";
             case Vietstock:
                 return "https://vietstock.vn/";
+            case TinNhanhChungKhoan:
+                return "https://tinnhanhchungkhoan.vn/";
+            case DauTuOnline:
+                return "https://baodautu.vn/";
         }
         return "";
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        webView = null;
+        super.finalize();
+    }
 }

@@ -34,21 +34,33 @@
         <menu>
             <item
                 android:id="@+id/nav_Cafef"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_public_black"
                 android:title="Cafef" />
             <item
                 android:id="@+id/nav_Vietstock"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_public_black"
                 android:title="Vietstock" />
             <item
                 android:id="@+id/nav_TinNhanhChungKhoan"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_public_black"
                 android:title="Tin Nhanh Chứng Khoán" />
             <item
                 android:id="@+id/nav_BaoDauTu"
-                android:icon="@drawable/ic_menu_send"
-                android:title="BaoDauTu" />
+                android:icon="@drawable/ic_public_black"
+                android:title="Báo Đầu Tư" />
         </menu>
     </item>
 
+    <item android:title="Hệ Thống">
+        <menu>
+            <item
+                android:id="@+id/nav_Setting"
+                android:icon="@drawable/ic_settings_black"
+                android:title="Setting" />
+            <item
+                android:id="@+id/nav_Rate"
+                android:icon="@drawable/ic_rate_review_black"
+                android:title="Rate" />
+        </menu>
+    </item>
 </menu>

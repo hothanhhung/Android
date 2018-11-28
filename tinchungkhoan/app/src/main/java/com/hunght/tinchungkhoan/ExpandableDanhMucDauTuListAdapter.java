@@ -10,6 +10,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.hunght.data.DanhMucDauTuItem;
+import com.hunght.data.StaticData;
+import com.hunght.utils.MethodsHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -117,11 +119,11 @@ public class ExpandableDanhMucDauTuListAdapter extends BaseExpandableListAdapter
     }
 
     public String getStringFromFloat(float number) {
-        return String.format("%.2f", number);
+        return MethodsHelper.getStringFromFloat(number);
     }
 
     public String getStringFromInt(int number) {
-        return String.format("%d", number);
+        return MethodsHelper.getStringFromInt(number);
     }
 
     @Override
@@ -165,12 +167,18 @@ public class ExpandableDanhMucDauTuListAdapter extends BaseExpandableListAdapter
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
 
+        TextView tvTongDauTu = convertView.findViewById(R.id.tvTongDauTu);
+        TextView tvTongThiTruong = convertView.findViewById(R.id.tvTongThiTruong);
         TextView tvTongLoiNhuan = convertView.findViewById(R.id.tvTongLoiNhuan);
 
-        float loiNhuan = 0;
+        float loiNhuan = 0, dauTu = 0, thiTruong = 0;
         for(DanhMucDauTuItem danhMucDauTuItem: groupItems){
             loiNhuan += danhMucDauTuItem.getLoiNhan();
+            dauTu += danhMucDauTuItem.getTongDauTu();
+            thiTruong += danhMucDauTuItem.getTongThiTruongHoacBan();
         }
+        tvTongDauTu.setText(getStringFromFloat(dauTu));
+        tvTongThiTruong.setText(getStringFromFloat(thiTruong));
         tvTongLoiNhuan.setText(getStringFromFloat(loiNhuan));
 
         if(loiNhuan == 0)

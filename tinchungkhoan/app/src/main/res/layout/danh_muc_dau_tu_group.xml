@@ -20,14 +20,74 @@
             android:text=""
             android:textColor="#1b2397" />
 
-        <TextView
-            android:id="@+id/tvTongLoiNhuan"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="14dp"
-            android:text="aaaaaa"
-            android:paddingLeft="5dp"
-            android:gravity="center"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textSize="11dp"
+                    android:text="Đầu Tư"
+                    android:paddingLeft="2dp"
+                    android:gravity="right"/>
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textSize="11dp"
+                    android:text="Thị Trường"
+                    android:paddingLeft="2dp"
+                    android:gravity="right"/>
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textSize="11dp"
+                    android:text="Lợi Nhuận"
+                    android:paddingLeft="2dp"
+                    android:gravity="right"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTongDauTu"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="100000000"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTongThiTruong"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="90000000"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTongLoiNhuan"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="10000000"
+                    android:textSize="11dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"

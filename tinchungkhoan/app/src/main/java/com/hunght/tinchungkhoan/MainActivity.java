@@ -142,25 +142,29 @@ public class MainActivity extends AppCompatActivity {
 	boolean doubleBackToExitPressedOnce = false;
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if (doubleBackToExitPressedOnce) {
-	            super.onBackPressed();
-	            return;
-	        }
+            if (LookUpForViewWithWebViewRequest.canGoBack()) {
+                LookUpForViewWithWebViewRequest.goBack();
+            } else {
+                if (doubleBackToExitPressedOnce) {
+                    super.onBackPressed();
+                    return;
+                }
 
-	        this.doubleBackToExitPressedOnce = true;
-	        Toast.makeText(this, "press BACK again to exit", Toast.LENGTH_SHORT).show();
+                this.doubleBackToExitPressedOnce = true;
+                Toast.makeText(this, "press BACK again to exit", Toast.LENGTH_SHORT).show();
 
-	        new Handler().postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
 
-	            @Override
-	            public void run() {
-	                doubleBackToExitPressedOnce=false;
-	            }
-	        }, 2000);
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce = false;
+                    }
+                }, 2000);
+            }
         }
     }
 
@@ -190,6 +194,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean navigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        updateUI(id);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void updateUI(int id){
         switch (id)
         {
             case R.id.nav_DanhMucDauTu:
@@ -228,13 +241,8 @@ public class MainActivity extends AppCompatActivity {
                 changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.TinNhanhChungKhoan));
                 break;
         }
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
-	
+
 	@Override
     protected  void onResume()
     {
