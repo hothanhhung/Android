@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hunght.data.MenuLookUpItemKind;
+import com.hunght.data.StaticData;
 
 /**
  * Created by Lenovo on 10/28/2016.
@@ -98,20 +99,8 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
 
     public String getUrl(MenuLookUpItemKind kind) {
 
-        switch (kind)
-        {
-            case DuLieuMuaBan:
-                return "http://liveboard.cafef.vn/";
-            case Cafef:
-                return "http://cafef.vn/";
-            case Vietstock:
-                return "https://vietstock.vn/";
-            case TinNhanhChungKhoan:
-                return "https://tinnhanhchungkhoan.vn/";
-            case DauTuOnline:
-                return "https://baodautu.vn/";
-        }
-        return "";
+        return StaticData.geMenuItemBasedOnKind(kind).getUrl();
+
     }
 
     @Override

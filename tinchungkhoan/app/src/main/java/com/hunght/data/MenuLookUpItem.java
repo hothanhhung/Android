@@ -12,9 +12,11 @@ import java.lang.reflect.Constructor;
 public class MenuLookUpItem {
     String name;
     String detail;
+    String url;
     int drawableIcon;
     String viewClassName;
     MenuLookUpItemKind kind;
+    boolean isTrangBao = false;
 
     public MenuLookUpItem(){}
     public MenuLookUpItem(String name, int drawableIcon, String viewClassName, String detail)
@@ -30,12 +32,37 @@ public class MenuLookUpItem {
         this.kind = kind;
     }
 
+    public MenuLookUpItem(String name, int drawableIcon, String viewClassName, String detail, MenuLookUpItemKind kind, String url)
+    {
+        this.name = name;
+        this.drawableIcon = drawableIcon;
+        this.viewClassName = viewClassName;
+        this.detail = detail;
+        this.kind = kind;
+        this.url = url;
+    }
+
+    public MenuLookUpItem(String name, int drawableIcon, String viewClassName, String detail, MenuLookUpItemKind kind, String url, Boolean isTrangBao)
+    {
+        this.name = name;
+        this.drawableIcon = drawableIcon;
+        this.viewClassName = viewClassName;
+        this.detail = detail;
+        this.kind = kind;
+        this.url = url;
+        this.isTrangBao = isTrangBao;
+    }
+
     public int getDrawableIcon() {
         return drawableIcon;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public String getDetail() {
@@ -86,6 +113,10 @@ public class MenuLookUpItem {
         return true;
     }
 
+    public boolean isTrangBao()
+    {
+        return isTrangBao;
+    }
 
     public boolean hasAction()
     {
