@@ -7,10 +7,13 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
+import java.text.DecimalFormat;
 import java.text.Normalizer;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Lenovo on 6/9/2016.
@@ -101,11 +104,16 @@ public class MethodsHelper {
     }
 
     public static String getStringFromFloat(float number) {
-        return String.format("%.2f", number);
+        int num = Math.round(number * 1000);
+        return getStringFromInt(num);
     }
 
     public static String getStringFromInt(int number) {
-        return String.format("%d", number);
+//        return String.format("%.d%n", number);
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMANY);
+        DecimalFormat myFormatter = (DecimalFormat)nf;
+        String output = myFormatter.format(number);
+        return output;
     }
 
     public static String getPackageName(Context context)
