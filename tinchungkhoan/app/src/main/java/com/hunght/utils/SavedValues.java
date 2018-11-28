@@ -22,6 +22,9 @@ public class SavedValues {
 	private static final String RECORD_FAVORITES = "RECORD_FAVORITES";
 	private static final String RECORD_THONG_TIN_DOANH_NGHIEP = "RECORD_THONG_TIN_DOANH_NGHIEP";
 	private static final String RECORD_DANH_MUC_DAU_TU = "RECORD_DANH_MUC_DAU_TU";
+	private static final String RECORD_INAPP_BROWSER = "RECORD_INAPP_BROWSER";
+	private static final String RECORD_PASSWORD_MUC_DAU_TU = "RECORD_PASSWORD_MUC_DAU_TU";
+	private static final String RECORD_PASSWORD_APP = "RECORD_PASSWORD_APP";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -29,6 +32,34 @@ public class SavedValues {
 		appSharedPrefs = var1.getSharedPreferences(
 				APP_SHARED_PREFS, 0);
 		prefsEditor = appSharedPrefs.edit();
+	}
+
+
+	public void setRecordPasswordInApp(boolean var1) {
+		prefsEditor.putBoolean(RECORD_PASSWORD_APP, var1);
+		prefsEditor.commit();
+	}
+
+	public boolean getRecordPasswordInApp( ) {
+		return appSharedPrefs.getBoolean(RECORD_PASSWORD_APP, false);
+	}
+
+	public void setRecordPasswordMucDauTu(boolean var1) {
+		prefsEditor.putBoolean(RECORD_PASSWORD_MUC_DAU_TU, var1);
+		prefsEditor.commit();
+	}
+
+	public boolean getRecordPasswordMucDauTu( ) {
+		return appSharedPrefs.getBoolean(RECORD_PASSWORD_MUC_DAU_TU, false);
+	}
+
+	public void setRecordInappBrowser(boolean var1) {
+		prefsEditor.putBoolean(RECORD_INAPP_BROWSER, var1);
+		prefsEditor.commit();
+	}
+
+	public boolean getRecordInappBrowser( ) {
+		return appSharedPrefs.getBoolean(RECORD_INAPP_BROWSER, true);
 	}
 
 	public ArrayList<String> getFavorites() {

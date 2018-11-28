@@ -1,6 +1,8 @@
 package com.hunght.tinchungkhoan;
 
 import android.app.ActionBar;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,9 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,18 +111,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void changeLayout(MenuLookUpItem menuLookUpItem)
-    {
-        if(menuLookUpItem.hasAction())
-        {
-            tvSelectedMenuLookUpItem.setText(menuLookUpItem.getName());
-            llMainContent.removeAllViews();
-            mDrawerLayout.closeDrawer(mLeftDrawerList);
-            llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        }else{
+    public void changeLayout(MenuLookUpItem menuLookUpItem) {
+        if (menuLookUpItem.hasAction()) {
+            if (menuLookUpItem.isTrangBao() && !savedValues.getRecordInappBrowser()) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuLookUpItem.getUrl()));
+                startActivity(browserIntent);
+            } else {
+                tvSelectedMenuLookUpItem.setText(menuLookUpItem.getName());
+                llMainContent.removeAllViews();
+                mDrawerLayout.closeDrawer(mLeftDrawerList);
+                llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            }
+        } else {
             Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_LONG).show();
         }
     }
+
 	public void menuClick(View view) {
         switch (view.getId()) {
             case R.id.btMenuLookUpItems:
@@ -239,6 +243,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_TinNhanhChungKhoan:
                 changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.TinNhanhChungKhoan));
+                break;
+            case R.id.nav_Setting:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
         }
     }

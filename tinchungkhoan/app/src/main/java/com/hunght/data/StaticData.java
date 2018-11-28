@@ -40,13 +40,13 @@ public class StaticData {
             menuLookUpItems = new ArrayList<>();
             menuLookUpItems.add(new MenuLookUpItem("Danh Mục Đầu Tư", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.DanhMucDauTuView","", MenuLookUpItemKind.DanhMucDauTu));
             menuLookUpItems.add(new MenuLookUpItem("Danh Mục Yêu Thích", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.FavoritesView","", MenuLookUpItemKind.DanhMucYeuThich));
-            menuLookUpItems.add(new MenuLookUpItem("Dữ Liêu Mua Bán", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DuLieuMuaBan));
+            menuLookUpItems.add(new MenuLookUpItem("Dữ Liêu Mua Bán", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DuLieuMuaBan,"http://liveboard.cafef.vn/"));
             menuLookUpItems.add(new MenuLookUpItem("Thực Hiện Quyền", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThucHienQuyenView","", MenuLookUpItemKind.ThucHienQuyen));
             menuLookUpItems.add(new MenuLookUpItem("Thông Tin Doanh Nghiệp", R.drawable.ic_menu_gallery,"com.hunght.tinchungkhoan.ThongTinDoanhNghiepView","", MenuLookUpItemKind.ThongTinDoanhNghiep));
-            menuLookUpItems.add(new MenuLookUpItem("Cafef",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.Cafef));
-            menuLookUpItems.add(new MenuLookUpItem("Vietstock",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.Vietstock));
-            menuLookUpItems.add(new MenuLookUpItem("Tin Nhanh Chứng Khoán",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.TinNhanhChungKhoan));
-            menuLookUpItems.add(new MenuLookUpItem("Báo Đầu Tư",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DauTuOnline));
+            menuLookUpItems.add(new MenuLookUpItem("Cafef",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.Cafef, "http://cafef.vn/", true));
+            menuLookUpItems.add(new MenuLookUpItem("Vietstock",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.Vietstock, "https://vietstock.vn/", true));
+            menuLookUpItems.add(new MenuLookUpItem("Tin Nhanh Chứng Khoán",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.TinNhanhChungKhoan,"https://tinnhanhchungkhoan.vn/", true));
+            menuLookUpItems.add(new MenuLookUpItem("Báo Đầu Tư",R.drawable.ic_menu_camera,"com.hunght.tinchungkhoan.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DauTuOnline, "https://baodautu.vn/", true));
 
         }
         return menuLookUpItems;
