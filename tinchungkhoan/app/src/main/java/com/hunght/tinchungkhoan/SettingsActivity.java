@@ -2,13 +2,20 @@ package com.hunght.tinchungkhoan;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 
 import com.hunght.utils.SavedValues;
 
 public class SettingsActivity extends AppCompatActivity {
     private static SavedValues savedValues;
+    private EditText etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +27,9 @@ public class SettingsActivity extends AppCompatActivity {
         Switch swPasswordMucDauTu = findViewById(R.id.swPasswordMucDauTu);
         Switch swPasswordApp = findViewById(R.id.swPasswordApp);
 
+        etPassword = findViewById(R.id.etPassword);
+
+        etPassword.setText(savedValues.getRecordPassword());
         swInsiteBrowser.setChecked(savedValues.getRecordInappBrowser());
         swInsiteBrowser.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -45,8 +55,31 @@ public class SettingsActivity extends AppCompatActivity {
                 savedValues.setRecordPasswordInApp(isChecked);
             }
         });
+
+        ((Button) findViewById(R.id.btDisplayPassword)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // if (!isChecked) {
+                    // show password
+                  //  etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                //} else {
+                    // hide password
+                    etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+              //  }
+            }
+        });
+
+        ((Button) findViewById(R.id.btSavePassword)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                savedValues.setRecordPassword(etPassword.getText().toString());
+            }
+        });
     }
 
+    protected void onClickBack(View v) {
+        finish();
+    }
 
 	@Override
     protected  void onResume()

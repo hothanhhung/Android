@@ -56,7 +56,7 @@
             <item
                 android:id="@+id/nav_Setting"
                 android:icon="@drawable/ic_settings_black"
-                android:title="Setting" />
+                android:title="Cài Đặt" />
             <item
                 android:id="@+id/nav_Rate"
                 android:icon="@drawable/ic_rate_review_black"

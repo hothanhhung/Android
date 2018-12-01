@@ -25,6 +25,7 @@ public class SavedValues {
 	private static final String RECORD_INAPP_BROWSER = "RECORD_INAPP_BROWSER";
 	private static final String RECORD_PASSWORD_MUC_DAU_TU = "RECORD_PASSWORD_MUC_DAU_TU";
 	private static final String RECORD_PASSWORD_APP = "RECORD_PASSWORD_APP";
+	private static final String RECORD_PASSWORD = "RECORD_PASSWORD";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -34,6 +35,14 @@ public class SavedValues {
 		prefsEditor = appSharedPrefs.edit();
 	}
 
+	public void setRecordPassword(String var1) {
+		prefsEditor.putString(RECORD_PASSWORD, var1);
+		prefsEditor.commit();
+	}
+
+	public String getRecordPassword( ) {
+		return appSharedPrefs.getString(RECORD_PASSWORD, "");
+	}
 
 	public void setRecordPasswordInApp(boolean var1) {
 		prefsEditor.putBoolean(RECORD_PASSWORD_APP, var1);
