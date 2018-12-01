@@ -1,12 +1,17 @@
 package com.hunght.tinchungkhoan;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +19,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +29,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.hunght.data.DanhMucDauTuItem;
 import com.hunght.data.MenuLookUpItem;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
@@ -109,7 +117,63 @@ public class MainActivity extends AppCompatActivity {
                 return navigationItemSelected(menuItem);
             }
         });
+
+        if(savedValues.getRecordPasswordInApp()){
+            showPasswordPopup(0);
+        }
     }
+
+    private void showPasswordPopup(final int index) {
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.password_popup, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Bảo Mật")
+                .setView(dialogView).setCancelable(false)
+                .setPositiveButton("Đi Vào", null)
+                .setNegativeButton("Bỏ Qua", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        View view = MainActivity.this.getCurrentFocus();
+                        if (view != null) {
+                            InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        }
+                        if(index == 0)
+                        {
+                            finish();
+                        }else{
+                            dialog.dismiss();
+                        }
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view = MainActivity.this.getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    String password = ((EditText) dialogView.findViewById(R.id.etPassword)).getText().toString();
+                    if(password.equals(savedValues.getRecordPassword())){
+                        dialog.dismiss();
+                        if(index != 0)
+                        {
+                            updateUI(index);
+                        }
+                    }else{
+                        ((TextView)dialogView.findViewById(R.id.tvMessage)).setText("Mật Khẩu không đúng. Vui lòng nhập lại");
+                    }
+                }
+
+
+            }
+        });
+    }
+
 
     public void changeLayout(MenuLookUpItem menuLookUpItem) {
         if (menuLookUpItem.hasAction()) {
@@ -199,8 +263,11 @@ public class MainActivity extends AppCompatActivity {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        updateUI(id);
-
+        if((id == R.id.nav_DanhMucDauTu || id == R.id.nav_Setting) && savedValues.getRecordPasswordMucDauTu()){
+            showPasswordPopup(id);
+        }else {
+            updateUI(id);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
