@@ -133,11 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Đi Vào", null)
                 .setNegativeButton("Bỏ Qua", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        View view = MainActivity.this.getCurrentFocus();
-                        if (view != null) {
-                            InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                        }
                         if(index == 0)
                         {
                             finish();
@@ -153,22 +148,16 @@ public class MainActivity extends AppCompatActivity {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View view = MainActivity.this.getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    String password = ((EditText) dialogView.findViewById(R.id.etPassword)).getText().toString();
-                    if(password.equals(savedValues.getRecordPassword())){
-                        dialog.dismiss();
-                        if(index != 0)
-                        {
-                            updateUI(index);
-                        }
-                    }else{
-                        ((TextView)dialogView.findViewById(R.id.tvMessage)).setText("Mật Khẩu không đúng. Vui lòng nhập lại");
+                String password = ((EditText) dialogView.findViewById(R.id.etPassword)).getText().toString();
+                if(password.equals(savedValues.getRecordPassword())){
+                    dialog.dismiss();
+                    if(index != 0)
+                    {
+                        updateUI(index);
                     }
+                }else{
+                    ((TextView)dialogView.findViewById(R.id.tvMessage)).setText("Mật Khẩu không đúng. Vui lòng nhập lại");
                 }
-
 
             }
         });
@@ -285,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_ToanCanhThiTruong:
+                Toast.makeText(this, "Coming Soon", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.nav_DuLieuMuBan:

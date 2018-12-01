@@ -10,7 +10,9 @@ import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -291,20 +293,41 @@ public class DanhMucDauTuView extends LinearLayout {
     }
 
 
-    private void showInMenu(final DanhMucDauTuItem danhMucDauTuItem){
+    private void showInMenu(final DanhMucDauTuItem danhMucDauTuItem) {
         if (danhMucDauTuItem == null) return;
         String[] colors = {"Bán", "Chỉnh Sửa", "Xóa"};
-        if(danhMucDauTuItem.daBan()){
-            colors = new String[] {"Xóa"};
+        if (danhMucDauTuItem.daBan()) {
+            colors = new String[]{"Xóa"};
         }
+
+        // Initialize a new array adapter instance
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(
+                getContext(),
+                android.R.layout.simple_list_item_1, colors
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                TextView text_view = (TextView) super.getView(position, convertView, parent);
+
+                if (position % 2 == 0) {
+                    text_view.setBackgroundColor(getContext().getResources().getColor(R.color.item_odd_color));
+                } else {
+                    text_view.setBackgroundColor(getContext().getResources().getColor(R.color.item_even_color));
+                }
+
+                return text_view;
+            }
+        };
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(danhMucDauTuItem.getAllInfo());
-        builder.setItems(colors, new DialogInterface.OnClickListener() {
+        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(danhMucDauTuItem.daBan()){
+                if (danhMucDauTuItem.daBan()) {
                     deleteDanhMucDauTu(danhMucDauTuItem);
-                }else {
+                } else {
                     switch (which) {
                         case 0:
                             banDanhMucDauTu(danhMucDauTuItem);

@@ -13,6 +13,10 @@ public class ThongTinDoanhNghiep {
 
     public ThongTinDoanhNghiep(){}
 
+    public ThongTinDoanhNghiep(String code){
+        this.code = code;
+    }
+
     public ThongTinDoanhNghiep(String name, String code, String logoURL, String information, String currentPrice, String thongSoKT, String traCoTuc){
         this.name = name;
         this.code = code;

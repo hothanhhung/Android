@@ -6,28 +6,37 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hunght.data.DanhMucDauTuItem;
 import com.hunght.data.HistoryPrice;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
 import com.hunght.data.StaticData;
+import com.hunght.data.ThongTinDoanhNghiep;
 import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,6 +104,93 @@ public class FavoritesView extends LinearLayout {
         getHistoryData(favoriteItems);
     }
 
+    private void showChartPopup(final HistoryPrice historyPrice)
+    {
+        if(historyPrice != null) {
+            LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.favorites_chart_popup, null);
+
+            final ImageView ivBieuDo = dialogView.findViewById(R.id.ivBieuDo);
+            final ThongTinDoanhNghiep thongTinDoanhNghiep = new ThongTinDoanhNghiep(historyPrice.getMaCK());
+
+            if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiSevenDays().isEmpty()) {
+                Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiSevenToDay()).into(ivBieuDo);
+            }
+
+            dialogView.findViewById(R.id.btXemBieuDoToDay).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiSevenDays().isEmpty()) {
+                        Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiSevenToDay()).into(ivBieuDo);
+                    }
+                }
+            });
+            dialogView.findViewById(R.id.btXemBieuDoTuan).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiSevenDays().isEmpty()) {
+                        Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiSevenDays()).into(ivBieuDo);
+                    }
+                }
+            });
+            dialogView.findViewById(R.id.btXemBieuDoOneThang).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiOneMonth().isEmpty()) {
+                        Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiOneMonth()).into(ivBieuDo);
+                    }
+                }
+            });
+
+            dialogView.findViewById(R.id.btXemBieuDoThreeThang).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiOneMonth().isEmpty()) {
+                        Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiThreeMonth()).into(ivBieuDo);
+                    }
+                }
+            });
+
+            dialogView.findViewById(R.id.btXemBieuDoSixThang).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiOneMonth().isEmpty()) {
+                        Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiSixMonth()).into(ivBieuDo);
+                    }
+                }
+            });
+            dialogView.findViewById(R.id.btXemBieuDoOneYear).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiOneYear().isEmpty()) {
+                        Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiOneYear()).into(ivBieuDo);
+                    }
+                }
+            });
+            dialogView.findViewById(R.id.btXemBieuDoAll).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (thongTinDoanhNghiep != null && ivBieuDo != null && !thongTinDoanhNghiep.getDoThiAll().isEmpty()) {
+                        Picasso.with(getContext()).load(thongTinDoanhNghiep.getDoThiAll()).into(ivBieuDo);
+                    }
+                }
+            });
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                    .setTitle("Biểu Đồ Giá")
+                    .setView(dialogView).setCancelable(false)
+                    .setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info);
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
+
+
     private void deleteFavorite(final HistoryPrice historyPrice)
     {
         if(historyPrice != null) {
@@ -118,23 +214,49 @@ public class FavoritesView extends LinearLayout {
         }
     }
 
-    private void showInMenu(final HistoryPrice historyPrice){
+    private void showInMenu(final HistoryPrice historyPrice) {
         if (historyPrice == null) return;
-        String[] colors = {"Xem Thông Tin Công Ty", "Xem Lịch Sử Giá", "Xóa"};
+        String[] colors = {"Xem Thông Tin Công Ty", "Xem Biểu Đồ Giá", "Xem Lịch Sử Giá", "Xóa"};
+
+        // Initialize a new array adapter instance
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(
+                getContext(),
+                android.R.layout.simple_list_item_1, colors
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                TextView text_view = (TextView) super.getView(position, convertView, parent);
+
+                if (position % 2 == 0) {
+                    text_view.setBackgroundColor(getContext().getResources().getColor(R.color.item_odd_color));
+                } else {
+                    text_view.setBackgroundColor(getContext().getResources().getColor(R.color.item_even_color));
+                }
+
+                return text_view;
+            }
+        };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(historyPrice.getFullName());
-        builder.setItems(colors, new DialogInterface.OnClickListener() {
+        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which)
-                {
+                switch (which) {
                     case 0:
                         ThongTinDoanhNghiepView.requestCongTy(historyPrice.getMaCK());
                         ((MainActivity) getContext()).changeLayout(StaticData.geMenuItemBasedOnViewClassName("com.hunght.tinchungkhoan.ThongTinDoanhNghiepView"));
                         break;
-                    case 1: showHistoryPopup(historyPrice); break;
-                    case 2: deleteFavorite(historyPrice); break;
+                    case 1:
+                        showChartPopup(historyPrice);
+                        break;
+                    case 2:
+                        showHistoryPopup(historyPrice);
+                        break;
+                    case 3:
+                        deleteFavorite(historyPrice);
+                        break;
                 }
                 dialog.dismiss();
             }
