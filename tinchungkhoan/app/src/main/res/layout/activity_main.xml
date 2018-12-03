@@ -35,7 +35,7 @@
             android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="#fff"
-            android:text="Tra Cứu Online"/>
+            android:text="Thông Tin Chứng Khoán"/>
         <ImageButton
             android:id="@+id/btMoreApp"
             android:background="@android:drawable/list_selector_background"

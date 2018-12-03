@@ -3,6 +3,7 @@ package com.hunght.tinchungkhoan;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -170,10 +171,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuLookUpItem.getUrl()));
                 startActivity(browserIntent);
             } else {
+                checkForShowInterstital();
                 tvSelectedMenuLookUpItem.setText(menuLookUpItem.getName());
-                llMainContent.removeAllViews();
                 mDrawerLayout.closeDrawer(mLeftDrawerList);
+                //loadingPopup = UIUtils.showPopUpLoading(MainActivity.this);
+                llMainContent.removeAllViews();
                 llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+                // (new CreateViewTask()).execute(menuLookUpItem);
             }
         } else {
             Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_LONG).show();
@@ -312,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
     protected  void onResume()
     {
         super.onResume();
-      //  checkForShowInterstital();
+        checkForShowInterstital();
     }
 
     private void checkForShowInterstital()
@@ -333,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
                 showInterstitial();
             }
             else if(numberOfSelectItem%4 == 0) {
-                showInterstitial();
+                //showInterstitial();
             }
         }
     }
@@ -434,6 +439,37 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(ArrayList<DoanhNghiepItem> data) {
             setThongTinDoanhNghieps(data);
+        }
+    }
+
+    ProgressDialog loadingPopup;
+    private class CreateViewTask extends AsyncTask<MenuLookUpItem, Integer, MenuLookUpItem> {
+        protected MenuLookUpItem doInBackground(MenuLookUpItem... menuLookUpItems) {
+            final MenuLookUpItem menuLookUpItem = menuLookUpItems[0];
+            runOnUiThread(new Thread(new Runnable() {
+                public void run() {
+                    llMainContent.removeAllViews();
+                    llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+                }
+            }));
+            return menuLookUpItems[0];
+            //return menuLookUpItems[0].getView(MainActivity.this);
+            //return new DanhMucDauTuView(MainActivity.this);
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(final MenuLookUpItem menuLookUpItem) {
+            if(loadingPopup!=null){
+                loadingPopup.dismiss();
+            }
+            /*llMainContent.removeAllViews();
+            llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            if(loadingPopup!=null){
+                loadingPopup.dismiss();
+            }*/
         }
     }
 }
