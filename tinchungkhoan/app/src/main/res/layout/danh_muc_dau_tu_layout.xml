@@ -14,14 +14,13 @@
             android:layout_height="wrap_content"
             android:text="Mã CK" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/etMaCK"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="" />
+            android:completionThreshold="1" />
         <TextView
             android:layout_width="65dp"
             android:layout_height="wrap_content"

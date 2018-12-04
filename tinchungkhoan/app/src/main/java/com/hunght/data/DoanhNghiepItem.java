@@ -26,4 +26,19 @@ public class DoanhNghiepItem {
         return "http://s.cafef.vn//"+sanStr+"/"+c+"-"+linkName+".chn";
     }
 
+    public String getMaCK()
+    {
+        return c;
+    }
+
+    public String getFullInfo()
+    {
+        return "<b>" + c + "</b> - " + m;
+    }
+
+    public boolean compare(String str)
+    {
+        return c.toLowerCase().contains(str) || o.toLowerCase().contains(str) ;
+    }
+
 }

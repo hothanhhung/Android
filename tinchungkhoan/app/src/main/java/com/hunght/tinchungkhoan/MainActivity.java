@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_ToanCanhThiTruong:
-                Toast.makeText(this, "Coming Soon", Toast.LENGTH_LONG).show();
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.ToanCanhThiTruong));
                 break;
 
             case R.id.nav_DuLieuMuBan:
