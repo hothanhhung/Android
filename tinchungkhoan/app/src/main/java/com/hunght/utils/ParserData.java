@@ -169,7 +169,8 @@ public class ParserData {
 
     public static ArrayList<DoanhNghiepItem> getThongTinDoanhNghieps()
     {
-        String link = "http://cafefcdn.com/frontend/scripts/kby_v1.js";
+        Calendar calendar = Calendar.getInstance();
+        String link = "http://e.cafef.vn/kby.ashx?_="+calendar.getTimeInMillis();
         Log.d("getThongTinDoanhNghieps", link);
 
         Gson gSon = new Gson();

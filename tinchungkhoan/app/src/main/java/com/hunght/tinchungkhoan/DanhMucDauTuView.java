@@ -3,7 +3,6 @@ package com.hunght.tinchungkhoan;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -12,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hunght.data.DanhMucDauTuItem;
+import com.hunght.data.DoanhNghiepItem;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
 import com.hunght.utils.MethodsHelper;
@@ -65,7 +67,7 @@ public class DanhMucDauTuView extends LinearLayout {
         final View view = inflate(getContext(), R.layout.danh_muc_dau_tu_layout, this);
         final EditText etNgayMua = view.findViewById(R.id.etNgayMua);
         final EditText etSoLuong = view.findViewById(R.id.etSoLuong);
-        final EditText etMaCK = view.findViewById(R.id.etMaCK);
+        final AutoCompleteTextView etMaCK = view.findViewById(R.id.etMaCK);
         final EditText etGiaMua = view.findViewById(R.id.etGiaMua);
         final Button btLưu = view.findViewById(R.id.btLưu);
         lvDanhMucDauTu = view.findViewById(R.id.lvDanhMucDauTu);
@@ -94,6 +96,17 @@ public class DanhMucDauTuView extends LinearLayout {
         final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), fromDate, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH));
+
+        CongTyAutoCompleteAdapter adapter = new CongTyAutoCompleteAdapter(getContext(), MainActivity.gethongTinDoanhNghieps());
+        etMaCK.setAdapter(adapter);
+        etMaCK.setThreshold(5);
+        etMaCK.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DoanhNghiepItem doanhNghiepItem = (DoanhNghiepItem)view.getTag();
+                etMaCK.setText(doanhNghiepItem.getMaCK(), false);
+            }
+        });
 
         etNgayMua.setOnClickListener(new OnClickListener() {
             @Override

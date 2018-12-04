@@ -134,4 +134,11 @@ public class MethodsHelper {
         int year = calendar.get(Calendar.YEAR);
         return (day < 10 ? "0" : "") + day + "-" + (month < 10 ? "0" : "") + month + "-" + year;
     }
+
+    public static String getYYYYMMDD(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year + "" + (month < 10 ? "0" : "") + month + "" + (day < 10 ? "0" : "") + day;
+    }
 }
