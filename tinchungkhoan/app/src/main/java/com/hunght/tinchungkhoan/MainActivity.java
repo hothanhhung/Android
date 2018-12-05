@@ -41,6 +41,7 @@ import com.hunght.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -391,6 +392,18 @@ public class MainActivity extends AppCompatActivity {
             StaticData.setThongTinDoanhNghieps(savedValues.getThongTinDoanhNghieps());
         }
         return StaticData.getThongTinDoanhNghieps();
+    }
+
+    static ArrayList<DoanhNghiepItem> gethongTinDoanhNghiepsClone()
+    {
+        if(StaticData.getThongTinDoanhNghieps() == null && savedValues != null)
+        {
+            StaticData.setThongTinDoanhNghieps(savedValues.getThongTinDoanhNghieps());
+        }
+        if(StaticData.getThongTinDoanhNghieps()!=null) {
+            return (ArrayList<DoanhNghiepItem>) StaticData.getThongTinDoanhNghieps().clone();
+        }
+        return null;
     }
 
     @Override

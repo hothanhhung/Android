@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:text="Mã CK" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/etMaCK"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
