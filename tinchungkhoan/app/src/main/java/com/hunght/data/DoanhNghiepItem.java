@@ -36,9 +36,14 @@ public class DoanhNghiepItem {
         return "<b>" + c + "</b> - " + m;
     }
 
-    public boolean compare(String str)
+    public boolean compare1(String str)
     {
-        return c.toLowerCase().contains(str) || o.toLowerCase().contains(str) ;
+        return c.toLowerCase().startsWith(str.toLowerCase());
+    }
+
+    public boolean compare2(String str)
+    {
+        return o.toLowerCase().contains(str.toLowerCase()) ;
     }
 
 }

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -97,9 +98,9 @@ public class DanhMucDauTuView extends LinearLayout {
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH));
 
-        CongTyAutoCompleteAdapter adapter = new CongTyAutoCompleteAdapter(getContext(), MainActivity.gethongTinDoanhNghieps());
+        CongTyAutoCompleteAdapter adapter = new CongTyAutoCompleteAdapter(getContext(), R.layout.cong_ty_auto_complete_item, 5, MainActivity.gethongTinDoanhNghiepsClone());
         etMaCK.setAdapter(adapter);
-        etMaCK.setThreshold(5);
+        etMaCK.setThreshold(1);
         etMaCK.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,6 +108,7 @@ public class DanhMucDauTuView extends LinearLayout {
                 etMaCK.setText(doanhNghiepItem.getMaCK(), false);
             }
         });
+        etMaCK.setTextColor(Color.RED);
 
         etNgayMua.setOnClickListener(new OnClickListener() {
             @Override

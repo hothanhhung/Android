@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hunght.data.DanhMucDauTuItem;
+import com.hunght.data.DoanhNghiepItem;
 import com.hunght.data.HistoryPrice;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
@@ -48,7 +50,7 @@ import java.util.Random;
 public class FavoritesView extends LinearLayout {
     ListView lvHistoryFavoriteItems;
     HistoryItemAdapter historyItemAdapter;
-    EditText etMaCK;
+    AutoCompleteTextView etMaCK;
     SavedValues savedValues;
     public FavoritesView(Context context) {
         super(context);
@@ -76,6 +78,18 @@ public class FavoritesView extends LinearLayout {
         ArrayList<String> favoriteItems = savedValues.getFavorites();
 
         etMaCK = view.findViewById(R.id.etMaCK);
+
+        CongTyAutoCompleteAdapter adapter = new CongTyAutoCompleteAdapter(getContext(), R.layout.cong_ty_auto_complete_item, 10, MainActivity.gethongTinDoanhNghiepsClone());
+        etMaCK.setAdapter(adapter);
+        etMaCK.setThreshold(1);
+        etMaCK.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DoanhNghiepItem doanhNghiepItem = (DoanhNghiepItem)view.getTag();
+                etMaCK.setText(doanhNghiepItem.getMaCK(), false);
+            }
+        });
+        etMaCK.setTextColor(Color.RED);
 
         Button btThemMaCK = view.findViewById(R.id.btThemMaCK);
         btThemMaCK.setOnClickListener(new OnClickListener() {

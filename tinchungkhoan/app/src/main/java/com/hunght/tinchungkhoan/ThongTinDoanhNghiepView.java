@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.text.Html;
@@ -16,6 +17,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,7 +44,7 @@ import java.util.Calendar;
  * TODO: document your custom view class.
  */
 public class ThongTinDoanhNghiepView extends LinearLayout {
-    EditText etMaCK;
+    AutoCompleteTextView etMaCK;
     SavedValues savedValues;
     TextView tvProcessInfo, tvThongSoKT, tvTenCongTy, tvThongTin, tvTraCoTuc;
     ImageView ivLogo, ivBieuDo;
@@ -85,6 +87,19 @@ public class ThongTinDoanhNghiepView extends LinearLayout {
         wvBaoCaoTaiChinh = view.findViewById(R.id.wvBaoCaoTaiChinh);
 
         Button btTraCuu = view.findViewById(R.id.btTraCuu);
+
+        CongTyAutoCompleteAdapter adapter = new CongTyAutoCompleteAdapter(getContext(), R.layout.cong_ty_auto_complete_item, 10, MainActivity.gethongTinDoanhNghiepsClone());
+        etMaCK.setAdapter(adapter);
+        etMaCK.setThreshold(1);
+        etMaCK.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DoanhNghiepItem doanhNghiepItem = (DoanhNghiepItem)view.getTag();
+                etMaCK.setText(doanhNghiepItem.getMaCK(), false);
+            }
+        });
+        etMaCK.setTextColor(Color.RED);
+
         btTraCuu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
