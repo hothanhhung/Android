@@ -1,10 +1,8 @@
 package com.hunght.tinchungkhoan;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,7 +18,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,7 +27,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.hunght.data.DanhMucDauTuItem;
 import com.hunght.data.MenuLookUpItem;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
@@ -41,7 +37,6 @@ import com.hunght.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftDrawerList = findViewById(R.id.leftNavdrawer);
 
-        llMainContent = (LinearLayout) findViewById(R.id.llMainContent);
+        llMainContent = findViewById(R.id.llMainContent);
         tvSelectedMenuLookUpItem = (TextView) findViewById(R.id.tvSelectedMenuLookUpItem);
         /*lvMenuLookUpItems = findViewById(R.id.lvMenuLookUpItems);
         ArrayList<MenuLookUpItem> menuLookUpItems = StaticData.GetMenuLookUpItems();
@@ -165,8 +160,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void updateWhenScrollChange(Boolean isUp)
+    {
+        LinearLayout llHeaderMenu = findViewById(R.id.llHeaderMenu);
+        if(llHeaderMenu!=null) {
+            if (isUp) {
+                if (llHeaderMenu.getVisibility() != View.VISIBLE) llHeaderMenu.setVisibility(View.VISIBLE);
+            } else {
+                if (llHeaderMenu.getVisibility() != View.GONE) llHeaderMenu.setVisibility(View.GONE);
+            }
+        }
+    }
 
-    public void changeLayout(MenuLookUpItem menuLookUpItem) {
+    public void changeLayout(final MenuLookUpItem menuLookUpItem) {
         if (menuLookUpItem.hasAction()) {
             if (menuLookUpItem.isTrangBao() && !savedValues.getRecordInappBrowser()) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuLookUpItem.getUrl()));
@@ -175,11 +181,21 @@ public class MainActivity extends AppCompatActivity {
                 checkForShowInterstital();
                 tvSelectedMenuLookUpItem.setText(menuLookUpItem.getName());
                 mDrawerLayout.closeDrawer(mLeftDrawerList);
-                //loadingPopup = UIUtils.showPopUpLoading(MainActivity.this);
-                llMainContent.removeAllViews();
-                llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                loadingPopup = UIUtils.showPopUpLoading(MainActivity.this);
+                /*runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        llMainContent.removeAllViews();
+                        llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                        if(loadingPopup!=null && loadingPopup.isShowing()){
+                            loadingPopup.dismiss();
+                        }
+                    }
+                });*/
+                //llMainContent.removeAllViews();
+                //llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
-                // (new CreateViewTask()).execute(menuLookUpItem);
+                (new CreateViewTask()).execute(menuLookUpItem);
             }
         } else {
             Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_LONG).show();
@@ -269,6 +285,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(int id){
+
+        updateWhenScrollChange(true);
+
         switch (id)
         {
             case R.id.nav_DanhMucDauTu:
@@ -310,6 +329,17 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_Setting:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.nav_Rate:
+                try {
+                    Uri marketUri = Uri.parse("market://details?id=" + getPackageName());
+                    Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+                    startActivity(marketIntent);
+                }catch(Exception e) {
+                    Uri marketUri = Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName());
+                    Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+                    startActivity(marketIntent);
+                }
                 break;
         }
     }
@@ -458,14 +488,11 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog loadingPopup;
     private class CreateViewTask extends AsyncTask<MenuLookUpItem, Integer, MenuLookUpItem> {
         protected MenuLookUpItem doInBackground(MenuLookUpItem... menuLookUpItems) {
-            final MenuLookUpItem menuLookUpItem = menuLookUpItems[0];
-            runOnUiThread(new Thread(new Runnable() {
-                public void run() {
-                    llMainContent.removeAllViews();
-                    llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-
-                }
-            }));
+            try {
+                Thread.sleep(1000);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
             return menuLookUpItems[0];
             //return menuLookUpItems[0].getView(MainActivity.this);
             //return new DanhMucDauTuView(MainActivity.this);
@@ -478,6 +505,16 @@ public class MainActivity extends AppCompatActivity {
             if(loadingPopup!=null){
                 loadingPopup.dismiss();
             }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    llMainContent.removeAllViews();
+                    llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    if(loadingPopup!=null && loadingPopup.isShowing()){
+                        loadingPopup.dismiss();
+                    }
+                }
+            });
             /*llMainContent.removeAllViews();
             llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             if(loadingPopup!=null){

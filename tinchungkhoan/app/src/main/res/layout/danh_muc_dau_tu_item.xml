@@ -5,15 +5,15 @@
     android:orientation="horizontal"
     android:paddingBottom="5dp"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:paddingRight="0dp"
     android:paddingTop="5dp">
 
     <TextView
         android:id="@+id/tvNgay"
         android:layout_width="90dp"
         android:layout_height="match_parent"
-        android:textSize="11dp"
         android:text="10-12-2018"
+        android:textSize="11dp"
         android:textStyle="normal" />
 
     <TextView
@@ -21,18 +21,18 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:text="VNM"
         android:textSize="11dp"
-        android:visibility="gone"
-        android:text="VNM" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tvSoLuong"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textSize="11dp"
         android:text="10"
         android:textAlignment="textEnd"
+        android:textSize="11dp"
         android:textStyle="normal" />
 
     <TextView
@@ -40,9 +40,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textSize="11dp"
         android:text="10000"
         android:textAlignment="textEnd"
+        android:textSize="11dp"
         android:textStyle="normal" />
 
     <TextView
@@ -50,9 +50,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textSize="11dp"
         android:text="11000"
         android:textAlignment="textEnd"
+        android:textSize="11dp"
         android:textStyle="normal" />
 
     <TextView
@@ -60,8 +60,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textSize="11dp"
         android:text="10000"
         android:textAlignment="textEnd"
+        android:textSize="11dp"
         android:textStyle="normal" />
 </LinearLayout>

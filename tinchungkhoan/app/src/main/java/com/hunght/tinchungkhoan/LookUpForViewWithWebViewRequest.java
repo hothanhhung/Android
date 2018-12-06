@@ -13,12 +13,13 @@ import android.widget.TextView;
 
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
+import com.hunght.utils.MyWebview;
 
 /**
  * Created by Lenovo on 10/28/2016.
  */
 public class LookUpForViewWithWebViewRequest extends LinearLayout {
-    static WebView webView;
+    static MyWebview webView;
     TextView textView;
     RelativeLayout llWebView;
     MenuLookUpItemKind kind;
@@ -47,7 +48,7 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
     private void initView() {
         View view = inflate(getContext(), R.layout.look_up_with_webview_request, this);
         textView = (TextView) view.findViewById(R.id.textView);
-        webView = (WebView) view.findViewById(R.id.webView);
+        webView = view.findViewById(R.id.webView);
         llWebView = (RelativeLayout) view.findViewById(R.id.llWebView);
 
         WebSettings webViewSettings = webView.getSettings();

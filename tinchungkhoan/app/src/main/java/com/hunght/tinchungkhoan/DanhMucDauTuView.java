@@ -45,6 +45,8 @@ public class DanhMucDauTuView extends LinearLayout {
     private static SavedValues savedValues;
     ArrayList<DanhMucDauTuItem> danhMucDauTuItems;
 
+    TextView tvTongDauTu, tvTongThiTruong, tvTongLoiNhuan;
+
     public DanhMucDauTuView(Context context) {
         super(context);
         init(null, 0);
@@ -71,6 +73,10 @@ public class DanhMucDauTuView extends LinearLayout {
         final AutoCompleteTextView etMaCK = view.findViewById(R.id.etMaCK);
         final EditText etGiaMua = view.findViewById(R.id.etGiaMua);
         final Button btLưu = view.findViewById(R.id.btLưu);
+        tvTongDauTu = view.findViewById(R.id.tvTongDauTu);
+        tvTongThiTruong = view.findViewById(R.id.tvTongThiTruong);
+        tvTongLoiNhuan = view.findViewById(R.id.tvTongLoiNhuan);
+
         lvDanhMucDauTu = view.findViewById(R.id.lvDanhMucDauTu);
         tvProcessInfo = view.findViewById(R.id.tvProcessInfo);
 
@@ -431,6 +437,7 @@ public class DanhMucDauTuView extends LinearLayout {
         {
             if(tvProcessInfo!=null)
             {
+                tvProcessInfo.setVisibility(VISIBLE);
                 tvProcessInfo.setText("Không có dữ liệu");
             }
             if(lvDanhMucDauTu !=null){
@@ -438,14 +445,32 @@ public class DanhMucDauTuView extends LinearLayout {
             }
         }else{
             if(tvProcessInfo!=null) {
+                tvProcessInfo.setVisibility(GONE);
                 tvProcessInfo.setText("");
             }
-            if(newPrice!=null){
-                for(DanhMucDauTuItem danhMucDauTuItem: danhMucDauTuItems){
-                    if(!danhMucDauTuItem.daBan() && danhMucDauTuItem.getMaCK().equalsIgnoreCase(newPrice.getMaCK()))
-                    {
+            float loiNhuan = 0, dauTu = 0, thiTruong = 0;
+            for(DanhMucDauTuItem danhMucDauTuItem: danhMucDauTuItems) {
+                if (newPrice != null) {
+                    if (!danhMucDauTuItem.daBan() && danhMucDauTuItem.getMaCK().equalsIgnoreCase(newPrice.getMaCK())) {
                         danhMucDauTuItem.setGiaThiTruong(newPrice.getGiaThiTruong());
                     }
+                }
+                loiNhuan += danhMucDauTuItem.getLoiNhan();
+                dauTu += danhMucDauTuItem.getTongDauTu();
+                thiTruong += danhMucDauTuItem.getTongThiTruongHoacBan();
+            }
+
+            if(tvTongDauTu!=null && tvTongThiTruong!=null && tvTongLoiNhuan!=null) {
+                tvTongDauTu.setText(MethodsHelper.getStringFromFloat(dauTu));
+                tvTongThiTruong.setText(MethodsHelper.getStringFromFloat(thiTruong));
+                tvTongLoiNhuan.setText(MethodsHelper.getStringFromFloat(loiNhuan));
+
+                if (loiNhuan == 0) {
+                    tvTongLoiNhuan.setTextColor(getContext().getResources().getColor(R.color.giaZero));
+                } else if (loiNhuan > 0) {
+                    tvTongLoiNhuan.setTextColor(getContext().getResources().getColor(R.color.giaDuong));
+                } else {
+                    tvTongLoiNhuan.setTextColor(getContext().getResources().getColor(R.color.giaAm));
                 }
             }
 
