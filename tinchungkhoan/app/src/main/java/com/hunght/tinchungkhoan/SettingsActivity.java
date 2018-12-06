@@ -26,6 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
         Switch swInsiteBrowser = findViewById(R.id.swInsiteBrowser);
         Switch swPasswordMucDauTu = findViewById(R.id.swPasswordMucDauTu);
         Switch swPasswordApp = findViewById(R.id.swPasswordApp);
+        Switch swShowHeader = findViewById(R.id.swShowHeader);
 
         etPassword = findViewById(R.id.etPassword);
 
@@ -53,6 +54,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 savedValues.setRecordPasswordInApp(isChecked);
+            }
+        });
+
+        swShowHeader.setChecked(savedValues.getRecordShowHeader());
+        swShowHeader.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                savedValues.setRecordShowHeader(isChecked);
             }
         });
 
