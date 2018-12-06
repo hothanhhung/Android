@@ -52,13 +52,48 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sử dụng trinfh duyệt trong ứng dụng này để đọc báo"
+                android:text="Sử dụng trình duyệt trong ứng dụng này để đọc báo"
                 android:textSize="11sp" />
 
         </LinearLayout>
 
         <Switch
             android:id="@+id/swInsiteBrowser"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Sử dụng header" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hiển thị hoặc ẩn header để không gian nội dung rộng hơn"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swShowHeader"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="" />

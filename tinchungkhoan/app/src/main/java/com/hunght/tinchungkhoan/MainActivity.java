@@ -286,7 +286,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(int id){
 
-        updateWhenScrollChange(true);
+        if(savedValues.getRecordShowHeader()){
+            updateWhenScrollChange(true);
+        }
 
         switch (id)
         {
@@ -349,6 +351,10 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onResume();
         checkForShowInterstital();
+        if(savedValues!=null)
+        {
+            updateWhenScrollChange(savedValues.getRecordShowHeader());
+        }
     }
 
     private void checkForShowInterstital()
