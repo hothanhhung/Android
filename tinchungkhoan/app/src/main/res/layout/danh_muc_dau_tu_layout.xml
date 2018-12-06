@@ -7,6 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -17,27 +18,32 @@
         <AutoCompleteTextView
             android:id="@+id/etMaCK"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="3"
-            android:ems="10"
-            android:completionThreshold="1" />
+            android:completionThreshold="1"
+            android:dropDownHeight="300dp"
+            android:dropDownWidth="300dp"
+            android:textSize="13sp" />
+
         <TextView
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:text="Ngày Mua" />
+
         <EditText
             android:id="@+id/etNgayMua"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="3"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="" />
+            android:text=""
+            android:textSize="13sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -48,43 +54,48 @@
         <EditText
             android:id="@+id/etSoLuong"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="3"
             android:digits="0123456789"
             android:inputType="numberDecimal"
-            android:ems="10"
-            android:text="" />
+            android:text=""
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:text="Giá Mua" />
+
         <EditText
             android:id="@+id/etGiaMua"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="3"
-            android:ems="10"
             android:digits="0123456789."
             android:inputType="numberDecimal"
-            android:text="" />
+            android:text=""
+            android:textSize="13sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:textSize="11dp"
             android:gravity="center"
-            android:text="Giá Mua tính theo đơn vị 1000 khi nhập" />
+            android:padding="3dp"
+            android:text="Giá Mua  theo đơn vị 1000 khi nhập"
+            android:textSize="11dp" />
+
         <Button
             android:id="@+id/btLưu"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:text="Lưu" />
     </LinearLayout>
@@ -100,6 +111,90 @@
             android:textAlignment="center"
             android:text="Vui lòng thực hiện tra cứu" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingLeft="2dp"
+                android:text="Đầu Tư"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingLeft="2dp"
+                android:text="Thị Trường"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingLeft="2dp"
+                android:text="Lợi Nhuận"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTongDauTu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingLeft="2dp"
+                android:text="100000000"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTongThiTruong"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingLeft="2dp"
+                android:text="90000000"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTongLoiNhuan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingLeft="2dp"
+                android:text="10000000"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
     </LinearLayout>
     <ExpandableListView
         android:id="@+id/lvDanhMucDauTu"

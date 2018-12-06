@@ -1,6 +1,7 @@
 package com.hunght.data;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import java.lang.reflect.Constructor;
@@ -91,6 +92,7 @@ public class MenuLookUpItem {
             }
         }catch (Exception ex)
         {
+            Log.d("getView", this.name +" - "+ this.viewClassName );
             ex.printStackTrace();
         }
         return null;

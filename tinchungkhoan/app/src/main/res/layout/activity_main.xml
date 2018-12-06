@@ -9,6 +9,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
     <LinearLayout
+        android:id="@+id/llHeaderMenu"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@android:color/holo_blue_light"
