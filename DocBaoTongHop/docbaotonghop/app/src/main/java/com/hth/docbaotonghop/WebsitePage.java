@@ -43,7 +43,8 @@ public enum WebsitePage {
 	BaoMoiDotCom(34, "BaoMoiDotCom.css", "baomoi.com", "http://www.baomoi.com/", "http://m.baomoi.com/", R.drawable.icon_baomoi),
 	VietTimesDotVN(35, "VietTimesDotVN.css", "viettimes.vn", "http://viettimes.vn/", "http://m.viettimes.vn/", R.drawable.icon_viettimes),
     DaiKyNguynVNDotCom(36, "DaiKyNgueynVNDotCom.css", "daikynguyenvn.com", "http://daikynguyenvn.com/", "http://mb.daikynguyenvn.com/", R.drawable.icon_daikynguyen),
-	GiaDinhDotNet(37, "GiaDinhDotNetDotVN.css", "giadinh.net.vn", "http://giadinh.net.vn/", "http://m.giadinh.net.vn/", R.drawable.icon_giadinh);
+	GiaDinhDotNet(37, "GiaDinhDotNetDotVN.css", "giadinh.net.vn", "http://giadinh.net.vn/", "http://m.giadinh.net.vn/", R.drawable.icon_giadinh),
+    CafeF(38, "CafeF.css", "cafef.vn", "http://cafef.vn/", "http://cafef.vn/", R.drawable.icon_cafef);
 
 
 	private String stringValue;

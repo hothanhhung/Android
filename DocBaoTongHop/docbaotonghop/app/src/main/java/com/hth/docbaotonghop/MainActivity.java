@@ -147,7 +147,18 @@ public class MainActivity extends Activity {
             viewArticleDetail.loadDataWithBaseURL(null, "No Website Mobile", "text/html", "utf-8", null);
     }
 
-  //  AdsView adsView;
+    @Override
+    public void onBackPressed() {
+        if(myHomeWebViewClient != null && myHomeWebViewClient.canGobackHistory())
+        {
+            backToHistory(null);
+
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+    //  AdsView adsView;
     
     static boolean isAdmod = true;
     static boolean needChanged = false;

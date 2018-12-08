@@ -139,8 +139,8 @@
                     android:contentDescription="@string/empty_string"
                     android:onClick="goToMainPage"
                     android:scaleType="centerInside"
-                    android:src="@drawable/logo_xaluan"
-                    android:tag="9" />
+                    android:src="@drawable/logo_cafef"
+                    android:tag="38" />
                 
                 
                 <ImageButton

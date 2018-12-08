@@ -1,6 +1,8 @@
 package com.hth.docbaotonghop;
 
 import com.hth.docbaotonghop.R;
+import com.hth.utils.ConfigAds;
+import com.hth.utils.ParserData;
 import com.hth.utils.SaveData;
 import com.hth.utils.UIUtils;
 import com.startapp.android.publish.adsCommon.StartAppAd;
@@ -11,6 +13,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,11 +44,8 @@ public class HomePageActivity extends Activity {
 
         timeForRun = Calendar.getInstance().getTime().getTime();
         WebsitePage.isHideAds = SaveData.getHideAds(this);
+        (new DownloadContentTask()).execute(this);
 
-        if(WebsitePage.isHideAds)
-        {
-            synchronized(new Object()){WebsitePage.reloadConfigAds(this);}
-        }
 	}
 
     private static Context context;
@@ -160,4 +160,18 @@ public class HomePageActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private class DownloadContentTask extends AsyncTask<Activity, Integer, String> {
+        protected String doInBackground(Activity... activities) {
+            WebsitePage.reloadConfigAds(activities[0]);
+            return "OK";
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(String data) {
+        }
+    }
+
 }
