@@ -27,6 +27,8 @@ public class SavedValues {
 	private static final String RECORD_PASSWORD_APP = "RECORD_PASSWORD_APP";
 	private static final String RECORD_PASSWORD = "RECORD_PASSWORD";
 	private static final String RECORD_SHOW_HEADER = "RECORD_SHOW_HEADER";
+	private static final String RECORD_HIDE_CHI_MUC_DAU_TU = "RECORD_HIDE_CHI_MUC_DAU_TU";
+	private static final String RECORD_HIDE_CHUNG_KHOAN_DAU_TU = "RECORD_HIDE_CHUNG_KHOAN_DAU_TU";
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -43,6 +45,23 @@ public class SavedValues {
 
 	public String getRecordPassword( ) {
 		return appSharedPrefs.getString(RECORD_PASSWORD, "");
+	}
+
+	public void setRecordHideChiMucDauTu(boolean var1) {
+		prefsEditor.putBoolean(RECORD_HIDE_CHI_MUC_DAU_TU, var1);
+		prefsEditor.commit();
+	}
+
+	public boolean getRecordHideChiMucDauTu( ) {
+		return appSharedPrefs.getBoolean(RECORD_HIDE_CHI_MUC_DAU_TU, false);
+	}
+	public void setRecordHideChungKhoanDauTu(boolean var1) {
+		prefsEditor.putBoolean(RECORD_HIDE_CHUNG_KHOAN_DAU_TU, var1);
+		prefsEditor.commit();
+	}
+
+	public boolean getRecordHideChungKhoanDauTu( ) {
+		return appSharedPrefs.getBoolean(RECORD_HIDE_CHUNG_KHOAN_DAU_TU, false);
 	}
 
 	public void setRecordShowHeader(boolean var1) {
