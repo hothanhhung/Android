@@ -3,6 +3,8 @@ package com.hth.docbaotonghop;
 
 import com.hth.docbaotonghop.R;
 import com.hth.utils.*;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrInterface;
 import com.startapp.android.publish.adsCommon.StartAppAd;
 import com.startapp.android.publish.adsCommon.StartAppSDK;
 
@@ -33,7 +35,8 @@ public class MainActivity extends Activity {
     static int height_Screen = 0;
     static WebsitePage current_Website_Page = WebsitePage.VNExpressDotNet;
     private MyWebview viewArticleDetail;
-    
+    private SlidrInterface slidr;
+
     public static WebsitePage getCurrent_Website_Page() {
         return current_Website_Page;
     }
@@ -60,6 +63,8 @@ public class MainActivity extends Activity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+        slidr = Slidr.attach(this);
 
         if(android.os.Build.VERSION.SDK_INT > 10) hideActionBar();
 
@@ -99,7 +104,7 @@ public class MainActivity extends Activity {
     
     @SuppressLint("SetJavaScriptEnabled")
 	private void onCreateWebsiteMobileStyle() {
-    	viewArticleDetail = (MyWebview) findViewById(R.id.viewArticleDetail);
+        viewArticleDetail = (MyWebview) findViewById(R.id.viewArticleDetail);
         viewArticleDetail.clearHistory();
         if (current_Website_Page.getHomePageMobile() != "") {
             WebSettings settings = viewArticleDetail.getSettings();
@@ -113,43 +118,56 @@ public class MainActivity extends Activity {
             settings.setDomStorageEnabled(true);
 
 
-            progressBar1 = (ProgressBar)this.findViewById(R.id.progressBar1);
+            progressBar1 = (ProgressBar) this.findViewById(R.id.progressBar1);
 
             //Uri uri = Uri.parse(current_Website_Page.getHomePageMobile());
             myHomeWebViewClient = new com.hth.utils.MyHomeWebViewClient(this);
             viewArticleDetail.setWebViewClient(myHomeWebViewClient);
             viewArticleDetail.setWebChromeClient(new WebChromeClient() {
                 public void onProgressChanged(WebView view, int progress) {
-                	if(progress < 90)
-                	{
-                		progressBar1.setVisibility(View.VISIBLE);
-                		if(progressBar1.getProgress() < progress){
-                			progressBar1.setProgress(progress);
-                		}
-                	}else
-                	{
-                		progressBar1.setVisibility(View.GONE);
-                	}
-                	
-            		if(progress > 70 && myHomeWebViewClient.getCurrentIndex() < 1)
-            		{
-            			changeAdProvider();
-            		}
+                    if (progress < 90) {
+                        progressBar1.setVisibility(View.VISIBLE);
+                        if (progressBar1.getProgress() < progress) {
+                            progressBar1.setProgress(progress);
+                        }
+                    } else {
+                        progressBar1.setVisibility(View.GONE);
+                    }
+
+                    if (progress > 70 && myHomeWebViewClient.getCurrentIndex() < 1) {
+                        changeAdProvider();
+                    }
                 }
-                
+
             });
             needChanged = true;
             myHomeWebViewClient.addListViewedContents(current_Website_Page.getHomePageMobile());
             //viewArticleDetail.loadUrl("http://stackoverflow.com");
             viewArticleDetail.loadUrl(current_Website_Page.getHomePageMobile());
             //viewArticleDetail.loadDataWithBaseURL("file:///android_asset/",ParserData.getArticleDetail(current_Website_Page.getHomePageMobile()), "text/html", "utf-8", null);
-        } else
+        } else {
             viewArticleDetail.loadDataWithBaseURL(null, "No Website Mobile", "text/html", "utf-8", null);
+        }
+        viewArticleDetail.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(SaveData.getSwipeToBack(MainActivity.this)) {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    String shareSubText = viewArticleDetail.getTitle();
+                    String shareBodyText = viewArticleDetail.getUrl();
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubText);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
+                    startActivity(Intent.createChooser(shareIntent, "Share With"));
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        if(myHomeWebViewClient != null && myHomeWebViewClient.canGobackHistory())
+        if(myHomeWebViewClient != null && myHomeWebViewClient.canGobackHistory() && !SaveData.getBackToHome(this))
         {
             backToHistory(null);
 
@@ -193,6 +211,14 @@ public class MainActivity extends Activity {
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+        if(slidr!=null){
+            if(SaveData.getSwipeToBack(this)){
+                slidr.unlock();
+            }else{
+                slidr.lock();
+            }
+        }
+
     	if(viewArticleDetail != null)
     		viewArticleDetail.onResume();
 
@@ -236,7 +262,10 @@ public class MainActivity extends Activity {
                     viewArticleDetail.clearHistory();
                 break;
             case R.id.button_more_apps:
-                showAlertAdsInform();
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+
+                //showAlertAdsInform();
                 /*
             	String url = getResources().getString(R.string.menu_moreApps_url);
             	Intent i = new Intent(Intent.ACTION_VIEW);

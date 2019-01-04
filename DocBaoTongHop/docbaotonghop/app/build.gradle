@@ -26,8 +26,8 @@ android {
         applicationId "com.hth.docbaotonghop"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 115
-        versionName "1.1.5"
+        versionCode 116
+        versionName "1.1.6"
         multiDexEnabled true
     }
     buildTypes {
@@ -58,4 +58,5 @@ dependencies {
     androidTestImplementation 'com.android.support:multidex:1.0.3'
     androidTestImplementation 'com.android.support:multidex-instrumentation:1.0.3'
     implementation 'com.startapp:inapp-sdk:3.11.1'
+    implementation 'com.r0adkll:slidableactivity:2.0.6'
 }
