@@ -455,10 +455,61 @@ public class DanhMucDauTuView extends LinearLayout {
                         danhMucDauTuItem.setGiaThiTruong(newPrice.getGiaThiTruong());
                     }
                 }
-                loiNhuan += danhMucDauTuItem.getLoiNhan();
-                dauTu += danhMucDauTuItem.getTongDauTu();
-                thiTruong += danhMucDauTuItem.getTongThiTruongHoacBan();
             }
+
+            savedValues.setDanhMucDauTus(danhMucDauTuItems);
+            boolean isHideCKDaBan = savedValues.getRecordHideChungKhoanDauTu();
+            boolean isHideChiMucDaBan = savedValues.getRecordHideChiMucDauTu();
+
+            for (DanhMucDauTuItem danhMucDauTuItem:danhMucDauTuItems) {
+                if(isHideChiMucDaBan && danhMucDauTuItem.daBan()) continue;
+
+                if(listDataHeader.contains(danhMucDauTuItem.getMaCK()))
+                {
+                    listDataChild.get(danhMucDauTuItem.getMaCK()).add(danhMucDauTuItem);
+                }else{
+                    listDataHeader.add(danhMucDauTuItem.getMaCK());
+                    ArrayList<DanhMucDauTuItem> newList = new ArrayList<>();
+                    newList.add(danhMucDauTuItem);
+                    listDataChild.put(danhMucDauTuItem.getMaCK(), newList);
+                }
+
+            }
+
+            if(isHideCKDaBan)
+            {
+                for(String title : listDataHeader)
+                {
+                    boolean allBan = true;
+                    for(DanhMucDauTuItem danhMucDauTuItem : listDataChild.get(title)){
+                        if(!danhMucDauTuItem.daBan()){
+                            allBan = false;
+                        }
+                    }
+                    if(allBan){
+                        listDataChild.remove(title);
+                        listDataHeader.remove(title);
+                    }
+                }
+            }
+
+            ExpandableDanhMucDauTuListAdapter listAdapter = new ExpandableDanhMucDauTuListAdapter(getContext(), listDataHeader, listDataChild);
+            // setting list adapter
+            if(lvDanhMucDauTu !=null)
+            {
+                lvDanhMucDauTu.setVisibility(VISIBLE);
+                lvDanhMucDauTu.setAdapter(listAdapter);
+                for(int i = 0; i < listDataHeader.size(); i++)
+                {
+                    lvDanhMucDauTu.expandGroup(i, true);
+                    for(DanhMucDauTuItem danhMucDauTuItem : listDataChild.get(listDataHeader.get(i))){
+                        loiNhuan += danhMucDauTuItem.getLoiNhan();
+                        dauTu += danhMucDauTuItem.getTongDauTu();
+                        thiTruong += danhMucDauTuItem.getTongThiTruongHoacBan();
+                    }
+                }
+            }
+
 
             if(tvTongDauTu!=null && tvTongThiTruong!=null && tvTongLoiNhuan!=null) {
                 tvTongDauTu.setText(MethodsHelper.getStringFromFloat(dauTu));
@@ -471,31 +522,6 @@ public class DanhMucDauTuView extends LinearLayout {
                     tvTongLoiNhuan.setTextColor(getContext().getResources().getColor(R.color.giaDuong));
                 } else {
                     tvTongLoiNhuan.setTextColor(getContext().getResources().getColor(R.color.giaAm));
-                }
-            }
-
-            savedValues.setDanhMucDauTus(danhMucDauTuItems);
-            for (DanhMucDauTuItem danhMucDauTuItem:danhMucDauTuItems) {
-                if(listDataHeader.contains(danhMucDauTuItem.getMaCK()))
-                {
-                    listDataChild.get(danhMucDauTuItem.getMaCK()).add(danhMucDauTuItem);
-                }else{
-                    listDataHeader.add(danhMucDauTuItem.getMaCK());
-                    ArrayList<DanhMucDauTuItem> newList = new ArrayList<>();
-                    newList.add(danhMucDauTuItem);
-                    listDataChild.put(danhMucDauTuItem.getMaCK(), newList);
-                }
-
-            }
-            ExpandableDanhMucDauTuListAdapter listAdapter = new ExpandableDanhMucDauTuListAdapter(getContext(), listDataHeader, listDataChild);
-            // setting list adapter
-            if(lvDanhMucDauTu !=null)
-            {
-                lvDanhMucDauTu.setVisibility(VISIBLE);
-                lvDanhMucDauTu.setAdapter(listAdapter);
-                for(int i = 0; i < listDataHeader.size(); i++)
-                {
-                    lvDanhMucDauTu.expandGroup(i, true);
                 }
             }
         }
