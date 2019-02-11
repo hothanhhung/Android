@@ -5,8 +5,10 @@ import com.hth.utils.ConfigAds;
 import com.hth.utils.ParserData;
 import com.hth.utils.SaveData;
 import com.hth.utils.UIUtils;
+/*
 import com.startapp.android.publish.adsCommon.StartAppAd;
 import com.startapp.android.publish.adsCommon.StartAppSDK;
+*/
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -36,11 +38,11 @@ public class HomePageActivity extends Activity {
 		setContentView(R.layout.activity_home_page);
         context = getApplicationContext();
 
-        StartAppSDK.init(this, "207910015", false);
+        /*StartAppSDK.init(this, "207910015", false);
         Random rand = new Random();
         if(rand.nextInt(4) == 3) PageApp.IsDisableSplash = false;
         else PageApp.IsDisableSplash = true;
-        if(PageApp.IsDisableSplash) StartAppAd.disableSplash();
+        if(PageApp.IsDisableSplash) StartAppAd.disableSplash();*/
 
         timeForRun = Calendar.getInstance().getTime().getTime();
         WebsitePage.isHideAds = SaveData.getHideAds(this);
@@ -95,7 +97,7 @@ public class HomePageActivity extends Activity {
 
     private void showInterstitial()
     {
-        long timenow = Calendar.getInstance().getTime().getTime();
+        /*long timenow = Calendar.getInstance().getTime().getTime();
         long longtime = (countShow*2000000 ) + 400000;
         if(longtime > 1000000) longtime = 1000000;
         
@@ -103,7 +105,7 @@ public class HomePageActivity extends Activity {
         {
             StartAppAd.showAd(this);
             timeForRun = Calendar.getInstance().getTime().getTime();
-        }
+        }*/
 
     }
 

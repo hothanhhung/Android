@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.startapp.android.publish.ads.list3d.List3DActivity"
+        <!--<activity android:name="com.startapp.android.publish.ads.list3d.List3DActivity"
             android:theme="@android:style/Theme" />
 
         <activity android:name="com.startapp.android.publish.adsCommon.activities.OverlayActivity"
@@ -54,7 +54,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
     </application>
 
 </manifest>
