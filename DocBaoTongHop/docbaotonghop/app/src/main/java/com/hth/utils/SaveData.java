@@ -18,7 +18,7 @@ public class SaveData {
         {
             try {
                 android.content.SharedPreferences sharedPref =activity.getSharedPreferences(activity.getPackageName(), Context.MODE_PRIVATE);
-                return sharedPref.getBoolean(LONG_CLICK_TO_SHARE, true);
+                return sharedPref.getBoolean(LONG_CLICK_TO_SHARE, false);
 
             } catch (Exception ex) {
                 ex.printStackTrace();

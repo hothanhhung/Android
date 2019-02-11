@@ -5,8 +5,10 @@ import com.hth.docbaotonghop.R;
 import com.hth.utils.*;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
+/*
 import com.startapp.android.publish.adsCommon.StartAppAd;
 import com.startapp.android.publish.adsCommon.StartAppSDK;
+*/
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -77,9 +79,9 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main_website);
         WebsitePage.isHideAds = SaveData.getHideAds(this);
-        StartAppSDK.init(this, "207910015", true);
+        /*StartAppSDK.init(this, "207910015", true);
         if(PageApp.IsDisableSplash) StartAppAd.disableSplash();
-
+*/
         ImageButton bthome = (ImageButton) findViewById(R.id.button_home);
         bthome.setImageResource(MainActivity.getCurrent_Website_Page().getIcon());
         onCreateWebsiteMobileStyle();

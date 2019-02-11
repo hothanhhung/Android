@@ -29,11 +29,11 @@
             android:scrollbars = "vertical"
             android:layout_weight="1"
             android:text="@string/loading_string" />
-        <com.startapp.android.publish.ads.banner.Banner
+        <!--<com.startapp.android.publish.ads.banner.Banner
             android:id="@+id/startAppBanner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"/>-->
     </LinearLayout>
 
     <ImageButton
