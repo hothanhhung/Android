@@ -1,12 +1,17 @@
 package com.hunght.tinchungkhoan;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +24,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,15 +37,27 @@ import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 /**
  * TODO: document your custom view class.
  */
 public class DanhMucDauTuView extends LinearLayout {
+    final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
     ExpandableListView lvDanhMucDauTu;
     TextView tvProcessInfo;
     private static SavedValues savedValues;
@@ -73,6 +91,9 @@ public class DanhMucDauTuView extends LinearLayout {
         final AutoCompleteTextView etMaCK = view.findViewById(R.id.etMaCK);
         final EditText etGiaMua = view.findViewById(R.id.etGiaMua);
         final Button btLưu = view.findViewById(R.id.btLưu);
+        final ImageButton imDownloadExcel = view.findViewById(R.id.imDownloadExcel);
+        final ImageButton imUpdate = view.findViewById(R.id.imUpdate);
+
         tvTongDauTu = view.findViewById(R.id.tvTongDauTu);
         tvTongThiTruong = view.findViewById(R.id.tvTongThiTruong);
         tvTongLoiNhuan = view.findViewById(R.id.tvTongLoiNhuan);
@@ -168,7 +189,7 @@ public class DanhMucDauTuView extends LinearLayout {
 
                 DanhMucDauTuItem danhMucDauTuItem = (DanhMucDauTuItem) v.getTag();
                 if(danhMucDauTuItem != null){
-                    showInMenu(danhMucDauTuItem);
+                    showInMenuForItem(danhMucDauTuItem);
                 }
                 return false;
             }
@@ -176,6 +197,30 @@ public class DanhMucDauTuView extends LinearLayout {
 
         updateListDanhMucDauTu(null);
         refeshGiaThiTruong();
+
+        imDownloadExcel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkPermission())
+                {
+                    MethodsHelper.exportToExcel(getContext(), savedValues.getDanhMucDauTus());
+                }
+            }
+        });
+
+        imUpdate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refeshGiaThiTruong();
+            }
+        });
+        /*this.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showInMenu();
+                return false;
+            }
+        });*/
     }
 
     private void deleteDanhMucDauTu(final DanhMucDauTuItem danhMucDauTuItem)
@@ -315,7 +360,7 @@ public class DanhMucDauTuView extends LinearLayout {
     }
 
 
-    private void showInMenu(final DanhMucDauTuItem danhMucDauTuItem) {
+    private void showInMenuForItem(final DanhMucDauTuItem danhMucDauTuItem) {
         if (danhMucDauTuItem == null) return;
         String[] colors = {"Bán", "Chỉnh Sửa", "Xóa"};
         if (danhMucDauTuItem.daBan()) {
@@ -368,7 +413,87 @@ public class DanhMucDauTuView extends LinearLayout {
         builder.show();
     }
 
+    private void showInMenu() {
+        String[] colors = {"Cập Nhật Giá", "Xuất ra excel"};
 
+
+        // Initialize a new array adapter instance
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(
+                getContext(),
+                android.R.layout.simple_list_item_1, colors
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                TextView text_view = (TextView) super.getView(position, convertView, parent);
+
+                if (position % 2 == 0) {
+                    text_view.setBackgroundColor(getContext().getResources().getColor(R.color.item_odd_color));
+                } else {
+                    text_view.setBackgroundColor(getContext().getResources().getColor(R.color.item_even_color));
+                }
+
+                return text_view;
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("...");
+        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                switch (which) {
+                    case 0:
+                        refeshGiaThiTruong();
+                        break;
+                    case 1:
+                        if(checkPermission())
+                        {
+                            MethodsHelper.exportToExcel(getContext(), savedValues.getDanhMucDauTus());
+                        }
+                        break;
+                    case 2:
+
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    private boolean checkPermission()
+    {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+           /* if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
+                    Manifest.permission.READ_CONTACTS)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else */
+                {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions((Activity) getContext(),
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+            return false;
+        } else {
+            // Permission has already been granted
+            return true;
+        }
+    }
 
     private int convertStringToInt(String number)
     {
@@ -478,6 +603,7 @@ public class DanhMucDauTuView extends LinearLayout {
 
             if(isHideCKDaBan)
             {
+                ArrayList temp = new ArrayList<>();
                 for(String title : listDataHeader)
                 {
                     boolean allBan = true;
@@ -488,9 +614,12 @@ public class DanhMucDauTuView extends LinearLayout {
                     }
                     if(allBan){
                         listDataChild.remove(title);
-                        listDataHeader.remove(title);
+                        //listDataHeader.remove(title);
+                    }else{
+                        temp.add(title);
                     }
                 }
+                listDataHeader = temp;
             }
 
             ExpandableDanhMucDauTuListAdapter listAdapter = new ExpandableDanhMucDauTuListAdapter(getContext(), listDataHeader, listDataChild);

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
@@ -116,86 +118,118 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <ImageButton
+                android:id="@+id/imDownloadExcel"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:gravity="right"
-                android:paddingLeft="2dp"
-                android:text="Đầu Tư"
-                android:textSize="12dp" />
+                android:background="#e6e6e6"
+                app:srcCompat="@android:drawable/stat_sys_download_done" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingLeft="2dp"
-                android:text="Thị Trường"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingLeft="2dp"
-                android:text="Lợi Nhuận"
-                android:textSize="12dp" />
-
+            <ImageButton
+                android:id="@+id/imUpdate"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:background="#e6e6e6"
+                app:srcCompat="@android:drawable/ic_menu_rotate" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvTongDauTu"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingLeft="2dp"
-                android:text="100000000"
-                android:textSize="12dp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvTongThiTruong"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingLeft="2dp"
-                android:text="90000000"
-                android:textSize="12dp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="Đầu Tư"
+                    android:textSize="12dp" />
 
-            <TextView
-                android:id="@+id/tvTongLoiNhuan"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingLeft="2dp"
-                android:text="10000000"
-                android:textSize="12dp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="Thị Trường"
+                    android:textSize="12dp" />
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="Lợi Nhuận"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTongDauTu"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="100000000"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTongThiTruong"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="90000000"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTongLoiNhuan"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingLeft="2dp"
+                    android:text="10000000"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
+
     <ExpandableListView
         android:id="@+id/lvDanhMucDauTu"
         android:layout_width="match_parent"
