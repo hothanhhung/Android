@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.hunght.data.MenuLookUpItem;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
 import com.hunght.data.DoanhNghiepItem;
+import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
 import com.hunght.utils.UIUtils;
@@ -477,6 +479,33 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
+
+
+    final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    MethodsHelper.exportToExcel(this, savedValues.getDanhMucDauTus());
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(this, "Không có quyền để tạo file", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
 
     private class DownloadContentTask extends AsyncTask<String, Integer, ArrayList<DoanhNghiepItem>> {
         protected ArrayList<DoanhNghiepItem> doInBackground(String... maCK) {

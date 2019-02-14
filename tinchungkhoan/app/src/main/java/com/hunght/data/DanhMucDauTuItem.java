@@ -98,7 +98,9 @@ public class DanhMucDauTuItem {
     public float getGiaMua() {
         return giaMua;
     }
-
+    public String getGiaMuaInString() {
+        return String.format("%.2f", giaMua);
+    }
     public void setGiaMua(float giaMua) {
         this.giaMua = giaMua;
     }
@@ -108,7 +110,7 @@ public class DanhMucDauTuItem {
     }
 
     public String getSoLuongInString() {
-        return String.format("%.2f", soLuong);
+        return String.format("%d", soLuong);
     }
 
     public void setSoLuong(int soLuong) {
@@ -124,7 +126,7 @@ public class DanhMucDauTuItem {
     }
 
     public String getGiaThiTruongInString() {
-        return String.format("%f", giaThiTruong);
+        return String.format("%.2f", giaThiTruong);
     }
 
     public void setGiaThiTruong(float giaThiTruong) {
@@ -136,7 +138,7 @@ public class DanhMucDauTuItem {
     }
 
     public String getGiaBanInString() {
-        return String.format("%f", giaBan);
+        return String.format("%.2f", giaBan);
     }
 
     public void setGiaBan(float giaBan) {
