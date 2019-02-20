@@ -1,0 +1,152 @@
+﻿{
+  "Version": 2018102909,
+  "DenyLinks": [
+
+  ],
+  "CSSWebs": [
+    {
+      "Name": "NgoiSao.Net",
+      "CSS": ".adsbygoogle, #TOP_BANNER, [id*='LARGE_BANNER'], #FOOTER_BANNER, iframe {display:none !important;} #divHeader .btn_control_col_left {top: 25px !important;}"
+    },
+    {
+      "Name": "VNExpress.Net",
+      "CSS": ".adsbygoogle, [class^='banner_mobile'], #admbackground, [id^='LARGE_BANNER'], iframe[class^='ad']{display:none !important;} #myvne_taskbar, .btn_control_col_left {top:0px !important;}"
+    },
+    {
+      "Name": "NLD.Com.VN",
+      "CSS": ".charge_vnmoney, .install_app, iframe, [id^='adm_zone'], #admBannerPopup, #admtpmPopup {display:none !important;} #admwrapper{opacity: 999999999999 !important;z-index: 999999999999 !important;}"
+    },
+    {
+      "Name": "VietNamNet.VN",
+      "CSS": ".apps, .VnnAdsPos, .install-content-app, .ads, iframe{display:none !important;}"
+    },
+    {
+      "Name": "ThanhNien.Com.VN",
+      "CSS": ".adsbygoogle, .install-content-app, [id*='div-gpt-ad-'], iframe{display:none !important;}"
+    },
+    {
+      "Name": "VTC.VN",
+      "CSS": ".adsbygoogle, iframe {display:none !important;}"
+    },
+    {
+      "Name": "NguoiDuaTin.VN",
+      "CSS": ".adsbygoogle, #bs_inpage_container, iframe{display:none !important;}"
+    },
+    {
+      "Name": "XaLuan.Com",
+      "CSS": "#adheaderholder, .adsbygoogle, .section-ads {display:none !important;}"
+    },
+    {
+      "Name": "Zing.VN",
+      "CSS": ".adsbygoogle, [id*='adv'] {display: none !important;}"
+    },
+    {
+      "Name": "HaiSao.VN",
+      "CSS": ".vmc_ads_viewport, .fixbanner, iframe {display:none !important;}"
+    },
+    {
+      "Name": "VietGiaiTri.Com",
+      "CSS": ".fb-like fb_iframe_widget fb_iframe_widget_fluid, .showbanner, iframe {display:none !important;}"
+    },
+    {
+      "Name": "DanTri.Com.VN",
+      "CSS": ".adsbygoogle, [id^='adm_zone'], #admbackground, #ifrp_popup_ifr, #admBannerPopup, #admtpmPopup {display:none !important;} #admwrapper{opacity: 999999999999 !important;z-index: 999999999999 !important;}"
+    },
+    {
+      "Name": "TinMoi.VN",
+      "CSS": ".adsbygoogle, iframe, #bs_ads_content {display:none !important;z-index:-1}"
+    },
+    {
+      "Name": "Kenh14.VN",
+      "CSS": ".adv, iframe {display:none !important;}"
+    },
+    {
+      "Name": "Tiin.VN",
+      "CSS": ".adsbygoogle, iframe, #url_adv {display:none !important;}"
+    },
+    {
+      "Name": "DoiSongPhapLuat.com",
+      "CSS": ".adsbygoogle, [id*='innity_adslot'], iframe {display:none !important;}"
+    },
+    {
+      "Name": "24h.Com.vn",
+      "CSS": ".banner, iframe{display:none !important;}"
+    },
+    {
+      "Name": "tuoitre.vn",
+      "CSS": ".layer-app, .block-ad, .adsbygoogle, .hide-468, iframe {display:none !important;} #comment_thread iframe {display:block !important;}"
+    },
+    {
+      "Name": "ngoisao.vn",
+      "CSS": ".adsbygoogle, iframe,[id*='div-gpt-ad-1429159079175'] {display:none !important;}"
+    },
+    {
+      "Name": "baodatviet.vn",
+      "CSS": ".adsbygoogle, #bs_inpage_container, iframe  [id*='adm'] {display:none !important;}"
+    },
+    {
+      "Name": "soha.vn",
+      "CSS": ".adv, iframe, #admbackground {display:none !important;}"
+    },
+    {
+      "Name": "tintuconline.com.vn",
+      "CSS": ".vmc_ads_viewport, iframe, #catfishadsense {display:none !important;}"
+    },
+    {
+      "Name": "www.vietnamplus.vn",
+      "CSS": ".ads, iframe, [id^='adm_zone'], #admtpmPopup {display:none !important;}"
+    },
+    {
+      "Name": "vov.vn",
+      "CSS": ".adsbygoogle, iframe {display:none !important;}"
+    },
+    {
+      "Name": "bongdaplus.vn",
+      "CSS": "#tbanner, iframe, #PopupBanner, [id*='qc'] {display:none !important;}"
+    },
+    {
+      "Name": "thethao247.vn",
+      "CSS": ".adsbygoogle, [id*='popupBlock'], [id*='ads'], .box_sponsor, .popup_right{display:none !important;}"
+    },
+    {
+      "Name": "bongda.com.vn",
+      "CSS": ".adsbygoogle, ins, [id*='div-gpt-ad'],[id*='google_ads']{display:none !important;}"
+    },
+    {
+      "Name": "thethaovanhoa.vn",
+      "CSS": ".adsbygoogle, .popupttvh, [id*='adm_zone'], [id*='google_ads']{display:none !important;}[id*='admwrapper']{display:block !important;}"
+    },
+    {
+      "Name": "ictnews.vn",
+      "CSS": ""
+    },
+    {
+      "Name": "vnreview.vn",
+      "CSS": ".app-notify, #adventist_content{display:none !important;}"
+    },
+    {
+      "Name": "genk.vn",
+      "CSS": "#admbackground, [id*='adm_zone']{display:none !important;}"
+    },
+    {
+      "Name": "tinhte.vn",
+      "CSS": ".mobileTopBanner, .customContentBottom{display:none !important;}"
+    },
+    {
+      "Name": "baomoi.com",
+      "CSS": ".adsbygoogle, ins, iframe, [class*='fyi']{display:none !important;}"
+    },
+    {
+      "Name": "viettimes.vn",
+      "CSS": "#admbackground, [id*='adm_zone'], [id*='adm-slot']{display:none !important;}"
+    },
+    {
+      "Name": "daikynguyenvn.com",
+      "CSS": ".adsbygoogle, [id*='ads'] {display:none !important;}"
+    },
+    {
+      "Name": "giadinh.net.vn",
+      "CSS": "#admbackground, [id*='adm_zone'], [id*='adm-slot']{display:none !important;}"
+    }
+  ]
+}

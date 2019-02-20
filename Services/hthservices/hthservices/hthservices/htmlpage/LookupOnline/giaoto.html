@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="hthApp">
+<head>
+    <title></title>
+    <base href="/" />
+    <!--<script src="/scripts/bower_components/jQuery-3.1.0/jquery-3.1.0.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <!--<script src="/scripts/bower_components/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/scripts/bower_components/bootstrap-3.3.7/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--<script src="/scripts/bower_components/angular-1.5.8/angular.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-route.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-animate.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-aria.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-messages.min.js"></script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+
+    <!--<link rel="stylesheet" href="/scripts/bower_components/angular_material-1.1.0-rc2/angular-material.min.css">
+    <script src="/scripts/bower_components/angular_material-1.1.0-rc2/angular-material.min.js"></script>-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+
+    <!--<link rel="stylesheet" href="/scripts/bower_components/sbadmin/sb-admin.css" />-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/3.3.7/css/sb-admin-2.min.css" />
+    <link rel="stylesheet" href="/adsweb/style.css" />
+
+</head>
+<body style="background-color:white; padding-left:20px; padding-right:20px; margin-top:20px" ng-controller="MainController">
+    <div class="loading" ng-if="IsLoading">
+        <img class="text-loading" src="/Images/loading.gif" />
+    </div>
+    <div class="container-fluid bg">
+        <div class="content">
+            <div class="row" ng-if="Message!=''">
+                {{Message}}
+            </div>
+            <div ng-repeat="item in Data">
+                <div class="row {{item.Image!=null && item.Image!=''?'rowbg':''}}">
+                    <div class=" pull-left cell_img" ng-if="item.Image!=null && item.Image!=''">
+                        <img class="img" src="{{item.Image}}" />
+                    </div>
+                    <div class="cell_content">
+                        <div class="title"><b>{{item.Name}} - {{item.HangXe}} - {{item.LoaiXe}} - {{item.NguonGoc}}</b></div>
+                        <div class="detail">{{item.Size}}</div>
+                        <div class="type">{{item.GiaNiemYet}} - {{item.GiaDamPhan}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var hthAdsApp = angular.module('hthApp', [
+            'ngMaterial'
+        ]);
+        var URL_SERVICE = "";
+
+
+
+        hthAdsApp.controller('MainController', function PhoneListController($scope, $http) {
+            
+            $scope.Data = {};
+            $scope.Message = "";
+            $scope.IsLoading = false;
+
+            $scope.GetGiaOtos = function () {
+                var url = "localhost:9511/TraCuuOnline/giaoto";// URL_SERVICE + '/api/TraCuuOnline/GiaOto';
+                $scope.Message = "";
+                $scope.IsLoading = true;
+
+                $http.get(url, null).then(
+                    function (response) {
+                        if (response.data) {
+                            $scope.Data = responseData.Data;
+                            $scope.Message = "";
+                        } else {
+                            $scope.Message = "Error when loading data";
+                        }
+                        $scope.IsLoading = false;
+                    },
+                    function (error) {
+                        $scope.IsLoading = false;
+                        $scope.Message = "Error when connect to sever";
+                    });
+            }
+            $scope.GetGiaOtos();
+        });
+    </script>
+</body >
+</html >

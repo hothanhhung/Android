@@ -43,5 +43,20 @@ namespace hthservices.Controllers
             }
             return View("VietlottMega645");
         }
+
+        //public ActionResult GiaOto()
+        //{
+        //    return Json(TraCuuOnlineHelper.GetGiaOto(), JsonRequestBehavior.AllowGet);
+        //}
+
+        public ActionResult GiaOto()
+        {
+            var data = TraCuuOnlineHelper.GetGiaOto();
+            ViewBag.CacHang = System.Web.Helpers.Json.Encode(data.Select(p => p.HangXe).Distinct().OrderBy(p=>p).ToList());
+            ViewBag.CacNguonGoc = System.Web.Helpers.Json.Encode(data.Select(p => p.NguonGoc).Distinct().OrderBy(p => p).ToList());
+            ViewBag.CacLoai = System.Web.Helpers.Json.Encode(data.Select(p => p.LoaiXe).Distinct().OrderBy(p => p).ToList());
+            ViewBag.Data = TraCuuOnlineHelper.GetOtoInfo(data);
+            return View();
+        }
     }
 }

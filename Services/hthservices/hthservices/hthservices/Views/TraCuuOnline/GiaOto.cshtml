@@ -1,0 +1,281 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="hthApp">
+<head>
+    <title></title>
+    <base href="/" />
+    <!--<script src="/scripts/bower_components/jQuery-3.1.0/jquery-3.1.0.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <!--<script src="/scripts/bower_components/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/scripts/bower_components/bootstrap-3.3.7/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--<script src="/scripts/bower_components/angular-1.5.8/angular.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-route.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-animate.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-aria.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-messages.min.js"></script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+
+    <!--<link rel="stylesheet" href="/scripts/bower_components/angular_material-1.1.0-rc2/angular-material.min.css">
+    <script src="/scripts/bower_components/angular_material-1.1.0-rc2/angular-material.min.js"></script>-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+    <script src="/scripts/bower_components/angular-lazy-img.min.js"></script>
+    
+
+    <!--<link rel="stylesheet" href="/scripts/bower_components/sbadmin/sb-admin.css" />-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/3.3.7/css/sb-admin-2.min.css" />
+    <style>
+
+        .bg {
+            background-color: #FFF !important;
+            background-position: left 0px;
+            background-repeat: no-repeat;
+            background-size: 160px;
+            box-sizing: border-box;
+            moz-box-sizing: border-box;
+            outline: 1px solid rgb(204, 204, 204);
+            margin: 0px auto;
+            /*max-width: 720px;*/
+        }
+
+        .content {
+            padding: 10px;
+        }
+
+        .rowbg {
+            /*background-color: #ECECEC;*/
+            box-shadow: 0 2px 3px #C3C3C3;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .cell_img {
+            margin: 10px;
+        }
+
+        .cell_content {
+            margin-top: 10px;
+            /*float: left;*/
+        }
+
+        .head {
+            font-size: 1.75rem;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            padding-bottom: 5px;
+        }
+
+        .detail {
+            font-size: 1.05rem;
+        }
+
+        .niemyet {
+            font-style: italic;
+            font-size: 2.5rem;
+            color: #059c43
+        }
+
+        .damphan {
+            font-style: italic;
+            font-size: 2.5rem;
+            color: #f70020
+        }
+
+        .lable {
+            font-weight: 700;
+            color: #619c05;
+            background: #11f999;
+            padding: 5px;
+            margin-right: 5px;
+        }
+
+        .width90 {
+            width: 99% !important;
+        }
+
+        .normal {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+    </style>
+
+</head>
+
+<body style="background-color:white;" ng-controller="MainController">
+    <div class="container-fluid bg">
+        <div class="row" style="margin: 10px -10px 10px -10px;">
+            <div class="col-xs-6 col-md-6">
+                <div class="dropdown width90">
+                    <button class="btn btn-default dropdown-toggle width90 normal" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{filter.hang}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+                        <li ng-repeat="item in CacHang"><a href="javascript:void(0)" class="normal" ng-click="filter.hang=item;filterData()"> {{item}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                <div class="dropdown width90">
+                    <button class="btn btn-default dropdown-toggle width90 normal" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{filter.loai}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+                        <li ng-repeat="item in CacLoai"><a href="javascript:void(0)" class="normal" ng-click="filter.loai=item;filterData()"> {{item}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin: 10px -10px 10px -10px;">
+            <div class="col-xs-6 col-md-6">
+                <div class="dropdown width90">
+                    <button class="btn btn-default dropdown-toggle width90 normal" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{filter.nguonGoc}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+                        <li ng-repeat="item in CacNguonGoc"><a href="javascript:void(0)" class="normal" ng-click="filter.nguonGoc=item;filterData()"> {{item}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6" style="padding-right: 0px;">
+                <div class="dropdown width90 row">
+                    <div class="col-xs-6 col-md-6" style="padding-right: 5px;">
+                        <input type="number" class="form-control normal" style="text-align: right;" ng-model="filter.giaTu" placeholder="Giá Từ" ng-change="filterData()" />
+                    </div>
+                    <div class="col-xs-6 col-md-6" style="padding-right: 5px;">
+                        <input type="number" class="form-control normal" style="text-align: right;"ng-model="filter.giaDen" placeholder="Giá Đến" ng-change="filterData()" />
+                    </div>
+                    @*<button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{filter.gia}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+                        <li ng-repeat="item in CacGia"><a href="javascript:void(0)" ng-click="filter.gia=item;filterData()"> {{item}}</a></li>
+                    </ul>*@
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div ng-repeat="item in Data">
+                <div class="row {{item.Image!=null && item.Image!=''?'rowbg':''}}">
+                    <div class=" pull-left cell_img" ng-if="item.Image!=null && item.Image!=''" style="width:110px; height:70px">
+                        <img width="110" src='~/Images/defaultCar.jpg' lazy-img="{{item.Image}}" />
+                    </div>
+                    <div class="cell_content">
+                        <div class="title"><b>{{item.Name}} - {{item.HangXe}}</b></div>
+                        <div class="detail"><span class="lable">{{item.NguonGoc}}</span> <span class="lable">{{item.LoaiXe}}</span> <span class="lable">{{item.DongCo}}</span> <span class="lable">{{item.Size}}</span></div>
+                        <div><span style="font-size:0.75rem">Giá Niêm Yết:</span> <span class="niemyet"><b>{{item.GiaNiemYet}}</b></span>  <span style="font-size:0.75rem">Giá Đàm Phán:</span> <span class="damphan"><b>{{item.GiaDamPhan}}</b></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var hthAdsApp = angular.module('hthApp', [
+            'ngMaterial', 'angularLazyImg'
+        ]);
+        var URL_SERVICE = "";
+
+
+
+        hthAdsApp.controller('MainController', function PhoneListController($scope, $http) {
+            $scope.CacHang = @Html.Raw(ViewBag.CacHang);
+            $scope.CacLoai = @Html.Raw(ViewBag.CacLoai);
+            $scope.CacNguonGoc = @Html.Raw(ViewBag.CacNguonGoc);
+            $scope.CacGia = ["---Tất Cả Giá---", "< 300", "300 - 500", "500-800", ">1ty"];
+
+            $scope.CacHang.splice(0, 0, "---Tất Cả Hãng Xe---");
+            $scope.CacLoai.splice(0, 0, "---Tất Cả Loại Xe---");
+            $scope.CacNguonGoc.splice(0, 0, "---Tất Cả Nguồn Gốc---");
+
+            $scope.OrignalData = @Html.Raw(ViewBag.Data);
+            $scope.Data = JSON.parse(JSON.stringify($scope.OrignalData));
+            $scope.filter = {
+                hang: $scope.CacHang[0],
+                loai: $scope.CacLoai[0],
+                nguonGoc: $scope.CacNguonGoc[0],
+                gia: $scope.CacGia[0]
+            };
+
+            $scope.filterData = function () {
+                $scope.Data = $scope.OrignalData.filter(function (obj) {
+                    if ($scope.filter.hang != $scope.CacHang[0] && obj.HangXe != $scope.filter.hang) {
+                        return false
+                    }
+                    if ($scope.filter.loai != $scope.CacLoai[0] && obj.LoaiXe != $scope.filter.loai) {
+                        return false
+                    }
+                    if ($scope.filter.nguonGoc != $scope.CacNguonGoc[0] && obj.NguonGoc != $scope.filter.nguonGoc) {
+                        return false
+                    }
+                    $scope.filter.giaTu = parseInt($scope.filter.giaTu);
+                    if ($scope.filter.giaTu) {
+                        if (obj.GiaNiemYet % 1 === 0) {
+                            if ($scope.filter.giaTu > obj.GiaNiemYet) {
+                                return false
+                            }
+                        }
+                        else if ($scope.filter.giaTu > obj.GiaNiemYet * 1000) {
+                            return false
+                        }
+                    }
+
+                    $scope.filter.giaDen = parseInt($scope.filter.giaDen);
+                    if ($scope.filter.giaDen) {
+                        if (obj.GiaNiemYet % 1 === 0) {
+                            if ($scope.filter.giaDen < obj.GiaNiemYet) {
+                                return false
+                            }
+                        }
+                        else if ($scope.filter.giaDen < obj.GiaNiemYet * 1000) {
+                            return false
+                        }
+                    }
+                    //if ($scope.filter.giaDen && $scope.filter.giaDen < obj.GiaNiemYet) {
+                    //    return false
+                    //}
+                    return true;
+                });
+            }
+
+            $scope.GetGiaOtos = function () {
+                var url = "localhost:9511/TraCuuOnline/giaoto";// URL_SERVICE + '/api/TraCuuOnline/GiaOto';
+                $scope.Message = "";
+                $scope.IsLoading = true;
+
+                $http.get(url, null).then(
+                    function (response) {
+                        if (response.data) {
+                            $scope.Data = responseData.Data;
+                            $scope.Message = "";
+                        } else {
+                            $scope.Message = "Error when loading data";
+                        }
+                        $scope.IsLoading = false;
+                    },
+                    function (error) {
+                        $scope.IsLoading = false;
+                        $scope.Message = "Error when connect to sever";
+                    });
+            }
+            //$scope.GetGiaOtos();
+        });
+    </script>
+</body>
+</html>
