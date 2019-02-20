@@ -149,6 +149,7 @@
     <Compile Include="Controllers\AdsController.cs" />
     <Compile Include="Controllers\DocBaoTongHopController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MockAPIController.cs" />
     <Compile Include="Controllers\ReportApiController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\LichTiviController.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GiaOto.cs" />
     <Compile Include="Models\ReportFilter.cs" />
     <Compile Include="Models\ReportForCurrentDate.cs" />
     <Compile Include="Models\RequestInfo.cs" />
@@ -200,9 +202,20 @@
     <Content Include="Data\DocBaoTongHop.json" />
     <None Include="Data\ThapNhiBatTu.json" />
     <None Include="Data\ChamNgon.json" />
+    <Content Include="htmlpage\Donate.html" />
+    <Content Include="htmlpage\images\Donate.png" />
+    <Content Include="htmlpage\images\thanks.jpg" />
+    <Content Include="htmlpage\images\thanks1.jpg" />
+    <Content Include="htmlpage\LookupOnline\giaoto.html" />
     <Content Include="htmlpage\LookupOnline\bongda.html" />
     <Content Include="htmlpage\LookupOnline\DauSoDienThoai.html" />
+    <Content Include="htmlpage\LookupOnline\index.html" />
     <Content Include="htmlpage\LookupOnline\MaBienSo.html" />
+    <Content Include="htmlpage\LookupOnline\MaBuuDien.html" />
+    <Content Include="htmlpage\LookupOnline\SwiftCode.html" />
+    <Content Include="htmlpage\LookupOnline\TraCuuKhac.html" />
+    <Content Include="htmlpage\LookupOnline\Vietlott.html" />
+    <Content Include="htmlpage\privacy.html" />
     <Content Include="Images\loading.gif" />
     <Content Include="Scripts\bower_components\angular-1.5.8\angular-animate.js" />
     <Content Include="Scripts\bower_components\angular-1.5.8\angular-animate.min.js" />
@@ -1141,6 +1154,7 @@
     <Content Include="Views\Report\Group.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\TraCuuOnline\VietlottMega645.cshtml" />
+    <Content Include="Views\TraCuuOnline\GiaOto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
