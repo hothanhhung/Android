@@ -116,20 +116,28 @@ td{
     text-align: left;
     color: #209EBB;
 }
-.item{
-	display: table;
+.item {
+    display: table;
     padding: 5px;
     margin: 5px;
-    width: 130px;
-    height: 130px;
+    width: 95%;
+    /*width: 130px;
+height: 130px;*/
     align-items: center;
     text-align: center;
     background-color: #d4cdcd;
-	border: 3px solid #ccc;	
-    box-shadow: 2px -5px 10px #716c6c;;
+    border: 3px solid #ccc;
+    box-shadow: 2px -5px 10px #716c6c;
 }
 
+.rItem {
+    width: 50%;
+}
 
+.rowContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
 </style>
   </head>
   <body>
@@ -154,22 +162,29 @@ td{
 			</div>
 		  </div>
 		  <div class="row" style="margin: 10px -10px 10px -10px;">
-			<div ng-if="selectedKindsOfView.id == 1" style="margin-left: 20px;">
-				<div class="row" ng-if="selectedItem!=null">
-					<a href="javascript:void(0)" ng-click="onClickItem()">Back</a>
-					<span><b>{{htmlDecode(selectedItem.name)}}</b></span> có đầu số là <b><span>{{htmlDecode(selectedItem.code)}}</span></b>
-				</div>
-				<div class="row" ng-if="message!=''">
-					<span>{{message}}</span>
-				</div>
-				<div class="row">
-					<div class="row text_center rowRp pull-left" style="margin: 0px" ng-repeat="maSo in items"  ng-click="onClickItem(maSo)">
-						<div class="item time_f ">
-							<span class="centerf" ng-bind-html = "getTrustAsHtml('<font color=\'black\'>'+maSo.code + '</font><br/>' + maSo.name)"> </span>
-						</div>
-					</div>
-				</div>
-			</div>
+              <div ng-if="selectedKindsOfView.id == 1" style="margin-left: 0px;">
+                  <div class="row" ng-if="selectedItem!=null">
+                      <a href="javascript:void(0)" ng-click="onClickItem()">Back</a>
+                      <span><b>{{htmlDecode(selectedItem.name)}}</b></span> có đầu số là <b><span>{{htmlDecode(selectedItem.code)}}</span></b>
+                  </div>
+                  <div class="row" ng-if="message!=''">
+                      <span>{{message}}</span>
+                  </div>
+                  <div class="row rowContainer" style="margin-left: 0px; margin-right:0px ">
+                      <div style="margin: 0px" ng-repeat="maSo in items" ng-click="onClickItem(maSo)" class='rItem'>
+                          <div class="item time_f ">
+                              <span class="centerf" ng-bind-html="getTrustAsHtml('<font color=\'black\'>'+maSo.code + '</font><br/>' + maSo.name)"> </span>
+                          </div>
+                      </div>
+                  </div>
+                  <!--<div class="row">
+                      <div class="row text_center rowRp pull-left" style="margin: 0px" ng-repeat="maSo in items" ng-click="onClickItem(maSo)">
+                          <div class="item time_f ">
+                              <span class="centerf" ng-bind-html="getTrustAsHtml('<font color=\'black\'>'+maSo.code + '</font><br/>' + maSo.name)"> </span>
+                          </div>
+                      </div>
+                  </div>-->
+              </div>
 			<div ng-if="selectedKindsOfView.id == 2">
 				<div class="row date text_center rowRp" style="margin: 0px">
 					<div class="col-xs-12 col-md-12">Nội Dung</div>
