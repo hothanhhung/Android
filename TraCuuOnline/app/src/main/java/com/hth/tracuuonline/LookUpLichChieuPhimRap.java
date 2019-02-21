@@ -55,6 +55,8 @@ public class LookUpLichChieuPhimRap extends LinearLayout {
         webViewSettings.setDisplayZoomControls(false);
         webViewSettings.setJavaScriptEnabled(true);
         webViewSettings.setDomStorageEnabled(true);
+        webView.clearCache(true);
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -81,7 +83,7 @@ public class LookUpLichChieuPhimRap extends LinearLayout {
     {
         textView.setVisibility(VISIBLE);
         llWebView.setVisibility(GONE);
-        webView.loadUrl("http://www.123phim.vn/lich-chieu/");
+        webView.loadUrl("http://www.123phim.vn/");
     }
 
 }

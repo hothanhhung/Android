@@ -67,6 +67,7 @@ public class LookUpForViewWithWebView extends LinearLayout {
         webViewSettings.setSupportZoom(true);
         webViewSettings.setBuiltInZoomControls(true);
         webViewSettings.setDisplayZoomControls(false);
+        webView.clearCache(true);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

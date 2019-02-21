@@ -38,6 +38,7 @@ public class LookUpBienSoOto extends LinearLayout {
         initView();
     }
 
+    private static final String desktop_mode = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36";
     private void initView() {
         View view = inflate(getContext(), R.layout.look_up_bien_so_oto_layout, this);
         textView = (TextView) view.findViewById(R.id.textView);
@@ -59,6 +60,9 @@ public class LookUpBienSoOto extends LinearLayout {
         webViewSettings.setJavaScriptEnabled(true);
         webViewSettings.setLoadWithOverviewMode(true);
         webViewSettings.setUseWideViewPort(false);
+        webViewSettings.setUserAgentString(desktop_mode );
+        webView.clearCache(true);
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onFormResubmission(WebView view, Message dontResend, Message resend) {

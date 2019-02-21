@@ -68,6 +68,8 @@ public class LookUpThongTinNguoiNopThue extends LinearLayout {
         webViewSettings.setDisplayZoomControls(false);
         webViewSettings.setJavaScriptEnabled(true);
         webViewSettings.setDomStorageEnabled(true);
+        webView.clearCache(true);
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {

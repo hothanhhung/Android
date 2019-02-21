@@ -15,6 +15,7 @@ public class StaticData {
             menuLookUpItems = new ArrayList<>();
             menuLookUpItems.add(new MenuLookUpItem("Thông Tin Phương Tiện Từ Biển Số Ôtô", R.drawable.autocar,"com.hth.tracuuonline.LookUpBienSoOto",""));
             menuLookUpItems.add(new MenuLookUpItem("Mã Biển Số Xe",R.drawable.biensoxe,"com.hth.tracuuonline.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.MaBienSo));
+            menuLookUpItems.add(new MenuLookUpItem("Giá Xe Ôto",R.drawable.pricecar,"com.hth.tracuuonline.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.GiaOto));
             menuLookUpItems.add(new MenuLookUpItem("Mã Bưu Điện",R.drawable.mail,"com.hth.tracuuonline.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.MaBuuDien));
             menuLookUpItems.add(new MenuLookUpItem("Đầu Số Điện Thoại",R.drawable.phonenumber,"com.hth.tracuuonline.LookUpForViewWithWebViewRequest","", MenuLookUpItemKind.DauSoDienThoai));
             menuLookUpItems.add(new MenuLookUpItem("Thông Tin Người Nộp Thuế",R.drawable.tax,"com.hth.tracuuonline.LookUpThongTinNguoiNopThue",""));

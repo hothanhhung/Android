@@ -43,6 +43,8 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
         initView();
     }
 
+    private static final String desktop_mode = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36";
+
     private void initView() {
         View view = inflate(getContext(), R.layout.look_up_with_webview_request, this);
         textView = (TextView) view.findViewById(R.id.textView);
@@ -55,7 +57,8 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
         webViewSettings.setDisplayZoomControls(false);
         webViewSettings.setJavaScriptEnabled(true);
         webViewSettings.setDomStorageEnabled(true);
-
+        webViewSettings.setUserAgentString(desktop_mode );
+        webView.clearCache(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -98,6 +101,8 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
                 return "http://hunght.com/htmlpage/lookuponline/TraCuuKhac.html";
             case BangGiaVang:
                 return "http://banggia.giavang.net";
+            case GiaOto:
+                return "http://hunght.com/tracuuonline/giaOto";
         }
         return "";
     }
