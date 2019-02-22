@@ -9,7 +9,7 @@
     <title></title>
     <base href="/" />
     <!--<script src="/scripts/bower_components/jQuery-3.1.0/jquery-3.1.0.min.js"></script>-->
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--<script src="/scripts/bower_components/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/scripts/bower_components/bootstrap-3.3.7/css/bootstrap.min.css" />-->
@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     <script src="/scripts/bower_components/angular-lazy-img.min.js"></script>
-    
+
 
     <!--<link rel="stylesheet" href="/scripts/bower_components/sbadmin/sb-admin.css" />-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/3.3.7/css/sb-admin-2.min.css" />
@@ -115,7 +115,7 @@
 
 </head>
 
-<body style="background-color:white;" ng-controller="MainController">
+<body style="background-color:white" ng-controller="MainController">
     <div class="container-fluid bg">
         <div class="row" style="margin: 10px -10px 10px -10px;">
             <div class="col-xs-6 col-md-6">
@@ -195,6 +195,8 @@
 
 
         hthAdsApp.controller('MainController', function PhoneListController($scope, $http) {
+            var currentIndex = 0, numberOfLoadedItems = 20;
+
             $scope.CacHang = @Html.Raw(ViewBag.CacHang);
             $scope.CacLoai = @Html.Raw(ViewBag.CacLoai);
             $scope.CacNguonGoc = @Html.Raw(ViewBag.CacNguonGoc);
@@ -205,7 +207,7 @@
             $scope.CacNguonGoc.splice(0, 0, "---Tất Cả Nguồn Gốc---");
 
             $scope.OrignalData = @Html.Raw(ViewBag.Data);
-            $scope.Data = JSON.parse(JSON.stringify($scope.OrignalData));
+            $scope.Data = [];
             $scope.filter = {
                 hang: $scope.CacHang[0],
                 loai: $scope.CacLoai[0],
@@ -213,26 +215,38 @@
                 gia: $scope.CacGia[0]
             };
 
-            $scope.filterData = function () {
-                $scope.Data = $scope.OrignalData.filter(function (obj) {
+            $scope.filterData = function () {                
+                $scope.loadMore(true);
+            }
+                        
+            $scope.loadMore = function (isReset) {
+                if (isReset) {
+                    currentIndex = 0;
+                }
+
+                var count = 0;
+                var newItem = [];
+                for (currentIndex; currentIndex < $scope.OrignalData.length && count < numberOfLoadedItems; currentIndex++) {
+                    var obj = $scope.OrignalData[currentIndex];
+
                     if ($scope.filter.hang != $scope.CacHang[0] && obj.HangXe != $scope.filter.hang) {
-                        return false
+                        continue;
                     }
                     if ($scope.filter.loai != $scope.CacLoai[0] && obj.LoaiXe != $scope.filter.loai) {
-                        return false
+                        continue;
                     }
                     if ($scope.filter.nguonGoc != $scope.CacNguonGoc[0] && obj.NguonGoc != $scope.filter.nguonGoc) {
-                        return false
+                        continue;
                     }
                     $scope.filter.giaTu = parseInt($scope.filter.giaTu);
                     if ($scope.filter.giaTu) {
                         if (obj.GiaNiemYet % 1 === 0) {
                             if ($scope.filter.giaTu > obj.GiaNiemYet) {
-                                return false
+                                continue;
                             }
                         }
                         else if ($scope.filter.giaTu > obj.GiaNiemYet * 1000) {
-                            return false
+                            continue;
                         }
                     }
 
@@ -240,41 +254,50 @@
                     if ($scope.filter.giaDen) {
                         if (obj.GiaNiemYet % 1 === 0) {
                             if ($scope.filter.giaDen < obj.GiaNiemYet) {
-                                return false
+                                0
                             }
                         }
                         else if ($scope.filter.giaDen < obj.GiaNiemYet * 1000) {
-                            return false
+                            continue;
                         }
                     }
                     //if ($scope.filter.giaDen && $scope.filter.giaDen < obj.GiaNiemYet) {
                     //    return false
                     //}
-                    return true;
-                });
+                    newItem.push(obj);
+                    count++;
+                }
+                if (isReset) {
+                    $scope.Data = newItem;
+                }else if (count > 0) {
+                    // $scope.$apply();
+                    //$scope.Data = angular.copy($scope.Data);
+                    $scope.Data = $scope.Data.concat(newItem);
+                    $scope.$apply();
+                } 
             }
-
-            $scope.GetGiaOtos = function () {
-                var url = "localhost:9511/TraCuuOnline/giaoto";// URL_SERVICE + '/api/TraCuuOnline/GiaOto';
-                $scope.Message = "";
-                $scope.IsLoading = true;
-
-                $http.get(url, null).then(
-                    function (response) {
-                        if (response.data) {
-                            $scope.Data = responseData.Data;
-                            $scope.Message = "";
-                        } else {
-                            $scope.Message = "Error when loading data";
+            $scope.loadMore(true);
+            var lastScrollTop = 0;
+            $(window).scroll(function () {
+                var scrollTop = $(window).scrollTop();
+                if (lastScrollTop < scrollTop && scrollTop + $(window).height() >= $(document).height() - 2) {
+                    $scope.loadMore();
+                }
+                lastScrollTop = scrollTop;
+            });
+        });
+        hthAdsApp.directive('lazyLoadItem', function () {
+            return {
+                restrict: 'A',
+                link: function (scope, elem) {
+                    var scroller = elem[0]
+                    $(scroller).bind('scroll', function () {
+                        if (scroller.scrollTop + scroller.offsetHeight >= scroller.scrollHeight) {
+                            scope.$apply('loadMore()')
                         }
-                        $scope.IsLoading = false;
-                    },
-                    function (error) {
-                        $scope.IsLoading = false;
-                        $scope.Message = "Error when connect to sever";
-                    });
+                    })
+                }
             }
-            //$scope.GetGiaOtos();
         });
     </script>
 </body>
