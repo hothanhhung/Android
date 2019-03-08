@@ -111,6 +111,11 @@
             font-size: 1.05rem;
             font-weight: 700;
         }
+
+        md-dialog {
+            width: 90% !important;
+            height: 80% !important;
+        }
     </style>
 
 </head>
@@ -175,7 +180,7 @@
             <div ng-repeat="item in Data">
                 <div class="row {{item.Image!=null && item.Image!=''?'rowbg':''}}">
                     <div class=" pull-left cell_img" ng-if="item.Image!=null && item.Image!=''" style="width:110px; height:70px">
-                        <img width="110" src='~/Images/defaultCar.jpg' lazy-img="{{item.Image}}" />
+                        <img width="110" src='~/Images/defaultCar.jpg' lazy-img="{{item.Image}}" ng-click="showDetail(item.DetailUrl)"/>
                     </div>
                     <div class="cell_content">
                         <div class="title"><b>{{item.Name}} - {{item.HangXe}}</b></div>
@@ -194,7 +199,7 @@
 
 
 
-        hthAdsApp.controller('MainController', function PhoneListController($scope, $http) {
+        hthAdsApp.controller('MainController', function PhoneListController($scope, $http, $mdDialog, $sce) {
             var currentIndex = 0, numberOfLoadedItems = 20;
 
             $scope.CacHang = @Html.Raw(ViewBag.CacHang);
@@ -285,6 +290,59 @@
                 }
                 lastScrollTop = scrollTop;
             });
+
+            $scope.showDetail = function (detailUrl) {
+                
+                $mdDialog.show({
+                    locals: { detailUrl: detailUrl },
+                    controller: DialogController,
+                    template: '<div style="padding: 10px; margin: 10px;"><div ng-bind-html = "Content"></div></div>',
+                    parent: angular.element(document.body),
+                 //   targetEvent: ev,
+                    clickOutsideToClose: true
+                })
+                    .then(function (answer) {
+                        $scope.status = 'You said the information was "' + answer + '".';
+                    }, function () {
+                        $scope.status = 'You cancelled the dialog.';
+                    });
+            };
+
+            function DialogController($scope, $mdDialog, $sce, detailUrl) {
+                var url = 'http://localhost:9511/TraCuuOnline/GetDetailOto/?url=' + encodeURIComponent(detailUrl);
+
+                $.ajax({
+                    url: url,
+                    xhrFields: { cors: false, withCredentials: true },
+                    type: 'GET',
+                    dataType: 'html',
+                    jsonpCallback: 'callback',
+                    timeout: 10000,
+                    error: function (xhr, status, error) {
+                        $scope.Content = $sce.trustAsHtml("Không có dữ liệu");
+                        $scope.$apply();
+                    },
+                    success: function (responsedata) {
+                        if (responsedata != '') {
+                            $scope.Content = $sce.trustAsHtml(responsedata);
+                            $scope.$apply();
+                        }
+                    }
+                });
+
+
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+                };
+
+                $scope.answer = function (answer) {
+                    $mdDialog.hide(answer);
+                };
+            }
         });
         hthAdsApp.directive('lazyLoadItem', function () {
             return {

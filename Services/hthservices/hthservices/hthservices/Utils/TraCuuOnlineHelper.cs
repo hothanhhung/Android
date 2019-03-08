@@ -184,5 +184,42 @@ namespace hthservices.Utils
             var otoInfo = Json.Decode<List<OtoInfo>>(str);
             return Json.Encode(otoInfo);
         }
+
+        static public string GetDetailOto(string url)
+        {
+            List<GiaOto> giaOtos = new List<GiaOto>();
+            try
+            {
+                HttpClient http = new HttpClient();
+                var response = http.GetByteArrayAsync(url).Result;
+                String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+                source = WebUtility.HtmlDecode(source);
+                HtmlDocument resultat = new HtmlDocument();
+                resultat.LoadHtml(source);
+
+                var content = resultat.DocumentNode.SelectNodes("//div[@class='detail_info']").FirstOrDefault();
+                if (content != null)
+                {
+                    var removeItem = content.SelectSingleNode("//div[@id='loadMore']");
+                    if (removeItem != null)
+                    {
+                        removeItem.Remove();
+                    }
+                    removeItem = content.SelectSingleNode("//div[@id='loadLess']");
+                    if (removeItem != null)
+                    {
+                        removeItem.Remove();
+                    }
+                    return content.InnerHtml.Replace("none","block");
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return string.Empty;
+        }
+
     }
 }

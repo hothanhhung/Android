@@ -41,8 +41,8 @@ namespace hthservices.Controllers
 
             var channels = hthservices.Utils.DataProcess.GetSchedulesOfChannel(channelKey, dateOn, Request.RequestUri.ToString(), device, ip, version);
 
-            Random rand = new Random();
-            channels.ForEach(p => p.ProgramName = EncrypeString.EncodeRandomly(p.ProgramName, rand.NextDouble()>0.5));
+            //Random rand = new Random();
+            //channels.ForEach(p => p.ProgramName = EncrypeString.EncodeRandomly(p.ProgramName, rand.NextDouble()>0.5));
             return ResponseJson.GetResponseJson(channels);
         }
 
