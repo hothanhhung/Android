@@ -37,6 +37,7 @@ namespace hthservices.Models
         public int CongSuat { get { int value = 0; int.TryParse(carPower, out value); return value; } }
         public int Momen { get { int value = 0; int.TryParse(carMoment, out value); return value; } }
         public string Size { get { return carSize; } }
+        public string DetailUrl { get { return "https://vnexpress.net/" + shareUrl; } }
 
     }
 
@@ -54,5 +55,6 @@ namespace hthservices.Models
         public int CongSuat { get; set; }
         public int Momen { get; set; }
         public string Size { get; set; }
+        public string DetailUrl { get; set; }
     }
 }

@@ -86,11 +86,12 @@ namespace hthservices.Utils
 
             public bool IsDeniedAppVersion(string version)
             {
-                if (AcceptedAppVersions != null)
-                {
-                    if (AcceptedAppVersions.Contains(version == null? null : version.Trim())) return false;
-                    else return true;
-                }
+
+                //if (AcceptedAppVersions != null)
+                //{
+                //    if (AcceptedAppVersions.Contains(version == null? null : version.Trim())) return false;
+                //    else return true;
+                //}
                 return false;
             }
         }
