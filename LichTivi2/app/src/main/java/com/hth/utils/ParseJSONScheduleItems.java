@@ -1,13 +1,9 @@
 package com.hth.utils;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URI;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,11 +16,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.StrictMode;
 import android.util.Log;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 public class ParseJSONScheduleItems {
 	private static final String APP_SHARED_PREFS = "com.hth.lichtivi";
@@ -104,15 +95,13 @@ public class ParseJSONScheduleItems {
     		
     		StringBuilder jsonStringBuilder = new StringBuilder();
 
-			HttpClient httpclient = new DefaultHttpClient();
-			URI uri = new URI(link);
-			// make GET request to the given URL
-			HttpResponse httpResponse = httpclient.execute(new HttpGet(uri));
+			if (android.os.Build.VERSION.SDK_INT > 9) {
+				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+						.permitAll().build();
+				StrictMode.setThreadPolicy(policy);
+			}
 
-			// receive response as inputStream
-			InputStream inputStream = httpResponse.getEntity().getContent();
-
-    		BufferedReader input = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+			BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
 
     		String inputLine;
             while ((inputLine = input.readLine()) != null)
@@ -120,7 +109,6 @@ public class ParseJSONScheduleItems {
             	jsonStringBuilder.append(inputLine);
             }
             input.close();
-			inputStream.close();
 	    	String json = jsonStringBuilder.toString();
 	    	
 	    	Type collectionType = new TypeToken<ResponseJson<ScheduleItem>>(){}.getType();
@@ -154,16 +142,7 @@ public class ParseJSONScheduleItems {
 
 			StringBuilder jsonStringBuilder = new StringBuilder();
 
-			HttpClient httpclient = new DefaultHttpClient();
-
-			URI uri = new URI(link);
-			// make GET request to the given URL
-			HttpResponse httpResponse = httpclient.execute(new HttpGet(uri));
-
-			// receive response as inputStream
-			InputStream inputStream = httpResponse.getEntity().getContent();
-
-			BufferedReader input = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+			BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
 
 			String inputLine;
 			while ((inputLine = input.readLine()) != null)
@@ -171,7 +150,8 @@ public class ParseJSONScheduleItems {
 				jsonStringBuilder.append(inputLine);
 			}
 			input.close();
-			inputStream.close();
+
+
 			String json = jsonStringBuilder.toString();
 
 			Type collectionType = new TypeToken<ResponseJson<SearchProgramItem>>(){}.getType();

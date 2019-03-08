@@ -15,8 +15,8 @@ android {
         applicationId "com.hth.lichtivi"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 400003
-        versionName "4.0.3"
+        versionCode 400004
+        versionName "4.0.4"
     }
     buildTypes {
         debug {
