@@ -59,49 +59,14 @@ namespace hthservices.Controllers
             return View();
         }
 
-        string styles = @"<style>
-                        .bar {
-                            height: 24px;
-                            padding: 4px 10px 0 0;
-                            display: block;
-                            border-bottom: 2px solid #e6e6e7;
-                            font: bold 16px arial;
-                            color: #9f224e;
-                            margin-bottom: 10px;}
-                        .left_line {
-                            width: 230px;
-                            float: left;
-                            overflow: hidden;
-                            font: 14px arial;
-                            color: #454545;
-                            line-height: 20px;
-                            text-align: lelf;
-                            margin-right: 20px;
-                        }
-                        .right_line {
-                            width: 130px !important;
-                            text-align: right;
-                            float: right;
-                            overflow: hidden;
-                            font: bold 14px arial;
-                            color: #333;
-                            line-height: 20px;
-                        }
-                        .line{
-                            display: block;
-                            overflow: hidden;
-                            margin: 0px 0px 5px;
-                            padding-bottom: 5px;
-                        }
-                        </style>";
 
-        public string GetDetailOto(string url)
+        public ActionResult GetDetailOto(string url)
         {
             if (string.IsNullOrEmpty(url))
             {
                 url = "https://vnexpress.net/interactive/2016/bang-gia-xe/sedan-cerato-1-6at-694.html";
             }
-            return styles + TraCuuOnlineHelper.GetDetailOto(url);
+            return Json(new { data = TraCuuOnlineHelper.GetDetailOto(url) }, JsonRequestBehavior.AllowGet);
         }
     }
 }

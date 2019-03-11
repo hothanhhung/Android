@@ -113,11 +113,49 @@
         }
 
         md-dialog {
-            width: 90% !important;
-            height: 80% !important;
+            position: relative !important;
+            min-width: 95% !important;
+            min-height: 90% !important;
+            width: 99% !important;
+            height: 90% !important;
+        }
+
+        .bar {
+            height: 24px;
+            padding: 4px 10px 0 0;
+            display: block;
+            border-bottom: 2px solid #e6e6e7;
+            font: bold 16px arial;
+            color: #9f224e;
+            margin-bottom: 10px;
+        }
+
+        .left_line {
+            float: left;
+            overflow: hidden;
+            font: 14px arial;
+            color: #454545;
+            line-height: 20px;
+            text-align: left;
+            margin-right: 20px;
+        }
+
+        .right_line {
+            text-align: right;
+            float: right;
+            overflow: hidden;
+            font: bold 14px arial;
+            color: #333;
+            line-height: 20px;
+        }
+
+        .line {
+            display: block;
+            overflow: hidden;
+            margin: 0px 0px 5px;
+            padding-bottom: 5px;
         }
     </style>
-
 </head>
 
 <body style="background-color:white" ng-controller="MainController">
@@ -180,7 +218,7 @@
             <div ng-repeat="item in Data">
                 <div class="row {{item.Image!=null && item.Image!=''?'rowbg':''}}">
                     <div class=" pull-left cell_img" ng-if="item.Image!=null && item.Image!=''" style="width:110px; height:70px">
-                        <img width="110" src='~/Images/defaultCar.jpg' lazy-img="{{item.Image}}" ng-click="showDetail(item.DetailUrl)"/>
+                        <img width="110" src='~/Images/defaultCar.jpg' lazy-img="{{item.Image}}" ng-click="showDetail(item)"/>
                     </div>
                     <div class="cell_content">
                         <div class="title"><b>{{item.Name}} - {{item.HangXe}}</b></div>
@@ -291,12 +329,27 @@
                 lastScrollTop = scrollTop;
             });
 
-            $scope.showDetail = function (detailUrl) {
-                
+            $scope.showDetail = function (item) {
+                $scope.Content = '';
                 $mdDialog.show({
-                    locals: { detailUrl: detailUrl },
+                    locals: { item: item },
                     controller: DialogController,
-                    template: '<div style="padding: 10px; margin: 10px;"><div ng-bind-html = "Content"></div></div>',
+                    template:
+                          '<div style="border-radius: 3px;position: absolute;top:3px;right:3px;background: #9405059c;padding: 5px 10px 5px 10px;" ng-click="hide()">X</div>'
+                        + '<div style="padding: 0px 10px 0px 0px; margin: 10px;overflow-y: auto;">'
+                        + '     <div>'
+                        +'          <div class="pull-left" style="width:130px; height:70px; margin-right: 15px;">'
+                        + '            <img width="130" ng-src="{{item.Image}}"/>'
+                        + '         </div>'
+                        + '            <div class="cell_content">'
+                        + '               <div class="title"><b>{{item.Name}} - {{item.HangXe}}</b></div>'
+                      //  + '               <div class="detail"><span class="lable">{{item.NguonGoc}}</span> <span class="lable">{{item.LoaiXe}}</span> <span class="lable">{{item.DongCo}}</span> <span class="lable">{{item.Size}}</span></div>'
+                        + '               <div><span style="font-size:0.75rem">Giá Niêm Yết:</span> <span class="niemyet"><b>{{item.GiaNiemYet}}</b></span><br/><span style="font-size:0.75rem">Giá Đàm Phán:</span> <span class="damphan"><b>{{item.GiaDamPhan}}</b></span></div>'
+                        + '           </div>'
+                        + '         </div>'
+                        + '         <div ng-if = "!Content" style="text-align: center;" > <b>loading...</b></div>'
+                        + '         <div ng-bind-html="Content"></div>'
+                        +'       </div> ',
                     parent: angular.element(document.body),
                  //   targetEvent: ev,
                     clickOutsideToClose: true
@@ -308,25 +361,28 @@
                     });
             };
 
-            function DialogController($scope, $mdDialog, $sce, detailUrl) {
-                var url = 'http://localhost:9511/TraCuuOnline/GetDetailOto/?url=' + encodeURIComponent(detailUrl);
+            function DialogController($scope, $mdDialog, $sce, item) {
+                $scope.item = item;
+                var url = 'TraCuuOnline/GetDetailOto/?url=' + encodeURIComponent($scope.item.DetailUrl);
 
                 $.ajax({
                     url: url,
                     xhrFields: { cors: false, withCredentials: true },
                     type: 'GET',
-                    dataType: 'html',
+                    dataType: 'json',
                     jsonpCallback: 'callback',
-                    timeout: 10000,
+                    timeout: 60000,
                     error: function (xhr, status, error) {
-                        $scope.Content = $sce.trustAsHtml("Không có dữ liệu");
+                        $scope.Content = $sce.trustAsHtml("Lỗi khi lấy dữ liệu");
                         $scope.$apply();
                     },
                     success: function (responsedata) {
-                        if (responsedata != '') {
-                            $scope.Content = $sce.trustAsHtml(responsedata);
-                            $scope.$apply();
+                        if (responsedata && responsedata.data && responsedata.data != '') {
+                            $scope.Content = $sce.trustAsHtml(responsedata.data);
+                        } else {
+                            $scope.Content = $sce.trustAsHtml("Không có dữ liệu");
                         }
+                        $scope.$apply();
                     }
                 });
 
