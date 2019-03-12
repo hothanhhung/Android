@@ -83,6 +83,11 @@
             font-size: 1.00rem;
         }
 
+        .more {
+            font-size: 1.00rem;
+            font-style: italic;
+            color: #bb5105;
+        }
         .niemyet {
             font-style: italic;
             font-size: 2.35rem;
@@ -217,13 +222,14 @@
         <div class="content">
             <div ng-repeat="item in Data">
                 <div class="row {{item.Image!=null && item.Image!=''?'rowbg':''}}">
-                    <div class=" pull-left cell_img" ng-if="item.Image!=null && item.Image!=''" style="width:110px; height:70px">
-                        <img width="110" src='~/Images/defaultCar.jpg' lazy-img="{{item.Image}}" ng-click="showDetail(item)"/>
+                    <div class=" pull-left cell_img" ng-if="item.Image!=null && item.Image!=''" style="width:110px; height:80px">
+                        <img width="110" src='~/Images/defaultCar.jpg' style="padding-top:5px" lazy-img="{{item.Image}}"/>
                     </div>
                     <div class="cell_content">
                         <div class="title"><b>{{item.Name}} - {{item.HangXe}}</b></div>
                         <div class="detail"><span class="lable">{{item.NguonGoc}}</span> <span class="lable">{{item.LoaiXe}}</span> <span class="lable">{{item.DongCo}}</span> <span class="lable">{{item.Size}}</span></div>
                         <div><span style="font-size:0.75rem">Giá Niêm Yết:</span> <span class="niemyet"><b>{{item.GiaNiemYet}}</b></span>  <span style="font-size:0.75rem">Giá Đàm Phán:</span> <span class="damphan"><b>{{item.GiaDamPhan}}</b></span></div>
+                        <div class="more" ng-click="showDetail(item)"><b>Xem Thêm ...</b></div>
                     </div>
                 </div>
             </div>
