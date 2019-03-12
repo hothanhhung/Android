@@ -187,7 +187,6 @@ namespace hthservices.Utils
 
         static public string GetDetailOto(string url)
         {
-            List<GiaOto> giaOtos = new List<GiaOto>();
             try
             {
                 HttpClient http = new HttpClient();
@@ -197,6 +196,7 @@ namespace hthservices.Utils
                 HtmlDocument resultat = new HtmlDocument();
                 resultat.LoadHtml(source);
 
+                StringBuilder stringBuilder = new StringBuilder();
                 var content = resultat.DocumentNode.SelectNodes("//div[@class='detail_info']").FirstOrDefault();
                 if (content != null)
                 {
@@ -210,8 +210,28 @@ namespace hthservices.Utils
                     {
                         removeItem.Remove();
                     }
-                    return content.InnerHtml.Replace("none","block");
+                    stringBuilder.Append(content.InnerHtml.Replace("none", "block"));
                 }
+
+                content = resultat.DocumentNode.SelectNodes("//div[@class='detail_info info_chi_phi']").LastOrDefault();
+                if (content != null)
+                {
+                    stringBuilder.Append(content.InnerHtml);
+                }
+
+                int start = source.IndexOf("function changeLocation()");
+                if (start > 0)
+                {
+                    int length = source.IndexOf("function getCookie", start) - start;
+
+                    if (length > 0)
+                    {
+                        var js = source.Substring(start, length);
+                        js.Replace("Seats=;", "");
+                        stringBuilder.Append("<script type=\"text/javascript\">").Append(js).Append("</script>");
+                    }
+                }
+                return stringBuilder.ToString();
             }
             catch (Exception ex)
             {

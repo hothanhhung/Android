@@ -29,8 +29,24 @@ namespace hthservices.Models
         public string Image { get { return "https://i-vnexpress.vnecdn.net/" + carImage; } }
         public string Name { get { return carName; } }
         public string HangXe { get { return carBrand; } }
-        public string LoaiXe { get { return carType; } }
-        public string NguonGoc { get { return carOrigin; } }
+        public string LoaiXe
+        {
+            get {
+                return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(carType.Trim().ToLower());
+            }
+        }
+        public string NguonGoc
+        {
+            get
+            {
+                var str = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(carOrigin.Trim().ToLower());
+                if (str.Equals("Nhâp Khẩu", StringComparison.OrdinalIgnoreCase))
+                {
+                    str = "Nhập Khẩu";
+                }
+                return str;
+            }
+            }
         public float GiaNiemYet { get { float value = 0; float.TryParse(carPrice, out value); return value; } }
         public float GiaDamPhan { get { float value = 0; float.TryParse(carPriceDeviation, out value); return value; } }
         public string DongCo { get { return carGear; } }
