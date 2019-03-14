@@ -1,10 +1,17 @@
 package com.hth.docbaotonghop;
 
 
+import com.chartboost.sdk.CBLocation;
+import com.chartboost.sdk.Chartboost;
+import com.chartboost.sdk.ChartboostDelegate;
+import com.chartboost.sdk.Model.CBError;
 import com.hth.docbaotonghop.R;
 import com.hth.utils.*;
 import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrInterface;
+import com.r0adkll.slidr.model.SlidrListener;
+import com.r0adkll.slidr.model.SlidrPosition;
 /*
 import com.startapp.android.publish.adsCommon.StartAppAd;
 import com.startapp.android.publish.adsCommon.StartAppSDK;
@@ -18,10 +25,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -32,12 +41,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import java.util.Calendar;
+
 public class MainActivity extends Activity {
     static int width_Screen = 0;
     static int height_Screen = 0;
     static WebsitePage current_Website_Page = WebsitePage.VNExpressDotNet;
     private MyWebview viewArticleDetail;
     private SlidrInterface slidr;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public static WebsitePage getCurrent_Website_Page() {
         return current_Website_Page;
@@ -66,7 +78,28 @@ public class MainActivity extends Activity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        slidr = Slidr.attach(this);
+        Chartboost.startWithAppId(this, "5c6127198dd6d97dec5b0a49", "b409bc2a1610f1edde98ab2314b70b1bf14c5541");
+        Chartboost.onCreate(this);
+        Chartboost.setDelegate(yourDelegateObject);
+        Chartboost.cacheInterstitial(CBLocation.LOCATION_HOME_SCREEN);
+        Chartboost.cacheRewardedVideo(CBLocation.LOCATION_HOME_SCREEN);
+        //timeForRun = Calendar.getInstance().getTime().getTime();
+
+        SlidrConfig config = new SlidrConfig.Builder()
+              //  .primaryColor(getResources().getColor(R.color.primary)
+                     //   .secondaryColor(getResources().getColor(R.color.secondary)
+                             //   .position(SlidrPosition.LEFT|SlidrPosition.RIGHT|SlidrPosition.TOP|SlidrPosition.BOTTOM|SlidrPosition.VERTICAL|SlidrPosition.HORIZONTAL)
+                                .sensitivity(1f)
+                                .scrimColor(Color.BLACK)
+                                .scrimStartAlpha(0.8f)
+                                .scrimEndAlpha(0f)
+                                .velocityThreshold(2400)
+                                .distanceThreshold(0.25f)
+                                .edge(true|false)
+                                .edgeSize(0.18f) // The % of the screen that counts as the edge, default 18%
+                              //  .listener(new SlidrListener(){})
+                                .build();
+        slidr = Slidr.attach(this, config);
 
         if(android.os.Build.VERSION.SDK_INT > 10) hideActionBar();
 
@@ -99,6 +132,21 @@ public class MainActivity extends Activity {
         adsView.loadAds(new AdsRequest());
         //changeAddProvider();
 */
+
+        swipeRefreshLayout = ((SwipeRefreshLayout)this.findViewById(R.id.swipeContainer));
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        if(viewArticleDetail!=null)
+                        {
+                            viewArticleDetail.reload();
+                            if(swipeRefreshLayout!=null)
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }
+        );
     }
 
     com.hth.utils.MyHomeWebViewClient myHomeWebViewClient;
@@ -134,6 +182,18 @@ public class MainActivity extends Activity {
                         }
                     } else {
                         progressBar1.setVisibility(View.GONE);
+                        try {
+                            String encoded = MainActivity.getCurrent_Website_Page().GetReformatCssContent(MainActivity.this);
+                            view.loadUrl("javascript:(function() {" +
+                                    "var parent = document.getElementsByTagName('head').item(0);" +
+                                    "var style = document.createElement('style');" +
+                                    "style.type = 'text/css';" +
+                                    "style.innerHTML = `" + encoded + "`;" +
+                                    "parent.appendChild(style)" +
+                                    "})()");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     if (progress > 70 && myHomeWebViewClient.getCurrentIndex() < 1) {
@@ -167,14 +227,54 @@ public class MainActivity extends Activity {
         });
     }
 
+    private static long timeForRun = 0;
+    private void showInterstitial()
+    {
+        long timenow = Calendar.getInstance().getTime().getTime();
+        long longtime = 400000;//(countShow*300000 );// + 100000;
+        //if(longtime > 1000000) longtime = 1000000;
+        if(timeForRun == 0){
+            timeForRun = Calendar.getInstance().getTime().getTime();
+        }
+        if((timenow - timeForRun) > longtime)
+        {
+            //StartAppAd.showAd(this);
+            if(Chartboost.hasRewardedVideo(CBLocation.LOCATION_HOME_SCREEN)){
+                Chartboost.showRewardedVideo(CBLocation.LOCATION_HOME_SCREEN);
+                Chartboost.cacheRewardedVideo(CBLocation.LOCATION_HOME_SCREEN);
+                timeForRun = Calendar.getInstance().getTime().getTime();
+            }
+            else if (Chartboost.hasInterstitial(CBLocation.LOCATION_HOME_SCREEN)) {
+                Chartboost.showInterstitial(CBLocation.LOCATION_HOME_SCREEN);
+                Chartboost.cacheInterstitial(CBLocation.LOCATION_HOME_SCREEN);
+                timeForRun = Calendar.getInstance().getTime().getTime();
+            }
+        }
+
+    }
+
+    private ChartboostDelegate yourDelegateObject = new ChartboostDelegate() {
+        // Declare delegate methods here, see CBSample project for examples
+        public void didFailToLoadInterstitial(String location, CBError.CBImpressionError error) {
+            Chartboost.cacheInterstitial(location);
+        }
+
+        public void didFailToLoadRewardedVideo(String location, CBError.CBImpressionError error) {
+            Chartboost.cacheRewardedVideo(location);
+        }
+    };
+
     @Override
     public void onBackPressed() {
-        if(myHomeWebViewClient != null && myHomeWebViewClient.canGobackHistory() && !SaveData.getBackToHome(this))
-        {
-            backToHistory(null);
+        if (Chartboost.onBackPressed())
+            return;
+        else {
+            if (myHomeWebViewClient != null && myHomeWebViewClient.canGobackHistory() && !SaveData.getBackToHome(this)) {
+                backToHistory(null);
 
-        }else {
-            super.onBackPressed();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -232,6 +332,14 @@ public class MainActivity extends Activity {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        Chartboost.onResume(this);
+        showInterstitial();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Chartboost.onStart(this);
     }
 
     @Override
@@ -239,6 +347,7 @@ public class MainActivity extends Activity {
         super.onPause();
     	if(viewArticleDetail != null)
     		viewArticleDetail.onPause();
+        Chartboost.onPause(this);
     }
 
     @Override
@@ -247,6 +356,7 @@ public class MainActivity extends Activity {
         super.onDestroy();
     	if(viewArticleDetail != null)
     		viewArticleDetail.destroy();
+        Chartboost.onDestroy(this);
     }
     
     private static Context context;
@@ -337,6 +447,7 @@ public class MainActivity extends Activity {
     }
 
     public void updateButtonBackAndPrevious() {
+        showInterstitial();
     	if(myHomeWebViewClient == null) return;
         if (myHomeWebViewClient.canGobackHistory())
             ((ImageButton) findViewById(R.id.btGobackHistory)).setVisibility(View.VISIBLE);
