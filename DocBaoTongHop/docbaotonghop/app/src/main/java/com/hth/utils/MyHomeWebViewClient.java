@@ -98,9 +98,10 @@ public class MyHomeWebViewClient extends WebViewClient {
     
 	@Override
     public WebResourceResponse shouldInterceptRequest (final WebView view, String url) {
-    	if (url!=null && url.contains(".css")) {
+    	/*if (url!=null && url.contains(".css")) {
             return ParserData.getCSSDetail(context, url);
-        } else if(WebsitePage.isDenied(url)){
+        } else */
+            if(WebsitePage.isDenied(url)){
             return new WebResourceResponse("text/html", "UTF-8", emptyData);
         }else
         {
@@ -108,7 +109,7 @@ public class MyHomeWebViewClient extends WebViewClient {
         }
         
     }
-	
+
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
     	String currenturl = currentIndexListViewedContents();
@@ -131,6 +132,20 @@ public class MyHomeWebViewClient extends WebViewClient {
        // view.scrollTo(0,0);
     	if(context!=null)
     		((MainActivity)context).lastChangeAdProvider();
+        /*try {
+            String encoded = MainActivity.getCurrent_Website_Page().GetReformatCssContent(context);
+            view.loadUrl("javascript:(function() {" +
+                    "var parent = document.getElementsByTagName('head').item(0);" +
+                    "var style = document.createElement('style');" +
+                    "style.type = 'text/css';" +
+                    "style.innerHTML = `" + encoded + "`;" +
+                    "parent.appendChild(style)" +
+                    "})()");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        super.onPageFinished(view, url);
       }
+
 }
 

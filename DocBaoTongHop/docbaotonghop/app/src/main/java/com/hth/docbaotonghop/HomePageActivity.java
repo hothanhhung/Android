@@ -1,5 +1,6 @@
 package com.hth.docbaotonghop;
 
+import com.chartboost.sdk.Model.CBError;
 import com.hth.docbaotonghop.R;
 import com.hth.utils.ConfigAds;
 import com.hth.utils.ParserData;
@@ -10,13 +11,23 @@ import com.startapp.android.publish.adsCommon.StartAppAd;
 import com.startapp.android.publish.adsCommon.StartAppSDK;
 */
 
+import com.chartboost.sdk.Chartboost;
+import com.chartboost.sdk.CBLocation;
+import com.chartboost.sdk.ChartboostDelegate;
+
+
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +38,7 @@ import java.util.Random;
 
 public class HomePageActivity extends Activity {
 
-	
+	final int REQUEST_WRITE_STORAGE_REQUEST_CODE = 101;
     Dialog loadingDialog = null;
     private static long timeForRun = 0;
 
@@ -44,9 +55,15 @@ public class HomePageActivity extends Activity {
         else PageApp.IsDisableSplash = true;
         if(PageApp.IsDisableSplash) StartAppAd.disableSplash();*/
 
-        timeForRun = Calendar.getInstance().getTime().getTime();
+        Chartboost.startWithAppId(this, "5c6127198dd6d97dec5b0a49", "b409bc2a1610f1edde98ab2314b70b1bf14c5541");
+        Chartboost.onCreate(this);
+        Chartboost.setDelegate(yourDelegateObject);
+        Chartboost.cacheInterstitial(CBLocation.LOCATION_MAIN_MENU);
+        Chartboost.cacheRewardedVideo(CBLocation.LOCATION_MAIN_MENU);
+        //timeForRun = Calendar.getInstance().getTime().getTime();
         WebsitePage.isHideAds = SaveData.getHideAds(this);
         (new DownloadContentTask()).execute(this);
+       // requestAppPermissions();
 
 	}
 
@@ -59,8 +76,13 @@ public class HomePageActivity extends Activity {
     @Override
     public void onBackPressed() {
         // Create the interstitial.
-        showInterstitial();
-        super.onBackPressed();
+        if (Chartboost.onBackPressed())
+            return;
+        else
+            {
+            showInterstitial();
+            super.onBackPressed();
+        }
     }
 
     public void goToMainPage(View view)
@@ -77,36 +99,113 @@ public class HomePageActivity extends Activity {
 			WebsitePage gotoPage = WebsitePage.valueOf(webpage);
 			if(gotoPage!=null)
 			{
+                //loadingDialog = com.hth.utils.UIUtils.showProgressDialog(loadingDialog, HomePageActivity.this);
 				MainActivity.current_Website_Page = gotoPage;
 				new Thread(loadingToMainScreen).start();
 				
-				HomePageActivity.this.runOnUiThread(new Runnable() { 
+				/*HomePageActivity.this.runOnUiThread(new Runnable() {
 					public void run() {
 						loadingDialog = com.hth.utils.UIUtils.showProgressDialog(loadingDialog, HomePageActivity.this);
-					}});
+					}});*/
 			}
 			//Toast.makeText(this, gotoPage.toString(), Toast.LENGTH_LONG).show();
 		}
 	}
 	private Runnable loadingToMainScreen = new Runnable() {
 	    public void run() {
+            /*HomePageActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    if ((loadingDialog != null) && (loadingDialog.isShowing())) {
+                        loadingDialog.dismiss();
+                    }
+                }});*/
+
 	    	android.content.Intent articleDetailIntent = new android.content.Intent(HomePageActivity.this, MainActivity.class);
 			startActivity(articleDetailIntent);
 	    }
 	};
 
+    private void requestAppPermissions() {
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        if (hasReadPermissions() && hasWritePermissions()) {
+            return;
+        }
+
+        ActivityCompat.requestPermissions(this,
+                new String[] {
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, REQUEST_WRITE_STORAGE_REQUEST_CODE); // your request code
+    }
+
+    private boolean hasReadPermissions() {
+        return (ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private boolean hasWritePermissions() {
+        return (ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+    }
+
     private void showInterstitial()
     {
-        /*long timenow = Calendar.getInstance().getTime().getTime();
-        long longtime = (countShow*2000000 ) + 400000;
-        if(longtime > 1000000) longtime = 1000000;
-        
-        if(timeForRun > 0 && ((timenow - timeForRun) > longtime))
+        long timenow = Calendar.getInstance().getTime().getTime();
+        long longtime = 360000;//(countShow*300000 );// + 100000;
+        //if(longtime > 1000000) longtime = 1000000;
+        if(timeForRun == 0){
+            timeForRun = timenow;
+        }
+        if((timenow - timeForRun) > longtime)
         {
-            StartAppAd.showAd(this);
-            timeForRun = Calendar.getInstance().getTime().getTime();
-        }*/
+            //StartAppAd.showAd(this);
+            if(Chartboost.hasRewardedVideo(CBLocation.LOCATION_MAIN_MENU)){
+                Chartboost.showRewardedVideo(CBLocation.LOCATION_MAIN_MENU);
+                Chartboost.cacheRewardedVideo(CBLocation.LOCATION_MAIN_MENU);
+                timeForRun = Calendar.getInstance().getTime().getTime();
+            }
+            else if (Chartboost.hasInterstitial(CBLocation.LOCATION_MAIN_MENU)) {
+                Chartboost.showInterstitial(CBLocation.LOCATION_MAIN_MENU);
+                Chartboost.cacheInterstitial(CBLocation.LOCATION_MAIN_MENU);
+                timeForRun = Calendar.getInstance().getTime().getTime();
+            }
+        }
 
+    }
+
+    private ChartboostDelegate yourDelegateObject = new ChartboostDelegate() {
+        // Declare delegate methods here, see CBSample project for examples
+        public void didFailToLoadInterstitial(String location, CBError.CBImpressionError error) {
+            Chartboost.cacheInterstitial(location);
+        }
+
+        public void didFailToLoadRewardedVideo(String location, CBError.CBImpressionError error) {
+            Chartboost.cacheRewardedVideo(location);
+        }
+    };
+    @Override
+    public void onStart() {
+        super.onStart();
+        Chartboost.onStart(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Chartboost.onPause(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Chartboost.onStop(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Chartboost.onDestroy(this);
     }
 
 	@Override
@@ -119,6 +218,8 @@ public class HomePageActivity extends Activity {
 		if ((loadingDialog != null) && (loadingDialog.isShowing())) {
 				loadingDialog.dismiss();
 		}
+
+        Chartboost.onResume(this);
 	}
 
     @Override
