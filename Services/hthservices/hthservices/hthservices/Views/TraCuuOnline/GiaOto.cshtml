@@ -88,6 +88,7 @@
             font-style: italic;
             color: #bb5105;
         }
+
         .niemyet {
             font-style: italic;
             font-size: 2.35rem;
@@ -109,7 +110,7 @@
         }
 
         .width90 {
-            width: 99% !important;
+            width: 100% !important;
         }
 
         .normal {
@@ -160,6 +161,10 @@
             margin: 0px 0px 5px;
             padding-bottom: 5px;
         }
+        .col-xs-6, .col-md-6 {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
     </style>
 </head>
 
@@ -201,21 +206,68 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xs-6 col-md-6" style="padding-right: 0px;">
-                <div class="dropdown width90 row">
-                    <div class="col-xs-6 col-md-6" style="padding-right: 5px;">
-                        <input type="number" class="form-control normal" style="text-align: right;" ng-model="filter.giaTu" placeholder="Giá Từ" ng-change="filterData()" />
+            <div class="col-xs-6 col-md-6">
+                <div class="width90">
+                    <div class="col-xs-6 col-md-6" style="padding: 0px 5px 0px 0px;">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle width90 normal" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{filter.giaTu}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+                                <li ng-repeat="item in CacGiaTu"><a href="javascript:void(0)" class="normal" ng-click="filter.giaTu=item;filterData()"> {{item}}</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-xs-6 col-md-6" style="padding-right: 5px;">
-                        <input type="number" class="form-control normal" style="text-align: right;"ng-model="filter.giaDen" placeholder="Giá Đến" ng-change="filterData()" />
+                    <div class="col-xs-6 col-md-6" style="padding: 0px 0px 0px 5px;">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle width90 normal" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{filter.giaDen}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+                                <li ng-repeat="item in CacGiaDen"><a href="javascript:void(0)" class="normal" ng-click="filter.giaDen=item;filterData()"> {{item}}</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    @*<button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        {{filter.gia}}
+                </div>
+                <!--<div class="dropdown width90 row">
+                <div class="col-xs-6 col-md-6" style="padding-right: 5px;">
+                    <input type="number" class="form-control normal" style="text-align: right;" ng-model="filter.giaTu" placeholder="Giá Từ" ng-change="filterData()" />
+                </div>
+                <div class="col-xs-6 col-md-6" style="padding-right: 5px;">
+                    <input type="number" class="form-control normal" style="text-align: right;" ng-model="filter.giaDen" placeholder="Giá Đến" ng-change="filterData()" />
+                </div>-->
+                <!-- <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {{filter.gia}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+                    <li ng-repeat="item in CacGia"><a href="javascript:void(0)" ng-click="filter.gia=item;filterData()"> {{item}}</a></li>
+                </ul> -->
+            </div>
+        </div>
+        <div class="row" style="margin: 10px -10px 10px -10px;">
+            <div class="col-xs-6 col-md-6">
+                <div class="dropdown width90">
+                    <button class="btn btn-default dropdown-toggle width90 normal" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{filter.loaiXep}}
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="item in CacGia"><a href="javascript:void(0)" ng-click="filter.gia=item;filterData()"> {{item}}</a></li>
-                    </ul>*@
+                        <li ng-repeat="item in CacLoaiXep"><a href="javascript:void(0)" class="normal" ng-click="filter.loaiXep=item;filterData(true)"> {{item}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                <div class="dropdown width90">
+                    <button class="btn btn-default dropdown-toggle width90 normal" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{filter.huongXep}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
+                        <li ng-repeat="item in CacHuongXep"><a href="javascript:void(0)" class="normal" ng-click="filter.huongXep=item;filterData(true)"> {{item}}</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -223,7 +275,7 @@
             <div ng-repeat="item in Data">
                 <div class="row {{item.Image!=null && item.Image!=''?'rowbg':''}}">
                     <div class=" pull-left cell_img" ng-if="item.Image!=null && item.Image!=''" style="width:110px; height:80px">
-                        <img width="110" src='~/Images/defaultCar.jpg' style="padding-top:5px" lazy-img="{{item.Image}}"/>
+                        <img width="110" src='~/Images/defaultCar.jpg' style="padding-top:5px" lazy-img="{{item.Image}}" />
                     </div>
                     <div class="cell_content">
                         <div class="title"><b>{{item.Name}} - {{item.HangXe}}</b></div>
@@ -249,7 +301,10 @@
             $scope.CacHang = @Html.Raw(ViewBag.CacHang);
             $scope.CacLoai = @Html.Raw(ViewBag.CacLoai);
             $scope.CacNguonGoc = @Html.Raw(ViewBag.CacNguonGoc);
-            $scope.CacGia = ["---Tất Cả Giá---", "< 300", "300 - 500", "500-800", ">1ty"];
+            $scope.CacGiaTu = ["---Giá Từ---", "300", " 500", "700", "900", "1000", "1500", "2000", "5000", "10000", "15000", "20000", "30000", "50000"];
+            $scope.CacGiaDen = ["---Giá Đến---", "300", " 500", "700", "900", "1000", "1500", "2000", "5000", "10000", "15000", "20000", "30000", "50000"];
+            $scope.CacHuongXep = ["Xếp Từ Nhỏ Đến Lớn", "Xếp Từ Lớn Đến Nhỏ"];
+            $scope.CacLoaiXep = ["Xếp Theo Giá Xe", "Xếp Theo Tên Xe"];
 
             $scope.CacHang.splice(0, 0, "---Tất Cả Hãng Xe---");
             $scope.CacLoai.splice(0, 0, "---Tất Cả Loại Xe---");
@@ -261,16 +316,64 @@
                 hang: $scope.CacHang[0],
                 loai: $scope.CacLoai[0],
                 nguonGoc: $scope.CacNguonGoc[0],
-                gia: $scope.CacGia[0]
+                giaTu: $scope.CacGiaTu[0],
+                giaDen: $scope.CacGiaDen[0],
+                huongXep: $scope.CacHuongXep[0],
+                loaiXep: $scope.CacLoaiXep[0]
             };
 
-            $scope.filterData = function () {                
-                $scope.loadMore(true);
+            $scope.filterData = function (isOrder) {
+                if (!isOrder) isOrder = false;
+
+                $scope.loadMore(true, isOrder);
             }
-                        
-            $scope.loadMore = function (isReset) {
+
+            $scope.loadMore = function (isReset, isOrder) {
                 if (isReset) {
                     currentIndex = 0;
+                }
+                if (isOrder) {
+                    if ($scope.filter.loaiXep == $scope.CacLoaiXep[1]) {
+                        if ($scope.filter.huongXep == $scope.CacHuongXep[1]) {
+                            $scope.OrignalData = $scope.OrignalData.sort(function (a, b) {
+                                var nameA = a.Name.toUpperCase(); // bỏ qua hoa thường
+                                var nameB = b.Name.toUpperCase(); // bỏ qua hoa thường
+                                if (nameA < nameB) {
+                                    return 1;
+                                }
+                                if (nameA > nameB) {
+                                    return -1;
+                                }
+
+                                // name trùng nhau
+                                return 0;
+                            });
+                        } else {
+                            $scope.OrignalData = $scope.OrignalData.sort(function (a, b) {
+                                var nameA = a.Name.toUpperCase(); // bỏ qua hoa thường
+                                var nameB = b.Name.toUpperCase(); // bỏ qua hoa thường
+                                if (nameA < nameB) {
+                                    return -1;
+                                }
+                                if (nameA > nameB) {
+                                    return 1;
+                                }
+
+                                // name trùng nhau
+                                return 0;
+                            });
+                        }
+                    } else {
+                        if ($scope.filter.huongXep == $scope.CacHuongXep[1]) {
+                            $scope.OrignalData = $scope.OrignalData.sort(function (a, b) {
+                                return b.GiaNiemYetInt - a.GiaNiemYetInt;
+                            });
+                        } else {
+                            $scope.OrignalData = $scope.OrignalData.sort(function (a, b) {
+                                return a.GiaNiemYetInt - b.GiaNiemYetInt;
+                            });
+                        }
+                    }
                 }
 
                 var count = 0;
@@ -287,26 +390,16 @@
                     if ($scope.filter.nguonGoc != $scope.CacNguonGoc[0] && obj.NguonGoc != $scope.filter.nguonGoc) {
                         continue;
                     }
-                    $scope.filter.giaTu = parseInt($scope.filter.giaTu);
-                    if ($scope.filter.giaTu) {
-                        if (obj.GiaNiemYet % 1 === 0) {
-                            if ($scope.filter.giaTu > obj.GiaNiemYet) {
-                                continue;
-                            }
-                        }
-                        else if ($scope.filter.giaTu > obj.GiaNiemYet * 1000) {
+                    if ($scope.filter.giaTu != $scope.CacGiaTu[0]) {
+                        $scope.filter.giaTu = parseInt($scope.filter.giaTu);
+                        if ($scope.filter.giaTu > obj.GiaNiemYetInt) {
                             continue;
                         }
                     }
 
-                    $scope.filter.giaDen = parseInt($scope.filter.giaDen);
-                    if ($scope.filter.giaDen) {
-                        if (obj.GiaNiemYet % 1 === 0) {
-                            if ($scope.filter.giaDen < obj.GiaNiemYet) {
-                                0
-                            }
-                        }
-                        else if ($scope.filter.giaDen < obj.GiaNiemYet * 1000) {
+                    if ($scope.filter.giaDen != $scope.CacGiaDen[0]) {
+                        $scope.filter.giaDen = parseInt($scope.filter.giaDen);
+                        if ($scope.filter.giaDen < obj.GiaNiemYetInt) {
                             continue;
                         }
                     }
@@ -323,9 +416,10 @@
                     //$scope.Data = angular.copy($scope.Data);
                     $scope.Data = $scope.Data.concat(newItem);
                     $scope.$apply();
-                } 
+                }
             }
-            $scope.loadMore(true);
+            $scope.loadMore(true, true);
+
             var lastScrollTop = 0;
             $(window).scroll(function () {
                 var scrollTop = $(window).scrollTop();

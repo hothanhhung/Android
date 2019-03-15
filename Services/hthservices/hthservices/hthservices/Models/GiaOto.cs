@@ -48,6 +48,7 @@ namespace hthservices.Models
             }
             }
         public float GiaNiemYet { get { float value = 0; float.TryParse(carPrice, out value); return value; } }
+        public int GiaNiemYetInt { get { int value = 0; int.TryParse(carPrice.Replace(".",""), out value); return value; } }
         public float GiaDamPhan { get { float value = 0; float.TryParse(carPriceDeviation, out value); return value; } }
         public string DongCo { get { return carGear; } }
         public int CongSuat { get { int value = 0; int.TryParse(carPower, out value); return value; } }
@@ -72,5 +73,6 @@ namespace hthservices.Models
         public int Momen { get; set; }
         public string Size { get; set; }
         public string DetailUrl { get; set; }
+        public int GiaNiemYetInt { get; set; }
     }
 }
