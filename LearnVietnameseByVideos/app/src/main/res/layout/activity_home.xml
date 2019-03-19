@@ -13,12 +13,12 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Learning Vietnamese\nBy Videos"
         android:paddingBottom="10dp"
-        android:textColor="#0e02fa"
+        android:text="Learning Vietnamese\nBy Videos"
+        android:textColor="@android:color/holo_red_dark"
         android:textSize="30sp"
-        android:visibility="visible"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="visible" />
 
     <ScrollView
         android:id="@+id/scrollView1"

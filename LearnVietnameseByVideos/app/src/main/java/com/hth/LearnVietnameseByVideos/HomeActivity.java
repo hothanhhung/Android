@@ -1,9 +1,12 @@
 package com.hth.LearnVietnameseByVideos;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.hth.data.Data;
 import com.hth.data.ObjectChannel;
 import com.hth.data.YouTubeService;
@@ -68,15 +71,56 @@ public class HomeActivity extends Activity {
 				}
 			});
 
-			button.setBackgroundColor(Color.DKGRAY);
+			button.setBackgroundColor(Color.CYAN);
 			button.setAlpha(0.9f);
 			layoutEnglishChannels.addView(button);
 		}
 		addMoreGameButton(layoutEnglishChannels);
-		
+
+		timeForRun = Calendar.getInstance().getTime().getTime();
 		mAdView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder().build();
 		mAdView.loadAd(adRequest);
+	}
+
+	private static long timeForRun = 0;
+	private int countShow = 0;
+	private InterstitialAd interstitial = null;
+	private void showInterstitial()
+	{
+		long timenow = Calendar.getInstance().getTime().getTime();
+		long maxTime = ((countShow*200000 ) + 200000);
+		if(maxTime > 300000) maxTime = 300000;
+		if(timeForRun > 0 && ((timenow - timeForRun) > maxTime))
+		{
+			if (interstitial == null) {
+				interstitial = new InterstitialAd(this);
+				interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
+				interstitial.setAdListener(new AdListener() {
+					@Override
+					public void onAdLoaded() {
+						if(interstitial.isLoaded()){
+							interstitial.show();
+							timeForRun = Calendar.getInstance().getTime().getTime();
+							countShow++;
+						}
+					}
+
+					@Override
+					public void onAdClosed() {
+					}
+
+
+					@Override
+					public void onAdFailedToLoad(int errorCode) {
+					}
+				});
+			}
+
+			AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+
+			interstitial.loadAd(adRequest_interstitial);
+		}
 	}
 
 	private void addMoreGameButton(LinearLayout layoutEnglishChannels) {
@@ -118,6 +162,7 @@ public class HomeActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if(mAdView!=null) mAdView.resume();
+		showInterstitial();
     }
 
     @Override

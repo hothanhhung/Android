@@ -52,9 +52,9 @@ public class PlayerYoutubeMovieActivity extends YouTubeBaseActivity implements
 				com.hth.data.DeveloperConst.EXTAR_MOVIE_ID);
 		loadUI(MovieID);
 		
-		mAdView = (AdView) this.findViewById(R.id.adView);
+		/*mAdView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder().build();
-		mAdView.loadAd(adRequest);
+		mAdView.loadAd(adRequest);*/
 	}
 	
 	@Override

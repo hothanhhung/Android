@@ -70,5 +70,5 @@
         android:layout_marginLeft="0dp"
         ads:adSize="BANNER"
         ads:adUnitId="@string/ad_unit_id"
-        android:visibility="visible" />
+        android:visibility="gone" />
 </LinearLayout>

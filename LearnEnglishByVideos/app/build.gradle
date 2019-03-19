@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.hth.learnenglishbyvideos"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 28
         multiDexEnabled true
     }
@@ -40,7 +40,7 @@ dependencies {
     implementation group:'com.squareup.picasso', name:'picasso', version:'2.3.2'
     implementation 'com.google.android.gms:play-services-ads:17.0.0'
     implementation 'com.google.code.gson:gson:2.3'
-    implementation 'com.google.apis:google-api-services-youtube:v3-rev205-1.25.0'
+    //implementation 'com.google.apis:google-api-services-youtube:v3-rev205-1.25.0'
     implementation 'com.android.support:multidex:1.0.3'
     androidTestImplementation 'com.android.support:multidex:1.0.3'
     androidTestImplementation 'com.android.support:multidex-instrumentation:1.0.3'

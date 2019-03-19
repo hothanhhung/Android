@@ -110,7 +110,7 @@ public class MainActivity extends FragmentActivity implements
     {
         long timenow = Calendar.getInstance().getTime().getTime();
 		long maxTime = ((countShow*200000 ) + 200000);
-		if(maxTime > 900000) maxTime = 900000;
+		if(maxTime > 300000) maxTime = 300000;
         if(timeForRun > 0 && ((timenow - timeForRun) > maxTime))
         {
 			if (interstitial == null) {
