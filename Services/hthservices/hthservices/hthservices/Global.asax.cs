@@ -24,6 +24,7 @@ namespace hthservices
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            DataBusiness.SQLiteProcess.CreateData();
         }
         protected void Application_BeginRequest()
         {

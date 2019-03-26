@@ -1,0 +1,88 @@
+﻿@using hthservices.Utils;
+@{
+    ViewBag.Title = "Home Page";
+    ViewBag.Keywords = "Android, C#, ASP.Net, C, C++, HTML, CSS, JavaScript, JQuery, AngularJS, Database, SQL SERVER, MySQL";
+	ViewBag.Description = "Chia sẽ các bài viết về Android, C#, ASP.Net, C, C++, HTML, CSS, JavaScript, JQuery, AngularJS, Database, SQL SERVER, MySQL";
+}
+<h1 style="display:none"> Các bài viết về Android, C#, ASP.Net, C, C++, HTML, CSS, JavaScript, JQuery, AngularJS, Database, SQL SERVER, MySQL</h1>
+<div class="content">
+    <div class="container">
+        <div class="content-text">
+            <div class="title">
+                @foreach (hthservices.Models.Website.ProgrammingContent content in ViewBag.Contents) { 
+                <div>
+                    <div class="some-title">
+                        <h2>
+                            <a href="@Url.RouteUrl("ProgrammingContent", new { category_name = (content.Category == null? "category":Url.ToFriendlyUrl(content.Category.Name)), content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.Title</a>
+                        </h2>
+                    </div>
+                    <div class="john">
+                        <p><span>@content.GetPublishedDateToShow()</span></p>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <div class="tilte-grid">
+                        <div class="row">
+                            <div class="pull-left cell_img">
+                                <img class="img" src="@(string.IsNullOrWhiteSpace(content.ImageUrl) ? string.Format("/home/GenerateImage/?text={0}", content.TextAvatar) : content.ImageUrl)" alt="@content.Title" title="@content.Title" />
+                            </div>
+                            <div class="cell_content">
+                                <p class="vel">
+                                    <a href="@Url.RouteUrl("ProgrammingContent", new { category_name = (content.Category == null ? "category" : Url.ToFriendlyUrl(content.Category.Name)), content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.ShortContent</a>
+                                </p>
+                                <p class="Sed">
+                                    <span>
+                                        @Html.Raw(content.GetSomeContent())
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="read">
+                        <a href="@Url.RouteUrl("ProgrammingContent", new { category_name = (content.Category == null ? "category" : Url.ToFriendlyUrl(content.Category.Name)), content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">Xem Thêm</a>
+                    </div>
+                    <div class="border">
+                        <p>&nbsp;/p>
+                    </div>
+                </div>
+                }
+
+                <div>
+                    <div>
+                        <div class="border1">
+                            <div class="pre">
+                                @if (ViewBag.CurrentPage > 1)
+                                {
+                                    <a href="?page=@(ViewBag.CurrentPage-1)&size=@ViewBag.PageSize">Trước</a>
+                                }
+                            </div>
+                            <div class="number">
+                                <ul>
+                                    @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                                    {
+                                        if (i != ViewBag.CurrentPage)
+                                        {
+                                            <li><a href="?page=@i&size=@ViewBag.PageSize">@i</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li>@i</li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            <div class="next">
+                                @if (ViewBag.CurrentPage < ViewBag.TotalPage)
+                                {
+                                    <a href="?page=@(ViewBag.CurrentPage + 1)&size=@ViewBag.PageSize">Sau</a>
+                                }
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @Html.Action("RightProgrammingPartial", "Programming")
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

@@ -1,44 +1,52 @@
 ﻿@{
-    ViewBag.Title = "Contact";
-    int[,] ArrayPositions = ViewBag.ArrayPositions;
+    ViewBag.Title = "Liên Hệ";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
-    @{
-        String str = "";
-        for (int i = 0; i < ArrayPositions.GetLength(0); i++)
-        {   for(int j = 0; j< ArrayPositions.GetLength(1); j++)
-            {
-                if (ArrayPositions[i, j] == 0) { ArrayPositions[i, j] = -1; }
-                <span style="width: 30px; float: left;">@ArrayPositions[i,j]</span>
-               str+="|"+ArrayPositions[i,j];
-            }
-            <br/>
-        }
-        
-        @str;
-        str = "";
-        Random ran = new Random();
-            for (int i = 0; i < ArrayPositions.GetLength(0); i++)
-            {
-                for (int j = 0; j < ArrayPositions.GetLength(1); j++)
-                {
-                    if (ArrayPositions[i, j] == 0) {ArrayPositions[i, j] = -1;}
-                    if (ran.Next(2) == 1 || ArrayPositions[i, j] < 0)
-                    {
-                    <span style="width: 30px; float: left;">@ArrayPositions[i, j]</span>
-                    str += "|" + ArrayPositions[i, j];
-                    }
-                   else{
-                        <span style="width: 30px; float: left;">0</span>
-                    str += "|" + 0;
-                    }
-                }
-                <br />
-            }
+<div class="content">
+    <div class="container">
+        <div class="content-text">
+            @*<hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>*@
+            <div class="contact">      
+                <div class="clearfix"> </div>
+                <div class="contact-left1">
+                    @*<h3>Liên Hệ Với <span>Nội Dung</span></h3>*@
+                    <div style="height: 20px; color: green; margin-top: -10px; margin-bottom: 10px;">@ViewBag.Message</div>
+                    <form method="post">
+                        <div class="in-left">
+                            <input type="text" name="FullName" placeholder="Họ Tên" required />
+                            <input type="text" name="PhoneNumber" placeholder="Số Điện Thoại" />
+                            <input type="text" name="Email" placeholder="Email" required />
+                        </div>
+                        <div class="in-right">
+                            <textarea name="Content" placeholder="Nội Dung" required></textarea>
+                            <input type="submit" value="Gửi">
+                        </div>
+                    </form>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="contact-right1">
+                    @*<h3>Find Us On <span>Social Websites</span></h3>*@
+                    <h4>
+                        Chia Sẻ Kiến Thức <label>
+                            Mang Đến Thành Công
+                        </label>
+                    </h4>
+                    <p>
+                        Đừng ngần ngại liên hệ với chúng tôi, tất cả mọi câu hỏi, yêu cầu và góp ý của bạn sẽ được phản hồi tốt nhất trong khả năng của chúng tôi.
 
-            @str;
-}
-</hgroup>
+                    </p>
+                    <ul>
+                        <li><a href="#" class="facebook"> </a></li>
+                        <li><a href="#" class="twitter"> </a></li>
+                        <li><a href="#" class="dribble"> </a></li>
+                    </ul>
+                    <div style="height: 35px;"> <span>&nbsp;</span></div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿@using hthservices.Utils;
+@{
+    ViewBag.Title = "Projects";
+}
+
+<div class="content">
+    <div class="container">
+        <div class="content-text">
+            <div class="title">
+                @foreach (hthservices.Models.Website.Project content in ViewBag.Contents) { 
+                <div>
+                    <div class="some-title">
+                        <h3>
+                            <a href="@Url.RouteUrl("ProjectContent", new { content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.Title</a>
+                        </h3>
+                    </div>
+                    <div class="john">
+                        <p><span>@content.GetUpdatedDateToShow()</span></p>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <div class="tilte-grid">
+                        <div class="row">
+                            <div class="pull-left cell_img">
+                                <img class="img" src="@content.ImageUrl" />
+                            </div>
+                            <div class="cell_content">
+                                <p class="vel">
+                                    <a href="@Url.RouteUrl("ProjectContent", new { content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.ShortContent</a>
+                                </p>
+                                <p class="Sed">
+                                    <span>
+                                        @Html.Raw(content.GetSomeContent())
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="read">
+                        <a href="@Url.RouteUrl("ProjectContent", new { content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">Xem Thêm</a>
+                    </div>
+                    <div class="border">
+                        <p>a</p>
+                    </div>
+                </div>
+                }
+
+                <div>
+                    <div>
+                        <div class="border1">
+                            <div class="pre">
+                                @if (ViewBag.CurrentPage > 1)
+                                {
+                                    <a href="?page=@(ViewBag.CurrentPage-1)&size=@ViewBag.PageSize">Prev</a>
+                                }
+                            </div>
+                            <div class="number">
+                                <ul>
+                                    @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                                    {
+                                        if (i != ViewBag.CurrentPage)
+                                        {
+                                            <li><a href="?page=@i&size=@ViewBag.PageSize">@i</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li>@i</li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            <div class="next">
+                                @if (ViewBag.CurrentPage < ViewBag.TotalPage)
+                                {
+                                    <a href="?page=@(ViewBag.CurrentPage + 1)&size=@ViewBag.PageSize">Next</a>
+                                }
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@using hthservices.Utils;
+@using hthservices.Models.Website;
+@{
+}
+<div class="categories">
+    <div class="categ">
+        <div class="cat">
+            <h3>Chuyên Mục</h3>
+            <ul>
+                @foreach (ProgrammingCategory catergory in ViewBag.Categories) { 
+                    <li>
+                        <a href="@Url.RouteUrl("ProgrammingCategory", new { category_name = Url.ToFriendlyUrl(catergory.Name), id = catergory.Id})">@catergory.Name</a>
+                        <span>(@catergory.NumberOfContents)</span>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="cat">
+            <h3>Bài Viết Mới</h3>
+            <ul>
+                @foreach (ProgrammingContent content in ViewBag.TopNews10ProgrammingContents)
+                {
+                    <li>
+                        <a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(content.Category.Name), content_name = Url.ToFriendlyUrl(content.Title), id = content.Id })">@content.Title</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="recent-com">
+            <h3>Phản Hồi Mới</h3>
+            <ul>
+                @foreach (ProgrammingComment comment in ViewBag.CurrentComments)
+                {
+                    if (comment.Content != null && comment.Content.Category != null) 
+                    { 
+                        <li>
+                            <a href="@Url.RouteUrl("ProgrammingContent", new { category_name = Url.ToFriendlyUrl(comment.Content.Category.Name), content_name = Url.ToFriendlyUrl(comment.Content.Title), id = comment.Content.Id })">@comment.Content.Title</a>
+                            <span>
+                                @Html.Raw(comment.Message)
+                            </span>
+                        </li>
+                    }
+                }                
+            </ul>
+        </div>
+        @*<div class="view">
+            <a href="single.html">Xem Thêm</a>
+        </div>*@
+    </div>
+</div>

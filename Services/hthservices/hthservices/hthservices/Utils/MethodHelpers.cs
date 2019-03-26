@@ -48,7 +48,7 @@ namespace hthservices.Utils
                     str = str.Replace(VietnameseSigns[i][j].ToString(), VietnameseSigns[0][i - 1].ToString());
                 }
             }
-            for (int i =0;i< str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
                 if (str[i] > 500)
                 {

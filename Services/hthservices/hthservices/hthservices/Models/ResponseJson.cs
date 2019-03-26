@@ -5,10 +5,12 @@ using System.Web;
 using System.Runtime.Serialization;
 using hthservices.Utils;
 using hthservices.Ads;
+using hthservices.Models.Website;
 
 namespace hthservices.Models
 {
     [Serializable]
+    [KnownType(typeof(string))]
     [KnownType(typeof(List<RequestInfo>))]
     [KnownType(typeof(List<GuideItem>))]
     [KnownType(typeof(List<SearchItem>))]
@@ -19,6 +21,8 @@ namespace hthservices.Models
     [KnownType(typeof(List<ReportForCurrentDate>))]
     [KnownType(typeof(AdsItemReport))]
     [KnownType(typeof(List<AdsItemReport>))] 
+    [KnownType(typeof(List<ProgrammingCategory>))]
+    [KnownType(typeof(List<ProgrammingContent>))] 
     public class ResponseJson
     {
         public bool IsSuccess;
@@ -26,7 +30,7 @@ namespace hthservices.Models
         public string NewDomain;
         public dynamic Data;
 
-        public static ResponseJson GetResponseJson(dynamic data, bool isSuccess = true)
+        public static dynamic GetResponseJson(dynamic data, bool isSuccess = true)
         {
             var responseJson = new ResponseJson()
             {
@@ -35,6 +39,17 @@ namespace hthservices.Models
                 Data = data
             };
             return responseJson; 
+        }
+
+        public static ResponseJson GetResponseJsonForError(string errorString)
+        {
+            var responseJson = new ResponseJson()
+            {
+                IsSuccess = false,
+                NeedChangeDomain = false,
+                Data = errorString
+            };
+            return responseJson;
         }
     }
 }

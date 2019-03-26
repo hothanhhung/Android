@@ -1,0 +1,105 @@
+﻿<div>
+    <div ng-if="IsLoading" class="loading">
+        <span class="text-loading"> loading... </span>
+    </div>
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form name="SaveCategoryForm" ng-submit="SaveCategory(SaveCategoryForm.$valid)">
+                    <div class="highlight">
+                        <div class="form-group">
+                            <label>
+                                {{SelectedCategory == null || SelectedCategory.Id <= 0 ?"Create Category":"Edit Category"}}
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Name
+                            </label>
+                            <input type="text" required ng-model="SelectedCategory.Name" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                IsDisplay
+                            </label>
+                            <input type="number" ng-model="SelectedCategory.IsDisplay" min="0" max="99" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Sort
+                            </label>
+                            <input type="number" ng-model="SelectedCategory.Sort" min="0" max="99" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Note
+                            </label>
+                            <input type="text" ng-model="SelectedCategory.Note" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">Save</button>
+                            <button type="button" class="btn btn-default" ng-click="NewCategory()">New</button>
+                        </div>
+                    </div>
+                    <div role="alert">
+                        <span class="error" ng-show="myForm.input.$error.required">
+                            Required!
+                        </span>
+                        <span class="error" ng-show="myForm.input.$error.number">
+                            Not valid number!
+                        </span>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        IsDisplay
+                    </th>
+                    <th>
+                        Sort
+                    </th>
+                    <th>
+                        Note
+                    </th>
+                    <th>
+                        NumberOfContents
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in Categories">
+                    <td>{{item.Id}}</td>
+                    <td>{{item.Name}}</td>
+                    <td>{{item.IsDisplay}}</td>
+                    <td>{{item.Sort}}</td>
+                    <td>{{item.Note}}</td>
+                    <td>
+                        <a href="#/content/{{item.Id}}">
+                            <span>{{item.NumberOfContents}}</span>
+                        </a>
+                    </td>
+                    <td align="center">
+                        <a href="javascript:void(0)">
+                            <span ng-click="EditCategory(item)" style="width:50px" class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <a href="javascript:void(0)">
+                            <span ng-click="DeleteCategory(item)" style="width:50px" class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>

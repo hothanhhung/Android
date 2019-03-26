@@ -1,0 +1,16 @@
+﻿<div class="row">
+    <div class="col-sm-12 col-lg-4 col-center" style="padding:20px;">
+        <div class="form-horizontal" style="padding:40px; background-color: rgba(109, 181, 118, 0.34);">
+            <div ngif="AuthInfo.Message!=''">{{AuthInfo.Message}}</div>
+            <div class="form-group">
+                <input class="form-control" type="text" ng-model="Username" placeholder="Username" required="required" />
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" ng-model="Password" placeholder="Password" required="required" ng-enter="Login(Username, Password)" />
+            </div>
+            <div class="form-group">
+                <button type="submit" ng-click="Login(Username, Password)" class="form-control btn btn-primary">Let me in.</button>
+            </div>
+        </div>
+    </div>
+</div>

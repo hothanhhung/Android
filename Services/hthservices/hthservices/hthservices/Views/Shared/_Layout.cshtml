@@ -1,46 +1,168 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" href="/Content/site.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    </head>
-    <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
-        </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
-                </div>
-            </div>
-        </footer>
+﻿<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="/Web/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/Web/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href="~/Scripts/bower_components/ckeditor-4.5.11/plugins/codesnippet/lib/highlight/styles/vs.css" rel="stylesheet">
+    <script src="/Scripts/bower_components/ckeditor-4.5.11/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+    <!-- js -->
+    <script src="/Web/js/jquery.min.js"></script>
+    <!-- //js -->
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="@ViewBag.Keywords" />
+	<meta name="description" content="@ViewBag.Description" />
+    <style>
+        pre {
+            padding: 0px;
+        }
+    </style>
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //for-mobile-apps -->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="/Web/js/move-top.js"></script>
+    <script type="text/javascript" src="/Web/js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+			
+			if($(".content").height()!=null && $(".content-text").height()!=null)
+			{
+				$(".content").height($(".content-text").height());
+			}
+        });
+    </script>
+    <!-- start-smoth-scrolling -->
+</head>
 
-        @RenderSection("scripts", required: false)
-    </body>
+<body>
+    <!-- header -->
+    <header>
+        <div class="container">
+            <div class="header-info">
+                <div class="logo">
+                    <a href="/"><img src="/Web/images/logo.png" alt=" " /></a>
+                </div>
+                <div class="logo-right">
+                    <span class="menu"><img src="/Web/images/menu.png" alt=" " /></span>
+                    <ul class="nav1">
+                        @{
+                            string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+                            string actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+                        }
+                        <li class="@("Programming".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Lập Trình", "", "Programming")</li>
+                        <li style="display:none" class="@("Home".Equals(controllerName,StringComparison.OrdinalIgnoreCase)?"cap":"")">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li style="display:none" class="@("Project".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")">@Html.ActionLink("Projects", "", "Projects")</li>
+                        <li class="@("Contact".Equals(actionName, StringComparison.OrdinalIgnoreCase) ? "cap" : "")"><a href="/lien-he">Liên Hệ</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+                <!-- script for menu -->
+                <script>
+                    $("span.menu").click(function () {
+                        $("ul.nav1").slideToggle(300, function () {
+                            // Animation complete.
+                        });
+                    });
+                </script>
+                <!-- //script for menu -->
+            </div>
+        </div>
+    </header>
+    <!-- header -->
+    <!-- content -->
+    <div id="body">
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            @RenderBody()
+        </section>
+    </div>
+    <!-- //content -->
+    <!-- footer -->
+
+    <footer>
+        <div class="footer">
+            <div class="container">
+                <div class="footer-grids">
+                    <div class="footer-grid">
+                        <h3>Giới Thiệu</h3>
+                        <p>
+                           Website này nhằm chia sẻ những kiến thức, kinh nghiêm chúng tôi có được trong quá trình nghiên cứu và làm việc. Hãy đóng góp ý kiến của các bạn để nội dung Website càng phong phú và chính xác hơn
+                        </p>
+                    </div>
+                    <div class="footer-grid">
+                        <h3>Site Page</h3>
+                        <ul>
+                            <li class="@("Programming".Equals(controllerName, StringComparison.OrdinalIgnoreCase) ? "cap1" : "")"><a href="/">Trang Chủ</a></li>
+                            <li class="@("About".Equals(actionName, StringComparison.OrdinalIgnoreCase) ? "cap1" : "")"><a href="/gioi-thieu">Giới Thiệu</a></li>
+                            <li class="@("Contact".Equals(actionName, StringComparison.OrdinalIgnoreCase) ? "cap1" : "")"><a href="/lien-he">Liên Hệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-grid">
+                        <h3>Websites Hay</h3>
+                        <ul>
+                            <li><a href="https://www.w3schools.com">w3schools</a></li>
+                            <li><a href="https://www.codeschool.com/">code school</a></li>
+                            <li><a href="https://www.codecademy.com">code cademy</a></li>
+                            <li><a href="https://www.tutorialspoint.com">tutorialspoint</a></li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>Template by<a href="http://w3layouts.com/"> w3layouts</a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- //footer -->
+    <!-- here stars scrolling icon -->
+    @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+        });
+    </script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+    @*<script type="text/javascript">
+        var adfly_id = 18303405;
+        var adfly_advert = 'banner';
+        var frequency_cap = 5;
+        var frequency_delay = 5;
+        var init_delay = 3;
+        var popunder = true;
+    </script>
+    <script src="https://cdn.ay.gy/js/entry.js">
+    </script> *@
+	 <!-- <script src="https://api.adflex.link/v1/fK0GFz0CllSk7gJoM_wqzgI0Ws-K2NbRJx8g_25SGLA/ads.js?b=1&aff_sub5=auto-ads&type=cpo"></script> -->
+    <!-- //here ends scrolling icon -->
+</body>
 </html>

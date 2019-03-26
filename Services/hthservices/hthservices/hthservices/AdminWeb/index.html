@@ -1,0 +1,145 @@
+﻿<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="hthWebsiteApp">
+<head>
+    <title>Manage website</title>
+    <link href="/Web/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <!--<script src="/scripts/bower_components/jQuery-3.1.0/jquery-3.1.0.min.js"></script>-->
+    <!--<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>-->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="/Scripts/bower_components/ckeditor-4.5.11/ckeditor.js"></script>
+    <link href="/Scripts/bower_components/ckeditor-4.5.11/plugins/codesnippet/lib/highlight/styles/school_book.css" rel="stylesheet">
+
+    <!--<script src="/scripts/bower_components/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/scripts/bower_components/bootstrap-3.3.7/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--<script src="/scripts/bower_components/angular-1.5.8/angular.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-route.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-animate.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-aria.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-messages.min.js"></script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+
+    <!--<link rel="stylesheet" href="/scripts/bower_components/angular_material-1.1.0-rc2/angular-material.min.css">
+    <script src="/scripts/bower_components/angular_material-1.1.0-rc2/angular-material.min.js"></script>-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+    <script src="/adminweb/app.module.js"></script>
+    <script src="/adminweb/app.config.js"></script>
+    <script src="/adminweb/directives/directives.js"></script>
+    <script src="/adminweb/modules/login/login.js"></script>
+    <script src="/adminweb/modules/home/home.js"></script>
+    <script src="/adminweb/modules/category/category.js"></script>
+    <script src="/adminweb/modules/content/content.js"></script>
+    <script src="/adminweb/modules/comment/comment.js"></script>
+    <script src="/adminweb/modules/project/project.js"></script>
+    <link rel="stylesheet" href="/admin/style.css" />
+    <style>
+        pre {
+            padding: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-info">
+                <div class="logo">
+                    <a href="index.html"><img src="/Web/images/logo.png" alt=" " /></a>
+                </div>
+                <div class="logo-right">
+                    <span class="menu"><img src="/Web/images/menu.png" alt=" " /></span>
+                    <ul class="nav1">
+                        <li class="cap"><a href="contact.html">Home</a></li>
+                        <li><a href="contact.html">Programming</a></li>
+                        <li><a href="contact.html">Projects</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+                <!-- script for menu -->
+                <script>
+                    $("span.menu").click(function () {
+                        $("ul.nav1").slideToggle(300, function () {
+                            // Animation complete.
+                        });
+                    });
+                </script>
+                <!-- //script for menu -->
+            </div>
+        </div>
+    </header>
+    <!-- header -->
+    <!-- content -->
+    <div id="body">
+        <div class="content">
+            <div class="container">
+                <div class="content-text">
+                    <div class="col-sm-12 col-lg-10">
+                        <div>
+                            <div ng-view></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-2">
+                        <div>
+                            <div class="categ">
+                                <div class="cat">
+                                    <h3>Chỉ Mục</h3>
+                                    <ul>
+                                        <li><a href="#category">Catergories</a></li>
+                                        <li><a href="#content">Contents</a></li>
+                                        <li><a href="#comment">Comments</a></li>
+                                        <li><a href="#project">projects</a></li>
+                                    </ul>
+                                </div>
+                                <div class="recent-com">
+
+                                </div>
+                                <div class="view">
+                                    <a href="single.html">View More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer">
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>Template by<a href="http://w3layouts.com/"> w3layouts</a></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        window.localStorage.setItem("AuthInfo.Token", "123344");
+    </script>
+
+</body>
+</html>
