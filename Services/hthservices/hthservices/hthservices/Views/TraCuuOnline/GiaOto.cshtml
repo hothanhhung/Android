@@ -108,7 +108,11 @@
             padding: 3px;
             margin-right: 3px;
         }
-
+        .lableHang {
+            background: #a5f34f;
+            padding: 2px;
+            /* margin-right: 0px; */
+        }
         .width90 {
             width: 100% !important;
         }
@@ -174,11 +178,16 @@
             <div class="col-xs-6 col-md-6">
                 <div class="dropdown width90">
                     <button class="btn btn-default dropdown-toggle width90 normal" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        {{filter.hang}}
+                        <span ng-if="filter.hang.length == 0">---Tất Cả Hãng Xe---</span>
+                        <span ng-if="filter.hang.length > 0"><span class="lableHang">{{filter.hang[0]}}</span></span>
+                        <span ng-if="filter.hang.length > 1"><span class="lableHang">{{filter.hang[1]}}</span></span>
+                        <span ng-if="filter.hang.length > 2"><span class="lableHang">...</span></span>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="item in CacHang"><a href="javascript:void(0)" class="normal" ng-click="filter.hang=item;filterData()"> {{item}}</a></li>
+                        <li ng-repeat="item in CacHang"><a href="javascript:void(0)" class="normal" ng-click="filterCacHangXeOnSelected(item)">
+                            <span ng-if="filter.hang.indexOf(item) >= 0" class="glyphicon glyphicon-ok"></span> {{item}}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -313,7 +322,7 @@
             $scope.OrignalData = @Html.Raw(ViewBag.Data);
             $scope.Data = [];
             $scope.filter = {
-                hang: $scope.CacHang[0],
+                hang: [], //$scope.CacHang[0],
                 loai: $scope.CacLoai[0],
                 nguonGoc: $scope.CacNguonGoc[0],
                 giaTu: $scope.CacGiaTu[0],
@@ -326,6 +335,20 @@
                 if (!isOrder) isOrder = false;
 
                 $scope.loadMore(true, isOrder);
+            }
+
+            $scope.filterCacHangXeOnSelected = function (item) {
+                if ($scope.CacHang[0] == item) {
+                    $scope.filter.hang = [];
+                } else {
+                    var pos = $scope.filter.hang.indexOf(item);
+                    if (pos < 0) {
+                        $scope.filter.hang.push(item);
+                    } else {
+                        $scope.filter.hang.splice(pos, 1);
+                    }
+                }
+                $scope.filterData();
             }
 
             $scope.loadMore = function (isReset, isOrder) {
@@ -381,7 +404,7 @@
                 for (currentIndex; currentIndex < $scope.OrignalData.length && count < numberOfLoadedItems; currentIndex++) {
                     var obj = $scope.OrignalData[currentIndex];
 
-                    if ($scope.filter.hang != $scope.CacHang[0] && obj.HangXe != $scope.filter.hang) {
+                    if ($scope.filter.hang.length > 0 && $scope.filter.hang.indexOf(obj.HangXe) < 0) {
                         continue;
                     }
                     if ($scope.filter.loai != $scope.CacLoai[0] && obj.LoaiXe != $scope.filter.loai) {
