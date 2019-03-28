@@ -115,7 +115,13 @@ public class NoteItemAdapter extends ArrayAdapter<NoteItem> {
         if (item != null) {
             tvNoteItemSubject.setText(item.getSubject());
             tvNotesItemDate.setText(item.getDateItem().getSolarInfo(false)+"\nNhằm "+item.getDateItem().getLunarInfo(false));
-            tvNoteItemContent.setText(item.getContentInSomeText());
+            if(item.hasContentInSomeText())
+            {
+                tvNoteItemContent.setVisibility(View.VISIBLE);
+                tvNoteItemContent.setText(item.getContentInSomeText());
+            }else{
+                tvNoteItemContent.setVisibility(View.GONE);
+            }
             DateItemForGridview nextRemind = item.getRemindDate();
             if(nextRemind == null)
             {

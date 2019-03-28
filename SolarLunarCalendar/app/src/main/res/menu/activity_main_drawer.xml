@@ -17,6 +17,7 @@
         <item
             android:id="@+id/navPositionOfTheSun"
             android:icon="@drawable/sun"
+            android:visible="false"
             android:title="Tọa độ mặt trời" />
         <item
             android:id="@+id/navNotes"
@@ -27,8 +28,14 @@
     <item android:title="Communicate">
         <menu>
             <item
+                android:id="@+id/navMoreApp"
+                android:icon="@drawable/moreapps"
+                android:title="More Apps"
+                android:visible="true" />
+            <item
                 android:id="@+id/navShare"
                 android:icon="@drawable/ic_menu_share"
+                android:visible="false"
                 android:title="Share" />
             <item
                 android:id="@+id/navSettings"

@@ -43,31 +43,32 @@ public class MyReceiver extends BroadcastReceiver {
         }
         Log.d("AmDuong", "onReceive 1: on off" + isOn);
         Date now = new Date();
-        if (isOn && now.getHours() > 6 && (MyService.lastOn == null || (now.getTime() - MyService.lastOn.getTime()) > 60000)) {
+        if (now.getHours() > 6 && (MyService.lastOn == null || (now.getTime() - MyService.lastOn.getTime()) > 60000)) {
             Log.d("AmDuong", "onReceive 1: on");
             MyService.lastOn = now;
             selectedDate = new DateItemForGridview("", new Date(), false);
-            if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context)))) {
+            if(isOn) {
+                if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context)))) {
 
-                if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
-                    currentPerformServiceProcessBackgroundTaskGoodDate.cancel(true);
-                    currentPerformServiceProcessBackgroundTaskGoodDate = null;
+                    if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
+                        currentPerformServiceProcessBackgroundTaskGoodDate.cancel(true);
+                        currentPerformServiceProcessBackgroundTaskGoodDate = null;
+                    }
+                    Log.d("AmDuong", "onReceive 1: good date");
+                    currentPerformServiceProcessBackgroundTaskGoodDate = new PerformServiceProcessBackgroundTask();
+                    currentPerformServiceProcessBackgroundTaskGoodDate.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
                 }
-                Log.d("AmDuong", "onReceive 1: good date");
-                currentPerformServiceProcessBackgroundTaskGoodDate = new PerformServiceProcessBackgroundTask();
-                currentPerformServiceProcessBackgroundTaskGoodDate.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
-            }
 
-            if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowNotifyChamNgonTime(context)))) {
-                if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
-                    currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
-                    currentPerformServiceProcessBackgroundTaskChamNgon = null;
+                if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowNotifyChamNgonTime(context)))) {
+                    if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
+                        currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
+                        currentPerformServiceProcessBackgroundTaskChamNgon = null;
+                    }
+                    currentPerformServiceProcessBackgroundTaskChamNgon = new PerformServiceProcessBackgroundTask();
+                    Log.d("AmDuong", "onReceive 1: cham ngon");
+                    currentPerformServiceProcessBackgroundTaskChamNgon.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
                 }
-                currentPerformServiceProcessBackgroundTaskChamNgon = new PerformServiceProcessBackgroundTask();
-                Log.d("AmDuong", "onReceive 1: cham ngon");
-                currentPerformServiceProcessBackgroundTaskChamNgon.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
             }
-
             if (SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyReminding(context)))) {
                 ArrayList<NoteItem> noteItems = SharedPreferencesUtils.getNoteItems(context);
 

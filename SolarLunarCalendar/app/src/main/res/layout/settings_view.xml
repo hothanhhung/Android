@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nhắc khi sắp tới sự kiện" />
+                android:text="Nhắc khi tới sự kiện" />
         </LinearLayout>
 
         <Switch

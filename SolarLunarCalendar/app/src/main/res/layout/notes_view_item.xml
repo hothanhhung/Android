@@ -1,36 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:gravity="center">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_margin="5sp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="5sp">
+
         <TextView
             android:id="@+id/tvNoteItemSubject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp"
             android:text="Tết Nguyên Đán"
-            android:textSize="16sp"
+            android:textColor="#ff99cc00"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvNotesItemDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp"
             android:text="Ngày 10 tháng 01 năm 2018"
+            android:textColor="#ff33b5e5"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvNoteItemContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chuẩn bị năm mới, mua nhiều đồ ăn" />
+            android:layout_marginBottom="5sp"
+            android:text="Chuẩn bị năm mới, mua nhiều đồ ăn"
+            android:textColor="#ff33be33"
+            android:textStyle="italic" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -49,7 +60,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:text="ngày 10 tháng 01 năm 2019" />
+                android:paddingRight="10dp"
+                android:text="ngày 10 tháng 01 năm 2019"
+                android:textColor="#ff33b5e5" />
 
         </LinearLayout>
     </LinearLayout>

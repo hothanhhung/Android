@@ -36,6 +36,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DateItemForGridview;
 import com.hunght.utils.DateTools;
+import com.hunght.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity
     public void updateUI(int id) {
         showAdsAfterLongTime();
         boolean shownAds = true;
-        llMainContent.removeAllViews();
+        if(R.id.navMoreApp != id)llMainContent.removeAllViews();
         switch (id) {
             case R.id.navSolarLunarCalendar:
                 shownAds = false;
@@ -186,6 +187,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.layout.notes_view_item:
                 llMainContent.addView(new SaveNoteItemView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navMoreApp:
+                Utils.showAlertGetMoreAppsServer(this);
                 break;
             default:
                 shownAds = false;

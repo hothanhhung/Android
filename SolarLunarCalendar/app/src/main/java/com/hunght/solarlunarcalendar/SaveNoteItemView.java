@@ -120,6 +120,13 @@ public class SaveNoteItemView  extends LinearLayout {
             }
         });
 
+        npSaveNoteItemDate.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                validateDate();
+            }
+        });
+
         npSaveNoteItemMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {

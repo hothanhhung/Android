@@ -6,43 +6,49 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:text="Ghi Chú" />
+                android:text="Ghi Chú"
+                android:textColor="#ffaa6666"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:orientation="horizontal"
-                android:background="#fff">
+                android:background="#fff"
+                android:orientation="horizontal">
+
                 <NumberPicker
                     android:id="@+id/npSaveNoteItemDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:descendantFocusability="blocksDescendants"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:descendantFocusability="blocksDescendants" />
 
                 <NumberPicker
                     android:id="@+id/npSaveNoteItemMonth"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:descendantFocusability="blocksDescendants"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:descendantFocusability="blocksDescendants" />
 
                 <NumberPicker
                     android:id="@+id/npSaveNoteItemYear"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:descendantFocusability="blocksDescendants"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:descendantFocusability="blocksDescendants" />
 
             </LinearLayout>
 
@@ -50,8 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="#fff">
+                android:background="#fff"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvSaveNoteItemInfoDate"
@@ -59,68 +65,77 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:lineSpacingMultiplier="1"
-                    android:textColor="#ce245e"
-                    android:textStyle="bold"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#ff33b5e5"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chủ Đề" />
+                    android:text="Chủ Đề"
+                    android:textColor="#ffeeeeee"
+                    android:textStyle="italic" />
 
                 <EditText
                     android:id="@+id/etSaveNoteItemSubject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:ems="10"
                     android:inputType="text"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#ff99cc00" />
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nội Dung" />
+                    android:text="Nội Dung"
+                    android:textColor="#ffeeeeee"
+                    android:textStyle="italic" />
 
                 <EditText
                     android:id="@+id/etSaveNoteItemContent"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:layout_margin="10dp"
                     android:ems="10"
                     android:gravity="top"
                     android:inputType="text"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#ff33be33" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
+                android:layout_height="100dp"
                 android:background="#fff"
-                android:layout_margin="10dp">
+                android:orientation="horizontal">
+
                 <NumberPicker
                     android:id="@+id/npSaveNoteItemRemindType"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:descendantFocusability="blocksDescendants"
-                    android:layout_weight="2" />
+                    android:layout_height="100dp"
+                    android:layout_weight="2"
+                    android:descendantFocusability="blocksDescendants" />
 
                 <Button
                     android:id="@+id/btSaveNoteItemUpdate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:descendantFocusability="blocksDescendants"
                     android:layout_weight="1"
-                    android:text="Lưu"/>
+                    android:descendantFocusability="blocksDescendants"
+                    android:text="Lưu" />
+
                 <Button
                     android:id="@+id/btSaveNoteItemCancel"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:descendantFocusability="blocksDescendants"
                     android:layout_weight="1"
-                    android:text="Bỏ Qua"/>
+                    android:descendantFocusability="blocksDescendants"
+                    android:text="Bỏ Qua" />
 
             </LinearLayout>
         </LinearLayout>

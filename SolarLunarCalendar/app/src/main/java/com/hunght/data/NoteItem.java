@@ -97,6 +97,10 @@ public class NoteItem {
         return Content;
     }
 
+    public boolean hasContentInSomeText() {
+        return !(Content==null || Content.isEmpty());
+    }
+
     public String getContentInSomeText() {
         return Content;
     }
