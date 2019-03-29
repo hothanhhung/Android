@@ -24,164 +24,65 @@ public class ServiceProcessor {
     }
     static public String getChamNgon(String date, int index, int type){
         String link = "http://hunght.com/api/solarlunar/GetInfoChamNgon/?date="+date+"&index="+index+"&type="+type;
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
         String jsonStr = null;
 
         try {
-            URL url = new URL(link);
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
 
-            // Create the request to OpenWeatherMap, and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
-                return null;
+            String inputLine;
+            while ((inputLine = input.readLine()) != null)
+            {
+                jsonStringBuilder.append(inputLine + "\n");
             }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
-            }
-
-            if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
-                return null;
-            }
-            jsonStr = buffer.toString();
-            return jsonStr;
+            input.close();
+            jsonStr = jsonStringBuilder.toString();
         } catch (Exception e) {
             Log.e("getChamNgon", "Error " +  e.toString());
-        } finally{
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final Exception e) {
-                    Log.e("getChamNgon", "Error closing stream", e);
-                }
-            }
         }
-        return null;
+        return jsonStr;
     }
 
     static public String getInfoDate(String date, int index) {
         String link = "http://hunght.com/api/solarlunar/GetGoodDateBadDate/?date="+date+"&index="+index;
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
         String jsonStr = null;
 
         try {
-            URL url = new URL(link);
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
 
-            // Create the request to OpenWeatherMap, and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
-                return null;
+            String inputLine;
+            while ((inputLine = input.readLine()) != null)
+            {
+                jsonStringBuilder.append(inputLine + "\n");
             }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
-            }
-
-            if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
-                return null;
-            }
-            jsonStr = buffer.toString();
-            return jsonStr;
+            input.close();
+            jsonStr = jsonStringBuilder.toString();
         } catch (Exception e) {
             Log.e("getChamNgon", "Error ", e);
-        } finally{
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final Exception e) {
-                    Log.e("getChamNgon", "Error closing stream", e);
-                }
-            }
         }
-        return null;
+        return jsonStr;
     }
 
     static public String getInfoDateShort(String date, int index) {
         String link = "http://hunght.com/api/solarlunar/GetGoodDateBadDateShort/?date="+date+"&index="+index;
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
         String jsonStr = null;
 
         try {
-            URL url = new URL(link);
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
 
-            // Create the request to OpenWeatherMap, and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
-                return null;
+            String inputLine;
+            while ((inputLine = input.readLine()) != null)
+            {
+                jsonStringBuilder.append(inputLine + "\n");
             }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
-            }
-
-            if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
-                return null;
-            }
-            jsonStr = buffer.toString();
-            return jsonStr;
+            input.close();
+            jsonStr = jsonStringBuilder.toString();
         } catch (Exception e) {
             Log.e("getChamNgon", "Error ", e);
-        } finally{
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final Exception e) {
-                    Log.e("getChamNgon", "Error closing stream", e);
-                }
-            }
         }
-        return null;
+        return jsonStr;
     }
 
 }

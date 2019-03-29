@@ -1,5 +1,6 @@
 package com.hunght.solarlunarcalendar;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -8,7 +9,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.hunght.data.DateItemForGridview;
@@ -43,12 +46,14 @@ public class MyReceiver extends BroadcastReceiver {
         }
         Log.d("AmDuong", "onReceive 1: on off" + isOn);
         Date now = new Date();
-        if (now.getHours() > 6 && (MyService.lastOn == null || (now.getTime() - MyService.lastOn.getTime()) > 60000)) {
+        if (now.getHours() > 6 && (MyService.lastOn == null || (now.getTime() - MyService.lastOn.getTime()) > 120000)) {
             Log.d("AmDuong", "onReceive 1: on");
             MyService.lastOn = now;
             selectedDate = new DateItemForGridview("", new Date(), false);
-            if(isOn) {
-                if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context)))) {
+            //if(isOn)
+            {
+                if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context))))
+                {
 
                     if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
                         currentPerformServiceProcessBackgroundTaskGoodDate.cancel(true);
@@ -59,7 +64,8 @@ public class MyReceiver extends BroadcastReceiver {
                     currentPerformServiceProcessBackgroundTaskGoodDate.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
                 }
 
-                if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowNotifyChamNgonTime(context)))) {
+                if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowNotifyChamNgonTime(context))))
+                {
                     if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
                         currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
                         currentPerformServiceProcessBackgroundTaskChamNgon = null;
@@ -69,7 +75,8 @@ public class MyReceiver extends BroadcastReceiver {
                     currentPerformServiceProcessBackgroundTaskChamNgon.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
                 }
             }
-            if (SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyReminding(context)))) {
+            if (SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyReminding(context))))
+             {
                 ArrayList<NoteItem> noteItems = SharedPreferencesUtils.getNoteItems(context);
 
                 for (NoteItem noteItem: noteItems) {
@@ -81,7 +88,7 @@ public class MyReceiver extends BroadcastReceiver {
                         SaveNoteItemView.setNoteItem(noteItem);
                         PendingIntent activity = PendingIntent.getActivity(context, 0, intent1, 0);
 
-                        NotificationCompat.Builder mBuilder =
+                        /*NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
                                         .setContentIntent(activity)
                                         .setSmallIcon(Utils.getIconConGiap(selectedDate.getDateInLunar()))
@@ -90,8 +97,11 @@ public class MyReceiver extends BroadcastReceiver {
                                         .setContentText(noteItem.Content);
 
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());
+                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());*/
+
+                        showNotification(context, "SERVICE_GET_INFO_OF_DATE_SHORT", ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, noteItem.Subject, noteItem.Content, activity, Utils.getIconConGiap(selectedDate.getDateInLunar()));
                     }
+
                 }
 
                 SharedPreferencesUtils.setShowDailyNotifyReminding(context, (new Date()).getDate());
@@ -105,6 +115,35 @@ public class MyReceiver extends BroadcastReceiver {
 
         return cm.getActiveNetworkInfo() != null &&
                 cm.getActiveNetworkInfo().isConnected();
+
+    }
+
+    public void showNotification(Context context, String channelId, int id, String subject, String content, PendingIntent intent, int icon)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(icon)
+                .setContentTitle(subject)
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(intent)
+                .setAutoCancel(true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "LichAmDuongChannel";
+            String description = "Lich Am Duong Channel to Notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(channelId, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(id, builder.build());
+
 
     }
 
@@ -142,7 +181,7 @@ public class MyReceiver extends BroadcastReceiver {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         MainActivity.setViewId(R.id.navGoodDayBadDay);
                         PendingIntent activity = PendingIntent.getActivity(context, 0, intent, 0);
-
+/*
                         NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
                                         .setContentIntent(activity)
@@ -152,8 +191,9 @@ public class MyReceiver extends BroadcastReceiver {
                                         .setContentText(str);
 
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());
+                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());*/
 
+                        showNotification(context, "SERVICE_GET_INFO_OF_DATE_SHORT", ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, "Hôm nay " + selectedDate.getSolarInfo(false), str, activity, Utils.getIconConGiap(selectedDate.getDateInLunar()));
                     } else {
                         //Toast.makeText(getContext(),"Error to connect to server", Toast.LENGTH_SHORT).show();
                     }
@@ -170,7 +210,7 @@ public class MyReceiver extends BroadcastReceiver {
                         MainActivity.setViewId(R.id.navSolarLunarCalendar);
                         PendingIntent activity = PendingIntent.getActivity(context, 0, intent, 0);
 
-                        NotificationCompat.Builder mBuilder =
+                        /*NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
                                         .setContentIntent(activity)
                                         .setSmallIcon(Utils.getIconConGiap(selectedDate.getDateInLunar()))
@@ -179,7 +219,9 @@ public class MyReceiver extends BroadcastReceiver {
                                         .setContentText(str);
 
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_CHAM_NGON, mBuilder.build());
+                        mNotificationManager.notify(ServiceProcessor.SERVICE_GET_CHAM_NGON, mBuilder.build());*/
+
+                        showNotification(context, "SERVICE_GET_CHAM_NGON", ServiceProcessor.SERVICE_GET_CHAM_NGON, "Hôm nay " + selectedDate.getSolarInfo(false), str, activity, Utils.getIconConGiap(selectedDate.getDateInLunar()));
 
                     } else {
                         //Toast.makeText(getContext(),"Error to connect to server", Toast.LENGTH_SHORT).show();
