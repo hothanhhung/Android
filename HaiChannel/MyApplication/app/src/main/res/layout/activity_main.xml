@@ -19,7 +19,8 @@
         android:layout_alignParentLeft="true"
         android:id="@+id/adFlexView"
 		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content" />
+		android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
