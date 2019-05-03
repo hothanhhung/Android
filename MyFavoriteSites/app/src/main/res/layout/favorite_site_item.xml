@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.hunght.utils.AspectRatioImageView
+        android:id="@+id/imgViewImage"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dip">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:maxLines="4"
+            android:text="Thanh Niên"
+            android:textColor="#040404"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:typeface="sans"></TextView>
+    </LinearLayout>
+
+</LinearLayout>
