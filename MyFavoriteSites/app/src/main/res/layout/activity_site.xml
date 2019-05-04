@@ -25,18 +25,29 @@
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <com.hunght.utils.MyWebview
-            android:id="@+id/viewArticleDetail"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scrollbars = "vertical"
-            android:layout_weight="1"
-            android:text="Loading..." />
-        <!--<com.startapp.android.publish.ads.banner.Banner
-            android:id="@+id/startAppBanner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"/>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.hunght.utils.MyWebview
+                    android:id="@+id/viewArticleDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="vertical"
+                    android:text="Loading..." />
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:visibility="visible"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/ad_unit_id" />
+            </LinearLayout>
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 

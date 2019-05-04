@@ -14,7 +14,12 @@ public class FavoriteSiteItem {
     }
 
     public FavoriteSiteItem(String name, String iconURL, String siteURL){
-        this.id =  java.util.UUID.randomUUID().toString();
+        if(siteURL==null || siteURL.isEmpty())
+        {
+            this.id =  java.util.UUID.randomUUID().toString();
+        }else{
+            this.id =  siteURL.trim().toLowerCase();
+        }
         this.name = name;
         this.iconURL = iconURL;
         this.siteURL = siteURL.toLowerCase();

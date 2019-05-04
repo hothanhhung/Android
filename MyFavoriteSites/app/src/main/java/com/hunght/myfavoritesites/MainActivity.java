@@ -3,6 +3,8 @@ package com.hunght.myfavoritesites;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,18 +19,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DataAccessor;
 import com.hunght.data.FavoriteSiteItem;
 import com.hunght.dynamicgrid.DynamicGridView;
 import com.hunght.utils.UIUtils;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     DynamicGridView grvFavoriteSite;
     SiteItemAdapter siteItemAdapter;
+    AdView adview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +62,14 @@ public class MainActivity extends AppCompatActivity {
                     UIUtils.showAlertErrorNoInternet(
                             MainActivity.this, false);
                 }else{
-                    SiteActivity.current_Website_Page = (FavoriteSiteItem) view.getTag();
-                    new Thread(loadingToSiteActivity).start();
+                    FavoriteSiteItem item = (FavoriteSiteItem) view.getTag();
+                    if(DataAccessor.getUsingInsideBrowser(MainActivity.this)) {
+                        SiteActivity.current_Website_Page = item;
+                        new Thread(loadingToSiteActivity).start();
+                    }else{
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getSiteURL()));
+                        startActivity(browserIntent);
+                    }
                 }
             }
         });
@@ -66,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        adview = this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adview.loadAd(adRequest);
     }
 
     private Runnable loadingToSiteActivity = new Runnable() {
@@ -82,6 +102,48 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private static long timeForRun = 0, countShow = 1;
+    private InterstitialAd interstitial;
+    private void showInterstitial()
+    {
+        long timenow = Calendar.getInstance().getTime().getTime();
+        long longtime = (countShow*300000 );// + 100000;
+        if(longtime > 1000000) longtime = 1000000;
+        if(timeForRun == 0){
+            timeForRun = Calendar.getInstance().getTime().getTime();
+        }
+        if((timenow - timeForRun) > longtime)
+        {
+            if (interstitial == null) {
+                interstitial = new InterstitialAd(this);
+                interstitial.setAdUnitId(getResources().getString(R.string.interstitial_ads));
+                interstitial.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        if (interstitial.isLoaded()) {
+                            interstitial.show();
+                            timeForRun = Calendar.getInstance().getTime().getTime();
+                            countShow = 1;
+                        }
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                    }
+
+
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                    }
+                });
+            }
+            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+            interstitial.loadAd(adRequest_interstitial);
+        }
+
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -97,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_settings:
-                Toast.makeText(this, "action_settings", Toast.LENGTH_LONG);
+                Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingIntent);
                 return true;
             case R.id.action_add:
                 showEditAndAddSiteDialog(new FavoriteSiteItem());
@@ -105,9 +168,47 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_reorder_gridview:
                 grvFavoriteSite.startEditMode();
                 return true;
+            case R.id.action_suggestion_sites:
+                showSuggestionSitesDialog();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void showSuggestionSitesDialog(){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialogView= inflater.inflate(R.layout.suggestion_sites, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setCancelable(false);
+        //dialogBuilder.setTitle("Suggestion Websites");
+
+        final ListView lvSuggestionSites = dialogView.findViewById(R.id.lvSuggestionSites);
+        SuggestionSiteItemAdapter suggestionSiteItemAdapter = new SuggestionSiteItemAdapter(this, DataAccessor.getSuggestionSiteItems());
+        lvSuggestionSites.setAdapter(suggestionSiteItemAdapter);
+        dialogBuilder.setPositiveButton("OK",null);
+
+        final AlertDialog mAlertDialog = dialogBuilder.create();
+        mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button btPositive = mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                btPositive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        siteItemAdapter.set(DataAccessor.getFavoriteSiteItems(MainActivity.this));
+                        mAlertDialog.dismiss();
+                    }
+                });
+            }
+        });
+        mAlertDialog.show();
+    }
+
 
     private void showEditAndAddSiteDialog(final FavoriteSiteItem favoriteSiteItem){
 
@@ -234,5 +335,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showInterstitial();
     }
 }

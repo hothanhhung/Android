@@ -1,5 +1,9 @@
 package com.hunght.myfavoritesites;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DataAccessor;
 import com.hunght.data.FavoriteSiteItem;
 import com.hunght.myfavoritesites.R;
@@ -43,7 +47,7 @@ public class SiteActivity extends Activity {
     private MyWebview viewArticleDetail;
     private SlidrInterface slidr;
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    private AdView adview;
     public static FavoriteSiteItem getCurrent_Website_Page() {
         return current_Website_Page;
     }
@@ -104,20 +108,10 @@ public class SiteActivity extends Activity {
         context = getApplicationContext();
         setContentView(R.layout.activity_site);
         onCreateWebsiteMobileStyle();
-/*
-        adview = (AdView) this.findViewById(R.id.adView);
+
+        adview = this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adview.loadAd(adRequest);
-
-         */
-        //MobileAd.showGift(this,	MobileAd.GIFT_TOP_CENTER);
-/*
-        adsView= new AdsView(this);
-        LinearLayout layout = (LinearLayout)findViewById(R.id.adFlexView);
-        layout.addView(adsView);
-        adsView.loadAds(new AdsRequest());
-        //changeAddProvider();
-*/
 
         swipeRefreshLayout = ((SwipeRefreshLayout)this.findViewById(R.id.swipeContainer));
         swipeRefreshLayout.setOnRefreshListener(
@@ -211,6 +205,7 @@ public class SiteActivity extends Activity {
     }
 
     private static long timeForRun = 0, countShow = 1;
+    private InterstitialAd interstitial;
     private void showInterstitial()
     {
         long timenow = Calendar.getInstance().getTime().getTime();
@@ -221,8 +216,31 @@ public class SiteActivity extends Activity {
         }
         if((timenow - timeForRun) > longtime)
         {
-            //StartAppAd.showAd(this);
+            if (interstitial == null) {
+                interstitial = new InterstitialAd(this);
+                interstitial.setAdUnitId(getResources().getString(R.string.interstitial_ads));
+                interstitial.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        if (interstitial.isLoaded()) {
+                            interstitial.show();
+                            timeForRun = Calendar.getInstance().getTime().getTime();
+                            countShow = 1;
+                        }
+                    }
 
+                    @Override
+                    public void onAdClosed() {
+                    }
+
+
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                    }
+                });
+            }
+            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+            interstitial.loadAd(adRequest_interstitial);
         }
 
     }

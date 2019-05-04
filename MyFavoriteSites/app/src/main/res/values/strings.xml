@@ -3,4 +3,6 @@
     <string name="notify_title">Notify</string>
     <string name="error_title">Error</string>
     <string name="error_internet">No Internet Access</string>
+    <string name="ad_unit_id">ca-app-pub-4576847792571626/5053596221</string>
+    <string name="interstitial_ads">ca-app-pub-4576847792571626/6175106207</string>
 </resources>

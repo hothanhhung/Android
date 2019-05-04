@@ -15,6 +15,11 @@
             backward-compatibility can go here.
         -->
     </style>
+    <style name="SwitchTheme" parent="AppTheme">
+        <item name="colorControlActivated">#fff</item>
+        <item name="colorSwitchThumbNormal">#d3d3d3</item>
+        <item name="android:colorForeground">#fff</item>
+    </style>
     <style name="AppTheme.Slidr" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:windowIsTranslucent">true</item>

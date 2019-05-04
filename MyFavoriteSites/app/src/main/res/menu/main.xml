@@ -17,4 +17,9 @@
         android:orderInCategory="100"
         android:title="ReOrder Gridview"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_suggestion_sites"
+        android:orderInCategory="100"
+        android:title="Suggestions"
+        app:showAsAction="never" />
 </menu>
