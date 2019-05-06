@@ -1,5 +1,7 @@
 package com.hunght.data;
 
+import com.hunght.utils.MethodHelpers;
+
 import java.net.URL;
 
 public class FavoriteSiteItem {
@@ -64,21 +66,46 @@ public class FavoriteSiteItem {
         this.siteURL = siteURL;
     }
 
+    public void setIconURL(String iconURL) {
+        this.iconURL = iconURL;
+    }
     @Override
     public String toString() {
-        return this.id;
+        return this.siteURL;
     }
 
     public String getFavicon(){
-        try {
-            URL url = new URL(siteURL);
-            String host = url.getProtocol() + "://" + url.getHost();
-            if(url.getPort() != -1 && url.getPort() != 80 ){
-                host += host + ":" + url.getPort();
-            }
-            return host + "/favicon.ico";
-        }catch (Exception ex){ex.printStackTrace();}
-        return "";
+        if(iconURL == null || iconURL.isEmpty()){
+            return findIconURL();
+        }else{
+            return iconURL;
+        }
+
     }
 
+    public String findIconURL(){
+        return MethodHelpers.findIconURL(siteURL);
+    }
+
+    public String getHost(){
+        return MethodHelpers.findHost(siteURL);
+    }
+
+    public String getAvatarName(){
+        if(name != null && !name.isEmpty()){
+            name = name.trim();
+            if(name.length()<4) return name;
+            String initials = "";
+            for (String s : name.split(" ")) {
+                if(s!=null) {
+                    s = s.trim();
+                    if (!s.isEmpty())
+                        initials += s.charAt(0);
+                    if(initials.length() == 3) break;
+                }
+            }
+            return initials;
+        }
+        return "";
+    }
 }

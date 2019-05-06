@@ -10,12 +10,12 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="Setting"
+        android:title="Settings"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_reorder_gridview"
         android:orderInCategory="100"
-        android:title="ReOrder Gridview"
+        android:title="Re-Order Gridview"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_suggestion_sites"

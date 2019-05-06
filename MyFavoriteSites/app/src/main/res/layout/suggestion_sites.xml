@@ -15,10 +15,10 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold" />
-<ListView
+<ExpandableListView
     android:id="@+id/lvSuggestionSites"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-</ListView>
+</ExpandableListView>
 </LinearLayout>

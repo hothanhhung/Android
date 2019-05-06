@@ -17,6 +17,7 @@ import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,6 +31,8 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DataAccessor;
 import com.hunght.data.FavoriteSiteItem;
 import com.hunght.dynamicgrid.DynamicGridView;
+import com.hunght.utils.ConfigAds;
+import com.hunght.utils.MethodHelpers;
 import com.hunght.utils.UIUtils;
 
 import java.util.Calendar;
@@ -83,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ConfigAds.reloadConfigAdsAsync(this);
+
         adview = this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adview.loadAd(adRequest);
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                         if (interstitial.isLoaded()) {
                             interstitial.show();
                             timeForRun = Calendar.getInstance().getTime().getTime();
-                            countShow = 1;
+                            countShow++;
                         }
                     }
 
@@ -185,11 +190,12 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setCancelable(false);
         //dialogBuilder.setTitle("Suggestion Websites");
 
-        final ListView lvSuggestionSites = dialogView.findViewById(R.id.lvSuggestionSites);
-        SuggestionSiteItemAdapter suggestionSiteItemAdapter = new SuggestionSiteItemAdapter(this, DataAccessor.getSuggestionSiteItems());
+        final ExpandableListView lvSuggestionSites = dialogView.findViewById(R.id.lvSuggestionSites);
+        ExpandableSuggestionSiteItemAdapter suggestionSiteItemAdapter = new ExpandableSuggestionSiteItemAdapter(this, DataAccessor.getHeaderSuggestionSiteItems(), DataAccessor.getSuggestionSiteItems());
         lvSuggestionSites.setAdapter(suggestionSiteItemAdapter);
         dialogBuilder.setPositiveButton("OK",null);
 
+        lvSuggestionSites.expandGroup(0);
         final AlertDialog mAlertDialog = dialogBuilder.create();
         mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
@@ -222,17 +228,35 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView inputName = dialogView.findViewById(R.id.inputName);
         final TextView inputAddress = dialogView.findViewById(R.id.inputAddress);
+        final TextView inputIconUrl = dialogView.findViewById(R.id.inputIconUrl);
 
         if(favoriteSiteItem != null)
         {
             inputName.setText(favoriteSiteItem.getName());
             inputAddress.setText(favoriteSiteItem.getSiteURL());
+            inputIconUrl.setText(favoriteSiteItem.getFavicon());
         }
         else{
             inputName.setText("");
             inputAddress.setText("");
+            inputIconUrl.setText("");
         }
 
+        inputAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String str = inputIconUrl.getText().toString().trim();
+                    String url = inputAddress.getText().toString().trim();
+                    if(!url.startsWith("http://") && !url.startsWith("https://")){
+                        url = "http://" + url;
+                    }
+                    if(!url.isEmpty() && URLUtil.isValidUrl(url) && str.isEmpty()){
+                        inputIconUrl.setText(MethodHelpers.findIconURL(url));
+                    }
+                }
+            }
+        });
         dialogBuilder.setPositiveButton("SAVE",null);
 
         dialogBuilder.setNegativeButton("CANCEL",null);
@@ -270,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String name = inputName.getText().toString().trim();
                         String url = inputAddress.getText().toString().trim();
+                        String iconUrl = inputIconUrl.getText().toString().trim();
                         boolean isValidate = true;
 
                         if (name.isEmpty()) {
@@ -287,9 +312,17 @@ public class MainActivity extends AppCompatActivity {
                             inputAddress.setError("Address is invalid!");
                             isValidate = false;
                         }
+                        if(!iconUrl.startsWith("http://") && !iconUrl.startsWith("https://")){
+                            iconUrl = "http://" + iconUrl;
+                        }
+                        if(!URLUtil.isValidUrl(iconUrl)){
+                            inputAddress.setError("Icon URL is invalid!");
+                            isValidate = false;
+                        }
                         if (isValidate) {
                             favoriteSiteItem.setName(name);
                             favoriteSiteItem.setSiteURL(url);
+                            favoriteSiteItem.setIconURL(iconUrl);
                             DataAccessor.updateFavoriteSiteItems(MainActivity.this, favoriteSiteItem);
                             siteItemAdapter.set(DataAccessor.getFavoriteSiteItems(MainActivity.this));
                             mAlertDialog.dismiss();

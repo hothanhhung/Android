@@ -2,6 +2,7 @@ package com.hunght.myfavoritesites;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.hunght.data.FavoriteSiteItem;
 import com.hunght.dynamicgrid.BaseDynamicGridAdapter;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
@@ -58,7 +61,7 @@ public class SiteItemAdapter extends BaseDynamicGridAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         FavoriteSiteGridViewHolder viewHolder;
         TextView tvTitle;
-        ImageView imgImageView;
+        final ImageView imgImageView;
         if(convertView==null)
         {
             convertView = inflater.inflate(R.layout.favorite_site_item, null);
@@ -75,7 +78,7 @@ public class SiteItemAdapter extends BaseDynamicGridAdapter {
             tvTitle = viewHolder.title;
             imgImageView = viewHolder.imgImageView;
         }
-        FavoriteSiteItem item = (FavoriteSiteItem)getItem(position);
+        final FavoriteSiteItem item = (FavoriteSiteItem)getItem(position);
         convertView.setTag(item);
 
         tvTitle.setText(item.getName());
@@ -84,8 +87,19 @@ public class SiteItemAdapter extends BaseDynamicGridAdapter {
         if(!faviconUrl.isEmpty()) {
             try {
                 picasso.load(faviconUrl)
-                        .into(imgImageView);
-            } catch (Exception ex) {
+                        .into(imgImageView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                            }
+
+                            @Override
+                            public void onError() {
+                                TextDrawable drawable = TextDrawable.builder()
+                                        .buildRect(item.getAvatarName(), Color.RED);
+                                imgImageView.setImageDrawable(drawable);
+                            }
+                        });
+            }catch (Exception ex) {
                 ex.printStackTrace();
             }
         }

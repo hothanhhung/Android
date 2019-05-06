@@ -1,12 +1,14 @@
 package com.hunght.myfavoritesites;
 
 import android.app.Activity;
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -20,47 +22,91 @@ import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class SuggestionSiteItemAdapter extends BaseAdapter {
+public class ExpandableSuggestionSiteItemAdapter extends BaseExpandableListAdapter {
     public static final int TAG_VALUE = 10000;
-    private ArrayList<FavoriteSiteItem> data;
+    private List<String> headers; // header titles
+    private HashMap<String, List<FavoriteSiteItem>> data;
     private static LayoutInflater inflater=null;
     /*public Resources res;*/
-    private Activity context;
+    private Context context;
     private Picasso picasso;
-    public SuggestionSiteItemAdapter(Activity a, ArrayList<FavoriteSiteItem> d) {
+    public ExpandableSuggestionSiteItemAdapter(Context context, List<String> headers,
+                                               HashMap<String, List<FavoriteSiteItem>> data) {
        // super( a, d, numberOfColumns );
-        context =a;
-        data=d;
+        this.context =context;
+        this.data=data;
+        this.headers = headers;
         /*res = resLocal;*/
-        // Cache the LayoutInflate to avoid asking for a new one each time.
-        inflater = LayoutInflater.from(a) ;
+        inflater = LayoutInflater.from(context) ;
         Picasso.Builder picassoBuilder = new Picasso.Builder(context);
         picassoBuilder.downloader(new OkHttpDownloader(context));
         picasso = picassoBuilder.build();
     }
 
-    public int getCount() {
-        return data.size();
+    public Object getChild(int groupPosition, int childPosititon) {
+        return this.data.get(this.headers.get(groupPosition))
+                .get(childPosititon);
     }
 
-    public Object getItem(int index) {
-        return data.get(index);
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
     }
 
-    public long getItemId(int position) {
-        return position;
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        return this.data.get(this.headers.get(groupPosition))
+                .size();
     }
 
-    public ArrayList<FavoriteSiteItem> getDataItems() {
-        ArrayList<FavoriteSiteItem> favoriteSiteItems = new ArrayList<>();
-        for (Object item: data) {
-            favoriteSiteItems.add((FavoriteSiteItem) item);
+    @Override
+    public Object getGroup(int groupPosition) {
+        return this.headers.get(groupPosition);
+    }
+
+    @Override
+    public int getGroupCount() {
+        return this.headers.size();
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent) {
+        String headerTitle = (String) getGroup(groupPosition);
+        if (convertView == null) {
+            LayoutInflater infalInflater = (LayoutInflater) this.context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.suggestion_sites_header_group, null);
         }
-        return favoriteSiteItems;
+
+        TextView lblListHeader = convertView
+                .findViewById(R.id.tvheader);
+        lblListHeader.setTypeface(null, Typeface.BOLD);
+        lblListHeader.setText(headerTitle);
+
+        return convertView;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    public View getChildView(int groupPosition, final int childPosition,
+                             boolean isLastChild, View convertView, ViewGroup parent) {
         SuggestionSiteGridViewHolder viewHolder;
         TextView tvTitle;
         final ImageView imgImageView;
@@ -83,15 +129,20 @@ public class SuggestionSiteItemAdapter extends BaseAdapter {
             imgImageView = viewHolder.imgImageView;
             cbSelectedItem = viewHolder.cbSelectedItem;
         }
-        final FavoriteSiteItem item = (FavoriteSiteItem)getItem(position);
+        FavoriteSiteItem item = (FavoriteSiteItem)getChild(groupPosition, childPosition);
         convertView.setTag(item);
+        updateUIBasedOnItem(item, tvTitle, imgImageView, cbSelectedItem);
 
+        return convertView;
+    }
+
+    private void updateUIBasedOnItem(final FavoriteSiteItem item, TextView tvTitle, final ImageView imgImageView, CheckBox cbSelectedItem){
         tvTitle.setText(item.getName());
 
         if(DataAccessor.isInFavoriteSiteItems(item)){
-            cbSelectedItem.setSelected(true);
+            cbSelectedItem.setChecked(true);
         }else{
-            cbSelectedItem.setSelected(false);
+            cbSelectedItem.setChecked(false);
         }
 
         cbSelectedItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -124,10 +175,7 @@ public class SuggestionSiteItemAdapter extends BaseAdapter {
                 ex.printStackTrace();
             }
         }
-
-        return convertView;
     }
-
     class SuggestionSiteGridViewHolder
     {
         TextView title;

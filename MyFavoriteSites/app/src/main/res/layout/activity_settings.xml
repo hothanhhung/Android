@@ -9,24 +9,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="10dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:onClick="onClickBack"
             android:src="@drawable/ic_chevron_left_black" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:onClick="onClickBack"
-            android:gravity="left"
             android:text="SETTINGS"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -61,11 +62,15 @@
             android:id="@+id/swUsingInSideBrowser"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:theme="@style/SwitchTheme"
             android:text="" />
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:padding="10dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,11 +102,15 @@
             android:id="@+id/swBackToHome"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:theme="@style/SwitchTheme"
             android:text="" />
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:padding="10dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -133,11 +142,15 @@
             android:id="@+id/swSwipeToClose"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:theme="@style/SwitchTheme"
             android:text="" />
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:padding="10dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,12 +168,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Long Click để chia sẻ" />
+                android:text="Double Touch For Sharing" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ấn lâu trên màn hình đọc báo để mở tính năng chia sẻ bài viết đang đọc"
+                android:text="Double Touch on the webview to share current page"
                 android:textSize="11sp" />
 
         </LinearLayout>
@@ -169,11 +182,48 @@
             android:id="@+id/swLongClickToShare"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:theme="@style/SwitchTheme"
             android:text="" />
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:padding="10dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Improve Webview" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Improve Webview in the inside Browser. Loading more quickly. It maybe hide some unexpected content"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swOptimation"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

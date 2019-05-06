@@ -10,6 +10,8 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.hunght.data.DataAccessor;
+import com.hunght.myfavoritesites.MainActivity;
 import com.hunght.myfavoritesites.SiteActivity;
 import com.hunght.data.FavoriteSiteItem;
 
@@ -132,18 +134,23 @@ public class MyHomeWebViewClient extends WebViewClient {
        // view.scrollTo(0,0);
     	if(context!=null)
     		((SiteActivity)context).lastChangeAdProvider();
-        /*try {
-            String encoded = MainActivity.getCurrent_Website_Page().GetReformatCssContent(context);
-            view.loadUrl("javascript:(function() {" +
-                    "var parent = document.getElementsByTagName('head').item(0);" +
-                    "var style = document.createElement('style');" +
-                    "style.type = 'text/css';" +
-                    "style.innerHTML = `" + encoded + "`;" +
-                    "parent.appendChild(style)" +
-                    "})()");
+        try {
+            if(DataAccessor.getUsingImproveBrowser(context)) {
+                String name = SiteActivity.getCurrent_Website_Page().getHost();
+                String encoded = ConfigAds.getCSSWeb(name);
+                if(encoded!=null && !encoded.isEmpty()) {
+                    view.loadUrl("javascript:(function() {" +
+                            "var parent = document.getElementsByTagName('head').item(0);" +
+                            "var style = document.createElement('style');" +
+                            "style.type = 'text/css';" +
+                            "style.innerHTML = `" + encoded + "`;" +
+                            "parent.appendChild(style)" +
+                            "})()");
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
         super.onPageFinished(view, url);
       }
 

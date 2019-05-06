@@ -29,6 +29,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -60,6 +62,8 @@ public class SiteActivity extends Activity {
         return height_Screen;
     }
 
+
+    private GestureDetector gs = null;
     Dialog loadingDialog = null;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -202,6 +206,39 @@ public class SiteActivity extends Activity {
                 return false;
             }
         });
+
+        /*viewArticleDetail.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (gs == null) {
+                    gs = new GestureDetector(
+                            new GestureDetector.SimpleOnGestureListener() {
+                                @Override
+                                public boolean onDoubleTapEvent(MotionEvent e) {
+                                    if(DataAccessor.getSharingPage(SiteActivity.this)){
+                                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                                        shareIntent.setType("text/plain");
+                                        String shareSubText = viewArticleDetail.getTitle();
+                                        String shareBodyText = viewArticleDetail.getUrl();
+                                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubText);
+                                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
+                                        startActivity(Intent.createChooser(shareIntent, "Share With"));
+                                    }
+                                    return true;
+                                }
+
+                                @Override
+                                public boolean onSingleTapConfirmed(MotionEvent e) {
+                                    return false;
+                                };
+                            });
+                }
+
+                gs.onTouchEvent(event);
+
+                return false;
+            }
+        });*/
     }
 
     private static long timeForRun = 0, countShow = 1;
@@ -225,7 +262,7 @@ public class SiteActivity extends Activity {
                         if (interstitial.isLoaded()) {
                             interstitial.show();
                             timeForRun = Calendar.getInstance().getTime().getTime();
-                            countShow = 1;
+                            countShow++;
                         }
                     }
 

@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.hunght.data.DataAccessor;
+import com.hunght.utils.ConfigAds;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
 
@@ -29,6 +30,26 @@ public class SettingsActivity extends Activity {
         Switch swBackToHome = findViewById(R.id.swBackToHome);
         Switch swSwipeToClose = findViewById(R.id.swSwipeToClose);
         Switch swLongClickToShare = findViewById(R.id.swLongClickToShare);
+        Switch swOptimation = findViewById(R.id.swOptimation);
+
+        swOptimation.setChecked(DataAccessor.getUsingImproveBrowser(SettingsActivity.this));
+        swOptimation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                DataAccessor.setUsingImproveBrowser(SettingsActivity.this, isChecked);
+                if(isChecked){
+                    ConfigAds.reloadConfigAdsAsync(SettingsActivity.this);
+                }
+            }
+        });
+
+        swBackToHome.setChecked(DataAccessor.getBackToHome(SettingsActivity.this));
+        swBackToHome.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                DataAccessor.setBackToHome(SettingsActivity.this, isChecked);
+            }
+        });
 
         swUsingInSideBrowser.setChecked(DataAccessor.getUsingInsideBrowser(SettingsActivity.this));
         swUsingInSideBrowser.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -59,13 +80,13 @@ public class SettingsActivity extends Activity {
             }
         });
 
-        /*swLongClickToShare.setChecked(SaveData.getLongClickToShare(this));
+        swLongClickToShare.setChecked(DataAccessor.getSharingPage(this));
         swLongClickToShare.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SaveData.setLongClickToShare(SettingsActivity.this, isChecked);
+                DataAccessor.setSharingPage(SettingsActivity.this, isChecked);
             }
-        });*/
+        });
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.hunght.utils.ConfigAds;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class DataAccessor {
     private static final String APP_SHARED_PREFS = "com.hunght.myfavoritesites";
@@ -14,39 +17,71 @@ public class DataAccessor {
     private static final String SWIPE_TO_BACK="SWIPE_TO_BACK";
     private static final String BACK_TO_HOME="BACK_TO_HOME";
     private static final String USE_INSIDE_BROWSER="USE_INSIDE_BROWSER";
+    private static final String USE_IMPROVE_BROWSER="USE_IMPROVE_BROWSER";
+    private static final String CONFIG_ADS_KEY_NAME="CONFIG_ADS_KEY_NAME";
+    private static final String SHARE_PAGE="SHARE_PAGE";
 
     static ArrayList<FavoriteSiteItem> favoriteSiteItems =  null;
-    static ArrayList<FavoriteSiteItem> suggestionSiteItems =  null;
-
-    public static ArrayList<FavoriteSiteItem> getSuggestionSiteItems(){
+    static HashMap<String, List<FavoriteSiteItem>> suggestionSiteItems =  null;
+    static List<String> headerSuggestionSiteItems =  null;
+    public static List<String> getHeaderSuggestionSiteItems(){
+        if(headerSuggestionSiteItems == null){
+            headerSuggestionSiteItems = new ArrayList<>();
+            headerSuggestionSiteItems.add("English");
+            headerSuggestionSiteItems.add("Vietnamese");
+        }
+        return headerSuggestionSiteItems;
+    }
+    public static HashMap<String, List<FavoriteSiteItem>> getSuggestionSiteItems(){
         if(suggestionSiteItems ==  null){
-            suggestionSiteItems = new ArrayList<>();
-            suggestionSiteItems.add(new FavoriteSiteItem("VNExpress", "https://vnexpress.net/favicon.ico", "https://vnexpress.net/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Dân Trí", "", "https://dantri.com.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Tuổi Trẻ", "", "http://tuoitre.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Thanh Niên", "", "https://thanhnien.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Vietnamnet", "", "http://vietnamnet.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Người Lao Động", "", "https://nld.com.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("VTC", "", "http://vtc.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Người Đưa Tin", "", "http://www.nguoiduatin.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Zing", "", "http://news.zing.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Tin Mới", "", "http://m.tinmoi.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Đời Sống Pháp Luật", "", "http://m.doisongphapluat.com/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("24h", "", "http://m.24h.com.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Báo Đất Việt", "", "http://m.baodatviet.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Báo Mới", "", "http://m.baomoi.com/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Viettimes", "", "http://m.viettimes.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("2 Sao", "", "http://m.2sao.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Tin Mới", "", "http://m.tinmoi.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Kênh 14", "", "http://m.kenh14.vn"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Ngôi Sao", "", "http://m.ngoisao.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Tin Tức Online", "", "http://m.tintuconline.com.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Số Ha", "", "http://m.soha.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("VOV", "", "http://m.vov.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("ICT News", "", "http://ictnews.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("VNReview", "", "http://m.vnreview.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Genk", "", "http://m.genk.vn/"));
-            suggestionSiteItems.add(new FavoriteSiteItem("Tinh Tế", "", "https://www.tinhte.vn/"));
+            suggestionSiteItems = new HashMap<>();
+
+            //ENGLISH
+            ArrayList<FavoriteSiteItem> suggestionEnglishItems = new ArrayList<FavoriteSiteItem>();
+            suggestionEnglishItems.add(new FavoriteSiteItem("BBC", "", "https://www.bbc.com/"));
+            suggestionEnglishItems.add(new FavoriteSiteItem("CNN", "", "https://edition.cnn.com/"));
+            suggestionEnglishItems.add(new FavoriteSiteItem("Fox News", "", "https://www.foxnews.com/"));
+            suggestionEnglishItems.add(new FavoriteSiteItem("Reuters", "", "https://www.reuters.com/"));
+            suggestionEnglishItems.add(new FavoriteSiteItem("New York Times", "", "https://www.nytimes.com/"));
+            suggestionEnglishItems.add(new FavoriteSiteItem("NBC News", "", "https://www.nbcnews.com/"));
+            suggestionEnglishItems.add(new FavoriteSiteItem("USA Today", "", "https://www.usatoday.com/"));
+            suggestionSiteItems.put(getHeaderSuggestionSiteItems().get(0), suggestionEnglishItems);
+
+            //VIETNAMESE
+            ArrayList<FavoriteSiteItem> suggestionVietnameseItems = new ArrayList<FavoriteSiteItem>();
+            suggestionVietnameseItems.add(new FavoriteSiteItem("VNExpress", "https://vnexpress.net/favicon.ico", "https://vnexpress.net/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Dân Trí", "", "https://dantri.com.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Tuổi Trẻ", "", "http://tuoitre.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Thanh Niên", "", "https://thanhnien.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Báo Mới", "", "http://m.baomoi.com/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Zing", "https://static-znews.zadn.vn/favicon/v003/favicon_48x48.ico", "http://news.zing.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Vietnamnet", "", "http://vietnamnet.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Người Lao Động", "", "https://nld.com.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Báo Đất Việt", "", "http://m.baodatviet.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("VTC", "", "http://vtc.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Người Đưa Tin", "", "http://www.nguoiduatin.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Đời Sống Pháp Luật", "", "http://m.doisongphapluat.com/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("24h", "", "http://m.24h.com.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Viettimes", "", "http://m.viettimes.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("So Ha", "", "http://m.soha.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("VOV", "", "http://m.vov.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("2 Sao", "", "http://m.2sao.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Tin Mới", "", "http://m.tinmoi.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Việt Giải Trí", "", "http://www.vietgiaitri.com"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Kênh 14", "", "http://m.kenh14.vn"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Ngôi Sao", "", "http://m.ngoisao.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Tin Tức Online", "", "http://m.tintuconline.com.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("ICT News", "", "http://ictnews.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("VNReview", "", "http://m.vnreview.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Genk", "", "http://m.genk.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Tinh Tế", "", "https://www.tinhte.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Bóng Đá Plus", "", "http://m.bongdaplus.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Thể Thao 247", "", "http://thethao247.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Bóng Đá", "", "http://www.bongda.com.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Thể Thao Văn Hóa", "", "http://thethaovanhoa.vn/"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("CafeF", "", "http://cafef.vn//"));
+            suggestionVietnameseItems.add(new FavoriteSiteItem("Tin Nhanh Chứng Khoán", "", "https://tinnhanhchungkhoan.vn/"));
+            suggestionSiteItems.put(getHeaderSuggestionSiteItems().get(1), suggestionVietnameseItems);
         }
         return suggestionSiteItems;
     }
@@ -207,12 +242,102 @@ public class DataAccessor {
         return true;
     }
 
-    public static void setUsingInsideBrowser(Context context, boolean isBackToHome)
+    public static void setUsingInsideBrowser(Context context, boolean value)
     {
         try {
             android.content.SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean(USE_INSIDE_BROWSER, isBackToHome);
+            editor.putBoolean(USE_INSIDE_BROWSER, value);
+            editor.commit();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
+    public static boolean getUsingImproveBrowser(Context context)
+    {
+        {
+            try {
+                android.content.SharedPreferences sharedPref =context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+                return sharedPref.getBoolean(USE_IMPROVE_BROWSER, true);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public static void setUsingImproveBrowser(Context context, boolean value)
+    {
+        try {
+            android.content.SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(USE_IMPROVE_BROWSER, value);
+            editor.commit();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
+    public static ConfigAds getConfigAds(Context context)
+    {
+        ConfigAds configAds = null;
+        try {
+            Gson gSon = new Gson();
+            android.content.SharedPreferences sharedPref =context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+            String json = sharedPref.getString(CONFIG_ADS_KEY_NAME, "");
+            configAds = gSon.fromJson(json, ConfigAds.class);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if(configAds == null) configAds = new ConfigAds();
+        return configAds;
+    }
+
+    public static void setConfigAds(Context context, ConfigAds configAds)
+    {
+        try {
+            android.content.SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            Gson gSon = new Gson();
+            String json = gSon.toJson(configAds);
+            editor.putString(CONFIG_ADS_KEY_NAME, json);
+            editor.commit();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
+    public static boolean getSharingPage(Context context)
+    {
+        {
+            try {
+                android.content.SharedPreferences sharedPref =context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+                return sharedPref.getBoolean(SHARE_PAGE, true);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public static void setSharingPage(Context context, boolean value)
+    {
+        try {
+            android.content.SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(SHARE_PAGE, value);
             editor.commit();
 
         } catch (Exception e) {

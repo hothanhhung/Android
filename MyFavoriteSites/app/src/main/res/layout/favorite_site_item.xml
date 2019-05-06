@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="5dip">
 
     <com.hunght.utils.AspectRatioImageView
         android:id="@+id/imgViewImage"
@@ -21,9 +22,10 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:maxLines="4"
             android:text="Thanh Niên"
             android:textColor="#040404"
