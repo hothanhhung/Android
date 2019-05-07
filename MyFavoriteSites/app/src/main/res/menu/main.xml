@@ -8,9 +8,9 @@
         android:title="Add"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_suggestion_sites"
         android:orderInCategory="100"
-        android:title="Settings"
+        android:title="Suggestions"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_reorder_gridview"
@@ -18,8 +18,8 @@
         android:title="Re-Order Gridview"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_suggestion_sites"
+        android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="Suggestions"
+        android:title="Settings"
         app:showAsAction="never" />
 </menu>

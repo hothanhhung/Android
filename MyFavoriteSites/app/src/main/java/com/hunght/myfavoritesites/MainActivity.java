@@ -35,6 +35,7 @@ import com.hunght.utils.ConfigAds;
 import com.hunght.utils.MethodHelpers;
 import com.hunght.utils.UIUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     DynamicGridView grvFavoriteSite;
     SiteItemAdapter siteItemAdapter;
     AdView adview;
+    TextView tvNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        tvNotification = findViewById(R.id.tvNotification);
         grvFavoriteSite = findViewById(R.id.grvFavoriteSite);
 
-        siteItemAdapter = new SiteItemAdapter(this, DataAccessor.getFavoriteSiteItems(this), getResources(), getResources().getInteger(R.integer.number_of_gridview_columns));
+        ArrayList<FavoriteSiteItem> dataItems = DataAccessor.getFavoriteSiteItems(this);
+        if(dataItems.size() > 0){
+            tvNotification.setVisibility(View.GONE);
+        }else{
+            tvNotification.setVisibility(View.VISIBLE);
+        }
+
+        siteItemAdapter = new SiteItemAdapter(this, dataItems, getResources(), getResources().getInteger(R.integer.number_of_gridview_columns));
         grvFavoriteSite.setAdapter(siteItemAdapter);
         grvFavoriteSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -206,7 +216,13 @@ public class MainActivity extends AppCompatActivity {
                 btPositive.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        siteItemAdapter.set(DataAccessor.getFavoriteSiteItems(MainActivity.this));
+                        ArrayList<FavoriteSiteItem> dataItems = DataAccessor.getFavoriteSiteItems(MainActivity.this);
+                        if(dataItems.size() > 0){
+                            tvNotification.setVisibility(View.GONE);
+                        }else{
+                            tvNotification.setVisibility(View.VISIBLE);
+                        }
+                        siteItemAdapter.set(dataItems);
                         mAlertDialog.dismiss();
                     }
                 });
@@ -324,7 +340,13 @@ public class MainActivity extends AppCompatActivity {
                             favoriteSiteItem.setSiteURL(url);
                             favoriteSiteItem.setIconURL(iconUrl);
                             DataAccessor.updateFavoriteSiteItems(MainActivity.this, favoriteSiteItem);
-                            siteItemAdapter.set(DataAccessor.getFavoriteSiteItems(MainActivity.this));
+                            ArrayList<FavoriteSiteItem> dataItems = DataAccessor.getFavoriteSiteItems(MainActivity.this);
+                            if(dataItems.size() > 0){
+                                tvNotification.setVisibility(View.GONE);
+                            }else{
+                                tvNotification.setVisibility(View.VISIBLE);
+                            }
+                            siteItemAdapter.set(dataItems);
                             mAlertDialog.dismiss();
                         }
                     }
@@ -345,7 +367,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                         DataAccessor.removeFavoriteSiteItems(MainActivity.this, favoriteSiteItem);
-                        siteItemAdapter.set(DataAccessor.getFavoriteSiteItems(MainActivity.this));
+                        ArrayList<FavoriteSiteItem> dataItems = DataAccessor.getFavoriteSiteItems(MainActivity.this);
+                        if(dataItems.size() > 0){
+                            tvNotification.setVisibility(View.GONE);
+                        }else{
+                            tvNotification.setVisibility(View.VISIBLE);
+                        }
+                        siteItemAdapter.set(dataItems);
                         farentDialog.dismiss();
                         dialog.dismiss();
                     }

@@ -71,7 +71,7 @@ public class FavoriteSiteItem {
     }
     @Override
     public String toString() {
-        return this.siteURL;
+        return getHost();
     }
 
     public String getFavicon(){

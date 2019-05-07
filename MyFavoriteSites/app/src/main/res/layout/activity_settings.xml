@@ -5,15 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:background="#e7e7e7">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="10dp">
+        android:paddingBottom="5dp"
+        android:background="#e7e7e7">
 
         <ImageView
             android:layout_width="50dp"
@@ -168,12 +170,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Double Touch For Sharing" />
+                android:text="Long Touch For Sharing" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Double Touch on the webview to share current page"
+                android:text="Long Touch on the webview to share current page"
                 android:textSize="11sp" />
 
         </LinearLayout>

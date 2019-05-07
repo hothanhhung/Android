@@ -105,11 +105,11 @@ public class ExpandableSuggestionSiteItemAdapter extends BaseExpandableListAdapt
         return true;
     }
 
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        SuggestionSiteGridViewHolder viewHolder;
+        final SuggestionSiteGridViewHolder viewHolder;
         TextView tvTitle;
-        final ImageView imgImageView;
+        ImageView imgImageView;
         CheckBox cbSelectedItem;
 
         if(convertView==null)
@@ -121,39 +121,45 @@ public class ExpandableSuggestionSiteItemAdapter extends BaseExpandableListAdapt
             viewHolder.imgImageView = imgImageView = convertView.findViewById(R.id.imgViewImageSuggestion);
             viewHolder.cbSelectedItem = cbSelectedItem = convertView.findViewById(R.id.cbSelectedItemSuggestion);
             viewHolder.imgImageView.setBackgroundColor(0);
-            convertView.setTag(R.id.imgViewImageSuggestion, viewHolder);
+            convertView.setTag(viewHolder);
         }
         else{
-            viewHolder = (SuggestionSiteGridViewHolder)convertView.getTag(R.id.imgViewImageSuggestion);
+            viewHolder = (SuggestionSiteGridViewHolder)convertView.getTag();
             tvTitle = viewHolder.title;
             imgImageView = viewHolder.imgImageView;
             cbSelectedItem = viewHolder.cbSelectedItem;
         }
         FavoriteSiteItem item = (FavoriteSiteItem)getChild(groupPosition, childPosition);
-        convertView.setTag(item);
-        updateUIBasedOnItem(item, tvTitle, imgImageView, cbSelectedItem);
+       // convertView.setTag(item);
 
-        return convertView;
-    }
-
-    private void updateUIBasedOnItem(final FavoriteSiteItem item, TextView tvTitle, final ImageView imgImageView, CheckBox cbSelectedItem){
         tvTitle.setText(item.getName());
-
         if(DataAccessor.isInFavoriteSiteItems(item)){
             cbSelectedItem.setChecked(true);
         }else{
             cbSelectedItem.setChecked(false);
         }
 
-        cbSelectedItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        cbSelectedItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FavoriteSiteItem item = (FavoriteSiteItem)getChild(groupPosition, childPosition);
+                if(((CompoundButton) v).isChecked()){
+                    DataAccessor.updateFavoriteSiteItems(context, item);
+                } else {
+                    DataAccessor.removeFavoriteSiteItems(context, item);
+                }
+            }
+        });
+        /*cbSelectedItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                FavoriteSiteItem item = (FavoriteSiteItem)getChild(groupPosition, childPosition);
                 if (isChecked) {
                     DataAccessor.updateFavoriteSiteItems(context, item);
                 } else {
                     DataAccessor.removeFavoriteSiteItems(context, item);
                 }
-            }});
+            }});*/
 
         String faviconUrl = item.getFavicon();
         if(!faviconUrl.isEmpty()) {
@@ -166,16 +172,21 @@ public class ExpandableSuggestionSiteItemAdapter extends BaseExpandableListAdapt
 
                             @Override
                             public void onError() {
+                                FavoriteSiteItem item = (FavoriteSiteItem)getChild(groupPosition, childPosition);
                                 TextDrawable drawable = TextDrawable.builder()
                                         .buildRect(item.getAvatarName(), Color.RED);
-                                imgImageView.setImageDrawable(drawable);
+                                viewHolder.imgImageView.setImageDrawable(drawable);
                             }
                         });
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
+
+        return convertView;
     }
+
+
     class SuggestionSiteGridViewHolder
     {
         TextView title;

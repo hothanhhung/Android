@@ -3,7 +3,7 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#e7e7e7"
     android:orientation="vertical" >
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -13,7 +13,12 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         ads:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
+    <TextView
+        android:id="@+id/tvNotification"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:text="No data here.\nPlease add new one or select from Suggession menu."
+        android:gravity="center"/>
     <com.hunght.dynamicgrid.DynamicGridView
         android:id="@+id/grvFavoriteSite"
         android:layout_width="match_parent"

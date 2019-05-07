@@ -102,6 +102,10 @@ public class SiteItemAdapter extends BaseDynamicGridAdapter {
             }catch (Exception ex) {
                 ex.printStackTrace();
             }
+        }else{
+            TextDrawable drawable = TextDrawable.builder()
+                    .buildRect(item.getAvatarName(), Color.RED);
+            imgImageView.setImageDrawable(drawable);
         }
 
         return convertView;

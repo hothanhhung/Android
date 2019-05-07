@@ -150,7 +150,7 @@ public class SiteActivity extends Activity {
             settings.setSupportZoom(true);
             settings.setDisplayZoomControls(false);
             settings.setDomStorageEnabled(true);
-
+            settings.setUserAgentString("Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Mobile Safari/537.36");
 
             progressBar1 = (ProgressBar) this.findViewById(R.id.progressBar1);
 
