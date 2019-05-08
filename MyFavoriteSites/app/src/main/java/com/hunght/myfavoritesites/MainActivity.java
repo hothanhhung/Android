@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.webkit.URLUtil;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,13 +45,15 @@ public class MainActivity extends AppCompatActivity {
     SiteItemAdapter siteItemAdapter;
     AdView adview;
     TextView tvNotification;
+    int myLastVisiblePos = 0;
+    Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         tvNotification = findViewById(R.id.tvNotification);
@@ -95,6 +98,34 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        /*myLastVisiblePos = grvFavoriteSite.getFirstVisiblePosition();
+        grvFavoriteSite.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if(myToolbar!=null && scrollState == 0) {
+                    int currentFirstVisPos = view.getFirstVisiblePosition();
+                    if (currentFirstVisPos > myLastVisiblePos) {
+                        //scroll down
+                        if(myToolbar.getVisibility() == View.VISIBLE){
+                            myToolbar.setVisibility(View.GONE);
+                        }
+                    }
+                    else if (currentFirstVisPos < myLastVisiblePos) {
+                        //scroll up
+                        if(myToolbar.getVisibility() == View.GONE){
+                            myToolbar.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    myLastVisiblePos = currentFirstVisPos;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });*/
 
         ConfigAds.reloadConfigAdsAsync(this);
 
