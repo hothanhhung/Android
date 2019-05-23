@@ -1,4 +1,5 @@
-﻿using hthservices.Models;
+﻿using hthservices.Ads;
+using hthservices.Models;
 using hthservices.Utils;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,16 @@ namespace hthservices.Controllers
         {
             Ads.AdData.UserClickAd(country, os, MethodHelpers.GetUrlToLog(Request), info, device, open, version, package);
             return ResponseJson.GetResponseJson(null);
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("GetPopupAds")]
+        public AdItem GetPopupAds(string country, string package = "", string adsId = "")
+        {
+            if (string.IsNullOrWhiteSpace(country)) country = "VN";
+
+            var adItem = Ads.AdData.GetPopupAds(country, package, adsId);
+            return adItem;
         }
     }
 }

@@ -154,6 +154,29 @@ namespace hthservices.Ads
                 return new List<AdItem>();
             }
         }
+
+
+        public static List<AdItem> OWNER_POPUP_ADS_ITEMS
+        {
+            get
+            {
+                try
+                {
+                    using (StreamReader r = new StreamReader(MethodHelpers.GetAbsolutePathToDataFolder() + "\\OwnerPopupAdsData.json"))
+                    {
+                        string json = r.ReadToEnd();
+                        List<AdItem> ro = JsonConvert.DeserializeObject<List<AdItem>>(json);
+                        return ro;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                return new List<AdItem>();
+            }
+        }
+
         public static List<AdItem> GetOwnerAds(string country, string package="")
         {
             List<AdItem> data = new List<AdItem>();

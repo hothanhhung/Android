@@ -6,6 +6,7 @@ using System.Web;
 
 namespace hthservices.Ads
 {
+    [Serializable]
     public class AdItem
     {
         public String NameVN;
@@ -16,6 +17,8 @@ namespace hthservices.Ads
         public String Link;
         public String AppId;
         public String UrlImage;
+        public String AdsId;
+        public List<String> PushToAppIds; 
 
         /*---------- For owner ads --------- */
 

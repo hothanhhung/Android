@@ -15,7 +15,8 @@ namespace hthservices.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect("Programming");
+            //return Redirect("Programming");
+            return Redirect("adsweb");
         }
 
         public ActionResult About()

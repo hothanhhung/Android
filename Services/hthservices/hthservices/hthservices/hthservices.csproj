@@ -235,6 +235,7 @@
     <Content Include="AdsWeb\Index.html" />
     <Content Include="AdsWeb\style.css" />
     <Content Include="Data\DocBaoTongHop.json" />
+    <Content Include="Data\OwnerPopupAdsData.json" />
     <None Include="Data\ThapNhiBatTu.json" />
     <None Include="Data\ChamNgon.json" />
     <Content Include="htmlpage\Donate.html" />

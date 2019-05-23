@@ -1,0 +1,12 @@
+[
+  {
+    "Type": "Google play",
+    "Name": "My Favorite Sites",
+    "Desc": "Manage the websites which you often access to read.\nAdd, Edit or get them from suggestion.\nSuggestions: BBC, CNN, Fox News, Reuters, New York Times, NBC News, USA Today",
+    "DescVN": "Quản lý những website bạn hay truy cập. Để dàng biến thành ứng dụng đọc báo theo phong cách riêng của bạn.\nHãy thử nào!!!",
+    "Link": "https://play.google.com/store/apps/details?id=com.hunght.myfavoritesites",
+    "UrlImage": "https://lh3.googleusercontent.com/BoUomKA8E1lF3pCv0e9n5qIn63SHBJJW26XCjbmbOcqb6jWYkEtnTPZk3QUB1yxbivE=s360",
+    "AdsId": "com.hunght.myfavoritesites01",
+    "PushToAppIds": [ "com.hth.docbaotonghop", "com.hth.learnenglishbyvideos" ]
+  }
+]

@@ -22,7 +22,8 @@ namespace hthservices.Models
     [KnownType(typeof(AdsItemReport))]
     [KnownType(typeof(List<AdsItemReport>))] 
     [KnownType(typeof(List<ProgrammingCategory>))]
-    [KnownType(typeof(List<ProgrammingContent>))] 
+    [KnownType(typeof(List<ProgrammingContent>))]
+    [KnownType(typeof(AdItem))]
     public class ResponseJson
     {
         public bool IsSuccess;

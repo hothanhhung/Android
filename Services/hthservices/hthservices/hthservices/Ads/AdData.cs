@@ -90,5 +90,24 @@ namespace hthservices.Ads
             }
             catch (Exception ex) { }
         }
+
+        public static AdItem GetPopupAds(string country, string package = "", string adsId = "")
+        {
+            var ownerAds = OwnerAds.OWNER_POPUP_ADS_ITEMS.Where(p=>p.PushToAppIds.Contains(package) && !p.AdsId.Equals(adsId)).FirstOrDefault();
+            if (ownerAds != null)
+            {
+                ownerAds = new AdItem()
+                {
+                    Name = ownerAds.GetName(country),
+                    Desc = ownerAds.GetDesc(country),
+                    Link = ownerAds.Link,
+                    UrlImage = ownerAds.UrlImage,
+                    Type = ownerAds.Type,
+                    AdsId = ownerAds.AdsId
+                };
+            }     
+            return ownerAds;
+        }
+
     }
 }
