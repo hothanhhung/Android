@@ -6,6 +6,7 @@ import com.chartboost.sdk.Chartboost;
 import com.chartboost.sdk.ChartboostDelegate;
 import com.chartboost.sdk.Model.CBError;
 import com.hth.docbaotonghop.R;
+import com.hth.owner.OwnerAds;
 import com.hth.utils.*;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
@@ -227,12 +228,12 @@ public class MainActivity extends Activity {
         });
     }
 
-    private static long timeForRun = 0;
+    private static long timeForRun = 0, countShow = 1;
     private void showInterstitial()
     {
         long timenow = Calendar.getInstance().getTime().getTime();
-        long longtime = 400000;//(countShow*300000 );// + 100000;
-        //if(longtime > 1000000) longtime = 1000000;
+        long longtime = (countShow*300000 );// + 100000;
+        if(longtime > 1000000) longtime = 1000000;
         if(timeForRun == 0){
             timeForRun = Calendar.getInstance().getTime().getTime();
         }
@@ -243,11 +244,13 @@ public class MainActivity extends Activity {
                 Chartboost.showRewardedVideo(CBLocation.LOCATION_HOME_SCREEN);
                 Chartboost.cacheRewardedVideo(CBLocation.LOCATION_HOME_SCREEN);
                 timeForRun = Calendar.getInstance().getTime().getTime();
+                countShow++;
             }
             else if (Chartboost.hasInterstitial(CBLocation.LOCATION_HOME_SCREEN)) {
                 Chartboost.showInterstitial(CBLocation.LOCATION_HOME_SCREEN);
                 Chartboost.cacheInterstitial(CBLocation.LOCATION_HOME_SCREEN);
                 timeForRun = Calendar.getInstance().getTime().getTime();
+                countShow++;
             }
         }
 

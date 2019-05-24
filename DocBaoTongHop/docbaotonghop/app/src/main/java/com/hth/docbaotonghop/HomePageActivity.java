@@ -2,6 +2,7 @@ package com.hth.docbaotonghop;
 
 import com.chartboost.sdk.Model.CBError;
 import com.hth.docbaotonghop.R;
+import com.hth.owner.OwnerAds;
 import com.hth.utils.ConfigAds;
 import com.hth.utils.ParserData;
 import com.hth.utils.SaveData;
@@ -42,12 +43,13 @@ public class HomePageActivity extends Activity {
     Dialog loadingDialog = null;
     private static long timeForRun = 0;
 
-    private int countShow = 0;
+    private int countShow = 1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_page);
         context = getApplicationContext();
+        OwnerAds.loadPopupDataAds(this);
 
         /*StartAppSDK.init(this, "207910015", false);
         Random rand = new Random();
@@ -152,8 +154,8 @@ public class HomePageActivity extends Activity {
     private void showInterstitial()
     {
         long timenow = Calendar.getInstance().getTime().getTime();
-        long longtime = 360000;//(countShow*300000 );// + 100000;
-        //if(longtime > 1000000) longtime = 1000000;
+        long longtime = (countShow*300000 );// + 100000;
+        if(longtime > 1000000) longtime = 1000000;
         if(timeForRun == 0){
             timeForRun = timenow;
         }
@@ -164,11 +166,13 @@ public class HomePageActivity extends Activity {
                 Chartboost.showRewardedVideo(CBLocation.LOCATION_MAIN_MENU);
                 Chartboost.cacheRewardedVideo(CBLocation.LOCATION_MAIN_MENU);
                 timeForRun = Calendar.getInstance().getTime().getTime();
+                countShow++;
             }
             else if (Chartboost.hasInterstitial(CBLocation.LOCATION_MAIN_MENU)) {
                 Chartboost.showInterstitial(CBLocation.LOCATION_MAIN_MENU);
                 Chartboost.cacheInterstitial(CBLocation.LOCATION_MAIN_MENU);
                 timeForRun = Calendar.getInstance().getTime().getTime();
+                countShow++;
             }
         }
 
@@ -211,8 +215,10 @@ public class HomePageActivity extends Activity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		
-       showInterstitial();
+
+       if(!OwnerAds.showPopupAds(this)){
+           showInterstitial();
+       }
         
 		super.onResume();
 		if ((loadingDialog != null) && (loadingDialog.isShowing())) {
