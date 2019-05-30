@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
 
     LinearLayout llMainContent;
 
+    private Intent mServiceIntent;
     private AdView mAdView = null;
     private InterstitialAd interstitial = null;
     @Override
@@ -82,14 +84,26 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         MyService mSensorService = new MyService();
-        Intent mServiceIntent = new Intent(this, mSensorService.getClass());
+        mServiceIntent = new Intent(this, mSensorService.getClass());
         if (!isMyServiceRunning(mSensorService.getClass())) {
-            startService(mServiceIntent);
+        //    startService(mServiceIntent);
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(mServiceIntent);
+            } else {
+                startService(mServiceIntent);
+            }*/
         }
         /*IntentFilter filter = new     IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         BroadcastReceiver mReceiver = new MyReceiver();
         registerReceiver(mReceiver, filter);*/
+
+        createInterstitialAds();
+
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction("com.hunght.solarlunarcalendar.restartservice");
+        broadcastIntent.setClass(this, Restarter.class);
+        this.sendBroadcast(broadcastIntent);
 
         Random random = new Random();
         if(random.nextInt(4) == 2)
@@ -97,6 +111,12 @@ public class MainActivity extends AppCompatActivity
             showInterstitial();
         }
         lastShowAds = (new Date()).getTime();
+    }
+
+    @Override
+    protected void onDestroy() {
+      //  stopService(mServiceIntent);
+        super.onDestroy();
     }
 
     public static void setViewId(int id){
@@ -226,18 +246,35 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    long lastShowAds = 0;
+    static long lastShowAds = 0;
+    static boolean loadAdsFailed = false;
     private void showInterstitial() {
+
+        if(loadAdsFailed){
+            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+            interstitial.loadAd(adRequest_interstitial);
+            loadAdsFailed = false;
+        }
+        if (interstitial.isLoaded()) {
+            interstitial.show();
+            lastShowAds = (new Date()).getTime();
+            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+            interstitial.loadAd(adRequest_interstitial);
+            loadAdsFailed = false;
+        }
+    }
+
+    private void createInterstitialAds(){
         if (interstitial == null) {
             interstitial = new InterstitialAd(this);
             interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
             interstitial.setAdListener(new AdListener() {
                 @Override
                 public void onAdLoaded() {
-                    if (interstitial.isLoaded()) {
+                    /*if (interstitial.isLoaded()) {
                         interstitial.show();
                         lastShowAds = (new Date()).getTime();
-                    }
+                    }*/
                 }
 
                 @Override
@@ -247,12 +284,13 @@ public class MainActivity extends AppCompatActivity
 
                 @Override
                 public void onAdFailedToLoad(int errorCode) {
+                    loadAdsFailed = true;
                 }
             });
         }
 
         AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-
         interstitial.loadAd(adRequest_interstitial);
+        loadAdsFailed = false;
     }
 }

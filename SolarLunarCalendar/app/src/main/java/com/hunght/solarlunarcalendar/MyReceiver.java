@@ -21,7 +21,7 @@ import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 public class MyReceiver extends BroadcastReceiver {
     DateItemForGridview selectedDate;
@@ -32,7 +32,7 @@ public class MyReceiver extends BroadcastReceiver {
         this.context = context;
         Log.d("AmDuong", "onReceive 1: " + intent.getAction());
         boolean isOn = false;
-        switch (intent.getAction()) {
+        /*switch (intent.getAction()) {
             // case PowerManager.PARTIAL_WAKE_LOCK:
             case Intent.ACTION_SCREEN_ON:
                 Log.d("AmDuong", "onReceive ACTION_SCREEN_ON: checking");
@@ -43,16 +43,18 @@ public class MyReceiver extends BroadcastReceiver {
                 isOn = isOnline(context);
                 break;
 
-        }
+        }*/
         Log.d("AmDuong", "onReceive 1: on off" + isOn);
-        Date now = new Date();
-        if (now.getHours() > 6 && (MyService.lastOn == null || (now.getTime() - MyService.lastOn.getTime()) > 120000)) {
+
+        Calendar now = Calendar.getInstance();
+
+        if (now.get(Calendar.HOUR_OF_DAY) > 5 && (MyService.lastOn == null || (now.getTimeInMillis() - MyService.lastOn.getTimeInMillis()) > 120000)) {
             Log.d("AmDuong", "onReceive 1: on");
             MyService.lastOn = now;
-            selectedDate = new DateItemForGridview("", new Date(), false);
+            selectedDate = new DateItemForGridview("", now.getTime(), false);
             //if(isOn)
             {
-                if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context))))
+                if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context))))
                 {
 
                     if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
@@ -64,7 +66,7 @@ public class MyReceiver extends BroadcastReceiver {
                     currentPerformServiceProcessBackgroundTaskGoodDate.execute(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, selectedDate.getDisplaySolarDate(), selectedDate.getThapNhiBatTu());
                 }
 
-                if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowNotifyChamNgonTime(context))))
+                if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowNotifyChamNgonTime(context))
                 {
                     if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
                         currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
@@ -75,7 +77,7 @@ public class MyReceiver extends BroadcastReceiver {
                     currentPerformServiceProcessBackgroundTaskChamNgon.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
                 }
             }
-            if (SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && ((now.getDate() != SharedPreferencesUtils.getShowDailyNotifyReminding(context))))
+            if (SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowDailyNotifyReminding(context))
              {
                 ArrayList<NoteItem> noteItems = SharedPreferencesUtils.getNoteItems(context);
 
@@ -104,7 +106,7 @@ public class MyReceiver extends BroadcastReceiver {
 
                 }
 
-                SharedPreferencesUtils.setShowDailyNotifyReminding(context, (new Date()).getDate());
+                SharedPreferencesUtils.setShowDailyNotifyReminding(context, now.get(Calendar.DAY_OF_YEAR));
             }
         }
     }
@@ -168,11 +170,12 @@ public class MyReceiver extends BroadcastReceiver {
 
         protected void onPostExecute(Object object) {
             Log.d("AmDuong", "onPostExecute 1: " + type);
+            Calendar now = Calendar.getInstance();
             switch (type) {
                 case ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT:
                     Log.d("AmDuong", "onPostExecute 2: " + ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT);
                     if (object != null) {
-                        SharedPreferencesUtils.setShowDailyNotifyGoodDateBadDateTime(context, (new Date()).getDate());
+                        SharedPreferencesUtils.setShowDailyNotifyGoodDateBadDateTime(context, now.get(Calendar.DAY_OF_YEAR));
                         String str =  "Là ngày " + String.valueOf(object);
                         Log.d("AmDuong", "onPostExecute" +  str);
 
@@ -201,7 +204,7 @@ public class MyReceiver extends BroadcastReceiver {
                 case ServiceProcessor.SERVICE_GET_CHAM_NGON:
                     Log.d("AmDuong", "onPostExecute 2: " + ServiceProcessor.SERVICE_GET_CHAM_NGON);
                     if (object != null) {
-                        SharedPreferencesUtils.setShowNotifyChamNgonTime(context, (new Date()).getDate());
+                        SharedPreferencesUtils.setShowNotifyChamNgonTime(context, now.get(Calendar.DAY_OF_YEAR));
                         String str = String.valueOf(object);
                         Log.d("AmDuong", "onPostExecute" +  str);
 

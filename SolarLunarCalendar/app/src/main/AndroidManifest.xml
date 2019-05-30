@@ -50,16 +50,26 @@
         </receiver>
 
         <service
-            android:name=".MyService"
+            android:name="com.hunght.solarlunarcalendar.MyService"
+            android:process="com.hunght.solarlunarcalendar.MyService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".MyReceiver"
+            android:name="Restarter"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.os.action.DEVICE_IDLE_MODE_CHANGED" >
+                <action android:name="com.hunght.solarlunarcalendar.restartservice" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.hunght.solarlunarcalendar.MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON" >
                 </action>
                 <action android:name="android.net.wifi.STATE_CHANGE" >
                 </action>

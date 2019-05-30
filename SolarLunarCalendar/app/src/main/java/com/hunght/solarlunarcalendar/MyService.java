@@ -1,28 +1,21 @@
 package com.hunght.solarlunarcalendar;
 
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.hunght.data.DateItemForGridview;
-import com.hunght.utils.ServiceProcessor;
-
-import java.util.Date;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MyService extends Service {
-    BroadcastReceiver mReceiver;
+    private static BroadcastReceiver mReceiver;
+    private static Timer timer = new Timer();
 
-    public static Date lastOn = null;
+    public static Calendar lastOn = null;
     public MyService() {
     }
 
@@ -32,19 +25,36 @@ public class MyService extends Service {
         super.onCreate();
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         mReceiver = new MyReceiver();
+        // Set broadcast receiver priority.
+        filter.setPriority(100);
         registerReceiver(mReceiver, filter);
     }
+
+    private class mainTask extends TimerTask
+    {
+        public void run()
+        {
+           // toastHandler.sendEmptyMessage(0);
+        }
+    }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("AmDuong onStartCommand", "onStartCommand: ");
-        super.onStartCommand(intent, flags, startId);
+        //super.onStartCommand(intent, flags, startId);
+
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(mReceiver);
+        Log.d("AmDuong MyService", "onDestroy: ");
+        //unregisterReceiver(mReceiver);
+        /*Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction("com.hunght.solarlunarcalendar.restartservice");
+        broadcastIntent.setClass(this, Restarter.class);
+        this.sendBroadcast(broadcastIntent);*/
         super.onDestroy();
     }
 
