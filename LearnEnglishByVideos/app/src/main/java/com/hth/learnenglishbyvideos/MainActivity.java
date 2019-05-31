@@ -44,7 +44,8 @@ public class MainActivity extends FragmentActivity implements
 		if(!UIUtils.isOnline(this)){
         	UIUtils.showAlertErrorNoInternet(this, false);
         	return;
-        } 
+        }
+
 		assetManager = getAssets();
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);

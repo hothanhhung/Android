@@ -11,6 +11,7 @@ import com.hth.data.Data;
 import com.hth.data.ObjectChannel;
 import com.hth.data.YouTubeService;
 import com.hth.learnenglishbyvideos.R;
+import com.hth.owner.OwnerAds;
 import com.hth.utils.ParseJSONAds;
 import com.hth.utils.UIUtils;
 
@@ -39,6 +40,7 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		OwnerAds.loadPopupDataAds(this);
 		ActionBar actionBar = getActionBar();
 		//if(actionBar!=null)
 		{
@@ -202,7 +204,9 @@ public class HomeActivity extends Activity {
 			progressDialog.dismiss();
 		}
         if(mAdView!=null) mAdView.resume();
-		showInterstitial();
+		if(!OwnerAds.showPopupAds(this)){
+			showInterstitial();
+		}
     }
 
     @Override
