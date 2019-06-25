@@ -60,6 +60,7 @@ public class DanhMucDauTuView extends LinearLayout {
     final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
     ExpandableListView lvDanhMucDauTu;
     TextView tvProcessInfo;
+    TextView tvLastUpdatedTime;
     private static SavedValues savedValues;
     ArrayList<DanhMucDauTuItem> danhMucDauTuItems;
 
@@ -100,6 +101,8 @@ public class DanhMucDauTuView extends LinearLayout {
 
         lvDanhMucDauTu = view.findViewById(R.id.lvDanhMucDauTu);
         tvProcessInfo = view.findViewById(R.id.tvProcessInfo);
+
+        tvLastUpdatedTime = view.findViewById(R.id.tvLastUpdatedTime);
 
         savedValues = new SavedValues(getContext());
         danhMucDauTuItems = savedValues.getDanhMucDauTus();
@@ -654,6 +657,9 @@ public class DanhMucDauTuView extends LinearLayout {
                 }
             }
         }
+        if(tvLastUpdatedTime!=null && savedValues!= null){
+            tvLastUpdatedTime.setText(savedValues.getLastUpdatePriceTime());
+        }
 
     }
 
@@ -668,6 +674,9 @@ public class DanhMucDauTuView extends LinearLayout {
         protected void onPostExecute(DanhMucDauTuItem danhMucDauTuItem) {
             if(danhMucDauTuItem!=null)
             {
+                if(savedValues != null){
+                    savedValues.setLastUpdatePriceTime(MethodsHelper.getCurrentDate());
+                }
                 updateListDanhMucDauTu(danhMucDauTuItem);
             }
         }

@@ -29,6 +29,8 @@ public class SavedValues {
 	private static final String RECORD_SHOW_HEADER = "RECORD_SHOW_HEADER";
 	private static final String RECORD_HIDE_CHI_MUC_DAU_TU = "RECORD_HIDE_CHI_MUC_DAU_TU";
 	private static final String RECORD_HIDE_CHUNG_KHOAN_DAU_TU = "RECORD_HIDE_CHUNG_KHOAN_DAU_TU";
+	private static final String RECORD_LAST_UPDATE_PRICE_TIME = "RECORD_LAST_UPDATE_PRICE_TIME";
+
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
 
@@ -46,6 +48,15 @@ public class SavedValues {
 	public String getRecordPassword( ) {
 		return appSharedPrefs.getString(RECORD_PASSWORD, "");
 	}
+	public void setLastUpdatePriceTime(String var1) {
+		prefsEditor.putString(RECORD_LAST_UPDATE_PRICE_TIME, var1);
+		prefsEditor.commit();
+	}
+
+	public String getLastUpdatePriceTime( ) {
+		return appSharedPrefs.getString(RECORD_LAST_UPDATE_PRICE_TIME, "");
+	}
+
 
 	public void setRecordHideChiMucDauTu(boolean var1) {
 		prefsEditor.putBoolean(RECORD_HIDE_CHI_MUC_DAU_TU, var1);

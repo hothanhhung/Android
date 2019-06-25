@@ -345,6 +345,15 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(marketIntent);
                 }
                 break;
+            case R.id.nav_Policy:
+                try {
+                    Uri marketUri = Uri.parse("http://hunght.com/htmlpage/privacy.html");
+                    Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+                    startActivity(marketIntent);
+                }catch(Exception e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 

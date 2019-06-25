@@ -63,7 +63,7 @@ public class MethodsHelper {
     }
 
     static public String getCurrentDate(){
-        return getCurrentDate("HH:mm:ss - MMM dd, yyyy");
+        return getCurrentDate("HH:mm:ss dd-MM-yyyy");
     }
 
     static public String getCurrentDate(String format){
