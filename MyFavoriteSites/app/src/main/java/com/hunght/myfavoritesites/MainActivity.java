@@ -130,8 +130,9 @@ public class MainActivity extends AppCompatActivity {
         ConfigAds.reloadConfigAdsAsync(this);
 
         adview = this.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adview.loadAd(adRequest);
+        adview.setVisibility(View.GONE);
+        /*AdRequest adRequest = new AdRequest.Builder().build();
+        adview.loadAd(adRequest);*/
     }
 
     private Runnable loadingToSiteActivity = new Runnable() {
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     private void showInterstitial()
     {
         long timenow = Calendar.getInstance().getTime().getTime();
-        long longtime = (countShow*300000 );// + 100000;
+        long longtime = (countShow*100000 );// + 100000;
         if(longtime > 1000000) longtime = 1000000;
         if(timeForRun == 0){
             timeForRun = Calendar.getInstance().getTime().getTime();

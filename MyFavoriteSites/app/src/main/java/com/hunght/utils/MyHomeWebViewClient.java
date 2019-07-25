@@ -134,7 +134,7 @@ public class MyHomeWebViewClient extends WebViewClient {
        // view.scrollTo(0,0);
     	if(context!=null)
     		((SiteActivity)context).lastChangeAdProvider();
-        try {
+        /*try {
             if(DataAccessor.getUsingImproveBrowser(context)) {
                 String name = SiteActivity.getCurrent_Website_Page().getHost();
                 String encoded = ConfigAds.getCSSWeb(name);
@@ -150,7 +150,7 @@ public class MyHomeWebViewClient extends WebViewClient {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         super.onPageFinished(view, url);
       }
 

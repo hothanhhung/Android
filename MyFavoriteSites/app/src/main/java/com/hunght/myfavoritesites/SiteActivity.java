@@ -113,9 +113,9 @@ public class SiteActivity extends Activity {
         setContentView(R.layout.activity_site);
         onCreateWebsiteMobileStyle();
 
-        adview = this.findViewById(R.id.adView);
+        /*adview = this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        adview.loadAd(adRequest);
+        adview.loadAd(adRequest);*/
 
         swipeRefreshLayout = ((SwipeRefreshLayout)this.findViewById(R.id.swipeContainer));
         swipeRefreshLayout.setOnRefreshListener(
@@ -135,7 +135,8 @@ public class SiteActivity extends Activity {
 
     MyHomeWebViewClient myHomeWebViewClient;
     public static ProgressBar progressBar1;
-    
+    private boolean needOverridedCss = true;
+
     @SuppressLint("SetJavaScriptEnabled")
 	private void onCreateWebsiteMobileStyle() {
         viewArticleDetail = (MyWebview) findViewById(R.id.viewArticleDetail);
@@ -163,20 +164,27 @@ public class SiteActivity extends Activity {
                         if (progressBar1.getProgress() < progress) {
                             progressBar1.setProgress(progress);
                         }
+                        needOverridedCss = true;
                     } else {
                         progressBar1.setVisibility(View.GONE);
-                        /*try {
-                            String encoded = SiteActivity.getCurrent_Website_Page().GetReformatCssContent(SiteActivity.this);
-                            view.loadUrl("javascript:(function() {" +
-                                    "var parent = document.getElementsByTagName('head').item(0);" +
-                                    "var style = document.createElement('style');" +
-                                    "style.type = 'text/css';" +
-                                    "style.innerHTML = `" + encoded + "`;" +
-                                    "parent.appendChild(style)" +
-                                    "})()");
+                        try {
+                            if(needOverridedCss && DataAccessor.getUsingImproveBrowser(context)) {
+                                String name = SiteActivity.getCurrent_Website_Page().getHost();
+                                String encoded = ConfigAds.getCSSWeb(name);
+                                if(encoded!=null && !encoded.isEmpty()) {
+                                    view.loadUrl("javascript:(function() {" +
+                                            "var parent = document.getElementsByTagName('head').item(0);" +
+                                            "var style = document.createElement('style');" +
+                                            "style.type = 'text/css';" +
+                                            "style.innerHTML = `" + encoded + "`;" +
+                                            "parent.appendChild(style)" +
+                                            "})()");
+                                }
+                                needOverridedCss = false;
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }*/
+                        }
                     }
 
                     if (progress > 70 && myHomeWebViewClient.getCurrentIndex() < 1) {
@@ -246,8 +254,8 @@ public class SiteActivity extends Activity {
     private void showInterstitial()
     {
         long timenow = Calendar.getInstance().getTime().getTime();
-        long longtime = (countShow*300000 );// + 100000;
-        if(longtime > 1000000) longtime = 1000000;
+        long longtime = (countShow*450000 );// + 100000;
+        if(longtime > 1500000) longtime = 1500000;
         if(timeForRun == 0){
             timeForRun = Calendar.getInstance().getTime().getTime();
         }
