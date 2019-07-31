@@ -82,7 +82,7 @@ public class GridviewLevelItemAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                // UIUtils.showAlertInform(mContext, levelItem.getLockMessage());
-                ((MainActivity)mContext).showDialog(view, levelItem.getLockMessage());
+                ((MainActivity)mContext).showDialog(view, levelItem);
             }
         });
         btLevelItem.setOnClickListener(new View.OnClickListener() {

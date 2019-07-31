@@ -38,20 +38,21 @@
             android:id="@+id/btBuyOneLevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_item"
-            android:textColor="#c40d6c"
+            android:background="@drawable/buy_rectangle_button"
+            android:textColor="#cc0066"
             android:textSize="15dp"
             android:textStyle="bold"
             android:text="Buy This Level" />
 
         <Button
             android:id="@+id/btClose"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@drawable/menu_item"
+            android:text="Close"
             android:textColor="#fff"
             android:textSize="15dp"
-            android:textStyle="bold"
-            android:text="Close" />
+            android:textStyle="bold" />
     </LinearLayout>
 </AbsoluteLayout>

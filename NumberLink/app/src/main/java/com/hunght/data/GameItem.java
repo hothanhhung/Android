@@ -189,10 +189,10 @@ public class GameItem implements Serializable {
             ArrayList<Integer> line = lines.get(0);
             if(line!=null){
                 int ignore = 0;
-                for(int i =0;i<gameCurrent.length;i++)
-                    for(int j=0; j<gameCurrent[i].length; j++)
+                for(int i =0;i<gameStart.length;i++)
+                    for(int j=0; j<gameStart[i].length; j++)
                     {
-                        if(gameCurrent[i][j] == -1 ) {
+                        if(gameStart[i][j] == -1 ) {
                             ignore++;
                         }
                     }

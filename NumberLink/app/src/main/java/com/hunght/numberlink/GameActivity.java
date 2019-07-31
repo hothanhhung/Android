@@ -14,9 +14,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.hunght.data.DataProcess;
 import com.hunght.data.GameItem;
 import com.hunght.data.SavedValues;
 import com.hunght.data.StaticData;
@@ -58,6 +61,9 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
     private InterstitialAd interstitial = null;
     private RewardedVideoAd mAd;
 
+    private TableLayout llPlayLayout;
+    private LinearLayout llWinLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +71,7 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
         /* In-app purchase */
         mHelper = new IabHelper(this, StaticData.getLicenseKey());
         // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
 
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
@@ -94,6 +100,9 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvNumberOfHints = (TextView) findViewById(R.id.tvNumberOfHints);
         puzzleView = (PuzzleView)findViewById(R.id.puzzleView);
+        llPlayLayout = findViewById(R.id.llPlayLayout);
+        llWinLayout = findViewById(R.id.llWinLayout);
+
         savedValues= new SavedValues(this);
         isShowLines = savedValues.getNeedShowLines();
         isPlayMusic = savedValues.getRecordPlaybackground();
@@ -125,6 +134,34 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
         mAd = MobileAds.getRewardedVideoAdInstance(this);
         mAd.setRewardedVideoAdListener(this);
         timePlay= System.currentTimeMillis();
+        updateLayOut(StaticData.getCurrentGame().isWin());
+    }
+
+    private void updateLayOut(boolean isWin){
+        if(isWin){
+            llPlayLayout.setVisibility(View.GONE);
+            llWinLayout.setVisibility(View.VISIBLE);
+            ArrayList<GameItem> gameItems = DataProcess.getNextAndPreviousGameItem(StaticData.getCurrentGame().getId(), this);
+            Button btPreviousGame = findViewById(R.id.btPreviousGame);
+            Button btNextGame = findViewById(R.id.btNextGame);
+            if(gameItems.get(0) == null){
+                btPreviousGame.setVisibility(View.INVISIBLE);
+            }else{
+                btPreviousGame.setVisibility(View.VISIBLE);
+                btPreviousGame.setTag(gameItems.get(0));
+            }
+
+            if(gameItems.get(1) == null){
+                btNextGame.setVisibility(View.INVISIBLE);
+            }else{
+                btNextGame.setVisibility(View.VISIBLE);
+                btNextGame.setTag(gameItems.get(1));
+            }
+
+        }else{
+            llPlayLayout.setVisibility(View.VISIBLE);
+            llWinLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -255,11 +292,15 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
     }
     public void timeStart() {
         if (fTimeStart == false && !StaticData.getCurrentGame().isWin()) {
+            updateLayOut(false);
             fTimeStart = true;
             fTimeStop = false;
             timestart = new Thread() {
                 public void run() {
                     try {
+                        long start = System.currentTimeMillis();
+                        long startTime = StaticData.getCurrentGame().getGamePlaySeconds();
+
                         while (!fTimeStop && !StaticData.getCurrentGame().isWin()) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -268,11 +309,16 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
                             });
                             sleep(1000L);
                             GameActivity game = GameActivity.this;
-                            StaticData.getCurrentGame().setGamePlaySeconds(StaticData.getCurrentGame().getGamePlaySeconds() + 1);
+                            StaticData.getCurrentGame().setGamePlaySeconds(startTime + (System.currentTimeMillis() - start)/1000);
                         }
 
                         if(StaticData.getCurrentGame().isWin())
                         {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    updateLayOut(true);
+                                }
+                            });
                             showInterstitial(true);
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -302,6 +348,20 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     public void btClick(View view) {
         switch (view.getId()){
+            case R.id.btPreviousGame:
+            case R.id.btNextGame:
+                GameItem item = (GameItem)view.getTag();
+                if(item != null){
+                    StaticData.setCurrentGame(item);
+                    updateLayOut(StaticData.getCurrentGame().isWin());
+                    puzzleView.invalidate();
+                    textViewTimer();
+                    timeStop();
+                    if(!StaticData.getCurrentGame().isWin())
+                        timeStart();
+                }
+                break;
+            case R.id.btReplayGame:
             case R.id.btUndo:
                 AlertDialog diaBox = AskOption();
                 diaBox.show();
@@ -555,7 +615,7 @@ public class GameActivity extends AppCompatActivity implements RewardedVideoAdLi
     private static final String TAG = "numberlink.inappbilling";
     static final int RC_REQUEST = 10001;
     IabHelper mHelper;
-    static final String SKU_GAS = "android.test.purchased";
+    static final String SKU_GAS = "numberlink.buy10hints";//"android.test.purchased";
 
     // Listener that's called when we finish querying the items and subscriptions we own
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {

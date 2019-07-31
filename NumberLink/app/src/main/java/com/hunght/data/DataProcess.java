@@ -255,6 +255,28 @@ public class DataProcess {
 
         return null;
     }
+
+    public static ArrayList<GameItem> getNextAndPreviousGameItem(String gameId, Context context)
+    {
+        ArrayList<GameItem> gameAllItems = getGameItems(context), gameItems = new ArrayList<GameItem>();
+        gameItems.add(null);
+        gameItems.add(null);
+        for(int i = 0; i<gameAllItems.size(); i++) {
+            if (gameId.equalsIgnoreCase(gameAllItems.get(i).getId())) {
+                if(i>0)
+                {
+                    gameItems.set(0, gameAllItems.get(i - 1));
+                }
+                if(i<gameAllItems.size() - 1){
+                    gameItems.set(1, gameAllItems.get(i + 1));
+                }
+                break;
+            }
+        }
+
+        return gameItems;
+    }
+
     public static ArrayList<GameItem> getGameItem(String[] ids, Context context)
     {
         ArrayList<GameItem> gameAllItems = getGameItems(context), gameItems = new ArrayList<>();

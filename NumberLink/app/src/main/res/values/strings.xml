@@ -4,4 +4,5 @@
     <string name="ad_unit_id">ca-app-pub-4576847792571626/6400898610</string>
     <string name="ad_unit_id_interstitial">ca-app-pub-4576847792571626/2685014880</string>
     <string name="ad_unit_id_rewarded_video">ca-app-pub-4576847792571626/4660441532</string>
+    <string name="privacy_policy">Privacy Policy</string>
 </resources>

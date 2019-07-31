@@ -1,14 +1,10 @@
 package com.hunght.numberlink;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.IBinder;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +16,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.vending.billing.IInAppBillingService;
 import com.hunght.data.DataProcess;
 import com.hunght.data.GameItem;
 import com.hunght.data.LevelItem;
@@ -45,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     static final int RC_REQUEST = 10001;
     // The helper object
     IabHelper mHelper;
-    static final String SKU_GAS = "android.test.purchased";
+    static String SKU_GAS = "numberlink.level55.level56";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         /* In-app purchase */
         mHelper = new IabHelper(this, StaticData.getLicenseKey());
         // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
 
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
@@ -113,41 +108,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     View vLockLevel = null;
-    public void showDialog(View view, String msg){
-        final Dialog dialog = new Dialog(MainActivity.this);
+    Dialog dialogUnlockLevel;
+    public void showDialog(View view, final LevelItem levelItem){
+        dialogUnlockLevel = new Dialog(MainActivity.this);
         vLockLevel = view;
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.lock_level_dialog);
+        dialogUnlockLevel.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogUnlockLevel.setContentView(R.layout.lock_level_dialog);
         ColorDrawable dialogColor = new ColorDrawable(Color.GRAY);
         dialogColor.setAlpha(0);
-        dialog.getWindow().setBackgroundDrawable(dialogColor);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialogUnlockLevel.getWindow().setBackgroundDrawable(dialogColor);
+        dialogUnlockLevel.setCanceledOnTouchOutside(false);
+        dialogUnlockLevel.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        TextView text = (TextView) dialog.findViewById(R.id.tvLockLevelMessage);
-        text.setText(msg);
+        TextView text = (TextView) dialogUnlockLevel.findViewById(R.id.tvLockLevelMessage);
+        text.setText(levelItem.getLockMessage());
 
-        Button btBuyOneLevel = (Button) dialog.findViewById(R.id.btBuyOneLevel);
+        Button btBuyOneLevel = (Button) dialogUnlockLevel.findViewById(R.id.btBuyOneLevel);
         btBuyOneLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             if(mHelper!=null) {
-                String payload = "ssss";
+                String payload = "purchase item";
+                SKU_GAS = levelItem.getGA();
                 mHelper.launchPurchaseFlow(MainActivity.this, SKU_GAS, RC_REQUEST,
                         mPurchaseFinishedListener, payload);
             }
             }
         });
 
-        Button btClose = (Button) dialog.findViewById(R.id.btClose);
+        Button btClose = (Button) dialogUnlockLevel.findViewById(R.id.btClose);
         btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialogUnlockLevel.dismiss();
             }
         });
-        dialog.show();
+        dialogUnlockLevel.show();
 
+    }
+
+    public void btPrivacyPolicy(View view){
+        try {
+            Uri marketUri = Uri.parse("http://hunght.com/htmlpage/privacy.html");
+            Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+            startActivity(marketIntent);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -281,6 +288,9 @@ public class MainActivity extends AppCompatActivity {
                 // game world's logic, which in our case means filling the gas tank a bit
                 Log.d(TAG, "Consumption successful. Provisioning.");
                 updateUIandSaveData();
+                if(dialogUnlockLevel!=null && dialogUnlockLevel.isShowing()){
+                    dialogUnlockLevel.dismiss();
+                }
             }
             else {
                 complain("Error while consuming: " + result);

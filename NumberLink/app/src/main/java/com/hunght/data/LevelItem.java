@@ -138,4 +138,23 @@ public class LevelItem {
         }
         return "Complete all previous sessions to Unlock";
     }
+
+    public String getGA(){
+        String result = "numberlink.level55.level56";
+        switch (getLevelId()){
+            case 66:
+                result = "numberlink.level66";
+                break;
+            case 77:
+                result = "numberlink.level77";
+                break;
+            case 88:
+                result = "numberlink.level88";
+                break;
+            case 99:
+                result = "numberlink.level99";
+                break;
+        }
+        return result;
+    }
 }

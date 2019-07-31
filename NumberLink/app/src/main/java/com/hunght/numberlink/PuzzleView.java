@@ -164,6 +164,7 @@ public class PuzzleView extends View {
                         i*height+y, foreground);
             }
         }
+        ArrayList<ArrayList<Integer>> lines = StaticData.getLines();
         if(isShowLine || StaticData.getCurrentGame().isWin()) {
             Paint paintLine = new Paint();
             if(StaticData.getCurrentGame().isWin()) {
@@ -184,7 +185,6 @@ public class PuzzleView extends View {
             float cycleSize = height / 8;
             if(cycleSize > 15) cycleSize = 15;
 
-            ArrayList<ArrayList<Integer>> lines = StaticData.getLines();
             for (ArrayList<Integer> line : lines) {
                 for (int i = 1; i < line.size(); i++) {
                     int point1 = line.get(i - 1) % 100, point2 = line.get(i) % 100;

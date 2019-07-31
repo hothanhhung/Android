@@ -19,11 +19,27 @@
         <GridView
             android:id="@+id/grvLevelItems"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:numColumns="2"
             android:verticalSpacing="5dp"
             android:layout_gravity="center"
             android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:textColor="#0000cc"
+            android:textSize="9sp"
+            android:onClick="btPrivacyPolicy"
+            android:text="@string/privacy_policy"
+            android:linksClickable="false"
+            android:textAllCaps="true"
+            android:autoLink="all"/>
     </LinearLayout>
 
 </LinearLayout>

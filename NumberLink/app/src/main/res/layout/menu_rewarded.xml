@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:orientation="vertical"
-            android:background="@drawable/menu_item"
+            android:background="@drawable/buy_rectangle_button"
             android:clickable="true">
 
             <TextView
@@ -48,23 +48,25 @@
             android:id="@+id/btBuyMoreHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:textAllCaps="false"
             android:textColor="#c40d6c"
             android:textSize="15dp"
             android:textStyle="bold"
             android:onClick="btRewardedAdsClick"
-            android:background="@drawable/menu_item"
+            android:background="@drawable/buy_rectangle_button"
             android:text="Buy More 10 Hints"/>
         <Button
             android:id="@+id/btDownloadMoreGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:textAllCaps="false"
             android:textColor="#fff"
             android:textSize="15dp"
             android:textStyle="bold"
             android:onClick="btRewardedAdsClick"
-            android:background="@drawable/menu_item"
+            android:background="@drawable/buy_rectangle_button"
             android:text="Download More Games"/>
         <!--       <TextView
                    android:id="@+id/textView"
@@ -110,8 +112,9 @@
             android:text="Turn Off Banner Ads"/>-->
         <Button
             android:id="@+id/btRewardedCancel"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:textAllCaps="false"
             android:textColor="#fff"
             android:textSize="15dp"
