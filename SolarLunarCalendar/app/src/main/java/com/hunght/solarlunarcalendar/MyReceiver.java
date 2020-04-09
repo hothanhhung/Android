@@ -23,27 +23,23 @@ import com.hunght.utils.Utils;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MyReceiver extends BroadcastReceiver {
-    DateItemForGridview selectedDate;
-    PerformServiceProcessBackgroundTask currentPerformServiceProcessBackgroundTaskGoodDate, currentPerformServiceProcessBackgroundTaskChamNgon;
-    Context context;
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        this.context = context;
-        Log.d("AmDuong", "onReceive 1: " + intent.getAction());
-        boolean isOn = false;
-        /*switch (intent.getAction()) {
-            // case PowerManager.PARTIAL_WAKE_LOCK:
-            case Intent.ACTION_SCREEN_ON:
-                Log.d("AmDuong", "onReceive ACTION_SCREEN_ON: checking");
-                isOn = isOnline(context);
-                break;
-            case WifiManager.NETWORK_STATE_CHANGED_ACTION:
-                Log.d("AmDuong", "onReceive NETWORK_STATE_CHANGED_ACTION: checking");
-                isOn = isOnline(context);
-                break;
+public class MyReceiver// extends BroadcastReceiver
+{
+    private int backgroundCount = 0;
+    private DateItemForGridview selectedDate;
+    private PerformServiceProcessBackgroundTask currentPerformServiceProcessBackgroundTaskGoodDate, currentPerformServiceProcessBackgroundTaskChamNgon;
+    private Context context;
 
-        }*/
+    public boolean isBackgroundRunning(){
+        return backgroundCount > 0;
+    }
+    public void start(Context context) {
+        this.context = context;
+        backgroundCount = 0;
+        Log.d("AmDuong", "start ");
+        //showNotificationDebug();
+        boolean isOn = false;
+
         Log.d("AmDuong", "onReceive 1: on off" + isOn);
 
         Calendar now = Calendar.getInstance();
@@ -111,7 +107,7 @@ public class MyReceiver extends BroadcastReceiver {
         }
     }
 
-    public Boolean isOnline(Context ctx) {
+    private Boolean isOnline(Context ctx) {
         ConnectivityManager cm =
                 (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -120,16 +116,25 @@ public class MyReceiver extends BroadcastReceiver {
 
     }
 
-    public void showNotification(Context context, String channelId, int id, String subject, String content, PendingIntent intent, int icon)
+    private void showNotificationDebug(){
+        showNotification(context, "SERVICE_GET_INFO_OF_DATE_SHORT_DEBUG", ServiceProcessor.SERVICE_GET_DEBUG, "Job alarm run", "Job alarm is running", null, R.drawable.icon);
+    }
+
+    private void showNotification(Context context, String channelId, int id, String subject, String content, PendingIntent intent, int icon)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(icon)
                 .setContentTitle(subject)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(intent)
                 .setAutoCancel(true);
 
+        if(icon > 0){
+            builder.setSmallIcon(icon);
+        }
+
+        if(intent!=null){
+            builder.setContentIntent(intent);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "LichAmDuongChannel";
             String description = "Lich Am Duong Channel to Notification";
@@ -150,12 +155,14 @@ public class MyReceiver extends BroadcastReceiver {
     }
 
     class PerformServiceProcessBackgroundTask extends AsyncTask<Object, Object, Object> {
+
         private int type;
 
         protected void onPreExecute() {
         }
 
         protected Object doInBackground(Object... params) {
+            backgroundCount++;
             type = Integer.parseInt(params[0].toString());
             Log.d("AmDuong", "doInBackground 1: " + type);
             switch (type) {
@@ -231,7 +238,7 @@ public class MyReceiver extends BroadcastReceiver {
                     }
                     break;
             }
-
+            backgroundCount--;
         }
 
     }

@@ -15,7 +15,8 @@ import java.net.URLConnection;
  */
 
 public class ServiceProcessor {
-    static public final int SERVICE_GET_CHAM_NGON = 0;
+    static public final int SERVICE_GET_DEBUG = 20120;
+    static public final int SERVICE_GET_CHAM_NGON = SERVICE_GET_DEBUG + 1;
     static public final int SERVICE_GET_INFO_OF_DATE = SERVICE_GET_CHAM_NGON + 1;
     static public final int SERVICE_GET_INFO_OF_DATE_SHORT = SERVICE_GET_INFO_OF_DATE + 1;
     static public String getChamNgon(String date, int index)

@@ -23,11 +23,11 @@ public class MyService extends Service {
     public void onCreate() {
         Log.d("AmDuong MyService", "onCreate: ");
         super.onCreate();
-        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        mReceiver = new MyReceiver();
+        //IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        //mReceiver = new MyReceiver();
         // Set broadcast receiver priority.
-        filter.setPriority(100);
-        registerReceiver(mReceiver, filter);
+        //filter.setPriority(100);
+        //registerReceiver(mReceiver, filter);
     }
 
     private class mainTask extends TimerTask

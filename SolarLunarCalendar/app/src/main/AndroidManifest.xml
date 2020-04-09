@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:usesCleartextTraffic="true"
@@ -48,31 +49,20 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/lunar_solar_app_widget_info" />
         </receiver>
-
         <service
-            android:name="com.hunght.solarlunarcalendar.MyService"
-            android:process="com.hunght.solarlunarcalendar.MyService"
-            android:enabled="true"
-            android:exported="true" />
+            android:name=".MyService"/>
 
         <receiver
-            android:name="Restarter"
+            android:name="com.hunght.solarlunarcalendar.AReceiver"
             android:enabled="true"
             android:exported="true">
-            <intent-filter>
-                <action android:name="com.hunght.solarlunarcalendar.restartservice" />
-            </intent-filter>
         </receiver>
 
         <receiver
-            android:name="com.hunght.solarlunarcalendar.MyReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:name="com.hunght.solarlunarcalendar.BootBroadcastReceiver"
+            android:enabled="true" >
             <intent-filter>
-                <action android:name="android.intent.action.SCREEN_ON" >
-                </action>
-                <action android:name="android.net.wifi.STATE_CHANGE" >
-                </action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
     </application>

@@ -1,19 +1,14 @@
 package com.hunght.solarlunarcalendar;
 
 import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.view.menu.ExpandedMenuView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,30 +16,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DateItemForGridview;
-import com.hunght.utils.DateTools;
 import com.hunght.utils.Utils;
-
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "AmDuong";
+    private static int JobId = 30200;
     private static int ViewId = 0;
 
     DateItemForGridview selectedDate;
@@ -74,6 +62,7 @@ public class MainActivity extends AppCompatActivity
 
 
         mAdView = (AdView) this.findViewById(R.id.adView);
+		//mAdView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
         llMainContent = (LinearLayout)findViewById(R.id.llMainContent);
         llMainContent.removeAllViews();
         updateUI(ViewId);
@@ -83,34 +72,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        MyService mSensorService = new MyService();
-        mServiceIntent = new Intent(this, mSensorService.getClass());
-        if (!isMyServiceRunning(mSensorService.getClass())) {
-        //    startService(mServiceIntent);
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(mServiceIntent);
-            } else {
-                startService(mServiceIntent);
-            }*/
+        Intent liveIntent = new Intent(getApplicationContext(), AReceiver.class);
+        if(PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_NO_CREATE) == null) {
+            PendingIntent recurring = PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Calendar updateTime = Calendar.getInstance();
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), 45 * 60 * 1000, recurring);
+            //wakeup and starts service in every 45 minutes.
+            Log.d(TAG, "AlarmManager scheduled");
+        }else{
+            Log.d(TAG, "AlarmManager existed");
         }
-        /*IntentFilter filter = new     IntentFilter(Intent.ACTION_SCREEN_ON);
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        BroadcastReceiver mReceiver = new MyReceiver();
-        registerReceiver(mReceiver, filter);*/
-
         createInterstitialAds();
-
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction("com.hunght.solarlunarcalendar.restartservice");
-        broadcastIntent.setClass(this, Restarter.class);
-        this.sendBroadcast(broadcastIntent);
-
-        Random random = new Random();
-        if(random.nextInt(4) == 2)
-        {
-            showInterstitial();
-        }
-        lastShowAds = (new Date()).getTime();
     }
 
     @Override
@@ -240,7 +213,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showAdsAfterLongTime()
     {
-        if(lastShowAds != 0 && ((new Date()).getTime() - lastShowAds == 300000))
+        if(lastShowAds == 0 || ((new Date()).getTime() - lastShowAds == 300000))
         {
             showInterstitial();
         }
@@ -249,7 +222,8 @@ public class MainActivity extends AppCompatActivity
     static long lastShowAds = 0;
     static boolean loadAdsFailed = false;
     private void showInterstitial() {
-
+		if(interstitial == null) return;
+		
         if(loadAdsFailed){
             AdRequest adRequest_interstitial = new AdRequest.Builder().build();
             interstitial.loadAd(adRequest_interstitial);
@@ -268,6 +242,7 @@ public class MainActivity extends AppCompatActivity
         if (interstitial == null) {
             interstitial = new InterstitialAd(this);
             interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
+            //interstitial.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
             interstitial.setAdListener(new AdListener() {
                 @Override
                 public void onAdLoaded() {
