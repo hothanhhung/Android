@@ -145,4 +145,15 @@ public class MethodsHelper {
         int year = calendar.get(Calendar.YEAR);
         return year + "" + (month < 10 ? "0" : "") + month + "" + (day < 10 ? "0" : "") + day;
     }
+
+    public static String getYYYYMMDDhhmmss(Calendar calendar) {
+        int second = calendar.get(Calendar.SECOND);
+        int minute = calendar.get(Calendar.MINUTE);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return (year + "" + (month < 10 ? "0" : "") + month + "" + (day < 10 ? "0" : "") + day
+                + (hour < 10 ? "0" : "") + hour + "" + (minute < 10 ? "0" : "") + minute+ "" + (second < 10 ? "0" : "") + second);
+    }
 }

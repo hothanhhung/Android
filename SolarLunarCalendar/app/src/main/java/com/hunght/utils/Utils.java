@@ -8,23 +8,38 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Environment;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hunght.data.LunarDate;
+import com.hunght.data.NoteItem;
+import com.hunght.solarlunarcalendar.BuildConfig;
 import com.hunght.solarlunarcalendar.R;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Lenovo on 5/1/2018.
  */
 
 public class Utils {
-
+    private static final String TAG = "AmDuong";
     static public int getIconConGiap(int day)
     {
         int lunarDate = day % 12;
@@ -161,5 +176,83 @@ public class Utils {
         return cm.getActiveNetworkInfo() != null &&
                 cm.getActiveNetworkInfo().isConnected();
 
+    }
+
+    public static void exportToCsv(Context context, ArrayList<NoteItem> noteItems) {
+        final String fileName = "DanhMucDauTu_"+MethodsHelper.getYYYYMMDDhhmmss(Calendar.getInstance())+".json";
+        Log.d("TAG", "exportToExcel");
+        //Saving file in external storage
+        //File sdCard = Environment.getExternalStorageDirectory();
+        File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File directory = new File(sdCard.getAbsolutePath() + "/LichAmDuong");
+        //create directory if not exist
+        if(!directory.isDirectory()){
+            directory.mkdirs();
+        }
+        //file path
+        File file = new File(directory, fileName);
+
+        Log.d("TAG", "Create File: " + file.getPath());
+            try {
+                if(file.createNewFile()) {
+                    try {
+                        Gson gson = new Gson();
+                        String json = gson.toJson(noteItems);
+                        PrintWriter writer = new PrintWriter(file);
+                        writer.print(json);
+                        writer.close();
+                    } catch (Exception e) {
+                        Log.d("TAG", "Error Write File" + e.getMessage());
+                        e.printStackTrace();
+                    }
+                    try {
+                        Toast.makeText(context, file.getPath(), Toast.LENGTH_LONG).show();
+                        Uri path = FileProvider.getUriForFile(context,
+                                BuildConfig.APPLICATION_ID + ".provider",
+                                file);
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(path, "text/plain");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        try {
+                            context.startActivity(intent);
+                        } catch (Exception e) {
+                            Log.d("TAG", "Error Open File" + e.getMessage());
+                            e.printStackTrace();
+                        }
+
+                        return;
+                    } catch (Exception e) {
+                        Log.d("TAG", "Error Create File" + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        Toast.makeText(context, "Lỗi Khi Tạo File", Toast.LENGTH_LONG).show();
+    }
+
+    public static String readTextFile(File file){
+        StringBuilder text = new StringBuilder();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+            br.close();
+        }
+        catch (Exception e) {
+            Log.d("TAG", "Error Read File" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return text.toString();
     }
 }

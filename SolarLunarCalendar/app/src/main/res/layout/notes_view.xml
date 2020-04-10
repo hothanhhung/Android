@@ -52,6 +52,28 @@
             android:text="Chưa có sự kiện nào. Hãy tạo mới"
             android:textColor="#fff000ee"
             android:textStyle="italic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btBackup"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_custom_rectangle"
+                android:text="Sao Lưu" />
+
+            <Button
+                android:id="@+id/btRestore"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_custom_rectangle"
+                android:text="Phục Hồi" />
+        </LinearLayout>
         <ListView
             android:id="@+id/lvNotesViewItems"
             android:layout_width="match_parent"

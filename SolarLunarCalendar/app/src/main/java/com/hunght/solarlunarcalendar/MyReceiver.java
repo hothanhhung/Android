@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.data.NoteItem;
+import com.hunght.utils.DateTools;
 import com.hunght.utils.ServiceProcessor;
 import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
@@ -47,12 +48,13 @@ public class MyReceiver// extends BroadcastReceiver
         if (now.get(Calendar.HOUR_OF_DAY) > 5 && (MyService.lastOn == null || (now.getTimeInMillis() - MyService.lastOn.getTimeInMillis()) > 120000)) {
             Log.d("AmDuong", "onReceive 1: on");
             MyService.lastOn = now;
+            boolean keepCheck = true;
             selectedDate = new DateItemForGridview("", now.getTime(), false);
             //if(isOn)
             {
                 if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context))))
                 {
-
+                    keepCheck = false;
                     if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
                         currentPerformServiceProcessBackgroundTaskGoodDate.cancel(true);
                         currentPerformServiceProcessBackgroundTaskGoodDate = null;
@@ -64,6 +66,7 @@ public class MyReceiver// extends BroadcastReceiver
 
                 if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowNotifyChamNgonTime(context))
                 {
+                    keepCheck = false;
                     if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
                         currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
                         currentPerformServiceProcessBackgroundTaskChamNgon = null;
@@ -73,7 +76,7 @@ public class MyReceiver// extends BroadcastReceiver
                     currentPerformServiceProcessBackgroundTaskChamNgon.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
                 }
             }
-            if (SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowDailyNotifyReminding(context))
+            if (keepCheck && SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowDailyNotifyReminding(context))
              {
                 ArrayList<NoteItem> noteItems = SharedPreferencesUtils.getNoteItems(context);
 
@@ -98,11 +101,27 @@ public class MyReceiver// extends BroadcastReceiver
                         mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());*/
 
                         showNotification(context, "SERVICE_GET_INFO_OF_DATE_SHORT", ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, noteItem.Subject, noteItem.Content, activity, Utils.getIconConGiap(selectedDate.getDateInLunar()));
+                        keepCheck = false;
                     }
 
                 }
 
                 SharedPreferencesUtils.setShowDailyNotifyReminding(context, now.get(Calendar.DAY_OF_YEAR));
+            }
+            if (keepCheck && SharedPreferencesUtils.getShowNotifyNgayRam(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowNgayRamNotifyReminding(context))
+            {
+                Calendar cal = Calendar.getInstance();
+                int day = DateTools.convertSolar2Lunar(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH), cal.get(Calendar.YEAR)).getDate();
+                if(day == 1 || day == 15) {
+                    String subject = day == 1? "Hôm nay là ngày đầu tháng" : "Hôm nay là rằm", content = "";
+                    Intent intent1 = new Intent(context, MainActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    MainActivity.setViewId(R.layout.notes_view_item);
+
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, 0);
+                    showNotification(context, "SERVICE_GET_INFO_OF_NGAY_RAM", ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, subject, content, pendingIntent, Utils.getIconConGiap(selectedDate.getDateInLunar()));
+                }
+                SharedPreferencesUtils.setShowNgayRamNotifyReminding(context, now.get(Calendar.DAY_OF_YEAR));
             }
         }
     }

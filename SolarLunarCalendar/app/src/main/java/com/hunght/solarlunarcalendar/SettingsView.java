@@ -58,6 +58,7 @@ public class SettingsView  extends LinearLayout {
                 (Switch) view.findViewById(R.id.swSettingsChamNgon),
                 (Switch) view.findViewById(R.id.swSettingsDailyNotifyChamNgon),
                 (Switch) view.findViewById(R.id.swSettingsDailyNotifyGoodDateBadDate),
+                (Switch) view.findViewById(R.id.swSettingsDailyNotifyNgayRam),
                 (Switch) view.findViewById(R.id.swSettingsNotifyEvent)};
 
         for (Switch switchItem : btSwitchs) {
@@ -91,6 +92,9 @@ public class SettingsView  extends LinearLayout {
             case R.id.swSettingsNotifyEvent:
                 SharedPreferencesUtils.setShowDailyNotifyEventSetting(getContext(), isChecked);
                 break;
+            case R.id.swSettingsDailyNotifyNgayRam:
+                SharedPreferencesUtils.setShowNotifyNgayRam(getContext(), isChecked);
+                break;
         }
     }
 
@@ -112,6 +116,9 @@ public class SettingsView  extends LinearLayout {
                 break;
             case R.id.swSettingsNotifyEvent:
                 buttonView.setChecked(SharedPreferencesUtils.getShowDailyNotifyEventSetting(getContext()));
+                break;
+            case R.id.swSettingsDailyNotifyNgayRam:
+                buttonView.setChecked(SharedPreferencesUtils.getShowNotifyNgayRam(getContext()));
                 break;
         }
     }

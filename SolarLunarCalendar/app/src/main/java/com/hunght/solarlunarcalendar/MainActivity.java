@@ -25,6 +25,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DateItemForGridview;
+import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.utils.Utils;
 import java.util.Calendar;
 import java.util.Date;
@@ -180,6 +181,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.layout.notes_view_item:
                 llMainContent.addView(new SaveNoteItemView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navTuVi:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.TuViHangNgay), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
             case R.id.navMoreApp:
                 Utils.showAlertGetMoreAppsServer(this);
