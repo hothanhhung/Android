@@ -5,16 +5,10 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.provider.Settings;
 import android.view.inputmethod.InputMethodManager;
-
-import com.hunght.solarlunarcalendar.BuildConfig;
-
-import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;

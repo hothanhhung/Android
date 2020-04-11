@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 public class NotesView extends LinearLayout {
     final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
     FloatingActionButton fbtNotesViewAdd;
-    TextView tvNotesViewNoItem;
+    TextView tvNotesViewNoItem, tvNotesViewBackupPath;
     ListView lvNotesViewItems;
     Button btBackup;
     Button btRestore;
@@ -70,12 +71,17 @@ public class NotesView extends LinearLayout {
     private void initView() {
         View view = inflate(getContext(), R.layout.notes_view, this);
 
-        fbtNotesViewAdd = (FloatingActionButton) view.findViewById(R.id.fbtNotesViewAdd);
-        tvNotesViewNoItem = (TextView) view.findViewById(R.id.tvNotesViewNoItem);
-        lvNotesViewItems =  (ListView) view.findViewById(R.id.lvNotesViewItems);
+        fbtNotesViewAdd = view.findViewById(R.id.fbtNotesViewAdd);
+        tvNotesViewNoItem = view.findViewById(R.id.tvNotesViewNoItem);
+        tvNotesViewBackupPath = view.findViewById(R.id.tvNotesViewBackupPath);
+        lvNotesViewItems =  view.findViewById(R.id.lvNotesViewItems);
         btBackup =  view.findViewById(R.id.btBackup);
         btRestore =  view.findViewById(R.id.btRestore);
 
+        File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        boolean isExternal = Environment.isExternalStorageRemovable(sdCard);
+        String path = isExternal?"SD card/":"Internal Storage/"+Environment.DIRECTORY_DOCUMENTS + "/LichAmDuong";
+        tvNotesViewBackupPath.setText("Sao Lưu: "+path);
         loadNoteItems();
 
         fbtNotesViewAdd.setOnClickListener(new OnClickListener() {

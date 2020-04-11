@@ -22,10 +22,10 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DateItemForGridview;
 import com.hunght.data.MenuLookUpItemKind;
+import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "AmDuong";
     private static int JobId = 30200;
     private static int ViewId = 0;
+
+    private static final int ALARM_VERSION = 2;
 
     DateItemForGridview selectedDate;
     DateItemAdapter adapter;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private Intent mServiceIntent;
     private AdView mAdView = null;
     private InterstitialAd interstitial = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,15 +77,17 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent liveIntent = new Intent(getApplicationContext(), AReceiver.class);
-        if(PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_NO_CREATE) == null) {
+        if(SharedPreferencesUtils.getAlarmVersion(this) != ALARM_VERSION) {
             PendingIntent recurring = PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Calendar updateTime = Calendar.getInstance();
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), 45 * 60 * 1000, recurring);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), 31 * 60 * 1000, recurring);
             //wakeup and starts service in every 45 minutes.
-            Log.d(TAG, "AlarmManager scheduled");
+
+            SharedPreferencesUtils.setAlarmVersion(this, ALARM_VERSION);
+            Log.d(TAG, "AlarmManager scheduled " + ALARM_VERSION);
         }else{
-            Log.d(TAG, "AlarmManager existed");
+            Log.d(TAG, "AlarmManager existed " + ALARM_VERSION);
         }
         createInterstitialAds();
     }

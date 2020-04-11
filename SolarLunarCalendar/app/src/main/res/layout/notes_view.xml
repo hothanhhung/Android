@@ -74,6 +74,22 @@
                 android:background="@drawable/button_custom_rectangle"
                 android:text="Phục Hồi" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvNotesViewBackupPath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Sao lưu được lưu: "
+                android:textColor="#044707"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+        </LinearLayout>
         <ListView
             android:id="@+id/lvNotesViewItems"
             android:layout_width="match_parent"

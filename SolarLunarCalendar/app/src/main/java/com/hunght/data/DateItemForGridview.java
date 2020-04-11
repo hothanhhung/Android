@@ -20,6 +20,10 @@ public class DateItemForGridview {
 
     }
 
+    static public DateItemForGridview createDateItemForGridviewFromLunar(int d, int m, int y){
+        return DateTools.convertSolar2DateItemForGridview(d, m, y);
+    }
+
     static public DateItemForGridview createDateItemForGridview(int d, int m, int y, boolean isLeap, boolean isLunar)
     {
         if(isLunar){

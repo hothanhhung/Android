@@ -2,14 +2,12 @@ package com.hunght.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.provider.ContactsContract;
 
 import com.google.gson.Gson;
 import com.hunght.data.NoteItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Lenovo on 4/20/2018.
@@ -30,6 +28,31 @@ public class SharedPreferencesUtils {
     public static final String ShowDailyNotifyGoodDateBadDateTime = "ShowDailyNotifyGoodDateBadDateTime";
     public static final String ShowDailyNotifyReminding = "ShowDailyNotifyReminding";
     public static final String ShowNgayRamNotifyReminding = "ShowNgayRamNotifyReminding";
+    public static final String AlarmVersion = "AlarmVersionInAppOfHungHt";
+
+    static public int getAlarmVersion(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getInt(AlarmVersion, 0);
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
+    static public void setAlarmVersion(Context var1, int value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putInt(AlarmVersion, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
 
     static public int getShowNgayRamNotifyReminding(Context var1)
     {

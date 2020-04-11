@@ -20,7 +20,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
             PendingIntent recurring = PendingIntent.getBroadcast(context, 0, liveIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             Calendar updateTime = Calendar.getInstance();
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), 45 * 60 * 1000, recurring);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), 31 * 60 * 1000, recurring);
             //wakeup and starts service in every 16 minutes.
             Log.d(TAG, "AlarmManager scheduled after reboot");
         }

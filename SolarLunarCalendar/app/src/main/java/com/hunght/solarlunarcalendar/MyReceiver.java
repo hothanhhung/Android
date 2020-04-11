@@ -3,11 +3,9 @@ package com.hunght.solarlunarcalendar;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -16,7 +14,6 @@ import android.util.Log;
 
 import com.hunght.data.DateItemForGridview;
 import com.hunght.data.NoteItem;
-import com.hunght.utils.DateTools;
 import com.hunght.utils.ServiceProcessor;
 import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
@@ -39,21 +36,18 @@ public class MyReceiver// extends BroadcastReceiver
         backgroundCount = 0;
         Log.d("AmDuong", "start ");
         //showNotificationDebug();
-        boolean isOn = false;
-
-        Log.d("AmDuong", "onReceive 1: on off" + isOn);
 
         Calendar now = Calendar.getInstance();
 
-        if (now.get(Calendar.HOUR_OF_DAY) > 5 && (MyService.lastOn == null || (now.getTimeInMillis() - MyService.lastOn.getTimeInMillis()) > 120000)) {
-            Log.d("AmDuong", "onReceive 1: on");
-            MyService.lastOn = now;
+        if (now.get(Calendar.HOUR_OF_DAY) > 5 ) {
+            Log.d("AmDuong", "start: > 5h");
             boolean keepCheck = true;
             selectedDate = new DateItemForGridview("", now.getTime(), false);
             //if(isOn)
             {
                 if (SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateSetting(context) && ((now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowDailyNotifyGoodDateBadDateTime(context))))
                 {
+                    Log.d("AmDuong", "Have Good Date");
                     keepCheck = false;
                     if (currentPerformServiceProcessBackgroundTaskGoodDate != null) {
                         currentPerformServiceProcessBackgroundTaskGoodDate.cancel(true);
@@ -66,6 +60,7 @@ public class MyReceiver// extends BroadcastReceiver
 
                 if (SharedPreferencesUtils.getShowNotifyChamNgonSetting(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowNotifyChamNgonTime(context))
                 {
+                    Log.d("AmDuong", "Have Cham ngon");
                     keepCheck = false;
                     if (currentPerformServiceProcessBackgroundTaskChamNgon != null) {
                         currentPerformServiceProcessBackgroundTaskChamNgon.cancel(true);
@@ -78,11 +73,13 @@ public class MyReceiver// extends BroadcastReceiver
             }
             if (keepCheck && SharedPreferencesUtils.getShowDailyNotifyEventSetting(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowDailyNotifyReminding(context))
              {
+                 Log.d("AmDuong", "Checking NoteItems");
                 ArrayList<NoteItem> noteItems = SharedPreferencesUtils.getNoteItems(context);
 
                 for (NoteItem noteItem: noteItems) {
                     if(noteItem != null && noteItem.haveDate && noteItem.isToday())
                     {
+                        Log.d("AmDuong", "Have NoteItem");
                         Intent intent1 = new Intent(context, MainActivity.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         MainActivity.setViewId(R.layout.notes_view_item);
@@ -110,16 +107,18 @@ public class MyReceiver// extends BroadcastReceiver
             }
             if (keepCheck && SharedPreferencesUtils.getShowNotifyNgayRam(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowNgayRamNotifyReminding(context))
             {
-                Calendar cal = Calendar.getInstance();
-                int day = DateTools.convertSolar2Lunar(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH), cal.get(Calendar.YEAR)).getDate();
+                DateItemForGridview date = DateItemForGridview.createDateItemForGridviewFromLunar(now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.MONTH) + 1, now.get(Calendar.YEAR));
+
+                int day = date.getLunarDate().getDate();
+                Log.d("AmDuong", "Checking Ngay Ram: " + day);
                 if(day == 1 || day == 15) {
-                    String subject = day == 1? "Hôm nay là ngày đầu tháng" : "Hôm nay là rằm", content = "";
+                    String subject = (day == 1)? "Hôm nay là ngày đầu tháng âm lịch" : "Hôm nay là rằm", content = date.getLunarInfoWidget(false);
                     Intent intent1 = new Intent(context, MainActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     MainActivity.setViewId(R.layout.notes_view_item);
 
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, 0);
-                    showNotification(context, "SERVICE_GET_INFO_OF_NGAY_RAM", ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, subject, content, pendingIntent, Utils.getIconConGiap(selectedDate.getDateInLunar()));
+                    showNotification(context, "SERVICE_GET_INFO_OF_NGAY_RAM", ServiceProcessor.SERVICE_GET_NGAY_RAM, subject, content, pendingIntent, (day == 1)? R.drawable.moon:R.drawable.fullmoon);
                 }
                 SharedPreferencesUtils.setShowNgayRamNotifyReminding(context, now.get(Calendar.DAY_OF_YEAR));
             }
