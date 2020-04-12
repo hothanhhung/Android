@@ -29,6 +29,7 @@ public class SharedPreferencesUtils {
     public static final String ShowDailyNotifyReminding = "ShowDailyNotifyReminding";
     public static final String ShowNgayRamNotifyReminding = "ShowNgayRamNotifyReminding";
     public static final String AlarmVersion = "AlarmVersionInAppOfHungHt";
+    public static final String ShowSuggestViewTuVi = "ShowSuggestViewTuVi";
 
     static public int getAlarmVersion(Context var1)
     {
@@ -61,6 +62,30 @@ public class SharedPreferencesUtils {
                     APP_SHARED_PREFS, 0);
             SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
             return appSharedPrefs.getInt(ShowNgayRamNotifyReminding, 0);
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
+    static public void setShowSuggestTuVi(Context var1, int value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putInt(ShowSuggestViewTuVi, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
+
+    static public int getShowSuggestTuVi(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getInt(ShowSuggestViewTuVi, 0);
         }catch (Exception ex){
             return 0;
         }

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     private static int JobId = 30200;
     private static int ViewId = 0;
 
-    private static final int ALARM_VERSION = 2;
+    private static final int ALARM_VERSION = 1;
 
     DateItemForGridview selectedDate;
     DateItemAdapter adapter;
@@ -150,12 +150,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-        showAdsAfterLongTime();
+        showAdsAfterLongTime(false);
 
     }
 
     public void updateUI(int id) {
-        showAdsAfterLongTime();
+        showAdsAfterLongTime(id == R.id.navTuVi);
         boolean shownAds = true;
         if(R.id.navMoreApp != id)llMainContent.removeAllViews();
         switch (id) {
@@ -220,9 +220,9 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
-    private void showAdsAfterLongTime()
+    private void showAdsAfterLongTime(boolean shouldShow)
     {
-        if(lastShowAds == 0 || ((new Date()).getTime() - lastShowAds == 300000))
+        if(shouldShow || lastShowAds == 0 || ((new Date()).getTime() - lastShowAds == 300000))
         {
             showInterstitial();
         }

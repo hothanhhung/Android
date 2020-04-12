@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.hunght.data.MenuLookUpItemKind;
 
+import java.util.Date;
+
 /**
  * Created by Lenovo on 10/28/2016.
  */
@@ -88,7 +90,7 @@ public class ViewWithWebViewRequest extends LinearLayout {
         switch (kind)
         {
             case TuViHangNgay:
-                return "http://hunght.com/htmlpage/lookuponline/mabienso.html";
+                return "http://hunght.com/htmlpage/lichamduong/tuvi.html?ts="+ (new Date()).getTime();
         }
         return "";
     }

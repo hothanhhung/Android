@@ -20,6 +20,7 @@ import com.hunght.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 
 public class MyReceiver// extends BroadcastReceiver
 {
@@ -119,8 +120,25 @@ public class MyReceiver// extends BroadcastReceiver
 
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, 0);
                     showNotification(context, "SERVICE_GET_INFO_OF_NGAY_RAM", ServiceProcessor.SERVICE_GET_NGAY_RAM, subject, content, pendingIntent, (day == 1)? R.drawable.moon:R.drawable.fullmoon);
+                    keepCheck = false;
                 }
                 SharedPreferencesUtils.setShowNgayRamNotifyReminding(context, now.get(Calendar.DAY_OF_YEAR));
+            }
+
+            if (keepCheck && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowSuggestTuVi(context))
+            {
+                Log.d("AmDuong", "Checking suggest Tuvi");
+                Random rand = new Random();
+                if(rand.nextInt(5) == 1 || SharedPreferencesUtils.getShowSuggestTuVi(context) == 0){
+                    String subject = "Xem tử vi hàng ngày", content="Thử xem tử vi hôm nay của bạn nào";
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    MainActivity.setViewId(R.id.navTuVi);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+                    showNotification(context, "SERVICE_GET_SUGGEST_TO_TUVI", ServiceProcessor.SERVICE_GET_SUGGEST_TO_TUVI, subject, content, pendingIntent, R.drawable.icon);
+                    keepCheck = false;
+                }
+                SharedPreferencesUtils.setShowSuggestTuVi(context, now.get(Calendar.DAY_OF_YEAR));
             }
         }
     }

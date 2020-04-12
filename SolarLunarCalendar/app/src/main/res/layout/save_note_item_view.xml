@@ -34,6 +34,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/custom_number_picker"
                     android:descendantFocusability="blocksDescendants" />
 
                 <NumberPicker
@@ -41,6 +42,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/custom_number_picker"
                     android:descendantFocusability="blocksDescendants" />
 
                 <NumberPicker
@@ -48,6 +50,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/custom_number_picker"
                     android:descendantFocusability="blocksDescendants" />
 
             </LinearLayout>
@@ -74,68 +77,80 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chủ Đề"
-                    android:textColor="#ffeeeeee"
+                    android:textColor="#400505"
                     android:textStyle="italic" />
 
                 <EditText
                     android:id="@+id/etSaveNoteItemSubject"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
                     android:ems="10"
                     android:inputType="text"
+                    android:background="@drawable/rounded_border_edittext"
                     android:text=""
-                    android:textColor="#ff99cc00" />
+                    android:textColor="#000" />
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nội Dung"
-                    android:textColor="#ffeeeeee"
+                    android:textColor="#400505"
                     android:textStyle="italic" />
 
                 <EditText
                     android:id="@+id/etSaveNoteItemContent"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_margin="10dp"
+                    android:padding="10dp"
                     android:ems="10"
                     android:gravity="top"
                     android:inputType="text"
+                    android:background="@drawable/rounded_border_edittext"
                     android:text=""
-                    android:textColor="#ff33be33" />
+                    android:textColor="#000" />
 
             </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="horizontal">
+            <NumberPicker
+                android:id="@+id/npSaveNoteItemRemindType"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_number_picker"
+                android:descendantFocusability="blocksDescendants" />
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:background="#fff"
                 android:orientation="horizontal">
-
-                <NumberPicker
-                    android:id="@+id/npSaveNoteItemRemindType"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="2"
-                    android:descendantFocusability="blocksDescendants" />
-
                 <Button
                     android:id="@+id/btSaveNoteItemUpdate"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:background="@drawable/button_custom_rectangle"
                     android:descendantFocusability="blocksDescendants"
-                    android:text="Lưu" />
+                    android:text="Lưu"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btSaveNoteItemCancel"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:background="@drawable/button_custom_rectangle"
                     android:descendantFocusability="blocksDescendants"
-                    android:text="Bỏ Qua" />
+                    android:text="Bỏ Qua"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>
