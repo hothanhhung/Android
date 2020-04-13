@@ -1,6 +1,5 @@
 package com.hunght.solarlunarcalendar;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -22,7 +21,7 @@ import com.hunght.data.DateItemForGridview;
 import com.hunght.data.NoteItem;
 import com.hunght.utils.SharedPreferencesUtils;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by Lenovo on 4/21/2018.
@@ -59,7 +58,7 @@ public class SaveNoteItemView  extends LinearLayout {
 
     private void initView() {
 
-        Date today = new Date();
+        Calendar today = Calendar.getInstance();
         View view = inflate(getContext(), R.layout.save_note_item_view, this);
 
         tvSaveNoteItemInfoDate = (TextView) view.findViewById(R.id.tvSaveNoteItemInfoDate);
@@ -91,9 +90,9 @@ public class SaveNoteItemView  extends LinearLayout {
             noteItem = new NoteItem();
         }
         if(!noteItem.haveDate()) {
-            date = today.getDate();
-            month = today.getMonth();
-            year = today.getYear() + 1900;
+            date = today.get(Calendar.DAY_OF_MONTH);
+            month = today.get(Calendar.MONTH);
+            year = today.get(Calendar.YEAR);
         }else{
             date = noteItem.getDateItem().getDayOfMonth();
             month = noteItem.getDateItem().getMonth() - 1;
@@ -162,7 +161,6 @@ public class SaveNoteItemView  extends LinearLayout {
                 noteItem.updateDate(npSaveNoteItemDate.getValue(), npSaveNoteItemMonth.getValue() + 1, npSaveNoteItemYear.getValue());
                 noteItem.setSubjectAndContent(etSaveNoteItemSubject.getText().toString(), etSaveNoteItemContent.getText().toString());
                 noteItem.setRemindType(npSaveNoteItemRemindType.getValue());
-
                 SharedPreferencesUtils.updateNoteItems(getContext(), noteItem);
 
                 ViewGroup parent = (ViewGroup) SaveNoteItemView.this.getParent();

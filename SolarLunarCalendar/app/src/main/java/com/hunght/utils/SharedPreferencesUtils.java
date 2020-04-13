@@ -388,9 +388,7 @@ public class SharedPreferencesUtils {
         {
             lstObjs.add(obj);
         }else{
-            savedObj.DateOfMonth = obj.DateOfMonth;
-            savedObj.Month = obj.Month;
-            savedObj.Year = obj.Year;
+            savedObj.updateDate(obj.DateOfMonth, obj.Month, obj.Year);
             savedObj.Subject = obj.Subject;
             savedObj.Content = obj.Content;
             savedObj.RemindType = obj.RemindType;
@@ -429,6 +427,7 @@ public class SharedPreferencesUtils {
             prefsEditor.putString(key, json);
             prefsEditor.commit();
         }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 }
