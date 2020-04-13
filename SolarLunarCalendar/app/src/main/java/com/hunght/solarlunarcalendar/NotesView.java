@@ -80,8 +80,9 @@ public class NotesView extends LinearLayout {
 
         File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         boolean isExternal = Environment.isExternalStorageRemovable(sdCard);
-        String path = isExternal?"SD card/":"Internal Storage/"+Environment.DIRECTORY_DOCUMENTS + "/LichAmDuong";
-        tvNotesViewBackupPath.setText("Sao Lưu: "+path);
+        String saveFolder = Environment.DIRECTORY_DOCUMENTS + "/LichAmDuong";
+        String path = isExternal?"SD card/":"Internal Storage/"+saveFolder;
+        tvNotesViewBackupPath.setText("Sao Lưu: "+path + "\n Hoặc: " + sdCard.getPath() +"/"+saveFolder );
         loadNoteItems();
 
         fbtNotesViewAdd.setOnClickListener(new OnClickListener() {

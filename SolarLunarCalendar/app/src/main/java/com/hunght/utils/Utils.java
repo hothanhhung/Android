@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
@@ -204,12 +205,18 @@ public class Utils {
                     }
                     try {
                         Toast.makeText(context, file.getPath(), Toast.LENGTH_LONG).show();
-                        Uri path = FileProvider.getUriForFile(context,
+                        Uri uri = Uri.parse(directory.getPath());
+
+//                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                        intent.setDataAndType(uri, "*/*");
+//                        context.startActivity(Intent.createChooser(intent, "Mở với ứng dụng"));
+                        /*Uri path = FileProvider.getUriForFile(context,
                                 BuildConfig.APPLICATION_ID + ".provider",
                                 file);
 
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(path, "text/plain");
+                        intent.setDataAndType(path, "application/json");
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         try {
@@ -217,7 +224,7 @@ public class Utils {
                         } catch (Exception e) {
                             Log.d("TAG", "Error Open File" + e.getMessage());
                             e.printStackTrace();
-                        }
+                        }*/
 
                         return;
                     } catch (Exception e) {
