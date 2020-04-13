@@ -12,6 +12,7 @@ import com.hunght.data.DateItemForGridview;
 import com.hunght.data.LunarDate;
 import com.hunght.solarlunarcalendar.MainActivity;
 import com.hunght.solarlunarcalendar.R;
+import com.hunght.utils.SharedPreferencesUtils;
 
 import java.util.Date;
 
@@ -28,25 +29,56 @@ public class LunarSolarAppWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.lunar_solar_app_widget);
         views.setTextViewText(R.id.appwidget_text_solar, today.getDayOfWeekInString() +"\n" + today.getSolarInfo(true));
         views.setTextViewText(R.id.appwidget_text_lunar, today.getLunarInfoWidget(true));
-        int lunarDate = today.getDateInLunar() % 12;
-        int resId = R.drawable.ty;
-        switch (lunarDate)
-        {
-            case LunarDate.TY: resId = R.drawable.ty; break;
-            case LunarDate.SUU: resId = R.drawable.suu; break;
-            case LunarDate.DAN: resId = R.drawable.dan; break;
-            case LunarDate.MAO: resId = R.drawable.meo; break;
-            case LunarDate.THIN: resId = R.drawable.thin; break;
-            case LunarDate.TI: resId = R.drawable.ti; break;
-            case LunarDate.NGO: resId = R.drawable.ngo; break;
-            case LunarDate.MUI: resId = R.drawable.mui; break;
-            case LunarDate.THAN: resId = R.drawable.than; break;
-            case LunarDate.DAU: resId = R.drawable.dau; break;
-            case LunarDate.TUAT: resId = R.drawable.tuat; break;
-            case LunarDate.HOI: resId = R.drawable.hoi; break;
-        }
-        views.setImageViewResource(R.id.appwidget_image_congiap, resId);
 
+        views.setTextColor(R.id.appwidget_text_solar, SharedPreferencesUtils.getWidgetTextColor(context));
+        views.setTextColor(R.id.appwidget_text_lunar, SharedPreferencesUtils.getWidgetTextColor(context));
+
+        if(SharedPreferencesUtils.getShowWidgetConGiap(context)) {
+            views.setViewVisibility(R.id.appwidget_image_congiap, View.VISIBLE);
+            int lunarDate = today.getDateInLunar() % 12;
+            int resId = R.drawable.ty;
+            switch (lunarDate) {
+                case LunarDate.TY:
+                    resId = R.drawable.ty;
+                    break;
+                case LunarDate.SUU:
+                    resId = R.drawable.suu;
+                    break;
+                case LunarDate.DAN:
+                    resId = R.drawable.dan;
+                    break;
+                case LunarDate.MAO:
+                    resId = R.drawable.meo;
+                    break;
+                case LunarDate.THIN:
+                    resId = R.drawable.thin;
+                    break;
+                case LunarDate.TI:
+                    resId = R.drawable.ti;
+                    break;
+                case LunarDate.NGO:
+                    resId = R.drawable.ngo;
+                    break;
+                case LunarDate.MUI:
+                    resId = R.drawable.mui;
+                    break;
+                case LunarDate.THAN:
+                    resId = R.drawable.than;
+                    break;
+                case LunarDate.DAU:
+                    resId = R.drawable.dau;
+                    break;
+                case LunarDate.TUAT:
+                    resId = R.drawable.tuat;
+                    break;
+                case LunarDate.HOI:
+                    resId = R.drawable.hoi;
+                    break;
+            }
+            views.setImageViewResource(R.id.appwidget_image_congiap, resId);
+        }else{
+            views.setViewVisibility(R.id.appwidget_image_congiap, View.GONE);
+        }
         Intent configIntent = new Intent(context, MainActivity.class);
         PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0);
         views.setOnClickPendingIntent(R.id.appwidget_image_congiap, configPendingIntent);

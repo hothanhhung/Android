@@ -2,6 +2,7 @@ package com.hunght.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 
 import com.google.gson.Gson;
 import com.hunght.data.NoteItem;
@@ -30,6 +31,32 @@ public class SharedPreferencesUtils {
     public static final String ShowNgayRamNotifyReminding = "ShowNgayRamNotifyReminding";
     public static final String AlarmVersion = "AlarmVersionInAppOfHungHt";
     public static final String ShowSuggestViewTuVi = "ShowSuggestViewTuVi";
+    public static final String ShowWidgetConGiap = "ShowWidgetConGiap";
+    public static final String SettingWidgetTextColor = "SettingWidgetTextColor";
+
+    static public int getWidgetTextColor(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getInt(SettingWidgetTextColor, Color.WHITE);
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
+    static public void setWidgetTextColor(Context var1, int value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putInt(SettingWidgetTextColor, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
 
     static public int getAlarmVersion(Context var1)
     {
@@ -289,6 +316,30 @@ public class SharedPreferencesUtils {
                     APP_SHARED_PREFS, 0);
             SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
             prefsEditor.putBoolean(ShowNotifyNgayRam, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
+
+    static public boolean getShowWidgetConGiap(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getBoolean(ShowWidgetConGiap, true);
+        }catch (Exception ex){
+            return true;
+        }
+    }
+
+    static public void setShowWidgetConGiap(Context var1, boolean value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putBoolean(ShowWidgetConGiap, value);
             prefsEditor.commit();
         }catch (Exception ex){
         }

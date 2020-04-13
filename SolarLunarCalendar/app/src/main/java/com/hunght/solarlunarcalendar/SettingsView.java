@@ -1,6 +1,13 @@
 package com.hunght.solarlunarcalendar;
 
+
+import android.app.AlertDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -15,8 +22,11 @@ import android.widget.TextView;
 
 import com.hunght.data.NoteItem;
 import com.hunght.utils.SharedPreferencesUtils;
+import com.rarepebble.colorpicker.ColorPickerView;
 
 import java.util.ArrayList;
+
+import layout.LunarSolarAppWidget;
 
 /**
  * Created by Lenovo on 4/24/2018.
@@ -25,7 +35,7 @@ import java.util.ArrayList;
 public class SettingsView  extends LinearLayout {
 
     FloatingActionButton fbtNotesViewAdd;
-    TextView tvNotesViewNoItem;
+    TextView tvNotesViewNoItem, tvWidgetTextColor;
     ListView lvNotesViewItems;
     ArrayList<NoteItem> noteItems;
 
@@ -59,6 +69,7 @@ public class SettingsView  extends LinearLayout {
                 (Switch) view.findViewById(R.id.swSettingsDailyNotifyChamNgon),
                 (Switch) view.findViewById(R.id.swSettingsDailyNotifyGoodDateBadDate),
                 (Switch) view.findViewById(R.id.swSettingsDailyNotifyNgayRam),
+                (Switch) view.findViewById(R.id.swSettingsWidgetShowConGiap),
                 (Switch) view.findViewById(R.id.swSettingsNotifyEvent)};
 
         for (Switch switchItem : btSwitchs) {
@@ -71,6 +82,44 @@ public class SettingsView  extends LinearLayout {
                 }
             });
         }
+
+        tvWidgetTextColor = view.findViewById(R.id.tvWidgetTextColor);
+        tvWidgetTextColor.setBackgroundColor(SharedPreferencesUtils.getWidgetTextColor(getContext()));
+        tvWidgetTextColor.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ColorPickerView picker = new ColorPickerView(getContext());
+                picker.setColor(SharedPreferencesUtils.getWidgetTextColor(getContext()));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setView(picker);
+
+                builder.setPositiveButton("Bỏ Qua", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }});
+                builder.setPositiveButton("Chọn", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        int color = picker.getColor();
+                        tvWidgetTextColor.setBackgroundColor(color);
+                        SharedPreferencesUtils.setWidgetTextColor(getContext(), color);
+                        updateWidgetTriger();
+                        dialog.dismiss();
+                    }});
+                builder.show();
+            }
+        });
+        //cpWidgetTextColor.setli
+    }
+
+    private void updateWidgetTriger(){
+        Intent intent = new Intent(getContext(), LunarSolarAppWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(getContext())
+                .getAppWidgetIds(new ComponentName(getContext(), LunarSolarAppWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        getContext().sendBroadcast(intent);
     }
 
     private void btSwitchsChange(CompoundButton buttonView, boolean isChecked)
@@ -94,6 +143,10 @@ public class SettingsView  extends LinearLayout {
                 break;
             case R.id.swSettingsDailyNotifyNgayRam:
                 SharedPreferencesUtils.setShowNotifyNgayRam(getContext(), isChecked);
+                break;
+            case R.id.swSettingsWidgetShowConGiap:
+                SharedPreferencesUtils.setShowWidgetConGiap(getContext(), isChecked);
+                updateWidgetTriger();
                 break;
         }
     }
@@ -120,6 +173,10 @@ public class SettingsView  extends LinearLayout {
             case R.id.swSettingsDailyNotifyNgayRam:
                 buttonView.setChecked(SharedPreferencesUtils.getShowNotifyNgayRam(getContext()));
                 break;
+            case R.id.swSettingsWidgetShowConGiap:
+                buttonView.setChecked(SharedPreferencesUtils.getShowWidgetConGiap(getContext()));
+                break;
+
         }
     }
 }
