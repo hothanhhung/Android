@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     private static int JobId = 30200;
     private static int ViewId = 0;
 
-    private static final int ALARM_VERSION = 1;
+    private static final int ALARM_VERSION = 3;
 
     DateItemForGridview selectedDate;
     DateItemAdapter adapter;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent liveIntent = new Intent(getApplicationContext(), AReceiver.class);
-        if(SharedPreferencesUtils.getAlarmVersion(this) != ALARM_VERSION) {
+        if(SharedPreferencesUtils.getAlarmVersion(this) != ALARM_VERSION || PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_NO_CREATE) == null) {
             PendingIntent recurring = PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Calendar updateTime = Calendar.getInstance();

@@ -98,7 +98,7 @@ public class MyReceiver// extends BroadcastReceiver
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                         mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());*/
 
-                        showNotification(context, "SERVICE_GET_INFO_OF_DATE_SHORT", ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, noteItem.Subject, noteItem.Content, activity, Utils.getIconConGiap(selectedDate.getDateInLunar()));
+                        showNotification(context, "SERVICE_GET_INFO_OF_DATE_SHORT", ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, noteItem.Subject, noteItem.Content, activity, R.drawable.bell);
                         keepCheck = false;
                     }
 
