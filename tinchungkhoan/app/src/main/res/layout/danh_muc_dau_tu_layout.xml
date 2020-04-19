@@ -95,10 +95,11 @@
             android:textSize="11dp" />
 
         <Button
-            android:id="@+id/btLưu"
+            android:id="@+id/btLuu"
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_weight="1"
+            android:background="@drawable/button_custom_rectangle"
             android:text="Lưu" />
     </LinearLayout>
     <LinearLayout
@@ -111,10 +112,44 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:textStyle="bold"
             android:text="Vui lòng thực hiện tra cứu" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/imDownloadExcel"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:layout_margin="2dp"
+            android:background="@drawable/button_custom_rectangle"
+            android:text="Sao Lưu" />
+
+        <Button
+            android:id="@+id/imUploadExcel"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:layout_margin="2dp"
+            android:background="@drawable/button_custom_rectangle"
+            android:text="Phục Hồi" />
+
+        <TextView
+            android:id="@+id/tvSaveFolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="Vui lòng thực hiện tra cứu\nVui lòng thực hiện tra cứu"
+            android:textSize="8sp" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,15 +159,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/imDownloadExcel"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="#e6e6e6"
-                app:srcCompat="@android:drawable/stat_sys_download_done" />
 
             <ImageButton
                 android:id="@+id/imUpdate"
@@ -208,7 +234,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:paddingLeft="2dp"
-                    android:text="100000000"
+                    android:text="0"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -219,7 +245,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:paddingLeft="2dp"
-                    android:text="90000000"
+                    android:text="0"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -230,7 +256,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:paddingLeft="2dp"
-                    android:text="10000000"
+                    android:text="0"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -243,5 +269,5 @@
         android:id="@+id/lvDanhMucDauTu"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 </LinearLayout>

@@ -1,20 +1,23 @@
 package com.hunght.utils;
 
+import android.Manifest;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.hunght.data.DanhMucDauTuItem;
 import com.hunght.tinchungkhoan.BuildConfig;
+import com.hunght.tinchungkhoan.MainActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +30,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import jxl.Cell;
+import jxl.Sheet;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.write.Label;
@@ -40,6 +45,7 @@ import jxl.write.biff.RowsExceededException;
  */
 public class MethodsHelper {
 
+    public static String BACKUP_FOLDER="TinChungKhoan";
 
     public static String stripAccentsAndD(String s)
     {
@@ -162,13 +168,12 @@ public class MethodsHelper {
         return year + "" + (month < 10 ? "0" : "") + month + "" + (day < 10 ? "0" : "") + day;
     }
 
-    public static void exportToExcel(Context context, ArrayList<DanhMucDauTuItem> danhMucDauTuItems) {
-        final String fileName = "DanhMucDauTu_"+MethodsHelper.getYYYYMMDD(Calendar.getInstance())+".xls";
+    private static File createExportFile(String fileName){
 
         //Saving file in external storage
         //File sdCard = Environment.getExternalStorageDirectory();
         File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File directory = new File(sdCard.getAbsolutePath() + "/TinChungKhoan");
+        File directory = new File(sdCard.getAbsolutePath() + "/"+BACKUP_FOLDER);
 
         //create directory if not exist
         if(!directory.isDirectory()){
@@ -177,72 +182,217 @@ public class MethodsHelper {
 
         //file path
         File file = new File(directory, fileName);
+        return file;
+    }
+    private static WritableWorkbook createWritableWorkbook(File file)
+    {
         WorkbookSettings wbSettings = new WorkbookSettings();
         wbSettings.setLocale(new Locale("en", "EN"));
-        WritableWorkbook workbook;
 
         try {
-            // file.createNewFile();
-            workbook = Workbook.createWorkbook(file, wbSettings);
-            //Excel sheet name. 0 represents first sheet
-            WritableSheet sheet = workbook.createSheet("DanhMucDauTu", 0);
+            return Workbook.createWorkbook(file, wbSettings);
 
-            try {
-                sheet.addCell(new Label(0, 0, "Ngày Mua"));
-                sheet.addCell(new Label(1, 0, "Tên Công Ty"));
-                sheet.addCell(new Label(2, 0, "Mã CK"));
-                sheet.addCell(new Label(3, 0, "Giá Mua"));
-                sheet.addCell(new Label(4, 0, "Số Lượng"));
-                sheet.addCell(new Label(5, 0, "Giá Thị Trường"));
-                sheet.addCell(new Label(6, 0, "Giá Bán"));
-                if(danhMucDauTuItems!=null)
-                {
-                    for (int i =0; i < danhMucDauTuItems.size(); i++) {
-                        DanhMucDauTuItem danhMucDauTuItem = danhMucDauTuItems.get(i);
-                        sheet.addCell(new Label(0, i + 1, danhMucDauTuItem.getNgayMua()));
-                        sheet.addCell(new Label(1, i + 1, danhMucDauTuItem.getTenCongTy()));
-                        sheet.addCell(new Label(2, i + 1, danhMucDauTuItem.getMaCK()));
-                        sheet.addCell(new Label(3, i + 1, danhMucDauTuItem.getGiaMuaInString()));
-                        sheet.addCell(new Label(4, i + 1, danhMucDauTuItem.getSoLuongInString()));
-                        sheet.addCell(new Label(5, i + 1, danhMucDauTuItem.getGiaThiTruongInString()));
-                        sheet.addCell(new Label(6, i + 1, danhMucDauTuItem.getGiaBanInString()));
-                    }
-                }
-
-            } catch (RowsExceededException e) {
-                e.printStackTrace();
-            } catch (WriteException e) {
-                e.printStackTrace();
-            }
-            workbook.write();
-            try {
-                workbook.close();
-                Toast.makeText(context, file.getPath(), Toast.LENGTH_LONG).show();
-
-                //open file
-                //Uri path = Uri.fromFile(file);
-                Uri path = FileProvider.getUriForFile(context,
-                        BuildConfig.APPLICATION_ID + ".provider",
-                        file);
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(path, "application/vnd.ms-excel");
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                try {
-                    context.startActivity(intent);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return;
-            } catch (WriteException e) {
-                e.printStackTrace();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    private static void tryToOpenExcelFile(Context context, File file){
+        try {
+
+            //open file
+            //Uri path = Uri.fromFile(file);
+            Uri path = FileProvider.getUriForFile(context,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    file);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(path, "application/vnd.ms-excel");
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            try {
+                context.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void exportFavoriteToExcel(Context context, ArrayList<String> favoriteItems) {
+        final String fileName = "DanhMucYeuThich_"+MethodsHelper.getYYYYMMDD(Calendar.getInstance())+".xls";
+
+        try {
+            File file = createExportFile(fileName);
+            WritableWorkbook workbook = createWritableWorkbook(file);
+            if (workbook != null) {
+                WritableSheet sheet = workbook.createSheet("DanhMucYeuThich_", 0);
+
+                try {
+                    int index = 0;
+                    sheet.addCell(new Label(index, 0, "Mã Chứng Khoán"));
+                    if (favoriteItems != null) {
+                        for (int i = 0; i < favoriteItems.size(); i++) {
+                            index = 0;
+                            String item = favoriteItems.get(i);
+                            sheet.addCell(new Label(index++, i + 1, "" + item));
+                        }
+                    }
+                    workbook.write();
+                    workbook.close();
+                    Toast.makeText(context, file.getPath(), Toast.LENGTH_LONG).show();
+
+                    tryToOpenExcelFile(context, file);
+                    return;
+                } catch (RowsExceededException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         Toast.makeText(context, "Lỗi Khi Tạo File", Toast.LENGTH_LONG).show();
+    }
+
+    public static void exportDanhMucDauTuToExcel(Context context, ArrayList<DanhMucDauTuItem> danhMucDauTuItems) {
+        final String fileName = "DanhMucDauTu_"+MethodsHelper.getYYYYMMDD(Calendar.getInstance())+".xls";
+
+        try {
+            File file = createExportFile(fileName);
+            WritableWorkbook workbook = createWritableWorkbook(file);
+            if (workbook != null) {
+                WritableSheet sheet = workbook.createSheet("DanhMucDauTu", 0);
+
+                try {
+                    int index = 0;
+                    sheet.addCell(new Label(index, 0, "Id"));
+                    sheet.addCell(new Label(index++, 0, "Ngày Mua"));
+                    sheet.addCell(new Label(index++, 0, "Tên Công Ty"));
+                    sheet.addCell(new Label(index++, 0, "Mã CK"));
+                    sheet.addCell(new Label(index++, 0, "Giá Mua"));
+                    sheet.addCell(new Label(index++, 0, "Số Lượng"));
+                    sheet.addCell(new Label(index++, 0, "Giá Thị Trường"));
+                    sheet.addCell(new Label(index++, 0, "Giá Bán"));
+                    if (danhMucDauTuItems != null) {
+                        for (int i = 0; i < danhMucDauTuItems.size(); i++) {
+                            index = 0;
+                            DanhMucDauTuItem danhMucDauTuItem = danhMucDauTuItems.get(i);
+                            sheet.addCell(new Label(index++, i + 1, "" + danhMucDauTuItem.getId()));
+                            sheet.addCell(new Label(index++, i + 1, danhMucDauTuItem.getNgayMua()));
+                            sheet.addCell(new Label(index++, i + 1, danhMucDauTuItem.getTenCongTy()));
+                            sheet.addCell(new Label(index++, i + 1, danhMucDauTuItem.getMaCK()));
+                            sheet.addCell(new Label(index++, i + 1, danhMucDauTuItem.getGiaMuaInString()));
+                            sheet.addCell(new Label(index++, i + 1, danhMucDauTuItem.getSoLuongInString()));
+                            sheet.addCell(new Label(index++, i + 1, danhMucDauTuItem.getGiaThiTruongInString()));
+                            sheet.addCell(new Label(index++, i + 1, danhMucDauTuItem.getGiaBanInString()));
+                        }
+                    }
+                    workbook.write();
+                    workbook.close();
+                    Toast.makeText(context, file.getPath(), Toast.LENGTH_LONG).show();
+
+                    tryToOpenExcelFile(context, file);
+                    return;
+                } catch (RowsExceededException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(context, "Lỗi Khi Tạo File", Toast.LENGTH_LONG).show();
+    }
+
+    public static ArrayList<DanhMucDauTuItem> importDanhMucDauTuFromExcel(File file) {
+        ArrayList<DanhMucDauTuItem> danhMucDauTuItems = new ArrayList<>();
+        WorkbookSettings wbSettings = new WorkbookSettings();
+        wbSettings.setLocale(new Locale("en", "EN"));
+
+        try {
+            Workbook workbook = Workbook.getWorkbook(file) ;
+            Sheet sheet = workbook.getSheet(0);
+            for(int i = 1; i< sheet.getRows(); i++){
+                Cell[] cells = sheet.getRow(i);
+                int index = 0;
+                DanhMucDauTuItem danhMucDauTuItem = new DanhMucDauTuItem();
+                danhMucDauTuItem.setId(Long.parseLong(cells[index++].getContents()));
+                danhMucDauTuItem.setNgayMua(cells[index++].getContents());
+                danhMucDauTuItem.setTenCongTy(cells[index++].getContents());
+                danhMucDauTuItem.setMaCK(cells[index++].getContents());
+                danhMucDauTuItem.setGiaMua(Float.parseFloat(cells[index++].getContents()));
+                danhMucDauTuItem.setSoLuong(Integer.parseInt(cells[index++].getContents()));
+                danhMucDauTuItem.setGiaThiTruong(Float.parseFloat(cells[index++].getContents()));
+                danhMucDauTuItem.setGiaBan(Float.parseFloat(cells[index++].getContents()));
+
+                danhMucDauTuItems.add(danhMucDauTuItem);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+        return danhMucDauTuItems;
+    }
+
+    public static ArrayList<String> importDanhMucYeuThichFromExcel(File file) {
+        ArrayList<String> danhMucYeuThichItems = new ArrayList<>();
+        WorkbookSettings wbSettings = new WorkbookSettings();
+        wbSettings.setLocale(new Locale("en", "EN"));
+
+        try {
+            Workbook workbook = Workbook.getWorkbook(file) ;
+            Sheet sheet = workbook.getSheet(0);
+            for(int i = 1; i< sheet.getRows(); i++){
+                Cell[] cells = sheet.getRow(i);
+                int index = 0;
+                danhMucYeuThichItems.add(cells[index++].getContents());
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+        return danhMucYeuThichItems;
+    }
+
+    public static boolean checkPermission(Context context, int permissionKey)
+    {
+        switch (permissionKey) {
+            case MainActivity.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE:
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // No explanation needed; request the permission
+                    ActivityCompat.requestPermissions((Activity) context,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            MainActivity.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                    return false;
+                } else {
+                    // Permission has already been granted
+                    return true;
+                }
+            case MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // No explanation needed; request the permission
+                    ActivityCompat.requestPermissions((Activity) context,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return false;
+                } else {
+                    // Permission has already been granted
+                    return true;
+                }
+        }
+        return false;
     }
 }

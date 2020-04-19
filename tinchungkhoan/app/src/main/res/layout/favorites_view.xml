@@ -29,9 +29,42 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/button_custom_rectangle"
             android:text="Thêm" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/imDownloadExcel"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:layout_margin="2dp"
+            android:background="@drawable/button_custom_rectangle"
+            android:text="Sao Lưu" />
+
+        <Button
+            android:id="@+id/imUploadExcel"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:layout_margin="2dp"
+            android:background="@drawable/button_custom_rectangle"
+            android:text="Phục Hồi" />
+
+        <TextView
+            android:id="@+id/tvSaveFolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="Vui lòng thực hiện tra cứu\nVui lòng thực hiện tra cứu"
+            android:textSize="8sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvProcessInfo"

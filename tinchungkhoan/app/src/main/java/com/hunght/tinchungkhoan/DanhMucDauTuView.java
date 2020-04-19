@@ -1,18 +1,15 @@
 package com.hunght.tinchungkhoan;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,31 +30,21 @@ import com.hunght.data.DanhMucDauTuItem;
 import com.hunght.data.DoanhNghiepItem;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
+import com.hunght.utils.FileChooser;
 import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-
-import jxl.Workbook;
-import jxl.WorkbookSettings;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
-import jxl.write.biff.RowsExceededException;
 
 /**
  * TODO: document your custom view class.
  */
 public class DanhMucDauTuView extends LinearLayout {
-    final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
     ExpandableListView lvDanhMucDauTu;
     TextView tvProcessInfo;
     TextView tvLastUpdatedTime;
@@ -91,9 +78,11 @@ public class DanhMucDauTuView extends LinearLayout {
         final EditText etSoLuong = view.findViewById(R.id.etSoLuong);
         final AutoCompleteTextView etMaCK = view.findViewById(R.id.etMaCK);
         final EditText etGiaMua = view.findViewById(R.id.etGiaMua);
-        final Button btLưu = view.findViewById(R.id.btLưu);
-        final ImageButton imDownloadExcel = view.findViewById(R.id.imDownloadExcel);
+        final Button btLuu = view.findViewById(R.id.btLuu);
+        final Button imDownloadExcel = view.findViewById(R.id.imDownloadExcel);
+        final Button btUploadExcel = view.findViewById(R.id.imUploadExcel);
         final ImageButton imUpdate = view.findViewById(R.id.imUpdate);
+        final TextView tvSaveFolder = view.findViewById(R.id.tvSaveFolder);
 
         tvTongDauTu = view.findViewById(R.id.tvTongDauTu);
         tvTongThiTruong = view.findViewById(R.id.tvTongThiTruong);
@@ -156,7 +145,7 @@ public class DanhMucDauTuView extends LinearLayout {
 
         updateDateForEditText(etNgayMua, myCalendar);
 
-        btLưu.setOnClickListener(new OnClickListener() {
+        btLuu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 View view = ((Activity)getContext()).getCurrentFocus();
@@ -204,9 +193,9 @@ public class DanhMucDauTuView extends LinearLayout {
         imDownloadExcel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkPermission())
+                if(MethodsHelper.checkPermission(getContext(),MainActivity.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE))
                 {
-                    MethodsHelper.exportToExcel(getContext(), savedValues.getDanhMucDauTus());
+                    MethodsHelper.exportDanhMucDauTuToExcel(getContext(), savedValues.getDanhMucDauTus());
                 }
             }
         });
@@ -224,6 +213,38 @@ public class DanhMucDauTuView extends LinearLayout {
                 return false;
             }
         });*/
+        File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        boolean isExternal = Environment.isExternalStorageRemovable(sdCard);
+        String saveFolder = Environment.DIRECTORY_DOCUMENTS + "/" + MethodsHelper.BACKUP_FOLDER;
+        String path = isExternal?"SD card/":"Internal Storage/"+saveFolder;
+        tvSaveFolder.setText("Sao Lưu: "+path + "\n Hoặc: " + sdCard.getPath() +"/" + MethodsHelper.BACKUP_FOLDER );
+
+        btUploadExcel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MethodsHelper.checkPermission(getContext(), MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE)) {
+                    FileChooser fileChooser = new FileChooser(getContext());
+
+                    fileChooser.setFileListener(new FileChooser.FileSelectedListener() {
+                        @Override
+                        public void fileSelected(final File file) {
+                            // ....do something with the file
+                            String filename = file.getAbsolutePath();
+                            Log.i("File Name", filename);
+                            ArrayList<DanhMucDauTuItem> restoreDanhMucDauTuItems = MethodsHelper.importDanhMucDauTuFromExcel(file);
+                            if (restoreDanhMucDauTuItems == null) {
+                                Toast.makeText(getContext(), "Không đọc được file: " + filename, Toast.LENGTH_LONG).show();
+                            } else if (restoreDanhMucDauTuItems.size() == 0) {
+                                Toast.makeText(getContext(), "Không có dữ liệu", Toast.LENGTH_LONG).show();
+                            }else {
+                                restoreDanhMucDauTu(restoreDanhMucDauTuItems);
+                            }
+                        }
+                    });
+                    fileChooser.showDialog();
+                }
+            }
+        });
     }
 
     private void deleteDanhMucDauTu(final DanhMucDauTuItem danhMucDauTuItem)
@@ -307,6 +328,22 @@ public class DanhMucDauTuView extends LinearLayout {
                 }
             });
         }
+    }
+
+    private void restoreDanhMucDauTu(final ArrayList<DanhMucDauTuItem> items)
+    {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Phục Hồi Dữ Liệu")
+                .setMessage("Toàn bộ dữ liệu hiện tại sẽ bị xóa và thay thế bằng dữ liệu phục hồi.\nBạn có muốn tiếp tục?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton("Tiếp Tục", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        danhMucDauTuItems = items;
+                        updateListDanhMucDauTu(null);
+                        Toast.makeText(getContext(), "Phục hồi dữ liệu thành công", Toast.LENGTH_LONG).show();
+                    }})
+                .setNegativeButton("Bỏ Qua", null).show();
     }
 
     private void banDanhMucDauTu(final DanhMucDauTuItem danhMucDauTuItem)
@@ -451,9 +488,9 @@ public class DanhMucDauTuView extends LinearLayout {
                         refeshGiaThiTruong();
                         break;
                     case 1:
-                        if(checkPermission())
+                        if(MethodsHelper.checkPermission(getContext(), MainActivity.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE))
                         {
-                            MethodsHelper.exportToExcel(getContext(), savedValues.getDanhMucDauTus());
+                            MethodsHelper.exportDanhMucDauTuToExcel(getContext(), savedValues.getDanhMucDauTus());
                         }
                         break;
                     case 2:
@@ -464,38 +501,6 @@ public class DanhMucDauTuView extends LinearLayout {
             }
         });
         builder.show();
-    }
-
-    private boolean checkPermission()
-    {
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-           /* if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
-                    Manifest.permission.READ_CONTACTS)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else */
-                {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions((Activity) getContext(),
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-            return false;
-        } else {
-            // Permission has already been granted
-            return true;
-        }
     }
 
     private int convertStringToInt(String number)

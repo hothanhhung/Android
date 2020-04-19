@@ -20,7 +20,7 @@
                 android:id="@+id/btXemBieuDoToDay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_rectangle"
+                android:background="@drawable/button_custom_rectangle"
                 android:layout_weight="1"
                 android:textSize="11dp"
                 android:text="Hôm Nay" />

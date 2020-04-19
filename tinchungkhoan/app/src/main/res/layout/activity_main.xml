@@ -37,14 +37,15 @@
             android:textAllCaps="false"
             android:textColor="#fff"
             android:text="Thông Tin Chứng Khoán"/>
+
         <ImageButton
             android:id="@+id/btMoreApp"
-            android:background="@android:drawable/list_selector_background"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:background="@android:drawable/list_selector_background"
+            android:onClick="menuClick"
             android:scaleType="centerCrop"
-            android:src="@drawable/side_nav_bar"
-            android:onClick="menuClick"/>
+            android:src="@android:drawable/ic_menu_more" />
     </LinearLayout>
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -63,14 +64,16 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:textSize="16dp"
-                    android:textColor="@android:color/holo_blue_dark"
+                    android:layout_marginBottom="15dp"
                     android:lineSpacingMultiplier="1.5"
-                    android:text="@string/app_about"/>
+                    android:padding="10dp"
+                    android:text="@string/app_about"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textSize="16dp" />
                 </LinearLayout>
         </LinearLayout>
 

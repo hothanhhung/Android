@@ -283,12 +283,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/button_custom_rectangle"
                 android:text="Hiện Mật Khẩu" />
             <Button
                 android:id="@+id/btSavePassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/button_custom_rectangle"
                 android:text="Lưu" />
         </LinearLayout>
     </LinearLayout>

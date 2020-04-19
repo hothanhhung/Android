@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,11 +38,13 @@ import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
 import com.hunght.data.StaticData;
 import com.hunght.data.ThongTinDoanhNghiep;
+import com.hunght.utils.FileChooser;
 import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -73,6 +78,10 @@ public class FavoritesView extends LinearLayout {
 
     private void init(AttributeSet attrs, int defStyle) {
         final View view = inflate(getContext(), R.layout.favorites_view, this);
+        final Button imDownloadExcel = view.findViewById(R.id.imDownloadExcel);
+        final Button btUploadExcel = view.findViewById(R.id.imUploadExcel);
+        final TextView tvSaveFolder = view.findViewById(R.id.tvSaveFolder);
+
         lvHistoryFavoriteItems = view.findViewById(R.id.lvHistoryFavoriteItems);
         savedValues = new SavedValues(getContext());
         ArrayList<String> favoriteItems = savedValues.getFavorites();
@@ -111,6 +120,57 @@ public class FavoritesView extends LinearLayout {
                     if (historyPrice != null) {
                         showInMenu(historyPrice);
                     }
+                }
+            }
+        });
+
+        imDownloadExcel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MethodsHelper.checkPermission(getContext(),MainActivity.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE))
+                {
+                    MethodsHelper.exportFavoriteToExcel(getContext(), savedValues.getFavorites());
+                }
+            }
+        });
+
+        File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        boolean isExternal = Environment.isExternalStorageRemovable(sdCard);
+        String saveFolder = Environment.DIRECTORY_DOCUMENTS + "/" + MethodsHelper.BACKUP_FOLDER;
+        String path = isExternal?"SD card/":"Internal Storage/"+saveFolder;
+        tvSaveFolder.setText("Sao Lưu: "+path + "\n Hoặc: " + sdCard.getPath() +"/" + MethodsHelper.BACKUP_FOLDER );
+
+        btUploadExcel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MethodsHelper.checkPermission(getContext(), MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE)) {
+                    FileChooser fileChooser = new FileChooser(getContext());
+
+                    fileChooser.setFileListener(new FileChooser.FileSelectedListener() {
+                        @Override
+                        public void fileSelected(final File file) {
+                            // ....do something with the file
+                            String filename = file.getAbsolutePath();
+                            Log.i("File Name", filename);
+                            ArrayList<String> restoredItems = MethodsHelper.importDanhMucYeuThichFromExcel(file);
+                            if (restoredItems == null) {
+                                Toast.makeText(getContext(), "Không đọc được file: " + filename, Toast.LENGTH_LONG).show();
+                            } else if (restoredItems.size() == 0) {
+                                Toast.makeText(getContext(), "Không có dữ liệu", Toast.LENGTH_LONG).show();
+                            }else {
+                                ArrayList<String> favoriteItems = savedValues.getFavorites();
+                                for(String item : restoredItems) {
+                                    if (!favoriteItems.contains(item)) {
+                                        favoriteItems.add(item);
+                                    }
+                                }
+                                savedValues.setFavorites(favoriteItems);
+                                getHistoryData(favoriteItems);
+                                Toast.makeText(getContext(), "Phục hồi dữ liệu thành công", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                    fileChooser.showDialog();
                 }
             }
         });

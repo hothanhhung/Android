@@ -490,7 +490,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
+    public final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
+    public final static int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE + 1;
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -501,7 +502,7 @@ public class MainActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    MethodsHelper.exportToExcel(this, savedValues.getDanhMucDauTus());
+                    MethodsHelper.exportDanhMucDauTuToExcel(this, savedValues.getDanhMucDauTus());
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -509,7 +510,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }
-
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:{
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Quyền đã được cấp. Vui lòng thử lại", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Không có quyền đọc file", Toast.LENGTH_LONG).show();
+                }
+            }
             // other 'case' lines to check for other
             // permissions this app might request.
         }
