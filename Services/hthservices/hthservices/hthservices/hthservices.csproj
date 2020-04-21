@@ -193,6 +193,7 @@
     <Compile Include="Sudoku\SudokuItem.cs" />
     <Compile Include="Utils\ChamNgonInfo.cs" />
     <Compile Include="Utils\Channel.cs" />
+    <Compile Include="Utils\CrawlTuViHelper.cs" />
     <Compile Include="Utils\DataProcess.cs" />
     <Compile Include="Utils\DataStatic.cs" />
     <Compile Include="Utils\DenyInfo.cs" />

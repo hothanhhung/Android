@@ -1,6 +1,7 @@
 ﻿using hthservices.Utils;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -53,12 +54,24 @@ namespace hthservices.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetInfoChamNgon(string date, int index, int type = 0)
         {
+            if (index < 0) index = DateTime.Now.DayOfYear;
+            var dateTime = ConvertToDateTime(date);
             return new HttpResponseMessage()
             {
-                Content = type == 0? new StringContent(ChamNgonInfo.GetThapNhiBatTuHTML(index), Encoding.UTF8, "text/html") 
-                                    : new StringContent(ChamNgonInfo.GetThapNhiBatTuText(index), Encoding.UTF8, "text/html")
+                Content = type == 0? new StringContent(ChamNgonInfo.GetThapNhiBatTuHTML(dateTime.HasValue? dateTime.Value.DayOfYear : index), Encoding.UTF8, "text/html") 
+                                    : new StringContent(ChamNgonInfo.GetThapNhiBatTuText(dateTime.HasValue ? dateTime.Value.DayOfYear : index), Encoding.UTF8, "text/html")
             };
          
+        }
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetTuVi(int days, int months)
+        {
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(CrawlTuViHelper.Crawl(days, months), Encoding.UTF8, "text/plain")
+            };
+
         }
 
         [System.Web.Http.HttpGet]
@@ -67,6 +80,18 @@ namespace hthservices.Controllers
             ThapNhiBatTuInfo.Reset();
             ChamNgonInfo.Reset();
             return "Reset";
+        }
+
+        private DateTime? ConvertToDateTime(string value)
+        {
+
+            try {
+                return DateTime.ParseExact(value, "yyyyMMdd", new CultureInfo("en-US"));
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
     }
 }
