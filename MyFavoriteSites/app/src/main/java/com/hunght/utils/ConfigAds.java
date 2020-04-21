@@ -73,7 +73,7 @@ public class ConfigAds
     }
 
     private static ConfigAds getConfigAds() {
-        String link = "https://hunghtpage.github.io/DocBaoTongHop.json";
+        String link = "https://raw.githubusercontent.com/hothanhhung/static-files/master/myfavoritesites/config.json";
         StringBuilder contentResult = new StringBuilder();
 
         try {
@@ -96,6 +96,7 @@ public class ConfigAds
             return gSon.fromJson(json, ConfigAds.class);
         } catch (Exception ex) {
             ex.printStackTrace();
+            Log.w("getConfigAds", ex.getMessage());
         }
         return new ConfigAds();
     }

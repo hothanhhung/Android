@@ -20,6 +20,7 @@ public class DataAccessor {
     private static final String USE_IMPROVE_BROWSER="USE_IMPROVE_BROWSER";
     private static final String CONFIG_ADS_KEY_NAME="CONFIG_ADS_KEY_NAME";
     private static final String SHARE_PAGE="SHARE_PAGE";
+    private static final String SWIPE_SHARE_PAGE="SWIPE_SHARE_PAGE";
 
     static ArrayList<FavoriteSiteItem> favoriteSiteItems =  null;
     static HashMap<String, List<FavoriteSiteItem>> suggestionSiteItems =  null;
@@ -323,7 +324,7 @@ public class DataAccessor {
         {
             try {
                 android.content.SharedPreferences sharedPref =context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
-                return sharedPref.getBoolean(SHARE_PAGE, true);
+                return sharedPref.getBoolean(SHARE_PAGE, false);
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -338,6 +339,35 @@ public class DataAccessor {
             android.content.SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(SHARE_PAGE, value);
+            editor.commit();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
+    public static boolean getSwipeSharingPage(Context context)
+    {
+        {
+            try {
+                android.content.SharedPreferences sharedPref =context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+                return sharedPref.getBoolean(SWIPE_SHARE_PAGE, true);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public static void setSwipeSharingPage(Context context, boolean value)
+    {
+        try {
+            android.content.SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(SWIPE_SHARE_PAGE, value);
             editor.commit();
 
         } catch (Exception e) {

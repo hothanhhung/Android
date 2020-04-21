@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
+import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +40,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -152,6 +154,9 @@ public class SiteActivity extends Activity {
             settings.setDisplayZoomControls(false);
             settings.setDomStorageEnabled(true);
             settings.setUserAgentString("Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Mobile Safari/537.36");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                settings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+            }
 
             progressBar1 = (ProgressBar) this.findViewById(R.id.progressBar1);
 
@@ -202,57 +207,46 @@ public class SiteActivity extends Activity {
         viewArticleDetail.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(DataAccessor.getSwipeToBack(SiteActivity.this)) {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    String shareSubText = viewArticleDetail.getTitle();
-                    String shareBodyText = viewArticleDetail.getUrl();
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubText);
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
-                    startActivity(Intent.createChooser(shareIntent, "Share With"));
+                if(DataAccessor.getSharingPage(SiteActivity.this)) {
+                    shareCurrentPage();
                 }
                 return false;
             }
         });
 
-        /*viewArticleDetail.setOnTouchListener(new View.OnTouchListener() {
+        viewArticleDetail.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (gs == null) {
-                    gs = new GestureDetector(
-                            new GestureDetector.SimpleOnGestureListener() {
-                                @Override
-                                public boolean onDoubleTapEvent(MotionEvent e) {
-                                    if(DataAccessor.getSharingPage(SiteActivity.this)){
-                                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                                        shareIntent.setType("text/plain");
-                                        String shareSubText = viewArticleDetail.getTitle();
-                                        String shareBodyText = viewArticleDetail.getUrl();
-                                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubText);
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
-                                        startActivity(Intent.createChooser(shareIntent, "Share With"));
-                                    }
-                                    return true;
-                                }
-
-                                @Override
-                                public boolean onSingleTapConfirmed(MotionEvent e) {
-                                    return false;
-                                };
-                            });
+            public void onSwipeLeft() {
+                super.onSwipeLeft();
+                if(DataAccessor.getSwipeSharingPage(getAppContext()))
+                {
+                    shareCurrentPage();
                 }
-
-                gs.onTouchEvent(event);
-
-                return false;
             }
-        });*/
+            @Override
+            public void onSwipeRight() {
+                super.onSwipeRight();
+            }
+        });
     }
 
+    private void shareCurrentPage(){
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        String shareSubText = viewArticleDetail.getTitle();
+        String shareBodyText = viewArticleDetail.getUrl();
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubText);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
+        startActivity(Intent.createChooser(shareIntent, "Share With"));
+    }
     private static long timeForRun = 0, countShow = 1;
     private InterstitialAd interstitial;
     private void showInterstitial()
     {
+        if(loadAdsFailed || interstitial == null){
+            createInterstitialAds();
+        }
+
         long timenow = Calendar.getInstance().getTime().getTime();
         long longtime = (countShow*450000 );// + 100000;
         if(longtime > 1500000) longtime = 1500000;
@@ -261,35 +255,46 @@ public class SiteActivity extends Activity {
         }
         if((timenow - timeForRun) > longtime)
         {
-            if (interstitial == null) {
-                interstitial = new InterstitialAd(this);
-                interstitial.setAdUnitId(getResources().getString(R.string.interstitial_ads));
-                interstitial.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdLoaded() {
-                        if (interstitial.isLoaded()) {
-                            interstitial.show();
-                            timeForRun = Calendar.getInstance().getTime().getTime();
-                            countShow++;
-                        }
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                    }
-
-
-                    @Override
-                    public void onAdFailedToLoad(int errorCode) {
-                    }
-                });
+            if (interstitial.isLoaded()) {
+                interstitial.show();
+                timeForRun = Calendar.getInstance().getTime().getTime();
+                countShow++;
+                createInterstitialAds();
             }
-            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-            interstitial.loadAd(adRequest_interstitial);
         }
 
     }
+    static boolean loadAdsFailed = false;
+    private void createInterstitialAds(){
+        if (interstitial == null) {
+            interstitial = new InterstitialAd(this);
+            interstitial.setAdUnitId(getResources().getString(R.string.interstitial_ads));
+            //interstitial.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            interstitial.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    /*if (interstitial.isLoaded()) {
+                        interstitial.show();
+                        lastShowAds = (new Date()).getTime();
+                    }*/
+                }
 
+                @Override
+                public void onAdClosed() {
+                }
+
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    loadAdsFailed = true;
+                }
+            });
+        }
+
+        AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+        interstitial.loadAd(adRequest_interstitial);
+        loadAdsFailed = false;
+    }
     @Override
     public void onBackPressed() {
         if (myHomeWebViewClient != null && myHomeWebViewClient.canGobackHistory() && !DataAccessor.getBackToHome(this)) {

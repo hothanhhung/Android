@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="On: Back Button to Home Screen. Off: open previous page of website"
+                android:text="On: Back Button to Home Screen.\nOff: open previous page of website"
                 android:textSize="11sp" />
 
         </LinearLayout>
@@ -130,12 +130,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Swipe To Close Screen" />
+                android:text="Swipe To Left For Closing Screen" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Swipe from left to right to close current screen"
+                android:text="Swipe from left to right for closing current screen"
                 android:textSize="11sp" />
 
         </LinearLayout>
@@ -153,6 +153,40 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         android:padding="10dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Swipe From Right For Sharing" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Swipe from right to left for sharing current page"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swSwipeToRightToShare"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

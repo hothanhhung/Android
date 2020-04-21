@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.support.annotation.UiThread;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -29,7 +30,8 @@ public class SettingsActivity extends Activity {
         Switch swUsingInSideBrowser = findViewById(R.id.swUsingInSideBrowser);
         Switch swBackToHome = findViewById(R.id.swBackToHome);
         Switch swSwipeToClose = findViewById(R.id.swSwipeToClose);
-        Switch swLongClickToShare = findViewById(R.id.swLongClickToShare);
+        final Switch swSwipeToRightToShare = findViewById(R.id.swSwipeToRightToShare);
+        final Switch swLongClickToShare = findViewById(R.id.swLongClickToShare);
         Switch swOptimation = findViewById(R.id.swOptimation);
 
         swOptimation.setChecked(DataAccessor.getUsingImproveBrowser(SettingsActivity.this));
@@ -84,7 +86,23 @@ public class SettingsActivity extends Activity {
         swLongClickToShare.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    DataAccessor.setSwipeSharingPage(SettingsActivity.this, false);
+                    swSwipeToRightToShare.setChecked(false);
+                }
                 DataAccessor.setSharingPage(SettingsActivity.this, isChecked);
+            }
+        });
+
+        swSwipeToRightToShare.setChecked(DataAccessor.getSwipeSharingPage(this));
+        swSwipeToRightToShare.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    DataAccessor.setSharingPage(SettingsActivity.this, false);
+                    swLongClickToShare.setChecked(false);
+                }
+                DataAccessor.setSwipeSharingPage(SettingsActivity.this, isChecked);
             }
         });
     }

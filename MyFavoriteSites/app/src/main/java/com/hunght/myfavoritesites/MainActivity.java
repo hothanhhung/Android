@@ -133,8 +133,14 @@ public class MainActivity extends AppCompatActivity {
         adview.setVisibility(View.GONE);
         /*AdRequest adRequest = new AdRequest.Builder().build();
         adview.loadAd(adRequest);*/
+        correctData();
     }
 
+    private void correctData(){
+        if(DataAccessor.getSwipeSharingPage(this)){
+            DataAccessor.setSharingPage(this, false);
+        }
+    }
     private Runnable loadingToSiteActivity = new Runnable() {
         public void run() {
             /*HomePageActivity.this.runOnUiThread(new Runnable() {
@@ -153,6 +159,9 @@ public class MainActivity extends AppCompatActivity {
     private InterstitialAd interstitial;
     private void showInterstitial()
     {
+        if(loadAdsFailed || interstitial == null){
+            createInterstitialAds();
+        }
         long timenow = Calendar.getInstance().getTime().getTime();
         long longtime = (countShow*100000 );// + 100000;
         if(longtime > 1000000) longtime = 1000000;
@@ -161,35 +170,46 @@ public class MainActivity extends AppCompatActivity {
         }
         if((timenow - timeForRun) > longtime)
         {
-            if (interstitial == null) {
-                interstitial = new InterstitialAd(this);
-                interstitial.setAdUnitId(getResources().getString(R.string.interstitial_ads));
-                interstitial.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdLoaded() {
-                        if (interstitial.isLoaded()) {
-                            interstitial.show();
-                            timeForRun = Calendar.getInstance().getTime().getTime();
-                            countShow++;
-                        }
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                    }
-
-
-                    @Override
-                    public void onAdFailedToLoad(int errorCode) {
-                    }
-                });
+            if (interstitial.isLoaded()) {
+                interstitial.show();
+                timeForRun = Calendar.getInstance().getTime().getTime();
+                countShow++;
+                createInterstitialAds();
             }
-            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-            interstitial.loadAd(adRequest_interstitial);
         }
 
     }
+    static boolean loadAdsFailed = false;
+    private void createInterstitialAds(){
+        if (interstitial == null) {
+            interstitial = new InterstitialAd(this);
+            interstitial.setAdUnitId(getResources().getString(R.string.interstitial_ads));
+            //interstitial.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            interstitial.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    /*if (interstitial.isLoaded()) {
+                        interstitial.show();
+                        lastShowAds = (new Date()).getTime();
+                    }*/
+                }
 
+                @Override
+                public void onAdClosed() {
+                }
+
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    loadAdsFailed = true;
+                }
+            });
+        }
+
+        AdRequest adRequest_interstitial = new AdRequest.Builder().build();
+        interstitial.loadAd(adRequest_interstitial);
+        loadAdsFailed = false;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
