@@ -168,7 +168,7 @@ public class SolarLunarCalendarView extends LinearLayout {
                 currentPerformServiceProcessBackgroundTask = null;
             }
             currentPerformServiceProcessBackgroundTask = new PerformServiceProcessBackgroundTask();
-            currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfMonth());
+            currentPerformServiceProcessBackgroundTask.execute(ServiceProcessor.SERVICE_GET_CHAM_NGON, selectedDate.getDisplaySolarDate(), selectedDate.getDayOfYear());
         }
         int color;// = getColorForDayOfWeek(selectedDate.getDayOfWeek());
         if(selectedDate.isHoliday())

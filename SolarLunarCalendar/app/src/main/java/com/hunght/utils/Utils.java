@@ -9,8 +9,6 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +20,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.hunght.data.LunarDate;
 import com.hunght.data.NoteItem;
-import com.hunght.solarlunarcalendar.BuildConfig;
 import com.hunght.solarlunarcalendar.R;
 
 import java.io.BufferedReader;
@@ -37,6 +34,7 @@ import java.util.Calendar;
  */
 
 public class Utils {
+    public static String BACKUP_FOLDER="LichAmDuong";
     private static final String TAG = "AmDuong";
     static public int getIconConGiap(int day)
     {
@@ -182,7 +180,7 @@ public class Utils {
         //Saving file in external storage
         //File sdCard = Environment.getExternalStorageDirectory();
         File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File directory = new File(sdCard.getAbsolutePath() + "/LichAmDuong");
+        File directory = new File(sdCard.getAbsolutePath() + "/" + BACKUP_FOLDER);
         //create directory if not exist
         if(!directory.isDirectory()){
             directory.mkdirs();

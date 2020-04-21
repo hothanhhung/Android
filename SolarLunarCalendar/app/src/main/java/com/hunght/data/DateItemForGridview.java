@@ -510,6 +510,17 @@ public class DateItemForGridview {
         return "";
     }
 
+    public int getDayOfYear()
+    {
+        if(date!=null)
+        {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            return cal.get(Calendar.DAY_OF_YEAR);
+        }
+        return 0;
+    }
+
     public int getDayOfMonth()
     {
         if(date!=null)

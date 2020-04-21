@@ -60,7 +60,7 @@ public class DirectoryChooserDialog {
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // setNewFolderEnabled() - enable/disable new folder button
+    // setNewFolderEnabled() - enable/disable new folder_icon button
     ///////////////////////////////////////////////////////////////////////
 
     public void setNewFolderEnabled(boolean isNewFolderEnabled)
@@ -223,7 +223,7 @@ public class DirectoryChooserDialog {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(m_context);
 
         // Create custom view for AlertDialog title containing
-        // current directory TextView and possible 'New folder' button.
+        // current directory TextView and possible 'New folder_icon' button.
         // Current directory TextView allows long directory path to be wrapped to multiple lines.
         LinearLayout titleLayout = new LinearLayout(m_context);
         titleLayout.setOrientation(LinearLayout.VERTICAL);
@@ -237,7 +237,7 @@ public class DirectoryChooserDialog {
 
         Button newDirButton = new Button(m_context);
         newDirButton.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-        newDirButton.setText("New folder");
+        newDirButton.setText("New folder_icon");
         newDirButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -245,9 +245,9 @@ public class DirectoryChooserDialog {
             {
                 final EditText input = new EditText(m_context);
 
-                // Show new folder name input dialog
+                // Show new folder_icon name input dialog
                 new AlertDialog.Builder(m_context).
-                        setTitle("New folder name").
+                        setTitle("New folder_icon name").
                         setView(input).setPositiveButton("OK", new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
@@ -265,7 +265,7 @@ public class DirectoryChooserDialog {
                         {
                             Toast.makeText(
                                     m_context, "Failed to create '" + newDirName +
-                                            "' folder", Toast.LENGTH_SHORT).show();
+                                            "' folder_icon", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).setNegativeButton("Cancel", null).show();

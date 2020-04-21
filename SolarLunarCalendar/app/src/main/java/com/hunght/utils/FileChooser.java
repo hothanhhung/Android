@@ -3,13 +3,17 @@ package com.hunght.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Environment;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.hunght.solarlunarcalendar.R;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -46,8 +50,9 @@ public class FileChooser {
         list = new ListView(this.context);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int which, long id) {
-                String fileChosen = (String) list.getItemAtPosition(which);
-                File chosenFile = getChosenFile(fileChosen);
+                Pair<String, Boolean> pair = (Pair) list.getItemAtPosition(which);
+
+                File chosenFile = getChosenFile(pair.first);
                 if (chosenFile.isDirectory()) {
                     refresh(chosenFile);
                 } else {
@@ -59,8 +64,8 @@ public class FileChooser {
             }
         });
         dialog.setContentView(list);
-        dialog.getWindow().setLayout(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
-        refresh(Environment.getExternalStorageDirectory());
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        refresh(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS));
     }
 
     public void showDialog() {
@@ -97,25 +102,27 @@ public class FileChooser {
 
             // convert to an array
             int i = 0;
-            String[] fileList;
+            Pair<String, Boolean>[] fileList;
             if (path.getParentFile() == null || path.getPath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getPath())) {
-                fileList = new String[dirs.length + files.length];
+                fileList = new Pair[dirs.length + files.length];
             } else {
-                fileList = new String[dirs.length + files.length + 1];
-                fileList[i++] = PARENT_DIR;
+                fileList = new Pair[dirs.length + files.length + 1];
+                fileList[i++] = new Pair<>(PARENT_DIR, false);
             }
             Arrays.sort(dirs);
             Arrays.sort(files);
-            for (File dir : dirs) { fileList[i++] = dir.getName(); }
-            for (File file : files ) { fileList[i++] = file.getName(); }
+            for (File dir : dirs) { fileList[i++] = new Pair<>(dir.getName(), false); }
+            for (File file : files ) { fileList[i++] = new Pair<>(file.getName(), true); }
 
             // refresh the user interface
             dialog.setTitle(currentPath.getPath());
             list.setAdapter(new ArrayAdapter(context,
-                    android.R.layout.simple_list_item_1, fileList) {
+                    R.layout.file_chooser_layout, R.id.tvChooser, fileList) {
                 @Override public View getView(int pos, View view, ViewGroup parent) {
                     view = super.getView(pos, view, parent);
-                    ((TextView) view).setSingleLine(true);
+                    Pair<String, Boolean> pair = (Pair)list.getItemAtPosition(pos);
+                    ((ImageView)view.findViewById(R.id.imgChooser)).setImageResource(pair.second? R.drawable.file_icon : R.drawable.folder_icon);
+                    ((TextView) view.findViewById(R.id.tvChooser)).setText(pair.first);
                     return view;
                 }
             });

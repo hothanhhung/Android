@@ -21,6 +21,7 @@ public class ServiceProcessor {
     static public final int SERVICE_GET_INFO_OF_DATE_SHORT = SERVICE_GET_INFO_OF_DATE + 1;
     static public final int SERVICE_GET_NGAY_RAM = SERVICE_GET_INFO_OF_DATE_SHORT + 1;
     static public final int SERVICE_GET_SUGGEST_TO_TUVI = SERVICE_GET_NGAY_RAM + 1;
+    static public final int SERVICE_GET_TO_NOTE = SERVICE_GET_SUGGEST_TO_TUVI + 1;
     static public String getChamNgon(String date, int index)
     {
         return getChamNgon(date, index, 0);

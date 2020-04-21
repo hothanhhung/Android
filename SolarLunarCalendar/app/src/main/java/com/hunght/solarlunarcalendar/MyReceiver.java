@@ -77,6 +77,7 @@ public class MyReceiver// extends BroadcastReceiver
                  Log.d("AmDuong", "Checking NoteItems");
                 ArrayList<NoteItem> noteItems = SharedPreferencesUtils.getNoteItems(context);
 
+                int index = 0;
                 for (NoteItem noteItem: noteItems) {
                     if(noteItem != null && noteItem.haveDate && noteItem.isToday())
                     {
@@ -98,7 +99,8 @@ public class MyReceiver// extends BroadcastReceiver
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                         mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());*/
 
-                        showNotification(context, "SERVICE_GET_INFO_OF_DATE_SHORT", ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, noteItem.Subject, noteItem.Content, activity, R.drawable.bell);
+                        index++;
+                        showNotification(context, "SERVICE_GET_TO_NOTE", ServiceProcessor.SERVICE_GET_TO_NOTE * 100 + index, noteItem.Subject, noteItem.Content, activity, R.drawable.bell);
                         keepCheck = false;
                     }
 

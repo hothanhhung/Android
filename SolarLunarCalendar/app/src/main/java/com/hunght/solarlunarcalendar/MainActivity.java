@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -28,6 +29,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.DateItemForGridview;
 import com.hunght.data.MenuLookUpItemKind;
+import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
 import java.util.Calendar;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity
             //wakeup and starts service in every 45 minutes.
 
             SharedPreferencesUtils.setAlarmVersion(this, ALARM_VERSION);
+            SharedPreferencesUtils.setShowSuggestTuVi(this, 0);
             Log.d(TAG, "AlarmManager scheduled " + ALARM_VERSION);
         }else{
             Log.d(TAG, "AlarmManager existed " + ALARM_VERSION);
@@ -173,6 +176,31 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         showAdsAfterLongTime(false);
 
+    }
+
+    public final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
+    public final static int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE + 1;
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Utils.exportToCsv(this, SharedPreferencesUtils.getNoteItems(this));
+                } else {
+                    Toast.makeText(this, "Không có quyền để tạo file", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:{
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Quyền đã được cấp. Vui lòng thử lại", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Không có quyền đọc file", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     public void updateUI(int id) {

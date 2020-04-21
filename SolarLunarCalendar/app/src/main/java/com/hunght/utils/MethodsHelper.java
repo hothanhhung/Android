@@ -1,10 +1,17 @@
 package com.hunght.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.inputmethod.InputMethodManager;
+
+import com.hunght.solarlunarcalendar.MainActivity;
+
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.text.NumberFormat;
@@ -17,7 +24,6 @@ import java.util.Locale;
  * Created by Lenovo on 6/9/2016.
  */
 public class MethodsHelper {
-
 
     public static String stripAccentsAndD(String s)
     {
@@ -149,5 +155,38 @@ public class MethodsHelper {
         int year = calendar.get(Calendar.YEAR);
         return (year + "" + (month < 10 ? "0" : "") + month + "" + (day < 10 ? "0" : "") + day
                 + (hour < 10 ? "0" : "") + hour + "" + (minute < 10 ? "0" : "") + minute+ "" + (second < 10 ? "0" : "") + second);
+    }
+
+    public static boolean checkPermission(Context context, int permissionKey)
+    {
+        switch (permissionKey) {
+            case MainActivity.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE:
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // No explanation needed; request the permission
+                    ActivityCompat.requestPermissions((Activity) context,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            MainActivity.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                    return false;
+                } else {
+                    // Permission has already been granted
+                    return true;
+                }
+            case MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // No explanation needed; request the permission
+                    ActivityCompat.requestPermissions((Activity) context,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return false;
+                } else {
+                    // Permission has already been granted
+                    return true;
+                }
+        }
+        return false;
     }
 }

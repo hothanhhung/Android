@@ -1,16 +1,11 @@
 package com.hunght.solarlunarcalendar;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +20,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.hunght.data.NoteItem;
 import com.hunght.utils.FileChooser;
+import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
 
@@ -36,7 +32,7 @@ import java.util.ArrayList;
  */
 
 public class NotesView extends LinearLayout {
-    final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
+
     FloatingActionButton fbtNotesViewAdd;
     TextView tvNotesViewNoItem, tvNotesViewBackupPath;
     ListView lvNotesViewItems;
@@ -80,9 +76,9 @@ public class NotesView extends LinearLayout {
 
         File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         boolean isExternal = Environment.isExternalStorageRemovable(sdCard);
-        String saveFolder = Environment.DIRECTORY_DOCUMENTS + "/LichAmDuong";
+        String saveFolder = Environment.DIRECTORY_DOCUMENTS + "/" + Utils.BACKUP_FOLDER;
         String path = isExternal?"SD card/":"Internal Storage/"+saveFolder;
-        tvNotesViewBackupPath.setText("Sao Lưu: "+path + "\n Hoặc: " + sdCard.getPath() +"/"+saveFolder );
+        tvNotesViewBackupPath.setText("Sao Lưu: "+path + "\n Hoặc: " + sdCard.getPath() +"/" + Utils.BACKUP_FOLDER );
         loadNoteItems();
 
         fbtNotesViewAdd.setOnClickListener(new OnClickListener() {
@@ -99,7 +95,7 @@ public class NotesView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Sao Lưu", Toast.LENGTH_LONG).show();
-                if(checkPermission())
+                if(MethodsHelper.checkPermission(getContext(),MainActivity.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE))
                 {
                     Utils.exportToCsv(getContext(), noteItems);
                 }
@@ -109,37 +105,38 @@ public class NotesView extends LinearLayout {
         btRestore.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileChooser fileChooser = new FileChooser(getContext());
+                if (MethodsHelper.checkPermission(getContext(), MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE)) {
+                    FileChooser fileChooser = new FileChooser(getContext());
 
-                fileChooser.setFileListener(new FileChooser.FileSelectedListener() {
-                    @Override
-                    public void fileSelected(final File file) {
-                        // ....do something with the file
-                        String filename = file.getAbsolutePath();
-                        Log.i("File Name", filename);
-                        String json = Utils.readTextFile(file);
-                        try {
-                            Gson gson = new Gson();
-                            NoteItem[] restoredNoteItems = gson.fromJson(json, NoteItem[].class);
-                            for(int i=0; i<restoredNoteItems.length; i++){
-                                SharedPreferencesUtils.updateNoteItems(getContext(), restoredNoteItems[i]);
+                    fileChooser.setFileListener(new FileChooser.FileSelectedListener() {
+                        @Override
+                        public void fileSelected(final File file) {
+                            // ....do something with the file
+                            String filename = file.getAbsolutePath();
+                            Log.i("File Name", filename);
+                            String json = Utils.readTextFile(file);
+                            try {
+                                Gson gson = new Gson();
+                                NoteItem[] restoredNoteItems = gson.fromJson(json, NoteItem[].class);
+                                for (int i = 0; i < restoredNoteItems.length; i++) {
+                                    SharedPreferencesUtils.updateNoteItems(getContext(), restoredNoteItems[i]);
+                                }
+
+                                loadNoteItems();
+
+                                Toast.makeText(getContext(), "Phục hồi dữ liệu đã xong", Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                Log.d("TAG", "Error Write File" + e.getMessage());
+                                e.printStackTrace();
+                                Toast.makeText(getContext(), "File không đúng định dạng phục hồi", Toast.LENGTH_LONG).show();
                             }
 
-                            loadNoteItems();
-
-                            Toast.makeText(getContext(), "Phục hồi dữ liệu đã xong", Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Log.d("TAG", "Error Write File" + e.getMessage());
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), "File không đúng định dạng phục hồi", Toast.LENGTH_LONG).show();
                         }
+                    });
 
-                    }
-                });
-// Set up and filter my extension I am looking for
-                //fileChooser.setExtension("pdf");
-                fileChooser.showDialog();
-                Toast.makeText(getContext(), "Phục Hồi", Toast.LENGTH_LONG).show();
+                    fileChooser.showDialog();
+                   // Toast.makeText(getContext(), "Phục Hồi", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -166,38 +163,6 @@ public class NotesView extends LinearLayout {
                     parentView.addView(new SaveNoteItemView(getContext()), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 }
             });
-        }
-    }
-
-    private boolean checkPermission()
-    {
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-           /* if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
-                    Manifest.permission.READ_CONTACTS)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else */
-            {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions((Activity) getContext(),
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-            return false;
-        } else {
-            // Permission has already been granted
-            return true;
         }
     }
 }
