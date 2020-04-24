@@ -2,21 +2,14 @@ package com.hunght.tinchungkhoan;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.UiThread;
-import android.support.v4.app.DialogFragment;
-import android.text.TextPaint;
+
+import androidx.annotation.UiThread;
+
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -36,7 +29,6 @@ import com.hunght.data.ThucHienQuyenItem;
 import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;

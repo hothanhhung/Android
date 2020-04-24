@@ -47,7 +47,7 @@
             android:scaleType="centerCrop"
             android:src="@android:drawable/ic_menu_more" />
     </LinearLayout>
-    <android.support.v4.widget.DrawerLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -78,7 +78,7 @@
         </LinearLayout>
 
         <!-- The navigation drawer -->
-        <android.support.design.widget.NavigationView
+        <com.google.android.material.navigation.NavigationView
             android:id="@+id/leftNavdrawer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -109,7 +109,7 @@
                 android:paddingBottom="30dp"
                 android:clipToPadding="false" />
         </LinearLayout>-->
-    </android.support.v4.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
