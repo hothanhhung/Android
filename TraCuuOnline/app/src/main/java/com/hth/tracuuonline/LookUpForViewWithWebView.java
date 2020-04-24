@@ -2,6 +2,7 @@ package com.hth.tracuuonline;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.StrictMode;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -64,6 +65,9 @@ public class LookUpForViewWithWebView extends LinearLayout {
         llWebView = (RelativeLayout) view.findViewById(R.id.llWebView);
 
         WebSettings webViewSettings = webView.getSettings();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webViewSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+        }
         webViewSettings.setSupportZoom(true);
         webViewSettings.setBuiltInZoomControls(true);
         webViewSettings.setDisplayZoomControls(false);

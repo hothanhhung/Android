@@ -1,8 +1,8 @@
 package com.hth.tracuuonline;
 
 import android.os.Handler;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
             isFirstRun = false;
         }
 
+        createInterstitialAds();
+
         mAdView = (AdView) this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -167,24 +169,25 @@ public class MainActivity extends AppCompatActivity {
             {
                 showInterstitial();
             }
-            else if(numberOfSelectItem%4 == 0) {
+            else if(numberOfSelectItem%3 == 0) {
                 showInterstitial();
             }
         }
     }
 
-    private void showInterstitial() {
+    static boolean loadAdsFailed = false;
+    private void createInterstitialAds(){
         if (interstitial == null) {
             interstitial = new InterstitialAd(this);
             interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
+            //interstitial.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
             interstitial.setAdListener(new AdListener() {
                 @Override
                 public void onAdLoaded() {
-                    if (interstitial.isLoaded()) {
+                    /*if (interstitial.isLoaded()) {
                         interstitial.show();
-                        timeForRun = Calendar.getInstance().getTime().getTime();
-                        numberOfSelectItem = 1;
-                    }
+                        lastShowAds = (new Date()).getTime();
+                    }*/
                 }
 
                 @Override
@@ -194,12 +197,24 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAdFailedToLoad(int errorCode) {
+                    loadAdsFailed = true;
                 }
             });
         }
 
         AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-
         interstitial.loadAd(adRequest_interstitial);
+        loadAdsFailed = false;
+    }
+
+    private void showInterstitial() {
+        if(loadAdsFailed || interstitial == null){
+            createInterstitialAds();
+        }
+        if (interstitial.isLoaded()) {
+            interstitial.show();
+            timeForRun = Calendar.getInstance().getTime().getTime();
+            createInterstitialAds();
+        }
     }
 }

@@ -62,6 +62,8 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
+                // Inject CSS when page is done loading
+                injectCSS();
                 super.onPageFinished(view, url);
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -103,8 +105,36 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
                 return "http://banggia.giavang.net";
             case GiaOto:
                 return "http://hunght.com/tracuuonline/giaOto";
+            case GiaXang:
+                return "https://thanhnien.vn/tien-ich/xang-dau.html";
         }
         return "";
     }
 
+    public String getCSSOverride(MenuLookUpItemKind kind) {
+
+        switch (kind)
+        {
+            case GiaXang:
+                return ".l-content{width: 100% !important;} div[id*=\"banner\"], iframe, .bottom-bar, .fb_reset, .banner, .m-header, .m-footer, a, #fb-root{display:none !important}";
+        }
+        return "";
+    }
+
+    private void injectCSS() {
+        try {
+            String encoded = getCSSOverride(kind);
+            if(!encoded.isEmpty()) {
+                webView.loadUrl("javascript:(function() {" +
+                        "var parent = document.getElementsByTagName('head').item(0);" +
+                        "var style = document.createElement('style');" +
+                        "style.type = 'text/css';" +
+                        "style.innerHTML = '" + encoded + "';" +
+                        "parent.appendChild(style)" +
+                        "})()");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

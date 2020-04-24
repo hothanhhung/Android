@@ -17,7 +17,7 @@ import android.widget.TextView;
  * Created by Lenovo on 10/28/2016.
  */
 public class LookUpBienSoOto extends LinearLayout {
-    String urlLookUpBienSoOto = "http://www.vr.org.vn/ptpublic_web/ThongTinPTPublic.aspx";
+    String urlLookUpBienSoOto = "http://www.vr.org.vn/ptpublic/ThongTinPTPublic.aspx";
     WebView webView;
     TextView textView;
     RelativeLayout llWebView;

@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +23,11 @@ import android.util.Log;
 import android.webkit.WebResourceResponse;
 
 import com.hth.data.MenuLookUpItemKind;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class ParserData {
     
@@ -67,9 +75,9 @@ public class ParserData {
     }
 
     public static String getExchageRateFromVietcombank() {
-        String urlpage = "https://www.vietcombank.com.vn/exchangerates/";
+        String urlpage = "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx?txttungay=&BacrhID=68&isEn=False";
         StringBuilder contentResult = new StringBuilder();
-        String joinContent="<style> h2, a, #exch-rates table {display:none} .rateTable {display:block !important} \n" +
+        String joinContent="<style> h2, a, table {width: 80% !important; border-spacing: 0px;} .rateTable {display:block !important} \n" +
                 "body, .rateTable {font: 81%/1.4 Tahoma, Arial, Helvetica, sans-serif;color: #000} " +
                 ".tbl-01 th {background-color: #88EE99; color: #333333;}"+
                 ".tbl-01 td {text-align: right;} body {margin-bottom: 40px;}</style>";
@@ -79,10 +87,10 @@ public class ParserData {
                 StrictMode.setThreadPolicy(policy);
             }
 
-            Document doc = Jsoup.connect(urlpage).timeout(10000)
+            Document doc = Jsoup.connect(urlpage).sslSocketFactory(socketFactory()).timeout(10000)
                    // .userAgent("Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0")
                     .get();
-            Element content = doc.getElementById("exch-rates");
+            Element content = doc;// doc.getElementById("interest-rates");
             contentResult.append(joinContent);
             contentResult.append("<body>").append(content.outerHtml()).append("</body>");
 
@@ -93,6 +101,29 @@ public class ParserData {
         }
         return contentResult.toString();
     }
+
+    private static SSLSocketFactory socketFactory() {
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            }
+
+            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            }
+        }};
+
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            return sslContext.getSocketFactory();
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            throw new RuntimeException("Failed to create a SSL socket factory", e);
+        }
+    }
+
     public static String getBangGiaVang() {
         String urlpage = "http://banggia.giavang.net/";
         StringBuilder contentResult = new StringBuilder();
@@ -200,7 +231,43 @@ public class ParserData {
                     result.append(line);
                 }
                 int start = result.indexOf("<table"), end = result.indexOf("/table>");
-                String strResult = result.substring(start, end + 7).replace("\\n", "").replace("\\", "");
+                String strResult = result.substring(start, end + 7).replace("\\n", "").replace("\\", "").replace("src=\"//stc","src=\"http://stc");
+                //Log.d("getThoiTiet", strResult);
+                contentResult.append(joinContent);
+                contentResult.append("<body>").append(strResult).append("<div style=\"font-size:9px\">Nguồn: laban.vn</div>").append("</body>");
+            } finally {
+                urlConnection.disconnect();
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "Lỗi khi kết nối server";
+        }
+        return contentResult.toString();
+    }
+
+    public static String getLichChieuPhimRap() {
+        String urlpage = "https://laban.vn/p/cinemaSchedule";
+        StringBuilder contentResult = new StringBuilder();
+        String joinContent="<style>.table{width:100% !important; font-size: 10px;text-align: center;}</style>";
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            URL url = new URL(urlpage);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            try {
+                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                int start = result.indexOf("<table"), end = result.indexOf("/table>");
+                String strResult = result.substring(start, end + 7).replace("\\n", "").replace("\\", "").replace("src=\"//stc","src=\"http://stc");
                 //Log.d("getThoiTiet", strResult);
                 contentResult.append(joinContent);
                 contentResult.append("<body>").append(strResult).append("<div style=\"font-size:9px\">Nguồn: laban.vn</div>").append("</body>");
