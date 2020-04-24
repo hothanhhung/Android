@@ -18,18 +18,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.hunght.data.DateItemForGridview;
 import com.hunght.data.MenuLookUpItemKind;
-import com.hunght.utils.MethodsHelper;
 import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
 import java.util.Calendar;
@@ -38,19 +34,10 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "AmDuong";
-    private static int JobId = 30200;
-    private static int ViewId = 0;
-
+    public static final String EXTRA_FOR_NAVIGATION_MENU_ID = "EXTRA_FOR_NAVIGATION_MENU_ID";
     private static final int ALARM_VERSION = 3;
 
-    DateItemForGridview selectedDate;
-    DateItemAdapter adapter;
-    Button btMonth, btYear;
-    TextView tvSolarMonthInfo, tvSolarInfoDate, tvSolarInfoDayInWeek, tvLunarInfoDayInWeek, tvLunarInfoDayInWeek1, tvSolarInfoToday;
-
     LinearLayout llMainContent;
-
-    private Intent mServiceIntent;
     private AdView mAdView = null;
     private InterstitialAd interstitial = null;
 
@@ -74,8 +61,7 @@ public class MainActivity extends AppCompatActivity
 		//mAdView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
         llMainContent = (LinearLayout)findViewById(R.id.llMainContent);
         llMainContent.removeAllViews();
-        updateUI(ViewId);
-        ViewId = 0;
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -96,16 +82,15 @@ public class MainActivity extends AppCompatActivity
             Log.d(TAG, "AlarmManager existed " + ALARM_VERSION);
         }
         createInterstitialAds();
+        int viewId = getIntent().getIntExtra(EXTRA_FOR_NAVIGATION_MENU_ID, 0);
+        updateUI(viewId);
+        Log.d(TAG, "viewId " + viewId);
     }
 
     @Override
     protected void onDestroy() {
       //  stopService(mServiceIntent);
         super.onDestroy();
-    }
-
-    public static void setViewId(int id){
-        ViewId = id;
     }
 
     boolean doubleBackToExitPressedOnce = false;

@@ -82,11 +82,12 @@ public class MyReceiver// extends BroadcastReceiver
                     if(noteItem != null && noteItem.haveDate && noteItem.isToday())
                     {
                         Log.d("AmDuong", "Have NoteItem");
-                        Intent intent1 = new Intent(context, MainActivity.class);
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        MainActivity.setViewId(R.layout.notes_view_item);
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.setAction("SERVICE_GET_TO_NOTE");
+                        intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.layout.notes_view_item);
                         SaveNoteItemView.setNoteItem(noteItem);
-                        PendingIntent activity = PendingIntent.getActivity(context, 0, intent1, 0);
+                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
                         /*NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
@@ -116,11 +117,11 @@ public class MyReceiver// extends BroadcastReceiver
                 Log.d("AmDuong", "Checking Ngay Ram: " + day);
                 if(day == 1 || day == 15) {
                     String subject = (day == 1)? "Hôm nay là ngày đầu tháng âm lịch" : "Hôm nay là rằm", content = date.getLunarInfoWidget(false);
-                    Intent intent1 = new Intent(context, MainActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    MainActivity.setViewId(R.layout.notes_view_item);
-
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, 0);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.setAction("SERVICE_GET_INFO_OF_NGAY_RAM");
+                    intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navSolarLunarCalendar);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
                     showNotification(context, "SERVICE_GET_INFO_OF_NGAY_RAM", ServiceProcessor.SERVICE_GET_NGAY_RAM, subject, content, pendingIntent, (day == 1)? R.drawable.moon:R.drawable.fullmoon);
                     keepCheck = false;
                 }
@@ -134,9 +135,10 @@ public class MyReceiver// extends BroadcastReceiver
                 if(rand.nextInt(5) == 1 || SharedPreferencesUtils.getShowSuggestTuVi(context) == 0){
                     String subject = "Xem tử vi hàng ngày", content="Thử xem tử vi hôm nay của bạn nào";
                     Intent intent = new Intent(context, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    MainActivity.setViewId(R.id.navTuVi);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+                    intent.setAction("SERVICE_GET_SUGGEST_TO_TUVI");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navTuVi);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
                     showNotification(context, "SERVICE_GET_SUGGEST_TO_TUVI", ServiceProcessor.SERVICE_GET_SUGGEST_TO_TUVI, subject, content, pendingIntent, R.drawable.icon);
                     keepCheck = false;
                 }
@@ -192,6 +194,11 @@ public class MyReceiver// extends BroadcastReceiver
 
     }
 
+    Random random = new Random();
+    private int getRandom(){
+        return 0;//random.nextInt();
+    }
+
     class PerformServiceProcessBackgroundTask extends AsyncTask<Object, Object, Object> {
 
         private int type;
@@ -226,9 +233,10 @@ public class MyReceiver// extends BroadcastReceiver
 
 
                         Intent intent = new Intent(context, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        MainActivity.setViewId(R.id.navGoodDayBadDay);
-                        PendingIntent activity = PendingIntent.getActivity(context, 0, intent, 0);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.setAction("SERVICE_GET_INFO_OF_DATE_SHORT");
+                        intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navGoodDayBadDay);
+                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
 /*
                         NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
@@ -254,9 +262,10 @@ public class MyReceiver// extends BroadcastReceiver
                         Log.d("AmDuong", "onPostExecute" +  str);
 
                         Intent intent = new Intent(context, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        MainActivity.setViewId(R.id.navSolarLunarCalendar);
-                        PendingIntent activity = PendingIntent.getActivity(context, 0, intent, 0);
+                        intent.setAction("SERVICE_GET_CHAM_NGON");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navSolarLunarCalendar);
+                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
                         /*NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)

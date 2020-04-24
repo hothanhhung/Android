@@ -80,7 +80,10 @@ public class LunarSolarAppWidget extends AppWidgetProvider {
             views.setViewVisibility(R.id.appwidget_image_congiap, View.GONE);
         }
         Intent configIntent = new Intent(context, MainActivity.class);
-        PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0);
+        configIntent.setAction("LunarSolarAppWidget");
+        configIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        configIntent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navSolarLunarCalendar);
+        PendingIntent configPendingIntent = PendingIntent.getActivity(context, 20201010, configIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         views.setOnClickPendingIntent(R.id.appwidget_image_congiap, configPendingIntent);
 
         // Instruct the widget manager to update the widget
