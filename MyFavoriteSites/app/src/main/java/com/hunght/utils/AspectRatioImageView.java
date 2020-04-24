@@ -3,7 +3,7 @@ package com.hunght.utils;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class AspectRatioImageView extends android.support.v7.widget.AppCompatImageView {
+public class AspectRatioImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public AspectRatioImageView(Context context) {
         super(context);

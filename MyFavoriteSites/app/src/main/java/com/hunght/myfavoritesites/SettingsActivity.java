@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.annotation.UiThread;
+import androidx.annotation.UiThread;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
