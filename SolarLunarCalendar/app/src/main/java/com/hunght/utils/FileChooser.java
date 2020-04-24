@@ -50,7 +50,7 @@ public class FileChooser {
         list = new ListView(this.context);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int which, long id) {
-                Pair<String, Boolean> pair = (Pair) list.getItemAtPosition(which);
+                Pair<String, Boolean> pair = (Pair<String, Boolean>) list.getItemAtPosition(which);
 
                 File chosenFile = getChosenFile(pair.first);
                 if (chosenFile.isDirectory()) {
@@ -120,7 +120,7 @@ public class FileChooser {
                     R.layout.file_chooser_layout, R.id.tvChooser, fileList) {
                 @Override public View getView(int pos, View view, ViewGroup parent) {
                     view = super.getView(pos, view, parent);
-                    Pair<String, Boolean> pair = (Pair)list.getItemAtPosition(pos);
+                    Pair<String, Boolean> pair = (Pair<String, Boolean>)list.getItemAtPosition(pos);
                     ((ImageView)view.findViewById(R.id.imgChooser)).setImageResource(pair.second? R.drawable.file_icon : R.drawable.folder_icon);
                     ((TextView) view.findViewById(R.id.tvChooser)).setText(pair.first);
                     return view;

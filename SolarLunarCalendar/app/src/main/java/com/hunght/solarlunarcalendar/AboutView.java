@@ -2,15 +2,11 @@ package com.hunght.solarlunarcalendar;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import com.hunght.data.DateItemForGridview;
-
-import java.util.Date;
 
 /**
  * Created by Lenovo on 4/18/2018.
