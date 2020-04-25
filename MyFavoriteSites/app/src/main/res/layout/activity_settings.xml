@@ -175,7 +175,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Swipe from right to left for sharing current page"
+                android:text="Swipe more than 50% screen width from right to left for sharing current page"
                 android:textSize="11sp" />
 
         </LinearLayout>

@@ -1,14 +1,19 @@
 package com.hunght.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 public class OnSwipeTouchListener implements View.OnTouchListener {
+    private static final String TAG = "myhunght";
     private GestureDetector gestureDetector;
+    private Context context;
 
     public OnSwipeTouchListener(Context c) {
+        this.context = c;
         gestureDetector = new GestureDetector(c, new GestureListener());
     }
 
@@ -47,10 +52,12 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
+                long minWidth = Math.round(Resources.getSystem().getDisplayMetrics().widthPixels * 0.5);
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
+                Log.d(TAG, "minWidth: "+minWidth+" diffX: "+diffX);
                 if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (Math.abs(diffX) > minWidth && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffX > 0) {
                             onSwipeRight();
                         } else {
