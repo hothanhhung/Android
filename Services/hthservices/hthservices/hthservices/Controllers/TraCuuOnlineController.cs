@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 
@@ -65,6 +66,10 @@ namespace hthservices.Controllers
             if (string.IsNullOrEmpty(url))
             {
                 url = "https://vnexpress.net/interactive/2016/bang-gia-xe/sedan-cerato-1-6at-694.html";
+            }
+            else
+            {
+                url = HttpUtility.UrlDecode(url).Replace(".net//", ".net/");
             }
             return Json(new { data = TraCuuOnlineHelper.GetDetailOto(url) }, JsonRequestBehavior.AllowGet);
         }
