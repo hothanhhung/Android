@@ -108,7 +108,7 @@ public class SavedValues {
 	}
 
 	public boolean getRecordInappBrowser( ) {
-		return appSharedPrefs.getBoolean(RECORD_INAPP_BROWSER, true);
+		return appSharedPrefs.getBoolean(RECORD_INAPP_BROWSER, false);
 	}
 
 	public ArrayList<String> getFavorites() {

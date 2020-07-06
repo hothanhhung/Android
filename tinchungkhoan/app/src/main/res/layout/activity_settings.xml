@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingBottom="10dp">
 
         <LinearLayout
