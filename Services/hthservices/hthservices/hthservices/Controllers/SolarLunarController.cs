@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http;
@@ -12,6 +10,8 @@ namespace hthservices.Controllers
 {
     public class SolarLunarController : ApiController
     {
+        static Dictionary<string, string> currentTuVi = new Dictionary<string, string>();
+
         [GZipOrDeflate]
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetInfoDate1(string date, int index)
@@ -64,12 +64,36 @@ namespace hthservices.Controllers
          
         }
 
+        [GZipOrDeflate]
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetTuVi(int days, int months)
         {
             return new HttpResponseMessage()
             {
                 Content = new StringContent(CrawlTuViHelper.Crawl(days, months), Encoding.UTF8, "text/plain")
+            };
+
+        }
+
+        [GZipOrDeflate]
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetTuVi()
+        {
+            var now = DateTime.UtcNow.AddHours(7).ToString("yyyMMdd");
+            string content;
+            if (currentTuVi.ContainsKey(now))
+            {
+                content = currentTuVi[now];
+            }
+            else
+            {
+                content = CrawlTuViHelper.Crawl(1, 0);
+                currentTuVi.Clear();
+                currentTuVi.Add(now, content);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(content, Encoding.UTF8, "text/plain")
             };
 
         }

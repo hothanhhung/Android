@@ -139,7 +139,7 @@ angular.module('starter', []).controller("mainController", ['$scope', '$http','$
 		$scope.updateInformation();
 	}
 
-   $scope.updateInformation = function(shouldFindNewItem){
+   $scope.updateInformation = function(shouldFindNewItem, loadFromOther){
    var date = new Date();
    var timeKey = ""+date.getFullYear();
    if($scope.selectedKindsOfViewTime.id !== 3)
@@ -154,7 +154,10 @@ angular.module('starter', []).controller("mainController", ['$scope', '$http','$
    if(tuviContent && tuviContent[$scope.selectedKindOfTuVi.id]){
 	$scope.TuVi.Content = $sce.trustAsHtml(tuviContent[$scope.selectedKindOfTuVi.id]);
    }else{
-   if(shouldFindNewItem && $scope.selectedKindsOfViewTime.id !== 3){
+   if(loadFromOther){
+	$scope.getCurrentData(timeKey);
+   }
+   else if(shouldFindNewItem && $scope.selectedKindsOfViewTime.id !== 3){
 	if($scope.selectedKindsOfViewTime.id === 1){
 		$scope.selectedKindsOfViewTime = $scope.KindsOfViewTime[1];
 	}else{
@@ -167,6 +170,27 @@ angular.module('starter', []).controller("mainController", ['$scope', '$http','$
    }			
    };
 
+	$scope.getCurrentData = function(timeKey){
+		$scope.TuVi.Content = $sce.trustAsHtml("Đang lấy dữ liệu...");
+		  var url = 'http://hunght.com/api/SolarLunar/GetTuVi?ts='+(new Date()).getDate();
+		  $.ajax({
+			url: url,
+			type: 'GET',
+			timeout: 10000,
+			error: function(xhr, status, error){
+			  $scope.updateInformation(true);
+			  $scope.$apply();
+			},
+			success: function(responsedata){
+			  if(responsedata != ''){  
+				$scope.TuViData[timeKey] = responsedata[timeKey];
+				$scope.updateInformation(true);
+				$scope.$apply();
+			  }
+			}
+		  });
+	}	
+	
 	$scope.getData = function(){
 		$scope.TuVi.Content = $sce.trustAsHtml("Đang lấy dữ liệu...");
 		  var url = 'https://raw.githubusercontent.com/hothanhhung/static-files/master/tuvi/tuvi.json?ts='+(new Date()).getTime();
@@ -182,7 +206,7 @@ angular.module('starter', []).controller("mainController", ['$scope', '$http','$
 			success: function(responsedata){
 			  if(responsedata != ''){  
 				$scope.TuViData = JSON.parse(responsedata);
-				$scope.updateInformation(true);
+				$scope.updateInformation(true, true);
 				$scope.$apply();
 			  }
 			}
