@@ -123,7 +123,9 @@
 angular.module('starter', []).controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
 	$scope.TuVi = {Content:$sce.trustAsHtml("BXH")};
 	$scope.KindsOfViewTime = [{ id: 1, name: 'Ngày Hôm Nay' },{ id: 2, name: 'Tháng Này' },{ id: 3, name: 'Năm Này' }];
+	
 	$scope.selectedKindsOfViewTime = $scope.KindsOfViewTime[0];
+	
 	$scope.changeKindsOfViewTime = function(kind)
 	{
 		$scope.selectedKindsOfViewTime = kind;
@@ -132,11 +134,26 @@ angular.module('starter', []).controller("mainController", ['$scope', '$http','$
 	
 	$scope.KindsOfTuVi = [{"id":"Ty","name":"Tuổi Tý"},{"id":"Suu","name":"Tuổi Sửu"},{"id":"Dan","name":"Tuổi Dần"},{"id":"Meo","name":"Tuổi Mẹo"},{"id":"Thin","name":"Tuổi Thìn"},{"id":"Ti","name":"Tuổi Tỵ"},{"id":"Ngo","name":"Tuổi Ngọ"},{"id":"Mui","name":"Tuổi Mùi"},{"id":"Than","name":"Tuổi Thân"},{"id":"Dau","name":"Tuổi Dậu"},{"id":"Tuat","name":"Tuổi Tuất"},{"id":"Hoi","name":"Tuổi Hợi"},{"id":"BachDuong","name":"Cung Bạch Dương"},{"id":"KimNguu","name":"Cung Kim Ngưu"},{"id":"SongTu","name":"Cung Song Tử"},{"id":"CuGiai","name":"Cung Cự Giải"},{"id":"SuTu","name":"Cung Sư Tử"},{"id":"XuNu","name":"Cung Xử Nữ"},{"id":"ThienBinh","name":"Cung Thiên Bình"},{"id":"BoCap","name":"Cung Bọ Cạp"},{"id":"NhanMa","name":"Cung Nhân Mã"},{"id":"MaKet","name":"Cung Ma Kết"},{"id":"BaoBinh","name":"Cung Bảo Bình"},{"id":"SongNgu","name":"Cung Song Ngư"}];
 	$scope.selectedKindOfTuVi = $scope.KindsOfTuVi[0];
+	
+	if(window.localStorage){
+		var oldValue = window.localStorage.getItem('SelectedKindOfTuVi');
+		if(oldValue){
+			var index = $scope.KindsOfTuVi.findIndex(x=>x.id===oldValue);
+			if(index > -1)
+			{
+				$scope.selectedKindOfTuVi = $scope.KindsOfTuVi[index];
+			}
+			
+		}
+	}
 
 	$scope.changeKindOfTuVi = function(kind)
 	{
 		$scope.selectedKindOfTuVi = kind;
 		$scope.updateInformation();
+		if(window.localStorage){
+			window.localStorage.setItem('SelectedKindOfTuVi', kind.id);
+		}
 	}
 
    $scope.updateInformation = function(shouldFindNewItem, loadFromOther){
