@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <style>
+        .giai, tr:nth-child(1) {
+            background: none repeat scroll 0% 0% #888C95;
+            color: #FFF;
+        }
+
+            .giai img {
+                float: left;
+                padding-right: 2px;
+            }
+
+            .giai h3 {
+                float: left;
+            }
+
+        .time_f {
+            color: #209EBB;
+            font-weight: 700;
+            text-align: center;
+            width: 15%;
+            min-width: 43px;
+        }
+
+        .text_right {
+            text-align: right;
+            width: 40%;
+        }
+
+        .guess {
+            color: #209EBB;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .lich {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .date {
+            background: none repeat scroll 0% 0% #D4D4D4;
+            color: #404040;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        td {
+            padding-left: 5px;
+        }
+
+        .grey_row {
+            background-color: #F3F3F3;
+        }
+
+        .table {
+            border-collapse: collapse;
+            width: 100% !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .width90 {
+            width: 99% !important;
+        }
+
+        .col-md-6 {
+            padding-right: 3px !important;
+            padding-left: 3px !important;
+        }
+		.acb{
+			min-width: 12px;
+			display: inline-block;
+			font-weight: 900;
+		}
+    </style>
+</head>
+  <body>
+	<div ng-app="starter" ng-controller="mainController">
+		<div class="container-fluid" style="margin: 0px 0px 10px 0px">    
+			<div class="row" style="margin: 10px -10px 10px -10px;">
+				<div class="col-xs-12 col-md-12">
+					<div style="text-align: center;font-weight: bold;margin-bottom: 20px;font-size: 20px;color: darkblue;">
+						Bói Tên Ai Cập
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-12">
+				  <div class="dropdown width90" style="display: flex">
+						<input type="text" ng-model="Name" style="flex: 1"/>
+					   <button type="button" ng-Click="perform()">Xem</button> 
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin: 10px -10px 10px -10px;">
+				<div style= "margin: 10px; padding-bottom: 20px;"><div ng-bind-html="Chars"></div><div ng-bind-html="Values"></div></div>
+				<div ng-bind-html = "TuVi.Content"></div>
+			</div> 
+			<div class="row">
+				<div style="font-size:10px">Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
+			</div>      
+		</div>
+	</div>
+  <script> 
+angular.module('starter', []).controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
+	$scope.TuVi = {Content:""};
+	
+	$scope.Name = "";
+	$scope.Chars = "";
+	$scope.Values = "";
+
+	$scope.removeAccents = function(str) {
+	  return str.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.replace(/đ/g, 'd').replace(/Đ/g, 'D');
+	}
+
+	$scope.perform = function()
+	{
+		var name = $scope.removeAccents($scope.Name.split(' ').join('')).toUpperCase();
+		var chars = [];
+		var values = [];
+		var total = 0;
+		for(var i = 0; i < name.length; i++){
+			var number = ((name.charCodeAt(i) - 65) % 9 ) + 1;
+			if(number < 1)
+			{
+				total = -1;
+				break;
+			}
+			chars.push(name[i]);
+			values.push(number);
+			total += number;
+		}
+		$scope.Chars = "<span class='acb'>" + chars.join("</span><span class='acb'> </span><span class='acb'>")+"</span>";
+		$scope.Values = "<span class='acb'>" + values.join("</span><span class='acb'>+</span><span class='acb'>")+"</span>" + "<span class='acb'>=</span><span class='acb'>"+total+"</span>";
+		
+		while(total > 9)
+		{
+			$scope.Values+="<span class='acb'>=</span>";
+			if(total < 100){
+				var num1 = total%10;
+				var num2 = (total - num1)/10;
+				total = num1 + num2;
+				$scope.Values += "<span class='acb'>" + num2 + "</span><span class='acb'>+</span><span class='acb'>" + num1 + "</span><span class='acb'>=</span><span class='acb'>"+total+"</span>";
+			}else{
+				var num1 = total%10;
+				var num2 = ((total - num1)/10)%10;
+				var num3 = (total - num1 - num2 * 10)/100;
+				total = num1 + num2 + num3;
+				$scope.Values += "<span class='acb'>" + num3 + "</span><span class='acb'>+</span><span class='acb'>" + num2 + "</span><span class='acb'>+</span><span class='acb'>" + num1 + "</span><span class='acb'>=</span><span class='acb'>"+total+"</span>";
+			}
+		}
+		$scope.Chars = $sce.trustAsHtml($scope.Chars);
+		$scope.Values = $sce.trustAsHtml($scope.Values);
+		$scope.performNumber(total);
+		
+	}
+	$scope.performNumber = function(value)
+	{
+		if(value > 0)
+		{
+			var content = $scope.TuViData["BoiSoAiCap"]["So"+value];
+			$scope.TuVi.Content = $sce.trustAsHtml(content);
+		}else{
+			$scope.Chars = $sce.trustAsHtml("");
+			$scope.Values = $sce.trustAsHtml("");
+			$scope.TuVi.Content = $sce.trustAsHtml("Tên không đúng. Vui lòng chỉ dùng chữ cái");
+		}
+		//$scope.$apply();
+	};
+	
+	$scope.getData = function(){
+		$scope.TuVi.Content = $sce.trustAsHtml("Đang lấy dữ liệu...");
+		  var url = 'https://raw.githubusercontent.com/hothanhhung/static-files/master/tuvi/boisoaicap.json?ts='+(new Date()).getTime();
+		  //var url = 'http://hunght.com/htmlpage/lichamduong/tuvi.json';
+		  $.ajax({
+			url: url,
+			type: 'GET',
+			timeout: 10000,
+			error: function(xhr, status, error){
+			  $scope.TuVi.Content = $sce.trustAsHtml("Không Thể Thực Hiện Bói Lúc Này");
+			  $scope.$apply();
+			},
+			success: function(responsedata){
+			  if(responsedata != ''){  
+				$scope.TuViData = JSON.parse(responsedata);
+				$scope.TuVi.Content = $sce.trustAsHtml("");
+			  }else{
+				$scope.TuVi.Content = $sce.trustAsHtml("Không Thể Thực Hiện Bói Lúc Này");
+			  }
+			  $scope.$apply();
+			}
+		  });
+	}	
+   $scope.getData();
+   
+}]);
+  </script>
+  </body>
+</html>
+
