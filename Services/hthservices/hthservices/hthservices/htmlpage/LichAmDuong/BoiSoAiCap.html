@@ -87,6 +87,11 @@
 			display: inline-block;
 			font-weight: 900;
 		}
+		.center-box{
+			margin: 0px auto;
+			display: table;
+			color: brown;
+		}
     </style>
 </head>
   <body>
@@ -100,17 +105,17 @@
 				</div>
 				<div class="col-xs-12 col-md-12">
 				  <div class="dropdown width90" style="display: flex">
-						<input type="text" ng-model="Name" style="flex: 1"/>
-					   <button type="button" ng-Click="perform()">Xem</button> 
+						<input type="text" ng-model="Name" style="flex: 1" class="form-control"/>
+					   <button type="button" ng-Click="perform()" style="width:78px;margin-left:3px;background: #f2efef;" class="form-control">Xem</button> 
 					</div>
 				</div>
 			</div>
 			<div class="row" style="margin: 10px -10px 10px -10px;">
-				<div style= "margin: 10px; padding-bottom: 20px;"><div ng-bind-html="Chars"></div><div ng-bind-html="Values"></div></div>
+				<div class="center-box" style="padding-bottom: 20px;"><div ng-bind-html="Chars"></div><div ng-bind-html="Values"></div></div>
 				<div ng-bind-html = "TuVi.Content"></div>
 			</div> 
-			<div class="row">
-				<div style="font-size:10px">Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
+			<div class="row" style="margin:10px;padding-bottom:20px;font-size:10px;font-style:italic;color:gray;">
+				<div>Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
 			</div>      
 		</div>
 	</div>
@@ -146,11 +151,11 @@ angular.module('starter', []).controller("mainController", ['$scope', '$http','$
 			total += number;
 		}
 		$scope.Chars = "<span class='acb'>" + chars.join("</span><span class='acb'> </span><span class='acb'>")+"</span>";
-		$scope.Values = "<span class='acb'>" + values.join("</span><span class='acb'>+</span><span class='acb'>")+"</span>" + "<span class='acb'>=</span><span class='acb'>"+total+"</span>";
+		$scope.Values = "<span class='acb'>" + values.join("</span><span class='acb'>+</span><span class='acb'>")+"</span>" + "<br/><span class='acb'>=</span><span class='acb'>"+total+"</span>";
 		
 		while(total > 9)
 		{
-			$scope.Values+="<span class='acb'>=</span>";
+			$scope.Values+="<br/><span class='acb'>=</span>";
 			if(total < 100){
 				var num1 = total%10;
 				var num2 = (total - num1)/10;

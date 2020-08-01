@@ -82,6 +82,11 @@
             padding-right: 3px !important;
             padding-left: 3px !important;
         }
+		.acb{
+			min-width: 12px;
+			display: inline-block;
+			font-weight: 900;
+		}
     </style>
 </head>
   <body>
@@ -90,26 +95,22 @@
 			<div class="row" style="margin: 10px -10px 10px -10px;">
 				<div class="col-xs-12 col-md-12">
 					<div style="text-align: center;font-weight: bold;margin-bottom: 20px;font-size: 20px;color: darkblue;">
-						Bói Tính Cách
+						Xem Tính Cách với Ngày Sinh
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-12">
-				  <div class="dropdown width90">
-					  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						{{selectedKindOfTuVi.name}}
-						<span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="kind in KindsOfTuVi"><a href="javascript:void(0)" ng-click="changeKindOfTuVi(kind)"> {{kind.name}}</a></li>
-					  </ul>
+				  <div class="dropdown width90" style="display: flex">
+						<input type="text" ng-model="Name" style="flex: 1"/>
+					   <button type="button" ng-Click="perform()">Xem</button> 
 					</div>
 				</div>
 			</div>
 			<div class="row" style="margin: 10px -10px 10px -10px;">
+				<div style= "margin: 10px; padding-bottom: 20px;"><div ng-bind-html="Chars"></div><div ng-bind-html="Values"></div></div>
 				<div ng-bind-html = "TuVi.Content"></div>
 			</div> 
 			<div class="row" style="margin:10px;padding-bottom:20px;font-size:10px;font-style:italic;color:gray;">
-				<div>Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
+				<div style="font-size:10px">Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
 			</div>      
 		</div>
 	</div>
@@ -117,44 +118,91 @@
 angular.module('starter', []).controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
 	$scope.TuVi = {Content:""};
 	
-	$scope.KindsOfTuVi = [{"id":"Ty","name":"Tuổi Tý"},{"id":"Suu","name":"Tuổi Sửu"},{"id":"Dan","name":"Tuổi Dần"},{"id":"Meo","name":"Tuổi Mẹo"},{"id":"Thin","name":"Tuổi Thìn"},{"id":"Ti","name":"Tuổi Tỵ"},{"id":"Ngo","name":"Tuổi Ngọ"},{"id":"Mui","name":"Tuổi Mùi"},{"id":"Than","name":"Tuổi Thân"},{"id":"Dau","name":"Tuổi Dậu"},{"id":"Tuat","name":"Tuổi Tuất"},{"id":"Hoi","name":"Tuổi Hợi"},{"id":"BachDuong","name":"Cung Bạch Dương"},{"id":"KimNguu","name":"Cung Kim Ngưu"},{"id":"SongTu","name":"Cung Song Tử"},{"id":"CuGiai","name":"Cung Cự Giải"},{"id":"SuTu","name":"Cung Sư Tử"},{"id":"XuNu","name":"Cung Xử Nữ"},{"id":"ThienBinh","name":"Cung Thiên Bình"},{"id":"BoCap","name":"Cung Bọ Cạp"},{"id":"NhanMa","name":"Cung Nhân Mã"},{"id":"MaKet","name":"Cung Ma Kết"},{"id":"BaoBinh","name":"Cung Bảo Bình"},{"id":"SongNgu","name":"Cung Song Ngư"}];
-	$scope.selectedKindOfTuVi = $scope.KindsOfTuVi[0];
+	$scope.Name = "";
+	$scope.Chars = "";
+	$scope.Values = "";
 
-	$scope.changeKindOfTuVi = function(kind)
+	$scope.removeAccents = function(str) {
+	  return str.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.replace(/đ/g, 'd').replace(/Đ/g, 'D');
+	}
+
+	$scope.perform = function()
 	{
-		$scope.selectedKindOfTuVi = kind;
-		$scope.updateInformation();
+		var name = $scope.removeAccents($scope.Name.split(' ').join('')).toUpperCase();
+		var chars = [];
+		var values = [];
+		var total = 0;
+		for(var i = 0; i < name.length; i++){
+			var number = ((name.charCodeAt(i) - 65) % 9 ) + 1;
+			if(number < 1)
+			{
+				total = -1;
+				break;
+			}
+			chars.push(name[i]);
+			values.push(number);
+			total += number;
+		}
+		$scope.Chars = "<span class='acb'>" + chars.join("</span><span class='acb'> </span><span class='acb'>")+"</span>";
+		$scope.Values = "<span class='acb'>" + values.join("</span><span class='acb'>+</span><span class='acb'>")+"</span>" + "<span class='acb'>=</span><span class='acb'>"+total+"</span>";
+		
+		while(total > 9)
+		{
+			$scope.Values+="<span class='acb'>=</span>";
+			if(total < 100){
+				var num1 = total%10;
+				var num2 = (total - num1)/10;
+				total = num1 + num2;
+				$scope.Values += "<span class='acb'>" + num2 + "</span><span class='acb'>+</span><span class='acb'>" + num1 + "</span><span class='acb'>=</span><span class='acb'>"+total+"</span>";
+			}else{
+				var num1 = total%10;
+				var num2 = ((total - num1)/10)%10;
+				var num3 = (total - num1 - num2 * 10)/100;
+				total = num1 + num2 + num3;
+				$scope.Values += "<span class='acb'>" + num3 + "</span><span class='acb'>+</span><span class='acb'>" + num2 + "</span><span class='acb'>+</span><span class='acb'>" + num1 + "</span><span class='acb'>=</span><span class='acb'>"+total+"</span>";
+			}
+		}
+		$scope.Chars = $sce.trustAsHtml($scope.Chars);
+		$scope.Values = $sce.trustAsHtml($scope.Values);
+		$scope.performNumber(total);
+		
 	}
-
-   $scope.updateInformation = function(){
-   var timeKey = "CacCungVaConGiap";
-   
-   var tuviContent = $scope.TuViData[timeKey];
-   if(tuviContent && tuviContent[$scope.selectedKindOfTuVi.id]){
-	$scope.TuVi.Content = $sce.trustAsHtml(tuviContent[$scope.selectedKindOfTuVi.id]);
-   }else{
-	$scope.TuVi.Content = $sce.trustAsHtml("Không tìm thấy dữ liệu");
-	}
-   };
+	$scope.performNumber = function(value)
+	{
+		if(value > 0)
+		{
+			var content = $scope.TuViData["BoiSoAiCap"]["So"+value];
+			$scope.TuVi.Content = $sce.trustAsHtml(content);
+		}else{
+			$scope.Chars = $sce.trustAsHtml("");
+			$scope.Values = $sce.trustAsHtml("");
+			$scope.TuVi.Content = $sce.trustAsHtml("Tên không đúng. Vui lòng chỉ dùng chữ cái");
+		}
+		//$scope.$apply();
+	};
 	
 	$scope.getData = function(){
 		$scope.TuVi.Content = $sce.trustAsHtml("Đang lấy dữ liệu...");
-		  var url = 'https://raw.githubusercontent.com/hothanhhung/static-files/master/tuvi/infos.json?ts='+(new Date()).getTime();
+		  var url = 'https://raw.githubusercontent.com/hothanhhung/static-files/master/tuvi/boisoaicap.json?ts='+(new Date()).getTime();
 		  //var url = 'http://hunght.com/htmlpage/lichamduong/tuvi.json';
 		  $.ajax({
 			url: url,
 			type: 'GET',
 			timeout: 10000,
 			error: function(xhr, status, error){
-			  $scope.TuVi.Content = $sce.trustAsHtml("Không có dữ liệu");
+			  $scope.TuVi.Content = $sce.trustAsHtml("Không Thể Thực Hiện Bói Lúc Này");
 			  $scope.$apply();
 			},
 			success: function(responsedata){
 			  if(responsedata != ''){  
 				$scope.TuViData = JSON.parse(responsedata);
-				$scope.updateInformation();
-				$scope.$apply();
+				$scope.TuVi.Content = $sce.trustAsHtml("");
+			  }else{
+				$scope.TuVi.Content = $sce.trustAsHtml("Không Thể Thực Hiện Bói Lúc Này");
 			  }
+			  $scope.$apply();
 			}
 		  });
 	}	
