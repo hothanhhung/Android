@@ -2,94 +2,18 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.vi.min.js" charset="UTF-8"></script>
     <style>
-        .giai, tr:nth-child(1) {
-            background: none repeat scroll 0% 0% #888C95;
-            color: #FFF;
-        }
-
-            .giai img {
-                float: left;
-                padding-right: 2px;
-            }
-
-            .giai h3 {
-                float: left;
-            }
-
-        .time_f {
-            color: #209EBB;
-            font-weight: 700;
-            text-align: center;
-            width: 15%;
-            min-width: 43px;
-        }
-
-        .text_right {
-            text-align: right;
-            width: 40%;
-        }
-
-        .guess {
-            color: #209EBB;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .lich {
-            font-size: 12px;
-            line-height: 20px;
-        }
-
-        .date {
-            background: none repeat scroll 0% 0% #D4D4D4;
-            color: #404040;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        td {
-            padding-left: 5px;
-        }
-
-        .grey_row {
-            background-color: #F3F3F3;
-        }
-
-        .table {
-            border-collapse: collapse;
-            width: 100% !important;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .width90 {
-            width: 99% !important;
-        }
-
-        .col-md-6 {
-            padding-right: 3px !important;
-            padding-left: 3px !important;
-        }
-		.acb{
-			min-width: 12px;
-			display: inline-block;
-			font-weight: 900;
-		}
     </style>
 </head>
-  <body>
+<body>
 	<div ng-app="starter" ng-controller="mainController">
 		<div class="container-fluid" style="margin: 0px 0px 10px 0px">    
 			<div class="row" style="margin: 10px -10px 10px -10px;">
@@ -99,117 +23,66 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-12">
-				  <div class="dropdown width90" style="display: flex">
-						<input type="text" ng-model="Name" style="flex: 1"/>
-					   <button type="button" ng-Click="perform()">Xem</button> 
+					 <div class="input-append date" style="display: flex">
+						<input type="text" class="form-control" style="flex: 1"><span class="input-group-addon" style="width: 50px;"><i class="glyphicon glyphicon-th"></i></span>
 					</div>
 				</div>
 			</div>
 			<div class="row" style="margin: 10px -10px 10px -10px;">
-				<div style= "margin: 10px; padding-bottom: 20px;"><div ng-bind-html="Chars"></div><div ng-bind-html="Values"></div></div>
-				<div ng-bind-html = "TuVi.Content"></div>
+				<div class="tab-content" id="myTabContent" style="padding-top: 10px;font-size: 16px;">
+				  <div class="tab-pane fade" id="nhom-1" role="tabpanel" aria-labelledby="nhom-1-tab">
+					&nbsp;&nbsp;Số 1 tượng trưng cho sự độc tôn duy nhất, nó còn biểu tượng cho sự hoàn hảo, chất lượng thượng hạng. Tất cả những con số khác dù nhân chia hay thêm bớt với số 1 cũng có cùng một đáp số là chính nó. Về biểu tượng, một con người nào đó được nhìn nhận qua chính con người có đầy đủ phẩm chất hàng đầu của số 1 sẽ hiện rõ chính xác mọi năng lực mà con số khác không hoặc chưa nhận ra.<BR/><BR/>&nbsp;&nbsp;Bạn là người năng động, có tài và có khiếu chỉ huy, tự tin nhưng hơi ích kỷ. Bạn hơi ngang bướng và lười biếng khi phải làm những việc mà bạn không thích. Tuy nhiên với những công việc mà bạn thích bạn sẽ hoàn thành một cách xuất sắc. Bạn luôn gây ấn tượng cho người khác bởi cách ăn mặc của mình. Bạn thích hợp với những hoạt động trong trường và các môn thể thao, và những hoạt động này giúp bạn hoàn thiện tính cách của mình.<BR/><BR/>&nbsp;&nbsp;Về tình cảm: thường kiêu hãnh nhưng bên trong rất độ lượng. Bạn đánh giá cao thái độ mềm mỏng, lễ độ xuất phát từ tình cảm chân thật của đối tượng. Thái độ xã giao ít khi qua mắt được bạn. Bạn chân tình nhưng không cởi mở lắm. Bạn trọng chữ tín và chung thuỷ.<BR/><BR/>&nbsp;&nbsp;Về sự nghiệp, bạn không chịu nổi sự lệ thuộc, yêu công việc và làm việc cật lực, liều lĩnh, táo bạo trong quyết định, có nhiều thăng tiến trong cuộc sống. Bạn khá bảo thủ và luôn đòi hỏi sự hoàn thiện ở bản thân và người khác.<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 2,3,5,7,11,12,14,16,20,21,23,25,29,30.&nbsp;<BR/><BR/>&nbsp;&nbsp;Những nhân vât nổi tiếng mang số 1: Jason Prestley, Sharon Stone, Mark – Paul Gosselar, ...
+				  </div>
+				  <div class="tab-pane fade" id="nhom-2" role="tabpanel" aria-labelledby="nhom-2-tab">
+					&nbsp;&nbsp;Số 2 biểu tượng của sự cân bằng. Số 2 liên quan mật thiết đến sự cân xứng của cơ thể con người (tay, chân, mắt,...). Nó còn biểu thị cho sự mực thước và giản dị. Con số nào cũng có thể dễ dàng chia cho 2.<BR/><BR/>&nbsp;&nbsp;Bạn là người hay quan tâm giúp đỡ người khác và yêu thích sự công bằng. Bản tính dịu dàng giúp bạn dễ làm bạn với mọi người. Bạn là người có năng khiếu về âm nhạc. Đôi khi bạn dễ bị tổn thương vì tính nhạy cảm của mình. Do vậy bạn nên làm bạn với những người tế nhị, biết cân nhắc. Bạn có khuynh hướng nghiêng về phong cách truyền thống hơn hiện đại.<BR/><BR/>&nbsp;&nbsp;Về tình cảm, đối với bạn yêu là để tiến đến hôn nhân. Khi lập gia đình rồi ít để tâm đến những chuyện bay bướm dù lòng đầy cảm xúc.<BR/><BR/>&nbsp;&nbsp;Sự nghiệp: thường có những mối quan hệ xã hội tốt nên khó bị thất nghiệp. Ít có đột biến trong nấc thang sự nghiệp. Dễ lên chức nhỏ nhưng chắc chắn.<BR/><BR/>&nbsp;&nbsp;Nhược điểm: phản ứng chậm trong môi trường nhiều biến động.<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 2,4,6,8,9,11,13,15,17,18,20,22,24,26,27,31.<BR/><BR/>&nbsp;&nbsp;Những nhân vật nổi tiếng mang số 2: Wynona Ryder, Keanu Reeves, Antonio Sanbato Jr, ...
+				  </div>
+				  <div class="tab-pane fade" id="nhom-3" role="tabpanel" aria-labelledby="nhom-3-tab">
+					&nbsp;&nbsp;Số 3 là biểu tượng của sự linh hoạt. Hãy xem các thế chân vạc; những hệ thống điều hành tổ chức theo sơ đồ tam giác: gần như không có chi tiết thừa.<BR/><BR/>&nbsp;&nbsp;Bạn là người vui tính, thích phiêu lưu mạo hiểm, thích hoạt động và là người có đầu óc sáng tạo. Bạn biết tính toán nhưng không quá lý tài. Bạn có năng khiếu đặc biệt về tạo mẫu quần áo và pha trộn màu sắc. Vì vậy trang phục của bạn sẽ tôn thêm vẽ đẹp của bạn. Mẫu người số 3 là mẫu người có năng khiếu về giao thiệp. Tuy nhiên, đôi khi nó cũng làm bạn nói hơi “bị”nhiều.<BR/><BR/>&nbsp;&nbsp;Về tình cảm, luôn giữ thế chủ động dù sẵn sàng dấn vào những chuyện tình lãng mạn. Yêu là cưới nhưng phải là người lý tưởng kia.<BR/><BR/>&nbsp;&nbsp;Về sự nghiệp, bạn thích hợp với những công việc có liên quan đến giao tiếp, bạn khéo léo trong thương thuyết, và biết cách làm cho công việc thích nghi với mình.<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 1,3,5,6,8,9,10,12,14,15,17,18,19,20,21,23,24,26,27,28,30.<BR/><BR/>&nbsp;&nbsp;Những nhân vật nổi tiếng mang số 3: Claire Danes, Tom Cruise, Brendan Fraser, ...
+				  </div>
+				  <div class="tab-pane fade" id="nhom-4" role="tabpanel" aria-labelledby="nhom-4-tab">
+					&nbsp;&nbsp;Số 4 là biểu tượng của kín đáo, kỷ luật và ổn định. Là bội số nhỏ nhất của 2, số 4 vừa có tính mực thước vừa có tính chất rộng rãi, dễ dung nạp những tính cách khác nó.<BR/><BR/>&nbsp;&nbsp;Bạn là người mạnh mẽ và cương quyết, đáng tin cậy, kiên nhẫn, chính xác và có óc tổ chức. Bạn luôn cố gắng hết sức mình trong mọi công việc nên thường đạt kết quả cao. Bạn sẽ là một người bạn chân thành, một công dân tốt. Nhưng đôi khi bạn cũng hơi cứng đầu. bạn không chùn bước trước những khó khăn. Bạn thích săn lùng và rất thành thạo trong việc chọn lựa trang phục và màu sắc thích hợp cho bạn.<BR/><BR/>&nbsp;&nbsp;Về tình cảm, bạn ít bộc lộ, thường giữ kín những tình cảm sâu đậm, và không bao giờ phá vỡ những nguyên tắc riêng của mình.<BR/><BR/>&nbsp;&nbsp;Về sự nghiệp, bạn là con người của hiệu quả, được giao phó những trọng trách. Thành công nhờ kiên trì.<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 2,4,6,7,9,11,13,15,16,18,20,22,24,25,27,29.<BR/><BR/>&nbsp;&nbsp;Những nhân vật nổi tiếng mang số 4: Jemie Waters, Drew Barrymore, Jonathan Brandis, ...
+				  </div>
+				  <div class="tab-pane fade" id="nhom-5" role="tabpanel" aria-labelledby="nhom-5-tab">
+					&nbsp;&nbsp;Số 5 làcon số của sự năng động, khoái hoạt và sáng tạo. Hãy để ý đến những con số 5 của cơ thể: ngũ quan, bàn tay, bàn chân,...<BR/><BR/>&nbsp;&nbsp;Bạn là một người duyên dáng, năng nổ, giàu chất nghệ sĩ. Bạn sẽ kết bạn và thích tham gia hoạt động xã hội. Khíêu ăn nói và sự thông minh sẽ giúp bạn gây cảm tình với bạn bè và đồng nghiệp. Bạn thích chơi thể thao nhưng bạn không thích cạnh tranh với người khác. Bạn không phải là người kiên nhẫn nên tập trung để làm việc gì đó là thử thách đối với bạn. Đi mua sắm, chạy theo thời trang là sở thích của bạn.<BR/><BR/>&nbsp;&nbsp;Về tình cảm, bạn bẩm sinh là người quyến rũ, ưa thích các cuộc chinh phục hoặc những mối tình kỳ lạ. Bạn hãy coi chừng vì bạn có thể tìm đến hôn nhân như một cảm hứng, dù yêu hay không.<BR/><BR/>&nbsp;&nbsp;Về sự nghiệp, Thích hợp với những công việc có tính chất sáng tạo hoặc công việc có thay đổi bất ngờ như du lịch, khảo cổ, làm báo, thiết kế,...<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 1,3,5,7,9,10,12,14,16,17,18,20,21,23,26,27,28,30.<BR/><BR/>&nbsp;&nbsp;Những nhân vật nổi tiếng mang số 5: Tiffany – Amber Thessen, Mark Wahlberg Vedder, Dan Cortess, ...
+				  </div>
+				  <div class="tab-pane fade" id="nhom-6" role="tabpanel" aria-labelledby="nhom-6-tab">
+					&nbsp;&nbsp;Số 6 là bội số của cả hai con số trái tính nhau: 2 và 3. Biểu tượng của sự hòa đồng, liên hiệp và cả thỏa hiệp nữa. Đây là con số của nhiều toan tính, nhiều ước muốn.<BR/><BR/>&nbsp;&nbsp;Bản tính chân thành và quan tâm đến mọi người giúp bạn chiếm được cảm tình của bạn bè và gia đình. Số 6 là số của lòng bao dung và sự tha thứ, vì vậy bạn rất thích hợp với những hoạt động bên ngoài và làm những việc từ thiện. Bạn có thể trở thành một lãnh đạo giỏi hoặc một nhân viên tốt bởi bạn yêu thích sự công bằng. Bạn cũng là con người biết tận hưởng, rất chuộng tiện nghi và các thú vui giải trí. Bạn có thể không phải là nhà tạo mốt nhưng bạn có khiếu chọn lựa màu sắc phù hợp với vóc dáng của bạn.<BR/><BR/>&nbsp;&nbsp;Về tình cảm, luôn tìm kiếm cảm giác vui sướng, hạnh phúc của tình yêu, thích chiều chuộng và được chiều chuộng. Dù biểu hiện tình cảm có vẻ nông nổi nhưng người số 6 lại biết cách chăm lo gia đình khi kết hôn.<BR/><BR/>&nbsp;&nbsp;Về sự nghiệp, hợp với công việc kinh doanh, đổi chác, nhưng đôi khi số 6 khó thành công bởi ý muốn được lòng tất cả mọi người.<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 2,3,4,6,7,9,11,12,13,15,16,18,20,21,24,25,29,30.<BR/><BR/>&nbsp;&nbsp;Những nhân vật nổi tiếng mang số 6: Lara Flynn Boyle, Tori Spelling, David Charvet, ...
+				  </div>
+				  <div class="tab-pane fade" id="nhom-7" role="tabpanel" aria-labelledby="nhom-7-tab">
+					&nbsp;&nbsp;Số 7 bất kỳ con số nào từ 1 đến 9 muốn chia xẻ với số 7 đều dắt dây một đống lít nhít sau dấu phẩy, ngoại trừ chính nó. Đây là con số của sự độc đáo, thậm chí lập dị và cô đơn.<BR/><BR/>&nbsp;&nbsp;Tính cách của bạn làm cho bạn trở nên khác thường, đôi khi bạn cảm thấy cô đơn. Bạn thích các hoạt động như: âm nhạc, nghệ thuật, thể thao và ngay cả trong lĩng vực khoa học, lịch sử, toán học. Bạn thích khám phá những bí mật trong cuộc sống, thích học hỏi và nghiên cứu. Thật ra bạn vùi đầu vào quyển sách là để lẩn tránh những công việc mà bạn không thích. Khả năng biết kết hợp tính tự chủ và khéo léo giúp bạn thích hợp với những môn thể thao như: tennis, judo hoặc môn nhào lộn. Bạn rất ngại bàn về chuyện riêng tư nhưng khả năng “biết lắng nghe” đã khiến bạn trở thành người dễ mến. Bạn có cách ăn mặc lịch sự, trang nhã.<BR/><BR/>&nbsp;&nbsp;Về tình cảm, bạn đòi hỏi cao ở đối tượng, kết hợp và cắt đứt tình cảm đều rõ ràng, ít tuân theo lề lói xã giao. Có khuynh hướng thích người có tính sáng tạo hoặc nghệ sĩ tính.<BR/><BR/>&nbsp;&nbsp;Về sự nghiệp, bạn không thích hợp với nề nếp, công chức, hay nghề nghiệp mang tíng giao tế.<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 1,2,4,5,7,9,10,11,13,14,16,18,20,22,23,25,27,29,31.<BR/><BR/>&nbsp;&nbsp;Những nhân vật nổi tiếng mang số 7: John Fitzerald Kenned, Kate Moss, Janet Jackson, Julia Roberts, ...
+				  </div>
+				  <div class="tab-pane fade" id="nhom-8" role="tabpanel" aria-labelledby="nhom-8-tab">
+					&nbsp;&nbsp;Số 8 là bội số của 2 và 4, có một biểu tượng chung: ổn định. Nên số 8 biểu tượng cho sự cầu toàn đến cực đoan. Đây là con số của năng lực khá toàn diện và tính đòi hỏi cao.<BR/><BR/>&nbsp;&nbsp;Bạn là người đầy tham vọng, đam mê, can đảm, thích lao vào các cuộc chinh phục dù ở bất kỳ lĩnh vực nào. Nhiều khi bạn trở nên hống hách và thiếu kiên nhẫn đối với những người không có khả năng như bạn. Nhưng nên nhớ rằng giúp đỡ người khác thì bạn sẽ chiếm được cảm tình và sự tôn trọng của người xung quanh hơn. Bạn thích những cái tuyệt đối hơn là tương đối và cách ăn mặc của bạn phản ánh điều đó.<BR/><BR/>&nbsp;&nbsp;Về tình cảm, bạn có khuynh hướng trấn áp người yêu, ưa sở hữu, yêu rất nồng nhiệt, và hay ghen.<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 2,3,5,7,9,11,12,14,16,18,20,21,23,25,27,29,30<BR/><BR/>&nbsp;&nbsp;Những nhân vật nổi tiếng mang số 8: Chris O’donell, Patricia Arquette, Jonathan – Taylor Thimas, ...
+				  </div>
+				  <div class="tab-pane fade" id="nhom-9" role="tabpanel" aria-labelledby="nhom-9-tab">
+					&nbsp;&nbsp;Số 9 là số lớn nhất trong các số đơn. Biểu hiện cho lòng quảng đại, tính nồng nhiệt, và khát vọng thầm kín, lòng hướng thượng.<BR/><BR/>&nbsp;&nbsp;Bạn giàu tình cảm, vị tha. Nhưng vì dễ xúc động nên dễ lâm vào tình trạng lưỡng lự, băn khoăn và tự dằn vặn mình. Bạn có năng khiếu có về lãnh đạo. Bạn là người dễ thích nghi với hoàn cảnh, điều đó làm cho bạn có nhiều bạn bè hơn. Bạn thích tự quyết định cho mình và ít bị ảnh hưởng bởi những tác động xung quanh. Nhưng bạn cũng biết tôn trọng những luật lệ trong một cuộc vui nào đó. Bạn rất cẩn thận trong việc mua sắm. Vì vậy, ít khi bạn cảm thấy hối tiếc về những gì bạn đã mua.<BR/><BR/>&nbsp;&nbsp;Về tình cảm, bạn là người trung thành, chung thuỷ, hay đòi hỏi người thân thường xuyên bộc lộ tình cảm đối với mình. Bạn cần một người tỉnh táo và cứng rắn bên cạnh.<BR/><BR/>&nbsp;&nbsp;Về sự nghiệp, bạn có thể sáng chói trong những công việc mang tính lý tưởng như công tác từ thiện, công trình công ích xã hội. Bạn xả thân không biết mệt mỏi vì nhân loại.<BR/><BR/>&nbsp;&nbsp;Bạn sẽ hợp với những người có ngày sinh: 2,3,6,8,9,10,11,12,16,17,18,20,21,24,26,27,30.<BR/><BR/>&nbsp;&nbsp;Những nhân vật nổi tiếng mang số 9: Brat Pitt, Christian Slater, Mariah Carey, Chelsea Clinton, Johnny Depp, ...
+				  </div>
+				</div>
 			</div> 
 			<div class="row" style="margin:10px;padding-bottom:20px;font-size:10px;font-style:italic;color:gray;">
 				<div style="font-size:10px">Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
 			</div>      
 		</div>
 	</div>
-  <script> 
-angular.module('starter', []).controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
-	$scope.TuVi = {Content:""};
-	
-	$scope.Name = "";
-	$scope.Chars = "";
-	$scope.Values = "";
-
-	$scope.removeAccents = function(str) {
-	  return str.normalize('NFD')
-				.replace(/[\u0300-\u036f]/g, '')
-				.replace(/đ/g, 'd').replace(/Đ/g, 'D');
-	}
-
-	$scope.perform = function()
-	{
-		var name = $scope.removeAccents($scope.Name.split(' ').join('')).toUpperCase();
-		var chars = [];
-		var values = [];
-		var total = 0;
-		for(var i = 0; i < name.length; i++){
-			var number = ((name.charCodeAt(i) - 65) % 9 ) + 1;
-			if(number < 1)
+	<script> 
+		$('.input-append.date').datepicker({
+			format: "dd/mm/yyyy",
+			keyboardNavigation: false,
+			forceParse: false,
+			language: "vi"
+		}).on('changeDate', function(e) {
+        // `e` here contains the extra attributes
+			$(this).datepicker('hide');
+			if(e.date)
 			{
-				total = -1;
-				break;
+				for(i=1; i<=9; i++){
+					$('#nhom-'+i).css({'display': 'none', 'opacity': '0'});
+				}
+				var value = (e.date.getDate() + e.date.getMonth() + 1 + e.date.getFullYear())%9 + 1;
+				$('#nhom-'+value).css({'display': 'block', 'opacity': '1'});
 			}
-			chars.push(name[i]);
-			values.push(number);
-			total += number;
-		}
-		$scope.Chars = "<span class='acb'>" + chars.join("</span><span class='acb'> </span><span class='acb'>")+"</span>";
-		$scope.Values = "<span class='acb'>" + values.join("</span><span class='acb'>+</span><span class='acb'>")+"</span>" + "<span class='acb'>=</span><span class='acb'>"+total+"</span>";
-		
-		while(total > 9)
-		{
-			$scope.Values+="<span class='acb'>=</span>";
-			if(total < 100){
-				var num1 = total%10;
-				var num2 = (total - num1)/10;
-				total = num1 + num2;
-				$scope.Values += "<span class='acb'>" + num2 + "</span><span class='acb'>+</span><span class='acb'>" + num1 + "</span><span class='acb'>=</span><span class='acb'>"+total+"</span>";
-			}else{
-				var num1 = total%10;
-				var num2 = ((total - num1)/10)%10;
-				var num3 = (total - num1 - num2 * 10)/100;
-				total = num1 + num2 + num3;
-				$scope.Values += "<span class='acb'>" + num3 + "</span><span class='acb'>+</span><span class='acb'>" + num2 + "</span><span class='acb'>+</span><span class='acb'>" + num1 + "</span><span class='acb'>=</span><span class='acb'>"+total+"</span>";
-			}
-		}
-		$scope.Chars = $sce.trustAsHtml($scope.Chars);
-		$scope.Values = $sce.trustAsHtml($scope.Values);
-		$scope.performNumber(total);
-		
-	}
-	$scope.performNumber = function(value)
-	{
-		if(value > 0)
-		{
-			var content = $scope.TuViData["BoiSoAiCap"]["So"+value];
-			$scope.TuVi.Content = $sce.trustAsHtml(content);
-		}else{
-			$scope.Chars = $sce.trustAsHtml("");
-			$scope.Values = $sce.trustAsHtml("");
-			$scope.TuVi.Content = $sce.trustAsHtml("Tên không đúng. Vui lòng chỉ dùng chữ cái");
-		}
-		//$scope.$apply();
-	};
-	
-	$scope.getData = function(){
-		$scope.TuVi.Content = $sce.trustAsHtml("Đang lấy dữ liệu...");
-		  var url = 'https://raw.githubusercontent.com/hothanhhung/static-files/master/tuvi/boisoaicap.json?ts='+(new Date()).getTime();
-		  //var url = 'http://hunght.com/htmlpage/lichamduong/tuvi.json';
-		  $.ajax({
-			url: url,
-			type: 'GET',
-			timeout: 10000,
-			error: function(xhr, status, error){
-			  $scope.TuVi.Content = $sce.trustAsHtml("Không Thể Thực Hiện Bói Lúc Này");
-			  $scope.$apply();
-			},
-			success: function(responsedata){
-			  if(responsedata != ''){  
-				$scope.TuViData = JSON.parse(responsedata);
-				$scope.TuVi.Content = $sce.trustAsHtml("");
-			  }else{
-				$scope.TuVi.Content = $sce.trustAsHtml("Không Thể Thực Hiện Bói Lúc Này");
-			  }
-			  $scope.$apply();
-			}
-		  });
-	}	
-   $scope.getData();
-   
-}]);
-  </script>
-  </body>
+		});
+	</script>
+</body>
 </html>
 
