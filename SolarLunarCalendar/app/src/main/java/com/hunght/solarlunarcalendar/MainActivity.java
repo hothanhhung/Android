@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity
     public void updateUI(int id) {
         showAdsAfterLongTime(id == R.id.navTuVi);
         boolean shownAds = true;
-        if(R.id.navMoreApp != id)llMainContent.removeAllViews();
+        if(R.id.navMoreApp != id && R.id.navShare != id)llMainContent.removeAllViews();
         switch (id) {
             case R.id.navSolarLunarCalendar:
                 shownAds = false;
@@ -211,6 +211,17 @@ public class MainActivity extends AppCompatActivity
                 llMainContent.addView(new NotesView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
             case R.id.navShare:
+                try {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Lịch Âm Dương");
+                    String shareMessage= "\nChia sẻ ứng dụng với bạn bè\n\n";
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "Chia sẻ với"));
+                } catch(Exception e) {
+                    //e.toString();
+                }
                 break;
             case R.id.navAbout:
                 llMainContent.addView(new AboutView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -223,6 +234,21 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.navTuVi:
                 llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.TuViHangNgay), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navBoiTinhCach:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.BoiTinhCach), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navBoiTinhCachVoiNhomMau:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.BoiTinhCachVoiNhomMau), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navBoiTinhCachVoiNgaySinh:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.BoiTinhCachVoiNgayThangNamSinh), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navBoiTenAiCap:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.BoiTenAiCap), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navGieoQueQuanAm:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.GieoQueQuanAm), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
             case R.id.navMoreApp:
                 Utils.showAlertGetMoreAppsServer(this);

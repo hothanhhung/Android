@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navSolarLunarCalendar"
-            android:icon="@android:drawable/ic_menu_my_calendar"
+            android:icon="@drawable/calendar"
             android:title="Xem Lịch" />
         <item
             android:id="@+id/navExchangeTool"
@@ -12,7 +12,7 @@
             android:title="Chuyển đổi lịch" />
         <item
             android:id="@+id/navGoodDayBadDay"
-            android:icon="@android:drawable/ic_menu_view"
+            android:icon="@drawable/good_date"
             android:title="Xem ngày tốt xấu" />
         <item
             android:id="@+id/navPositionOfTheSun"
@@ -21,34 +21,57 @@
             android:title="Tọa độ mặt trời" />
         <item
             android:id="@+id/navNotes"
-            android:icon="@android:drawable/ic_menu_agenda"
+            android:icon="@drawable/note_date"
             android:title="Các Sự Kiện" />
-        <item
-            android:id="@+id/navTuVi"
-            android:icon="@android:drawable/ic_menu_compass"
-            android:title="Xem Tử Vi" />
     </group>
-
-    <item android:title="Communicate">
+    <item android:title="Bói Vui">
         <menu>
             <item
-                android:id="@+id/navMoreApp"
-                android:icon="@drawable/moreapps"
-                android:title="More Apps"
-                android:visible="true" />
+                android:id="@+id/navTuVi"
+                android:icon="@drawable/tu_vi"
+                android:title="Xem Tử Vi Hàng Ngay" />
             <item
-                android:id="@+id/navShare"
-                android:icon="@drawable/ic_menu_share"
-                android:visible="false"
-                android:title="Share" />
+                android:id="@+id/navBoiTinhCach"
+                android:icon="@drawable/rong"
+                android:title="Xem Tính Cách" />
+            <item
+                android:id="@+id/navBoiTinhCachVoiNhomMau"
+                android:icon="@drawable/nhom_mau"
+                android:title="Tính Cách với Nhóm Máu" />
+            <item
+                android:id="@+id/navBoiTinhCachVoiNgaySinh"
+                android:icon="@drawable/date"
+                android:title="Tính Cách với Ngày Sinh" />
+            <item
+                android:id="@+id/navBoiTenAiCap"
+                android:icon="@drawable/ai_cap"
+                android:title="Bói Tên Ai Cập" />
+            <item
+                android:id="@+id/navGieoQueQuanAm"
+                android:icon="@drawable/quan_am"
+                android:title="Gieo Quẻ Quan Âm" />
+        </menu>
+    </item>
+    <item android:title="Thông Tin Chung">
+        <menu>
             <item
                 android:id="@+id/navSettings"
                 android:icon="@android:drawable/ic_menu_manage"
                 android:title="Cài đặt" />
             <item
+                android:id="@+id/navMoreApp"
+                android:icon="@drawable/moreapps"
+                android:title="Những ứng dụng khác"
+                android:visible="true" />
+            <item
+                android:id="@+id/navShare"
+                android:icon="@drawable/ic_menu_share"
+                android:visible="true"
+                android:title="Chia sẻ ứng dụng" />
+            <item
                 android:id="@+id/navAbout"
                 android:icon="@android:drawable/ic_menu_info_details"
-                android:title="About" />
+                android:title="Giới Thiệu" />
         </menu>
     </item>
 

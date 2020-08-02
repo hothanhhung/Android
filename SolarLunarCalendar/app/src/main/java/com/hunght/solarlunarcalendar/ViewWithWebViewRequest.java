@@ -91,6 +91,16 @@ public class ViewWithWebViewRequest extends LinearLayout {
         {
             case TuViHangNgay:
                 return "http://hunght.com/htmlpage/lichamduong/tuvi.html?ts="+ (new Date()).getTime();
+            case BoiTinhCach:
+                return "http://hunght.com/htmlpage/lichamduong/boitinhcach.html?ts="+ (new Date()).getTime();
+            case BoiTinhCachVoiNhomMau:
+                return "http://hunght.com/htmlpage/lichamduong/boinhommau.html?ts="+ (new Date()).getTime();
+            case BoiTinhCachVoiNgayThangNamSinh:
+                return "http://hunght.com/htmlpage/lichamduong/boingaythangnamsinh.html?ts="+ (new Date()).getTime();
+            case BoiTenAiCap:
+                return "http://hunght.com/htmlpage/lichamduong/boisoaicap.html?ts="+ (new Date()).getTime();
+            case GieoQueQuanAm:
+                return "http://hunght.com/htmlpage/lichamduong/GieoQueQuanAm.html?ts="+ (new Date()).getTime();
         }
         return "";
     }
