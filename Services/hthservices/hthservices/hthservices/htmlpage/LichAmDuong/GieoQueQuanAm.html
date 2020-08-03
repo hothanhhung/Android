@@ -28,11 +28,11 @@
 			</div>
 			<div class="row" style="margin: 10px 10px 10px 10px;">
 				<div style=width:100%">
-					<img src="https://raw.githubusercontent.com/hothanhhung/static-files/master/images/tuvi/quanam.png" style="display: block;margin-left: auto;margin-right: auto;width: 120px;" />
+					<img src="https://raw.githubusercontent.com/hothanhhung/static-files/master/images/tuvi/quanam.png" style="display: block;margin-left: auto;margin-right: auto;width: 150px;" />
 					<div style="text-align: center;padding: 10px;color: #878b8e;">
 						Thành tâm cầu nguyện, sau đó bấm nút [Gieo Quẻ]
 					</div>
-					<button id="btGieoQue" type="button" style="background: #93f499;display: block;margin-left: auto;margin-right: auto;width: 100px;font-weight: bold;color: #07712c;" onclick="gieoQue()" class="form-control">Gieo Quẻ</button> 
+					<button id="btGieoQue" type="button" style="background: #93f499;display: block;margin-left: auto;margin-right: auto;width: 120px;font-weight: bold;color: #07712c;" onclick="gieoQue()" class="form-control">Gieo Quẻ</button> 
 				</div>
 			</div> 
 			<div id="content" class="row" style="margin: 10px 10px 10px 10px;">
@@ -57,7 +57,16 @@
 			});
 		});	
 
-		gieoQue = function(){
+		async function gieoQue(){
+			$('#btGieoQue').prop('disabled', true);
+			$('#btGieoQue').text('Đang Xin...');
+			var count = 5;
+			while(count > 0){
+				$('#content').html('<div style="text-align: center;font-size: 18px;color: green;font-weight: bold;">'+count+'</div>');
+				await new Promise(r => setTimeout(r, 1000));
+				count--;
+			}
+			
 			var index = Math.floor(Math.random() * items.length);
 			var content = items[index];
 			var result = '<div style="text-align: center;font-size: 18px;color: green;font-weight: bold;">'+content.So+' - '+content.Ten+'</div>';
@@ -67,6 +76,8 @@
 			var result = result.concat('<div style="padding: 10px;"><span><b>Điềm Ứng:</b></span><br/><span>'+content.DiemUng+'</span></div>');
 			var result = result.concat('<div style="padding: 10px;"><span><b>Giải Nghĩa:</b></span><br/><span>'+content.Giai+'</span></div>');
 			$('#content').html(result);
+			$('#btGieoQue').text('Gieo Quẻ Lại');
+			$('#btGieoQue').prop('disabled', false);
 		}
 	</script>
   </body>
