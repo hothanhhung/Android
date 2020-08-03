@@ -19,14 +19,23 @@
   <body>
 	<div>
 		<div class="container-fluid" style="margin: 0px 0px 10px 0px">    
-			<div class="row" style="margin: 10px -10px 10px -10px;">
+			<div class="row" style="margin: 10px 10px 10px 10px;">
 				<div class="col-xs-12 col-md-12">
 					<div style="text-align: center;font-weight: bold;margin-bottom: 20px;font-size: 20px;color: darkblue;">
 						Gieo Quẻ Quan Âm
 					</div>
 				</div>
 			</div>
-			<div class="row" style="margin: 10px -10px 10px -10px;">
+			<div class="row" style="margin: 10px 10px 10px 10px;">
+				<div style=width:100%">
+					<img src="https://raw.githubusercontent.com/hothanhhung/static-files/master/images/tuvi/quanam.png" style="display: block;margin-left: auto;margin-right: auto;width: 120px;" />
+					<div style="text-align: center;padding: 10px;color: #878b8e;">
+						Thành tâm cầu nguyện, sau đó bấm nút [Gieo Quẻ]
+					</div>
+					<button id="btGieoQue" type="button" style="background: #93f499;display: block;margin-left: auto;margin-right: auto;width: 100px;font-weight: bold;color: #07712c;" onclick="gieoQue()" class="form-control">Gieo Quẻ</button> 
+				</div>
+			</div> 
+			<div id="content" class="row" style="margin: 10px 10px 10px 10px;">
 			</div> 
 			<div class="row" style="margin:10px;padding-bottom:20px;font-size:10px;font-style:italic;color:gray;">
 				<div style="font-size:10px">Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
@@ -34,9 +43,31 @@
 		</div>
 	</div>
 	<script>
+		var items = [];
 		$( document ).ready(function() {
-			$('#nhom-o-tab').tab('show')
-		});		
+			$('#btGieoQue').prop('disabled', true);
+			$('#content').html('<div style="text-align: center;">Đang nhận dữ liệu...</div>');
+			var url = 'https://raw.githubusercontent.com/hothanhhung/static-files/master/tuvi/quequanam.json?ts='+(new Date()).getTime();
+			$.getJSON(url, function(data){
+				items = data.QueQuanAm;
+				$('#btGieoQue').prop('disabled', false);
+			$('#content').html('');
+			}).fail(function(ex){
+				$('#content').html('<div style="text-align: center;color: red;">Không Thể Thực Hiện Gieo Quẻ Lúc Này</div>');
+			});
+		});	
+
+		gieoQue = function(){
+			var index = Math.floor(Math.random() * items.length);
+			var content = items[index];
+			var result = '<div style="text-align: center;font-size: 18px;color: green;font-weight: bold;">'+content.So+' - '+content.Ten+'</div>';
+			var result = result.concat('<div style="padding: 10px;"><span><b>Âm:</b></span><br/><span>'+content.Am+'</span></div>');
+			var result = result.concat('<div style="padding: 10px;"><span><b>Dịch:</b></span><br/><span>'+content.Dich+'</span></div>');
+			var result = result.concat('<div style="padding: 10px;"><span><b>Lời Bàn:</b></span><br/><span>'+content.LoiBan+'</span></div>');
+			var result = result.concat('<div style="padding: 10px;"><span><b>Điềm Ứng:</b></span><br/><span>'+content.DiemUng+'</span></div>');
+			var result = result.concat('<div style="padding: 10px;"><span><b>Giải Nghĩa:</b></span><br/><span>'+content.Giai+'</span></div>');
+			$('#content').html(result);
+		}
 	</script>
   </body>
 </html>
