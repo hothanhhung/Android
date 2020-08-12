@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <style>
+	.btGieoQue{
+        position: absolute;
+		top: 50%;
+		left: 50%;
+		background: #a4f2a985;
+		display: block;
+		transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		width: 120px;
+		font-weight: bold;
+		color: #084153;
+		border-radius: 43px;
+		}
+	.nguoc {
+	  -webkit-transform: scaleX(-1);
+	  transform: scaleX(-1);
+	}
+    </style>
+</head>
+  <body>
+	<div>
+		<div class="container-fluid" style="margin: 0px 0px 10px 0px">    
+			<div class="row" style="margin: 10px 10px 10px 10px;">
+				<div class="col-xs-12 col-md-12">
+					<div style="text-align: center;font-weight: bold;margin-bottom: 20px;font-size: 20px;color: darkblue;">
+						Bói Bài Tarot
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin: 10px 10px 10px 10px;">
+				<div style=width:100%">
+					<div style="text-align: center;padding: 10px;color: #878b8e;">
+						Chọn Chủ đề muốn hỏi
+					</div>
+					<div style="display:flex">
+						<button type="button" id="CongViec" style="background: #f2f6f2;display: block;margin-left: auto;margin-right: auto;width: 120px;font-weight: bold;color: #07712c;" onclick="selectType(this); " class="form-control btType">Công Việc</button> 
+						<button type="button" id="TinhYeu" style="background: #f2f6f2;display: block;margin-left: auto;margin-right: auto;width: 120px;font-weight: bold;color: #07712c;" onclick="selectType( this)" class="form-control btType">Tình Yêu</button> 
+						<button type="button" id="TaiChinh" style="background: #f2f6f2;display: block;margin-left: auto;margin-right: auto;width: 120px;font-weight: bold;color: #07712c;" onclick="selectType(this)" class="form-control btType">Tài Chính</button> 
+						<button type="button" id="SucKhoe" style="background: #f2f6f2;display: block;margin-left: auto;margin-right: auto;width: 120px;font-weight: bold;color: #07712c;" onclick="selectType(this)" class="form-control btType">Sức Khỏe</button> 
+						<button type="button" id="TinhThan" style="background: #f2f6f2;display: block;margin-left: auto;margin-right: auto;width: 120px;font-weight: bold;color: #07712c;" onclick="selectType(this)" class="form-control btType">Tinh Thần</button> 
+					</div>
+					<div style="text-align: center;padding: 10px;color: #878b8e;">
+						Thành tâm cầu nguyện, sau đó rút một lá bài
+					</div>
+					<div style="position: relative;">
+						<img id="imgCard" src="https://raw.githubusercontent.com/hothanhhung/static-files/master/images/tuvi/tarotcards/TarotCard.png" style="display: block;margin-left: auto;margin-right: auto;width: 150px;" />
+						<button id="btGieoQue" type="button" onclick="gieoQue()" class="form-control btGieoQue">Rút Bài</button> 
+					</div>
+				</div>
+			</div> 
+			<div id="content" class="row" style="margin: 10px 10px 10px 10px;">
+			</div> 
+			<div class="row" style="margin:10px;padding-bottom:20px;font-size:10px;font-style:italic;color:gray;">
+				<div style="font-size:10px">Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
+			</div>      
+		</div>
+	</div>
+	<script>
+		var items = [];
+		var selectedButton = "";
+
+		$( document ).ready(function() {
+			$('#btGieoQue').prop('disabled', true);
+			$('#content').html('<div style="text-align: center;">Đang nhận dữ liệu...</div>');
+			var url = 'https://raw.githubusercontent.com/hothanhhung/static-files/master/tuvi/tarot.json?ts='+(new Date()).getTime();
+			$.getJSON(url, function(data){
+				items = data;
+				$('#btGieoQue').prop('disabled', false);
+			$('#content').html('');
+			}).fail(function(ex){
+				$('#content').html('<div style="text-align: center;color: red;">Không Thể Thực Hiện Gieo Quẻ Lúc Này</div>');
+			});
+		});	
+
+		async function selectType(selectButton){
+			selectedButton = selectButton;
+			$('.btType').css('background-color','#f2f6f2');
+			$(selectButton).css('background-color','#93f499');
+			$('#content').html('');
+		}
+
+		async function gieoQue(){
+			if(!selectedButton){
+				$('#content').html('<div style="text-align: center;color: red;">Chưa Chọn Chủ Đề Muốn Hỏi</div>');
+				return;
+			}
+			
+			$("#imgCard").attr("src","https://raw.githubusercontent.com/hothanhhung/static-files/master/images/tuvi/tarotcards/TarotCard.png");
+			
+			$('#btGieoQue').prop('disabled', true);
+			$('#btGieoQue').text('Đang Xử Lý...');
+			var count = 5;
+			while(count > 0){
+				$('#content').html('<div style="text-align: center;font-size: 18px;color: green;font-weight: bold;">'+count+'</div>');
+				await new Promise(r => setTimeout(r, 1000));
+				count--;
+			}
+			
+			var index = Math.floor(Math.random() * items.length);
+			var nguoc = Math.floor(Math.random() * 2);
+			var selectedCard = items[index]
+			var content = (nguoc == 0? selectedCard.Xuoi: selectedCard.Nguoc);
+			$("#imgCard").attr("src","https://raw.githubusercontent.com/hothanhhung/static-files/master/images/tuvi/tarotcards/"+selectedCard.Code+".png");
+			var type = [$(selectedButton).attr('id')][0];
+			if(nguoc){
+				$("#imgCard").css('-webkit-transform', 'scaleY(-1)');
+				$("#imgCard").css('transform', 'scaleY(-1)');
+			}else{
+				$("#imgCard").css('-webkit-transform', 'scaleY(1)');
+				$("#imgCard").css('transform', 'scaleY(1)');
+			}
+			var result = '<div style="text-align: center;font-size: 18px;color: green;font-weight: bold;">'+selectedCard.Name+' - '+(nguoc == 0? "Xuôi": "Ngược")+'</div>';
+			var result = result.concat('<div style="padding: 10px;"><span><b>Về ' + $(selectedButton).text() + ' :</b></span><br/><span>'+content[type]+'</span></div>');
+			$('#content').html(result);
+			$('#btGieoQue').text('Rút Lại');
+			$('#btGieoQue').prop('disabled', false);
+		}
+	</script>
+  </body>
+</html>
+
