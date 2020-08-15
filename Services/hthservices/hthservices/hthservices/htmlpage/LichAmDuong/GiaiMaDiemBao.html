@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+		.title{
+			text-align:center;
+			font-size:20px;
+			padding-bottom:15px;
+		}
+	</style>
+</head>
+  <body>
+	<div>
+		<div class="container-fluid" style="margin: 0px 0px 10px 0px">
+			<div class="row" style="margin: 10px -10px 10px -10px;">
+				<div class="col-xs-12 col-md-12">
+					<div style="text-align: center;font-weight: bold;margin-bottom: 20px;font-size: 20px;color: darkblue;">
+						Giải Mã Điềm Báo
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin: 10px -10px 10px -10px;">
+				<select class="custom-select" onchange="selectKind(this[this.selectedIndex].value);">
+				  <option selected disabled>Chọn loại điềm báo</option>
+				  <option value="chimheokeu">Chim heo kêu</option>
+				  <option value="chimkhachkeu">Chim khách kêu</option>
+				  <option value="quakeu">Chim Quạ kêu</option>
+				  <option value="chosua">Chó sủa</option>
+				  <option value="hoihop">Hồi hộp</option>
+				  <option value="luacuoi">Lửa cười</option>
+				  <option value="maymat">Máy Mắt</option>
+				  <option value="matnong">Mặt nóng</option>
+				  <option value="nhaymui">Nhảy mũi</option>
+				  <option value="noikeu">Nồi kêu</option>
+				  <option value="taiu">Tai ù</option>
+				  <option value="thitgiat">Thịt giật</option>
+				</select>
+			</div>
+			<div class="row" style="margin: 10px 10px 10px 10px;">
+				<div style="padding-top: 10px;font-size: 16px;">
+					<div id="maymat" class="tabContent">
+					<div class="title"><b>MÁY MẮT</b></div>
+					&emsp;Máy mắt là một điềm thông thường hơn hết mà mỗi người trong chúng ta đều biết. Đó là một tác động tự nhiên xảy ra; bất cứ lúc nào mà không làm sao khống chế được, ngoại trừ tác động ấy ngừng lại, cũng tự nhiên như lúc xảy ra.<br/>
+					&emsp;Về sự ứng nghiệm của loại điềm này thì mỗi người hiểu một nghĩa khác nhau và gần như do sự truyền khẩu, mà không căn cứ vào đâu cả. Đại khái đàn ông máy mắt phải là tốt, máy mắt trái là xấu. Còn đàn bà thì ngược lại. Đó là lề lối thông thường dựa trên nguyên tắc "nam tả nữ hữu", mà chúng ta có thể nói là khá sai lầm, nếu không bảo là vô căn cứ.<br/>
+					&emsp;Theo nghiên cứu qua những sách Đông Tây nêu trên, thì giá trị của điềm máy mắt tương đồng như sau, bất luận là nam hay nữ.<br/><br/>
+					<b>Máy mắt trái</b><br/>
+					<div>
+					&emsp;- 23 giờ đến 01 giờ: có bạn bè ở xa về.<br/>
+					&emsp;- 01 giờ đến 03 giờ: buồn bực do người trong thân gây ra.<br/>
+					&emsp;- 03 giờ đến 05 giờ: có người mang tài lợi đến.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có người âm thầm giúp đỡ mình, sẽ có tin trong vài ngày.<br/>
+					&emsp;- 07 giờ đến 09 giờ: có khách quấy rầy.<br/>
+					&emsp;- 09 giờ đến 11 giờ: có người mời ăn uống.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có người đem tin vui về.<br/>
+					&emsp;- 13 giờ đến 15 giờ: có tin vui.<br/>
+					&emsp;- 15 giờ đến 17 giờ: gặp chuyện bất ngờ về tình cảm.<br/>
+					&emsp;- 17 giờ đến 19 giờ: có khách sang đến nhà bàn chuyện hôn nhân, hay chuyện làm ăn.<br/>
+					&emsp;- 19 giờ đến 21 giờ: việc suy tính trong lòng sắp thành tựu.<br/>
+					&emsp;- 21 giờ đến 23 giờ: có khách quí đến nhà.<br/>
+					</div>
+					<br/>
+					<b>Máy mắt phải</b><br/>
+					<div>
+					&emsp;- 23 giờ đến 01 giờ: có rượu thịt, ăn uống.<br/>
+					&emsp;- 01 giờ đến 03 giờ: có người thân nhắc nhở.<br/>
+					&emsp;- 03 giờ đến 05 giờ: sắp có tin lành đem đến.<br/>
+					&emsp;- 05 giờ đến 07 giờ: tài lợi bất ngờ.<br/>
+					&emsp;- 07 giờ đến 09 giờ: có lời ăn tiếng nói, đề phòng có thể đến tụng đình.<br/>
+					&emsp;- 09 giờ đến 11 giờ: có kẻ gây chuyện, đề phòng xô xát.<br/>
+					&emsp;- 11 giờ đến 12 giờ: đề phòng tai nạn hoặc mất của.<br/>
+					&emsp;- 13 giờ đến 15 giờ: hao tài không đáng kể.<br/>
+					&emsp;- 15 giờ đến 17 giờ: có người khác phái đang tưởng nhớ đến mình.<br/>
+					&emsp;- 17 giờ đến 19 giờ: có bà con ở xa đến thăm.<br/>
+					&emsp;- 19 giờ đến 21 giờ: có người rủ đi du lịch.<br/>
+					&emsp;- 21 giờ đến 23 giờ: có chuyện rắc rối, làm mang lời ăn tiếng nói.<br/>
+					</div>
+					</div>
+					<div id="nhaymui" class="tabContent">
+					<div class="title"><b>NHẢY MŨI</b></div>
+					&emsp;Nhảy mũi do cảm sốt gây ra là chuyện thông thường, không liên quan gì cả và cũng không có giá trị gì đối với những điềm. Ngược lại, bỗng nhiên nhảy mũi liên tiếp nhiều lượt, một hay nhiều cái. Chúng ta có câu ví thông thường:<br/>
+					&emsp;- Nhảy mũi (một cái) có tài.<br/>
+					&emsp;- Nhảy mũi hai cái có lợi.<br/>
+					&emsp;Câu ấy cũng có một phần đúng, vì hầu hết những lần nhảy mũi như thế là điềm tốt lành mà ít khi có điềm dữ. Việc nhảy mũi một hay nhiều cái, giá trị vẫn như nhau.<br/><br/>
+					&emsp;- 23 giờ đến 01 giờ: có người mời dự tiệc hoặc dự lễ linh đình.<br/>
+					&emsp;- 01 giờ đến 03 giờ: có người khác phái rủ mình làm một việc tuy có lợi, nhưng rất hại cho người khác.<br/>
+					&emsp;- 03 giờ đến 05 giờ: có cuộc hẹn hò về tình cảm.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có người mang quà đến tặng.<br/>
+					&emsp;- 07 giờ đến 09 giờ: có lộc ăn.<br/>
+					&emsp;- 09 giờ đến 11 giờ: có quới nhân sẵn sàng giúp đỡ, đáp ứng sự mong muốn trong lòng mình từ lâu.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có thân nhân từ xa về, đem tài lợi đến cho mình.<br/>
+					&emsp;- 13 giờ đến 15 giờ: có lộc ăn và có lợi vào.<br/>
+					&emsp;- 15 giờ đến 17 giờ: có tin làm mình lo sợ, nhưng rốt cuộc đâu vào đó, mọi việc đều êm đẹp.<br/>
+					&emsp;- 17 giờ đến 19 giờ: có người khác phái nhờ giúp một việc gì, có lợi về tiền cũng như tình cảm.<br/>
+					&emsp;- 19 giờ đến 21 giờ: có người khác phái tưởng nhớ đến mình, sẽ viết thơ cho mình.<br/>
+					&emsp;- 21 giờ đến 23 giờ: có sự lo nghĩ về tiền bạc, nhưng vẫn giải quyết dễ dàng.<br/>
+					</div>
+					<div id="matnong" class="tabContent">
+					<div class="title"><b>MẶT NÓNG</b></div>
+					&emsp;Tự nhiên ta thấy mặt nóng bừng ngứa ngáy khó chịu mà không phải do bệnh chứng gây ra. Đó là một điềm.<br/>
+					&emsp;Mặt bừng nóng tuy là một điềm nhưng cũng chưa phải là điềm dữ, mà chỉ là một lối báo ứng tự nhiên và vẫn có những giá trị khác nhau tuỳ theo thời gian xảy ra.<br/>
+					&emsp;Ngoài việc mặt nóng, còn tai nóng, lắm lúc bừng đỏ trông thấy. Gần như một thứ phong ngứa thường gọi là mề đay. Thật ra đó là điềm nóng tai. Điềm này cũng có giá trị tương đương như mặt nóng.<br/><br/>
+					&emsp;- 23 giờ đến 01 giờ: công việc trù tính sẽ được thu xếp, lợi vào.<br/>
+					&emsp;- 01 giờ đến 03 giờ: sắp có chuyện bực mình, có lục đục trong nhà.<br/>
+					&emsp;- 03 giờ đến 05 giờ: có người bạn đến nhà mời hợp tác.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có người mời ăn uống.<br/>
+					&emsp;- 07 giờ đến 09 giờ: người xa về đem tin vui.<br/>
+					&emsp;- 09 giờ đến 11 giờ: người cũ tưởng nhớ đến mình, mong gặp để giúp đỡ.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có chuyện xích mích giữa người trong thân.<br/>
+					&emsp;- 13 giờ đến 15 giờ: có cãi vã, đề phòng to chuyện.<br/>
+					&emsp;- 15 giờ đến 17 giờ: có người giới thiệu khách quí muốn hợp tác với mình.<br/>
+					&emsp;- 17 giờ đến 19 giờ: được người dòm ngó đến mình.<br/>
+					&emsp;- 19 giờ đến 21 giờ: có lộc thực mang đến.<br/>
+					&emsp;- 21 giờ đến 23 giờ: có kẻ vu cáo mình đến tụng đình.<br/>
+					</div>
+					<div id="taiu" class="tabContent">
+					<div class="title"><b>TAI Ù</b></div>
+					&emsp;Triệu chứng ù tai gần giống như lúc tắm bị nước vào tai lùng bùng, y như gió thổi mạnh vào. Đó là một điềm xảy ra bất ngờ và rất dễ nhận.<br/>
+					&emsp;Ù tai có những giá trị khác nhau và riêng rẽ giữa tai phải và tai trái, khác với tai nóng.<br/><br/>
+					<b>Tai trái</b><br/>
+					&emsp;- 23 giờ đến 01 giờ: có người khác phái đang mong nhớ.<br/>
+					&emsp;- 01 giờ đến 03 giờ: mang lời ăn tiếng nói.<br/>
+					&emsp;- 03 giờ đến 05 giờ: có việc hao tài, nhưng không đáng kể<br/>
+					&emsp;- 05 giờ đến 07 giờ: có kẻ rình rập, đề phòng mất trộm.<br/>
+					&emsp;- 07 giờ đến 09 giờ: có việc phải đi xa.<br/>
+					&emsp;- 09 giờ đến 11 giờ: tai biến nặng nề, đề phòng xe cộ.<br/>
+					&emsp;- 11 giờ đến 12 giờ: người thân từ xa về, có sự vui vẻ trong nhà.<br/>
+					&emsp;- 13 giờ đến 15 giờ: có người mời ăn uống.<br/>
+					&emsp;- 15 giờ đến 17 giờ: có người rủ đi du lịch.<br/>
+					&emsp;- 17 giờ đến 19 giờ: đề phòng mất đồ trong nhà.<br/>
+					&emsp;- 19 giờ đến 21 giờ: có ăn uống.<br/>
+					&emsp;- 21 giờ đến 23 giờ: tin vui, có tài lợi vào.<br/><br/>
+					<b>Tai phải</b><br/>
+					&emsp;- 23 giờ đến 01 giờ: hao tài còn mang tai tiếng.<br/>
+					&emsp;- 01 giờ đến 03 giờ: có việc kiện thưa. Ít phần thắng, nhiều phần thiệt.<br/>
+					&emsp;- 03 giờ đến 05 giờ: có cãi vã giữa vợ chồng, nên nhường nhịn nhau kẻo đổ vỡ.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có khách quí đến thăm hoặc dạm hỏi.<br/>
+					&emsp;- 07 giờ đến 09 giờ: có người đến cạnh nhờ vả mình.<br/>
+					&emsp;- 09 giờ đến 11 giờ: tài đến bất ngờ, vui trong nhà.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có người trong thân đến thăm.<br/>
+					&emsp;- 13 giờ đến 15 giờ: có tin từ xa đưa về.<br/>
+					&emsp;- 15 giờ đến 17 giờ: người vắng nhà từ lâu bỗng nhiên trở lại.<br/>
+					&emsp;- 17 giờ đến 19 giờ: có người mời hợp tác trong công việc lợi lộc.<br/>
+					&emsp;- 19 giờ đến 21 giờ: có của bất ngờ.<br/>
+					&emsp;- 21 giờ đến 23 giờ: có rượu thịt, ăn uống hoặc có người mời dự tiệc.<br/>
+					</div>
+					<div id="thitgiat" class="tabContent">
+					<div class="title"><b>THỊT GIỰT</b></div>
+					&emsp;Tự nhiên một vài nơi trong người, nhất là các bắp thịt giựt nổi phồng lên, hoặc máy động. Đó là một điềm, thịt giựt hay thịt máy cũng thề.<br/><br/>
+					&emsp;- 23 giờ đến 01 giờ: có tin chia gia tài, hoặc có của bất ngờ.<br/>
+					&emsp;- 01 giờ đến 03 giờ: con cái từ xa về, mang lại vui vẻ cho gia đình.<br/>
+					&emsp;- 03 giờ đến 05 giờ: chuyện nhỏ hoá to, nếu không nhường nhịn sẽ có kiện tụng.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có người mang quà đến tặng để nhờ mình giúp một việc gì.<br/>
+					&emsp;- 07 giờ đến 09 giờ: đề phòng tai nạn bất ngờ xảy ra cho con cái trong nhà.<br/>
+					&emsp;- 09 giờ đến 11 giờ: có khách lạ tìm đến nhờ mình, việc có lợi cho mình.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có người gièm pha, đề phòng bạn bè phản trắc.<br/>
+					&emsp;- 13 giờ đến 15 giờ: có của bất ngờ, thử mua số.<br/>
+					&emsp;- 15 giờ đến 17 giờ: có gia tài nhưng cũng có chuyện lôi thôi nhỏ.<br/>
+					&emsp;- 17 giờ đến 19 giờ: hao tài mang nhiều tai tiếng.<br/>
+					&emsp;- 19 giờ đến 21 giờ: con cái ở xa về, gia đình vui vẻ.<br/>
+					&emsp;- 21 giờ đến 23 giờ: công việc thành tựu, tài lợi dồi dào.<br/>
+					</div>
+					<div id="hoihop" class="tabContent">
+					<div class="title"><b>HỒI HỘP</b></div>
+					&emsp;Tự nhiên trong người phát hồi hộp, như lo sợ một chuyện gì. Tim đập liên hồi, đầu óc xáo trộn. Đó là một điềm báo tin, dĩ nhiên cũng có lành, cũng có dữ.<br/><br/>
+					&emsp;- 23 giờ đến 01 giờ: có người chờ mong trong cuộc ân tình.<br/>
+					&emsp;- 01 giờ đến 03 giờ: tai hoạ bất ngờ, đề phòng có kẻ phao vu.<br/>
+					&emsp;- 03 giờ đến 05 giờ: có người mời ăn uống.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có khách sang đến, lợi vào.<br/>
+					&emsp;- 07 giờ đến 09 giờ: tin vui, tài lộc tới tấp, thử mua vé số.<br/>
+					&emsp;- 09 giờ đến 11 giờ: gặp chuyện tâm tình, có cơ thành tựu.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có sự hội họp ngẫu nhiên, tiền vào nhà.<br/>
+					&emsp;- 13 giờ đến 15 giờ: duyên bất ngờ, thơ mộng nhưng không thành.<br/>
+					&emsp;- 15 giờ đến 17 giờ: tin từ xa về, vui vẻ.<br/>
+					&emsp;- 17 giờ đến 19 giờ: có người trong thân đến thăm và giúp đỡ.<br/>
+					&emsp;- 19 giờ đến 21 giờ: có người rủ hùn hạp, lợi vào, nên nhận.<br/>
+					&emsp;- 21 giờ đến 23 giờ: tai nạn có thể xảy ra, hung tin.<br/>
+					</div>
+					<div id="noikeu" class="tabContent">
+					<div class="title"><b>NỒI KÊU</b></div>
+					&emsp;Nồi đặt lên bếp chưa nóng, tự nhiên có tiếng phát ra như tiếng nước sôi, mặc dầu bên trong không phải là nước. Đó là điềm đem tới báo sự kiết, hung.<br/><br/>
+					&emsp;- 23 giờ đến 01 giờ: có người mang quà đến biếu.<br/>
+					&emsp;- 01 giờ đến 03 giờ: tài lợi sẽ vào.
+					&emsp;- 03 giờ đến 05 giờ: tai hoạ sẽ đến, gây rối rắm trong gia đình.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có người gây sự, sẽ đến tụng đình.<br/>
+					&emsp;- 07 giờ đến 09 giờ: điềm lành, yên vui kéo dài.
+					&emsp;- 09 giờ đến 11 giờ: lợi lộc tới tấp nhưng phải đề phòng lợi vào lời ra.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có cãi vã, nên nhường nhịn là hơn.<br/>
+					&emsp;- 13 giờ đến 15 giờ: đề phòng rủi ro, nhất là nên tránh đi sông, biển.<br/>
+					&emsp;- 15 giờ đến 17 giờ: có tin từ xa về, vui vẻ.<br/>
+					&emsp;- 17 giờ đến 19 giờ: có của bất ngờ, thử mua vé số.<br/>
+					&emsp;- 19 giờ đến 21 giờ: có người rủ đi ăn nhậu.<br/>
+					&emsp;- 21 giờ đến 23 giờ: có tranh tụng nhưng thắng lợi về mình.<br/>
+					</div>
+					<div id="luacuoi" class="tabContent">
+					<div class="title"><b>LỬA CƯỜI</b></div>
+					&emsp;Lửa trong lò không gió, không cao ngọn, thế mà tự nhiên phì phì như có người thổi. Đó là một loại điềm, gọi là lửa cười.<br/><br/>
+					&emsp;- 23 giờ đến 01 giờ: có điềm không hay, vợ chồng có ngoại tâm.<br/>
+					&emsp;- 01 giờ đến 03 giờ: coi chừng con cái sẽ bỏ nhà theo tình nhân.<br/>
+					&emsp;- 03 giờ đến 05 giờ: điềm lành có người muốn cầu thân.<br/>
+					&emsp;- 05 giờ đến 07 giờ: điền của vào lúc rạng đông, mọi sự vui vẻ.<br/>
+					&emsp;- 07 giờ đến 09 giờ: có chuyện buồn phiền, cố gắng thu xếp mới yên thân.<br/>
+					&emsp;- 09 giờ đến 11 giờ: có người mời dự tiệc.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có kiện tụng, nên ôn hoà mới tránh được phiền nhiễu.<br/>
+					&emsp;- 13 giờ đến 15 giờ: có người nâng đỡ, việc trù liệu sẽ thành.<br/>
+					&emsp;- 15 giờ đến 17 giờ: gặp của bất ngờ trong lúc đi đường.<br/>
+					&emsp;- 17 giờ đến 19 giờ: có tai biến trong nhà, có thể là tang khó.<br/>
+					&emsp;- 19 giờ đến 21 giờ: người tình cũ tìm đến, thơ mộng lại bắt đầu.<br/>
+					&emsp;- 21 giờ đến 23 giờ: bệnh bất ngờ, cần chạy chữa gấp.<br/>
+					</div>
+					<div id="chosua" class="tabContent">
+					<div class="title"><b>CHÓ SỦA</b></div>
+					&emsp;Chó trong nhà tự nhiên dõ mõm vào mình sủa, hoặc tru dài. Đó là một điềm mà mỗi người định nghĩa một lối, tựu trung đều cho là điềm gở, nhưng cũng không hiểu được điềm gở đó là điềm gì.<br/><br/>
+					&emsp;- 23 giờ đến 01 giờ: trong nhà có ngoại tình, nên dằn kẻo có đổ vỡ.<br/>
+					&emsp;- 01 giờ đến 03 giờ: nguy hiểm sắp đến, cẩn thận kẻo bị hàm oan.<br/>
+					&emsp;- 03 giờ đến 05 giờ: người cũ tìm nối lại ân tình, đề phòng ghen tuông.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có tin về tiền bạc mất mát từ lâu, nay được hoàn lại.<br/>
+					&emsp;- 07 giờ đến 09 giờ: được của hoạnh tài, thử mua vé số.<br/>
+					&emsp;- 09 giờ đến 11 giờ: có người trong thân đến báo một hung tin.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có người mời ăn uống.<br/>
+					&emsp;- 13 giờ đến 15 giờ: tai nạn có thể xảy ra cho vợ con, hoặc chồng, đề phòng lúc đi đường.<br/>
+					&emsp;- 15 giờ đến 17 giờ: có cãi vã với người lân cận, thành to chuyện.<br/>
+					&emsp;- 17 giờ đến 19 giờ: có người nâng đỡ vào một địa vị.<br/>
+					&emsp;- 19 giờ đến 21 giờ: có kẻ rắp tâm hại mình, nguy hiểm.<br/>
+					&emsp;- 21 giờ đến 23 giờ: có kiện tụng, hao tốn tiền bạc, mang tai tiếng.<br/>
+					</div>
+					<div id="quakeu" class="tabContent">
+					<div class="title"><b>QUẠ KÊU</b></div>
+					&emsp;Quạ bay ngang nhà buông những tiếng dài không dứt. Đó là một thứ điềm.<br/><br/>
+					&emsp;- 23 giờ đến 01 giờ: có người thân thích từ xa về, gia đình sum hợp.<br/>
+					&emsp;- 01 giờ đến 03 giờ: có người mang tin vui đến.<br/>
+					&emsp;- 03 giờ đến 05 giờ: có tranh tụng nhưng không nguy hại.<br/>
+					&emsp;- 05 giờ đến 07 giờ: có người mời dự tiệc, đem lợi vào.<br/>
+					&emsp;- 07 giờ đến 09 giờ: tài lợi vào tới tấp.<br/>
+					&emsp;- 09 giờ đến 11 giờ: có tin may mắn.<br/>
+					&emsp;- 11 giờ đến 12 giờ: phòng bệnh bất ngờ.<br/>
+					&emsp;- 13 giờ đến 15 giờ: hao tài, mất đồ vật trong nhà.<br/>
+					&emsp;- 15 giờ đến 17 giờ: có người mời hợp tác, sẽ thành công.<br/>
+					&emsp;- 17 giờ đến 19 giờ: phiền muộn, nặng lo âu.<br/>
+					&emsp;- 19 giờ đến 21 giờ: lợi lộc vào nhiều, may mắn.<br/>
+					&emsp;- 21 giờ đến 23 giờ: có cãi vã với người ngoài đường, sinh ẩu đả.<br/>
+					</div>
+					<div id="chimheokeu" class="tabContent">
+					<div class="title"><b>CHIM HEO KÊU</b></div>
+					&emsp;Chim heo là loài chim nhỏ, tiếng phát ra như tiếng heo la. Loài chim này luôn luôn xuất hiện về đêm, ban ngày thì tuyệt nhiên không có. Khi loài chim này kêu chỉ mũi vào nhà, đó là điềm gở, đáng lo ngại.<br/><br/>
+					&emsp;- 19 giờ đến 21 giờ: có điều tang khó trong gia đình.<br/>
+					&emsp;- 21 giờ đến 23 giờ: hung tin từ xa đưa về.<br/>
+					&emsp;- 23 giờ đến 01 giờ: mất một người thân, đề phòng gìn giữ trẻ em.<br/>
+					&emsp;- 01 giờ đến 03 giờ: tai nạn xe cộ cho người trong nhà.<br/>
+					&emsp;- 03 giờ đến 05 giờ: người đau nặng sẽ tuyệt vọng.<br/>
+					</div>
+					<div id="chimkhachkeu" class="tabContent">
+					<div class="title"><b>CHIM KHÁCH KÊU</b></div>
+					&emsp;Khác hơn chim heo, loài chim khách chỉ đến vào lúc ban ngày từ nhiều phương. Nên tiếng kêu của chim khách cũng cần theo phương hướng mà định giá trị.<br/><br/>
+					<b>Hướng Đông</b><br/>
+					&emsp;- 07 giờ đến 11 giờ: có tài lộc của khách xa mang đến.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có sự tranh giành quyền lợi trong gia đình.<br/>
+					&emsp;- 13 giờ đến 17 giờ: có kẻ mưu hại mình, đề phòng kẻ dưới tay.<br/><br/>
+					<b>Hướng Đông - Nam</b><br/>
+					&emsp;- 07 giờ đến 11 giờ: có khách tài hoa đến thăm, vui vẻ nhiều.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có người mời đi du lịch.<br/>
+					&emsp;- 13 giờ đến 17 giờ: tin từ xa về, hung nhiều hơn kiết.<br/><br/>
+					<b>Hướng Nam</b><br/>
+					&emsp;- 07 giờ đến 11 giờ: có tiệc tùng.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có sự tranh giành quyền lợi trong gia đình.<br/>
+					&emsp;- 13 giờ đến 17 giờ: tin vui từ xa đưa về.<br/><br/>
+					<b>Hướng Tây - Nam</b><br/>
+					&emsp;- 07 giờ đến 11 giờ: có người đến cầu thân.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có chuyện buồn bực.<br/>
+					&emsp;- 13 giờ đến 17 giờ: đề phòng hoả hoạn.<br/><br/>
+					<b>Hướng Tây</b><br/>
+					&emsp;- 07 giờ đến 11 giờ: có cãi vã trong gia đình.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có người mang quà tặng.<br/>
+					&emsp;- 13 giờ đến 17 giờ: có tin lành.<br/><br/>
+					<b>Hướng Tây - Bắc</b><br/>
+					&emsp;- 07 giờ đến 11 giờ: có khách quí đến nhà.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có người mời ăn uống.<br/>
+					&emsp;- 13 giờ đến 17 giờ: khách cũ đến thăm và giúp đỡ.<br/><br/>
+					<b>Hướng Bắc</b><br/>
+					&emsp;- 07 giờ đến 11 giờ: có khách đến viếng nhà, cầu hôn.<br/>
+					&emsp;- 11 giờ đến 12 giờ: có người đem đồ vật đến tặng.<br/>
+					&emsp;- 13 giờ đến 17 giờ: súc vật đang nuôi bị hao hớt.<br/><br/>
+					<b>Hướng Đông - Bắc</b><br/>
+					&emsp;- 07 giờ đến 11 giờ: có người trong thân đến thăm.<br/>
+					&emsp;- 11 giờ đến 12 giờ: người cũ mang quà đến biếu.<br/>
+					&emsp;- 13 giờ đến 17 giờ: có khách quí đến nhà. <br/>
+					</div>
+				</div>
+			</div> 
+			<div class="row" style="margin:10px;padding-bottom:20px;font-size:10px;font-style:italic;color:gray;">
+				<div style="font-size:10px">Nội dung được sưu tầm, có tính chất giải trí. Đề nghị không cuồng tin :D</div>
+			</div>      
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script>
+		$( document ).ready(function() {
+			selectKind($("option:selected").val());
+		});	
+		
+		selectKind = function(value){
+			var tab = $('#'+value);
+			$('.tabContent').hide();
+			if(tab.length > 0){
+				tab.show();
+			}
+		}
+	</script>
+  </body>
+</html>
+
