@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "AmDuong";
     public static final String EXTRA_FOR_NAVIGATION_MENU_ID = "EXTRA_FOR_NAVIGATION_MENU_ID";
-    private static final int ALARM_VERSION = 3;
+    private static final int ALARM_VERSION = 4;
 
     LinearLayout llMainContent;
     private AdView mAdView = null;
@@ -246,6 +246,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.navBoiTenAiCap:
                 llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.BoiTenAiCap), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navGiaiDiem:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.GiaiDiem), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navBoiBaiTarot:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.BoiBaiTarot), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
             case R.id.navGieoQueQuanAm:
                 llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.GieoQueQuanAm), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));

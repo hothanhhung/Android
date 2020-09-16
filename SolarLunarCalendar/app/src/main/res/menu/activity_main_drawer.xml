@@ -47,6 +47,14 @@
                 android:icon="@drawable/ai_cap"
                 android:title="Bói Tên Ai Cập" />
             <item
+                android:id="@+id/navGiaiDiem"
+                android:icon="@drawable/omen"
+                android:title="Giải Điềm Báo" />
+            <item
+                android:id="@+id/navBoiBaiTarot"
+                android:icon="@drawable/tarot"
+                android:title="Bói Bài Tarot" />
+            <item
                 android:id="@+id/navGieoQueQuanAm"
                 android:icon="@drawable/quan_am"
                 android:title="Gieo Quẻ Quan Âm" />

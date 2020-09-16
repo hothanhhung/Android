@@ -26,6 +26,7 @@ import com.hunght.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Lenovo on 4/20/2018.
@@ -149,6 +150,7 @@ public class NotesView extends LinearLayout {
             lvNotesViewItems.setVisibility(GONE);
             btBackup.setVisibility(GONE);
         }else {
+            Collections.sort(noteItems);
             tvNotesViewNoItem.setVisibility(GONE);
             lvNotesViewItems.setVisibility(VISIBLE);
 

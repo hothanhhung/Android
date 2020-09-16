@@ -14,30 +14,47 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="5sp">
-
-        <TextView
-            android:id="@+id/tvNoteItemSubject"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5sp"
-            android:text="Tết Nguyên Đán"
-            android:textColor="#ff99cc00"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvNoteItemSubject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp"
+                android:text="Tết Nguyên Đán"
+                android:textColor="#383EA1"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvNoteItemRemainingDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="5sp"
+                android:text="(còn 4 ngày)"
+                android:textColor="#ff99cc00"
+                android:textSize="10sp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvNotesItemDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_marginBottom="5sp"
             android:text="Ngày 10 tháng 01 năm 2018"
             android:textColor="#ff33b5e5"
-            android:textStyle="bold" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvNoteItemContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_marginBottom="5sp"
             android:text="Chuẩn bị năm mới, mua nhiều đồ ăn"
             android:textColor="#ff33be33"
@@ -53,6 +70,7 @@
                 android:id="@+id/imgNoteItemImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
 
             <TextView

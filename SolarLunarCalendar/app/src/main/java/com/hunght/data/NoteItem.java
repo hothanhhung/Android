@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by Lenovo on 4/20/2018.
  */
 
-public class NoteItem {
+public class NoteItem implements Comparable<NoteItem> {
     public String Id;
     public int Year;
     public int Month;
@@ -17,6 +17,7 @@ public class NoteItem {
     public boolean haveDate;
 
     DateItemForGridview dateItemForGridviewItem = null;
+    DateItemForGridview remindDateItemForGridviewItem = null;
     public DateItemForGridview getDateItem()
     {
         if(dateItemForGridviewItem == null)
@@ -49,6 +50,7 @@ public class NoteItem {
         this.Month = m;
         this.Year = y;
         dateItemForGridviewItem = null;
+        remindDateItemForGridviewItem = null;
         haveDate = true;
     }
 
@@ -117,6 +119,12 @@ public class NoteItem {
     }
 
     public DateItemForGridview getRemindDate() {
+        if(remindDateItemForGridviewItem == null){
+            remindDateItemForGridviewItem = calRemindDate();
+        }
+        return remindDateItemForGridviewItem;
+    }
+    private DateItemForGridview calRemindDate() {
 
         DateItemForGridview now = new DateItemForGridview(null, new Date(), true);
         DateItemForGridview setupTime = getDateItem();
@@ -163,5 +171,50 @@ public class NoteItem {
     public boolean haveDate()
     {
         return haveDate;
+    }
+    @Override
+    public int compareTo(NoteItem noteItem) {
+        // sort desc
+        return -1 * compareToSort(noteItem);
+    }
+    private int compareToSort(NoteItem noteItem) {
+        if(noteItem == null)
+        {
+            return 1;
+        }
+        DateItemForGridview thisRemindDate = this.getRemindDate();
+        DateItemForGridview thisDate = this.getDateItem();
+
+        DateItemForGridview otherRemindDate = noteItem.getRemindDate();
+        DateItemForGridview otherDate = noteItem.getDateItem();
+
+        if(thisRemindDate != null)
+        {
+            if(otherRemindDate == null)
+            {
+                return 1;
+            }
+            int diff = thisRemindDate.difference(otherRemindDate);
+            if(diff < 0) return 1;
+            if (diff > 0) return -1;
+            return 0;
+        }
+        if(otherRemindDate != null) return -1;
+
+        // compare date
+        if(thisDate != null)
+        {
+            if(otherDate == null)
+            {
+                return 1;
+            }
+            int diff = thisDate.difference(otherDate);
+            if(diff < 0) return 1;
+            if (diff > 0) return -1;
+            return 0;
+        }
+        if(otherDate != null) return -1;
+
+        return 0;
     }
 }

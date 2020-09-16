@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.hunght.data.NoteItem;
 import com.hunght.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Lenovo on 4/21/2018.
@@ -49,7 +51,7 @@ public class NoteItemAdapter extends ArrayAdapter<NoteItem> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         NoteItemViewHolder viewHolder;
-        TextView tvNoteItemSubject, tvNotesItemDate, tvNoteItemContent, tvNoteItemNextDate;
+        TextView tvNoteItemSubject, tvNoteItemRemainingDate, tvNotesItemDate, tvNoteItemContent, tvNoteItemNextDate;
         ImageView imgNoteItemImage, imgNoteItemImageDelete;
 
         if (convertView == null) {
@@ -57,6 +59,7 @@ public class NoteItemAdapter extends ArrayAdapter<NoteItem> {
             viewHolder = new NoteItemViewHolder();
 
             viewHolder.tvNoteItemSubject = tvNoteItemSubject = (TextView) convertView.findViewById(R.id.tvNoteItemSubject); // title
+            viewHolder.tvNoteItemRemainingDate = tvNoteItemRemainingDate = (TextView) convertView.findViewById(R.id.tvNoteItemRemainingDate); // title
             viewHolder.tvNotesItemDate = tvNotesItemDate = (TextView) convertView.findViewById(R.id.tvNotesItemDate);// title
             viewHolder.tvNoteItemContent = tvNoteItemContent = (TextView) convertView.findViewById(R.id.tvNoteItemContent);// title
             viewHolder.tvNoteItemNextDate = tvNoteItemNextDate = (TextView) convertView.findViewById(R.id.tvNoteItemNextDate);
@@ -67,6 +70,7 @@ public class NoteItemAdapter extends ArrayAdapter<NoteItem> {
         } else {
             viewHolder = (NoteItemViewHolder) convertView.getTag(R.layout.notes_view_item);
             tvNoteItemSubject = viewHolder.tvNoteItemSubject; // title
+            tvNoteItemRemainingDate = viewHolder.tvNoteItemRemainingDate;
             tvNotesItemDate = viewHolder.tvNotesItemDate;
             tvNoteItemContent = viewHolder.tvNoteItemContent;
             tvNoteItemNextDate = viewHolder.tvNoteItemNextDate;
@@ -125,11 +129,26 @@ public class NoteItemAdapter extends ArrayAdapter<NoteItem> {
             DateItemForGridview nextRemind = item.getRemindDate();
             if(nextRemind == null)
             {
+                tvNoteItemRemainingDate.setText("");
                 tvNoteItemNextDate.setText("Không lặp lại");
             }else {
+                DateItemForGridview today = new DateItemForGridview("", new Date(), false);
                 tvNoteItemNextDate.setText(nextRemind.getSolarInfo(false) + "\nNhằm " + nextRemind.getLunarInfo(false));
-                //  imgNoteItemImage;
+                int remaingDate = nextRemind.difference(today);
+                if(remaingDate == 0){
+                    tvNoteItemRemainingDate.setText("(hôm nay)");
+                    tvNoteItemRemainingDate.setTextColor(Color.RED);
+                }else {
+                    tvNoteItemRemainingDate.setText("(còn " + remaingDate + " ngày)");
+                    tvNoteItemRemainingDate.setTextColor(Color.parseColor("#ff99cc00"));
+                }
             }
+        }
+        if( position%2 == 0)
+        {
+            convertView.setBackgroundColor(Color.parseColor("#f7f7f7"));
+        }else {
+            convertView.setBackgroundColor(Color.WHITE);
         }
         convertView.setTag(item);
         return convertView;
@@ -138,7 +157,7 @@ public class NoteItemAdapter extends ArrayAdapter<NoteItem> {
 
     class NoteItemViewHolder {
 
-        TextView tvNoteItemSubject, tvNotesItemDate, tvNoteItemContent, tvNoteItemNextDate;
+        TextView tvNoteItemSubject, tvNoteItemRemainingDate, tvNotesItemDate, tvNoteItemContent, tvNoteItemNextDate;
         ImageView imgNoteItemImage, imgNoteItemImageDelete;
     }
 }

@@ -62,6 +62,21 @@ public class DateItemForGridview {
             return date.compareTo(obj.getDate());
         }
     }
+    public int difference(DateItemForGridview obj) {
+        if (date == null) {
+            if (obj.getDate() == null) {
+                return 0;
+            } else {
+                return Integer.MIN_VALUE;
+            }
+        } else if (obj.getDate() == null) {
+            return Integer.MAX_VALUE;
+        } else {
+            long thisTime = date.getTime();
+            long anotherTime = obj.getDate().getTime();
+            return (int) java.lang.Math.ceil((thisTime - anotherTime)/(1000.0 * 3600 * 24));
+        }
+    }
 
     public void addDate(int number)
     {

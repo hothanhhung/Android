@@ -130,14 +130,29 @@ public class MyReceiver// extends BroadcastReceiver
 
             if (keepCheck && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowSuggestTuVi(context))
             {
+                int longTime = now.get(Calendar.DAY_OF_YEAR) - SharedPreferencesUtils.getShowSuggestTuVi(context);
+                if(longTime < 0) longTime += 365;
                 Log.d("AmDuong", "Checking suggest Tuvi");
                 Random rand = new Random();
-                if(rand.nextInt(5) == 1 || SharedPreferencesUtils.getShowSuggestTuVi(context) == 0){
-                    String subject = "Xem tử vi hàng ngày", content="Thử xem tử vi hôm nay của bạn nào";
+                if(rand.nextInt(4) == 1 || SharedPreferencesUtils.getShowSuggestTuVi(context) == 0 || longTime > 5){
+                    String subject = "Xem tử vi hàng ngày", content = "Thử xem tử vi hôm nay của bạn nào";
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.setAction("SERVICE_GET_SUGGEST_TO_TUVI");
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navTuVi);
+                    switch (rand.nextInt(3)) {
+                        case 0:
+                            subject = "Thử gieo quẻ xem";
+                            content = "Thử gieo quẻ xem thế nào";
+                            intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navGieoQueQuanAm);
+                            break;
+                        case 1:
+                            subject = "Bói Bài Tarot";
+                            content = "Thử bói bài Tarot nào";
+                            intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navBoiBaiTarot);
+                            break;
+                        default:
+                            break;
+                    }
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
                     showNotification(context, "SERVICE_GET_SUGGEST_TO_TUVI", ServiceProcessor.SERVICE_GET_SUGGEST_TO_TUVI, subject, content, pendingIntent, R.drawable.icon);
                     keepCheck = false;
