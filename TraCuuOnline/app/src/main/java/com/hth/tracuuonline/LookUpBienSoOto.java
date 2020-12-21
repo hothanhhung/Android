@@ -17,7 +17,7 @@ import android.widget.TextView;
  * Created by Lenovo on 10/28/2016.
  */
 public class LookUpBienSoOto extends LinearLayout {
-    String urlLookUpBienSoOto = "http://www.vr.org.vn/ptpublic/ThongTinPTPublic.aspx";
+    String urlLookUpBienSoOto = "http://app.vr.org.vn/ptpublic/"; //"http://www.vr.org.vn/ptpublic/ThongTinPTPublic.aspx";
     WebView webView;
     TextView textView;
     RelativeLayout llWebView;
@@ -76,7 +76,9 @@ public class LookUpBienSoOto extends LinearLayout {
             public void onPageFinished(WebView view, String url) {
 
                 // Inject CSS when page is done loading
-                injectCSS();
+				if(url.equalsIgnoreCase(urlLookUpBienSoOto)) {
+                    injectCSS();
+                }
                 super.onPageFinished(view, url);
                 new Handler().postDelayed(new Runnable() {
                     @Override
