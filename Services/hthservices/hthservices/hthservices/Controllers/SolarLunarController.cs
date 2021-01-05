@@ -11,7 +11,7 @@ namespace hthservices.Controllers
     public class SolarLunarController : ApiController
     {
         static Dictionary<string, string> currentTuVi = new Dictionary<string, string>();
-
+        static Object obj = new object();
         [GZipOrDeflate]
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetInfoDate1(string date, int index)
@@ -88,8 +88,14 @@ namespace hthservices.Controllers
             else
             {
                 content = CrawlTuViHelper.Crawl(1, 0);
-                currentTuVi.Clear();
-                currentTuVi.Add(now, content);
+                lock (obj)
+                {
+                    if (!currentTuVi.ContainsKey(now))
+                    {
+                        currentTuVi.Clear();
+                        currentTuVi.Add(now, content);
+                    }
+                }
             }
             return new HttpResponseMessage()
             {
