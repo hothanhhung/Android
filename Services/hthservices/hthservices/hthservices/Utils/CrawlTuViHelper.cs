@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Linq;
+using System.Net;
 
 namespace hthservices.Utils
 {
@@ -17,6 +18,13 @@ namespace hthservices.Utils
             return url;
         }
 
+        private static string GetTuViCungHoangDao2(DateTime date)
+        {
+            string dateOfWeek = date.DayOfWeek == 0 ? "chu-nhat" : $"thu-{(int)date.DayOfWeek + 1}";
+            string url = $"https://xemtuvi.mobi/tu-vi-ngay-{date.Day}-{date.Month}-{date.Year}-cua-12-cung-hoang-dao-{dateOfWeek}.html";
+            return url;
+        }
+
         private static string GetTuViConGiap(DateTime date)
         {
             string dateOfWeek = date.DayOfWeek == 0 ? "chu-nhat" : $"thu-{(int)date.DayOfWeek + 1}";
@@ -24,7 +32,13 @@ namespace hthservices.Utils
             return url;
         }
 
-        private static List<string> CrawlXemTuVi(string url)
+        private static string GetTuViConGiap2(DateTime date)
+        {
+            string dateOfWeek = date.DayOfWeek == 0 ? "chu-nhat" : $"thu-{(int)date.DayOfWeek + 1}";
+            string url = $"https://xemtuvi.mobi/tu-vi-ngay-{date.Day}-{date.Month}-{date.Year}-cua-12-con-giap-{dateOfWeek}.html";
+            return url;
+        }
+        private static List<string> CrawlXemTuVi1(string url)
         {
             var result = new List<string>();
             try
@@ -93,6 +107,73 @@ namespace hthservices.Utils
             return result;
         }
 
+        private static List<string> CrawlXemTuVi(string url)
+        {
+            var result = new List<string>();
+            try
+            {
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)768 | (SecurityProtocolType)3072;
+                HttpClient hc = new HttpClient();
+                HttpResponseMessage response = hc.GetAsync(url).Result;
+
+                var pageContents = response.Content.ReadAsStringAsync().Result;
+                HtmlDocument pageDocument = new HtmlDocument();
+                pageDocument.LoadHtml(pageContents);
+                var contentNode = pageDocument.DocumentNode.SelectNodes("//div[@class='text-detail news_content fit-content']").FirstOrDefault();
+                if (contentNode != null)
+                {
+                    bool removedUnuseItem = false;
+                    var stringBuilder = new StringBuilder();
+                    for (int i = 0; i < contentNode.ChildNodes.Count - 1; i++)
+                    {
+                        var item = contentNode.ChildNodes[i];
+                        var style = item.GetAttributeValue("style", "empty");
+                        if (style.ToLower().Contains("text-align:center") || style.ToLower().Contains("text-align:right")) continue;
+
+                        if (item.Name.Equals("h2"))
+                        {
+                            if (stringBuilder.Length > 0)
+                            {
+                                result.Add(stringBuilder.ToString().Trim());
+                                stringBuilder = new StringBuilder();
+                            }
+                            if (!removedUnuseItem)
+                            {
+                                removedUnuseItem = true;
+                            }
+                        }
+                        else if (removedUnuseItem)
+                        {
+                            if (item.InnerText.Contains("---------------"))
+                            {
+                                removedUnuseItem = false;
+                                continue;
+                            }
+
+                            if (item.Name.Equals("p") && !string.IsNullOrWhiteSpace(item.InnerText))
+                            {
+                                stringBuilder.Append("&emsp;" + item.InnerText.Replace('"', '“').Trim() + "<br/><br/>");
+                            }
+                            if (item.Name.Equals("ul"))
+                            {
+                                foreach (var li in item.ChildNodes)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(li.InnerText))
+                                    {
+                                        stringBuilder.Append("&emsp;" + li.InnerText.Replace('"', '“').Trim() + "<br/><br/>");
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    result.Add(stringBuilder.ToString().Trim());
+                }
+            }
+            catch (Exception ex) { }
+            return result;
+        }
+
         private static string buildJson(List<string> congiap, List<string> cunghoangDao, string dateInString)
         {
             if (congiap.Count == 12 && cunghoangDao.Count == 12)
@@ -134,7 +215,15 @@ namespace hthservices.Utils
         private static string CrawlTuVi(DateTime date)
         {
             var congiap = CrawlXemTuVi(GetTuViConGiap(date));
+            if (congiap == null || congiap.Count == 0)
+            {
+                congiap = CrawlXemTuVi(GetTuViConGiap2(date));
+            }
             var cunghoangDao = CrawlXemTuVi(GetTuViCungHoangDao(date));
+            if (cunghoangDao == null || cunghoangDao.Count == 0)
+            {
+                cunghoangDao = CrawlXemTuVi(GetTuViCungHoangDao2(date));
+            }
             return buildJson(congiap, cunghoangDao, date.ToString("yyyyMMdd"));
         }
 
