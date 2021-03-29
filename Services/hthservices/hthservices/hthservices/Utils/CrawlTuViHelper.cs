@@ -38,6 +38,13 @@ namespace hthservices.Utils
             string url = $"https://xemtuvi.mobi/tu-vi-ngay-{date.Day}-{date.Month}-{date.Year}-cua-12-con-giap-{dateOfWeek}.html";
             return url;
         }
+        private static string GetTuViConGiap3(DateTime date)
+        {
+            string dateOfWeek = date.DayOfWeek == 0 ? "chu-nhat" : $"thu-{(int)date.DayOfWeek + 1}";
+            string url = $"https://xemtuvi.mobi/tu-vi-{dateOfWeek}-ngay-{date.Day}-{date.Month}-{date.Year}-tu-vi-hang-ngay-12-con-giap.html";
+            return url;
+        }
+        
         private static List<string> CrawlXemTuVi1(string url)
         {
             var result = new List<string>();
@@ -214,15 +221,20 @@ namespace hthservices.Utils
         }
         private static string CrawlTuVi(DateTime date)
         {
-            var congiap = CrawlXemTuVi(GetTuViConGiap(date));
-            if (congiap == null || congiap.Count == 0)
+            var congiap = CrawlXemTuVi(GetTuViConGiap3(date));
+            if(congiap == null || congiap.Count == 0)
             {
                 congiap = CrawlXemTuVi(GetTuViConGiap2(date));
             }
-            var cunghoangDao = CrawlXemTuVi(GetTuViCungHoangDao(date));
+            if (congiap == null || congiap.Count == 0)
+            {
+                congiap = CrawlXemTuVi(GetTuViConGiap(date));
+            }
+
+            var cunghoangDao = CrawlXemTuVi(GetTuViCungHoangDao2(date));
             if (cunghoangDao == null || cunghoangDao.Count == 0)
             {
-                cunghoangDao = CrawlXemTuVi(GetTuViCungHoangDao2(date));
+                cunghoangDao = CrawlXemTuVi(GetTuViCungHoangDao(date));
             }
             return buildJson(congiap, cunghoangDao, date.ToString("yyyyMMdd"));
         }
