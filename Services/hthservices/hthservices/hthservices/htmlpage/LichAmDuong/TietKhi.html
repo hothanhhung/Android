@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	<style>
+		.years-container{
+			align-content: center;
+			display: grid;
+			margin-bottom: 20px;
+		}
+		
+		.tiet-khi-container{
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.tiet-khi-item{
+			width: 80px;
+			height: 60px;
+			display: flex;
+			text-align: center;
+			justify-content: center;
+			align-items: center;
+			margin: 1px;
+			background: #00000030;
+		}
+	</style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+		const e = React.createElement;
+
+		function SelectedYears(props) {
+		  return (
+			<select name="years" id="years" value={props.selectedYear} onChange={(obj)=>{props.handleSelectedYear(obj.target.value);}}>
+				{props.years.map((item,index)=>{
+					 return <option key={item} value={item}>{item}</option>
+				 })}
+			</select>
+		  );
+		}
+		
+		function TietKhiView(props) {
+		  return (
+					<div className = "tiet-khi-container">
+						{props.items.map((item,index)=>{
+							 return <div className = "tiet-khi-item" key={index}>{Object.keys(item)[0]}<br/>{Object.values(item)[0]}</div>
+						 })}
+				 </div>
+		  );
+		}
+		
+		class MainComponent extends React.Component {
+			constructor(props) {
+				super(props);
+				var currentYear = (new Date()).getFullYear().toString();
+				this.state = { selectedYear: currentYear, years: [], selectedTietKhi: [] };
+			}
+			
+			handleSelectedYear = (year) =>{
+				var tietKhi = this.state.TietKhi[year];
+				this.setState({ selectedYear: year, selectedTietKhi: [...tietKhi]});
+			}
+			
+			componentWillMount = () => {
+				var url = 'https://raw.githubusercontent.com/hothanhhung/static-files/master/tuvi/tietkhi.json?ts='+(new Date()).getTime();
+				  $.ajax({
+					url: url,
+					type: 'GET',
+					timeout: 10000,
+					error: (xhr, status, error) => {
+					  alert("Lỗi khi tải dữ liệu");
+					},
+					success: (responsedata) => {
+					  if(responsedata != ''){  
+						this.state.TietKhi = JSON.parse(responsedata);
+						this.setState({ years: Object.keys(this.state.TietKhi) });
+						this.handleSelectedYear(this.state.selectedYear);
+					  }else{
+						  alert("Không có dữ liệu");
+					  }
+					}
+				  });
+			}
+			
+			render() {
+				return (
+				  <div>
+					<div className = "years-container">
+						<SelectedYears 
+							years={this.state.years}
+							selectedYear={this.state.selectedYear}
+							handleSelectedYear={this.handleSelectedYear}
+						/>
+					</div>
+					<div>
+						<TietKhiView
+							items={this.state.selectedTietKhi}
+						/>
+					</div>
+				  </div>
+				);
+			  }
+			}
+			ReactDOM.render(
+				e(MainComponent),
+				document.getElementById('root')
+			);
+
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+  </body>
+</html>
