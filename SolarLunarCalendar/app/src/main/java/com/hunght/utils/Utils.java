@@ -175,7 +175,7 @@ public class Utils {
     }
 
     public static void exportToCsv(Context context, ArrayList<NoteItem> noteItems) {
-        final String fileName = "DanhMucDauTu_"+MethodsHelper.getYYYYMMDDhhmmss(Calendar.getInstance())+".json";
+        final String fileName = "LichAmDuong_"+MethodsHelper.getYYYYMMDDhhmmss(Calendar.getInstance())+".json";
         Log.d("TAG", "exportToExcel");
         //Saving file in external storage
         //File sdCard = Environment.getExternalStorageDirectory();

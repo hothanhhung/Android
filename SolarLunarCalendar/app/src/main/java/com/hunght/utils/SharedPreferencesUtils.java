@@ -33,6 +33,31 @@ public class SharedPreferencesUtils {
     public static final String ShowSuggestViewTuVi = "ShowSuggestViewTuVi";
     public static final String ShowWidgetConGiap = "ShowWidgetConGiap";
     public static final String SettingWidgetTextColor = "SettingWidgetTextColor";
+    public static final String SettingWidgetTextFontSize = "SettingWidgetTextFontSize";
+
+    static public int getWidgetTextFontSize(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            return appSharedPrefs.getInt(SettingWidgetTextFontSize, 18);
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
+
+    static public void setWidgetTextFontSize(Context var1, int value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putInt(SettingWidgetTextFontSize, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
 
     static public int getWidgetTextColor(Context var1)
     {
@@ -303,7 +328,7 @@ public class SharedPreferencesUtils {
             SharedPreferences appSharedPrefs = var1.getSharedPreferences(
                     APP_SHARED_PREFS, 0);
             SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-            return appSharedPrefs.getBoolean(ShowNotifyNgayRam, false);
+            return appSharedPrefs.getBoolean(ShowNotifyNgayRam, true);
         }catch (Exception ex){
             return true;
         }

@@ -3,6 +3,9 @@ package com.hunght.utils;
 import android.os.StrictMode;
 import android.util.Log;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,6 +25,27 @@ public class ServiceProcessor {
     static public final int SERVICE_GET_NGAY_RAM = SERVICE_GET_INFO_OF_DATE_SHORT + 1;
     static public final int SERVICE_GET_SUGGEST_TO_TUVI = SERVICE_GET_NGAY_RAM + 1;
     static public final int SERVICE_GET_TO_NOTE = SERVICE_GET_SUGGEST_TO_TUVI + 1;
+
+    public static String getContent(String urlpage) {
+
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            Document doc = Jsoup.connect(urlpage).timeout(10000)
+                    // .userAgent("Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0")
+                    .header("Connection", "close")
+                    .get();
+
+            return doc.html();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     static public String getChamNgon(String date, int index)
     {
         return getChamNgon(date, index, 0);
@@ -31,16 +55,7 @@ public class ServiceProcessor {
         String jsonStr = null;
 
         try {
-            StringBuilder jsonStringBuilder = new StringBuilder();
-            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
-
-            String inputLine;
-            while ((inputLine = input.readLine()) != null)
-            {
-                jsonStringBuilder.append(inputLine + "\n");
-            }
-            input.close();
-            jsonStr = jsonStringBuilder.toString();
+            jsonStr = getContent(link);
         } catch (Exception e) {
             Log.e("getChamNgon", "Error " +  e.toString());
         }
@@ -52,16 +67,7 @@ public class ServiceProcessor {
         String jsonStr = null;
 
         try {
-            StringBuilder jsonStringBuilder = new StringBuilder();
-            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
-
-            String inputLine;
-            while ((inputLine = input.readLine()) != null)
-            {
-                jsonStringBuilder.append(inputLine + "\n");
-            }
-            input.close();
-            jsonStr = jsonStringBuilder.toString();
+            jsonStr = getContent(link);
         } catch (Exception e) {
             Log.e("getChamNgon", "Error ", e);
         }
@@ -73,16 +79,7 @@ public class ServiceProcessor {
         String jsonStr = null;
 
         try {
-            StringBuilder jsonStringBuilder = new StringBuilder();
-            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
-
-            String inputLine;
-            while ((inputLine = input.readLine()) != null)
-            {
-                jsonStringBuilder.append(inputLine + "\n");
-            }
-            input.close();
-            jsonStr = jsonStringBuilder.toString();
+            jsonStr = getContent(link);
         } catch (Exception e) {
             Log.e("getChamNgon", "Error ", e);
         }

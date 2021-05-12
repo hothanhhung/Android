@@ -23,13 +23,17 @@
             android:id="@+id/navNotes"
             android:icon="@drawable/note_date"
             android:title="Các Sự Kiện" />
+        <item
+            android:id="@+id/navTietKhi"
+            android:icon="@drawable/tietkhi"
+            android:title="Xem Tiết Khí" />
     </group>
     <item android:title="Bói Vui">
         <menu>
             <item
                 android:id="@+id/navTuVi"
                 android:icon="@drawable/tu_vi"
-                android:title="Xem Tử Vi Hàng Ngay" />
+                android:title="Xem Tử Vi Hàng Ngày" />
             <item
                 android:id="@+id/navBoiTinhCach"
                 android:icon="@drawable/rong"

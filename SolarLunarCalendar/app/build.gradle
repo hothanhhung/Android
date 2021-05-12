@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.hunght.solarlunarcalendar"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 109
-        versionName "1.0.9"
+        targetSdkVersion 30
+        versionCode 110
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -34,4 +34,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
     implementation group:'com.squareup.picasso', name:'picasso', version:'2.5.2'
     implementation 'com.rarepebble:colorpicker:3.0.1'
+    implementation 'org.jsoup:jsoup:1.13.1'
 }

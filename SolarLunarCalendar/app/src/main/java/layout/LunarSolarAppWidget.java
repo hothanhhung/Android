@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -31,7 +32,9 @@ public class LunarSolarAppWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.appwidget_text_lunar, today.getLunarInfoWidget(true));
 
         views.setTextColor(R.id.appwidget_text_solar, SharedPreferencesUtils.getWidgetTextColor(context));
+        views.setTextViewTextSize(R.id.appwidget_text_solar, TypedValue.COMPLEX_UNIT_SP, SharedPreferencesUtils.getWidgetTextFontSize(context));
         views.setTextColor(R.id.appwidget_text_lunar, SharedPreferencesUtils.getWidgetTextColor(context));
+        views.setTextViewTextSize(R.id.appwidget_text_lunar, TypedValue.COMPLEX_UNIT_SP, SharedPreferencesUtils.getWidgetTextFontSize(context));
 
         if(SharedPreferencesUtils.getShowWidgetConGiap(context)) {
             views.setViewVisibility(R.id.appwidget_image_congiap, View.VISIBLE);

@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,7 +35,8 @@ import layout.LunarSolarAppWidget;
 public class SettingsView  extends LinearLayout {
 
     FloatingActionButton fbtNotesViewAdd;
-    TextView tvNotesViewNoItem, tvWidgetTextColor;
+    TextView tvNotesViewNoItem, tvWidgetTextColor, tvWidgetTextFontSize;
+    Button btWidgetMinusFontSize, btWidgetPlusFontSize;
     ListView lvNotesViewItems;
     ArrayList<NoteItem> noteItems;
 
@@ -109,7 +111,35 @@ public class SettingsView  extends LinearLayout {
                 builder.show();
             }
         });
-        //cpWidgetTextColor.setli
+
+        tvWidgetTextFontSize = view.findViewById(R.id.tvWidgetTextFontSize);
+        tvWidgetTextFontSize.setText(""+SharedPreferencesUtils.getWidgetTextFontSize(getContext())+"sp");
+
+        btWidgetMinusFontSize = view.findViewById(R.id.btWidgetMinusFontSize);
+        btWidgetMinusFontSize.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentValue = SharedPreferencesUtils.getWidgetTextFontSize(getContext()) - 1;
+                if(currentValue >= 1) {
+                    SharedPreferencesUtils.setWidgetTextFontSize(getContext(), currentValue);
+                    tvWidgetTextFontSize.setText("" + currentValue + "sp");
+                    updateWidgetTriger();
+                }
+            }
+        });
+
+        btWidgetPlusFontSize = view.findViewById(R.id.btWidgetPlusFontSize);
+        btWidgetPlusFontSize.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentValue = SharedPreferencesUtils.getWidgetTextFontSize(getContext()) + 1;
+                if(currentValue < 30 ) {
+                    SharedPreferencesUtils.setWidgetTextFontSize(getContext(), currentValue);
+                    tvWidgetTextFontSize.setText("" + currentValue + "sp");
+                    updateWidgetTriger();
+                }
+            }
+        });
     }
 
     private void updateWidgetTriger(){

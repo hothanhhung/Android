@@ -256,6 +256,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.navGieoQueQuanAm:
                 llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.GieoQueQuanAm), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
+            case R.id.navTietKhi:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.TietKhi), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
             case R.id.navMoreApp:
                 Utils.showAlertGetMoreAppsServer(this);
                 break;
