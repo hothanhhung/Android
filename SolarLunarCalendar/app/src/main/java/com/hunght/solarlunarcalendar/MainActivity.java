@@ -8,11 +8,21 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.View;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +34,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAd ;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.utils.SharedPreferencesUtils;
 import com.hunght.utils.Utils;
@@ -56,6 +66,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        // Initialize the Mobile Ads SDK.
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
 
         mAdView = (AdView) this.findViewById(R.id.adView);
 		//mAdView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
@@ -168,6 +183,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -178,7 +194,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 return;
             }
-            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:{
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "Quyền đã được cấp. Vui lòng thử lại", Toast.LENGTH_LONG).show();
                 } else {
@@ -298,52 +314,56 @@ public class MainActivity extends AppCompatActivity
     }
 
     static long lastShowAds = 0;
-    static boolean loadAdsFailed = false;
     private void showInterstitial() {
-		if(interstitial == null) return;
-		
-        if(loadAdsFailed){
-            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-            interstitial.loadAd(adRequest_interstitial);
-            loadAdsFailed = false;
-        }
-        if (interstitial.isLoaded()) {
-            interstitial.show();
+        if (interstitial == null) {
+            createInterstitialAds();
+    }else{
+            interstitial.show(this);
             lastShowAds = (new Date()).getTime();
-            AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-            interstitial.loadAd(adRequest_interstitial);
-            loadAdsFailed = false;
         }
     }
 
     private void createInterstitialAds(){
         if (interstitial == null) {
-            interstitial = new InterstitialAd(this);
-            interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
-            //interstitial.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-            interstitial.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    /*if (interstitial.isLoaded()) {
-                        interstitial.show();
-                        lastShowAds = (new Date()).getTime();
-                    }*/
-                }
+            AdRequest adRequest = new AdRequest.Builder().build();
+            InterstitialAd.load(this,getResources().getString(R.string.interstitial_unit_id), adRequest, new InterstitialAdLoadCallback() {
+                        @Override
+                        public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                            // The mInterstitialAd reference will be null until
+                            // an ad is loaded.
+                            interstitial = interstitialAd;
+                            Log.i(TAG, "onAdLoaded");
+                            interstitialAd.setFullScreenContentCallback(
+                                    new FullScreenContentCallback() {
+                                        @Override
+                                        public void onAdDismissedFullScreenContent() {
+                                            MainActivity.this.interstitial = null;
+                                            createInterstitialAds();
+                                            Log.d("TAG", "The ad was dismissed.");
+                                        }
 
-                @Override
-                public void onAdClosed() {
-                }
+                                        @Override
+                                        public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                            MainActivity.this.interstitial = null;
+                                            Log.d("TAG", "The ad failed to show.");
+                                        }
 
+                                        @Override
+                                        public void onAdShowedFullScreenContent() {
+                                            // Called when fullscreen content is shown.
+                                            Log.d("TAG", "The ad was shown.");
+                                        }
+                                    });
 
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
-                    loadAdsFailed = true;
-                }
+                        }
+
+                        @Override
+                        public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                            // Handle the error
+                            Log.i(TAG, loadAdError.getMessage());
+                            interstitial = null;
+                        }
             });
         }
-
-        AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-        interstitial.loadAd(adRequest_interstitial);
-        loadAdsFailed = false;
     }
 }
