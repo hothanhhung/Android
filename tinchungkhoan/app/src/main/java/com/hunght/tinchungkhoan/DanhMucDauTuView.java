@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -98,7 +99,7 @@ public class DanhMucDauTuView extends LinearLayout {
 
         final Calendar myCalendar = Calendar.getInstance();
         myCalendar.set(myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-        myCalendar.add(Calendar.DAY_OF_MONTH, -1);
+        //myCalendar.add(Calendar.DAY_OF_MONTH, -1);
         final DatePickerDialog.OnDateSetListener fromDate = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -129,17 +130,19 @@ public class DanhMucDauTuView extends LinearLayout {
         });
         etMaCK.setTextColor(Color.RED);
 
+        etNgayMua.setInputType(InputType.TYPE_NULL);
+        etNgayMua.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    showDateTimePopup(datePickerDialog);
+                }
+            }
+        });
         etNgayMua.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                datePickerDialog.show();
-                View view = ((Activity)getContext()).getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-
+                showDateTimePopup(datePickerDialog);
             }
         });
 
@@ -246,7 +249,15 @@ public class DanhMucDauTuView extends LinearLayout {
             }
         });
     }
-
+    private void showDateTimePopup(final DatePickerDialog datePickerDialog){
+    // TODO Auto-generated method stub
+    datePickerDialog.show();
+    View view = ((Activity)getContext()).getCurrentFocus();
+    if (view != null) {
+        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+}
     private void deleteDanhMucDauTu(final DanhMucDauTuItem danhMucDauTuItem)
     {
         if(danhMucDauTuItem != null) {

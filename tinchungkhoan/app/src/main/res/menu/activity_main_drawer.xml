@@ -24,7 +24,12 @@
         <item
             android:id="@+id/nav_ThucHienQuyen"
             android:icon="@drawable/ic_assignment_black"
+            android:visible="false"
             android:title="Thực Hiện Quyền" />
+        <item
+            android:id="@+id/nav_SuKien"
+            android:icon="@drawable/ic_assignment_black"
+            android:title="Sự Kiện" />
         <item
             android:id="@+id/nav_ThongTinDoanhNghiep"
             android:icon="@drawable/ic_business_center_black"

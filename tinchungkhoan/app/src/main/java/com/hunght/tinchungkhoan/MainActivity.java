@@ -313,7 +313,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_ThucHienQuyen:
                 changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.ThucHienQuyen));
                 break;
-
+            case R.id.nav_SuKien:
+                changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.SuKien));
+                break;
             case R.id.nav_ThongTinDoanhNghiep:
                 changeLayout(StaticData.geMenuItemBasedOnKind(MenuLookUpItemKind.ThongTinDoanhNghiep));
                 break;

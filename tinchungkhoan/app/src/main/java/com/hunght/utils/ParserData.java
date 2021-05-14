@@ -10,6 +10,7 @@ import com.hunght.data.HistoryPrice;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.PriceItem;
 import com.hunght.data.DoanhNghiepItem;
+import com.hunght.data.SuKienItem;
 import com.hunght.data.ThongTinDoanhNghiep;
 import com.hunght.data.ThucHienQuyenItem;
 
@@ -25,6 +26,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class ParserData {
     
@@ -36,6 +41,69 @@ public class ParserData {
                 return "Cafef";
         }
         return "Không xác định được dữ liêu";
+    }
+
+    public static ArrayList<SuKienItem> getSuKienItems(String search, String loaiSuKien, String start, String end){
+        Log.d("getSuKienItems", "");
+        ArrayList<SuKienItem> suKienItems = new ArrayList<SuKienItem>();
+        ArrayList<String> listSearch;
+        if(search != null && !search.trim().isEmpty()) {
+            search = search.replaceAll(" ", "").toUpperCase();
+            listSearch = new ArrayList<>(Arrays.asList(search.split(",")));
+        }else{
+            listSearch = new ArrayList<>();
+        }
+        suKienItems = parseSuKienItems(listSearch, loaiSuKien, start, end);
+
+        if(suKienItems == null){
+            suKienItems = new ArrayList<>();
+        }
+        return suKienItems;
+    }
+
+    class SuKienFromServer{
+
+    }
+    public static ArrayList<SuKienItem> parseSuKienItems(ArrayList<String> listSearch, String loaiSuKien,  String start, String end) {
+        Calendar calendar = Calendar.getInstance();
+        final Calendar myCalendarFromDate = Calendar.getInstance();
+
+        int day = myCalendarFromDate.get(Calendar.DAY_OF_MONTH);
+        int month = (myCalendarFromDate.get(Calendar.MONTH) + 1);
+
+        //https://finfo-api.vndirect.com.vn/v4/events?q=locale:VN~code:~type:~effectiveDate:gte:2021-05-14~effectiveDate:lte:2021-05-31&sort=effectiveDate:asc&size=20&page=1
+        String link = "https://finfo-api.vndirect.com.vn/v4/events?q=locale:VN~code:" + (listSearch.size() == 1 ? listSearch.get(0) : "") + "~type:" + loaiSuKien + "~effectiveDate:gte:" + start + "~effectiveDate:lte:" + end + "&sort=effectiveDate:asc&size=200&page=1";
+
+        try {
+            Log.d("getThucHienQuyenItems", link);
+
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            StringBuilder jsonStringBuilder = new StringBuilder();
+            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(link).openStream(), "UTF-8"));
+
+            String inputLine;
+            while ((inputLine = input.readLine()) != null) {
+                jsonStringBuilder.append(inputLine);
+            }
+            input.close();
+            String json = jsonStringBuilder.toString();
+
+            json = json.substring(json.indexOf('['), json.lastIndexOf(']') + 1);
+            Log.d("getThucHienQuyenItems", json);
+
+            Gson gSon = new Gson();
+            Type collectionType = new TypeToken<ArrayList<SuKienItem>>() {
+            }.getType();
+            ArrayList<SuKienItem> response = gSon.fromJson(json, collectionType);
+            return response;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static ArrayList<ThucHienQuyenItem> getThucHienQuyenItems(String search, String market, String stockType, String start, String end, boolean moreTime){
@@ -60,16 +128,21 @@ public class ParserData {
         return thucHienQuyenItems;
     }
     public static void getThucHienQuyenItems(ArrayList<ThucHienQuyenItem> thucHienQuyenItems, ArrayList<String> listSearch, String market, String stockType, String start, String end, String page) {
+	    //https://web.vsd.vn/vi/lich-giao-dich?tab=LICH_THQ&date=13/05/2021&page=1&ks=TB8%7C1%7C%7C13%2F05%2F2021%7C17%2F05%2F2021%7CVI
         //     String link = "http://vsd.vn/ModuleLichHoatDong/ThucHienQuyen/ThucHienQuyenSearch/?p_Search="+search+"&p_StockType=1&p_Market=Trái+phiếu+chuyên+biệt&p_StartDate=02/11/2018&p_EndDate=23/11/2018&_=1541843815679";
         Calendar calendar = Calendar.getInstance();
         market = market.replace(' ', '+');
 
-        String link = "http://vsd.vn/ModuleLichHoatDong/ThucHienQuyen/ArticleSort/?p_OrderBy=NGAYDKCC&p_OrderType=0&p_Search="+(listSearch.size()==1?listSearch.get(0):"")+"&p_StockType=" + stockType + "&p_Market=" + market + "&p_StartDate=" + start + "&p_EndDate=" + end + "&_=" + calendar.getTimeInMillis();
-        if(page!=null && page !="") {
-            link += "&p_CurrPage=" + page;
-        }else{
-            link += "&p_CurrPage=" + 1;
-        }
+        final Calendar myCalendarFromDate = Calendar.getInstance();
+
+        int day = myCalendarFromDate.get(Calendar.DAY_OF_MONTH);
+        int month = (myCalendarFromDate.get(Calendar.MONTH) + 1);
+        String today = (day > 9 ? day : "0" + day)  + "%2F" + (month > 9 ? month : "0" + month) + "%2F" + calendar.get(Calendar.YEAR);
+
+        if(page == null || page.isEmpty()) page= "1";
+        //String link = "http://vsd.vn/ModuleLichHoatDong/ThucHienQuyen/ArticleSort/?p_OrderBy=NGAYDKCC&p_OrderType=0&p_Search="+(listSearch.size()==1?listSearch.get(0):"")+"&p_StockType=" + stockType + "&p_Market=" + market + "&p_StartDate=" + start + "&p_EndDate=" + end + "&_=" + calendar.getTimeInMillis();
+        String link = "https://web.vsd.vn/vi/lich-giao-dich?tab=LICH_THQ&date="+today+"&page="+page+"&ks="+(listSearch.size()==1?listSearch.get(0):"")+"|"+stockType+"|"+market+"|"+start.replace("/","%2F")+"|"+end.replace("/","%2F")+"|VI";
+
 
         if(thucHienQuyenItems == null){
             thucHienQuyenItems = new ArrayList<ThucHienQuyenItem>();
@@ -98,7 +171,7 @@ public class ParserData {
                         Elements aTags = trTag.select("a");
                         if(aTags!=null && aTags.size() > 0)
                         {
-                            url = "http://vsd.vn" + aTags.get(0).attr("href");
+                            url = "https://web.vsd.vn/" + aTags.get(0).attr("href");
                         }
                         loaiCK = tdTags.get(5).text().trim();
                         thiTruong = tdTags.get(6).text().trim();

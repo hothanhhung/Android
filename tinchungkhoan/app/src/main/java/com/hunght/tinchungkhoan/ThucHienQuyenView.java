@@ -195,14 +195,17 @@ public class ThucHienQuyenView extends LinearLayout {
     }
 
 
-    private void updateDateForEditText(EditText editText, Calendar calendar)
-    {
-        editText.setText(calendar.get(Calendar.DAY_OF_MONTH) + " - " + (calendar.get(Calendar.MONTH) +1 ) + " - " + calendar.get(Calendar.YEAR));
+    private void updateDateForEditText(EditText editText, Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = (calendar.get(Calendar.MONTH) + 1);
+        editText.setText((day > 9 ? day : "0" + day) + " - " + (month > 9 ? month : "0" + month) + " - " + calendar.get(Calendar.YEAR));
     }
 
     private String getDateInString(Calendar calendar)
     {
-        return calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) +1 ) + "/" + calendar.get(Calendar.YEAR);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = (calendar.get(Calendar.MONTH) + 1);
+        return (day > 9 ? day : "0" + day)  + "/" + (month > 9 ? month : "0" + month) + "/" + calendar.get(Calendar.YEAR);
     }
 
     ArrayList<String> listDataHeader;

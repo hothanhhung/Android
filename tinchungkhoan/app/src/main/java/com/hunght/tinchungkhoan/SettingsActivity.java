@@ -102,7 +102,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    protected void onClickBack(View v) {
+    public void onClickBack(View v) {
         finish();
     }
 
