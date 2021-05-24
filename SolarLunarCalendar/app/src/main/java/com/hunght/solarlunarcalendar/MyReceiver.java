@@ -227,9 +227,9 @@ public class MyReceiver// extends BroadcastReceiver
             Log.d("AmDuong", "doInBackground 1: " + type);
             switch (type) {
                 case ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT:
-                    return ServiceProcessor.getInfoDateShort(params[1].toString(), Integer.parseInt(params[2].toString()));
+                    return ServiceProcessor.getInfoDateShort(params[1].toString(), Integer.parseInt(params[2].toString()), false);
                 case ServiceProcessor.SERVICE_GET_CHAM_NGON:
-                    return ServiceProcessor.getChamNgon(params[1].toString(), Integer.parseInt(params[2].toString()), 1);
+                    return ServiceProcessor.getChamNgon(params[1].toString(), Integer.parseInt(params[2].toString()), 1, false);
 
             }
             return null;
