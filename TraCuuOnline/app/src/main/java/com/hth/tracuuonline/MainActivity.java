@@ -1,9 +1,12 @@
 package com.hth.tracuuonline;
 
 import android.os.Handler;
+
+import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -11,10 +14,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd ;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.hth.data.MenuLookUpItem;
 import com.hth.data.StaticData;
 import com.hth.utils.SavedValues;
@@ -63,16 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 numberOfSelectItem++;
                 checkForShowInterstital();
                 MenuLookUpItem menuLookUpItem = (MenuLookUpItem) view.getTag();
-                if(menuLookUpItem.hasAction())
-                {
-                    tvSelectedMenuLookUpItem.setText(menuLookUpItem.getName());
-                   // vwMainContent.ad
-                    llMainContent.removeAllViews();
-                    mDrawerLayout.closeDrawer(mLeftDrawerList);
-                    llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                }else{
-                    Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_LONG).show();
-                }
+                updateUI(menuLookUpItem);
             }
         });
         numberOfSelectItem = 1;
@@ -93,8 +90,23 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         mDrawerLayout.openDrawer(mLeftDrawerList);
+
+        updateUI(menuLookUpItems.get(10));
     }
 
+    private void updateUI(MenuLookUpItem menuLookUpItem)
+    {
+        if(menuLookUpItem.hasAction())
+        {
+            tvSelectedMenuLookUpItem.setText(menuLookUpItem.getName());
+            // vwMainContent.ad
+            llMainContent.removeAllViews();
+            mDrawerLayout.closeDrawer(mLeftDrawerList);
+            llMainContent.addView(menuLookUpItem.getView(MainActivity.this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        }else{
+            Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_LONG).show();
+        }
+    }
 
     public void menuClick(View view) {
         switch (view.getId()){
@@ -175,46 +187,58 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    static  String TAG = "Admob";
     static boolean loadAdsFailed = false;
     private void createInterstitialAds(){
         if (interstitial == null) {
-            interstitial = new InterstitialAd(this);
-            interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
-            //interstitial.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-            interstitial.setAdListener(new AdListener() {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            InterstitialAd.load(this,getResources().getString(R.string.interstitial_unit_id), adRequest, new InterstitialAdLoadCallback() {
                 @Override
-                public void onAdLoaded() {
-                    /*if (interstitial.isLoaded()) {
-                        interstitial.show();
-                        lastShowAds = (new Date()).getTime();
-                    }*/
+                public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                    // The mInterstitialAd reference will be null until
+                    // an ad is loaded.
+                    interstitial = interstitialAd;
+                    Log.i(TAG, "onAdLoaded");
+                    interstitialAd.setFullScreenContentCallback(
+                            new FullScreenContentCallback() {
+                                @Override
+                                public void onAdDismissedFullScreenContent() {
+                                    MainActivity.this.interstitial = null;
+                                    createInterstitialAds();
+                                    Log.d(TAG, "The ad was dismissed.");
+                                }
+
+                                @Override
+                                public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                    MainActivity.this.interstitial = null;
+                                    Log.d(TAG, "The ad failed to show.");
+                                }
+
+                                @Override
+                                public void onAdShowedFullScreenContent() {
+                                    // Called when fullscreen content is shown.
+                                    Log.d(TAG, "The ad was shown.");
+                                }
+                            });
+
                 }
 
                 @Override
-                public void onAdClosed() {
-                }
-
-
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
-                    loadAdsFailed = true;
+                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                    // Handle the error
+                    Log.i(TAG, loadAdError.getMessage());
+                    interstitial = null;
                 }
             });
         }
-
-        AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-        interstitial.loadAd(adRequest_interstitial);
-        loadAdsFailed = false;
     }
 
     private void showInterstitial() {
-        if(loadAdsFailed || interstitial == null){
+        if (interstitial == null) {
             createInterstitialAds();
-        }
-        if (interstitial.isLoaded()) {
-            interstitial.show();
+        } else {
+            interstitial.show(this);
             timeForRun = Calendar.getInstance().getTime().getTime();
-            createInterstitialAds();
         }
     }
 }
