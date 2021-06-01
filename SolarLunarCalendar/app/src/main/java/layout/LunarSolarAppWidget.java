@@ -15,6 +15,7 @@ import com.hunght.solarlunarcalendar.MainActivity;
 import com.hunght.solarlunarcalendar.R;
 import com.hunght.utils.SharedPreferencesUtils;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -88,6 +89,10 @@ public class LunarSolarAppWidget extends AppWidgetProvider {
         configIntent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navSolarLunarCalendar);
         PendingIntent configPendingIntent = PendingIntent.getActivity(context, 20201010, configIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         views.setOnClickPendingIntent(R.id.appwidget_image_congiap, configPendingIntent);
+
+        Calendar now = Calendar.getInstance();
+        int dayOfYear = now.get(Calendar.DAY_OF_YEAR);
+        SharedPreferencesUtils.setSettingWidgetLastUpdateDate(context, dayOfYear);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

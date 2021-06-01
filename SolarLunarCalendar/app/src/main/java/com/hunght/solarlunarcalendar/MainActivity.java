@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "AmDuong";
     public static final String EXTRA_FOR_NAVIGATION_MENU_ID = "EXTRA_FOR_NAVIGATION_MENU_ID";
-    private static final int ALARM_VERSION = 4;
+    private static final int ALARM_VERSION = 5;
 
     LinearLayout llMainContent;
     private AdView mAdView = null;

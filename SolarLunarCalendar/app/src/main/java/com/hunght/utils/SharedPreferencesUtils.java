@@ -34,13 +34,38 @@ public class SharedPreferencesUtils {
     public static final String ShowWidgetConGiap = "ShowWidgetConGiap";
     public static final String SettingWidgetTextColor = "SettingWidgetTextColor";
     public static final String SettingWidgetTextFontSize = "SettingWidgetTextFontSize";
+    public static final String SettingWidgetLastUpdateDate = "SettingWidgetLastUpdateDate";
+
+    static public int getSettingWidgetLastUpdateDate(Context var1)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            return appSharedPrefs.getInt(SettingWidgetLastUpdateDate, 0);
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
+    static public void setSettingWidgetLastUpdateDate(Context var1, int value)
+    {
+        try {
+            SharedPreferences appSharedPrefs = var1.getSharedPreferences(
+                    APP_SHARED_PREFS, 0);
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putInt(SettingWidgetLastUpdateDate, value);
+            prefsEditor.commit();
+        }catch (Exception ex){
+        }
+    }
 
     static public int getWidgetTextFontSize(Context var1)
     {
         try {
             SharedPreferences appSharedPrefs = var1.getSharedPreferences(
                     APP_SHARED_PREFS, 0);
-            return appSharedPrefs.getInt(SettingWidgetTextFontSize, 18);
+            return appSharedPrefs.getInt(SettingWidgetTextFontSize, 14);
         }catch (Exception ex){
             return 0;
         }

@@ -3,6 +3,8 @@ package com.hunght.solarlunarcalendar;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+import layout.LunarSolarAppWidget;
+
 public class MyReceiver// extends BroadcastReceiver
 {
     private int backgroundCount = 0;
@@ -39,6 +43,19 @@ public class MyReceiver// extends BroadcastReceiver
         //showNotificationDebug();
 
         Calendar now = Calendar.getInstance();
+        int dayOfYear = now.get(Calendar.DAY_OF_YEAR);
+        int lastWidgetLastUpdate = SharedPreferencesUtils.getSettingWidgetLastUpdateDate(context);
+        if(dayOfYear != lastWidgetLastUpdate){
+
+            Intent intent = new Intent(context, LunarSolarAppWidget.class);
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            int[] ids = AppWidgetManager.getInstance(context)
+                    .getAppWidgetIds(new ComponentName(context, LunarSolarAppWidget.class));
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+            context.sendBroadcast(intent);
+
+            SharedPreferencesUtils.setSettingWidgetLastUpdateDate(context, dayOfYear);
+        }
 
         if (now.get(Calendar.HOUR_OF_DAY) > 5 ) {
             Log.d("AmDuong", "start: > 5h");
