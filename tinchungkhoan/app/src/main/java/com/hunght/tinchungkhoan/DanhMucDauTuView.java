@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.text.Editable;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,11 +20,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,7 @@ import com.hunght.utils.ParserData;
 import com.hunght.utils.SavedValues;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -47,7 +51,7 @@ import java.util.List;
  */
 public class DanhMucDauTuView extends LinearLayout {
     ExpandableListView lvDanhMucDauTu;
-    TextView tvProcessInfo;
+    TextView tvProcessInfo, tvNotification;
     TextView tvLastUpdatedTime;
     private static SavedValues savedValues;
     ArrayList<DanhMucDauTuItem> danhMucDauTuItems;
@@ -75,19 +79,17 @@ public class DanhMucDauTuView extends LinearLayout {
 
     private void init(AttributeSet attrs, int defStyle) {
         final View view = inflate(getContext(), R.layout.danh_muc_dau_tu_layout, this);
-        final EditText etNgayMua = view.findViewById(R.id.etNgayMua);
-        final EditText etSoLuong = view.findViewById(R.id.etSoLuong);
-        final AutoCompleteTextView etMaCK = view.findViewById(R.id.etMaCK);
-        final EditText etGiaMua = view.findViewById(R.id.etGiaMua);
-        final Button btLuu = view.findViewById(R.id.btLuu);
         final Button imDownloadExcel = view.findViewById(R.id.imDownloadExcel);
         final Button btUploadExcel = view.findViewById(R.id.imUploadExcel);
         final ImageButton imUpdate = view.findViewById(R.id.imUpdate);
         final TextView tvSaveFolder = view.findViewById(R.id.tvSaveFolder);
+        final Button btThemDauTu = view.findViewById(R.id.btThemDauTu);
+        final Button btDieuKienLoc = view.findViewById(R.id.btDieuKienLoc);
 
         tvTongDauTu = view.findViewById(R.id.tvTongDauTu);
         tvTongThiTruong = view.findViewById(R.id.tvTongThiTruong);
         tvTongLoiNhuan = view.findViewById(R.id.tvTongLoiNhuan);
+        tvNotification = view.findViewById(R.id.tvNotification);
 
         lvDanhMucDauTu = view.findViewById(R.id.lvDanhMucDauTu);
         tvProcessInfo = view.findViewById(R.id.tvProcessInfo);
@@ -97,86 +99,6 @@ public class DanhMucDauTuView extends LinearLayout {
         savedValues = new SavedValues(getContext());
         danhMucDauTuItems = savedValues.getDanhMucDauTus();
 
-        final Calendar myCalendar = Calendar.getInstance();
-        myCalendar.set(myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-        //myCalendar.add(Calendar.DAY_OF_MONTH, -1);
-        final DatePickerDialog.OnDateSetListener fromDate = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDateForEditText(etNgayMua, myCalendar);
-            }
-
-        };
-
-        final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), fromDate, myCalendar
-                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH));
-
-        CongTyAutoCompleteAdapter adapter = new CongTyAutoCompleteAdapter(getContext(), R.layout.cong_ty_auto_complete_item, 5, MainActivity.gethongTinDoanhNghiepsClone());
-        etMaCK.setAdapter(adapter);
-        etMaCK.setThreshold(1);
-        etMaCK.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DoanhNghiepItem doanhNghiepItem = (DoanhNghiepItem)view.getTag();
-                etMaCK.setText(doanhNghiepItem.getMaCK(), false);
-            }
-        });
-        etMaCK.setTextColor(Color.RED);
-
-        etNgayMua.setInputType(InputType.TYPE_NULL);
-        etNgayMua.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    showDateTimePopup(datePickerDialog);
-                }
-            }
-        });
-        etNgayMua.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDateTimePopup(datePickerDialog);
-            }
-        });
-
-        updateDateForEditText(etNgayMua, myCalendar);
-
-        btLuu.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View view = ((Activity)getContext()).getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-
-                String ngayMua = etNgayMua.getText().toString().trim();
-                String maCK = etMaCK.getText().toString().toUpperCase().trim();
-                int soLuong = convertStringToInt(etSoLuong.getText().toString());
-                float giaMua = convertStringToFloat(etGiaMua.getText().toString());
-                if(ngayMua.isEmpty() || maCK.isEmpty() || soLuong == 0 || giaMua == 0){
-                    Toast.makeText(getContext(), "Dữ Liệu Không Hợp Lệ", Toast.LENGTH_LONG).show();
-                }else {
-                    String name = StaticData.getNameCongTy(maCK);
-                    if(name.isEmpty()){
-                        Toast.makeText(getContext(), "Mã Chứng Khoán Không Tồn Tại", Toast.LENGTH_LONG).show();
-                    }else {
-                        DanhMucDauTuItem danhMucDauTuItem = new DanhMucDauTuItem(ngayMua, maCK, name, giaMua, soLuong);
-                        updateDanhMucDauTu(danhMucDauTuItem);
-                        etMaCK.setText("");
-                        etSoLuong.setText("");
-                        etGiaMua.setText("");
-                    }
-                }
-            }
-        });
 
         lvDanhMucDauTu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -246,6 +168,20 @@ public class DanhMucDauTuView extends LinearLayout {
                     });
                     fileChooser.showDialog();
                 }
+            }
+        });
+
+        btThemDauTu.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                themDanhMucDauTu();
+            }
+        });
+
+        btDieuKienLoc.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                caiDatHienThi();
             }
         });
     }
@@ -410,7 +346,180 @@ public class DanhMucDauTuView extends LinearLayout {
         }
     }
 
+    private void caiDatHienThi(){
+        LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.danh_muc_dau_tu_cai_dat_hien_thi, null);
 
+        Switch swHideChungKhoanDauTu = dialogView.findViewById(R.id.swHideChungKhoanDauTu);
+        Switch swHideChiMucDauTu = dialogView.findViewById(R.id.swHideChiMucDauTu);
+        EditText etCacMaCK = dialogView.findViewById(R.id.etCacMaCK);
+
+        etCacMaCK.setText(savedValues.getRecordCacMaChungKhoanDauTu());
+
+        swHideChungKhoanDauTu.setChecked(savedValues.getRecordHideChungKhoanDauTu());
+        swHideChungKhoanDauTu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                savedValues.setRecordHideChungKhoanDauTu(isChecked);
+            }
+        });
+
+        swHideChiMucDauTu.setChecked(savedValues.getRecordHideChiMucDauTu());
+        swHideChiMucDauTu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                savedValues.setRecordHideChiMucDauTu(isChecked);
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Cài Đặt Hiển Thị")
+                .setView(dialogView).setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        EditText etCacMaCK = dialogView.findViewById(R.id.etCacMaCK);
+                        String cks = "";
+                        if(etCacMaCK != null && etCacMaCK.getText() != null )
+                        {
+                            cks =etCacMaCK.getText().toString();
+                        }
+                        Log.d("filterMaCKs", cks);
+                        savedValues.setRecordCacMaChungKhoanDauTu(cks.trim());
+                        updateListDanhMucDauTu(null);
+                        hideKeyboard();
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void themDanhMucDauTu() {
+        LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.danh_muc_dau_tu_them_popup, null);
+
+
+        final EditText etNgayMua = dialogView.findViewById(R.id.etNgayMua);
+        final AutoCompleteTextView etMaCK = dialogView.findViewById(R.id.etMaCK);
+
+        final Calendar myCalendar = Calendar.getInstance();
+        myCalendar.set(myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        //myCalendar.add(Calendar.DAY_OF_MONTH, -1);
+        final DatePickerDialog.OnDateSetListener fromDate = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDateForEditText(etNgayMua, myCalendar);
+            }
+
+        };
+
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), fromDate, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+
+        CongTyAutoCompleteAdapter adapter = new CongTyAutoCompleteAdapter(getContext(), R.layout.cong_ty_auto_complete_item, 5, MainActivity.gethongTinDoanhNghiepsClone());
+        etMaCK.setAdapter(adapter);
+        etMaCK.setThreshold(1);
+        etMaCK.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DoanhNghiepItem doanhNghiepItem = (DoanhNghiepItem)view.getTag();
+                etMaCK.setText(doanhNghiepItem.getMaCK(), false);
+            }
+        });
+        etMaCK.setTextColor(Color.RED);
+
+        etNgayMua.setInputType(InputType.TYPE_NULL);
+        etNgayMua.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    showDateTimePopup(datePickerDialog);
+                }
+            }
+        });
+        etNgayMua.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateTimePopup(datePickerDialog);
+            }
+        });
+
+        updateDateForEditText(etNgayMua, myCalendar);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Thêm Mục Đầu Tư")
+                .setView(dialogView).setCancelable(false)
+                .setPositiveButton("Lưu", null)
+                .setNegativeButton("Bỏ Qua", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        hideKeyboard();
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard();
+
+                EditText etNgayMua = dialogView.findViewById(R.id.etNgayMua);
+                EditText etSoLuong = dialogView.findViewById(R.id.etSoLuong);
+                AutoCompleteTextView etMaCK = dialogView.findViewById(R.id.etMaCK);
+                EditText etGiaMua = dialogView.findViewById(R.id.etGiaMua);
+
+                String ngayMua = etNgayMua.getText().toString().trim();
+                String maCK = etMaCK.getText().toString().toUpperCase().trim();
+                int soLuong = convertStringToInt(etSoLuong.getText().toString());
+                float giaMua = convertStringToFloat(etGiaMua.getText().toString());
+
+                if(ngayMua.isEmpty() || maCK.isEmpty() || soLuong == 0 || giaMua == 0){
+                    Toast.makeText(getContext(), "Dữ Liệu Không Hợp Lệ", Toast.LENGTH_LONG).show();
+                }else {
+                    String name = StaticData.getNameCongTy(maCK);
+                    if(name.isEmpty()){
+                        Toast.makeText(getContext(), "Mã Chứng Khoán Không Tồn Tại", Toast.LENGTH_LONG).show();
+                    }else {
+                        String filterMaCKs = savedValues.getRecordCacMaChungKhoanDauTu();
+                        if(filterMaCKs!=null && filterMaCKs!="") {
+                            String[] maCks = filterMaCKs.split(",");
+                            if(!isInItems(maCks, maCK)){
+                                filterMaCKs = filterMaCKs + ", " + maCK;
+                                savedValues.setRecordCacMaChungKhoanDauTu(filterMaCKs);
+                            }
+                        }
+                        DanhMucDauTuItem danhMucDauTuItem = new DanhMucDauTuItem(ngayMua, maCK, name, giaMua, soLuong);
+                        updateDanhMucDauTu(danhMucDauTuItem);
+                        etMaCK.setText("");
+                        etSoLuong.setText("");
+                        etGiaMua.setText("");
+
+                        dialog.dismiss();
+                    }
+                }
+            }
+        });
+    }
+
+    private void hideKeyboard()
+    {
+        View view = ((Activity) getContext()).getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
     private void showInMenuForItem(final DanhMucDauTuItem danhMucDauTuItem) {
         if (danhMucDauTuItem == null) return;
         String[] colors = {"Bán", "Chỉnh Sửa", "Xóa"};
@@ -570,7 +679,15 @@ public class DanhMucDauTuView extends LinearLayout {
         editText.setText((day < 10 ? "0" : "") + day + "-" + (month < 10 ? "0" : "") + month + "-" + year);
     }
 
-
+    private boolean isInItems(String[] items, String item)
+    {
+        for (String element : items) {
+            if (item.equalsIgnoreCase(element.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
     ArrayList<String> listDataHeader;
     HashMap<String, List<DanhMucDauTuItem>> listDataChild;
     private void updateListDanhMucDauTu(DanhMucDauTuItem newPrice)
@@ -604,8 +721,18 @@ public class DanhMucDauTuView extends LinearLayout {
             savedValues.setDanhMucDauTus(danhMucDauTuItems);
             boolean isHideCKDaBan = savedValues.getRecordHideChungKhoanDauTu();
             boolean isHideChiMucDaBan = savedValues.getRecordHideChiMucDauTu();
-
+            String filterMaCKs = savedValues.getRecordCacMaChungKhoanDauTu();
+            String[] maCks = filterMaCKs.split(",");
+            Log.d("filterMaCKs", filterMaCKs);
+            if(filterMaCKs != null && !filterMaCKs.isEmpty()){
+                tvNotification.setVisibility(View.VISIBLE);
+                tvNotification.setText("Bộ lọc các mã chứng khoán: " + filterMaCKs);
+            }else{
+                tvNotification.setVisibility(View.GONE);
+            }
             for (DanhMucDauTuItem danhMucDauTuItem:danhMucDauTuItems) {
+                if((filterMaCKs != null && !filterMaCKs.isEmpty()) && !isInItems(maCks, danhMucDauTuItem.getMaCK())) continue;
+
                 if(isHideChiMucDaBan && danhMucDauTuItem.daBan()) continue;
 
                 if(listDataHeader.contains(danhMucDauTuItem.getMaCK()))

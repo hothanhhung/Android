@@ -25,24 +25,6 @@ public class SettingsActivity extends AppCompatActivity {
         Switch swPasswordMucDauTu = findViewById(R.id.swPasswordMucDauTu);
         Switch swPasswordApp = findViewById(R.id.swPasswordApp);
         Switch swShowHeader = findViewById(R.id.swShowHeader);
-        Switch swHideChungKhoanDauTu = findViewById(R.id.swHideChungKhoanDauTu);
-        Switch swHideChiMucDauTu = findViewById(R.id.swHideChiMucDauTu);
-
-        swHideChungKhoanDauTu.setChecked(savedValues.getRecordHideChungKhoanDauTu());
-        swHideChungKhoanDauTu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                savedValues.setRecordHideChungKhoanDauTu(isChecked);
-            }
-        });
-
-        swHideChiMucDauTu.setChecked(savedValues.getRecordHideChiMucDauTu());
-        swHideChiMucDauTu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                savedValues.setRecordHideChiMucDauTu(isChecked);
-            }
-        });
 
         etPassword = findViewById(R.id.etPassword);
 

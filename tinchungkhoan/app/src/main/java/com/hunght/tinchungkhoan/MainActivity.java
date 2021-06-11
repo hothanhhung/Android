@@ -11,8 +11,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -24,10 +32,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.hunght.data.MenuLookUpItem;
 import com.hunght.data.MenuLookUpItemKind;
 import com.hunght.data.StaticData;
@@ -395,32 +401,54 @@ public class MainActivity extends AppCompatActivity {
 
     private void showInterstitial() {
         if (interstitial == null) {
-            interstitial = new InterstitialAd(this);
-            interstitial.setAdUnitId(getResources().getString(R.string.interstitial_unit_id));
-            interstitial.setAdListener(new AdListener() {
+            createInterstitialAds();
+        }else{
+            interstitial.show(this);
+        }
+    }
+
+    private void createInterstitialAds(){
+        if (interstitial == null) {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            InterstitialAd.load(this,getResources().getString(R.string.interstitial_unit_id), adRequest, new InterstitialAdLoadCallback() {
                 @Override
-                public void onAdLoaded() {
-                    if (interstitial.isLoaded()) {
-                        interstitial.show();
-                        timeForRun = Calendar.getInstance().getTime().getTime();
-                        numberOfSelectItem = 1;
-                    }
+                public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                    // The mInterstitialAd reference will be null until
+                    // an ad is loaded.
+                    interstitial = interstitialAd;
+                    Log.i("TAG", "onAdLoaded");
+                    interstitialAd.setFullScreenContentCallback(
+                            new FullScreenContentCallback() {
+                                @Override
+                                public void onAdDismissedFullScreenContent() {
+                                    MainActivity.this.interstitial = null;
+                                    createInterstitialAds();
+                                    Log.d("TAG", "The ad was dismissed.");
+                                }
+
+                                @Override
+                                public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                    MainActivity.this.interstitial = null;
+                                    Log.d("TAG", "The ad failed to show.");
+                                }
+
+                                @Override
+                                public void onAdShowedFullScreenContent() {
+                                    // Called when fullscreen content is shown.
+                                    Log.d("TAG", "The ad was shown.");
+                                }
+                            });
+
                 }
 
                 @Override
-                public void onAdClosed() {
-                }
-
-
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
+                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                    // Handle the error
+                    Log.i("TAG", loadAdError.getMessage());
+                    interstitial = null;
                 }
             });
         }
-
-        AdRequest adRequest_interstitial = new AdRequest.Builder().build();
-
-        interstitial.loadAd(adRequest_interstitial);
     }
 
     private void setThongTinDoanhNghieps(ArrayList<DoanhNghiepItem> data)
@@ -497,6 +525,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -512,7 +541,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }
-            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:{
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "Quyền đã được cấp. Vui lòng thử lại", Toast.LENGTH_LONG).show();
