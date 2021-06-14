@@ -492,7 +492,7 @@ public class DanhMucDauTuView extends LinearLayout {
                         Toast.makeText(getContext(), "Mã Chứng Khoán Không Tồn Tại", Toast.LENGTH_LONG).show();
                     }else {
                         String filterMaCKs = savedValues.getRecordCacMaChungKhoanDauTu();
-                        if(filterMaCKs!=null && filterMaCKs!="") {
+                        if(filterMaCKs != null && !filterMaCKs.isEmpty()) {
                             String[] maCks = filterMaCKs.split(",");
                             if(!isInItems(maCks, maCK)){
                                 filterMaCKs = filterMaCKs + ", " + maCK;
