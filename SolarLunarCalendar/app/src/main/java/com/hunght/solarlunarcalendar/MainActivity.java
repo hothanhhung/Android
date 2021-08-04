@@ -69,12 +69,13 @@ public class MainActivity extends AppCompatActivity
         // Initialize the Mobile Ads SDK.
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
         });
 
         mAdView = (AdView) this.findViewById(R.id.adView);
-		//mAdView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
-        llMainContent = (LinearLayout)findViewById(R.id.llMainContent);
+        //mAdView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+        llMainContent = (LinearLayout) findViewById(R.id.llMainContent);
         llMainContent.removeAllViews();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent liveIntent = new Intent(getApplicationContext(), AReceiver.class);
-        if(SharedPreferencesUtils.getAlarmVersion(this) != ALARM_VERSION || PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_NO_CREATE) == null) {
+        if (SharedPreferencesUtils.getAlarmVersion(this) != ALARM_VERSION || PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_NO_CREATE) == null) {
             PendingIntent recurring = PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Calendar updateTime = Calendar.getInstance();
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             SharedPreferencesUtils.setAlarmVersion(this, ALARM_VERSION);
             SharedPreferencesUtils.setShowSuggestTuVi(this, 0);
             Log.d(TAG, "AlarmManager scheduled " + ALARM_VERSION);
-        }else{
+        } else {
             Log.d(TAG, "AlarmManager existed " + ALARM_VERSION);
         }
         createInterstitialAds();
@@ -104,11 +105,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
-      //  stopService(mServiceIntent);
+        //  stopService(mServiceIntent);
         super.onDestroy();
     }
 
     boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else{
+        } else {
             drawer.openDrawer(GravityCompat.START);
         }
 
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 3000);
     }
@@ -172,7 +174,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         showAdsAfterLongTime(false);
 
@@ -180,6 +182,7 @@ public class MainActivity extends AppCompatActivity
 
     public final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
     public final static int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE + 1;
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -207,7 +210,7 @@ public class MainActivity extends AppCompatActivity
     public void updateUI(int id) {
         showAdsAfterLongTime(id == R.id.navTuVi);
         boolean shownAds = true;
-        if(R.id.navMoreApp != id && R.id.navShare != id)llMainContent.removeAllViews();
+        if (R.id.navMoreApp != id && R.id.navShare != id) llMainContent.removeAllViews();
         switch (id) {
             case R.id.navSolarLunarCalendar:
                 shownAds = false;
@@ -231,11 +234,11 @@ public class MainActivity extends AppCompatActivity
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Lịch Âm Dương");
-                    String shareMessage= "\nChia sẻ ứng dụng với bạn bè\n\n";
-                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+                    String shareMessage = "\nChia sẻ ứng dụng với bạn bè\n\n";
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "Chia sẻ với"));
-                } catch(Exception e) {
+                } catch (Exception e) {
                     //e.toString();
                 }
                 break;
@@ -283,6 +286,10 @@ public class MainActivity extends AppCompatActivity
                 llMainContent.addView(new SolarLunarCalendarView(this), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
         }
+        adViewShow(shownAds);
+    }
+
+    public void adViewShow(boolean shownAds){
         if (shownAds) {
             if (mAdView.getVisibility() != View.VISIBLE) {
                 mAdView.setVisibility(View.VISIBLE);

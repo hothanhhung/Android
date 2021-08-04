@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,25 +26,30 @@ public class ViewWithWebViewRequest extends LinearLayout {
     TextView textView;
     RelativeLayout llWebView;
     MenuLookUpItemKind kind;
+    MainActivity mainActivity;
 
     public ViewWithWebViewRequest(Context context) {
         super(context);
+        mainActivity = (MainActivity)context;
         initView();
     }
 
     public ViewWithWebViewRequest(Context context, MenuLookUpItemKind kind) {
         super(context);
+        mainActivity = (MainActivity)context;
         this.kind = kind;
         initView();
     }
 
     public ViewWithWebViewRequest(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mainActivity = (MainActivity)context;
         initView();
     }
 
     public ViewWithWebViewRequest(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mainActivity = (MainActivity)context;
         initView();
     }
 
@@ -72,6 +80,22 @@ public class ViewWithWebViewRequest extends LinearLayout {
                         llWebView.setVisibility(VISIBLE);
                     }
                 }, 500);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                if(mainActivity != null && request.getUrl().getHost().contains("hunght.com"))
+                {
+                   mainActivity.adViewShow(false);
+                }
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                if(mainActivity != null && request.getUrl().getHost().contains("hunght.com"))
+                {
+                    mainActivity.adViewShow(false);
+                }
             }
         });
         firstLoadWeb();
