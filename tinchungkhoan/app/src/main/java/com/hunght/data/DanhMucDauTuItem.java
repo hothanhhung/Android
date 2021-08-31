@@ -52,12 +52,7 @@ public class DanhMucDauTuItem {
     }
 
     private String getDateMuaInYYYYmmDD(){
-        String[] items = dateMua.split("-");
-        if(items.length == 3)
-        {
-            return items[2] + items[1] + items[0];
-        }
-        return "";
+        return MethodsHelper.getDateMuaInYYYYmmDD(dateMua);
     }
 
     public long getId() {

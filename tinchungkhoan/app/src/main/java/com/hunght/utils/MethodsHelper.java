@@ -46,6 +46,31 @@ public class MethodsHelper {
 
     public static String BACKUP_FOLDER="TinChungKhoan";
 
+    public static int compareDateInString(String value1, String value2){
+        return getDateMuaInYYYYmmDD(value1).compareTo(getDateMuaInYYYYmmDD(value2));
+    }
+
+    public static Calendar getCalendar(String value){
+        String[] items = value.split("-");
+        Calendar myCalendar = Calendar.getInstance();
+        if(items.length == 3)
+        {
+            myCalendar.set(Integer.parseInt(items[2]), Integer.parseInt(items[1]) - 1, Integer.parseInt(items[0]), 0, 0, 0);
+        }else{
+            myCalendar.set(myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        }
+        return myCalendar;
+    }
+
+    public static String getDateMuaInYYYYmmDD(String value){
+        String[] items = value.split("-");
+        if(items.length == 3)
+        {
+            return items[2] + items[1] + items[0];
+        }
+        return "";
+    }
+
     public static String stripAccentsAndD(String s)
     {
         s = Normalizer.normalize(s, Normalizer.Form.NFD);

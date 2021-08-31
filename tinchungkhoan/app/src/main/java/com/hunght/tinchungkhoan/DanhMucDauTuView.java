@@ -353,8 +353,14 @@ public class DanhMucDauTuView extends LinearLayout {
         Switch swHideChungKhoanDauTu = dialogView.findViewById(R.id.swHideChungKhoanDauTu);
         Switch swHideChiMucDauTu = dialogView.findViewById(R.id.swHideChiMucDauTu);
         EditText etCacMaCK = dialogView.findViewById(R.id.etCacMaCK);
+        final EditText etFilterFrom = dialogView.findViewById(R.id.etFilterFrom);
+        final EditText etFilterTo = dialogView.findViewById(R.id.etFilterTo);
+        final Button btClearFilterFrom = dialogView.findViewById(R.id.btClearFilterFrom);
+        final Button btClearFilterTo = dialogView.findViewById(R.id.btClearFilterTo);
 
         etCacMaCK.setText(savedValues.getRecordCacMaChungKhoanDauTu());
+        etFilterFrom.setText(savedValues.getRecordFilterFrom());
+        etFilterTo.setText(savedValues.getRecordFilterTo());
 
         swHideChungKhoanDauTu.setChecked(savedValues.getRecordHideChungKhoanDauTu());
         swHideChungKhoanDauTu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -372,19 +378,138 @@ public class DanhMucDauTuView extends LinearLayout {
             }
         });
 
+        btClearFilterFrom.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etFilterFrom.setText("");
+                btClearFilterFrom.setVisibility(GONE);
+            }
+        });
+
+        if(savedValues.getRecordFilterFrom().isEmpty()){
+            btClearFilterFrom.setVisibility(GONE);
+        }else{
+            btClearFilterFrom.setVisibility(VISIBLE);
+        }
+
+        btClearFilterTo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etFilterTo.setText("");
+                btClearFilterTo.setVisibility(GONE);
+            }
+        });
+
+        if(savedValues.getRecordFilterTo().isEmpty()){
+            btClearFilterTo.setVisibility(GONE);
+        }else{
+            btClearFilterTo.setVisibility(VISIBLE);
+        }
+
+        final Calendar calendarTo = MethodsHelper.getCalendar(savedValues.getRecordFilterTo());
+        final DatePickerDialog.OnDateSetListener dateSetListenerTo = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                calendarTo.set(Calendar.YEAR, year);
+                calendarTo.set(Calendar.MONTH, monthOfYear);
+                calendarTo.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDateForEditText(etFilterTo, calendarTo);
+
+                btClearFilterTo.setVisibility(VISIBLE);
+            }
+
+        };
+
+        final DatePickerDialog datePickerDialogTo = new DatePickerDialog(getContext(), dateSetListenerTo, calendarTo
+                .get(Calendar.YEAR), calendarTo.get(Calendar.MONTH),
+                calendarTo.get(Calendar.DAY_OF_MONTH));
+
+        etFilterTo.setInputType(InputType.TYPE_NULL);
+        etFilterTo.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    showDateTimePopup(datePickerDialogTo);
+                }
+            }
+        });
+        etFilterTo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateTimePopup(datePickerDialogTo);
+            }
+        });
+
+        final Calendar calendarFrom = MethodsHelper.getCalendar(savedValues.getRecordFilterFrom());
+
+        final DatePickerDialog.OnDateSetListener dateSetListenerFrom = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                calendarFrom.set(Calendar.YEAR, year);
+                calendarFrom.set(Calendar.MONTH, monthOfYear);
+                calendarFrom.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDateForEditText(etFilterFrom, calendarFrom);
+
+                btClearFilterFrom.setVisibility(VISIBLE);
+
+            }
+
+        };
+
+        final DatePickerDialog datePickerDialogFrom = new DatePickerDialog(getContext(), dateSetListenerFrom, calendarFrom
+                .get(Calendar.YEAR), calendarFrom.get(Calendar.MONTH),
+                calendarFrom.get(Calendar.DAY_OF_MONTH));
+
+        etFilterFrom.setInputType(InputType.TYPE_NULL);
+        etFilterFrom.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    showDateTimePopup(datePickerDialogFrom);
+                }
+            }
+        });
+        etFilterFrom.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateTimePopup(datePickerDialogFrom);
+            }
+        });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                 .setTitle("Cài Đặt Hiển Thị")
                 .setView(dialogView).setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         EditText etCacMaCK = dialogView.findViewById(R.id.etCacMaCK);
-                        String cks = "";
+                        EditText etFilterFrom = dialogView.findViewById(R.id.etFilterFrom);
+                        EditText etFilterTo = dialogView.findViewById(R.id.etFilterTo);
+                        String cks = "", filterFrom = "", filterTo = "";
                         if(etCacMaCK != null && etCacMaCK.getText() != null )
                         {
                             cks =etCacMaCK.getText().toString();
                         }
+                        if(etFilterFrom != null && etFilterFrom.getText() != null )
+                        {
+                            filterFrom =etFilterFrom.getText().toString();
+                        }
+                        if(etFilterTo != null && etFilterTo.getText() != null )
+                        {
+                            filterTo =etFilterTo.getText().toString();
+                        }
                         Log.d("filterMaCKs", cks);
+                        Log.d("filterFrom", filterFrom);
+                        Log.d("filterTo", filterTo);
                         savedValues.setRecordCacMaChungKhoanDauTu(cks.trim());
+                        savedValues.setRecordFilterFrom(filterFrom.trim());
+                        savedValues.setRecordFilterTo(filterTo.trim());
+
                         updateListDanhMucDauTu(null);
                         hideKeyboard();
                         dialog.dismiss();
@@ -722,18 +847,45 @@ public class DanhMucDauTuView extends LinearLayout {
             boolean isHideCKDaBan = savedValues.getRecordHideChungKhoanDauTu();
             boolean isHideChiMucDaBan = savedValues.getRecordHideChiMucDauTu();
             String filterMaCKs = savedValues.getRecordCacMaChungKhoanDauTu();
+            String filterFrom = savedValues.getRecordFilterFrom();
+            String filterTo = savedValues.getRecordFilterTo();
+
             String[] maCks = filterMaCKs.split(",");
             Log.d("filterMaCKs", filterMaCKs);
+            String infoFilterMessage = "";
             if(filterMaCKs != null && !filterMaCKs.isEmpty()){
-                tvNotification.setVisibility(View.VISIBLE);
-                tvNotification.setText("Bộ lọc các mã chứng khoán: " + filterMaCKs);
-            }else{
-                tvNotification.setVisibility(View.GONE);
+
+                infoFilterMessage = "\nCác mã chứng khoán: " + filterMaCKs;
             }
+
+            if(filterFrom != null && !filterFrom.isEmpty())
+            {
+                infoFilterMessage += "\nĐược đầu tư (mua) từ ngày: " + filterFrom;
+            }
+
+            if(filterTo != null && !filterTo.isEmpty())
+            {
+                infoFilterMessage += "\nĐược đầu tư (mua) đến ngày: " + filterTo;
+            }
+
+            if(infoFilterMessage.isEmpty()){
+                tvNotification.setVisibility(View.GONE);
+            }else{
+                tvNotification.setVisibility(View.VISIBLE);
+                tvNotification.setText("ĐANG SỬ DỤNG BỘ LỌC" + infoFilterMessage);
+            }
+
             for (DanhMucDauTuItem danhMucDauTuItem:danhMucDauTuItems) {
                 if((filterMaCKs != null && !filterMaCKs.isEmpty()) && !isInItems(maCks, danhMucDauTuItem.getMaCK())) continue;
 
                 if(isHideChiMucDaBan && danhMucDauTuItem.daBan()) continue;
+
+                if(filterFrom != null && !filterFrom.isEmpty()
+                        && MethodsHelper.compareDateInString(filterFrom, danhMucDauTuItem.getNgayMua()) > 0) continue;
+
+
+                if(filterTo != null && !filterTo.isEmpty()
+                        && MethodsHelper.compareDateInString(filterTo, danhMucDauTuItem.getNgayMua()) < 0) continue;
 
                 if(listDataHeader.contains(danhMucDauTuItem.getMaCK()))
                 {

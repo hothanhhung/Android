@@ -31,6 +31,8 @@ public class SavedValues {
 	private static final String RECORD_HIDE_CHUNG_KHOAN_DAU_TU = "RECORD_HIDE_CHUNG_KHOAN_DAU_TU";
 	private static final String RECORD_LAST_UPDATE_PRICE_TIME = "RECORD_LAST_UPDATE_PRICE_TIME";
 	private static final String RECORD_CAC_MA_CK_CHUNG_KHOAN_DAU_TU = "RECORD_CAC_MA_CK_CHUNG_KHOAN_DAU_TU";
+	private static final String RECORD_FILTER_FROM = "RECORD_FILTER_FROM";
+	private static final String RECORD_FILTER_TO = "RECORD_FILTER_TO";
 
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
@@ -40,6 +42,25 @@ public class SavedValues {
 				APP_SHARED_PREFS, 0);
 		prefsEditor = appSharedPrefs.edit();
 	}
+
+	public void setRecordFilterFrom(String var1) {
+		prefsEditor.putString(RECORD_FILTER_FROM, var1);
+		prefsEditor.commit();
+	}
+
+	public String getRecordFilterFrom( ) {
+		return appSharedPrefs.getString(RECORD_FILTER_FROM, "");
+	}
+
+	public void setRecordFilterTo(String var1) {
+		prefsEditor.putString(RECORD_FILTER_TO, var1);
+		prefsEditor.commit();
+	}
+
+	public String getRecordFilterTo( ) {
+		return appSharedPrefs.getString(RECORD_FILTER_TO, "");
+	}
+
 
 	public void setRecordPassword(String var1) {
 		prefsEditor.putString(RECORD_PASSWORD, var1);
@@ -83,7 +104,7 @@ public class SavedValues {
 	}
 
 	public String getRecordCacMaChungKhoanDauTu( ) {
-		return appSharedPrefs.getString(RECORD_CAC_MA_CK_CHUNG_KHOAN_DAU_TU, "");
+		return appSharedPrefs.getString(RECORD_CAC_MA_CK_CHUNG_KHOAN_DAU_TU, "").toUpperCase();
 	}
 
 	public void setRecordShowHeader(boolean var1) {
