@@ -153,6 +153,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\StockNewsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministratorApiController.cs" />
     <Compile Include="Controllers\AdsController.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Models\RequestInfo.cs" />
     <Compile Include="Models\ResponseJson.cs" />
     <Compile Include="Models\ScheduleReport.cs" />
+    <Compile Include="Models\StockNews.cs" />
     <Compile Include="Models\Website\ProgrammingCategory.cs" />
     <Compile Include="Models\Website\ProgrammingComment.cs" />
     <Compile Include="Models\Website\ProgrammingContent.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Sudoku\SudokuItem.cs" />
     <Compile Include="Utils\ChamNgonInfo.cs" />
     <Compile Include="Utils\Channel.cs" />
+    <Compile Include="Utils\CrawlStockHelper.cs" />
     <Compile Include="Utils\CrawlTuViHelper.cs" />
     <Compile Include="Utils\DataProcess.cs" />
     <Compile Include="Utils\DataStatic.cs" />
