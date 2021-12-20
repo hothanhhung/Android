@@ -514,6 +514,12 @@ public class DateItemForGridview {
         return date;
     }
 
+    public Calendar getCalendar(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
+
     public String getDayOfWeekInString()
     {
         if(date!=null)

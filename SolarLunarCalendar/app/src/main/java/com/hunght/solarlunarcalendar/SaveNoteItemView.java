@@ -30,7 +30,7 @@ import java.util.Calendar;
 public class SaveNoteItemView  extends LinearLayout {
     static NoteItem noteItem;
     int date, month, year;
-    NumberPicker npSaveNoteItemDate, npSaveNoteItemMonth, npSaveNoteItemYear, npSaveNoteItemRemindType;
+    NumberPicker npSaveNoteItemDate, npSaveNoteItemMonth, npSaveNoteItemYear, npSaveNoteItemRemindType, npSaveNoteItemRemindTypeBefore;
     Button btSaveNoteItemUpdate, btSaveNoteItemCancel;
     EditText etSaveNoteItemSubject, etSaveNoteItemContent;
     TextView tvSaveNoteItemInfoDate;
@@ -67,6 +67,7 @@ public class SaveNoteItemView  extends LinearLayout {
         npSaveNoteItemMonth = (NumberPicker) view.findViewById(R.id.npSaveNoteItemMonth);
         npSaveNoteItemYear = (NumberPicker) view.findViewById(R.id.npSaveNoteItemYear);
         npSaveNoteItemRemindType = (NumberPicker) view.findViewById(R.id.npSaveNoteItemRemindType);
+        npSaveNoteItemRemindTypeBefore = (NumberPicker) view.findViewById(R.id.npSaveNoteItemRemindTypeBefore);
 
         etSaveNoteItemSubject = (EditText) view.findViewById(R.id.etSaveNoteItemSubject);
         etSaveNoteItemContent = (EditText) view.findViewById(R.id.etSaveNoteItemContent);
@@ -78,12 +79,19 @@ public class SaveNoteItemView  extends LinearLayout {
                 "Nhắc Sau 1 Tháng Âm", "Nhắc Sau 1 Năm Dương", "Nhắc Sau 1 Năm Âm"} );
 
 
+        npSaveNoteItemRemindTypeBefore.setDisplayedValues( new String[] { "Không thông báo trước ngày", "Thông báo trước 1 ngày",
+                "Thông báo trước 2 ngày", "Thông báo trước 3 ngày", "Thông báo trước 5 ngày",
+                "Thông báo trước 7 ngày", "Thông báo trước 10 ngày", "Thông báo trước 15 ngày", "Thông báo trước 30 ngày"} );
+
         npSaveNoteItemMonth.setDisplayedValues( new String[] { "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4",
                 "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12",} );
 
 
         npSaveNoteItemRemindType.setMinValue(0);
         npSaveNoteItemRemindType.setMaxValue(4);
+
+        npSaveNoteItemRemindTypeBefore.setMinValue(0);
+        npSaveNoteItemRemindTypeBefore.setMaxValue(8);
 
         if(noteItem == null)
         {
@@ -100,6 +108,7 @@ public class SaveNoteItemView  extends LinearLayout {
             etSaveNoteItemContent.setText(noteItem.getContent());
             etSaveNoteItemSubject.setText(noteItem.getSubject());
             npSaveNoteItemRemindType.setValue(noteItem.getRemindType());
+            npSaveNoteItemRemindTypeBefore.setValue(noteItem.getRemindTypeBefore());
         }
 
 
@@ -161,6 +170,7 @@ public class SaveNoteItemView  extends LinearLayout {
                 noteItem.updateDate(npSaveNoteItemDate.getValue(), npSaveNoteItemMonth.getValue() + 1, npSaveNoteItemYear.getValue());
                 noteItem.setSubjectAndContent(etSaveNoteItemSubject.getText().toString(), etSaveNoteItemContent.getText().toString());
                 noteItem.setRemindType(npSaveNoteItemRemindType.getValue());
+                noteItem.setRemindTypeBefore(npSaveNoteItemRemindTypeBefore.getValue());
                 SharedPreferencesUtils.updateNoteItems(getContext(), noteItem);
 
                 ViewGroup parent = (ViewGroup) SaveNoteItemView.this.getParent();

@@ -450,6 +450,9 @@ public class SharedPreferencesUtils {
         if(items == null) {
             return  new ArrayList<NoteItem>();
         }
+        for (NoteItem item: items) {
+            item.resetGridviewItem();
+        }
         return new ArrayList<>(Arrays.asList(items));
     }
 
@@ -493,6 +496,7 @@ public class SharedPreferencesUtils {
             savedObj.Subject = obj.Subject;
             savedObj.Content = obj.Content;
             savedObj.RemindType = obj.RemindType;
+            savedObj.RemindTypeBefore = obj.RemindTypeBefore;
             savedObj.haveDate = obj.haveDate;
         }
 

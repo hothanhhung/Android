@@ -1,5 +1,6 @@
 package com.hunght.data;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -14,6 +15,7 @@ public class NoteItem implements Comparable<NoteItem> {
     public String Subject;
     public String Content;
     public int RemindType;
+    public int RemindTypeBefore;
     public boolean haveDate;
 
     DateItemForGridview dateItemForGridviewItem = null;
@@ -32,7 +34,7 @@ public class NoteItem implements Comparable<NoteItem> {
         haveDate = false;
     }
 
-    public NoteItem(String id, int d, int m, int y, String subj, String cont,int remindType )
+    public NoteItem(String id, int d, int m, int y, String subj, String cont,int remindType,int remindTypeBefore)
     {
         this.Id = id;
         this.DateOfMonth = d;
@@ -41,6 +43,7 @@ public class NoteItem implements Comparable<NoteItem> {
         this.Subject = subj;
         this.Content = cont;
         this.RemindType = remindType;
+        this.RemindTypeBefore = remindTypeBefore;
         haveDate = true;
     }
 
@@ -52,6 +55,11 @@ public class NoteItem implements Comparable<NoteItem> {
         dateItemForGridviewItem = null;
         remindDateItemForGridviewItem = null;
         haveDate = true;
+    }
+
+    public void resetGridviewItem(){
+        dateItemForGridviewItem = null;
+        remindDateItemForGridviewItem = null;
     }
 
     public void setSubject(String subj)
@@ -73,6 +81,11 @@ public class NoteItem implements Comparable<NoteItem> {
     public void setRemindType(int remindType)
     {
         this.RemindType = remindType;
+    }
+
+    public void setRemindTypeBefore(int remindTypeBefore)
+    {
+        this.RemindTypeBefore = remindTypeBefore;
     }
 
     public String getId() {
@@ -111,10 +124,58 @@ public class NoteItem implements Comparable<NoteItem> {
         return RemindType;
     }
 
+    public int getRemindTypeBefore() {
+        return RemindTypeBefore;
+    }
+
     public boolean isToday()
     {
         DateItemForGridview data = getRemindDate();
         if(data!=null) return data.isToday();
+        return false;
+    }
+
+    public boolean isTodayBefore() {
+        DateItemForGridview currentDate = getRemindDate();
+        if (currentDate != null && RemindTypeBefore > 0) {
+            Calendar calendar = currentDate.getCalendar();
+            DateItemForGridview dateBefore = DateItemForGridview.createDateItemForGridviewFromLunar(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+            switch (RemindTypeBefore) {
+                case 1: {
+                    dateBefore.addDate(-1);
+                    break;
+                }
+                case 2: {
+                    dateBefore.addDate(-2);
+                    break;
+                }
+                case 3: {
+                    dateBefore.addDate(-3);
+                    break;
+                }
+                case 4: {
+                    dateBefore.addDate(-5);
+                    break;
+                }
+                case 5: {
+                    dateBefore.addDate(-7);
+                    break;
+                }
+                case 6: {
+                    dateBefore.addDate(-10);
+                    break;
+                }
+                case 7: {
+                    dateBefore.addDate(-15);
+                    break;
+                }
+                case 8: {
+                    dateBefore.addDate(-30);
+                    break;
+                }
+            }
+            return dateBefore.isToday();
+        }
         return false;
     }
 
@@ -124,6 +185,24 @@ public class NoteItem implements Comparable<NoteItem> {
         }
         return remindDateItemForGridviewItem;
     }
+
+    public String getTitleRemindBefore(){
+        DateItemForGridview returnItem = getRemindDate();
+        if(returnItem == null){
+            returnItem = getDateItem();
+        }
+        String message = "Vào " + returnItem.getSolarInfo(false);
+        if(RemindType == 2 || RemindType == 4){
+            message = "Vào " + returnItem.getLunarInfo(false);
+        }
+
+        DateItemForGridview today = new DateItemForGridview("", new Date(), false);
+
+        message += " (còn " + returnItem.difference(today) + " ngày)";
+
+        return message;
+    }
+
     private DateItemForGridview calRemindDate() {
 
         DateItemForGridview now = new DateItemForGridview(null, new Date(), true);

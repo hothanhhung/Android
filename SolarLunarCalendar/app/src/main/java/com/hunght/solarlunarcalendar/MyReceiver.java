@@ -96,7 +96,7 @@ public class MyReceiver// extends BroadcastReceiver
 
                 int index = 0;
                 for (NoteItem noteItem: noteItems) {
-                    if(noteItem != null && noteItem.haveDate && noteItem.isToday())
+                    if(noteItem != null && noteItem.haveDate && (noteItem.isToday() || noteItem.isTodayBefore()))
                     {
                         Log.d("AmDuong", "Have NoteItem");
                         Intent intent = new Intent(context, MainActivity.class);
@@ -118,7 +118,12 @@ public class MyReceiver// extends BroadcastReceiver
                         mNotificationManager.notify(ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT, mBuilder.build());*/
 
                         index++;
-                        showNotification(context, "SERVICE_GET_TO_NOTE", ServiceProcessor.SERVICE_GET_TO_NOTE * 100 + index, noteItem.Subject, noteItem.Content, activity, R.drawable.bell);
+                        if(noteItem.isToday())
+                        {
+                            showNotification(context, "SERVICE_GET_TO_NOTE", ServiceProcessor.SERVICE_GET_TO_NOTE * 100 + index, noteItem.Subject, noteItem.Content, activity, R.drawable.bell);
+                        }else{
+                            showNotification(context, "SERVICE_GET_TO_NOTE", ServiceProcessor.SERVICE_GET_TO_NOTE * 100 + index, "Sắp đến " + noteItem.Subject, noteItem.getTitleRemindBefore(), activity, R.drawable.bell);
+                        }
                         keepCheck = false;
                     }
 
@@ -194,11 +199,19 @@ public class MyReceiver// extends BroadcastReceiver
 
     private void showNotification(Context context, String channelId, int id, String subject, String content, PendingIntent intent, int icon)
     {
+        showNotification(context, channelId, id, subject, content, intent, icon, null);
+    }
+    private void showNotification(Context context, String channelId, int id, String subject, String content, PendingIntent intent, int icon, NotificationCompat.Style style)
+    {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setContentTitle(subject)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
+
+        if(style != null){
+            builder.setStyle(style);
+        }
 
         if(icon > 0){
             builder.setSmallIcon(icon);

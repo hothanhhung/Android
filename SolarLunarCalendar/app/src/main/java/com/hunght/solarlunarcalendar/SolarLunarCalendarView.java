@@ -117,7 +117,7 @@ public class SolarLunarCalendarView extends LinearLayout {
                 DateItemForGridview item = (DateItemForGridview)view.getTag();
                 if(item!=null)
                 {
-                    NoteItem noteItem = new NoteItem("", item.getDayOfMonth(), item.getMonth(), item.getYear(),"", "", 0);
+                    NoteItem noteItem = new NoteItem("", item.getDayOfMonth(), item.getMonth(), item.getYear(),"", "", 0, 0);
                     //ViewGroup parentView = (ViewGroup) SolarLunarCalendarView.this.getParent();
                     SaveNoteItemView.setNoteItem(noteItem);
                     MainActivity mainActivity = (MainActivity) getContext();
@@ -262,7 +262,7 @@ public class SolarLunarCalendarView extends LinearLayout {
                 break;
             case R.id.imgOpenMenu:
                 DrawerLayout drawer = (DrawerLayout) ((Activity) view.getContext()).findViewById(R.id.drawer_layout);
-                drawer.openDrawer(Gravity.START);
+                drawer.openDrawer(Gravity.LEFT);
                 break;
 
         }
