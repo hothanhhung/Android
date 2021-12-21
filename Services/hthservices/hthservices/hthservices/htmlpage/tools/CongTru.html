@@ -41,17 +41,17 @@
 			background-position-y: -130px;
 		}
 		.content{
-			margin-top: 150px;
+			margin-top: 100px;
 			margin-left: 20px;
 			margin-right: 35px;
 			min-height: 500px;
 		}
 		.summary{
-			margin-right: 40px;
+			margin-right: 35px;
 			background: #d2e3f2;
 			height: 450px;
 			overflow-y: auto;
-			margin-left: -60px;
+			margin-left: -75px;
 			padding: 10px;
 			padding-left: 21px;
 			overflow-x: hidden;
@@ -68,9 +68,12 @@
 			border-radius: 5px;
 			padding-top: 5px;
 			padding-bottom: 5px;
+			scrollbar-width: thin;
+			margin-right: 0px;
+			padding-right: 0px;
 		}
 		.font-cal{
-			font-size: 9em;
+			font-size: 8.5em;
 			text-align: center;
 		}
 		
@@ -99,14 +102,21 @@
 		<div>
 			<div class="col-xs-2 col-md-2">
 				<div class="summary">
-					<div style="text-align: center;color: #056f65;font-weight: bold;"> Phép toán đến <input type="text"  style="width:100%; text-align: center;" ng-model="maxExpress"/></div>
-					
+					<div style="text-align: center;color: #056f65;font-weight: bold;">
+						<div>
+							Phép toán đến 
+						</div>
+						<div>
+							<input type="text"  style="width:40%; text-align: center;" ng-model="maxExpress"/>
+							<input type="button"  style="width:40%; text-align: center;" value="Làm Lại" ng-click="reset()"/>
+						</div>
+					</div>
 					<div>
 						<div class="row" style="text-align: center;padding: 5px;color: #0064ff;"> 
 							Đã làm đúng {{getSummary()}}
 						</div>
 						<div class="row history">
-							<div class="col-xs-12 col-md-12" style="padding-right:30px">
+							<div class="col-xs-12 col-md-12" style="padding:5px 15px 5px 5px">
 								<div ng-repeat="item in historyItems" class="row {{item.expectedResult == item.resultNumber?'format-correct':'format-incorrect'}}">
 									<div class="col-md-2">{{item.firstNumber}} </div><div class="col-md-2">{{item.signNumber}} </div><div class="col-md-2">{{item.secondNumber}} </div><div class="col-md-2">= </div><div class="col-md-2">{{item.resultNumber}}</div><div class="col-md-2"> ({{item.expectedResult}})</div>
 								</div>
@@ -136,7 +146,7 @@
 					<div class="col-md-2 font-cal">
 					</div>
 				</div>
-				<div class="row" style="font-weight: bold;">
+				<div class="row" style="font-weight: bold; {{!firstOldNumber?'padding-top:40px':''}}">
 					<div class="col-md-2 font-cal">
 						{{firstNumber}}
 					</div>
@@ -191,7 +201,7 @@
 			}
 			
 			$scope.onKeypressResult = function(keyEvent) {
-			  if (keyEvent.which === 13)
+			  if (keyEvent.which === 13 && $scope.resultNumber)
 			  {
 				$scope.firstOldNumber = $scope.firstNumber;
 				$scope.secondOldNumber = $scope.secondNumber;
@@ -204,7 +214,7 @@
 					$scope.expectedResult = ($scope.firstNumber - $scope.secondNumber)
 				}
 				
-				$scope.historyItems.push({"firstNumber":$scope.firstOldNumber, 'secondNumber':$scope.secondOldNumber, 'signNumber':$scope.signOldNumber, 'resultNumber':$scope.resultOldNumber,'expectedResult':$scope.expectedResult});
+				$scope.historyItems.splice(0, 0,{"firstNumber":$scope.firstOldNumber, 'secondNumber':$scope.secondOldNumber, 'signNumber':$scope.signOldNumber, 'resultNumber':$scope.resultOldNumber,'expectedResult':$scope.expectedResult});
 				
 				$scope.resultNumber = "";
 				$scope.generateNewExpress();
@@ -213,6 +223,20 @@
 			$scope.getSummary = function(){
 				var correctItems = $scope.historyItems.filter(p=>p.expectedResult == p.resultNumber);
 				return ""+correctItems.length+ "/"+$scope.historyItems.length + "  đạt " + ($scope.historyItems.length > 0 ? Math.round(correctItems.length/$scope.historyItems.length * 100) : 0) + "%";
+			}
+			
+			$scope.reset = function(keyEvent) 
+			{
+				$scope.historyItems = [];
+				$scope.firstOldNumber = "";
+				$scope.secondOldNumber = "";
+				$scope.signOldNumber = "";
+				$scope.resultOldNumber = "";
+				$scope.firstNumber = "";
+				$scope.secondNumber = "";
+				$scope.signNumber = "";
+				$scope.resultNumber = "";
+				$scope.generateNewExpress();
 			}
 			$scope.generateNewExpress();
 			function getRandomInt(max) {
