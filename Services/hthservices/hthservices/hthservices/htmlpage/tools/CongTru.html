@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="hthApp">
+<head>
+    <title></title>
+    <base href="/" />
+    <!--<script src="/scripts/bower_components/jQuery-3.1.0/jquery-3.1.0.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <!--<script src="/scripts/bower_components/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/scripts/bower_components/bootstrap-3.3.7/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--<script src="/scripts/bower_components/angular-1.5.8/angular.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-route.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-animate.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-aria.min.js"></script>
+    <script src="/scripts/bower_components/angular-1.5.8/angular-messages.min.js"></script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+
+    <!--<link rel="stylesheet" href="/scripts/bower_components/angular_material-1.1.0-rc2/angular-material.min.css">
+    <script src="/scripts/bower_components/angular_material-1.1.0-rc2/angular-material.min.js"></script>-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+
+    <!--<link rel="stylesheet" href="/scripts/bower_components/sbadmin/sb-admin.css" />-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/3.3.7/css/sb-admin-2.min.css" />
+    <link rel="stylesheet" href="/adsweb/style.css" />
+	<style>
+		.body-content{
+			padding-left: 20px;
+			padding-right: 20px;
+			margin-top: 20px;
+			background: url('https://raw.githubusercontent.com/hothanhhung/static-files/master/images/tools/background.jpg');
+			background-size: cover;
+			background-position-y: -130px;
+		}
+		.content{
+			margin-top: 150px;
+			margin-left: 20px;
+			margin-right: 35px;
+			min-height: 500px;
+		}
+		.summary{
+			margin-right: 40px;
+			background: #d2e3f2;
+			height: 450px;
+			overflow-y: auto;
+			margin-left: -60px;
+			padding: 10px;
+			padding-left: 21px;
+			overflow-x: hidden;
+			border-radius: 10px;
+		}
+		
+		.history{
+			background: #c8dfc7;
+			margin-left: -12px;
+			margin-right: 0px;
+			height: 350px;
+			overflow-y: auto;
+			overflow-x: hidden;
+			border-radius: 5px;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+		.font-cal{
+			font-size: 9em;
+			text-align: center;
+		}
+		
+		.format-correct{
+			color:green;
+			
+		}
+		.format-incorrect{
+			color:red;
+			
+		}
+		.format-correct-1{
+			color:#00800024;
+			
+		}
+		.format-incorrect-1{
+			color:#ff000047;
+			
+		}
+	</style>
+</head>
+<body class="body-content" ng-controller="MainController">
+    
+    <div class="container-fluid">
+        <div class="content">
+		<div>
+			<div class="col-xs-2 col-md-2">
+				<div class="summary">
+					<div style="text-align: center;color: #056f65;font-weight: bold;"> Phép toán đến <input type="text"  style="width:100%; text-align: center;" ng-model="maxExpress"/></div>
+					
+					<div>
+						<div class="row" style="text-align: center;padding: 5px;color: #0064ff;"> 
+							Đã làm đúng {{getSummary()}}
+						</div>
+						<div class="row history">
+							<div class="col-xs-12 col-md-12" style="padding-right:30px">
+								<div ng-repeat="item in historyItems" class="row {{item.expectedResult == item.resultNumber?'format-correct':'format-incorrect'}}">
+									<div class="col-md-2">{{item.firstNumber}} </div><div class="col-md-2">{{item.signNumber}} </div><div class="col-md-2">{{item.secondNumber}} </div><div class="col-md-2">= </div><div class="col-md-2">{{item.resultNumber}}</div><div class="col-md-2"> ({{item.expectedResult}})</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-10 col-md-10">
+				<div class="row {{expectedResult == resultOldNumber?'format-correct-1':'format-incorrect-1'}}" ng-if="firstOldNumber">
+					<div class="col-md-2 font-cal">
+						{{firstOldNumber}}
+					</div>
+					<div class="col-md-2 font-cal">
+						{{signOldNumber}}
+					</div>
+					<div class="col-md-2 font-cal">
+						{{secondOldNumber}}
+					</div>
+					<div class="col-md-2 font-cal">
+					=
+					</div>
+					<div class="col-md-2 font-cal">
+						{{resultOldNumber}}
+					</div>
+					<div class="col-md-2 font-cal">
+					</div>
+				</div>
+				<div class="row" style="font-weight: bold;">
+					<div class="col-md-2 font-cal">
+						{{firstNumber}}
+					</div>
+					<div class="col-md-2 font-cal">
+						{{signNumber}}
+					</div>
+					<div class="col-md-2 font-cal">
+						{{secondNumber}}
+					</div>
+					<div class="col-md-2 font-cal">
+					=
+					</div>
+					<div class="col-md-2 font-cal">
+						<input type="text"  style="width:100%; text-align: center;" ng-model="resultNumber" ng-keypress="onKeypressResult($event)"/>
+					</div>
+					<div class="col-md-2 font-cal">
+					</div>
+				</div>
+			</div>
+		
+		</div>
+        </div>
+    </div>
+    <script>
+        var hthAdsApp = angular.module('hthApp', [
+            'ngMaterial'
+        ]);
+        var URL_SERVICE = "";
+
+
+
+        hthAdsApp.controller('MainController', function PhoneListController($scope, $http) {
+			$scope.historyItems = [];
+            $scope.firstOldNumber = "";
+            $scope.secondOldNumber = "";
+            $scope.signOldNumber = "";
+            $scope.resultOldNumber = "";
+            $scope.firstNumber = "";
+            $scope.secondNumber = "";
+            $scope.signNumber = "";
+            $scope.resultNumber = "";
+            $scope.maxExpress = 20; 
+			$scope.generateNewExpress = function(){
+				$scope.firstNumber = getRandomInt($scope.maxExpress);
+				$scope.signNumber = getRandomInt(10) < 5?"+":"-";
+				if($scope.signNumber == "-")
+				{
+					$scope.secondNumber = getRandomInt($scope.firstNumber);
+				}else{
+					$scope.secondNumber = getRandomInt($scope.maxExpress - $scope.firstNumber);
+				}
+			}
+			
+			$scope.onKeypressResult = function(keyEvent) {
+			  if (keyEvent.which === 13)
+			  {
+				$scope.firstOldNumber = $scope.firstNumber;
+				$scope.secondOldNumber = $scope.secondNumber;
+				$scope.signOldNumber = $scope.signNumber;
+				$scope.resultOldNumber = $scope.resultNumber;
+
+				if($scope.signOldNumber=="+"){
+					$scope.expectedResult = ($scope.firstNumber + $scope.secondNumber);
+				}else{
+					$scope.expectedResult = ($scope.firstNumber - $scope.secondNumber)
+				}
+				
+				$scope.historyItems.push({"firstNumber":$scope.firstOldNumber, 'secondNumber':$scope.secondOldNumber, 'signNumber':$scope.signOldNumber, 'resultNumber':$scope.resultOldNumber,'expectedResult':$scope.expectedResult});
+				
+				$scope.resultNumber = "";
+				$scope.generateNewExpress();
+				}
+			}
+			$scope.getSummary = function(){
+				var correctItems = $scope.historyItems.filter(p=>p.expectedResult == p.resultNumber);
+				return ""+correctItems.length+ "/"+$scope.historyItems.length + "  đạt " + ($scope.historyItems.length > 0 ? Math.round(correctItems.length/$scope.historyItems.length * 100) : 0) + "%";
+			}
+			$scope.generateNewExpress();
+			function getRandomInt(max) {
+			  return Math.round(Math.random()*max);
+			}
+        });
+    </script>
+</body >
+</html >
