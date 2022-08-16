@@ -404,7 +404,8 @@ public class ParserData {
     public static DanhMucDauTuItem getCurrentPrice(String maCK) {
         if(maCK == null || maCK.isEmpty()) return null;
         maCK = maCK.toUpperCase();
-        String link = "http://vcbs.com.vn/DataGen/StockInfo/"+maCK+".xml?_="+ Calendar.getInstance().getTimeInMillis();
+        //String link = "http://vcbs.com.vn/DataGen/StockInfo/"+maCK+".xml?_="+ Calendar.getInstance().getTimeInMillis();
+        String link = "https://s.cafef.vn/hose/"+maCK+"-tong.chn";
 
         try {
             Log.d("getCurrentPrice", link);
@@ -414,9 +415,9 @@ public class ParserData {
                 StrictMode.setThreadPolicy(policy);
             }
             Document doc = Jsoup.connect(link).get();
-            Element stock  = doc.select("Stock").first();
+            Element stock  = doc.select("div[class*='dltlu-point']").first();
             if(stock != null){
-                String current_price = stock.attr("current_price");
+                String current_price = stock.text().trim();
                 if(current_price!=null && !current_price.isEmpty()){
                     current_price = current_price.replace(',', '.');
                     DanhMucDauTuItem danhMucDauTuItem = new DanhMucDauTuItem();
