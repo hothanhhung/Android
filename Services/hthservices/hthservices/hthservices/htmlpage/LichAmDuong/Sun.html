@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <style>
+		.datepicker,
+		.table-condensed {
+		  width: 500px;
+		  height:500px;
+		  font-size:2.5rem;
+		}
+
+		center {
+		  display: none;
+		}
+        
+		.info-group{
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+		}
+		.info-title{
+			font-weight: bold;
+			padding: 0px 20px;
+			font-size: 4rem;
+			color: cadetblue;
+			text-transform: capitalize;
+		}
+		
+		.info-time{
+			font-weight: bold;
+			padding: 15px 20px;
+			font-size: 4rem;
+			color: #ff0909;
+		}
+		
+		.image-sun{
+			width: 50%
+		}
+
+        .date {
+            background: none repeat scroll 0% 0% #D4D4D4;
+            color: #404040;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .width90 {
+            width: 99% !important;
+        }
+
+        .col-md-6 {
+            padding-right: 3px !important;
+            padding-left: 3px !important;
+        }
+		.main-content{
+		}
+		
+		.canvas-class{
+			position:absolute;
+			top: 0;
+			left: 0;
+		}
+    </style>
+</head>
+  <body>
+	<div ng-app="starter" ng-controller="mainController">
+		<div class="container-fluid" style="margin: 10px 10px 10px 20px">    
+		<div class="row">
+			<div class="col main-content">
+					<div class="row" style="margin: 10px -10px 10px -10px;">
+						<div class="col-xs-6 col-md-6">
+						  <div class="dropdown width90">
+							  <button class="btn btn-default dropdown-toggle width90"  style="font-size:4rem" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								{{selectedProvice.name}}
+								<span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1" style="font-size: 3rem;">
+								<li ng-repeat="kind in Provinces"><a href="javascript:void(0)" ng-click="changeProvince(kind)" > {{kind.name}}</a></li>
+							  </ul>
+							</div>
+						</div>
+						<div class="col-xs-6 col-md-6">
+						  <div class="dropdown width90">
+								<input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" readonly
+									ng-model="selectedDate" ng-change="getData()"  style="font-size:4rem; height: fit-content;"/>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin: 10px -10px 10px -10px;">
+						<div ng-bind-html = "TuVi.Content"></div>
+					</div> 
+					<div class="row" style="margin: 10px -10px 30px -10px;">
+						<div class="col-xs-4 col-md-4 info-group">
+						</div>
+						<div class="col-xs-4 col-md-4 info-group">
+							<div class="info-title">Giữa Trưa</div>
+							<div style='color: #7f7f7f;'>(Thời điểm mặt trời ở vị trí cao nhất)</div>
+							<div class="info-time">{{getLocalTime(Result.Data.solar_noon)}}</div>
+							<div style='width:100%; display:flex;justify-content: center;'><img  id="control-sun" class="image-sun" src='imgs/sun.png'/></div>
+						</div>				
+						<div class="col-xs-4 col-md-4 info-group">
+						</div>
+					</div> 
+					<div class="row" style="margin: 10px -10px 30px -10px;">
+						<div class="col-xs-4 col-md-4 info-group">
+							<div class="info-title">Mặt Trời Mọc</div>
+							<div class="info-time">{{getLocalTime(Result.Data.sunrise)}}</div>
+							<div style='width:100%; display:flex;justify-content: center;'><img  id="control-sunrise" class="image-sun" src='imgs/sunrise.png'/></div>
+						</div>
+						<div class="col-xs-4 col-md-4 info-group">
+						</div>				
+						<div class="col-xs-4 col-md-4 info-group">
+							<div class="info-title">Mặt Trời Lặn</div>
+							<div class="info-time">{{getLocalTime(Result.Data.sunset)}}</div>
+							<div style='width:100%; display:flex;justify-content: center;'><img id="control-sunset" class="image-sun" src='imgs/sunset.png'/></div>
+						</div>
+					</div> 
+					<div class="row info-group" style="margin-bottom: 10px;">
+					</div> 
+					<div class="row info-group">
+						<div class="info-title">Thời Gian Ban Ngày Dài</div>
+						<div class="info-time">{{Result.Data.day_length}}</div>
+					</div>
+				</div>
+			<div>
+			<div class="row" style="margin:10px;padding-bottom:20px;padding-top:50px;font-size:10px;font-style:italic;color:gray;">
+				<div>Nội dung được sưu tầm</div>
+			</div>      
+		</div>
+	</div>
+	<canvas id="myCanvas" width="100%" height="100%" class="canvas-class">Your browser does not support the canvas tag.</canvas>
+  <script> 
+angular.module('starter', []).controller("mainController", ['$scope', '$http','$sce', function ($scope, $http, $sce){
+	$scope.Result = {Content:$sce.trustAsHtml(""), Data:{}};
+	$scope.Provinces = [{ name: 'An Giang', lat:10.51490, lng:105.11317}, { name: 'Bà Rịa – Vũng Tàu', lat:10.58197, lng:107.28998}, { name: 'Bắc Giang', lat:21.30928, lng:106.61651}, { name: 'Bắc Kạn', lat:22.25717, lng:105.85889}, { name: 'Bạc Liêu', lat:9.34773, lng:105.50970},
+						{ name: 'Bắc Ninh', lat:21.12120, lng:106.08802}, { name: 'Bến Tre', lat:10.12452, lng:106.46904}, { name: 'Bình Định', lat:11.19698, lng:108.92396}, { name: 'Bình Dương', lat:11.19698, lng:106.70805}, { name: 'Bình Phước', lat:11.73324, lng:106.90624},
+						{ name: 'Bình Thuận', lat:11.10146, lng:107.94159}, { name: 'Cà Mau', lat:9.08754, lng:105.03204}, { name: 'Cần Thơ', lat:10.09065, lng:105.57993}, { name: 'Cao Bằng', lat:22.77308, lng:106.00172}, { name: 'Đà Nẵng', lat:16.04720, lng:108.21996},
+						{ name: 'Đắk Lắk', lat:12.83993, lng:108.22849}, { name: 'Đắk Nông', lat:12.12886, lng:107.58742}, { name: 'Điện Biên', lat:21.72101, lng:103.04108}, { name: 'Đồng Nai', lat:11.00632, lng:107.19218}, { name: 'Đồng Tháp', lat:10.62666, lng:105.63162}, 
+						{ name: 'Gia Lai', lat:13.79640, lng:108.26082}, { name: 'Hà Giang', lat:22.60689, lng:104.79948}, { name: 'Hà Nam', lat:20.52690, lng:105.95435}, { name: 'Hà Nội', lat:21.02851, lng:105.80482}, { name: 'Hà Tĩnh', lat:18.28790, lng:105.78427},
+						{ name: 'Hải Dương', lat:20.94436, lng:106.37803}, { name: 'Hải Phòng', lat:20.86514, lng:106.68383}, { name: 'Hậu Giang', lat:9.76331, lng:105.63795}, { name: 'Hòa Bình', lat:20.66091, lng:105.39247}, { name: 'Hưng Yên', lat:20.81933, lng:106.03145},
+						{ name: 'Khánh Hòa', lat:12.19608, lng:108.99503}, { name: 'Kiên Giang', lat:9.91139, lng:105.25338}, { name: 'Kon Tum', lat:14.69953, lng:107.93238}, { name: 'Lai Châu', lat:22.30487, lng:102.96288}, { name: 'Lâm Đồng', lat:11.69377, lng:108.15275},
+						{ name: 'Lạng Sơn', lat:21.85670, lng:106.44243}, { name: 'Lào Cai', lat:22.29676, lng:104.05661}, { name: 'Long An', lat:10.66667, lng:106.16667}, { name: 'Nam Định', lat:20.27122, lng:106.16298}, { name: 'Nghệ An', lat:19.37388, lng:104.92334},
+						{ name: 'Ninh Bình', lat:20.18448, lng:105.98025}, { name: 'Ninh Thuận', lat:11.74497, lng:108.89834}, { name: 'Phú Thọ', lat:21.32122, lng:105.12672}, { name: 'Phú Yên', lat:13.21265, lng:109.08342}, { name: 'Quảng Bình', lat:17.54626, lng:106.25762},
+						{ name: 'Quảng Nam', lat:15.59733, lng:107.97580}, { name: 'Quảng Ngãi', lat:14.96353, lng:108.66426}, { name: 'Quảng Ninh', lat:21.17180, lng:107.201274}, { name: 'Quảng Trị', lat:16.85813, lng:106.85889}, { name: 'Sóc Trăng', lat:9.58677, lng:105.94684},
+						{ name: 'Sơn La', lat:21.15085, lng:103.8884}, { name: 'Tây Ninh', lat:11.4046, lng:106.003390}, { name: 'Thái Bình', lat:20.52968, lng:106.38760}, { name: 'Thái Nguyên', lat:21.64985, lng:105.83513}, { name: 'Thanh Hóa', lat:20.10716, lng:105.21244},
+						{ name: 'Thừa Thiên Huế', lat:16.33753, lng:107.55637}, { name: 'Tiền Giang', lat:10.48443 , lng:106.36257}, { name: 'TP Hồ Chí Minh', lat:10.76262, lng:106.66017}, { name: 'Trà Vinh', lat:9.770460, lng:106.35638}, { name: 'Tuyên Quang', lat:22.12567, lng:105.20897},
+						{ name: 'Vĩnh Long', lat:10.25000, lng:105.96667}, { name: 'Vĩnh Phúc', lat:21.31135, lng:105.60329}, { name: 'Yên Bái', lat:21.80136, lng:104.51480}
+						];
+	
+	$scope.selectedProvice = $scope.Provinces[0];
+	if(window.localStorage){
+		var oldValue = window.localStorage.getItem('selectedProvice');
+		if(oldValue){
+			$scope.selectedProvice = JSON.parse(oldValue);			
+		}
+	}
+		
+	$scope.changeProvince = function(kind)
+	{
+		if(window.localStorage){
+			window.localStorage.setItem('selectedProvice', JSON.stringify(kind));
+		}
+		$scope.selectedProvice = kind;
+		$scope.getData();
+	}
+	
+	$scope.getDateyyyymmdd = function(date) {
+	  var mm = date.getMonth() + 1;
+	  var dd = date.getDate();
+
+	  return [(dd>9 ? '' : '0') + dd,
+			  (mm>9 ? '' : '0') + mm,
+			  date.getFullYear()
+			 ].join('-');
+	}
+
+	$scope.selectedDate = $scope.getDateyyyymmdd(new Date());
+
+   $scope.getLocalTime = function(item){
+		if(!item) return "";
+   		var time = item.trim().split(" ")
+   		var times = time[0].trim().split(":");
+		var hour = parseInt(times[0]);
+		if(time[1]=='AM' && hour == 12){
+			hour = 0;
+		}else if(time[1]=='PM' && hour != 12){
+			hour+=12;
+		}
+		
+		//timezone +7
+		hour=(hour + 7);
+		if(hour > 24){
+			hour -= 24;
+		}
+		
+		return [(hour>9? '' : '0') + hour,
+			(parseInt(times[1])>9? '' : '0') + parseInt(times[1]),
+			(parseInt(times[2])>9? '' : '0') + parseInt(times[2])].join(":");
+   };
+
+	
+	$scope.getData = function(){
+		$scope.Result.Content = $sce.trustAsHtml("Đang lấy dữ liệu...");
+			var requestDate = $scope.selectedDate.substr(6, 4)+'-'+$scope.selectedDate.substr(3, 2)+'-'+$scope.selectedDate.substr(0, 2);
+		  var url = 'https://api.sunrise-sunset.org/json?lat='+$scope.selectedProvice.lat+'&lng='+$scope.selectedProvice.lng+'&date='+requestDate;
+		  $.ajax({
+			url: url,
+			type: 'GET',
+			timeout: 10000,
+			error: function(xhr, status, error){
+			  $scope.Result.Content = $sce.trustAsHtml("Không có dữ liệu");
+			  $scope.$apply();
+			},
+			success: function(responsedata){
+			  if(responsedata.results){  
+				$scope.Result.Data = responsedata.results;
+				$scope.$apply();
+			  }
+			}
+		  });
+	}	
+  
+  $scope.getData();
+   
+}]);
+$(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'dd-mm-yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    });
+	
+	var canvas=document.getElementById('myCanvas');
+	var ctx=canvas.getContext('2d');
+
+	window.addEventListener('resize', resizeCanvas, false);
+        
+	function resizeCanvas() {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		drawContent();
+	}
+
+	function drawContent(){
+		var noon = document.getElementById("control-sun").getBoundingClientRect();
+		var sunrise = document.getElementById("control-sunrise").getBoundingClientRect();
+		var sunset = document.getElementById("control-sunset").getBoundingClientRect();
+		
+		var pos1_x = sunrise.right;
+		var pos1_y =  sunrise.top;
+		
+		var pos2_x =  (noon.left + noon.right )/2;
+		var pos2_y =  noon.bottom;
+		
+		
+		var pos3_x =  sunset.left;
+		var pos3_y =   sunset.top;
+		
+		drawArrow(ctx, pos1_x + 10, pos1_y, pos2_x - 10, pos2_y, 5, 'red');
+		drawArrow(ctx, pos2_x + 10, pos2_y, pos3_x - 10, pos3_y, 5, 'red');
+	  
+	}
+
+	function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
+		//variables to be used when creating the arrow
+		var headlen = 10;
+		var angle = Math.atan2(toy-fromy,tox-fromx);
+	 
+		ctx.save();
+		ctx.strokeStyle = color;
+	 
+		//starting path of the arrow from the start square to the end square
+		//and drawing the stroke
+		ctx.beginPath();
+		ctx.moveTo(fromx, fromy);
+		ctx.lineTo(tox, toy);
+		ctx.lineWidth = arrowWidth;
+		ctx.stroke();
+	 
+		//starting a new path from the head of the arrow to one of the sides of
+		//the point
+		ctx.beginPath();
+		ctx.moveTo(tox, toy);
+		ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),
+				   toy-headlen*Math.sin(angle-Math.PI/7));
+	 
+		//path from the side point of the arrow, to the other side point
+		ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/7),
+				   toy-headlen*Math.sin(angle+Math.PI/7));
+	 
+		//path from the side point back to the tip of the arrow, and then
+		//again to the opposite side point
+		ctx.lineTo(tox, toy);
+		ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),
+				   toy-headlen*Math.sin(angle-Math.PI/7));
+	 
+		//draws the paths created above
+		ctx.stroke();
+		ctx.restore();
+	}
+
+  </script>
+  </body>
+</html>
+

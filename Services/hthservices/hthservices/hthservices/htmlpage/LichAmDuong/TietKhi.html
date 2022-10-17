@@ -130,8 +130,15 @@
 		}
 		
 		.active-item{
-			color: black !important;
+			color: #0a0a0a !important;
 			font-weight: 900 !important;
+			border: 3px solid red;
+			border-radius: 35px;
+			height: 100%;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
 		}
 		.active-background-item{
 			opacity: 1 !important;
@@ -173,6 +180,12 @@
 			display: block;
 			font-size: 25%;
 		}
+		
+		.select-input-year{
+			height: fit-content;
+			padding-left: 10px;
+			font-size: 1.7rem;
+		}
 	</style>
   </head>
   <body>
@@ -182,7 +195,8 @@
 
 		function SelectedYears(props) {
 		  return (
-			<select name="years" id="years" value={props.selectedYear} onChange={(obj)=>{props.handleSelectedYear(obj.target.value);}}>
+			<select className="select-input-year" 
+				name="years" id="years" value={props.selectedYear} onChange={(obj)=>{props.handleSelectedYear(obj.target.value);}}>
 				{props.years.map((item,index)=>{
 					 return <option key={item} value={item}>{item}</option>
 				 })}
@@ -346,7 +360,7 @@
 				return (
 				  <div>
 					<div className = "years-container">
-						<SelectedYears 
+						<SelectedYears
 							years={this.state.years}
 							selectedYear={this.state.selectedYear}
 							handleSelectedYear={this.handleSelectedYear}
