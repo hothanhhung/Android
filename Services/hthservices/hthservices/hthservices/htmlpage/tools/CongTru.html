@@ -39,6 +39,7 @@
 			background: url('https://raw.githubusercontent.com/hothanhhung/static-files/master/images/tools/background.jpg');
 			background-size: cover;
 			background-position-y: -130px;
+			background-position-x: 35px;
 		}
 		.content{
 			margin-top: 100px;
@@ -47,9 +48,9 @@
 			min-height: 500px;
 		}
 		.summary{
-			margin-right: 35px;
+			margin-right: 0px;
 			background: #d2e3f2;
-			height: 450px;
+			height: 520px;
 			overflow-y: auto;
 			margin-left: -75px;
 			padding: 10px;
@@ -93,6 +94,9 @@
 			color:#ff000047;
 			
 		}
+		.format-bold{
+			font-weight: bold;
+		}
 	</style>
 </head>
 <body class="body-content" ng-controller="MainController">
@@ -110,15 +114,32 @@
 							<input type="text"  style="width:40%; text-align: center;" ng-model="maxExpress"/>
 							<input type="button"  style="width:40%; text-align: center;" value="Làm Lại" ng-click="reset()"/>
 						</div>
+						<div style="text-align: left; padding: 10px 00px 0px 0px;">
+							 <label>
+								<input type="radio" ng-model="kind" value="1">
+								Làm toán
+							 </label>
+							 <br/>
+							 <label>
+								<input type="radio" ng-model="kind" value="2">
+								Điền vào chổ trống
+							 </label>
+						</div>
 					</div>
+					<hr style="margin-top: 5px;margin-bottom: 5px;" />
 					<div>
 						<div class="row" style="text-align: center;padding: 5px;color: #0064ff;"> 
 							Đã làm đúng {{getSummary()}}
 						</div>
 						<div class="row history">
-							<div class="col-xs-12 col-md-12" style="padding:5px 15px 5px 5px">
-								<div ng-repeat="item in historyItems" class="row {{item.expectedResult == item.resultNumber?'format-correct':'format-incorrect'}}">
-									<div class="col-md-2">{{item.firstNumber}} </div><div class="col-md-2">{{item.signNumber}} </div><div class="col-md-2">{{item.secondNumber}} </div><div class="col-md-2">= </div><div class="col-md-2">{{item.resultNumber}}</div><div class="col-md-2"> ({{item.expectedResult}})</div>
+							<div class="col-xs-12 col-md-12" style="padding:5px 20px 5px 5px">
+								<div ng-repeat="item in historyItems" class="row {{isCorrect(item)?'format-correct':'format-incorrect'}}">
+									<div class="col-md-2 {{item.hiddenPosition == 1?'format-bold':''}}">{{item.hiddenPosition == 1? item.inputNumber [item.hiddenPosition]: item.firstNumber}} </div>
+									<div class="col-md-2 {{item.hiddenPosition == 2?'format-bold':''}}">{{item.hiddenPosition == 2? item.inputNumber [item.hiddenPosition]: item.signNumber}} </div>
+									<div class="col-md-2 {{item.hiddenPosition == 3?'format-bold':''}}">{{item.hiddenPosition == 3? item.inputNumber [item.hiddenPosition]: item.secondNumber}} </div>
+									<div class="col-md-2">= </div>
+									<div class="col-md-2 {{item.hiddenPosition == 4?'format-bold':''}}">{{item.hiddenPosition == 4? item.inputNumber[item.hiddenPosition] : item.resultNumber}}</div>
+									<div class="col-md-2"> ({{getExpectedValue(item)}})</div>
 								</div>
 							</div>
 							
@@ -126,41 +147,45 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-10 col-md-10">
-				<div class="row {{expectedResult == resultOldNumber?'format-correct-1':'format-incorrect-1'}}" ng-if="firstOldNumber">
-					<div class="col-md-2 font-cal">
-						{{firstOldNumber}}
+			<div class="col-xs-10 col-md-10" style="padding-left:60px">
+				<div class="row {{isCorrect(historyItems[0])?'format-correct-1':'format-incorrect-1'}}" ng-if="historyItems && historyItems.length > 0">
+					<div class="col-md-2 font-cal {{historyItems[0].hiddenPosition == 1?'format-bold':''}}">
+						{{historyItems[0].hiddenPosition == 1? historyItems[0].inputNumber [historyItems[0].hiddenPosition]: historyItems[0].firstNumber}}
 					</div>
-					<div class="col-md-2 font-cal">
-						{{signOldNumber}}
+					<div class="col-md-2 font-cal {{historyItems[0].hiddenPosition == 2?'format-bold':''}}">
+						{{historyItems[0].hiddenPosition == 2? historyItems[0].inputNumber [historyItems[0].hiddenPosition]: historyItems[0].signNumber}}
 					</div>
-					<div class="col-md-2 font-cal">
-						{{secondOldNumber}}
+					<div class="col-md-2 font-cal {{historyItems[0].hiddenPosition == 3?'format-bold':''}}">
+						{{historyItems[0].hiddenPosition == 3? historyItems[0].inputNumber [historyItems[0].hiddenPosition]: historyItems[0].secondNumber}}
 					</div>
 					<div class="col-md-2 font-cal">
 					=
 					</div>
-					<div class="col-md-2 font-cal">
-						{{resultOldNumber}}
+					<div class="col-md-2 font-cal {{historyItems[0].hiddenPosition == 4?'format-bold':''}}">
+						{{historyItems[0].hiddenPosition == 4? historyItems[0].inputNumber[historyItems[0].hiddenPosition] : historyItems[0].resultNumber}}
 					</div>
 					<div class="col-md-2 font-cal">
 					</div>
 				</div>
-				<div class="row" style="font-weight: bold; {{!firstOldNumber?'padding-top:40px':''}}">
+				<div class="row" style="font-weight: bold; {{!historyItems || historyItems.length == 0?'padding-top:40px':''}}">
 					<div class="col-md-2 font-cal">
-						{{firstNumber}}
+						{{hiddenPosition == 1?'': firstNumber}}
+						<input type="text"  style="width:100%; text-align: center;" id="inputNumber1" ng-model="inputNumber[1]" ng-keypress="onKeypressResult($event)" ng-if="hiddenPosition == 1"/>
 					</div>
 					<div class="col-md-2 font-cal">
-						{{signNumber}}
+						{{hiddenPosition == 2?'': signNumber}}
+						<input type="text"  style="width:100%; text-align: center;" id="inputNumber2" ng-model="inputNumber[2]" ng-keypress="onKeypressResult($event)" ng-if="hiddenPosition == 2"/>
 					</div>
 					<div class="col-md-2 font-cal">
-						{{secondNumber}}
+						{{hiddenPosition == 3?'': secondNumber}}
+						<input type="text"  style="width:100%; text-align: center;" id="inputNumber3" ng-model="inputNumber[3]" ng-keypress="onKeypressResult($event)" ng-if="hiddenPosition == 3"/>
 					</div>
 					<div class="col-md-2 font-cal">
 					=
 					</div>
 					<div class="col-md-2 font-cal">
-						<input type="text"  style="width:100%; text-align: center;" ng-model="resultNumber" ng-keypress="onKeypressResult($event)"/>
+						{{hiddenPosition == 4?'': resultNumber}}
+						<input type="text"  style="width:100%; text-align: center;" id="inputNumber4" ng-model="inputNumber[4]" ng-keypress="onKeypressResult($event)" ng-if="hiddenPosition == 4"/>
 					</div>
 					<div class="col-md-2 font-cal">
 					</div>
@@ -180,64 +205,109 @@
 
         hthAdsApp.controller('MainController', function PhoneListController($scope, $http) {
 			$scope.historyItems = [];
-            $scope.firstOldNumber = "";
-            $scope.secondOldNumber = "";
-            $scope.signOldNumber = "";
-            $scope.resultOldNumber = "";
             $scope.firstNumber = "";
             $scope.secondNumber = "";
             $scope.signNumber = "";
             $scope.resultNumber = "";
-            $scope.maxExpress = 20; 
+            $scope.hiddenPosition = "";
+            $scope.inputNumber = [];
+            $scope.maxExpress = window.localStorage && window.localStorage.getItem('maxExpress')? window.localStorage.getItem('maxExpress') : 20; 
+			$scope.kind = window.localStorage && window.localStorage.getItem('kind')? window.localStorage.getItem('kind') : 1;
+			
+			$scope.$watch('kind', function(value) {
+				$scope.reset();
+			 });
+			 
 			$scope.generateNewExpress = function(){
 				$scope.firstNumber = getRandomInt($scope.maxExpress);
-				$scope.signNumber = getRandomInt(10) < 5?"+":"-";
+				if($scope.firstNumber == 0) 
+					$scope.firstNumber = 1;
+				$scope.signNumber = "+"; //getRandomInt(10) < 5?"+":"-";
 				if($scope.signNumber == "-")
 				{
 					$scope.secondNumber = getRandomInt($scope.firstNumber);
+					$scope.resultNumber = ($scope.firstNumber - $scope.secondNumber);
 				}else{
 					$scope.secondNumber = getRandomInt($scope.maxExpress - $scope.firstNumber);
+					$scope.resultNumber = ($scope.firstNumber + $scope.secondNumber);
 				}
-			}
+				var firstN = getRandomInt($scope.maxExpress);
+				$scope.firstNumber = firstN +"" + $scope.firstNumber;
+				$scope.resultNumber = firstN +"" + $scope.resultNumber;
+				
+				if($scope.kind == 1){
+					$scope.hiddenPosition = 4;
+				}
+				else{
+					$scope.hiddenPosition = getRandomInt(3) + 1;
+				}
+				$scope.inputNumber = [];
+				
+				//$('#inputNumber'+$scope.hiddenPosition).focus();
+				$("input[id='inputNumber4']").focus();
+					window.setTimeout(function () { document.getElementById('inputNumber'+$scope.hiddenPosition).focus();}, 0); 
+				}
 			
 			$scope.onKeypressResult = function(keyEvent) {
-			  if (keyEvent.which === 13 && $scope.resultNumber)
+			  if (keyEvent.which === 13 && $scope.inputNumber[$scope.hiddenPosition])
 			  {
-				$scope.firstOldNumber = $scope.firstNumber;
-				$scope.secondOldNumber = $scope.secondNumber;
-				$scope.signOldNumber = $scope.signNumber;
-				$scope.resultOldNumber = $scope.resultNumber;
-
-				if($scope.signOldNumber=="+"){
-					$scope.expectedResult = ($scope.firstNumber + $scope.secondNumber);
-				}else{
-					$scope.expectedResult = ($scope.firstNumber - $scope.secondNumber)
-				}
+				$scope.historyItems.splice(0, 0,{"firstNumber":$scope.firstNumber,
+												'secondNumber':$scope.secondNumber, 
+												'signNumber':$scope.signNumber, 
+												'resultNumber':$scope.resultNumber,
+												'inputNumber':$scope.inputNumber,
+												'hiddenPosition':$scope.hiddenPosition});
 				
-				$scope.historyItems.splice(0, 0,{"firstNumber":$scope.firstOldNumber, 'secondNumber':$scope.secondOldNumber, 'signNumber':$scope.signOldNumber, 'resultNumber':$scope.resultOldNumber,'expectedResult':$scope.expectedResult});
-				
-				$scope.resultNumber = "";
 				$scope.generateNewExpress();
 				}
 			}
 			$scope.getSummary = function(){
-				var correctItems = $scope.historyItems.filter(p=>p.expectedResult == p.resultNumber);
+				var correctItems = $scope.historyItems.filter(p=>$scope.isCorrect(p));
 				return ""+correctItems.length+ "/"+$scope.historyItems.length + "  đạt " + ($scope.historyItems.length > 0 ? Math.round(correctItems.length/$scope.historyItems.length * 100) : 0) + "%";
 			}
 			
 			$scope.reset = function(keyEvent) 
 			{
+				if(window.localStorage){
+					window.localStorage.setItem('kind', $scope.kind)
+					window.localStorage.setItem('maxExpress', $scope.maxExpress)
+				}
 				$scope.historyItems = [];
-				$scope.firstOldNumber = "";
-				$scope.secondOldNumber = "";
-				$scope.signOldNumber = "";
-				$scope.resultOldNumber = "";
 				$scope.firstNumber = "";
 				$scope.secondNumber = "";
 				$scope.signNumber = "";
 				$scope.resultNumber = "";
+				$scope.inputNumber = "";
+				$scope.hiddenPosition = "";
 				$scope.generateNewExpress();
 			}
+			
+			$scope.isCorrect = function(item){
+				if(item.hiddenPosition == 2 && (item.firstNumber == 0 || item.secondNumber == 0)){
+					return item.inputNumber[item.hiddenPosition] == '+' || item.inputNumber[item.hiddenPosition] == '-';
+				}
+				return $scope.getExpectedValue(item) == item.inputNumber[item.hiddenPosition];
+			}
+			
+			$scope.getExpectedValue = function(item){
+				if(item){
+					if(item.hiddenPosition == 1){
+						return  item.firstNumber;
+					} else if(item.hiddenPosition == 2){
+						if(item.firstNumber == 0 || item.secondNumber == 0)
+						{
+							return '+/-';
+						}
+						return item.signNumber;
+					}else if(item.hiddenPosition == 3){
+						return item.secondNumber;
+					}else if(item.hiddenPosition == 4){
+						return  item.resultNumber;
+					}
+				}
+			}
+			
+			
 			$scope.generateNewExpress();
 			function getRandomInt(max) {
 			  return Math.round(Math.random()*max);
