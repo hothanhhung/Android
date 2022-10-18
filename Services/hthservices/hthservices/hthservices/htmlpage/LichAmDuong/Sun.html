@@ -20,9 +20,7 @@
     <style>
 		.datepicker,
 		.table-condensed {
-		  width: 500px;
-		  height:500px;
-		  font-size:2.5rem;
+		  font-size:1.5rem;
 		}
 
 		center {
@@ -37,15 +35,16 @@
 		.info-title{
 			font-weight: bold;
 			padding: 0px 20px;
-			font-size: 4rem;
+			font-size: 1.5rem;
 			color: cadetblue;
 			text-transform: capitalize;
+			text-align: center;
 		}
 		
 		.info-time{
 			font-weight: bold;
 			padding: 15px 20px;
-			font-size: 4rem;
+			font-size: 1.5rem;
 			color: #ff0909;
 		}
 		
@@ -75,6 +74,7 @@
 			position:absolute;
 			top: 0;
 			left: 0;
+			margin-top: 100px;
 		}
     </style>
 </head>
@@ -82,15 +82,15 @@
 	<div ng-app="starter" ng-controller="mainController">
 		<div class="container-fluid" style="margin: 10px 10px 10px 20px">    
 		<div class="row">
-			<div class="col main-content">
+			<div class="col main-content" id="control-main">
 					<div class="row" style="margin: 10px -10px 10px -10px;">
 						<div class="col-xs-6 col-md-6">
 						  <div class="dropdown width90">
-							  <button class="btn btn-default dropdown-toggle width90"  style="font-size:4rem" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							  <button class="btn btn-default dropdown-toggle width90"  style="font-size:1.5rem" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 								{{selectedProvice.name}}
 								<span class="caret"></span>
 							  </button>
-							  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1" style="font-size: 3rem;">
+							  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1" style="font-size: 1.5rem;">
 								<li ng-repeat="kind in Provinces"><a href="javascript:void(0)" ng-click="changeProvince(kind)" > {{kind.name}}</a></li>
 							  </ul>
 							</div>
@@ -98,7 +98,7 @@
 						<div class="col-xs-6 col-md-6">
 						  <div class="dropdown width90">
 								<input class="form-control" id="date" name="date" placeholder="DD-MM-YYYY" type="text" readonly
-									ng-model="selectedDate" ng-change="getData()"  style="font-size:4rem; height: fit-content;"/>
+									ng-model="selectedDate" ng-change="getData()"  style="font-size:1.5rem; height: fit-content;"/>
 							</div>
 						</div>
 					</div>
@@ -106,16 +106,12 @@
 						<div ng-bind-html = "TuVi.Content"></div>
 					</div> 
 					<div class="row" style="margin: 10px -10px 30px -10px;">
-						<div class="col-xs-4 col-md-4 info-group">
-						</div>
-						<div class="col-xs-4 col-md-4 info-group">
+						<div class="col-xs-12 col-md-12 info-group">
 							<div class="info-title">Giữa Trưa</div>
-							<div style='color: #7f7f7f;'>(Thời điểm mặt trời ở vị trí cao nhất)</div>
+							<div style='color: #7f7f7f;font-size: 0.7rem;'>(Thời điểm mặt trời ở vị trí cao nhất)</div>
 							<div class="info-time">{{getLocalTime(Result.Data.solar_noon)}}</div>
-							<div style='width:100%; display:flex;justify-content: center;'><img  id="control-sun" class="image-sun" src='imgs/sun.png'/></div>
-						</div>				
-						<div class="col-xs-4 col-md-4 info-group">
-						</div>
+							<div style='width:30%; display:flex;justify-content: center;'><img  id="control-sun" class="image-sun" src='imgs/sun.png'/></div>
+						</div>	
 					</div> 
 					<div class="row" style="margin: 10px -10px 30px -10px;">
 						<div class="col-xs-4 col-md-4 info-group">
@@ -133,7 +129,7 @@
 					</div> 
 					<div class="row info-group" style="margin-bottom: 10px;">
 					</div> 
-					<div class="row info-group">
+					<div class="row info-group" style="padding-top: 20px;margin-left: -20px;background-image: linear-gradient(#00ff280d, #2efa3178, #38ff0024);">
 						<div class="info-title">Thời Gian Ban Ngày Dài</div>
 						<div class="info-time">{{Result.Data.day_length}}</div>
 					</div>
@@ -257,28 +253,34 @@ $(document).ready(function(){
 	window.addEventListener('resize', resizeCanvas, false);
         
 	function resizeCanvas() {
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
+		var main = document.getElementById("control-main").getBoundingClientRect();
+		canvas.width = main.right - main.left;
+		canvas.height = main.bottom - main.top;
 		drawContent();
 	}
 
+	window.onload = (event) => {
+	  setTimeout(resizeCanvas, 1000);
+	};
+	//setTimeout(resizeCanvas, 1000);
+	
 	function drawContent(){
 		var noon = document.getElementById("control-sun").getBoundingClientRect();
 		var sunrise = document.getElementById("control-sunrise").getBoundingClientRect();
 		var sunset = document.getElementById("control-sunset").getBoundingClientRect();
 		
 		var pos1_x = sunrise.right;
-		var pos1_y =  sunrise.top;
+		var pos1_y =  sunrise.top - 100;
 		
 		var pos2_x =  (noon.left + noon.right )/2;
-		var pos2_y =  noon.bottom;
+		var pos2_y =  noon.bottom - 100;
 		
 		
 		var pos3_x =  sunset.left;
-		var pos3_y =   sunset.top;
+		var pos3_y =   sunset.top - 100;
 		
-		drawArrow(ctx, pos1_x + 10, pos1_y, pos2_x - 10, pos2_y, 5, 'red');
-		drawArrow(ctx, pos2_x + 10, pos2_y, pos3_x - 10, pos3_y, 5, 'red');
+		drawArrow(ctx, pos1_x + 10, pos1_y, pos2_x - 10, pos2_y, 3, 'red');
+		drawArrow(ctx, pos2_x + 10, pos2_y, pos3_x - 10, pos3_y, 3, 'red');
 	  
 	}
 
