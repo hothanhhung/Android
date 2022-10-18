@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity
 
     public final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10000;
     public final static int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE + 1;
+    public final static int MY_PERMISSIONS_REQUEST_MANAGE_EXTERNAL_STORAGE = MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE + 1;
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -204,6 +205,13 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(this, "Không có quyền đọc file", Toast.LENGTH_LONG).show();
                 }
             }
+            /*case MY_PERMISSIONS_REQUEST_MANAGE_EXTERNAL_STORAGE: {
+                if (Environment.isExternalStorageManager()) {
+                    Toast.makeText(this, "Quyền đã được cấp. Vui lòng thử lại", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Không có quyền đọc file ngoài ứng dụng", Toast.LENGTH_LONG).show();
+                }
+            }*/
         }
     }
 
@@ -277,6 +285,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.navTietKhi:
                 llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.TietKhi), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+            case R.id.navSunTime:
+                llMainContent.addView(new ViewWithWebViewRequest(this, MenuLookUpItemKind.SunTime), 0, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
             case R.id.navMoreApp:
                 Utils.showAlertGetMoreAppsServer(this);

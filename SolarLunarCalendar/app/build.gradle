@@ -7,8 +7,8 @@ android {
         applicationId "com.hunght.solarlunarcalendar"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 115
-        versionName "1.1.5"
+        versionCode 117
+        versionName "1.1.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -131,6 +131,8 @@ public class ViewWithWebViewRequest extends LinearLayout {
                 return "http://hunght.com/htmlpage/lichamduong/GieoQueQuanAm.html?ts="+ (new Date()).getTime();
             case TietKhi:
                 return "http://hunght.com/htmlpage/lichamduong/TietKhi.html?ts="+ (new Date()).getTime();
+            case SunTime:
+                return "http://hunght.com/htmlpage/lichamduong/Sun.html?ts="+ (new Date()).getTime();
         }
         return "";
     }

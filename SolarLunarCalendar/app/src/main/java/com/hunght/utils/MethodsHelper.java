@@ -186,6 +186,19 @@ public class MethodsHelper {
                     // Permission has already been granted
                     return true;
                 }
+            case MainActivity.MY_PERMISSIONS_REQUEST_MANAGE_EXTERNAL_STORAGE:
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // No explanation needed; request the permission
+                    ActivityCompat.requestPermissions((Activity) context,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE},
+                            MainActivity.MY_PERMISSIONS_REQUEST_MANAGE_EXTERNAL_STORAGE);
+                    return false;
+                } else {
+                    // Permission has already been granted
+                    return true;
+                }
         }
         return false;
     }
