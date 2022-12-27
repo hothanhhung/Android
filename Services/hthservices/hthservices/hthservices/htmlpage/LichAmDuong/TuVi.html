@@ -104,23 +104,31 @@
 			<div class="row" style="margin: 10px -10px 10px -10px;">
 				<div class="col-xs-6 col-md-6">
 				  <div class="dropdown width90">
-					  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"style="height: 55px; font-weight:bold">
 						{{selectedKindsOfViewTime.name}}
 						<span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="kind in KindsOfViewTime"><a href="javascript:void(0)" ng-click="changeKindsOfViewTime(kind)"> {{kind.name}}</a></li>
+						<li ng-repeat="kind in KindsOfViewTime"><a href="javascript:void(0)" ng-click="changeKindsOfViewTime(kind)" style="font-weight:bold"> {{kind.name}}</a></li>
 					  </ul>
 					</div>
 				</div>
 				<div class="col-xs-6 col-md-6">
 				  <div class="dropdown width90">
-					  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						{{selectedKindOfTuVi.name}}
+					  <button class="btn btn-default dropdown-toggle width90" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"style="height: 55px">
+						<span>
+							<span style="font-weight:bold">{{splitString(selectedKindOfTuVi.name)[0] }}</span>
+							<br/>
+							<span style="color:gray">{{splitString(selectedKindOfTuVi.name)[1] }}</span>
+						</span>
 						<span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu width90" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="kind in KindsOfTuVi"><a href="javascript:void(0)" ng-click="changeKindOfTuVi(kind)"> {{kind.name}}</a></li>
+						<li ng-repeat="kind in KindsOfTuVi"><a href="javascript:void(0)" ng-click="changeKindOfTuVi(kind)"> 
+							<span style="font-weight:bold">{{splitString(kind.name)[0] }}</span>
+							<br/>
+							<span style="color:gray">{{splitString(kind.name)[1] }}</span>
+						</a></li>
 					  </ul>
 					</div>
 				</div>
@@ -146,8 +154,12 @@ angular.module('starter', []).controller("mainController", ['$scope', '$http','$
 		$scope.updateInformation();
 	}
 	
-	$scope.KindsOfTuVi = [{"id":"Ty","name":"Tuổi Tý"},{"id":"Suu","name":"Tuổi Sửu"},{"id":"Dan","name":"Tuổi Dần"},{"id":"Meo","name":"Tuổi Mẹo"},{"id":"Thin","name":"Tuổi Thìn"},{"id":"Ti","name":"Tuổi Tỵ"},{"id":"Ngo","name":"Tuổi Ngọ"},{"id":"Mui","name":"Tuổi Mùi"},{"id":"Than","name":"Tuổi Thân"},{"id":"Dau","name":"Tuổi Dậu"},{"id":"Tuat","name":"Tuổi Tuất"},{"id":"Hoi","name":"Tuổi Hợi"},{"id":"BachDuong","name":"Cung Bạch Dương (21/03 - 19/04)"},{"id":"KimNguu","name":"Cung Kim Ngưu (20/04 - 20/05)"},{"id":"SongTu","name":"Cung Song Tử (21/05 - 21/06)"},{"id":"CuGiai","name":"Cung Cự Giải (22/06 - 22/07)"},{"id":"SuTu","name":"Cung Sư Tử (23/07 - 22/08)"},{"id":"XuNu","name":"Cung Xử Nữ (23/08 - 22/09)"},{"id":"ThienBinh","name":"Cung Thiên Bình (23/09 - 23/10)"},{"id":"BoCap","name":"Cung Bọ Cạp (24/10 - 21/11)"},{"id":"NhanMa","name":"Cung Nhân Mã (22/11 - 21/12)"},{"id":"MaKet","name":"Cung Ma Kết (22/12 - 19/01)"},{"id":"BaoBinh","name":"Cung Bảo Bình (20/01 - 18/02)"},{"id":"SongNgu","name":"Cung Song Ngư (19/02 - 20/03)"}];
+	$scope.KindsOfTuVi = [{"id":"Ty","name":"Tuổi Tý"},{"id":"Suu","name":"Tuổi Sửu"},{"id":"Dan","name":"Tuổi Dần"},{"id":"Meo","name":"Tuổi Mẹo"},{"id":"Thin","name":"Tuổi Thìn"},{"id":"Ti","name":"Tuổi Tỵ"},{"id":"Ngo","name":"Tuổi Ngọ"},{"id":"Mui","name":"Tuổi Mùi"},{"id":"Than","name":"Tuổi Thân"},{"id":"Dau","name":"Tuổi Dậu"},{"id":"Tuat","name":"Tuổi Tuất"},{"id":"Hoi","name":"Tuổi Hợi"},{"id":"BachDuong","name":"Cung Bạch Dương<br/>(21/03 - 19/04)"},{"id":"KimNguu","name":"Cung Kim Ngưu<br/>(20/04 - 20/05)"},{"id":"SongTu","name":"Cung Song Tử<br/>(21/05 - 21/06)"},{"id":"CuGiai","name":"Cung Cự Giải<br/>(22/06 - 22/07)"},{"id":"SuTu","name":"Cung Sư Tử<br/>(23/07 - 22/08)"},{"id":"XuNu","name":"Cung Xử Nữ<br/>(23/08 - 22/09)"},{"id":"ThienBinh","name":"Cung Thiên Bình<br/>(23/09 - 23/10)"},{"id":"BoCap","name":"Cung Bọ Cạp<br/>(24/10 - 21/11)"},{"id":"NhanMa","name":"Cung Nhân Mã<br/>(22/11 - 21/12)"},{"id":"MaKet","name":"Cung Ma Kết<br/>(22/12 - 19/01)"},{"id":"BaoBinh","name":"Cung Bảo Bình<br/>(20/01 - 18/02)"},{"id":"SongNgu","name":"Cung Song Ngư<br/>(19/02 - 20/03)"}];
 	$scope.selectedKindOfTuVi = $scope.KindsOfTuVi[0];
+	
+	$scope.splitString = function (str){
+		return str.split("<br/>");
+	}
 	
 	if(window.localStorage){
 		var oldValue = window.localStorage.getItem('SelectedKindOfTuVi');
