@@ -15,6 +15,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebChromeClient;
@@ -108,7 +109,7 @@ public class UIUtils {
         WebSettings settings = wv.getSettings();
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 		settings.setJavaScriptEnabled(true);
-        settings.setAppCacheMaxSize(50000 * 1024);
+        //settings.setAppCacheMaxSize(50000 * 1024);
         
 		progressBar1 = new ProgressBar(activity);//,null, android.R.attr.progressBarStyleHorizontal);
 		progressBar1.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -138,7 +139,7 @@ public class UIUtils {
 		});
 		wv.loadUrl(urlPage);
 		LinearLayout linearLayout = new LinearLayout(activity);
-		if (android.os.Build.VERSION.SDK_INT>=17) {
+		if (Build.VERSION.SDK_INT>=17) {
 			// call something for API Level 11+
 			linearLayout.setLayoutDirection(LinearLayout.LAYOUT_DIRECTION_LTR);
 		}
