@@ -136,7 +136,7 @@ public class SiteActivity extends Activity {
             WebSettings settings = viewArticleDetail.getSettings();
             settings.setCacheMode(WebSettings.LOAD_DEFAULT);
             settings.setJavaScriptEnabled(true);
-            settings.setAppCacheMaxSize(50000 * 1024);
+            //settings.setAppCacheMaxSize(50000 * 1024);
             settings.setJavaScriptCanOpenWindowsAutomatically(false);
             settings.setBuiltInZoomControls(true);
             settings.setSupportZoom(true);

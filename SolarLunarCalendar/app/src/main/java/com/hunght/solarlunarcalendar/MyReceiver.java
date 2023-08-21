@@ -131,13 +131,13 @@ public class MyReceiver// extends BroadcastReceiver
 
                 SharedPreferencesUtils.setShowDailyNotifyReminding(context, now.get(Calendar.DAY_OF_YEAR));
             }
-            if (keepCheck && SharedPreferencesUtils.getShowNotifyNgayRam(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowNgayRamNotifyReminding(context))
+            if (true || SharedPreferencesUtils.getShowNotifyNgayRam(context) && now.get(Calendar.DAY_OF_YEAR) != SharedPreferencesUtils.getShowNgayRamNotifyReminding(context))
             {
                 DateItemForGridview date = DateItemForGridview.createDateItemForGridviewFromLunar(now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.MONTH) + 1, now.get(Calendar.YEAR));
 
                 int day = date.getLunarDate().getDate();
                 Log.d("AmDuong", "Checking Ngay Ram: " + day);
-                if(day == 1 || day == 15) {
+                if(true || day == 1 || day == 15) {
                     String subject = (day == 1)? "Hôm nay là ngày đầu tháng âm lịch" : "Hôm nay là rằm", content = date.getLunarInfoWidget(false);
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

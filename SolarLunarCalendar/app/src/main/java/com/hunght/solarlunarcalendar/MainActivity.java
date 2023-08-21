@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "AmDuong";
     public static final String EXTRA_FOR_NAVIGATION_MENU_ID = "EXTRA_FOR_NAVIGATION_MENU_ID";
-    private static final int ALARM_VERSION = 5;
+    private static final int ALARM_VERSION = 0;
 
     LinearLayout llMainContent;
     private AdView mAdView = null;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
             PendingIntent recurring = PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Calendar updateTime = Calendar.getInstance();
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), 31 * 60 * 1000, recurring);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), 3 * 60 * 1000, recurring);
             //wakeup and starts service in every 45 minutes.
 
             SharedPreferencesUtils.setAlarmVersion(this, ALARM_VERSION);

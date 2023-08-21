@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.hth.tracuuOnline"
         minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 108
-        versionName "1.0.8"
+        targetSdkVersion 33
+        versionCode 109
+        versionName "1.0.9"
     }
     buildTypes {
         release {
