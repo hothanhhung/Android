@@ -1,11 +1,10 @@
 package com.hth.sudoku;
 
 import android.app.Dialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import com.hth.utils.DataBaseHelper;
 import com.hth.utils.MethodsHelper;

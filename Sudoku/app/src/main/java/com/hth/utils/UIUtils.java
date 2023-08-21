@@ -108,7 +108,7 @@ public class UIUtils {
         WebSettings settings = wv.getSettings();
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 		settings.setJavaScriptEnabled(true);
-        settings.setAppCacheMaxSize(50000 * 1024);
+        //settings.setAppCacheMaxSize(50000 * 1024);
         
 		progressBar1 = new ProgressBar(activity);//,null, android.R.attr.progressBarStyleHorizontal);
 		progressBar1.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
