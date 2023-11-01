@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -83,11 +84,17 @@ public class LunarSolarAppWidget extends AppWidgetProvider {
         }else{
             views.setViewVisibility(R.id.appwidget_image_congiap, View.GONE);
         }
+
+        int flagPendingIntent = PendingIntent.FLAG_CANCEL_CURRENT;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+            flagPendingIntent = flagPendingIntent|PendingIntent.FLAG_IMMUTABLE;
+        }
+
         Intent configIntent = new Intent(context, MainActivity.class);
         configIntent.setAction("LunarSolarAppWidget");
         configIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         configIntent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navSolarLunarCalendar);
-        PendingIntent configPendingIntent = PendingIntent.getActivity(context, 20201010, configIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent configPendingIntent = PendingIntent.getActivity(context, 20201010, configIntent, flagPendingIntent);
         views.setOnClickPendingIntent(R.id.appwidget_image_congiap, configPendingIntent);
 
         Calendar now = Calendar.getInstance();

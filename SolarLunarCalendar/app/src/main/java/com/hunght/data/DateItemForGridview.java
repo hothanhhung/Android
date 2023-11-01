@@ -1,5 +1,7 @@
 package com.hunght.data;
 
+import android.util.Log;
+
 import com.hunght.utils.DateTools;
 
 import java.util.Calendar;
@@ -223,10 +225,14 @@ public class DateItemForGridview {
 
     public int getDateInLunar()
     {
-        Date orginalDate = new Date(2013 - 1900, 8 - 1, 2); //Canh Tý
-        int day = new Long(((date.getTime() -orginalDate.getTime())/(1000*24*3600)) % 60).intValue();
-        if(day<0) day+=60;
-        return day;
+        if(date!=null) {
+            Date orginalDate = new Date(2013 - 1900, 8 - 1, 2); //Canh Tý
+            int day = new Long(((date.getTime() - orginalDate.getTime()) / (1000 * 24 * 3600)) % 60).intValue();
+            if (day < 0) day += 60;
+            return day;
+        }
+        Log.e("AmDuong","Date is null in getDateInLunar");
+        return 1;
     }
 
     public String getLunarGoodTime() {

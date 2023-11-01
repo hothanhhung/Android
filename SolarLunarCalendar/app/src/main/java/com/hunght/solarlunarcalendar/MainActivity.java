@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "AmDuong";
     public static final String EXTRA_FOR_NAVIGATION_MENU_ID = "EXTRA_FOR_NAVIGATION_MENU_ID";
-    private static final int ALARM_VERSION = 0;
+    private static final int ALARM_VERSION = 10;
 
     LinearLayout llMainContent;
     private AdView mAdView = null;
@@ -84,8 +85,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent liveIntent = new Intent(getApplicationContext(), AReceiver.class);
-        if (SharedPreferencesUtils.getAlarmVersion(this) != ALARM_VERSION || PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_NO_CREATE) == null) {
-            PendingIntent recurring = PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        int flagPendingIntent = PendingIntent.FLAG_CANCEL_CURRENT;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+            flagPendingIntent = flagPendingIntent|PendingIntent.FLAG_IMMUTABLE;
+        }
+
+        if (SharedPreferencesUtils.getAlarmVersion(this) != ALARM_VERSION || PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, flagPendingIntent) == null) {
+            PendingIntent recurring = PendingIntent.getBroadcast(getApplicationContext(), 0, liveIntent, flagPendingIntent);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Calendar updateTime = Calendar.getInstance();
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), 3 * 60 * 1000, recurring);

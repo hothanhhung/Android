@@ -1,6 +1,8 @@
 package com.hunght.solarlunarcalendar;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
@@ -96,6 +98,17 @@ public class ViewWithWebViewRequest extends LinearLayout {
                 {
                     mainActivity.adViewShow(false);
                 }
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if(url.contains("hunght.com")){
+                    return false;
+                }
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                view.getContext().startActivity(intent);
+                return true;
             }
         });
         firstLoadWeb();

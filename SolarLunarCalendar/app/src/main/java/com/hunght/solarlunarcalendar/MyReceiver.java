@@ -57,6 +57,12 @@ public class MyReceiver// extends BroadcastReceiver
             SharedPreferencesUtils.setSettingWidgetLastUpdateDate(context, dayOfYear);
         }
 
+
+		int flagPendingIntent = PendingIntent.FLAG_CANCEL_CURRENT;
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+			flagPendingIntent = flagPendingIntent|PendingIntent.FLAG_IMMUTABLE;
+		}
+		
         if (now.get(Calendar.HOUR_OF_DAY) > 5 ) {
             Log.d("AmDuong", "start: > 5h");
             boolean keepCheck = true;
@@ -104,7 +110,7 @@ public class MyReceiver// extends BroadcastReceiver
                         intent.setAction("SERVICE_GET_TO_NOTE");
                         intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.layout.notes_view_item);
                         SaveNoteItemView.setNoteItem(noteItem);
-                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, flagPendingIntent);
 
                         /*NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
@@ -143,7 +149,7 @@ public class MyReceiver// extends BroadcastReceiver
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.setAction("SERVICE_GET_INFO_OF_NGAY_RAM");
                     intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navSolarLunarCalendar);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, getRandom(), intent, flagPendingIntent);
                     showNotification(context, "SERVICE_GET_INFO_OF_NGAY_RAM", ServiceProcessor.SERVICE_GET_NGAY_RAM, subject, content, pendingIntent, (day == 1)? R.drawable.moon:R.drawable.fullmoon);
                     keepCheck = false;
                 }
@@ -175,7 +181,7 @@ public class MyReceiver// extends BroadcastReceiver
                         default:
                             break;
                     }
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, getRandom(), intent, flagPendingIntent);
                     showNotification(context, "SERVICE_GET_SUGGEST_TO_TUVI", ServiceProcessor.SERVICE_GET_SUGGEST_TO_TUVI, subject, content, pendingIntent, R.drawable.icon);
                     keepCheck = false;
                 }
@@ -268,6 +274,10 @@ public class MyReceiver// extends BroadcastReceiver
         protected void onPostExecute(Object object) {
             Log.d("AmDuong", "onPostExecute 1: " + type);
             Calendar now = Calendar.getInstance();
+            int flagPendingIntent = PendingIntent.FLAG_CANCEL_CURRENT;
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+                flagPendingIntent = flagPendingIntent|PendingIntent.FLAG_IMMUTABLE;
+            }
             switch (type) {
                 case ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT:
                     Log.d("AmDuong", "onPostExecute 2: " + ServiceProcessor.SERVICE_GET_INFO_OF_DATE_SHORT);
@@ -281,7 +291,7 @@ public class MyReceiver// extends BroadcastReceiver
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.setAction("SERVICE_GET_INFO_OF_DATE_SHORT");
                         intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navGoodDayBadDay);
-                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, flagPendingIntent);
 /*
                         NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
@@ -310,7 +320,7 @@ public class MyReceiver// extends BroadcastReceiver
                         intent.setAction("SERVICE_GET_CHAM_NGON");
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.putExtra(MainActivity.EXTRA_FOR_NAVIGATION_MENU_ID, R.id.navSolarLunarCalendar);
-                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                        PendingIntent activity = PendingIntent.getActivity(context, getRandom(), intent, flagPendingIntent);
 
                         /*NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
