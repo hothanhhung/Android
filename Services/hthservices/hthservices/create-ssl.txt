@@ -1,0 +1,7 @@
+1. Create free 3 months: 
+	https://manage.sslforfree.com/dashboard
+2. download zip file : 
+	ca_bundle.crt certificate.crt private.key
+3. create pfx file: 
+	"C:\Program Files\OpenSSL-Win64\bin\openssl.exe" pkcs12 -export -out myPrivateCert.pfx -inkey PRIVATE.key -in certificate.crt
+4. import & bind
