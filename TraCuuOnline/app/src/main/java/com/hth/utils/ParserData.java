@@ -125,7 +125,7 @@ public class ParserData {
     }
 
     public static String getBangGiaVang() {
-        String urlpage = "http://banggia.giavang.net/";
+        String urlpage = "https://vnexpress.net/chu-de/gia-vang-1403";
         StringBuilder contentResult = new StringBuilder();
         try {
             if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -136,7 +136,8 @@ public class ParserData {
             Document doc = Jsoup.connect(urlpage).timeout(10000)
                     // .userAgent("Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0")
                     .get();
-            contentResult.append(doc.outerHtml());//.replaceAll("size=\"5\"","size=\"4\""));
+            Element rs = doc.getElementsByTag("table").get(0);
+            contentResult.append(rs.outerHtml());//.replaceAll("size=\"5\"","size=\"4\""));
 
 
         } catch (Exception ex) {

@@ -90,23 +90,25 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
         switch (kind)
         {
             case MaBienSo:
-                return "http://hunght.com/htmlpage/lookuponline/mabienso.html";
+                return "https://hunght.com/htmlpage/lookuponline/mabienso.html";
             case DauSoDienThoai:
-                return "http://hunght.com/htmlpage/lookuponline/dausodienthoai.html";
+                return "https://hunght.com/htmlpage/lookuponline/dausodienthoai.html";
             case BongDa:
-                return "http://hunght.com/htmlpage/lookuponline/bongda.html";
+                return "https://hunght.com/htmlpage/lookuponline/bongda.html";
             case MaBuuDien:
-                return "http://hunght.com/htmlpage/lookuponline/MaBuuDien.html";
+                return "https://hunght.com/htmlpage/lookuponline/MaBuuDien.html";
             case SwiftCode:
-                return "http://hunght.com/htmlpage/lookuponline/SwiftCode.html";
+                return "https://hunght.com/htmlpage/lookuponline/SwiftCode.html";
             case OtherLookUp:
-                return "http://hunght.com/htmlpage/lookuponline/TraCuuKhac.html";
+                return "https://hunght.com/htmlpage/lookuponline/TraCuuKhac.html";
             case BangGiaVang:
-                return "http://banggia.giavang.net";
+                return "https://vnexpress.net/chu-de/gia-vang-1403";
             case GiaOto:
-                return "http://hunght.com/tracuuonline/giaOto";
+                return "https://hunght.com/tracuuonline/giaOto";
             case GiaXang:
                 return "https://thanhnien.vn/tien-ich/xang-dau.html";
+            case DuBaoThoiTiet:
+                return "http://vnmha.gov.vn/nchmf-new/show-city-weather";
         }
         return "";
     }
@@ -117,7 +119,12 @@ public class LookUpForViewWithWebViewRequest extends LinearLayout {
         {
             case GiaXang:
                 return ".l-content{width: 100% !important;} div[id*=\"banner\"], iframe, .bottom-bar, .fb_reset, .banner, .m-header, .m-footer, a, #fb-root{display:none !important}";
+            case BangGiaVang:
+                return "article{ display:none !important} section{ display:none !important} .section{ display:none !important} nav{ display:none !important} #to_be_continue{ display:none !important} .social { display:none !important}";
+            case DuBaoThoiTiet:
+                return ".widget_block{ display:none !important} #site_header{ display:none !important}";
         }
+
         return "";
     }
 

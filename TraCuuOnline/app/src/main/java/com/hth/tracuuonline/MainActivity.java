@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout.openDrawer(mLeftDrawerList);
 
-        updateUI(menuLookUpItems.get(10));
+        //updateUI(menuLookUpItems.get(10));
     }
 
     private void updateUI(MenuLookUpItem menuLookUpItem)

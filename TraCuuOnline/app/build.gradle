@@ -6,16 +6,21 @@ android {
 
     defaultConfig {
         applicationId "com.hth.tracuuOnline"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 33
-        versionCode 109
-        versionName "1.0.9"
+        versionCode 110
+        versionName "1.1.0"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
@@ -32,5 +37,5 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.jsoup:jsoup:1.13.1'
-    implementation 'com.google.android.gms:play-services-ads:20.1.0'
+    implementation 'com.google.android.gms:play-services-ads:20.6.0'
 }
